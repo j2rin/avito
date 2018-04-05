@@ -1,0 +1,21 @@
+search_with_query:
+  template: click_stream
+  sql_bindings:
+    event_types: 300
+    filter_predicate: AND cs.searchquery_id IS NOT NULL
+
+search_without_query:
+  template: click_stream
+  sql_bindings:
+    event_types: 300
+    filter_predicate: AND cs.searchquery_id IS NULL
+
+item_view:
+  template: click_stream
+  sql_bindings:
+    event_types: 301
+
+phone_view:
+  template: click_stream
+  sql_bindings:
+    event_types: 303
