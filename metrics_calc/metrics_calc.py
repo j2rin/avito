@@ -13,6 +13,7 @@ from cached_property import cached_property
 import yaml
 import psycopg2
 import psycopg2.extras
+import cerberus
 
 from log_helper import configure_logger
 from ab_significance.significance import ObservationsStats, CompareObservations
@@ -455,3 +456,36 @@ class AbMetrics:
             logger.debug(r)
             results.append(r)
         return results
+
+
+def validate_config():
+    def get_config(config_name):
+        with open('../config/{}.yaml'.format(config_name), 'r') as f:
+            return yaml.load(f)
+
+    def get_schema(schema_name):
+        with open('../config_schemas/{}.yaml'.format(schema_name), 'r') as f:
+            return yaml.load(f)
+
+    events_config = get_config('events')
+    observations_config = get_config('observations')
+    metrics_config = get_config('metrics')
+
+    configs = dict()
+    schemas = dict()
+
+    for cn in ['events', 'observations', 'metrics']:
+        configs[cn] = get_config(cn)
+        schemas[cn] = get_schema(cn)
+
+    schemas['observations']['valueschema']['schema']['events']['allowed'] = list(configs['events'].keys())
+    schemas['metrics']['valueschema']['schema']['observations']['allowed'] = list(configs['observations'].keys())
+
+    validator = cerberus.Validator(schemas)
+    if not validator.validate(configs):
+        raise Exception(validator.errors)
+    else:
+        print('All good')
+
+
+
