@@ -18,7 +18,7 @@ import cerberus
 from log_helper import configure_logger
 from ab_significance.significance import ObservationsStats, CompareObservations
 
-DFT_VERTICA_AUTH_FILE = '~/vertica_auth.json'
+DFT_VERTICA_AUTH_FILE = '/home/dlenkov/vertica_auth.json'
 
 with open(os.path.expanduser(DFT_VERTICA_AUTH_FILE),  'r') as f:
     auth = json.load(f)
@@ -69,10 +69,15 @@ OBSERVATIONS_FILENAME = 'observations'
 METRICS_FILENAME = 'metrics'
 PARAMS_FILENAME = 'params_default'
 
+CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+CONFIG_PATH = CUR_DIR_PATH + '/../config/'
+SCHEMAS_PATH = CUR_DIR_PATH + '/../config_schemas/'
+TEMPLATES_PATH = CUR_DIR_PATH + '/../templates/'
+
 
 def _get_config(filename):
     if USE_LOCAL:
-        url = '../config/' + filename + '.yaml'
+        url = CONFIG_PATH + filename + '.yaml'
         with open(url, 'r') as f:
             return yaml.load(f)
     else:
@@ -86,7 +91,7 @@ DEFAULT_TEMPLATE = 'single_observation_sum'
 
 def _get_template(filename):
     if USE_LOCAL:
-        url = '../templates/' + filename + '.sql'
+        url = TEMPLATES_PATH + filename + '.sql'
         with open(url, 'r') as f:
             return f.read()
     else:
@@ -121,7 +126,7 @@ def connect_postgre():
                             host='ab-central',
                             port=5432)
 
-logger = configure_logger(logger_name='metrics_calc', log_dir='log')
+logger = configure_logger(logger_name='metrics_calc', log_dir=CUR_DIR_PATH + '/log')
 
 
 def get_df_from_vertica(sql):
@@ -154,9 +159,11 @@ class AbMetricsIters:
 
         self.metrics = _get_config(METRICS_FILENAME)
 
+        logger.info('AbMetricsIters initialized')
+
     @staticmethod
     def _get_sql(script_name):
-        url = '../metrics_calc/scripts.sql'
+        url = CUR_DIR_PATH + '/scripts.sql'
         with open(url, 'r') as f:
             return yaml.load(f)[script_name]
 
@@ -326,6 +333,8 @@ class AbMetrics:
         else:
             self.n_threads = n_threads
 
+        logger.info('AbMetrics initialized')
+
     @cached_property
     def observations_iters_to_load(self):
         ObsIter = namedtuple('ObservationIter',
@@ -446,25 +455,27 @@ class AbMetrics:
 
     @cached_property
     def calc_fast_ab_iters(self):
-        return [self.calculate_ab_iter(it) for it in self.fast_ab_iters]
+        results = [self.calculate_ab_iter(it) for it in self.fast_ab_iters]
+        logger.info('calc_fast_ab_iters completed')
+        return results
 
     @cached_property
     def calc_slow_ab_iters(self):
         results = []
+        logger.info('calc_slow_ab_iters started')
         for it in self.slow_ab_iters:
             r = self.calculate_ab_iter(it)
-            logger.debug(r)
             results.append(r)
         return results
 
 
 def validate_config():
     def get_config(config_name):
-        with open('../config/{}.yaml'.format(config_name), 'r') as f:
+        with open(CONFIG_PATH + '{}.yaml'.format(config_name), 'r') as f:
             return yaml.load(f)
 
     def get_schema(schema_name):
-        with open('../config_schemas/{}.yaml'.format(schema_name), 'r') as f:
+        with open(SCHEMAS_PATH + '{}.yaml'.format(schema_name), 'r') as f:
             return yaml.load(f)
 
     events_config = get_config('events')
@@ -484,8 +495,3 @@ def validate_config():
     validator = cerberus.Validator(schemas)
     if not validator.validate(configs):
         raise Exception(validator.errors)
-    else:
-        print('All good')
-
-
-
