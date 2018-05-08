@@ -7,31 +7,35 @@ import json
 import os
 from timeit import default_timer
 
-import vertica_python
 import pandas as pd
 from cached_property import cached_property
 import yaml
-import psycopg2
-import psycopg2.extras
 import cerberus
 
 from log_helper import configure_logger
 from ab_significance.significance import ObservationsStats, CompareObservations
+from db_utils import connect_postgre, connect_vertica, get_df_from_vertica
+from storage import ObservationsStorage
 
-DFT_VERTICA_AUTH_FILE = '/home/dlenkov/vertica_auth.json'
 
-with open(os.path.expanduser(DFT_VERTICA_AUTH_FILE),  'r') as f:
-    auth = json.load(f)
-
-RESULT_COLUMNS = [
+OBS_FIELDS = [
     'ab_test_id',
     'period_id',
-    'metric_id',
-    'metric',
     'start_date',
     'calc_date',
+]
+
+SPLIT_GROUPS_FIELDS = [
     'split_group_id',
     'control_split_group_id',
+]
+
+METRIC_FIELDS = [
+    'metric_id',
+    'metric',
+]
+
+METRIC_PARAMS_FIELDS = [
     'class_name',
     'method',
     'stat_func',
@@ -41,6 +45,9 @@ RESULT_COLUMNS = [
     'alpha',
     'is_pivotal',
     'n_iters',
+]
+
+RESULT_FIELDS = [
     'mean',
     'std',
     'n_obs',
@@ -51,15 +58,13 @@ RESULT_COLUMNS = [
     'elapsed_seconds'
 ]
 
-ITER_COLUMNS = RESULT_COLUMNS[:17]
+ITER_FIELDS = OBS_FIELDS + SPLIT_GROUPS_FIELDS + METRIC_FIELDS + METRIC_PARAMS_FIELDS
 
-METRIC_PARAMS_COLUMS = RESULT_COLUMNS[8:17]
-
-Iter = namedtuple('Iter', ITER_COLUMNS)
+Iter = namedtuple('Iter', ITER_FIELDS)
 Iter.__new__.__defaults__ = (None,) * len(Iter._fields)
-MetricParams = namedtuple('MetricParams', METRIC_PARAMS_COLUMS)
+MetricParams = namedtuple('MetricParams', METRIC_FIELDS)
 MetricParams.__new__.__defaults__ = (None,) * len(MetricParams._fields)
-IterResult = namedtuple('IterResult', RESULT_COLUMNS)
+IterResult = namedtuple('IterResult', RESULT_FIELDS)
 IterResult.__new__.__defaults__ = (None,) * len(IterResult._fields)
 
 USE_LOCAL = True
@@ -100,38 +105,7 @@ def _get_template(filename):
             return f.read()
 
 
-def connect_vertica():
-    conn_info = {
-        'host': 'avi-dwh24',
-        'port': 5433,
-        'database': 'DWH',
-        # 10 minutes timeout on queries
-        'read_timeout': 3600,
-        # default throw error on invalid UTF-8 results
-        # 'unicode_error': 'strict',
-        # SSL is disabled by default
-        # 'ssl': False,
-        # 'connection_timeout': 20
-        # connection timeout is not enabled by default
-    }
-    conn_info.update(auth)
-    return vertica_python.connect(**conn_info)
-
-
-def connect_postgre():
-    """Connects to the specific database."""
-    return psycopg2.connect(dbname='ab_config',
-                            user='ab_configurator',
-                            password='ab_configurator',
-                            host='ab-central',
-                            port=5432)
-
 logger = configure_logger(logger_name='metrics_calc', log_dir=CUR_DIR_PATH + '/log')
-
-
-def get_df_from_vertica(sql):
-    with connect_vertica() as vcon:
-        return pd.read_sql(sql, vcon)
 
 
 class AbMetricsIters:
@@ -200,6 +174,7 @@ class AbMetricsIters:
             (self.df_ab_metric_params.metric == metric)
         ]['params'].values[0]
         if ab_metric_params:
+
             result.extend(self.tuplify_metric_params(ab_metric_params))
 
             params_file = ab_metric_params.get('params_file')
@@ -333,19 +308,21 @@ class AbMetrics:
         else:
             self.n_threads = n_threads
 
+        self.observations_storage = ObservationsStorage()
         logger.info('AbMetrics initialized')
 
     @cached_property
     def observations_iters_to_load(self):
         ObsIter = namedtuple('ObservationIter',
-                             ['template', 'period_id', 'start_date', 'calc_date', 'observations'])
+                             ['sql_template', 'period_id', 'start_date', 'calc_date', 'observations'])
         results = set()
         for it in self.ab_iters:
             template = self.metrics[it.metric].get('template', DEFAULT_TEMPLATE)
-            r = ObsIter(template, it.period_id, it.start_date, it.calc_date,
+            sql_template = _get_template(params['template'])
+            r = ObsIter(sql_template, it.period_id, it.start_date, it.calc_date,
                         tuple(self.metrics[it.metric]['observations']))
             results.add(r)
-        return list(results)
+        return [r._asdict() for r in results]
 
     @property
     def ab_iters_with_data(self):
@@ -359,7 +336,7 @@ class AbMetrics:
 
     @staticmethod
     def _load_observation(params):
-        template = _get_template(params['template'])
+        template = 
         sql = template.format(**params)
         df = get_df_from_vertica(sql)
         if df.shape[0] == 0:
