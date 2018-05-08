@@ -8,9 +8,12 @@ observations_stats:
 
 compare_observations:
   t_test:
-    - {null_value: 0, alternative: '>'}
-    - {null_value: 0, alternative: '<'}
-    - {null_value: 0, alternative: '2s'}
+    - {null_value: 0, alternative: '>', comp_func: difference}
+    - {null_value: 0, alternative: '<', comp_func: difference}
+    - {null_value: 0, alternative: '2s', comp_func: difference}
+    - {null_value: 0, alternative: '>', comp_func: relative_change}
+    - {null_value: 0, alternative: '<', comp_func: relative_change}
+    - {null_value: 0, alternative: '2s', comp_func: relative_change}
   t_confint:
     - {alpha: 0.05, alternative: '2s', comp_func: difference}
     - {alpha: 0.05, alternative: '2s', comp_func: relative_change}
