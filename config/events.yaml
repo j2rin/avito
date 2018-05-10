@@ -49,3 +49,32 @@ saved_searches_list_view:
   template: click_stream
   sql_bindings:
     event_types: 2341
+
+forgot_password:
+  template: click_stream
+  sql_bindings:
+    event_types: 2090
+
+password_restore_request:
+  template: click_stream
+  sql_bindings:
+    event_types: 212
+    filter_predicate: AND cs.error_code IS NULL
+
+password_restore_request_error:
+  template: click_stream
+  sql_bindings:
+    event_types: 212
+    filter_predicate: AND cs.error_code IS NOT NULL
+
+password_restore:
+  template: click_stream
+  sql_bindings:
+    event_types: 213
+    filter_predicate: AND cs.error_code IS NULL
+
+password_restore_error:
+  template: click_stream
+  sql_bindings:
+    event_types: 213
+    filter_predicate: AND cs.error_code IS NOT NULL
