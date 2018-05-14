@@ -17,13 +17,17 @@ from ab_significance.significance import ObservationsStats, CompareObservations
 from db_utils import connect_postgre, connect_vertica, get_df_from_vertica
 from storage import ObservationsStorage
 
+from settings import *
 
-OBS_FIELDS = [
+
+FILTER_FIELDS = [
     'ab_test_id',
-    'period_id',
     'start_date',
     'calc_date',
+    'period_id',
 ]
+
+DIMENSION_FIELDS = []
 
 SPLIT_GROUPS_FIELDS = [
     'split_group_id',
@@ -58,31 +62,22 @@ RESULT_FIELDS = [
     'elapsed_seconds'
 ]
 
-ITER_FIELDS = OBS_FIELDS + SPLIT_GROUPS_FIELDS + METRIC_FIELDS + METRIC_PARAMS_FIELDS
+ITER_FIELDS = ['iter_hash'] + FILTER_FIELDS + DIMENSION_FIELDS + SPLIT_GROUPS_FIELDS + \
+              METRIC_FIELDS + METRIC_PARAMS_FIELDS
+ITER_RESULT_FIELDS = ITER_FIELDS + RESULT_FIELDS
 
 Iter = namedtuple('Iter', ITER_FIELDS)
 Iter.__new__.__defaults__ = (None,) * len(Iter._fields)
-MetricParams = namedtuple('MetricParams', METRIC_FIELDS)
+MetricParams = namedtuple('MetricParams', METRIC_PARAMS_FIELDS)
 MetricParams.__new__.__defaults__ = (None,) * len(MetricParams._fields)
-IterResult = namedtuple('IterResult', RESULT_FIELDS)
+IterResult = namedtuple('IterResult', ITER_RESULT_FIELDS)
 IterResult.__new__.__defaults__ = (None,) * len(IterResult._fields)
-
-USE_LOCAL = True
-
-EVENTS_FILENAME = 'events'
-OBSERVATIONS_FILENAME = 'observations'
-METRICS_FILENAME = 'metrics'
-PARAMS_FILENAME = 'params_default'
-
-CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
-CONFIG_PATH = CUR_DIR_PATH + '/../config/'
-SCHEMAS_PATH = CUR_DIR_PATH + '/../config_schemas/'
-TEMPLATES_PATH = CUR_DIR_PATH + '/../templates/'
+ObsIter = namedtuple('ObservationIter', FILTER_FIELDS + ['sql', 'observations'])
 
 
-def _get_config(filename):
+def _get_yaml(config_path, filename):
     if USE_LOCAL:
-        url = CONFIG_PATH + filename + '.yaml'
+        url = config_path + filename + '.yaml'
         with open(url, 'r') as f:
             return yaml.load(f)
     else:
@@ -91,7 +86,12 @@ def _get_config(filename):
             return yaml.load(r.text)
 
 
-DEFAULT_TEMPLATE = 'single_observation_sum'
+def _get_config(filename):
+    return _get_yaml(CONFIG_PATH, filename)
+
+
+def _get_params(filename):
+    return _get_yaml(PARAMS_PATH, filename)
 
 
 def _get_template(filename):
@@ -141,10 +141,6 @@ class AbMetricsIters:
         with open(url, 'r') as f:
             return yaml.load(f)[script_name]
 
-    @staticmethod
-    def get_default_params(params_filename):
-        return _get_config(params_filename)
-
     def get_dates(self, period_id):
         start_time, end_time = self.df_ab_period[
             self.df_ab_period.period_id == period_id][['start_date', 'end_date']].values[0]
@@ -177,24 +173,24 @@ class AbMetricsIters:
 
             result.extend(self.tuplify_metric_params(ab_metric_params))
 
-            params_file = ab_metric_params.get('params_file')
-            if params_file:
-                result.extend(self.tuplify_metric_params(self.get_default_params(params_file)))
+            params_filename = ab_metric_params.get('params')
+            if params_filename:
+                result.extend(self.tuplify_metric_params(_get_params(params_filename)))
 
             if ab_metric_params.get('override'):
                 return result
 
         metric_params = self.metrics[metric]
         result.extend(self.tuplify_metric_params(metric_params))
-        params_file = metric_params.get('params_file')
-        if params_file:
-            result.extend(self.tuplify_metric_params(self.get_default_params(params_file)))
+        params_filename = metric_params.get('params')
+        if params_filename:
+            result.extend(self.tuplify_metric_params(_get_params(params_filename)))
 
         if metric_params.get('override'):
             return result
 
-        if not params_file:
-            result.extend(self.tuplify_metric_params(self.get_default_params(PARAMS_FILENAME)))
+        if not params_filename:
+            result.extend(self.tuplify_metric_params(_get_params(DEFAULT_PARAMS_FILENAME)))
 
         return list(set(result))
 
@@ -267,7 +263,11 @@ class AbMetricsIters:
         iters = set()
         for ab_test_id in self.df_ab_test.ab_test_id:
             iters.update(self.get_ab_iters(ab_test_id))
-        return list(iters)
+
+        return [Iter(**{
+            **it._asdict(),
+            'iter_hash': hash(tuple((k, v) for k, v in it._asdict().items() if v is not None))
+        }) for it in iters]
 
     @cached_property
     def iters_to_skip(self):
@@ -275,28 +275,11 @@ class AbMetricsIters:
             with vcon.cursor('dict') as cur:
                 cur.execute(self._get_sql('sql_iters_to_skip'))
                 results = cur.fetchall()
-        return list({Iter(**r) for r in results})
-
-    @staticmethod
-    def check_iters_equality(iter1, iter2):
-        fields = [f for f in iter1._fields
-                  if getattr(iter2, f) is not None and
-                  getattr(iter1, f) is not None and
-                  getattr(iter2, f) != getattr(iter1, f)]
-        return len(fields) == 0
+        return {r['iter_hash'] for r in results}
 
     @cached_property
     def iters_to_do(self):
-        results = []
-        for it in self.iters_all:
-            to_add = True
-            for iter_to_skip in self.iters_to_skip:
-                if self.check_iters_equality(it, iter_to_skip):
-                    to_add = False
-                    break
-            if to_add:
-                results.append(it)
-        return results
+        return [it for it in self.iters_all if it.iter_hash not in self.iters_to_skip]
 
 
 class AbMetrics:
@@ -308,56 +291,44 @@ class AbMetrics:
         else:
             self.n_threads = n_threads
 
-        self.observations_storage = ObservationsStorage()
         logger.info('AbMetrics initialized')
 
     @cached_property
     def observations_iters_to_load(self):
-        ObsIter = namedtuple('ObservationIter',
-                             ['sql_template', 'period_id', 'start_date', 'calc_date', 'observations'])
-        results = set()
-        for it in self.ab_iters:
-            template = self.metrics[it.metric].get('template', DEFAULT_TEMPLATE)
-            sql_template = _get_template(params['template'])
-            r = ObsIter(sql_template, it.period_id, it.start_date, it.calc_date,
-                        tuple(self.metrics[it.metric]['observations']))
-            results.add(r)
-        return [r._asdict() for r in results]
-
-    @property
-    def ab_iters_with_data(self):
-        results = []
-        for it in self.ab_iters:
-            obs = tuple(self.metrics[it.metric]['observations'])
-            storage_key = (it.period_id, it.calc_date, obs, it.split_group_id)
-            if storage_key in self.observations_storage:
-                results.append(it)
-        return results
-
-    @staticmethod
-    def _load_observation(params):
-        template = 
-        sql = template.format(**params)
-        df = get_df_from_vertica(sql)
-        if df.shape[0] == 0:
-            return dict()
-        obs_cols = [c for c in df.columns if c not in ['split_group_id', 'cnt']]
-        return {
-            (params['period_id'], params['calc_date'], params['observations'], sg): {
-                    'obs': df[df.split_group_id == sg][obs_cols].values,
-                    'counts': df[df.split_group_id == sg]['cnt'].values
-            }
-            for sg in df.split_group_id.unique()
-        }
+        return list(set([self.obs_iter_from_ab_iter(it) for it in self.ab_iters]))
 
     @cached_property
     def observations_storage(self):
-        results = dict()
-        with multiprocessing.Pool(self.n_threads) as pool:
-            results = [pool.apply_async(self._load_observation, (it._asdict(),))
-                       for it in self.observations_iters_to_load]
-            results = {k: v for r in results for k, v in r.get().items()}
-        return results
+        observations_storage = ObservationsStorage()
+        observations_iters_to_load_list = [it._asdict() for it in self.observations_iters_to_load]
+        observations_storage.load_data_batch(observations_iters_to_load_list, n_threads=self.n_threads)
+        return observations_storage
+
+    def obs_iter_from_ab_iter(self, ab_iter):
+        template = self.metrics[ab_iter.metric].get('template', DEFAULT_TEMPLATE)
+        sql_template = _get_template(template)
+        observations = tuple(self.metrics[ab_iter.metric]['observations'])
+        obs_iter_kwargs = {
+            'sql': sql_template,
+            'observations': observations
+        }
+        obs_iter_kwargs.update({f: ab_iter.__getattribute__(f) for f in FILTER_FIELDS})
+        return ObsIter(**obs_iter_kwargs)
+
+    def get_observations_data(self, obs_iter):
+        return self.observations_storage.get_data(**obs_iter._asdict())
+
+    def get_observation(self, obs_iter, split_group_id):
+        return self.observations_storage.get_observation(**{
+            **obs_iter._asdict(),
+            'split_group_id': split_group_id,
+        })
+
+    @cached_property
+    def ab_iters_with_data(self):
+        return [
+            it for it in self.ab_iters if self.get_observations_data(self.obs_iter_from_ab_iter(it)).shape[0] > 0
+        ]
 
     @property
     def obs_stats_storage(self):
@@ -371,25 +342,21 @@ class AbMetrics:
             self._comp_obs_storage = dict()
         return self._comp_obs_storage
 
-    def get_obs_stats(self, period_id, calc_date, metric, split_group_id):
-        observations = tuple(self.metrics[metric]['observations'])
-        storage_key = (period_id, calc_date, observations, split_group_id)
+    def get_obs_stats(self, obs_iter, split_group_id):
+        storage_key = (obs_iter, split_group_id)
         if storage_key in self.obs_stats_storage:
             return self.obs_stats_storage[storage_key]
-
-        args = self.observations_storage[storage_key]
+        args = self.get_observation(obs_iter, split_group_id)
         obs_stats = ObservationsStats(**args)
         self._obs_stats_storage[storage_key] = obs_stats
         return obs_stats
 
-    def get_comp_obs(self, period_id, calc_date, metric, split_group_id, control_split_group_id):
-        observations = tuple(self.metrics[metric]['observations'])
-        storage_key = (period_id, calc_date, observations, split_group_id, control_split_group_id)
+    def get_comp_obs(self, obs_iter, split_group_id, control_split_group_id):
+        storage_key = (obs_iter, split_group_id, control_split_group_id)
         if storage_key in self.comp_obs_storage:
             return self.comp_obs_storage[storage_key]
-
-        obs_stats = self.get_obs_stats(period_id, calc_date, metric, split_group_id)
-        obs_stats_ctrl = self.get_obs_stats(period_id, calc_date, metric, control_split_group_id)
+        obs_stats = self.get_obs_stats(obs_iter, split_group_id)
+        obs_stats_ctrl = self.get_obs_stats(obs_iter, control_split_group_id)
         comp_obs = CompareObservations(obs_stats, obs_stats_ctrl)
         self._comp_obs_storage[storage_key] = comp_obs
         return comp_obs
@@ -397,13 +364,12 @@ class AbMetrics:
     _slow_methods = ('bootstrap_test', 'bootstrap_confint', 'permutation_test', 'permutation_confint')
 
     def calculate_ab_iter(self, ab_iter):
+        obs_iter = self.obs_iter_from_ab_iter(ab_iter)
         if ab_iter.class_name == 'observations_stats':
-            obs_stats = self.get_obs_stats(ab_iter.period_id, ab_iter.calc_date,
-                                           ab_iter.metric, ab_iter.split_group_id)
+            obs_stats = self.get_obs_stats(obs_iter, ab_iter.split_group_id)
             method = getattr(obs_stats, ab_iter.method)
         elif ab_iter.class_name == 'compare_observations':
-            comp_obs = self.get_comp_obs(ab_iter.period_id, ab_iter.calc_date, ab_iter.metric,
-                                         ab_iter.split_group_id, ab_iter.control_split_group_id)
+            comp_obs = self.get_comp_obs(obs_iter, ab_iter.split_group_id, ab_iter.control_split_group_id)
             method = getattr(comp_obs, ab_iter.method)
         else:
             return
@@ -422,11 +388,11 @@ class AbMetrics:
         }
         return IterResult(**{k: v for k, v in res_dict.items() if k in IterResult._fields})
 
-    @property
+    @cached_property
     def fast_ab_iters(self):
         return [i for i in self.ab_iters_with_data if i.method not in self._slow_methods]
 
-    @property
+    @cached_property
     def slow_ab_iters(self):
         return [i for i in self.ab_iters_with_data if i.method in self._slow_methods]
 
@@ -444,31 +410,3 @@ class AbMetrics:
             r = self.calculate_ab_iter(it)
             results.append(r)
         return results
-
-
-def validate_config():
-    def get_config(config_name):
-        with open(CONFIG_PATH + '{}.yaml'.format(config_name), 'r') as f:
-            return yaml.load(f)
-
-    def get_schema(schema_name):
-        with open(SCHEMAS_PATH + '{}.yaml'.format(schema_name), 'r') as f:
-            return yaml.load(f)
-
-    events_config = get_config('events')
-    observations_config = get_config('observations')
-    metrics_config = get_config('metrics')
-
-    configs = dict()
-    schemas = dict()
-
-    for cn in ['events', 'observations', 'metrics']:
-        configs[cn] = get_config(cn)
-        schemas[cn] = get_schema(cn)
-
-    schemas['observations']['valueschema']['schema']['events']['allowed'] = list(configs['events'].keys())
-    schemas['metrics']['valueschema']['schema']['observations']['allowed'] = list(configs['observations'].keys())
-
-    validator = cerberus.Validator(schemas)
-    if not validator.validate(configs):
-        raise Exception(validator.errors)

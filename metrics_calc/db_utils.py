@@ -33,7 +33,8 @@ def connect_vertica(user=None, password=None):
 
 def get_df_from_vertica(sql, **conn_params):
     with connect_vertica(**conn_params) as vcon:
-        return pd.read_sql(sql, vcon)
+        df = pd.read_sql(sql, vcon)
+        return df
 
 
 import psycopg2
@@ -64,8 +65,6 @@ class VerticaStorage:
 
     def load_data_batch(self, sql_list, n_threads=1):
         with multiprocessing.Pool(n_threads) as pool:
-            results = dict()
-            for sql in sql_list:
-                results[sql] = pool.apply_async(get_df_from_vertica, (sql,))
+            results = {sql: pool.apply_async(get_df_from_vertica, (sql,)) for sql in sql_list}
             results = {k: v.get() for k, v in results.items()}
         self.storage.update(results)

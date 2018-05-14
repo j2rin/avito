@@ -81,6 +81,7 @@ sql_ab_split_group_pair: |
 sql_create_result_table: |
     drop table if exists saef.ab_result;
     create table saef.ab_result (
+        iter_hash int,
         ab_test_id int,
         period_id int,
         metric_id int,
@@ -112,23 +113,7 @@ sql_create_result_table: |
 
 
 sql_iters_to_skip: |
-    select  r.ab_test_id,
-            r.period_id,
-            r.metric_id,
-            r.metric,
-            r.start_date,
-            r.calc_date,
-            r.split_group_id,
-            r.control_split_group_id,
-            r.class_name,
-            r.method,
-            r.stat_func,
-            r.comp_func,
-            r.null_value,
-            r.alternative,
-            r.alpha,
-            r.is_pivotal,
-            r.n_iters
+    select  r.iter_hash
     from    saef.ab_result r
     join    dma.v_ab_test  t on t.ab_test_id = r.ab_test_id
     where   t.is_active
