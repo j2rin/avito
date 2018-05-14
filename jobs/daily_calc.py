@@ -3,7 +3,9 @@ import datetime
 import pandas as pd
 
 sys.path.append('/home/dlenkov/workspace/ab-metrics/metrics_calc/')
-from metrics_calc import AbMetricsIters, AbMetrics, connect_vertica, Iter, MetricParams, validate_config, logger
+from metrics_calc import AbMetricsIters, AbMetrics, logger
+from validator import validate_config
+from db_utils import connect_vertica
 
 
 def vertica_insert(df, tablename):

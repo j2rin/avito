@@ -13,7 +13,8 @@ from (
                                         and o.observation_date <= '{calc_date}'
                                         and o.observation_name = '{observations[0]}'
                                         and o.is_after_first_exposure
-    where   p.ab_period_id = {period_id}
+    where   p.ab_test_id = {ab_test_id}
+        and p.ab_period_id = {period_id}
         and p.first_exposure_time::date <= '{calc_date}'
     group by 1,2
 ) o
