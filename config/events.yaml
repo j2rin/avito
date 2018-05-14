@@ -78,3 +78,15 @@ password_restore_error:
   sql_bindings:
     event_types: 213
     filter_predicate: AND cs.error_code IS NOT NULL
+
+sign_in:
+  template: click_stream
+  sql_bindings:
+    event_types: 210
+    filter_predicate: AND cs.error_code IS NULL
+
+sign_in_error:
+  template: click_stream
+  sql_bindings:
+    event_types: 210
+    filter_predicate: AND cs.error_code IS NOT NULL
