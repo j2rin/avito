@@ -1,37 +1,28 @@
 import os
 import cerberus
 import yaml
-from settings import CONFIG_PATH, SCHEMAS_PATH
+from utils import get_config, get_schema
+from settings import *
 
 
 def validate_config():
-    def get_config(config_name):
-        with open(CONFIG_PATH + '{}.yaml'.format(config_name), 'r') as f:
-            return yaml.load(f)
-
-    def get_schema(schema_name):
-        with open(SCHEMAS_PATH + '{}.yaml'.format(schema_name), 'r') as f:
-            return yaml.load(f)
-
-    events_config = get_config('events')
-    observations_config = get_config('observations')
-    metrics_config = get_config('metrics')
-
     configs = dict()
     schemas = dict()
 
-    for cn in ['events', 'observations', 'metrics']:
+    for cn in [EVENTS_FILENAME, OBSERVATIONS_FILENAME, METRICS_FILENAME]:
         configs[cn] = get_config(cn)
         schemas[cn] = get_schema(cn)
 
-    schemas['observations']['valueschema']['schema']['events']['allowed'] = list(configs['events'].keys())
-    schemas['metrics']['valueschema']['schema']['observations']['allowed'] = list(configs['observations'].keys())
+    schemas[OBSERVATIONS_FILENAME]['valueschema']['schema']['events']['allowed'] = \
+        list(configs[EVENTS_FILENAME].keys())
+    schemas[METRICS_FILENAME]['valueschema']['schema']['observations']['allowed'] = \
+        list(configs[OBSERVATIONS_FILENAME].keys())
 
-    metric_params = [f.split('.')[0] for f in os.listdir(CONFIG_PATH + 'metric_params/')]
-    metric_templates = [f.split('.')[0] for f in os.listdir(CONFIG_PATH + 'metric_templates/')]
+    metric_params = [f.split('.')[0] for f in os.listdir(LOCAL_PATH + PARAMS_RELATIVE_PATH)]
+    metric_templates = [f.split('.')[0] for f in os.listdir(LOCAL_PATH + TEMPLATES_RELATIVE_PATH)]
 
-    schemas['metrics']['valueschema']['schema']['params']['allowed'] = metric_params
-    schemas['metrics']['valueschema']['schema']['template']['allowed'] = metric_templates
+    schemas[METRICS_FILENAME]['valueschema']['schema']['params']['allowed'] = metric_params
+    schemas[METRICS_FILENAME]['valueschema']['schema']['template']['allowed'] = metric_templates
 
     validator = cerberus.Validator(schemas)
     if not validator.validate(configs):

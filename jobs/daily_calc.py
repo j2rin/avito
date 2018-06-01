@@ -3,39 +3,42 @@ import datetime
 import pandas as pd
 
 sys.path.append('/home/dlenkov/workspace/ab-metrics/metrics_calc/')
-from metrics_calc import AbMetricsIters, AbMetrics, logger
+from metrics_calc import fill_data_storage_ab, get_all_ab_iters, AbItersStorage
 from validator import validate_config
-from db_utils import connect_vertica
+from db_utils import insert_into_vertica
+from log_helper import configure_logger
+from settings import *
 
-
-def vertica_insert(df, tablename):
-    df['insert_datetime'] = datetime.datetime.now()
-    csv = df.to_csv(
-        sep='^',
-        index=False,
-        header=False,
-        float_format='%.16g'
-    )
-    columns_sql = ', '.join(df.columns)
-    query = \
-        "COPY {t} ({c}) from stdin DELIMITER '^' ABORT ON ERROR DIRECT;".format(t=tablename, c=columns_sql)
-    with connect_vertica() as con:
-        with con.cursor() as cur:
-            cur.copy(query, csv)
 
 if __name__ == '__main__':
+    logger = configure_logger(logger_name='metrics_calc', log_dir=CUR_DIR_PATH + 'log/')
+
     logger.info('metrics_calc started')
 
     validate_config()
-    ai = AbMetricsIters()
-    am = AbMetrics(ai.iters_to_do, 32)
 
-    n_fast_iters = len(am.fast_ab_iters)
+    fill_data_storage_ab()
+
+    logger.info('ab dicts loaded')
+
+    its = get_all_ab_iters()
+    ai = AbItersStorage(its)
+
+    try:
+        ai.fill_data_storage()
+    except Exception as e:
+        logger.error(e)
+        raise e
+
+    logger.info('data_storage filled')
+
+    n_fast_iters = len(ai.ab_iters_filtered())
 
     if n_fast_iters:
         logger.info('{} fast iters to go'.format(n_fast_iters))
-        df = pd.DataFrame.from_records(am.calc_fast_ab_iters, columns=am.calc_fast_ab_iters[0]._fields)
-        vertica_insert(df, 'saef.ab_result')
+        records = ai.calc_iters_by_type()
+        df = pd.DataFrame.from_records(records)
+        insert_into_vertica(df, 'saef.ab_result')
 
     # if len(am.slow_ab_iters):
     #    df = pd.DataFrame.from_records(am.calc_slow_ab_iters, columns=am.calc_slow_ab_iters[0]._fields)

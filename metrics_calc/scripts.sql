@@ -1,4 +1,4 @@
-sql_pg_ab_metric_params: |
+pg_ab_metric_params: |
     select  t.ab_test_id as ab_test_ext,
             m.metric,
             m.params
@@ -9,7 +9,7 @@ sql_pg_ab_metric_params: |
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
     ;
 
-sql_ab_test: |
+ab_test: |
     select  t.ab_test_id,
             t.ab_test_ext_id as ab_test_ext,
             t.ab_test_label
@@ -18,19 +18,31 @@ sql_ab_test: |
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
     ;
 
-sql_ab_metric: |
-    select  t.ab_test_id,
-            m.ab_metric_id as metric_id,
-            m.ab_metric_name as metric
-    from    dma.v_ab_test           t
-    join    dma.v_ab_test_metric    m   on  m.ab_test_id = t.ab_test_id
-    where   t.is_active
-        and m.ab_test_metric_link_is_active
-        and m.ab_metric_is_active
-        and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
+ab_metric: |
+    select  ab_test_id,
+            metric_id,
+            metric
+    from    (
+        select  t.ab_test_id,
+                m.ab_metric_id as metric_id,
+                m.ab_metric_name as metric,
+                row_number() over(partition by t.ab_test_id, m.ab_metric_id) as rn
+        from    dma.v_ab_test           t
+        join    dma.v_ab_test_metric    m   on  m.ab_test_id = t.ab_test_id
+        where   t.is_active
+            and m.ab_test_metric_link_is_active
+            and m.ab_metric_is_active
+            and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
+    ) m
+    where   rn = 1
     ;
 
-sql_ab_period: |
+metric: |
+    select  ABMetric_id as metric_id, External_ID as metric
+    from    dds.H_ABMetric
+    ;
+
+ab_period: |
     select  t.ab_test_id,
             p.ab_period_id as period_id,
             p.period,
@@ -39,7 +51,7 @@ sql_ab_period: |
                 when t.interrupt_time is not null then t.interrupt_time 
                 when p.end_time::date <= current_date - interval'1 day' then p.end_time::date
                 else current_date - interval'1 day'
-                end as
+                end::date as
             end_date
     from    dma.v_ab_test   t
     join    dma.v_ab_period p on p.ab_test_id = t.ab_test_id
@@ -48,7 +60,7 @@ sql_ab_period: |
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
     ;
 
-sql_ab_split_group: |
+ab_split_group: |
     select  t.ab_test_id,
             sg.ab_split_group_id as split_group_id,
             sg.split_group,
@@ -60,7 +72,7 @@ sql_ab_split_group: |
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
     ;
 
-sql_ab_split_group_pair: |
+ab_split_group_pair: |
     select  t.ab_test_id,
             sg.ab_split_group_id as split_group_id,
             sg.split_group,
@@ -78,7 +90,7 @@ sql_ab_split_group_pair: |
     ;
 
 
-sql_create_result_table: |
+result_table: |
     drop table if exists saef.ab_result;
     create table saef.ab_result (
         iter_hash int,
@@ -86,10 +98,11 @@ sql_create_result_table: |
         period_id int,
         metric_id int,
         metric varchar(64),
-        start_date date,
         calc_date date,
         split_group_id int,
         control_split_group_id int,
+        breakdown_hash int,
+        breakdown varchar(1000),
         class_name varchar(64),
         method varchar(64),
         stat_func varchar(64),
@@ -101,6 +114,7 @@ sql_create_result_table: |
         n_iters int,
         mean float,
         std float,
+        sum float,
         n_obs float,
         p_value float,
         test_statistic float,
@@ -111,8 +125,7 @@ sql_create_result_table: |
     ) order by ab_test_id, period_id, metric_id, calc_date, split_group_id, control_split_group_id
     segmented by hash(ab_test_id, period_id, metric_id, calc_date, split_group_id, control_split_group_id) all nodes;
 
-
-sql_iters_to_skip: |
+iters_to_skip: |
     select  r.iter_hash
     from    saef.ab_result r
     join    dma.v_ab_test  t on t.ab_test_id = r.ab_test_id

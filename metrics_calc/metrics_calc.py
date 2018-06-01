@@ -1,412 +1,497 @@
-from collections import namedtuple
 import itertools
-import datetime
 import multiprocessing
-import inspect
-import json
 import os
 from timeit import default_timer
+from hashlib import md5
+import inspect
+from functools import lru_cache
 
 import pandas as pd
 from cached_property import cached_property
-import yaml
-import cerberus
 
-from log_helper import configure_logger
 from ab_significance.significance import ObservationsStats, CompareObservations
-from db_utils import connect_postgre, connect_vertica, get_df_from_vertica
-from storage import ObservationsStorage
+from db_utils import connect_postgre, select_df
 
-from settings import *
-
-
-FILTER_FIELDS = [
-    'ab_test_id',
-    'start_date',
-    'calc_date',
-    'period_id',
-]
-
-DIMENSION_FIELDS = []
-
-SPLIT_GROUPS_FIELDS = [
-    'split_group_id',
-    'control_split_group_id',
-]
-
-METRIC_FIELDS = [
-    'metric_id',
-    'metric',
-]
-
-METRIC_PARAMS_FIELDS = [
-    'class_name',
-    'method',
-    'stat_func',
-    'comp_func',
-    'null_value',
-    'alternative',
-    'alpha',
-    'is_pivotal',
-    'n_iters',
-]
-
-RESULT_FIELDS = [
-    'mean',
-    'std',
-    'n_obs',
-    'p_value',
-    'test_statistic',
-    'lower_bound',
-    'upper_bound',
-    'elapsed_seconds'
-]
-
-ITER_FIELDS = ['iter_hash'] + FILTER_FIELDS + DIMENSION_FIELDS + SPLIT_GROUPS_FIELDS + \
-              METRIC_FIELDS + METRIC_PARAMS_FIELDS
-ITER_RESULT_FIELDS = ITER_FIELDS + RESULT_FIELDS
-
-Iter = namedtuple('Iter', ITER_FIELDS)
-Iter.__new__.__defaults__ = (None,) * len(Iter._fields)
-MetricParams = namedtuple('MetricParams', METRIC_PARAMS_FIELDS)
-MetricParams.__new__.__defaults__ = (None,) * len(MetricParams._fields)
-IterResult = namedtuple('IterResult', ITER_RESULT_FIELDS)
-IterResult.__new__.__defaults__ = (None,) * len(IterResult._fields)
-ObsIter = namedtuple('ObservationIter', FILTER_FIELDS + ['sql', 'observations'])
+from utils import *
 
 
-def _get_yaml(config_path, filename):
-    if USE_LOCAL:
-        url = config_path + filename + '.yaml'
-        with open(url, 'r') as f:
-            return yaml.load(f)
+VERTICA_MAX_THREADS = 8
+
+
+data_storage = dict()
+significance_obj_storage = dict()
+
+
+def fill_data_storage(sql_list, index_list=None, data_key_list=None, n_threads=VERTICA_MAX_THREADS, con_method=None):
+    if n_threads > VERTICA_MAX_THREADS:
+        n_threads = VERTICA_MAX_THREADS
+
+    if index_list is None:
+        index_list = [None] * len(sql_list)
+
+    if data_key_list is None:
+        data_key_list = sql_list
+
+    params_list = set((s, i, d) for s, i, d in zip(sql_list, index_list, data_key_list) if d not in data_storage)
+
+    with multiprocessing.Pool(n_threads) as pool:
+        results = {k: pool.apply_async(select_df, (s, i, con_method)) for s, i, k in params_list}
+        results = {k: v.get() for k, v in results.items()}
+
+    data_storage.update(results)
+
+
+def fill_data_storage_ab():
+    data_keys = [
+        'ab_test',
+        'ab_metric',
+        'ab_period',
+        'ab_split_group',
+        'ab_split_group_pair',
+        'iters_to_skip',
+        'metric',
+    ]
+
+    sqls = [get_sql(dk) for dk in data_keys]
+    indecies = ['ab_test_id'] * (len(data_keys) - 2) + ['iter_hash', 'metric_id']
+
+    fill_data_storage(sqls, indecies, data_keys)
+
+    data_keys = ['pg_ab_metric_params']
+    pg_sqls = [get_sql('pg_ab_metric_params')]
+    indecies = ['ab_test_ext']
+    fill_data_storage(pg_sqls, indecies, data_keys, con_method=connect_postgre)
+
+
+def hash_md563(obj):
+    h = md5()
+    h.update(repr(obj).encode())
+    return int(h.hexdigest(), 16) % (2 ** 63 - 1)
+
+
+def hash_unordered(iterable):
+    if len(iterable) == 0:
+        return hash_md563([])
     else:
-        url = 'http://stash.msk.avito.ru/projects/BI/repos/ab-metrics/raw/config/' + filename + '.yaml'
-        with requests.get(url) as r:
-            return yaml.load(r.text)
+        hashes = [hash_md563(t) for t in iterable]
+        return sum(hashes) // len(hashes)
 
 
-def _get_config(filename):
-    return _get_yaml(CONFIG_PATH, filename)
+class AbIter:
+    def __init__(
+        self,
+        sql_template,
 
+        ab_test_id,
+        period_id,
+        split_group_id,
+        calc_date,
 
-def _get_params(filename):
-    return _get_yaml(PARAMS_PATH, filename)
+        other_params,
 
+        observations,
+        breakdown,
 
-def _get_template(filename):
-    if USE_LOCAL:
-        url = TEMPLATES_PATH + filename + '.sql'
-        with open(url, 'r') as f:
-            return f.read()
-    else:
-        url = 'http://stash.msk.avito.ru/projects/BI/repos/ab-metrics/raw/templates/' + filename + '.sql'
-        with requests.get(url) as r:
-            return f.read()
+        significance_params,
+        control_split_group_id=None,
+    ):
 
+        self.sql_template = sql_template
 
-logger = configure_logger(logger_name='metrics_calc', log_dir=CUR_DIR_PATH + '/log')
+        self.ab_test_id = ab_test_id
+        self.period_id = period_id
+        self.split_group_id = split_group_id
+        self.control_split_group_id = control_split_group_id
+        self.calc_date = calc_date
 
+        self.other_params = {k: v for k, v in other_params.items() if v is not None}
 
-class AbMetricsIters:
+        self.observations = observations
+        self.breakdown = {k: v for k, v in breakdown.items() if v is not None}
 
-    def __init__(self):
-
-        scripts = [
-            'sql_ab_test',
-            'sql_ab_metric',
-            'sql_ab_period',
-            'sql_ab_split_group',
-            'sql_ab_split_group_pair',
-        ]
-
-        sqls = [self._get_sql(sql_script_name) for sql_script_name in scripts]
-
-        with multiprocessing.Pool(5) as pool:
-            dfs = pool.map(get_df_from_vertica, sqls)
-
-        for script, df in zip(scripts, dfs):
-            setattr(self, 'df' + script[3:], df)
-
-        with connect_postgre() as pgcon:
-            self.df_ab_metric_params = pd.read_sql(self._get_sql('sql_pg_ab_metric_params'), pgcon)
-
-        self.metrics = _get_config(METRICS_FILENAME)
-
-        logger.info('AbMetricsIters initialized')
-
-    @staticmethod
-    def _get_sql(script_name):
-        url = CUR_DIR_PATH + '/scripts.sql'
-        with open(url, 'r') as f:
-            return yaml.load(f)[script_name]
-
-    def get_dates(self, period_id):
-        start_time, end_time = self.df_ab_period[
-            self.df_ab_period.period_id == period_id][['start_date', 'end_date']].values[0]
-        return [{'calc_date': d.date()} for d in pd.date_range(start_time, end_time)]
-
-    @staticmethod
-    def tuplify_metric_params(params_dict):
-        if not params_dict:
-            return []
-        result = []
-        for class_name, methods in params_dict.items():
-            if class_name not in ['observations_stats', 'compare_observations']:
-                continue
-            for method, params in methods.items():
-                if params is None:
-                    params = [dict()]
-                rows = [MetricParams(**{**p, 'class_name': class_name, 'method': method}) for p in params]
-                result.extend(rows)
-        return result
-
-    def get_metric_params(self, ab_test_ext, metric):
-
-        result = []
-
-        ab_metric_params = self.df_ab_metric_params[
-            (self.df_ab_metric_params.ab_test_ext == ab_test_ext) &
-            (self.df_ab_metric_params.metric == metric)
-        ]['params'].values[0]
-        if ab_metric_params:
-
-            result.extend(self.tuplify_metric_params(ab_metric_params))
-
-            params_filename = ab_metric_params.get('params')
-            if params_filename:
-                result.extend(self.tuplify_metric_params(_get_params(params_filename)))
-
-            if ab_metric_params.get('override'):
-                return result
-
-        metric_params = self.metrics[metric]
-        result.extend(self.tuplify_metric_params(metric_params))
-        params_filename = metric_params.get('params')
-        if params_filename:
-            result.extend(self.tuplify_metric_params(_get_params(params_filename)))
-
-        if metric_params.get('override'):
-            return result
-
-        if not params_filename:
-            result.extend(self.tuplify_metric_params(_get_params(DEFAULT_PARAMS_FILENAME)))
-
-        return list(set(result))
-
-    def get_ab_test(self, ab_test_id):
-        ix = self.df_ab_test.ab_test_id == ab_test_id
-        return self.df_ab_test[ix].to_dict(orient='records')[0]
-
-    def get_ab_metrics(self, ab_test_id):
-        ix = self.df_ab_metric.ab_test_id == ab_test_id
-        return self.df_ab_metric[ix][['metric_id', 'metric']].to_dict(orient='records')
-
-    def get_ab_periods(self, ab_test_id):
-        ix = self.df_ab_period.ab_test_id == ab_test_id
-        return self.df_ab_period[ix][['period_id', 'start_date']].to_dict(orient='records')
-
-    def get_split_groups(self, ab_test_id):
-        ix = self.df_ab_split_group.ab_test_id == ab_test_id
-        return self.df_ab_split_group[ix][['split_group_id']].to_dict(orient='records')
-
-    def get_split_group_pairs(self, ab_test_id):
-        ix = self.df_ab_split_group_pair.ab_test_id == ab_test_id
-        cols = ['split_group_id', 'control_split_group_id']
-        return self.df_ab_split_group_pair[ix][cols].to_dict(orient='records')
-
-    def get_ab_iters(self, ab_test_id):
-        iters = set()
-
-        ab_test = self.get_ab_test(ab_test_id)
-        metrics = self.get_ab_metrics(ab_test_id)
-        periods = self.get_ab_periods(ab_test_id)
-        split_groups = self.get_split_groups(ab_test_id)
-        split_group_pairs = self.get_split_group_pairs(ab_test_id)
-
-        for metric, period in itertools.product(metrics, periods):
-            dates = self.get_dates(period['period_id'])
-            obs_stats_params = [
-                prm for prm in self.get_metric_params(ab_test['ab_test_ext'], metric['metric'])
-                if prm.class_name == 'observations_stats'
-            ]
-            comp_obs_params = [
-                prm for prm in self.get_metric_params(ab_test['ab_test_ext'], metric['metric'])
-                if prm.class_name == 'compare_observations'
-            ]
-            iters.update({
-                Iter(**{
-                    'ab_test_id': ab_test['ab_test_id'],
-                    'metric_id': metric['metric_id'],
-                    'metric': metric['metric'],
-                    'period_id': period['period_id'],
-                    'start_date': period['start_date'],
-                    **d, **os._asdict(), **sg,
-                })
-                for d, os, sg in itertools.product(dates, obs_stats_params, split_groups)
-            })
-            iters.update({
-                Iter(**{
-                    'ab_test_id': ab_test['ab_test_id'],
-                    'metric_id': metric['metric_id'],
-                    'metric': metric['metric'],
-                    'period_id': period['period_id'],
-                    'start_date': period['start_date'],
-                    **d, **co._asdict(), **sgp,
-                })
-                for d, co, sgp in itertools.product(dates, comp_obs_params, split_group_pairs)
-            })
-        return list(iters)
+        self.significance_params = {k: v for k, v in significance_params.items() if v is not None}
 
     @cached_property
-    def iters_all(self):
-        iters = set()
-        for ab_test_id in self.df_ab_test.ab_test_id:
-            iters.update(self.get_ab_iters(ab_test_id))
+    def breakdown_hash(self):
+        return hash_unordered([(k, hash_unordered(v)) for k, v in self.breakdown.items()])
 
-        return [Iter(**{
-            **it._asdict(),
-            'iter_hash': hash(tuple((k, v) for k, v in it._asdict().items() if v is not None))
-        }) for it in iters]
+    @property
+    def breakdown_text(self):
+        bkd = ((key, ','.join([str(v) for v in values])) for (key, values) in self.breakdown.items())
+        return ';'.join(['{0}[{1}]'.format(dim, values) for dim, values in bkd])
 
-    @cached_property
-    def iters_to_skip(self):
-        with connect_vertica() as vcon:
-            with vcon.cursor('dict') as cur:
-                cur.execute(self._get_sql('sql_iters_to_skip'))
-                results = cur.fetchall()
-        return {r['iter_hash'] for r in results}
-
-    @cached_property
-    def iters_to_do(self):
-        return [it for it in self.iters_all if it.iter_hash not in self.iters_to_skip]
-
-
-class AbMetrics:
-    def __init__(self, ab_iters, n_threads=None):
-        self.ab_iters = ab_iters
-        self.metrics = _get_config(METRICS_FILENAME)
-        if n_threads is None:
-            self.n_threads = multiprocessing.cpu_count()
-        else:
-            self.n_threads = n_threads
-
-        logger.info('AbMetrics initialized')
-
-    @cached_property
-    def observations_iters_to_load(self):
-        return list(set([self.obs_iter_from_ab_iter(it) for it in self.ab_iters]))
-
-    @cached_property
-    def observations_storage(self):
-        observations_storage = ObservationsStorage()
-        observations_iters_to_load_list = [it._asdict() for it in self.observations_iters_to_load]
-        observations_storage.load_data_batch(observations_iters_to_load_list, n_threads=self.n_threads)
-        return observations_storage
-
-    def obs_iter_from_ab_iter(self, ab_iter):
-        template = self.metrics[ab_iter.metric].get('template', DEFAULT_TEMPLATE)
-        sql_template = _get_template(template)
-        observations = tuple(self.metrics[ab_iter.metric]['observations'])
-        obs_iter_kwargs = {
-            'sql': sql_template,
-            'observations': observations
+    @property
+    def ab_params(self):
+        return {
+            'ab_test_id': self.ab_test_id,
+            'period_id': self.period_id,
+            'split_group_id': self.split_group_id,
+            'calc_date': self.calc_date,
+            'breakdown_hash': self.breakdown_hash,
+            **self.other_params,
+            **({'control_split_group_id': self.control_split_group_id} if self.control_split_group_id else dict()),
         }
-        obs_iter_kwargs.update({f: ab_iter.__getattribute__(f) for f in FILTER_FIELDS})
-        return ObsIter(**obs_iter_kwargs)
 
-    def get_observations_data(self, obs_iter):
-        return self.observations_storage.get_data(**obs_iter._asdict())
+    @property
+    def sql_params(self):
+        return {
+            'calc_date': self.calc_date,
+            'observations': self.observations,
+            'sql_breakdown': self.sql_breakdown,
+            'observations_str': "'{}'".format("', '".join(self.observations)),
+        }
 
-    def get_observation(self, obs_iter, split_group_id):
-        return self.observations_storage.get_observation(**{
-            **obs_iter._asdict(),
+    @property
+    def sql_breakdown(self):
+        bkd = ((key, ', '.join([str(v) for v in values])) for (key, values) in self.breakdown.items())
+        return ' '.join(['and {0} in ({1})'.format(dim, values) for dim, values in bkd])
+
+    @property
+    def sql(self):
+        return self.sql_template.format(**self.sql_params)
+
+    @property
+    def data_index_cols(self):
+        return ('period_id', 'split_group_id')
+
+    def get_data_index(self, split_group_id):
+        d = {
+            **self.ab_params,
             'split_group_id': split_group_id,
-        })
+        }
+        return tuple(d[c] for c in self.data_index_cols)
+
+    def fill_data_storage(self):
+        fill_data_storage(sql_list=[self.sql], index_list=[self.data_index_cols])
+
+    @property
+    def data(self):
+        return get_data(self.sql)
+
+    def get_observations(self, split_group_id):
+        data_index = self.get_data_index(split_group_id)
+        if data_index in self.data.index:
+            df = self.data.loc[data_index]
+            return {
+                'obs': df[list(self.observations)].values,
+                'counts': df['cnt'].values,
+            }
+
+    @property
+    def is_with_data(self):
+        return self.get_observations(self.split_group_id) is not None
+
+    def get_obs_stats_obj_key(self, split_group_id):
+        sg_tup = ('split_group_id', split_group_id)
+        return tuple(
+            [
+                t for t in self.ab_params.items()
+                if t[0] not in ('control_split_group_id', 'split_group_id') and t[1] is not None
+            ] + [sg_tup]
+        )
 
     @cached_property
-    def ab_iters_with_data(self):
-        return [
-            it for it in self.ab_iters if self.get_observations_data(self.obs_iter_from_ab_iter(it)).shape[0] > 0
-        ]
+    def significance_obj_key(self):
+        return tuple(self.ab_params.items())
 
-    @property
-    def obs_stats_storage(self):
-        if not hasattr(self, '_obs_stats_storage'):
-            self._obs_stats_storage = dict()
-        return self._obs_stats_storage
-
-    @property
-    def comp_obs_storage(self):
-        if not hasattr(self, '_comp_obs_storage'):
-            self._comp_obs_storage = dict()
-        return self._comp_obs_storage
-
-    def get_obs_stats(self, obs_iter, split_group_id):
-        storage_key = (obs_iter, split_group_id)
-        if storage_key in self.obs_stats_storage:
-            return self.obs_stats_storage[storage_key]
-        args = self.get_observation(obs_iter, split_group_id)
-        obs_stats = ObservationsStats(**args)
-        self._obs_stats_storage[storage_key] = obs_stats
+    def get_observations_stats_obj(self, split_group_id):
+        key = self.get_obs_stats_obj_key(split_group_id)
+        if key in significance_obj_storage:
+            return significance_obj_storage[key]
+        obs_stats = ObservationsStats(**self.get_observations(split_group_id))
+        significance_obj_storage[key] = obs_stats
         return obs_stats
 
-    def get_comp_obs(self, obs_iter, split_group_id, control_split_group_id):
-        storage_key = (obs_iter, split_group_id, control_split_group_id)
-        if storage_key in self.comp_obs_storage:
-            return self.comp_obs_storage[storage_key]
-        obs_stats = self.get_obs_stats(obs_iter, split_group_id)
-        obs_stats_ctrl = self.get_obs_stats(obs_iter, control_split_group_id)
-        comp_obs = CompareObservations(obs_stats, obs_stats_ctrl)
-        self._comp_obs_storage[storage_key] = comp_obs
-        return comp_obs
+    @property
+    def significance_obj(self):
+        key = self.significance_obj_key
+        if key in significance_obj_storage:
+            return significance_obj_storage[key]
+        if self.significance_params['class_name'] == 'observations_stats':
+            return self.get_observations_stats_obj(self.split_group_id)
+        elif self.significance_params['class_name'] == 'compare_observations':
+            obs_stats_1 = self.get_observations_stats_obj(self.split_group_id)
+            obs_stats_2 = self.get_observations_stats_obj(self.control_split_group_id)
+            comp_obs = CompareObservations(obs_stats_1, obs_stats_2)
+            significance_obj_storage[key] = comp_obs
+            return comp_obs
 
-    _slow_methods = ('bootstrap_test', 'bootstrap_confint', 'permutation_test', 'permutation_confint')
+    @property
+    def significance_obj_method(self):
+        return getattr(self.significance_obj, self.significance_params['method'])
 
-    def calculate_ab_iter(self, ab_iter):
-        obs_iter = self.obs_iter_from_ab_iter(ab_iter)
-        if ab_iter.class_name == 'observations_stats':
-            obs_stats = self.get_obs_stats(obs_iter, ab_iter.split_group_id)
-            method = getattr(obs_stats, ab_iter.method)
-        elif ab_iter.class_name == 'compare_observations':
-            comp_obs = self.get_comp_obs(obs_iter, ab_iter.split_group_id, ab_iter.control_split_group_id)
-            method = getattr(comp_obs, ab_iter.method)
-        else:
-            return
-        argnames = [a for a in inspect.getfullargspec(method).args
-                    if a in [f for f, v in ab_iter._asdict().items() if v is not None]]
-        args = {a: getattr(ab_iter, a) for a in argnames}
-        if ab_iter.method in self._slow_methods:
-            args['n_threads'] = self.n_threads
+    @property
+    def iter_type(self):
+        return 'slow' if self.significance_params['method'] in {
+            'bootstrap_test',
+            'bootstrap_confint',
+            'permutation_test',
+            'permutation_confint'
+        } else 'fast'
+
+    @cached_property
+    def significance_result(self):
+        argnames = inspect.getfullargspec(self.significance_obj_method).args
+        args = {k: v for k, v in self.significance_params.items() if k in argnames}
         start = default_timer()
-        result = method(**args)
+        result = self.significance_obj_method(**args)
         end = default_timer()
-        res_dict = {
-            **ab_iter._asdict(),
+        return {
             **result._asdict(),
             'elapsed_seconds': end - start,
         }
-        return IterResult(**{k: v for k, v in res_dict.items() if k in IterResult._fields})
+
+    @property
+    def calc_iter(self):
+        return {
+            'iter_hash': self.__hash__(),
+            **self.ab_params,
+            **self.significance_params,
+            **self.significance_result,
+            'breakdown': self.breakdown_text,
+        }
+
+    def __hash__(self):
+        return hash_unordered(list(self.ab_params.items()) + list(self.significance_params.items()))
+
+    def __eq__(self, other):
+        return self.__hash__() == other.__hash__()
+
+
+class AbItersStorage:
+    def __init__(self, ab_iters=None):
+        if ab_iters is None:
+            ab_test_ids = list(get_data('ab_test').index)
+            ab_iters = list()
+            for i in ab_test_ids:
+                ab_iters.extend(get_ab_iters(i))
+        self.ab_iters = list(set(ab_iters))
+
+    @property
+    def iter_hashes_to_skip(self):
+        return set(get_data('iters_to_skip').index)
 
     @cached_property
-    def fast_ab_iters(self):
-        return [i for i in self.ab_iters_with_data if i.method not in self._slow_methods]
+    def ab_iters_to_do(self):
+        return [it for it in self.ab_iters if hash(it) not in self.iter_hashes_to_skip]
 
-    @cached_property
-    def slow_ab_iters(self):
-        return [i for i in self.ab_iters_with_data if i.method in self._slow_methods]
+    @property
+    def fill_data_storage_args(self):
+        sql_list = [it.sql for it in self.ab_iters_to_do]
+        index_list = [it.data_index_cols for it in self.ab_iters_to_do]
+        zipped = set(zip(sql_list, index_list))
+        return {
+            'sql_list': [s[0] for s in zipped],
+            'index_list': [s[1] for s in zipped],
+        }
 
-    @cached_property
-    def calc_fast_ab_iters(self):
-        results = [self.calculate_ab_iter(it) for it in self.fast_ab_iters]
-        logger.info('calc_fast_ab_iters completed')
-        return results
+    def fill_data_storage(self):
+        fill_data_storage(**self.fill_data_storage_args)
 
-    @cached_property
-    def calc_slow_ab_iters(self):
-        results = []
-        logger.info('calc_slow_ab_iters started')
-        for it in self.slow_ab_iters:
-            r = self.calculate_ab_iter(it)
-            results.append(r)
-        return results
+    def ab_iters_filtered(self, iter_type='fast', is_with_data=True):
+        return [it for it in self.ab_iters_to_do if it.iter_type == iter_type and it.is_with_data == is_with_data]
+
+    def calc_iters_by_type(self, iter_type='fast'):
+        return [
+            it.calc_iter
+            for it in self.ab_iters_filtered(iter_type=iter_type, is_with_data=True)
+            if it.iter_type == iter_type and it.is_with_data
+        ]
+
+
+def get_data(data_key):
+    if data_key not in data_storage:
+        raise Exception('You need to fill data_storage first')
+    return data_storage[data_key]
+
+
+def get_ab_something(ab_test_id, data_key, fields):
+    data = get_data(data_key)
+    if ab_test_id in data.index:
+        return data.loc[[ab_test_id]][fields].to_dict(orient='records')
+    return []
+
+
+def get_ab_test_ext(ab_test_id):
+    data = get_data('ab_test')
+    if ab_test_id in data.index:
+        return data.loc[ab_test_id]['ab_test_ext']
+
+
+def get_ab_metrics(ab_test_id):
+    data_key = 'ab_metric'
+    fields = ['metric_id', 'metric']
+    return get_ab_something(ab_test_id, data_key, fields)
+
+
+def get_metric(metric_id):
+    data = get_data('metric')
+    if metric_id in data.index:
+        return data.loc[metric_id]['metric']
+
+
+def get_ab_periods(ab_test_id):
+    data_key = 'ab_period'
+    fields = ['period_id', 'start_date', 'end_date']
+    return get_ab_something(ab_test_id, data_key, fields)
+
+
+def get_split_groups(ab_test_id):
+    data_key = 'ab_split_group'
+    fields = ['split_group_id']
+    return get_ab_something(ab_test_id, data_key, fields)
+
+
+def get_split_group_pairs(ab_test_id):
+    data_key = 'ab_split_group_pair'
+    fields = ['split_group_id', 'control_split_group_id']
+    return get_ab_something(ab_test_id, data_key, fields)
+
+
+def get_dates(ab_test_id, period_id):
+    record = [p for p in get_ab_periods(ab_test_id) if p['period_id'] == period_id][0]
+    return [{'calc_date': d.date()} for d in pd.date_range(record['start_date'], record['end_date'])]
+
+
+def get_ab_metric_params(ab_test_id, metric_id):
+    ab_test_ext = get_ab_test_ext(ab_test_id)
+    metric = get_metric(metric_id)
+    data = get_data('pg_ab_metric_params').loc[[ab_test_ext]]
+    params = data[data.metric == metric]['params'].values[0]
+    return params if params else dict()
+
+
+def flatlify_significance_params(params_dict):
+    result = []
+    for class_name, methods in params_dict.items():
+        if class_name not in ['observations_stats', 'compare_observations']:
+            continue
+        for method, params in methods.items():
+            if params is None:
+                params = [dict()]
+            rows = [{**p, 'class_name': class_name, 'method': method} for p in params]
+            result.extend(rows)
+    return result
+
+
+def get_significance_params(ab_test_id, metric_id):
+
+    def get_flat_params(params_filename):
+        params = get_params(params_filename)
+        return flatlify_significance_params(params)
+
+    metrics = get_config(METRICS_FILENAME)
+    metric = get_metric(metric_id)
+
+    ab_metric_params = get_ab_metric_params(ab_test_id, metric_id)
+    metric_params = metrics[metric]
+    default_params = get_flat_params(DEFAULT_PARAMS_FILENAME)
+
+    result = []
+
+    if ab_metric_params:
+        result.extend(flatlify_significance_params(ab_metric_params))
+
+        params_filename = ab_metric_params.get('params')
+        if params_filename:
+            result.extend(get_flat_params(params_filename))
+
+        if ab_metric_params.get('override'):
+            return result
+
+    params_flat = flatlify_significance_params(metric_params)
+    result.extend(params_flat)
+
+    params_filename = metric_params.get('params')
+    if params_filename:
+        result.extend(get_flat_params(params_filename))
+
+    if metric_params.get('override'):
+        return result
+
+    if not params_filename:
+        result.extend(default_params)
+
+    return uniquify_dicts(result)
+
+
+def get_breakdowns(ab_test_id, metric_id):
+    return [dict()]
+    ab_metric_params = get_ab_metric_params(ab_test_id, metric_id)
+    breakdowns = ab_metric_params.get('breakdowns')
+    if not breakdowns:
+        return [dict()]
+    else:
+        breakdowns = [{k: tuple(set(v)) for k, v in b.items()} for b in breakdowns]
+        breakdowns = uniquify_dicts(breakdowns)
+        return [{k: sorted(v) for k, v in sorted(b.items())} for b in breakdowns]
+
+
+def get_ab_iters(ab_test_id):
+
+    ab_metrics = get_ab_metrics(ab_test_id)
+    ab_periods = get_ab_periods(ab_test_id)
+    ab_split_groups = get_split_groups(ab_test_id)
+    ab_split_group_pairs = get_split_group_pairs(ab_test_id)
+    metrics = get_config(METRICS_FILENAME)
+
+    iters = list()
+
+    for metric, period in itertools.product(ab_metrics, ab_periods):
+        metric_id = metric['metric_id']
+        period_id = period['period_id']
+        template = metrics[metric['metric']].get('template', DEFAULT_TEMPLATE)
+        sql_template = get_template(template)
+        observations = tuple(metrics[metric['metric']]['observations'])
+
+        dates = get_dates(ab_test_id, period_id)
+        breakdowns = get_breakdowns(ab_test_id, metric_id)
+
+        significance_params = get_significance_params(ab_test_id, metric_id)
+        obs_stats_params = [prm for prm in significance_params if prm['class_name'] == 'observations_stats']
+        comp_obs_params = [prm for prm in significance_params if prm['class_name'] == 'compare_observations']
+
+        iters.extend([
+            AbIter(
+                **{
+                    'sql_template': sql_template,
+                    'ab_test_id': ab_test_id,
+                    'period_id': period_id,
+                    'other_params': {**metric, },
+                    'observations': observations,
+                    'breakdown': b,
+                    'significance_params': os,
+                    **d, **sg,
+                }
+            )
+            for d, os, sg, b in itertools.product(dates, obs_stats_params, ab_split_groups, breakdowns)
+        ])
+        iters.extend([
+            AbIter(
+                **{
+                    'sql_template': sql_template,
+                    'ab_test_id': ab_test_id,
+                    'period_id': period_id,
+                    'other_params': {**metric, },
+                    'observations': observations,
+                    'breakdown': b,
+                    'significance_params': co,
+                    **d, **sgp,
+                }
+            )
+            for d, co, sgp, b in itertools.product(dates, comp_obs_params, ab_split_group_pairs, breakdowns)
+        ])
+    return iters
+
+
+@lru_cache(maxsize=None)
+def get_all_ab_iters():
+    ab_test_ids = list(get_data('ab_test').index)
+    ab_iters = list()
+    for i in ab_test_ids:
+        ab_iters.extend(get_ab_iters(i))
+    return ab_iters
+
+
+def get_ab_iter_by_hash(iter_hash):
+    return [it for it in get_all_ab_iters() if hash(it) == iter_hash][0]
