@@ -1,83 +1,91 @@
 searches_with_query:
   observations: [searches_with_query]
-  template: single_observation_sum
+  template: observations_sum
 
 searches_without_query:
   observations: [searches_without_query]
-  template: single_observation_sum
+  template: observations_sum
 
 item_views:
   observations: [item_views]
-  template: single_observation_sum
+  template: observations_sum
 
 phone_views:
   observations: [phone_views]
-  template: single_observation_sum
+  template: observations_sum
 
 favorites_added:
   observations: [favorites_added]
-  template: single_observation_sum
+  template: observations_sum
 
 favorites_removed:
   observations: [favorites_removed]
-  template: single_observation_sum
+  template: observations_sum
 
 favorites_list_views:
   observations: [favorites_list_views]
-  template: single_observation_sum
+  template: observations_sum
 
 saved_searches_added:
   observations: [saved_searches_added]
-  template: single_observation_sum
+  template: observations_sum
 
 saved_searches_removed:
   observations: [saved_searches_removed]
-  template: single_observation_sum
+  template: observations_sum
 
 saved_searches_list_views:
   observations: [saved_searches_list_views]
-  template: single_observation_sum
+  template: observations_sum
 
 forgot_password_count:
   observations: [forgot_password_count]
-  template: single_observation_sum
+  template: observations_sum
 
 password_restore_requests:
   observations: [password_restore_requests]
-  template: single_observation_sum
+  template: observations_sum
 
 password_restore_request_proportion:
   observations: [password_restore_requests]
-  template: single_observation_proportion
+  template: observations_proportion
   description: "1 если хотя бы один запрос на восстановление пароля, иначе 0"
   params: params_proportion
 
 password_restore_request_errors:
   observations: [password_restore_request_errors]
-  template: single_observation_sum
+  template: observations_sum
 
 password_restore_count:
   observations: [password_restore_count]
-  template: single_observation_sum
+  template: observations_sum
 
 password_restore_proportion:
   observations: [password_restore_count]
-  template: single_observation_proportion
+  template: observations_proportion
   params: params_proportion
 
 password_restore_errors:
   observations: [password_restore_errors]
-  template: single_observation_sum
+  template: observations_sum
 
 sign_in_count:
   observations: [sign_in_count] 
-  template: single_observation_sum
+  template: observations_sum
 
 sign_in_proportion:
-  observations: [sign_in_count] 
-  template: single_observation_proportion
+  observations: [sign_in_count]
+  template: observations_proportion
   params: params_proportion
 
 sign_in_errors:
   observations: [sign_in_errors] 
-  template: single_observation_sum
+  template: observations_sum
+
+first_messages:
+  observations: [first_messages]
+  template: observations_sum
+
+daily_buyers:
+  observations: [phone_views, first_messages]
+  template: observations_proportion_daily

@@ -3,14 +3,27 @@ import vertica_python
 import pandas as pd
 import os
 import multiprocessing
+import psycopg2
+import psycopg2.extras
+import datetime
+
+
+def connect_postgre(user=None, password=None):
+    """Connects to the specific database."""
+    return psycopg2.connect(dbname='ab_config',
+                            user='ab_configurator',
+                            password='ab_configurator',
+                            host='ab-central',
+                            port=5432)
 
 
 DFT_VERTICA_AUTH_FILE = '~/vertica_auth.json'
+VERTICA_MAX_THREADS = 12
 
 
 def connect_vertica(user=None, password=None):
     conn_info = {
-        'host': 'avi-dwh24',
+        'host': 'vertica-dwh',
         'port': 5433,
         'database': 'DWH',
         # 10 minutes timeout on queries
@@ -31,40 +44,28 @@ def connect_vertica(user=None, password=None):
     return vertica_python.connect(**conn_info)
 
 
-def get_df_from_vertica(sql, **conn_params):
-    with connect_vertica(**conn_params) as vcon:
-        df = pd.read_sql(sql, vcon)
-        return df
+def select_df(sql, index=None, con_method=None, **con_params):
+    if con_method is None:
+        con_method = connect_vertica
+    if isinstance(index, tuple):
+        index = list(index)
+    with con_method(**con_params) as con:
+        df = pd.read_sql(sql, con, index_col=index)
+
+    return df
 
 
-import psycopg2
-import psycopg2.extras
-
-
-def connect_postgre():
-    """Connects to the specific database."""
-    return psycopg2.connect(dbname='ab_config',
-                            user='ab_configurator',
-                            password='ab_configurator',
-                            host='ab-central',
-                            port=5432)
-
-
-class VerticaStorage:
-
-    @property
-    def storage(self):
-        if not hasattr(self, '_storage'):
-            self._storage = dict()
-        return self._storage
-
-    def get_data(self, sql):
-        if sql not in self.storage:
-            self.storage[sql] = get_df_from_vertica(sql)
-        return self.storage[sql]
-
-    def load_data_batch(self, sql_list, n_threads=1):
-        with multiprocessing.Pool(n_threads) as pool:
-            results = {sql: pool.apply_async(get_df_from_vertica, (sql,)) for sql in sql_list}
-            results = {k: v.get() for k, v in results.items()}
-        self.storage.update(results)
+def insert_into_vertica(df, tablename):
+    df['insert_datetime'] = datetime.datetime.now()
+    csv = df.to_csv(
+        sep='^',
+        index=False,
+        header=False,
+        float_format='%.16g'
+    )
+    columns_sql = ', '.join(df.columns)
+    query = \
+        "COPY {t} ({c}) from stdin DELIMITER '^' ABORT ON ERROR DIRECT;".format(t=tablename, c=columns_sql)
+    with connect_vertica() as con:
+        with con.cursor() as cur:
+            cur.copy(query, csv)
