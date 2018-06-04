@@ -11,7 +11,7 @@ ab_observation as (
                 o.observation_date,
                 coalesce((sum(o.observation_value) > 0)::int, 0) as observation_value
         from    dma.ab_observation o
-        where   o.observation_name = '{observations[0]}'
+        where   o.observation_name in ({observations_str})
             and o.observation_date <= '{calc_date}'
             and o.is_after_first_exposure
         group by 1, 2, 3

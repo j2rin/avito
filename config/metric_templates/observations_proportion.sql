@@ -6,7 +6,7 @@ ab_observation as (
             min(o.observation_date) as min_date,
             max(o.observation_date) as max_date
     from    dma.ab_observation o
-    where   o.observation_name = '{observations_str}'
+    where   o.observation_name in ({observations_str})
         and o.observation_date <= '{calc_date}'
         and o.is_after_first_exposure
     group by 1, 2
