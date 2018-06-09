@@ -13,10 +13,11 @@ from ab_significance.significance import ObservationsStats, CompareObservations
 from db_utils import connect_postgre, select_df
 
 from utils import *
+from log_helper import configure_logger
 
+logger = configure_logger(logger_name='metrics_calc', log_dir=CUR_DIR_PATH + 'log/')
 
 VERTICA_MAX_THREADS = 8
-
 
 data_storage = dict()
 significance_obj_storage = dict()
@@ -35,8 +36,13 @@ def fill_data_storage(sql_list, index_list=None, data_key_list=None, n_threads=V
     params_list = set((s, i, d) for s, i, d in zip(sql_list, index_list, data_key_list) if d not in data_storage)
 
     with multiprocessing.Pool(n_threads) as pool:
-        results = {k: pool.apply_async(select_df, (s, i, con_method)) for s, i, k in params_list}
-        results = {k: v.get() for k, v in results.items()}
+        res = {k: pool.apply_async(select_df, (s, i, con_method)) for s, i, k in params_list}
+        results = dict()
+        for k, v in res.items():
+            try:
+                results.update({k: v.get()})
+            except Exception as e:
+                logger.error('error: {0}\ndata_key: {1}'.format(e, k))
 
     data_storage.update(results)
 
@@ -47,7 +53,6 @@ def fill_data_storage_ab():
         'ab_metric',
         'ab_period',
         'ab_split_group',
-        'ab_split_group_pair',
         'iters_to_skip',
         'metric',
     ]
@@ -57,9 +62,12 @@ def fill_data_storage_ab():
 
     fill_data_storage(sqls, indecies, data_keys)
 
-    data_keys = ['pg_ab_metric_params']
-    pg_sqls = [get_sql('pg_ab_metric_params')]
-    indecies = ['ab_test_ext']
+    data_keys = []
+    pg_sqls = []
+    for sname in ['pg_ab_metric_params', 'pg_ab_split_group_pair']:
+        data_keys.append(sname)
+        pg_sqls.append(get_sql(sname))
+    indecies = ['ab_test_ext'] * 2
     fill_data_storage(pg_sqls, indecies, data_keys, con_method=connect_postgre)
 
 
@@ -164,16 +172,22 @@ class AbIter:
     def fill_data_storage(self):
         fill_data_storage(sql_list=[self.sql], index_list=[self.data_index_cols])
 
-    @property
+    @cached_property
     def data(self):
-        return get_data(self.sql)
+        data = get_data(self.sql)
+        if data is not None and data.shape[0] == 0:
+            logger.error('No data :: iter_hash: {}'.format(self.__hash__()))
+            return
+        return data
 
     def get_observations(self, split_group_id):
         data_index = self.get_data_index(split_group_id)
-        if data_index in self.data.index:
+        not_value_cols = list(self.data_index_cols) + ['cnt']
+        if self.data is not None and data_index in self.data.index:
             df = self.data.loc[data_index]
+            obs_columns = [c for c in df.columns if c not in not_value_cols]
             return {
-                'obs': df[list(self.observations)].values,
+                'obs': df[obs_columns].values,
                 'counts': df['cnt'].values,
             }
 
@@ -261,15 +275,14 @@ class AbIter:
 class AbItersStorage:
     def __init__(self, ab_iters=None):
         if ab_iters is None:
-            ab_test_ids = list(get_data('ab_test').index)
-            ab_iters = list()
-            for i in ab_test_ids:
-                ab_iters.extend(get_ab_iters(i))
+            ab_iters = get_all_ab_iters()
         self.ab_iters = list(set(ab_iters))
 
     @property
     def iter_hashes_to_skip(self):
-        return set(get_data('iters_to_skip').index)
+        data = get_data('iters_to_skip')
+        if data is not None:
+            return set(data.index)
 
     @cached_property
     def ab_iters_to_do(self):
@@ -301,21 +314,31 @@ class AbItersStorage:
 
 def get_data(data_key):
     if data_key not in data_storage:
-        raise Exception('You need to fill data_storage first')
-    return data_storage[data_key]
+        logger.error('You need to fill data_storage first\ndata_key: {}'.format(data_key))
+        return
+    data = data_storage[data_key]
+    return data
 
 
-def get_ab_something(ab_test_id, data_key, fields):
+def get_ab_something(ix, data_key, fields):
     data = get_data(data_key)
-    if ab_test_id in data.index:
-        return data.loc[[ab_test_id]][fields].to_dict(orient='records')
+    if data is not None and ix in data.index:
+        return data.loc[[ix]][fields].to_dict(orient='records')
     return []
 
 
 def get_ab_test_ext(ab_test_id):
     data = get_data('ab_test')
-    if ab_test_id in data.index:
+    if data is not None and ab_test_id in data.index:
         return data.loc[ab_test_id]['ab_test_ext']
+
+
+def get_ab_test_id(ab_test_ext):
+    data = get_data('ab_test')
+    if data is not None:
+        ftr = data.ab_test_ext == ab_test_ext
+        if data[ftr].shape[0] > 0:
+            return data[ftr].index[0]
 
 
 def get_ab_metrics(ab_test_id):
@@ -326,7 +349,7 @@ def get_ab_metrics(ab_test_id):
 
 def get_metric(metric_id):
     data = get_data('metric')
-    if metric_id in data.index:
+    if data is not None and metric_id in data.index:
         return data.loc[metric_id]['metric']
 
 
@@ -342,10 +365,26 @@ def get_split_groups(ab_test_id):
     return get_ab_something(ab_test_id, data_key, fields)
 
 
+def get_split_group_id(ab_test_ext, split_group):
+    data = get_data('ab_split_group')
+    if data is not None:
+        ab_test_id = get_ab_test_id(ab_test_ext)
+        if ab_test_id is not None:
+            ftr = (data.index == ab_test_id) & (data.split_group == split_group)
+            return data[ftr]['split_group_id'].values[0]
+
+
 def get_split_group_pairs(ab_test_id):
-    data_key = 'ab_split_group_pair'
-    fields = ['split_group_id', 'control_split_group_id']
-    return get_ab_something(ab_test_id, data_key, fields)
+    data_key = 'pg_ab_split_group_pair'
+    ab_test_ext = get_ab_test_ext(ab_test_id)
+    fields = ['split_group', 'control_split_group']
+    pairs = get_ab_something(ab_test_ext, data_key, fields)
+    return [
+        {
+            'split_group_id': get_split_group_id(ab_test_ext, p['split_group']),
+            'control_split_group_id': get_split_group_id(ab_test_ext, p['control_split_group']),
+        } for p in pairs
+    ]
 
 
 def get_dates(ab_test_id, period_id):
@@ -486,11 +525,14 @@ def get_ab_iters(ab_test_id):
 
 @lru_cache(maxsize=None)
 def get_all_ab_iters():
-    ab_test_ids = list(get_data('ab_test').index)
-    ab_iters = list()
-    for i in ab_test_ids:
-        ab_iters.extend(get_ab_iters(i))
-    return ab_iters
+    data = get_data('ab_test')
+    if data is not None:
+        ab_test_ids = list(data.index)
+        ab_iters = list()
+        for i in ab_test_ids:
+            ab_iters.extend(get_ab_iters(i))
+        return list(set(ab_iters))
+    return []
 
 
 def get_ab_iter_by_hash(iter_hash):

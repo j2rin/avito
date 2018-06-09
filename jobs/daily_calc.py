@@ -21,25 +21,25 @@ if __name__ == '__main__':
 
     logger.info('ab dicts loaded')
 
-    its = get_all_ab_iters()
-    ai = AbItersStorage(its)
+    # its = get_all_ab_iters()
+    ai = AbItersStorage()
 
-    try:
-        ai.fill_data_storage()
-    except Exception as e:
-        logger.error(e)
-        raise e
+    ai.fill_data_storage()
 
     logger.info('data_storage filled')
 
-    n_fast_iters = len(ai.ab_iters_filtered())
+    try:
+        n_fast_iters = len(ai.ab_iters_filtered())
 
-    if n_fast_iters:
-        logger.info('{} fast iters to go'.format(n_fast_iters))
-        records = ai.calc_iters_by_type()
-        df = pd.DataFrame.from_records(records)
-        insert_into_vertica(df, 'saef.ab_result')
+        if n_fast_iters:
+            logger.info('{} fast iters to go'.format(n_fast_iters))
+            records = ai.calc_iters_by_type()
+            df = pd.DataFrame.from_records(records)
+            insert_into_vertica(df, 'saef.ab_result')
 
+    except Exception as e:
+        logger.error(e)
+        raise e
     # if len(am.slow_ab_iters):
     #    df = pd.DataFrame.from_records(am.calc_slow_ab_iters, columns=am.calc_slow_ab_iters[0]._fields)
     #    vertica_insert(df, 'saef.ab_result')

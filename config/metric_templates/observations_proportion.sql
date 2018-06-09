@@ -23,7 +23,7 @@ ab_participant as (
 )
 select  o.ab_period_id as period_id,
         o.ab_split_group_id as split_group_id,
-        o.observation_value as {observations[0]},
+        o.observation_value as value,
         cnt
 from (
     select  p.ab_period_id,
