@@ -33,6 +33,7 @@ ab_metric: |
             and m.ab_test_metric_link_is_active
             and m.ab_metric_is_active
             and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
+            and m.ab_metric_name not in ('saved_searches_list_views')
     ) m
     where   rn = 1
     ;
@@ -58,6 +59,7 @@ ab_period: |
     where   p.is_active
         and t.is_active
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
+        and p.period not in ('AA_retro')
     ;
 
 ab_split_group: |
@@ -72,23 +74,16 @@ ab_split_group: |
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
     ;
 
-ab_split_group_pair: |
-    select  t.ab_test_id,
-            sg.ab_split_group_id as split_group_id,
+pg_ab_split_group_pair: |
+    select  sg.ab_test_id as ab_test_ext,
             sg.split_group,
-            csg.ab_split_group_id as control_split_group_id,
-            csg.split_group as control_split_group
-    from    dma.v_ab_split_group    sg
-    join    dma.v_ab_split_group    csg on  csg.ab_test_id = sg.ab_test_id
-                                        and csg.is_control
-                                        and csg.is_active
-                                        and csg.ab_split_group_id <> sg.ab_split_group_id
-    join    dma.v_ab_test           t   on  t.ab_test_id = sg.ab_test_id
+            sg.split_group_control as control_split_group
+    from    ab_config.ab_split_group_comparison sg
+    join    ab_config.ab_test                   t   on t.ab_test_id = sg.ab_test_id
     where   sg.is_active
         and t.is_active
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
     ;
-
 
 result_table: |
     drop table if exists saef.ab_result;
