@@ -62,6 +62,14 @@ ab_period: |
         and p.period not in ('AA_retro')
     ;
 
+ab_period_date: |
+    select  ab_period_id as period_id,
+            event_date as calc_date
+    from    DMA.v_ab_test_period_date
+    where   period not in ('AA_retro')
+        and not event_date between '2018-06-14' and '2018-06-18'
+    ;
+
 ab_split_group: |
     select  t.ab_test_id,
             sg.ab_split_group_id as split_group_id,
