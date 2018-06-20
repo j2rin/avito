@@ -42,7 +42,7 @@ def fill_data_storage(sql_list, index_list=None, data_key_list=None, n_threads=V
             try:
                 results.update({k: v.get()})
             except Exception as e:
-                logger.error('error: {0}\ndata_key: {1}'.format(e, k))
+                logger.error('error: {0} :: data_key: {1}'.format(e, k))
 
     data_storage.update(results)
 
@@ -53,12 +53,13 @@ def fill_data_storage_ab():
         'ab_metric',
         'ab_period',
         'ab_split_group',
+        'ab_period_date',
         'iters_to_skip',
         'metric',
     ]
 
     sqls = [get_sql(dk) for dk in data_keys]
-    indecies = ['ab_test_id'] * (len(data_keys) - 2) + ['iter_hash', 'metric_id']
+    indecies = ['ab_test_id'] * (len(data_keys) - 3) + ['period_id', 'iter_hash', 'metric_id']
 
     fill_data_storage(sqls, indecies, data_keys)
 
@@ -387,9 +388,10 @@ def get_split_group_pairs(ab_test_id):
     ]
 
 
-def get_dates(ab_test_id, period_id):
-    record = [p for p in get_ab_periods(ab_test_id) if p['period_id'] == period_id][0]
-    return [{'calc_date': d.date()} for d in pd.date_range(record['start_date'], record['end_date'])]
+def get_dates(period_id):
+    data_key = 'ab_period_date'
+    fields = ['calc_date']
+    return get_ab_something(period_id, data_key, fields)
 
 
 def get_ab_metric_params(ab_test_id, metric_id):
@@ -483,7 +485,7 @@ def get_ab_iters(ab_test_id):
         sql_template = get_template(template)
         observations = tuple(metrics[metric['metric']]['observations'])
 
-        dates = get_dates(ab_test_id, period_id)
+        dates = get_dates(period_id)
         breakdowns = get_breakdowns(ab_test_id, metric_id)
 
         significance_params = get_significance_params(ab_test_id, metric_id)
