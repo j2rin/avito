@@ -42,7 +42,7 @@ def fill_data_storage(sql_list, index_list=None, data_key_list=None, n_threads=V
             try:
                 results.update({k: v.get()})
             except Exception as e:
-                logger.error('error: {0} :: data_key: {1}'.format(e, k))
+                logger.error('{0} :: data_key: {1}'.format(e, k))
 
     data_storage.update(results)
 
@@ -237,12 +237,17 @@ class AbIter:
 
     @property
     def iter_type(self):
-        return 'slow' if self.significance_params['method'] in {
+        if self.significance_params['method'] in {
             'bootstrap_test',
             'bootstrap_confint',
             'permutation_test',
             'permutation_confint'
-        } else 'fast'
+        }:
+            return 'slow'
+        elif self.significance_params['method'] == 'smart_stats' and self.significance_params['stat_func'] != 'mean':
+            return 'slow'
+        else:
+            return 'fast'
 
     @cached_property
     def significance_result(self):

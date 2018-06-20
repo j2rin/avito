@@ -4,9 +4,9 @@ pg_ab_metric_params: |
             m.params
     from    ab_config.ab_metric m
     join    ab_config.ab_test   t   on t.ab_test_id = m.ab_test_id
-    where   t.is_active
+    /*where   t.is_active
         and m.is_active
-        and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
+        and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')*/
     ;
 
 ab_test: |
@@ -114,6 +114,8 @@ result_table: |
         alternative varchar(10),
         alpha float,
         is_pivotal boolean,
+        resampling varchar(64),
+        variance varchar(64),
         n_iters int,
         mean float,
         std float,
@@ -123,10 +125,13 @@ result_table: |
         test_statistic float,
         lower_bound float,
         upper_bound float,
+        stat_val float,
+        std_stat_val float,
         elapsed_seconds float,
         insert_datetime timestamp
-    ) order by ab_test_id, period_id, metric_id, calc_date, split_group_id, control_split_group_id
-    segmented by hash(ab_test_id, period_id, metric_id, calc_date, split_group_id, control_split_group_id) all nodes;
+    ) order by iter_hash segmented by hash(iter_hash) all nodes;
+
+
 
 iters_to_skip: |
     select  r.iter_hash
