@@ -24,6 +24,9 @@ if __name__ == '__main__':
     # its = get_all_ab_iters()
     ai = AbItersStorage()
 
+    n_iters = len(ai.ab_iters_to_do)
+    logger.info('{} iters to go'.format(n_iters))
+
     ai.fill_data_storage()
 
     logger.info('data_storage filled')

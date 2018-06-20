@@ -1,7 +1,7 @@
 create or replace view saef.tv_ab_central as 
 select
     r.ab_test_id,
-    t.ab_test_ext_id,
+    t.ab_test_ext_id as ab_test_ext,
     t.ab_test_label,
     t.ab_test_title,
     t.ab_test_description,
@@ -51,19 +51,45 @@ select
     r.upper_bound,
     r.elapsed_seconds,
     r.insert_datetime,
-    r.cell_hash,
     r.slot_hash,
     r.params_hash,
+    r.slot_sign_params_hash,
+    r.slot_sign_test_hash,
+    r.slot_date_hash,
     r.iter_hash,
-    row_number() over(partition by cell_hash order by r.calc_date desc) as cell_day_rn_desc
+    r.significance_test,
+    r.method_kind,
+    r.stat_val,
+    r.std_stat_val,
+    r.resampling,
+    r.variance,
+    row_number() over(partition by r.slot_sign_params_hash order by r.calc_date desc) as cell_day_rn_desc
 from (
     select  r.*,
-            hash(slot_hash, params_hash) as cell_hash,
+            hash(slot_hash, significance_test) as slot_sign_test_hash,
+            hash(slot_hash, calc_date) as slot_date_hash,
+            hash(slot_hash, params_hash) as slot_sign_params_hash,
             rank() over(partition by slot_hash, params_hash order by r.is_pivotal desc, r.n_iters desc) as secondary_params_rnk
     from (
         select  *,
                 hash(r.ab_test_id, r.period_id, r.metric_id, r.metric, r.split_group_id, r.control_split_group_id, r.breakdown_hash) as slot_hash,
-                hash(r.class_name, r.method, r.stat_func, r.comp_func, r.null_value, r.alternative, r.alpha) params_hash
+                hash(r.class_name, r.method, r.stat_func, r.comp_func, r.null_value, r.alternative, r.alpha) as params_hash,
+                    case
+                    when r.method like 't\_%' then 'T'
+                    when r.method like 'z\_%' then 'Z'
+                    when r.method like 'mann\_%' then 'MW U'
+                    when r.method like 'bootstrap\_%' then 'Bootstrap'
+                    when r.method like 'permutation\_%' then 'Permutation'
+                    when r.method like 'proportion\_%' then 'Proportion Exact'
+                    else r.method
+                    end as
+                significance_test,
+                    case
+                    when r.method like '%\_test' then 'Test'
+                    when r.method like '%\_confint' then 'CI'
+                    else r.method
+                    end as
+                method_kind
         from    saef.ab_result r
     ) r
 ) r
@@ -74,7 +100,7 @@ left join dma.v_ab_split_group  sgc on sgc.ab_split_group_id = r.control_split_g
 where   secondary_params_rnk = 1
 ;
 
-alter view saef.tv_ab_central owner to dbadmin;    
+alter view saef.tv_ab_central owner to dbadmin;
     
 create table saef.ab_result_2 like saef.ab_result including projections;
 
@@ -119,13 +145,21 @@ where rn = 1
 drop table saef.ab_result cascade;
 alter table saef.ab_result_2 rename to ab_result;
 
-select  *
+
+
+delete
 from    saef.ab_result
+;
+
+
+
+
 
 select  *, column_name || ',' as c
 from    v_catalog.columns
 where   table_name = 'ab_result'
 ;
+
 
 select  *
 from (
@@ -133,7 +167,7 @@ from (
     from    saef.ab_result
 ) r
 where   cnt > 1
-
+;
 
 
 select  t.ab_test_id,
@@ -145,69 +179,272 @@ where   t.is_active
     and m.ab_test_metric_link_is_active
     and m.ab_metric_is_active
     and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
-    and t.ab_test_id = 532250001
+    and t.ab_test_id = 1450500001
 ;
 
+
 select  *
-from    dma.v_ab_test_metric
-where   ab_test_id = 532250001
-
-
-
-
-
-
-WITH
-S_ABTest_IsActive                  AS (SELECT ABTest_id, IsActive                  FROM (SELECT ABTest_id, IsActive,                  ROW_NUMBER() OVER(PARTITION BY ABTest_id                  ORDER BY actual_date DESC) AS rnk FROM DDS.S_ABTest_IsActive) t                  WHERE rnk=1),
-----
-S_ABTestMetricLink_IsActive        AS (SELECT ABTestMetricLink_id, IsActive        FROM (SELECT ABTestMetricLink_id, IsActive,        ROW_NUMBER() OVER(PARTITION BY ABTestMetricLink_id        ORDER BY actual_date DESC) AS rnk FROM DDS.S_ABTestMetricLink_IsActive) t        WHERE rnk=1),
-S_ABMetric_Title                   AS (SELECT ABMetric_id, Title                   FROM (SELECT ABMetric_id, Title,                   ROW_NUMBER() OVER(PARTITION BY ABMetric_id                ORDER BY actual_date DESC) AS rnk FROM DDS.S_ABMetric_Title) t                   WHERE rnk=1),
-S_ABMetric_Description             AS (SELECT ABMetric_id, Description             FROM (SELECT ABMetric_id, Description,             ROW_NUMBER() OVER(PARTITION BY ABMetric_id                ORDER BY actual_date DESC) AS rnk FROM DDS.S_ABMetric_Description) t             WHERE rnk=1),
-S_ABMetric_IsActive                AS (SELECT ABMetric_id, IsActive                FROM (SELECT ABMetric_id, IsActive,                ROW_NUMBER() OVER(PARTITION BY ABMetric_id                ORDER BY actual_date DESC) AS rnk FROM DDS.S_ABMetric_IsActive) t                WHERE rnk=1)
-SELECT ht.ABTest_id          AS ab_test_id,
-       tia.IsActive          AS ab_test_is_active,
-       tct.CreateTime        AS ab_test_create_time,
-       ----
-       tmlm.ABMetric_id      AS ab_metric_id,
-       tmlia.IsActive        AS ab_test_metric_link_is_active,
-       m.External_id         AS ab_metric_name,
-       mt.Title              AS ab_metric_title,
-       md.Description        AS ab_metric_description,
-       mia.IsActive          AS ab_metric_is_active,
-       tmlt.ABTestMetricLink_id
-  FROM      DDS.H_ABTest                                ht
-  LEFT JOIN S_ABTest_IsActive                           tia   ON ht.ABTest_id = tia.ABTest_id
-  LEFT JOIN DDS.S_ABTest_CreateTime                     tct   ON ht.ABTest_id = tct.ABTest_id
-  ----
-  INNER JOIN DDS.L_ABTestMetricLink_ABTest              tmlt  ON ht.ABTest_id = tmlt.ABTest_id
-  LEFT JOIN DDS.L_ABTestMetricLink_ABMetric             tmlm  ON tmlt.ABTestMetricLink_id = tmlm.ABTestMetricLink_id
-  LEFT JOIN S_ABTestMetricLink_IsActive                 tmlia ON tmlt.ABTestMetricLink_id = tmlia.ABTestMetricLink_id
-  LEFT JOIN DDS.H_ABMetric                              m     ON tmlm.ABMetric_id = m.ABMetric_id
-  LEFT JOIN S_ABMetric_Title                            mt    ON tmlm.ABMetric_id = mt.ABMetric_id
-  LEFT JOIN S_ABMetric_Description                      md    ON tmlm.ABMetric_id = md.ABMetric_id
-  LEFT JOIN S_ABMetric_IsActive                         mia   ON tmlm.ABMetric_id = mia.ABMetric_id
-  where ht.abtest_id = 532250001
-  
-select  *
-from    DDS.S_ABTest_CreateTime
-where   abtest_id = 532250001
+from    dma.v_ab_test        t
+join    dma.v_ab_split_group sg on sg.ab_test_id = t.ab_test_id
+join    dma.v_ab_period p on p.ab_test_id = t.ab_test_id
+where   t.ab_test_ext_id = 133
 ;
 
-select  *
-from    DDS.L_ABTestMetricLink_ABMetric 
-where   AbMetric_id = 655000004
+
+select  observation_date, observation_name, count(*) as cnt
+from    dma.ab_observation
+where   ab_split_group_id = 1452000001
+    and 
+group by 1, 2
+;
+
 
 select  *
-from    DDS.L_ABTestMetricLink_ABTest
+from    saef.tv_ab_central
+where   ab_test_ext_id = 133
+;
 
-  with
-  S_ABTestMetricLink_IsActive        AS (SELECT ABTestMetricLink_id, IsActive        FROM (SELECT ABTestMetricLink_id, IsActive,        ROW_NUMBER() OVER(PARTITION BY ABTestMetricLink_id        ORDER BY actual_date DESC) AS rnk FROM DDS.S_ABTestMetricLink_IsActive) t        WHERE rnk=1)
-  select    *
-  from  DDS.L_ABTestMetricLink_ABTest              tmlt
-  JOIN DDS.L_ABTestMetricLink_ABMetric             tmlm  ON tmlt.ABTestMetricLink_id = tmlm.ABTestMetricLink_id
-  JOIN S_ABTestMetricLink_IsActive                 tmlia ON tmlt.ABTestMetricLink_id = tmlia.ABTestMetricLink_id
-  join  DDS.H_ABTestMetricLink                     ml    on ml.ABTestMetricLink_id = tmlt.ABTestMetricLink_id
-  where ABTest_id = 532250001
-    and AbMetric_id = 655000004
 
-where   
+
+with
+ab_observation as (
+    select  o.participant_id,
+            o.ab_period_id,
+            sum(o.observation_value) as observation_value,
+            min(o.observation_date) as min_date,
+            max(o.observation_date) as max_date
+    from    dma.ab_observation o
+    where   o.observation_name in ('phone_views', 'first_messages')
+        and o.observation_date <= '2018-06-11'
+        and o.is_after_first_exposure
+    group by 1, 2
+),
+ab_participant as (
+    select  p.participant_id,
+            p.ab_test_id,
+            p.ab_period_id,
+            p.ab_split_group_id
+    from    dma.ab_participant p
+    where   true--p.first_exposure_time::date <= '2018-06-11'
+        and p.event_date <= '2018-06-11'
+        and p.ab_test_id = 1450500001
+        and p.ab_period_id = 1448500001
+    group by 1, 2, 3, 4
+)
+select  o.ab_period_id as period_id,
+        o.ab_split_group_id as split_group_id,
+        o.observation_value,
+        cnt
+from (
+    select  p.ab_period_id,
+            p.ab_split_group_id,
+            coalesce(o.observation_value, 0) as observation_value,
+            count(*) as cnt,
+            min(min(o.min_date)) over(partition by p.ab_period_id) as min_date,
+            max(max(o.max_date)) over(partition by p.ab_period_id) as max_date
+    from    ab_participant      p
+    left join ab_observation    o   on  o.participant_id = p.participant_id
+                                    and o.ab_period_id = p.ab_period_id
+    group by 1, 2, 3
+) o
+join    dma.v_ab_period     p  on  p.ab_period_id = o.ab_period_id
+where   min_date = p.start_time::date
+    and max_date = '2018-06-11'
+order by 1, 2
+;
+
+
+select  p.ab_test_id,
+        p.ab_period_id,
+        p.ab_split_group_id,
+        p.event_date,
+        count(*) as cnt,
+        count(first_exposure_time) as exposed
+from    dma.ab_participant p
+where   true
+    and p.ab_test_id = 1095750001
+--    and p.ab_period_id = 1448500001
+--    and p.ab_split_group_id = 1452000001
+group by 1, 2, 3, 4
+;
+
+select  p.event_date,
+        count(*) as cnt,
+        count(first_exposure_time) as exposed
+from    dma.ab_participant p
+where   true
+group by 1
+;
+
+
+select  p.ab_test_id,
+        t.ab_test_ext_id,
+        t.ab_test_label,
+        t.traffic_percent,
+        t.salt,
+        p.event_date,
+        count(*) as cnt,
+        count(p.first_exposure_time) as exposed,
+        min(p.first_exposure_time) as min_exp_time,
+        max(p.first_exposure_time) as max_exp_time
+from    dma.ab_participant p
+join    dma.v_ab_period    pr on pr.ab_period_id = p.ab_period_id
+join    dma.v_ab_test      t  on t.ab_test_id = p.ab_test_id
+where   true
+    and pr.period not in ('AA_retro')
+group by 1, 2, 3, 4, 5, 6
+;
+
+
+select  *
+from    dma.v_ab_test_period_date
+
+select  t.ab_test_label, max(p.end_time) as end_time
+from    dma.v_ab_test   t
+join    dma.v_ab_period p on p.ab_test_id = t.ab_test_id
+group by 1
+;
+
+
+where   ab_test_id = 1177500001
+;
+
+
+
+select  *
+from    DMA.v_ab_test_period_date
+
+
+delete from saef.ab_result where calc_date between '2018-06-14' and '2018-06-18';
+
+
+
+select  *
+from    dma.ab_observation
+where   observation_name = 'phone_views_anon_number'
+;
+
+
+
+
+with
+ab_observation as (
+    select  o.participant_id,
+            o.ab_period_id,
+            sum(o.observation_value) as observation_value,
+            min(o.observation_date) as min_date,
+            max(o.observation_date) as max_date
+    from    dma.ab_observation o
+    where   o.observation_name in ('phone_views')
+        and o.observation_date <= '2018-05-25'
+        and o.is_after_first_exposure
+    group by 1, 2
+),
+ab_participant as (
+    select  p.participant_id,
+            p.ab_test_id,
+            p.ab_period_id,
+            p.ab_split_group_id
+    from    dma.ab_participant p
+    where   p.first_exposure_time::date <= '2018-05-25'
+        and p.event_date <= '2018-05-25'
+    group by 1, 2, 3, 4
+)
+select  o.ab_period_id as period_id,
+        o.ab_split_group_id as split_group_id,
+        o.observation_value,
+        cnt
+from (
+    select  p.ab_period_id,
+            p.ab_split_group_id,
+            coalesce(o.observation_value, 0) as observation_value,
+            count(*) as cnt,
+            min(min(o.min_date)) over(partition by p.ab_period_id) as min_date,
+            max(max(o.max_date)) over(partition by p.ab_period_id) as max_date
+    from    ab_participant      p
+    left join ab_observation    o   on  o.participant_id = p.participant_id
+                                    and o.ab_period_id = p.ab_period_id
+    group by 1, 2, 3
+) o
+join    dma.v_ab_period     p  on  p.ab_period_id = o.ab_period_id
+where   min_date = p.start_time::date
+    and max_date = '2018-05-25'
+order by 1, 2
+;
+
+
+
+with
+ab_observation as (
+    select  ab_period_id,
+            ab_split_group_id,
+            observation_value,
+            count(*) as cnt,
+            min(min(o.min_date)) over(partition by o.ab_period_id) as min_date,
+            max(max(o.max_date)) over(partition by o.ab_period_id) as max_date
+    from (
+        select  o.participant_id,
+                o.ab_split_group_id,
+                o.ab_period_id,
+                sum(o.observation_value) as observation_value,
+                min(o.observation_date) as min_date,
+                max(o.observation_date) as max_date
+        from    dma.ab_observation o
+        where   o.observation_name in ('phone_views')
+            and o.observation_date <= '2018-05-25'
+            and o.is_after_first_exposure
+        group by 1, 2, 3
+    ) o
+    group by 1, 2, 3
+),
+ab_observation_nonzero as (
+    select  ab_period_id,
+            ab_split_group_id,
+            sum(cnt) as cnt,
+            min(min_date) as min_date,
+            max(max_date) as max_date
+    from    ab_observation
+    group by 1, 2
+),
+ab_observation_zero as (
+    select  p.ab_period_id,
+            p.ab_split_group_id,
+            0,
+            p.cnt - zeroifnull(o.cnt) as cnt,
+            min(o.min_date) over(partition by p.ab_period_id) as min_date,
+            max(o.max_date) over(partition by p.ab_period_id) as max_date
+    from (
+        select  p.ab_period_id,
+                p.ab_split_group_id,
+                count(*) as cnt
+        from (
+            select  p.participant_id,
+                    p.ab_test_id,
+                    p.ab_period_id,
+                    p.ab_split_group_id
+            from    dma.ab_participant p
+            where   p.first_exposure_time::date <= '2018-05-25'
+                and p.event_date <= '2018-05-25'
+            group by 1, 2, 3, 4
+        ) p
+        group by 1, 2
+    ) p
+    left join ab_observation_nonzero o on  o.ab_period_id = p.ab_period_id
+                                       and o.ab_split_group_id = p.ab_split_group_id
+    where   p.cnt - zeroifnull(o.cnt) > 0
+)
+select  o.ab_period_id as period_id,
+        o.ab_split_group_id as split_group_id,
+        o.observation_value,
+        cnt
+from (
+    select * from ab_observation union all
+    select * from ab_observation_zero
+) o
+join    dma.v_ab_period     p  on  p.ab_period_id = o.ab_period_id
+where   min_date = p.start_time::date
+    and max_date = '2018-05-25'
+order by 1, 2
+;
+
+
