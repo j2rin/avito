@@ -10,66 +10,17 @@ import pandas as pd
 from cached_property import cached_property
 
 from ab_significance.significance import ObservationsStats, CompareObservations
-from db_utils import connect_postgre, select_df
+from db_utils import connect_postgre, select_df, insert_into_vertica
 
 from utils import *
 from log_helper import configure_logger
 
 logger = configure_logger(logger_name='metrics_calc', log_dir=CUR_DIR_PATH + 'log/')
 
-VERTICA_MAX_THREADS = 8
+pd.core.generic.warnings.filterwarnings('ignore')
 
 data_storage = dict()
 significance_obj_storage = dict()
-
-
-def fill_data_storage(sql_list, index_list=None, data_key_list=None, n_threads=VERTICA_MAX_THREADS, con_method=None):
-    if n_threads > VERTICA_MAX_THREADS:
-        n_threads = VERTICA_MAX_THREADS
-
-    if index_list is None:
-        index_list = [None] * len(sql_list)
-
-    if data_key_list is None:
-        data_key_list = sql_list
-
-    params_list = set((s, i, d) for s, i, d in zip(sql_list, index_list, data_key_list) if d not in data_storage)
-
-    with multiprocessing.Pool(n_threads) as pool:
-        res = {k: pool.apply_async(select_df, (s, i, con_method)) for s, i, k in params_list}
-        results = dict()
-        for k, v in res.items():
-            try:
-                results.update({k: v.get()})
-            except Exception as e:
-                logger.error('{0} :: data_key: {1}'.format(e, k))
-
-    data_storage.update(results)
-
-
-def fill_data_storage_ab():
-    data_keys = [
-        'ab_test',
-        'ab_metric',
-        'ab_period',
-        'ab_split_group',
-        'ab_period_date',
-        'iters_to_skip',
-        'metric',
-    ]
-
-    sqls = [get_sql(dk) for dk in data_keys]
-    indecies = ['ab_test_id'] * (len(data_keys) - 3) + ['period_id', 'iter_hash', 'metric_id']
-
-    fill_data_storage(sqls, indecies, data_keys)
-
-    data_keys = []
-    pg_sqls = []
-    for sname in ['pg_ab_metric_params', 'pg_ab_split_group_pair']:
-        data_keys.append(sname)
-        pg_sqls.append(get_sql(sname))
-    indecies = ['ab_test_ext'] * 2
-    fill_data_storage(pg_sqls, indecies, data_keys, con_method=connect_postgre)
 
 
 def hash_md563(obj):
@@ -84,6 +35,77 @@ def hash_unordered(iterable):
     else:
         hashes = [hash_md563(t) for t in iterable]
         return sum(hashes) // len(hashes)
+
+
+def fill_data_storage(sql_list, index_list=None, data_key_list=None, n_threads=VERTICA_MAX_THREADS, con_method=None,
+                      use_cache=False, use_db=True):
+
+    if index_list is None:
+        index_list = [None] * len(sql_list)
+
+    if data_key_list is None:
+        data_key_list = sql_list
+
+    params_list = set((s, i, d) for s, i, d in zip(sql_list, index_list, data_key_list) if d not in data_storage)
+
+    results = dict()
+
+    if use_cache:
+        for p in params_list:
+            try:
+                results[p[2]] = pd.read_hdf(DATA_CACHE_PATH, p[2])
+            except (KeyError, FileNotFoundError):
+                pass
+
+    if use_db:
+        params_list = set(p for p in params_list if p[2] not in results)
+
+        total_sqls = len(params_list)
+
+        if n_threads > VERTICA_MAX_THREADS:
+            n_threads = VERTICA_MAX_THREADS
+
+        logger.info('{0} sqls to load'.format(total_sqls))
+
+        with multiprocessing.Pool(n_threads) as pool:
+            res = {k: pool.apply_async(select_df, (s, i, con_method)) for s, i, k in params_list}
+            for i, (k, v) in enumerate(res.items()):
+                try:
+                    data = v.get()
+                    logger.info('{0}/{1} loaded'.format(i + 1, total_sqls))
+                    if data.shape[0] == 0:
+                        continue
+                    data.to_hdf(DATA_CACHE_PATH, k)
+                    results.update({k: data})
+                except Exception as e:
+                    logger.error('{0} :: data_key: {1}'.format(e, k))
+
+    data_storage.update(results)
+
+
+def fill_data_storage_ab(use_cache=False):
+    data_keys = [
+        'ab_test',
+        'ab_metric',
+        'ab_period',
+        'ab_split_group',
+        'ab_period_date',
+        'iters_to_skip',
+        'metric',
+    ]
+
+    sqls = [get_sql(dk) for dk in data_keys]
+    indecies = ['ab_test_id'] * (len(data_keys) - 3) + ['period_id', 'iter_hash', 'metric_id']
+
+    fill_data_storage(sqls, indecies, data_keys, use_cache=use_cache)
+
+    data_keys = []
+    pg_sqls = []
+    for sname in ['pg_ab_metric_params', 'pg_ab_split_group_pair']:
+        data_keys.append(sname)
+        pg_sqls.append(get_sql(sname))
+    indecies = ['ab_test_ext'] * 2
+    fill_data_storage(pg_sqls, indecies, data_keys, con_method=connect_postgre, use_cache=use_cache)
 
 
 class AbIter:
@@ -119,6 +141,7 @@ class AbIter:
         self.breakdown = {k: v for k, v in breakdown.items() if v is not None}
 
         self.significance_params = {k: v for k, v in significance_params.items() if v is not None}
+        self.is_calculated = False
 
     @cached_property
     def breakdown_hash(self):
@@ -163,6 +186,10 @@ class AbIter:
     def data_index_cols(self):
         return ('period_id', 'split_group_id')
 
+    @property
+    def data_key(self):
+        return str(hash_md563((self.sql, self.data_index_cols)))
+
     def get_data_index(self, split_group_id):
         d = {
             **self.ab_params,
@@ -170,16 +197,13 @@ class AbIter:
         }
         return tuple(d[c] for c in self.data_index_cols)
 
-    def fill_data_storage(self):
-        fill_data_storage(sql_list=[self.sql], index_list=[self.data_index_cols])
+    def fill_data_storage(self, use_cache=True, use_db=True):
+        fill_data_storage(sql_list=[self.sql], index_list=[self.data_index_cols], data_key_list=[self.data_key],
+                          use_cache=use_cache, use_db=use_db)
 
-    @cached_property
+    @property
     def data(self):
-        data = get_data(self.sql)
-        if data is not None and data.shape[0] == 0:
-            logger.error('No data :: iter_hash: {}'.format(self.__hash__()))
-            return
-        return data
+        return get_data(self.data_key)
 
     def get_observations(self, split_group_id):
         data_index = self.get_data_index(split_group_id)
@@ -256,13 +280,14 @@ class AbIter:
         start = default_timer()
         result = self.significance_obj_method(**args)
         end = default_timer()
+        self.is_calculated = True
         return {
             **result._asdict(),
             'elapsed_seconds': end - start,
         }
 
     @property
-    def calc_iter(self):
+    def iter_result(self):
         return {
             'iter_hash': self.__hash__(),
             **self.ab_params,
@@ -279,48 +304,58 @@ class AbIter:
 
 
 class AbItersStorage:
-    def __init__(self, ab_iters=None):
+    def __init__(self, ab_iters=None, skip_existing=True):
         if ab_iters is None:
             ab_iters = get_all_ab_iters()
-        self.ab_iters = list(set(ab_iters))
+        ab_iters = list(set(ab_iters))
+        if skip_existing:
+            data = get_data('iters_to_skip')
+            iter_hashes_to_skip = set()
+            if data is not None:
+                iter_hashes_to_skip = set(data.index)
+            ab_iters = [it for it in ab_iters if hash(it) not in iter_hashes_to_skip]
 
-    @property
-    def iter_hashes_to_skip(self):
-        data = get_data('iters_to_skip')
-        if data is not None:
-            return set(data.index)
-
-    @cached_property
-    def ab_iters_to_do(self):
-        return [it for it in self.ab_iters if hash(it) not in self.iter_hashes_to_skip]
+        self.ab_iters = ab_iters
 
     @property
     def fill_data_storage_args(self):
-        sql_list = [it.sql for it in self.ab_iters_to_do]
-        index_list = [it.data_index_cols for it in self.ab_iters_to_do]
-        zipped = set(zip(sql_list, index_list))
+        zipped = set((it.sql, it.data_index_cols, it.data_key) for it in self.ab_iters)
         return {
             'sql_list': [s[0] for s in zipped],
             'index_list': [s[1] for s in zipped],
+            'data_key_list': [s[2] for s in zipped]
         }
 
-    def fill_data_storage(self):
-        fill_data_storage(**self.fill_data_storage_args)
+    def fill_data_storage(self, use_cache=True, use_db=True):
+        fill_data_storage(**self.fill_data_storage_args, use_cache=use_cache, use_db=use_db)
 
     def ab_iters_filtered(self, iter_type='fast', is_with_data=True):
-        return [it for it in self.ab_iters_to_do if it.iter_type == iter_type and it.is_with_data == is_with_data]
+        return [it for it in self.ab_iters if it.iter_type == iter_type and it.is_with_data == is_with_data]
 
-    def calc_iters_by_type(self, iter_type='fast'):
-        return [
-            it.calc_iter
-            for it in self.ab_iters_filtered(iter_type=iter_type, is_with_data=True)
-            if it.iter_type == iter_type and it.is_with_data
-        ]
+    def calc_iters_by_type(self, iter_type='fast', save_each=1000):
+        records = []
+        iters = self.ab_iters_filtered(iter_type=iter_type, is_with_data=True)
+        total_iters = len(iters)
+        for i, it in enumerate(self.ab_iters_filtered(iter_type=iter_type, is_with_data=True)):
+            records.append(it.iter_result)
+            logger.info('{0}/{1} iters done'.format(i + 1, total_iters))
+            if save_each > 0 and (len(records) % save_each == 0 or i + 1 == total_iters):
+                self.save_records_to_vertica(records)
+                records = list()
+
+    def save_records_to_vertica(self, records, table_name='saef.ab_result'):
+        df = pd.DataFrame.from_records(records)
+        insert_into_vertica(df, table_name)
+        logger.info('{0} records saved to vertica'.format(len(records)))
+
+    @property
+    def iters_results(self):
+        return [it.iter_result for it in self.ab_iters if it.is_calculated]
 
 
 def get_data(data_key):
     if data_key not in data_storage:
-        logger.error('You need to fill data_storage first\ndata_key: {}'.format(data_key))
+        logger.error('No data :: data_key: {}'.format(data_key))
         return
     data = data_storage[data_key]
     return data

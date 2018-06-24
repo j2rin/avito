@@ -11,17 +11,14 @@ compare_observations:
     - {null_value: 0, alternative: '>', comp_func: difference}
     - {null_value: 0, alternative: '<', comp_func: difference}
     - {null_value: 0, alternative: '2s', comp_func: difference}
-    - {null_value: 0, alternative: '>', comp_func: relative_change}
-    - {null_value: 0, alternative: '<', comp_func: relative_change}
-    - {null_value: 0, alternative: '2s', comp_func: relative_change}
   t_confint:
     - {alpha: 0.05, alternative: '2s', comp_func: difference}
-    - {alpha: 0.05, alternative: '2s', comp_func: relative_change}
   mann_whitney_u_test:
     - {alternative: '>'}
     - {alternative: '<'}
     - {alternative: '2s'}
-  basic_stats:
+  basic_stats_pooled:
+  smart_stats_pooled:
+    - {comp_func: 'difference', stat_func: mean}
   smart_stats:
     - {comp_func: 'difference', stat_func: mean}
-    - {comp_func: 'relative_change', stat_func: mean}

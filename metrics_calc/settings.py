@@ -19,3 +19,7 @@ CONFIG_RELATIVE_PATH = 'config/'
 TEMPLATES_RELATIVE_PATH = 'config/metric_templates/'
 PARAMS_RELATIVE_PATH = 'config/metric_params/'
 SCHEMAS_RELATIVE_PATH = 'config_schemas/'
+
+DATA_CACHE_PATH = CUR_DIR_PATH + 'data_cache.h5'
+
+VERTICA_MAX_THREADS = 8

@@ -68,6 +68,7 @@ ab_period_date: |
     from    DMA.v_ab_test_period_date
     where   period not in ('AA_retro')
         and not event_date between '2018-06-14' and '2018-06-18'
+        and event_date < current_date
     ;
 
 ab_split_group: |
@@ -130,8 +131,6 @@ result_table: |
         elapsed_seconds float,
         insert_datetime timestamp
     ) order by iter_hash segmented by hash(iter_hash) all nodes;
-
-
 
 iters_to_skip: |
     select  r.iter_hash
