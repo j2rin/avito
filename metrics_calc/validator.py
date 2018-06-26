@@ -17,6 +17,9 @@ def validate_config():
         list(configs[EVENTS_FILENAME].keys())
     schemas[METRICS_FILENAME]['valueschema']['schema']['observations']['allowed'] = \
         list(configs[OBSERVATIONS_FILENAME].keys())
+    for key in ['numenator', 'denominator']:
+        schemas[METRICS_FILENAME]['valueschema']['schema'][key]['allowed'] = \
+            list(configs[OBSERVATIONS_FILENAME].keys())
 
     metric_params = [f.split('.')[0] for f in os.listdir(LOCAL_PATH + PARAMS_RELATIVE_PATH)]
     metric_templates = [f.split('.')[0] for f in os.listdir(LOCAL_PATH + TEMPLATES_RELATIVE_PATH)]
