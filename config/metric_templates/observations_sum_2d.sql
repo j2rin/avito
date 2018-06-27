@@ -2,6 +2,7 @@ with
 ab_observation as (
     select  ab_period_id,
             ab_split_group_id,
+            breakdown_id,
             numenator_value,
             denominator_value,
             count(*) as cnt,
@@ -11,6 +12,7 @@ ab_observation as (
         select  o.participant_id,
                 o.ab_split_group_id,
                 o.ab_period_id,
+                o.breakdown_id,
                 sum(case when o.observation_name in ({numenator_str}) then o.observation_value else 0 end) as numenator_value,
                 sum(case when o.observation_name in ({denominator_str}) then o.observation_value else 0 end) as denominator_value,
                 min(o.observation_date) as min_date,
@@ -19,9 +21,9 @@ ab_observation as (
         where   o.observation_name in ({observations_str})
             and o.observation_date <= '{calc_date}'
             and o.is_after_first_exposure
-        group by 1, 2, 3
+        group by 1, 2, 3, 4
     ) o
-    group by 1, 2, 3, 4
+    group by 1, 2, 3, 4, 5
 ),
 ab_observation_nonzero as (
     select  ab_period_id,
@@ -35,6 +37,7 @@ ab_observation_nonzero as (
 ab_observation_zero as (
     select  p.ab_period_id,
             p.ab_split_group_id,
+            o.breakdown_id,
             0, 0,
             p.cnt - zeroifnull(o.cnt) as cnt,
             min(o.min_date) over(partition by p.ab_period_id) as min_date,
@@ -55,12 +58,13 @@ ab_observation_zero as (
         ) p
         group by 1, 2
     ) p
-    left join ab_observation_nonzero o  on  o.ab_period_id = p.ab_period_id
-                                        and o.ab_split_group_id = p.ab_split_group_id
+    join ab_observation_nonzero o   on  o.ab_period_id = p.ab_period_id
+                                    and o.ab_split_group_id = p.ab_split_group_id
     where   p.cnt - zeroifnull(o.cnt) > 0
 )
 select  o.ab_period_id as period_id,
         o.ab_split_group_id as split_group_id,
+        o.breakdown_id,
         o.numenator_value,
         o.denominator_value,
         cnt
