@@ -20,16 +20,12 @@ if __name__ == '__main__':
     ai = AbItersStorage()
 
     n_iters = len(ai.ab_iters)
-    logger.info('{} iters to go'.format(n_iters))
 
     ai.fill_data_storage()
-
-    logger.info('data_storage filled')
 
     try:
         n_fast_iters = len(ai.ab_iters_filtered())
         if n_fast_iters:
-            logger.info('{} fast iters to go'.format(n_fast_iters))
             ai.calc_iters_by_type()
 
     except Exception as e:
