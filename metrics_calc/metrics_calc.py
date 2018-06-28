@@ -153,8 +153,15 @@ class AbIter:
 
     @property
     def observations(self):
-        metrics = get_config(METRICS_FILENAME)
-        return tuple(metrics[self.metric]['observations'])
+        return tuple(get_metrics[self.metric]['observations'])
+
+    @property
+    def numenator(self):
+        return tuple(get_metrics[self.metric].get('numenator', list()))
+
+    @property
+    def denominator(self):
+        return tuple(get_metrics[self.metric].get('numenator', list()))
 
     @property
     def ab_params(self):
@@ -168,12 +175,18 @@ class AbIter:
             **({'control_split_group_id': self.control_split_group_id} if self.control_split_group_id else dict()),
         }
 
+    @staticmethod
+    def list_to_sql_str(lst):
+        return "'{}'".format("', '".join(lst)),
+
     @property
     def sql_params(self):
         return {
             'calc_date': self.calc_date,
             'observations': self.observations,
-            'observations_str': "'{}'".format("', '".join(self.observations)),
+            'observations_str': self.list_to_sql_str(self.observations),
+            'numenator_str': self.list_to_sql_str(self.numenator),
+            'denominator_str': self.list_to_sql_str(self.denominator),
         }
 
     @property
@@ -271,7 +284,8 @@ class AbIter:
             'permutation_confint'
         }:
             return 'slow'
-        elif self.significance_params['method'] == 'smart_stats' and self.significance_params['stat_func'] != 'mean':
+        elif self.significance_params['method'] in ('smart_stats', 'smart_stats_pooled') \
+                and self.significance_params.get('resampling'):
             return 'slow'
         else:
             return 'fast'
@@ -376,6 +390,7 @@ def get_metric_id(metric):
     if data is not None and metric in data.index:
         return data.loc[metric]['metric_id']
 
+
 @lru_cache(maxsize=None)
 def get_split_groups(ab_test_ext):
     data_key = 'ab_split_group'
@@ -389,6 +404,7 @@ def get_split_group_id(ab_test_ext, split_group):
         ftr = (data.index == ab_test_ext) & (data.split_group == split_group)
         return data[ftr]['split_group_id'].values[0]
 
+
 @lru_cache(maxsize=None)
 def get_split_group_pairs(ab_test_ext):
     data_key = 'pg_ab_split_group_pair'
@@ -400,6 +416,10 @@ def get_split_group_pairs(ab_test_ext):
             'control_split_group_id': get_split_group_id(ab_test_ext, p['control_split_group']),
         } for p in pairs
     ]
+
+
+def get_metrics():
+    return get_config(METRICS_FILENAME)
 
 
 def get_ab_metric_params(ab_test_ext, metric):
