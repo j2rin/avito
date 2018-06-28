@@ -73,6 +73,7 @@ ab_period_date: |
 
 ab_split_group: |
     select  t.ab_test_id,
+            t.ab_test_ext_id as ab_test_ext,
             sg.ab_split_group_id as split_group_id,
             sg.split_group,
             sg.is_control
@@ -92,6 +93,49 @@ pg_ab_split_group_pair: |
     where   sg.is_active
         and t.is_active
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
+    ;
+
+ab_records: |
+    select  t.ab_test_id,
+            t.ab_test_ext_id as ab_test_ext,
+            t.ab_test_label,
+            m.ab_metric_id as metric_id,
+            m.ab_metric_name as metric,
+            p.ab_period_id as period_id,
+            p.period,
+            p.start_time::date as start_date,
+                case
+                when t.interrupt_time is not null then t.interrupt_time 
+                when p.end_time::date <= current_date - interval'1 day' then p.end_time::date
+                else current_date - interval'1 day'
+                end::date as
+            end_date,
+            b.breakdown_id,
+            d.event_date as calc_date
+    from    dma.v_ab_test                   t
+    join    dma.v_ab_test_metric            m   on  m.ab_test_id = t.ab_test_id
+    join    dma.v_ab_period                 p   on  p.ab_test_id = t.ab_test_id
+    join    dma.v_ab_test_period_date       d   on  d.ab_period_id = p.ab_period_id
+    join    dma.v_ab_test_metric_breakdown  b   on  b.ab_metric_id = m.ab_metric_id
+    where   t.is_active
+        and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
+        and m.ab_test_metric_link_is_active
+        and m.ab_metric_is_active
+        and m.ab_metric_name not in ('saved_searches_list_views')
+        and p.is_active
+        and p.period not in ('AA_retro')
+        and not d.event_date between '2018-06-14' and '2018-06-18'
+        and d.event_date < current_date
+    order by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+    ;
+
+ab_breakdown_dim_filter: |
+    select  f.breakdown_id,
+            f.dimension_slug,
+            f.dimension_value
+    from    dma.v_ab_test_metric_breakdown_dimension_filter f
+    where   dimension_value is not null
+    order by 1, 2, 3
     ;
 
 result_table: |

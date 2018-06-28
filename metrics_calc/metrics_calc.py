@@ -83,19 +83,17 @@ def fill_data_storage(sql_list, index_list=None, data_key_list=None, n_threads=V
     data_storage.update(results)
 
 
-def fill_data_storage_ab(use_cache=False):
+def fill_data_storage_ab(use_cache=False, con=None):
     data_keys = [
-        'ab_test',
-        'ab_metric',
-        'ab_period',
         'ab_split_group',
-        'ab_period_date',
         'iters_to_skip',
+        'ab_records',
+        'ab_breakdown_dim_filter',
         'metric',
     ]
 
     sqls = [get_sql(dk) for dk in data_keys]
-    indecies = ['ab_test_id'] * (len(data_keys) - 3) + ['period_id', 'iter_hash', 'metric_id']
+    indecies = ['ab_test_ext', 'iter_hash', None, 'breakdown_id', 'metric']
 
     fill_data_storage(sqls, indecies, data_keys, use_cache=use_cache)
 
@@ -118,10 +116,9 @@ class AbIter:
         split_group_id,
         calc_date,
 
-        other_params,
+        metric,
 
-        observations,
-        breakdown,
+        breakdown_id,
 
         significance_params,
         control_split_group_id=None,
@@ -134,18 +131,16 @@ class AbIter:
         self.split_group_id = split_group_id
         self.control_split_group_id = control_split_group_id
         self.calc_date = calc_date
+        self.metric = metric
 
-        self.other_params = {k: v for k, v in other_params.items() if v is not None}
-
-        self.observations = observations
-        self.breakdown = {k: v for k, v in breakdown.items() if v is not None}
+        self.breakdown_id = breakdown_id
 
         self.significance_params = {k: v for k, v in significance_params.items() if v is not None}
         self.is_calculated = False
 
-    @cached_property
-    def breakdown_hash(self):
-        return hash_unordered([(k, hash_unordered(v)) for k, v in self.breakdown.items()])
+    @property
+    def breakdown(self):
+        return get_breakdown_values(self.breakdown_id)
 
     @property
     def breakdown_text(self):
@@ -153,24 +148,45 @@ class AbIter:
         return ';'.join(['{0}[{1}]'.format(dim, values) for dim, values in bkd])
 
     @property
+    def metric_id(self):
+        return get_metric_id(self.metric)
+
+    @property
+    def observations(self):
+        return tuple(get_metrics[self.metric]['observations'])
+
+    @property
+    def numenator(self):
+        return tuple(get_metrics[self.metric].get('numenator', list()))
+
+    @property
+    def denominator(self):
+        return tuple(get_metrics[self.metric].get('numenator', list()))
+
+    @property
     def ab_params(self):
         return {
             'ab_test_id': self.ab_test_id,
             'period_id': self.period_id,
             'split_group_id': self.split_group_id,
+            'metric_id': self.metric_id,
+            'breakdown_id': self.breakdown_id,
             'calc_date': self.calc_date,
-            'breakdown_hash': self.breakdown_hash,
-            **self.other_params,
             **({'control_split_group_id': self.control_split_group_id} if self.control_split_group_id else dict()),
         }
+
+    @staticmethod
+    def list_to_sql_str(lst):
+        return "'{}'".format("', '".join(lst)),
 
     @property
     def sql_params(self):
         return {
             'calc_date': self.calc_date,
             'observations': self.observations,
-            'sql_breakdown': self.sql_breakdown,
-            'observations_str': "'{}'".format("', '".join(self.observations)),
+            'observations_str': self.list_to_sql_str(self.observations),
+            'numenator_str': self.list_to_sql_str(self.numenator),
+            'denominator_str': self.list_to_sql_str(self.denominator),
         }
 
     @property
@@ -184,7 +200,7 @@ class AbIter:
 
     @property
     def data_index_cols(self):
-        return ('period_id', 'split_group_id')
+        return ('period_id', 'split_group_id', 'breakdown_id')
 
     @property
     def data_key(self):
@@ -268,7 +284,8 @@ class AbIter:
             'permutation_confint'
         }:
             return 'slow'
-        elif self.significance_params['method'] == 'smart_stats' and self.significance_params['stat_func'] != 'mean':
+        elif self.significance_params['method'] in ('smart_stats', 'smart_stats_pooled') \
+                and self.significance_params.get('resampling'):
             return 'slow'
         else:
             return 'fast'
@@ -368,56 +385,29 @@ def get_ab_something(ix, data_key, fields):
     return []
 
 
-def get_ab_test_ext(ab_test_id):
-    data = get_data('ab_test')
-    if data is not None and ab_test_id in data.index:
-        return data.loc[ab_test_id]['ab_test_ext']
-
-
-def get_ab_test_id(ab_test_ext):
-    data = get_data('ab_test')
-    if data is not None:
-        ftr = data.ab_test_ext == ab_test_ext
-        if data[ftr].shape[0] > 0:
-            return data[ftr].index[0]
-
-
-def get_ab_metrics(ab_test_id):
-    data_key = 'ab_metric'
-    fields = ['metric_id', 'metric']
-    return get_ab_something(ab_test_id, data_key, fields)
-
-
-def get_metric(metric_id):
+def get_metric_id(metric):
     data = get_data('metric')
-    if data is not None and metric_id in data.index:
-        return data.loc[metric_id]['metric']
+    if data is not None and metric in data.index:
+        return data.loc[metric]['metric_id']
 
 
-def get_ab_periods(ab_test_id):
-    data_key = 'ab_period'
-    fields = ['period_id', 'start_date', 'end_date']
-    return get_ab_something(ab_test_id, data_key, fields)
-
-
-def get_split_groups(ab_test_id):
+@lru_cache(maxsize=None)
+def get_split_groups(ab_test_ext):
     data_key = 'ab_split_group'
     fields = ['split_group_id']
-    return get_ab_something(ab_test_id, data_key, fields)
+    return get_ab_something(ab_test_ext, data_key, fields)
 
 
 def get_split_group_id(ab_test_ext, split_group):
     data = get_data('ab_split_group')
     if data is not None:
-        ab_test_id = get_ab_test_id(ab_test_ext)
-        if ab_test_id is not None:
-            ftr = (data.index == ab_test_id) & (data.split_group == split_group)
-            return data[ftr]['split_group_id'].values[0]
+        ftr = (data.index == ab_test_ext) & (data.split_group == split_group)
+        return data[ftr]['split_group_id'].values[0]
 
 
-def get_split_group_pairs(ab_test_id):
+@lru_cache(maxsize=None)
+def get_split_group_pairs(ab_test_ext):
     data_key = 'pg_ab_split_group_pair'
-    ab_test_ext = get_ab_test_ext(ab_test_id)
     fields = ['split_group', 'control_split_group']
     pairs = get_ab_something(ab_test_ext, data_key, fields)
     return [
@@ -428,15 +418,11 @@ def get_split_group_pairs(ab_test_id):
     ]
 
 
-def get_dates(period_id):
-    data_key = 'ab_period_date'
-    fields = ['calc_date']
-    return get_ab_something(period_id, data_key, fields)
+def get_metrics():
+    return get_config(METRICS_FILENAME)
 
 
-def get_ab_metric_params(ab_test_id, metric_id):
-    ab_test_ext = get_ab_test_ext(ab_test_id)
-    metric = get_metric(metric_id)
+def get_ab_metric_params(ab_test_ext, metric):
     data = get_data('pg_ab_metric_params').loc[[ab_test_ext]]
     params = data[data.metric == metric]['params'].values[0]
     return params if params else dict()
@@ -455,16 +441,16 @@ def flatlify_significance_params(params_dict):
     return result
 
 
-def get_significance_params(ab_test_id, metric_id):
+@lru_cache(maxsize=None)
+def get_significance_params(ab_test_ext, metric):
 
     def get_flat_params(params_filename):
         params = get_params(params_filename)
         return flatlify_significance_params(params)
 
     metrics = get_config(METRICS_FILENAME)
-    metric = get_metric(metric_id)
 
-    ab_metric_params = get_ab_metric_params(ab_test_id, metric_id)
+    ab_metric_params = get_ab_metric_params(ab_test_ext, metric)
     metric_params = metrics[metric]
     default_params = get_flat_params(DEFAULT_PARAMS_FILENAME)
 
@@ -496,86 +482,71 @@ def get_significance_params(ab_test_id, metric_id):
     return uniquify_dicts(result)
 
 
-def get_breakdowns(ab_test_id, metric_id):
-    return [dict()]
-    ab_metric_params = get_ab_metric_params(ab_test_id, metric_id)
-    breakdowns = ab_metric_params.get('breakdowns')
-    if not breakdowns:
-        return [dict()]
-    else:
-        breakdowns = [{k: tuple(set(v)) for k, v in b.items()} for b in breakdowns]
-        breakdowns = uniquify_dicts(breakdowns)
-        return [{k: sorted(v) for k, v in sorted(b.items())} for b in breakdowns]
-
-
-def get_ab_iters(ab_test_id):
-
-    ab_metrics = get_ab_metrics(ab_test_id)
-    ab_periods = get_ab_periods(ab_test_id)
-    ab_split_groups = get_split_groups(ab_test_id)
-    ab_split_group_pairs = get_split_group_pairs(ab_test_id)
-    metrics = get_config(METRICS_FILENAME)
-
-    iters = list()
-
-    for metric, period in itertools.product(ab_metrics, ab_periods):
-        metric_id = metric['metric_id']
-        period_id = period['period_id']
-        template = metrics[metric['metric']].get('template', DEFAULT_TEMPLATE)
-        sql_template = get_template(template)
-        observations = tuple(metrics[metric['metric']]['observations'])
-
-        dates = get_dates(period_id)
-        breakdowns = get_breakdowns(ab_test_id, metric_id)
-
-        significance_params = get_significance_params(ab_test_id, metric_id)
-        obs_stats_params = [prm for prm in significance_params if prm['class_name'] == 'observations_stats']
-        comp_obs_params = [prm for prm in significance_params if prm['class_name'] == 'compare_observations']
-
-        iters.extend([
-            AbIter(
-                **{
-                    'sql_template': sql_template,
-                    'ab_test_id': ab_test_id,
-                    'period_id': period_id,
-                    'other_params': {**metric, },
-                    'observations': observations,
-                    'breakdown': b,
-                    'significance_params': os,
-                    **d, **sg,
-                }
-            )
-            for d, os, sg, b in itertools.product(dates, obs_stats_params, ab_split_groups, breakdowns)
-        ])
-        iters.extend([
-            AbIter(
-                **{
-                    'sql_template': sql_template,
-                    'ab_test_id': ab_test_id,
-                    'period_id': period_id,
-                    'other_params': {**metric, },
-                    'observations': observations,
-                    'breakdown': b,
-                    'significance_params': co,
-                    **d, **sgp,
-                }
-            )
-            for d, co, sgp, b in itertools.product(dates, comp_obs_params, ab_split_group_pairs, breakdowns)
-        ])
-    return iters
+def get_ab_records():
+    return get_data('ab_records').to_dict(orient='records')
 
 
 @lru_cache(maxsize=None)
 def get_all_ab_iters():
-    data = get_data('ab_test')
-    if data is not None:
-        ab_test_ids = list(data.index)
-        ab_iters = list()
-        for i in ab_test_ids:
-            ab_iters.extend(get_ab_iters(i))
-        return list(set(ab_iters))
-    return []
+
+    ab_records = get_ab_records()
+    metrics = get_config(METRICS_FILENAME)
+
+    iters = list()
+
+    for i, ab_record in enumerate(ab_records):
+        ab_test_id = ab_record['ab_test_id']
+        ab_test_ext = ab_record['ab_test_ext']
+        period_id = ab_record['period_id']
+        metric = ab_record['metric']
+        breakdown_id = ab_record['breakdown_id']
+
+        ab_split_groups = get_split_groups(ab_test_ext)
+        ab_split_group_pairs = get_split_group_pairs(ab_test_ext)
+
+        template = metrics[metric].get('template', DEFAULT_TEMPLATE)
+        sql_template = get_template(template)
+        observations = tuple(metrics[metric]['observations'])
+
+        significance_params = get_significance_params(ab_test_ext, metric)
+        obs_stats_params = [prm for prm in significance_params if prm['class_name'] == 'observations_stats']
+        comp_obs_params = [prm for prm in significance_params if prm['class_name'] == 'compare_observations']
+
+        os_iters = list(itertools.product(obs_stats_params, ab_split_groups))
+        co_oters = list(itertools.product(comp_obs_params, ab_split_group_pairs))
+
+        iters.extend([
+            AbIter(
+                **{
+                    'sql_template': sql_template,
+                    'ab_test_id': ab_test_id,
+                    'period_id': period_id,
+                    'metric': metric,
+                    'breakdown_id': breakdown_id,
+                    'calc_date': ab_record['calc_date'],
+                    'significance_params': os,
+                    **sg,
+                }
+            )
+            for os, sg in os_iters + co_oters
+        ])
+    return list(set(iters))
 
 
 def get_ab_iter_by_hash(iter_hash):
     return [it for it in get_all_ab_iters() if hash(it) == iter_hash][0]
+
+
+@lru_cache(maxsize=None)
+def get_breakdown_values(breakdown_id):
+    data = get_data('ab_breakdown_dim_filter')
+    result = dict()
+    if breakdown_id in data.index:
+        records = data.loc[breakdown_id].to_dict(orient='records')
+        for r in records:
+            s, v = r.values()
+            if s in result:
+                result[s].append(r['dimension_value'])
+            else:
+                result[s] = [v]
+    return result

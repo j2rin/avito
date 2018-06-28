@@ -17,7 +17,7 @@ def connect_postgre(user=None, password=None):
                             port=5432)
 
 
-DFT_VERTICA_AUTH_FILE = '~/vertica_auth.json'
+DFT_VERTICA_AUTH_FILE = '~/workspace/wallet/vertica_auth.json'
 VERTICA_MAX_THREADS = 12
 
 
