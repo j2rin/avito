@@ -4,14 +4,12 @@ import pandas as pd
 import os
 
 sys.path.append(os.environ['METRICS_CALC_PATH'])
-from metrics_calc import fill_data_storage_ab, get_all_ab_iters, AbItersStorage
+from metrics_calc import fill_data_storage_ab, get_all_ab_iters, AbItersStorage, logger
 from validator import validate_config
-from log_helper import configure_logger
 from settings import *
 
 
 if __name__ == '__main__':
-    logger = configure_logger(logger_name='metrics_calc', log_dir=CUR_DIR_PATH + 'log/')
     logger.info('metrics_calc started')
 
     validate_config()

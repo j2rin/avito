@@ -23,6 +23,8 @@ ab_observation as (
             and o.is_after_first_exposure
         group by 1, 2, 3, 4
     ) o
+    where   numenator_value > 0
+        and denominator_value > 0
     group by 1, 2, 3, 4, 5
 ),
 ab_observation_nonzero as (
