@@ -116,7 +116,7 @@ ab_records: |
     join    dma.v_ab_test_metric            m   on  m.ab_test_id = t.ab_test_id
     join    dma.v_ab_period                 p   on  p.ab_test_id = t.ab_test_id
     join    dma.v_ab_test_period_date       d   on  d.ab_period_id = p.ab_period_id
-    join    dma.v_ab_test_metric_breakdown  b   on  b.ab_metric_id = m.ab_metric_id
+    join    dma.v_ab_test_metric_breakdown  b   on  b.ab_test_metric_link_id = m.ab_test_metric_link_id
     where   t.is_active
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
         and m.ab_test_metric_link_is_active
@@ -149,7 +149,7 @@ result_table: |
         calc_date date,
         split_group_id int,
         control_split_group_id int,
-        breakdown_hash int,
+        breakdown_id int,
         breakdown varchar(1000),
         class_name varchar(64),
         method varchar(64),
