@@ -15,7 +15,7 @@ from db_utils import connect_postgre, select_df, insert_into_vertica
 from utils import *
 from log_helper import configure_logger
 
-logger = configure_logger(logger_name='metrics_calc', log_dir=CUR_DIR_PATH + 'log/')
+logger = configure_logger(logger_name='metrics_calc', log_dir=CUR_DIR_PATH)
 
 pd.core.generic.warnings.filterwarnings('ignore')
 
@@ -161,7 +161,7 @@ class AbIter:
 
     @property
     def denominator(self):
-        return get_metrics()[self.metric].get('numenator')
+        return get_metrics()[self.metric].get('denominator')
 
     @property
     def ab_params(self):
