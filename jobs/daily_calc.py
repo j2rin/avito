@@ -1,8 +1,9 @@
 import sys
 import datetime
 import pandas as pd
+import os
 
-sys.path.append('/home/dlenkov/workspace/ab-metrics/metrics_calc/')
+sys.path.append(os.environ['METRICS_CALC_PATH'])
 from metrics_calc import fill_data_storage_ab, get_all_ab_iters, AbItersStorage
 from validator import validate_config
 from log_helper import configure_logger
@@ -20,12 +21,13 @@ if __name__ == '__main__':
     ai = AbItersStorage()
 
     n_iters = len(ai.ab_iters)
-
+    logger.info('{} iters total'.format(n_iters))
     ai.fill_data_storage()
 
     try:
         n_fast_iters = len(ai.ab_iters_filtered())
         if n_fast_iters:
+            logger.info('{} fast iters total'.format(n_fast_iters))
             ai.calc_iters_by_type()
 
     except Exception as e:
