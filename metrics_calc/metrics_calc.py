@@ -153,15 +153,15 @@ class AbIter:
 
     @property
     def observations(self):
-        return tuple(get_metrics[self.metric]['observations'])
+        return tuple(get_metrics()[self.metric]['observations'])
 
     @property
     def numenator(self):
-        return tuple(get_metrics[self.metric].get('numenator', list()))
+        return tuple(get_metrics()[self.metric].get('numenator', list()))
 
     @property
     def denominator(self):
-        return tuple(get_metrics[self.metric].get('numenator', list()))
+        return tuple(get_metrics()[self.metric].get('numenator', list()))
 
     @property
     def ab_params(self):
@@ -177,7 +177,7 @@ class AbIter:
 
     @staticmethod
     def list_to_sql_str(lst):
-        return "'{}'".format("', '".join(lst)),
+        return "'{}'".format("', '".join(lst))
 
     @property
     def sql_params(self):
@@ -542,7 +542,7 @@ def get_breakdown_values(breakdown_id):
     data = get_data('ab_breakdown_dim_filter')
     result = dict()
     if breakdown_id in data.index:
-        records = data.loc[breakdown_id].to_dict(orient='records')
+        records = data.loc[[breakdown_id]].to_dict(orient='records')
         for r in records:
             s, v = r.values()
             if s in result:
