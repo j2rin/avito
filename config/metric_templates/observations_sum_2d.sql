@@ -17,7 +17,7 @@ ab_observation as (
                 sum(case when o.observation_name in ({denominator_str}) then o.observation_value else 0 end) as denominator_value,
                 min(o.observation_date) as min_date,
                 max(o.observation_date) as max_date
-        from    dma.ab_observation o
+        from    dma.ab_observation_4147 o
         where   o.observation_name in ({observations_str})
             and o.observation_date <= '{calc_date}'
             and o.is_after_first_exposure
@@ -28,11 +28,12 @@ ab_observation as (
 ab_observation_nonzero as (
     select  ab_period_id,
             ab_split_group_id,
+            breakdown_id,
             sum(cnt) as cnt,
             min(min_date) as min_date,
             max(max_date) as max_date
     from    ab_observation
-    group by 1, 2
+    group by 1, 2, 3
 ),
 ab_observation_zero as (
     select  p.ab_period_id,
