@@ -1,0 +1,20 @@
+observations_stats:
+  smart_stats:
+    - {stat_func: ratio, resampling: null}
+
+
+compare_observations:
+  t_test:
+    - {null_value: 0, alternative: '>', stat_func: ratio}
+    - {null_value: 0, alternative: '<', stat_func: ratio}
+    - {null_value: 0, alternative: '2s', stat_func: ratio}
+  t_confint:
+    - {alpha: 0.05, alternative: '2s', stat_func: ratio}
+  mann_whitney_u_test:
+    - {alternative: '>', ratio: True}
+    - {alternative: '<', ratio: True}
+    - {alternative: '2s', ratio: True}
+  smart_stats_pooled:
+    - {stat_func: ratio, resampling: null}
+  smart_stats:
+    - {comp_func: difference, stat_func: ratio, resampling: null}
