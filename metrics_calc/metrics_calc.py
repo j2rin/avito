@@ -157,11 +157,11 @@ class AbIter:
 
     @property
     def numenator(self):
-        return tuple(get_metrics()[self.metric].get('numenator', list()))
+        return get_metrics()[self.metric].get('numenator')
 
     @property
     def denominator(self):
-        return tuple(get_metrics()[self.metric].get('numenator', list()))
+        return get_metrics()[self.metric].get('numenator')
 
     @property
     def ab_params(self):
@@ -179,22 +179,26 @@ class AbIter:
     def list_to_sql_str(lst):
         return "'{}'".format("', '".join(lst))
 
-    @property
+    @cached_property
     def sql_params(self):
-        return {
+        res = {
             'calc_date': self.calc_date,
             'observations': self.observations,
             'observations_str': self.list_to_sql_str(self.observations),
-            'numenator_str': self.list_to_sql_str(self.numenator),
-            'denominator_str': self.list_to_sql_str(self.denominator),
         }
+        if self.numenator:
+            res.update({
+                'numenator_str': self.list_to_sql_str(self.numenator),
+                'denominator_str': self.list_to_sql_str(self.denominator),
+            })
+        return res
 
     @property
     def sql_breakdown(self):
         bkd = ((key, ', '.join([str(v) for v in values])) for (key, values) in self.breakdown.items())
         return ' '.join(['and {0} in ({1})'.format(dim, values) for dim, values in bkd])
 
-    @property
+    @cached_property
     def sql(self):
         return self.sql_template.format(**self.sql_params)
 
@@ -202,7 +206,7 @@ class AbIter:
     def data_index_cols(self):
         return ('period_id', 'split_group_id', 'breakdown_id')
 
-    @property
+    @cached_property
     def data_key(self):
         return str(hash_md563((self.sql, self.data_index_cols)))
 
@@ -340,7 +344,7 @@ class AbItersStorage:
         return {
             'sql_list': [s[0] for s in zipped],
             'index_list': [s[1] for s in zipped],
-            'data_key_list': [s[2] for s in zipped]
+            'data_key_list': [s[2] for s in zipped],
         }
 
     def fill_data_storage(self, use_cache=True, use_db=True):
@@ -369,7 +373,7 @@ class AbItersStorage:
     def iters_results(self):
         return [it.iter_result for it in self.ab_iters if it.is_calculated]
 
-
+@lru_cache(maxsize=None)
 def get_data(data_key):
     if data_key not in data_storage:
         logger.error('No data :: data_key: {}'.format(data_key))
@@ -418,6 +422,7 @@ def get_split_group_pairs(ab_test_ext):
     ]
 
 
+@lru_cache(maxsize=None)
 def get_metrics():
     return get_config(METRICS_FILENAME)
 
