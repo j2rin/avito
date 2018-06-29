@@ -109,7 +109,6 @@ def fill_data_storage_ab(use_cache=False, con=None):
 class AbIter:
     def __init__(
         self,
-        sql_template,
 
         ab_test_id,
         period_id,
@@ -123,9 +122,6 @@ class AbIter:
         significance_params,
         control_split_group_id=None,
     ):
-
-        self.sql_template = sql_template
-
         self.ab_test_id = ab_test_id
         self.period_id = period_id
         self.split_group_id = split_group_id
@@ -174,6 +170,14 @@ class AbIter:
             'calc_date': self.calc_date,
             **({'control_split_group_id': self.control_split_group_id} if self.control_split_group_id else dict()),
         }
+
+    @cached_property
+    def metric_template(self):
+        return get_metrics()[self.metric].get('template', DEFAULT_TEMPLATE)
+
+    @cached_property
+    def sql_template(self):
+        return get_template(self.metric_template)
 
     @staticmethod
     def list_to_sql_str(lst):
@@ -496,10 +500,8 @@ def get_ab_records():
 def get_all_ab_iters():
 
     ab_records = get_ab_records()
-    metrics = get_config(METRICS_FILENAME)
 
     iters = list()
-
     for i, ab_record in enumerate(ab_records):
         ab_test_id = ab_record['ab_test_id']
         ab_test_ext = ab_record['ab_test_ext']
@@ -509,10 +511,6 @@ def get_all_ab_iters():
 
         ab_split_groups = get_split_groups(ab_test_ext)
         ab_split_group_pairs = get_split_group_pairs(ab_test_ext)
-
-        template = metrics[metric].get('template', DEFAULT_TEMPLATE)
-        sql_template = get_template(template)
-        observations = tuple(metrics[metric]['observations'])
 
         significance_params = get_significance_params(ab_test_ext, metric)
         obs_stats_params = [prm for prm in significance_params if prm['class_name'] == 'observations_stats']
@@ -524,7 +522,6 @@ def get_all_ab_iters():
         iters.extend([
             AbIter(
                 **{
-                    'sql_template': sql_template,
                     'ab_test_id': ab_test_id,
                     'period_id': period_id,
                     'metric': metric,

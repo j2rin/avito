@@ -1,39 +1,51 @@
 with
 ab_observation as (
-    select  ab_period_id,
-            ab_split_group_id,
-            breakdown_id,
-            numenator_value,
-            denominator_value,
-            count(*) as cnt,
-            min(min(o.min_date)) over(partition by o.ab_period_id) as min_date,
-            max(max(o.max_date)) over(partition by o.ab_period_id) as max_date
+    select  o.ab_period_id,
+            o.ab_split_group_id,
+            o.breakdown_id,
+            o.numenator_value,
+            o.denominator_value,
+            o.cnt
     from (
-        select  o.participant_id,
-                o.ab_split_group_id,
-                o.ab_period_id,
-                o.breakdown_id,
-                sum(case when o.observation_name in ({numenator_str}) then o.observation_value else 0 end) as numenator_value,
-                sum(case when o.observation_name in ({denominator_str}) then o.observation_value else 0 end) as denominator_value,
-                min(o.observation_date) as min_date,
-                max(o.observation_date) as max_date
-        from    dma.ab_observation_4147 o
-        where   o.observation_name in ({observations_str})
-            and o.observation_date <= '{calc_date}'
-            and o.is_after_first_exposure
-        group by 1, 2, 3, 4
+        select  ab_period_id,
+                ab_split_group_id,
+                breakdown_id,
+                numenator_value,
+                denominator_value,
+                count(*) as cnt,
+                min(min(o.min_date)) over(partition by o.ab_period_id) as min_date,
+                max(max(o.max_date)) over(partition by o.ab_period_id) as max_date,
+                sum(numenator_value) over(partition by o.ab_period_id) as numenator_sum,
+                sum(denominator_value) over(partition by o.ab_period_id) as denominator_sum
+        from (
+            select  o.participant_id,
+                    o.ab_split_group_id,
+                    o.ab_period_id,
+                    o.breakdown_id,
+                    sum(case when o.observation_name in ({numenator_str}) then o.observation_value else 0 end) as numenator_value,
+                    sum(case when o.observation_name in ({denominator_str}) then o.observation_value else 0 end) as denominator_value,
+                    min(o.observation_date) as min_date,
+                    max(o.observation_date) as max_date
+            from    dma.ab_observation_4147 o
+            where   o.observation_name in ({observations_str})
+                and o.observation_date <= '{calc_date}'
+                and o.is_after_first_exposure
+            group by 1, 2, 3, 4
+        ) o
+        group by 1, 2, 3, 4, 5
     ) o
-    where   numenator_value > 0
-        and denominator_value > 0
-    group by 1, 2, 3, 4, 5
+    join    dma.v_ab_period p   on  p.ab_period_id = o.ab_period_id
+    where   '{calc_date}' between p.start_time::date and p.end_time::date
+        and min_date = p.start_time::date
+        and max_date = '{calc_date}'
+        and numenator_sum > 0
+        and denominator_sum > 0
 ),
 ab_observation_nonzero as (
     select  ab_period_id,
             ab_split_group_id,
             breakdown_id,
-            sum(cnt) as cnt,
-            min(min_date) as min_date,
-            max(max_date) as max_date
+            sum(cnt) as cnt
     from    ab_observation
     group by 1, 2, 3
 ),
@@ -42,9 +54,7 @@ ab_observation_zero as (
             p.ab_split_group_id,
             o.breakdown_id,
             0, 0,
-            p.cnt - zeroifnull(o.cnt) as cnt,
-            min(o.min_date) over(partition by p.ab_period_id) as min_date,
-            max(o.max_date) over(partition by p.ab_period_id) as max_date
+            p.cnt - zeroifnull(o.cnt) as cnt
     from (
         select  p.ab_period_id,
                 p.ab_split_group_id,
@@ -75,9 +85,5 @@ from (
     select * from ab_observation union all
     select * from ab_observation_zero
 ) o
-join    dma.v_ab_period p   on  p.ab_period_id = o.ab_period_id
-where   '{calc_date}' between p.start_time::date and p.end_time::date
-    and min_date = p.start_time::date
-    and max_date = '{calc_date}'
 order by 1, 2
 ;
