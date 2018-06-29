@@ -378,7 +378,6 @@ class AbItersStorage:
         return [it.iter_result for it in self.ab_iters if it.is_calculated]
 
 
-@lru_cache(maxsize=None)
 def get_data(data_key):
     if data_key not in data_storage:
         logger.error('No data :: data_key: {}'.format(data_key))
