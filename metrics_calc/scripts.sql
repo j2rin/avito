@@ -162,6 +162,7 @@ result_table: |
         resampling varchar(64),
         variance varchar(64),
         n_iters int,
+        ratio boolean,
         mean float,
         std float,
         sum float,

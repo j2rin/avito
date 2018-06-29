@@ -70,14 +70,9 @@ where   filter_rn = 1
 
 alter view saef.tv_ab_central owner to dbadmin;
 
-alter table saef.ab_result drop metric;
 --drop table saef.ab_result_2;
 --create table saef.ab_result_2 like saef.ab_result including projections;
 --create table saef.ab_result_2 like saef.ab_result including projections;
 --truncate table saef.ab_result;
 
 --insert /*+direct*/ into saef.ab_result_2 select * from saef.ab_result where insert_datetime < current_date;
-
-select  REGEXP_SUBSTR(breakdown, '(?<=platform\[)(.*?)(?=\])') as platform
-from    saef.ab_result
---where   breakdown is not null;
