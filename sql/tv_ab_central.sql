@@ -21,8 +21,10 @@ select
     sg.split_upper_bound,
     sgc.split_group as control_split_group,
     m.External_ID as metric,
-    coalesce(REGEXP_SUBSTR(breakdown, '(?<=platform\[)(.*?)(?=\])'), 'Any') as platform,
-    coalesce(REGEXP_SUBSTR(breakdown, '(?<=category\[)(.*?)(?=\])'), 'Any') as category,
+    b.breakdown_json,
+    b.breakdown_text,
+    coalesce(REGEXP_SUBSTR(breakdown_text, '(?<=platform\[)(.*?)(?=\])'), 'Any') as platform,
+    coalesce(REGEXP_SUBSTR(breakdown_text, '(?<=category\[)(.*?)(?=\])'), 'Any') as category,
     row_number() over(partition by slot_class_method_alt_hash, filter_rn order by r.calc_date desc) as day_rn_desc
 from (
     select  r.*,
@@ -64,6 +66,7 @@ join    dma.v_ab_test           t   on t.ab_test_id = r.ab_test_id
 join    dma.v_ab_period         p   on p.ab_period_id = r.period_id
 join    dma.v_ab_split_group    sg  on sg.ab_split_group_id = r.split_group_id
 join    dds.H_ABMetric          m   on m.AbMetric_id = r.metric_id
+left join saef.ab_breakdown_text b  on b.breakdown_id = r.breakdown_id 
 left join dma.v_ab_split_group  sgc on sgc.ab_split_group_id = r.control_split_group_id
 where   filter_rn = 1
 ;

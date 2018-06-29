@@ -5,6 +5,7 @@ from timeit import default_timer
 from hashlib import md5
 import inspect
 from functools import lru_cache
+import json
 
 import pandas as pd
 from cached_property import cached_property
@@ -318,7 +319,6 @@ class AbIter:
             **self.ab_params,
             **self.significance_params,
             **self.significance_result,
-            'breakdown': self.breakdown_text,
         }
 
     def __hash__(self):
@@ -540,11 +540,12 @@ def get_ab_iter_by_hash(iter_hash):
 
 
 @lru_cache(maxsize=None)
-def get_breakdown_values(breakdown_id):
-    data = get_data('ab_breakdown_dim_filter')
+def get_breakdown_values(breakdown_id, breakdowns_data=None):
+    if breakdowns_data is None:
+        breakdowns_data = get_data('ab_breakdown_dim_filter')
     result = dict()
-    if breakdown_id in data.index:
-        records = data.loc[[breakdown_id]].to_dict(orient='records')
+    if breakdown_id in breakdowns_data.index:
+        records = breakdowns_data.loc[[breakdown_id]].to_dict(orient='records')
         for r in records:
             s, v = r.values()
             if s in result:
@@ -552,3 +553,22 @@ def get_breakdown_values(breakdown_id):
             else:
                 result[s] = [v]
     return result
+
+
+def generate_breakdown_text(breakdown):
+    bkd = ((key, ','.join([str(v) for v in values])) for (key, values) in breakdown.items())
+    return ';'.join(['{0}[{1}]'.format(dim, values) for dim, values in bkd])
+
+
+def make_breakdowns_text_df(breakdowns_data):
+    result = list()
+    for ix in breakdowns_data.index.unique():
+        row = get_breakdown_values(ix)
+        result.append([ix, json.dumps(row), generate_breakdown_text(row)])
+    return pd.DataFrame.from_records(result, columns=['breakdown_id', 'breakdown_json', 'breakdown_text'])
+
+
+def insert_breakdown_text_into_vertica(table_name='saef.ab_breakdown_text'):
+    data = get_data('ab_breakdown_dim_filter')
+    df = make_breakdowns_text_df(data)
+    insert_into_vertica(df, table_name, truncate=True)
