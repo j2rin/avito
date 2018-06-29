@@ -32,9 +32,9 @@ from (
             row_number() over(partition by slot_hash, class_method_alt_hash, calc_date order by insert_datetime desc, r.is_pivotal desc, r.n_iters desc) as filter_rn
     from (
         select  *,
-                hash(r.ab_test_id, r.period_id, r.metric_id, r.metric, r.split_group_id, r.control_split_group_id, r.breakdown_id) as slot_hash,
-                hash(r.ab_test_id, r.period_id, r.metric_id, r.metric, r.split_group_id, r.breakdown_id) as sg_slot_hash,
-                hash(r.ab_test_id, r.period_id, r.metric_id, r.metric, coalesce(r.control_split_group_id, r.split_group_id), r.breakdown_id) as csg_slot_hash,
+                hash(r.ab_test_id, r.period_id, r.metric_id, r.split_group_id, r.control_split_group_id, r.breakdown_id) as slot_hash,
+                hash(r.ab_test_id, r.period_id, r.metric_id, r.split_group_id, r.breakdown_id) as sg_slot_hash,
+                hash(r.ab_test_id, r.period_id, r.metric_id, coalesce(r.control_split_group_id, r.split_group_id), r.breakdown_id) as csg_slot_hash,
                 hash(class_name, method_kind, alternative) as class_method_alt_hash
         from (
             select  *,
@@ -70,14 +70,9 @@ where   filter_rn = 1
 
 alter view saef.tv_ab_central owner to dbadmin;
 
-alter table saef.ab_result drop metric;
 --drop table saef.ab_result_2;
 --create table saef.ab_result_2 like saef.ab_result including projections;
 --create table saef.ab_result_2 like saef.ab_result including projections;
 --truncate table saef.ab_result;
 
 --insert /*+direct*/ into saef.ab_result_2 select * from saef.ab_result where insert_datetime < current_date;
-
-select  REGEXP_SUBSTR(breakdown, '(?<=platform\[)(.*?)(?=\])') as platform
-from    saef.ab_result
---where   breakdown is not null;
