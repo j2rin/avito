@@ -4,7 +4,9 @@ import pandas as pd
 import os
 
 sys.path.append(os.environ['METRICS_CALC_PATH'])
-from metrics_calc import fill_data_storage_ab, get_all_ab_iters, AbItersStorage, logger
+
+from metrics_calc import fill_data_storage_ab, get_all_ab_iters, AbItersStorage, insert_breakdown_text_into_vertica, \
+    logger
 from validator import validate_config
 from settings import *
 
@@ -14,8 +16,10 @@ if __name__ == '__main__':
 
     validate_config()
     fill_data_storage_ab()
-
     logger.info('ab dicts loaded')
+    insert_breakdown_text_into_vertica()
+    logger.info('breakdowns texts inserted to vertica')
+
     ai = AbItersStorage()
 
     n_iters = len(ai.ab_iters)

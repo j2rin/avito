@@ -55,8 +55,8 @@ def select_df(sql, index=None, con_method=None, **con_params):
     return df
 
 
-def insert_into_vertica(df, tablename):
-    df['insert_datetime'] = datetime.datetime.now()
+def insert_into_vertica(df, table_name, truncate=False):
+    df['insert_time'] = datetime.datetime.now()
     csv = df.to_csv(
         sep='^',
         index=False,
@@ -65,7 +65,9 @@ def insert_into_vertica(df, tablename):
     )
     columns_sql = ', '.join(df.columns)
     query = \
-        "COPY {t} ({c}) from stdin DELIMITER '^' ABORT ON ERROR DIRECT;".format(t=tablename, c=columns_sql)
+        "COPY {t} ({c}) from stdin DELIMITER '^' ABORT ON ERROR DIRECT;".format(t=table_name, c=columns_sql)
     with connect_vertica() as con:
         with con.cursor() as cur:
+            if truncate:
+                cur.execute('truncate table {};'.format(table_name))
             cur.copy(query, csv)
