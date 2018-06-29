@@ -1,10 +1,10 @@
 with
 ab_observation as (
-    select  ab_period_id,
-            ab_split_group_id,
-            breakdown_id,
-            observation_value,
-            cnt
+    select  o.ab_period_id,
+            o.ab_split_group_id,
+            o.breakdown_id,
+            o.observation_value,
+            o.cnt
     from (
         select  ab_period_id,
                 ab_split_group_id,

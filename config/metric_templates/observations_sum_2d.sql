@@ -1,11 +1,11 @@
 with
 ab_observation as (
-    select  ab_period_id,
-            ab_split_group_id,
-            breakdown_id,
-            numenator_value,
-            denominator_value,
-            cnt
+    select  o.ab_period_id,
+            o.ab_split_group_id,
+            o.breakdown_id,
+            o.numenator_value,
+            o.denominator_value,
+            o.cnt
     from (
         select  ab_period_id,
                 ab_split_group_id,
