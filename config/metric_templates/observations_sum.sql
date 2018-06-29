@@ -4,32 +4,41 @@ ab_observation as (
             ab_split_group_id,
             breakdown_id,
             observation_value,
-            count(*) as cnt,
-            min(min(o.min_date)) over(partition by o.ab_period_id) as min_date,
-            max(max(o.max_date)) over(partition by o.ab_period_id) as max_date
+            cnt
     from (
-        select  o.participant_id,
-                o.ab_split_group_id,
-                o.ab_period_id,
-                o.breakdown_id,
-                sum(o.observation_value) as observation_value,
-                min(o.observation_date) as min_date,
-                max(o.observation_date) as max_date
-        from    dma.ab_observation_4147 o
-        where   o.observation_name in ({observations_str})
-            and o.observation_date <= '{calc_date}'
-            and o.is_after_first_exposure
+        select  ab_period_id,
+                ab_split_group_id,
+                breakdown_id,
+                observation_value,
+                count(*) as cnt,
+                min(min(o.min_date)) over(partition by o.ab_period_id) as min_date,
+                max(max(o.max_date)) over(partition by o.ab_period_id) as max_date
+        from (
+            select  o.participant_id,
+                    o.ab_split_group_id,
+                    o.ab_period_id,
+                    o.breakdown_id,
+                    sum(o.observation_value) as observation_value,
+                    min(o.observation_date) as min_date,
+                    max(o.observation_date) as max_date
+            from    dma.ab_observation_4147 o
+            where   o.observation_name in ({observations_str})
+                and o.observation_date <= '{calc_date}'
+                and o.is_after_first_exposure
+            group by 1, 2, 3, 4
+        ) o
         group by 1, 2, 3, 4
     ) o
-    group by 1, 2, 3, 4
+    join    dma.v_ab_period p   on  p.ab_period_id = o.ab_period_id
+    where   '{calc_date}' between p.start_time::date and p.end_time::date
+        and min_date = p.start_time::date
+        and max_date = '{calc_date}'
 ),
 ab_observation_nonzero as (
     select  ab_period_id,
             ab_split_group_id,
             breakdown_id,
-            sum(cnt) as cnt,
-            min(min_date) as min_date,
-            max(max_date) as max_date
+            sum(cnt) as cnt
     from    ab_observation
     group by 1, 2, 3
 ),
@@ -38,9 +47,7 @@ ab_observation_zero as (
             p.ab_split_group_id,
             o.breakdown_id,
             0,
-            p.cnt - zeroifnull(o.cnt) as cnt,
-            min(o.min_date) over(partition by p.ab_period_id) as min_date,
-            max(o.max_date) over(partition by p.ab_period_id) as max_date
+            p.cnt - zeroifnull(o.cnt) as cnt
     from (
         select  p.ab_period_id,
                 p.ab_split_group_id,
@@ -70,8 +77,4 @@ from (
     select * from ab_observation union all
     select * from ab_observation_zero
 ) o
-join    dma.v_ab_period p   on  p.ab_period_id = o.ab_period_id
-where   '{calc_date}' between p.start_time::date and p.end_time::date
-    and min_date = p.start_time::date
-    and max_date = '{calc_date}'
 ;
