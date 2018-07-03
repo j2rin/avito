@@ -28,7 +28,7 @@ ab_observation as (
                         o.breakdown_id,
                         o.observation_date,
                         (sum(o.observation_value) > 0)::int as observation_value
-                from    dma.ab_observation_4147 o
+                from    dma.ab_observation o
                 where   o.observation_name in ({observations_str})
                     and o.observation_date <= '{calc_date}'
                     and o.is_after_first_exposure
