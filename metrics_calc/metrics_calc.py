@@ -556,7 +556,7 @@ def get_breakdown_values(breakdown_id, breakdowns_data=None):
 
 
 def generate_breakdown_text(breakdown):
-    bkd = ((key, ','.join([str(v) for v in values])) for (key, values) in breakdown.items())
+    bkd = ((key, ', '.join([str(v) for v in values])) for (key, values) in breakdown.items())
     return ';'.join(['{0}[{1}]'.format(dim, values) for dim, values in bkd])
 
 
@@ -564,7 +564,7 @@ def make_breakdowns_text_df(breakdowns_data):
     result = list()
     for ix in breakdowns_data.index.unique():
         row = get_breakdown_values(ix)
-        result.append([ix, json.dumps(row), generate_breakdown_text(row)])
+        result.append([ix, json.dumps(row, ensure_ascii=False), generate_breakdown_text(row)])
     return pd.DataFrame.from_records(result, columns=['breakdown_id', 'breakdown_json', 'breakdown_text'])
 
 
