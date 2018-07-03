@@ -112,11 +112,24 @@ ab_records: |
             end_date,
             b.breakdown_id,
             d.event_date as calc_date
-    from    dma.v_ab_test                   t
-    join    dma.v_ab_test_metric            m   on  m.ab_test_id = t.ab_test_id
-    join    dma.v_ab_period                 p   on  p.ab_test_id = t.ab_test_id
-    join    dma.v_ab_test_period_date       d   on  d.ab_period_id = p.ab_period_id
-    join    dma.v_ab_test_metric_breakdown  b   on  b.ab_test_metric_link_id = m.ab_test_metric_link_id
+    from    dma.v_ab_test                    t
+    join    dma.v_ab_test_metric             m   on  m.ab_test_id = t.ab_test_id
+    join    dma.v_ab_period                  p   on  p.ab_test_id = t.ab_test_id
+    join    dma.v_ab_test_period_date        d   on  d.ab_period_id = p.ab_period_id
+    join    dma.v_ab_test_metric_breakdown   b   on  b.ab_test_metric_link_id = m.ab_test_metric_link_id
+    join    dma.v_ab_test_metric_observation o  on  o.ab_test_metric_link_id = m.ab_test_metric_link_id
+    join (
+        select  --o.ab_split_group_id as split_group_id,
+                o.ab_period_id,
+                o.breakdown_id,
+                o.observation_name,
+                o.observation_date
+        from    dma.ab_observation o
+        group by 1, 2, 3, 4
+    ) oa    on  oa.ab_period_id = p.ab_period_id
+            and oa.breakdown_id = b.breakdown_id
+            and oa.observation_name = o.ab_observation_name
+            and oa.observation_date = d.event_date
     where   t.is_active
         and t.status in ('Ready for DWH', 'In progress', 'Interrupted', 'Ended')
         and m.ab_test_metric_link_is_active
