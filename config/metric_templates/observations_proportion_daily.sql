@@ -40,7 +40,7 @@ ab_observation as (
     ) o
     join    dma.v_ab_period p   on  p.ab_period_id = o.ab_period_id
     where   '{calc_date}' between p.start_time::date and p.end_time::date
-        and min_date = p.start_time::date
+        --and min_date = p.start_time::date
         and max_date = '{calc_date}'
 ),
 ab_observation_nonzero as (
