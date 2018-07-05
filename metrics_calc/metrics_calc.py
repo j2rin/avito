@@ -144,7 +144,7 @@ class AbIter:
         bkd = ((key, ','.join([str(v) for v in values])) for (key, values) in self.breakdown.items())
         return ';'.join(['{0}[{1}]'.format(dim, values) for dim, values in bkd])
 
-    @property
+    @cached_property
     def metric_id(self):
         return get_metric_id(self.metric)
 
@@ -280,7 +280,7 @@ class AbIter:
             significance_obj_storage[key] = comp_obs
             return comp_obs
 
-    @property
+    @cached_property
     def significance_obj_method(self):
         return getattr(self.significance_obj, self.significance_params['method'])
 
