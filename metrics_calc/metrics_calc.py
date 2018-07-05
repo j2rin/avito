@@ -365,14 +365,14 @@ class AbItersStorage:
         records = []
         iters = self.ab_iters_filtered(iter_type=iter_type, is_with_data=True)
         total_iters = len(iters)
-        for i, it in enumerate(self.ab_iters_filtered(iter_type=iter_type, is_with_data=True)):
+        for i, it in enumerate(iters):
             try:
                 records.append(it.iter_result)
                 logger.info('{0}/{1} iters done :: iter_hash: {2}'.format(i + 1, total_iters, it.iter_hash))
             except Exception as e:
                 logger.error('iter_hash: {0} :: {1}'.format(it.iter_hash, e))
 
-            if save_each > 0 and (len(records) % save_each == 0 or i + 1 == total_iters):
+            if save_each > 0 and len(records) > 0 (len(records) % save_each == 0 or i + 1 == total_iters):
                 self.save_records_to_vertica(records)
                 records = list()
 
