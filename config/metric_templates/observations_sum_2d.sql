@@ -13,8 +13,6 @@ ab_observation as (
                 numenator_value,
                 denominator_value,
                 count(*) as cnt,
-                min(min(o.min_date)) over(partition by o.ab_period_id) as min_date,
-                max(max(o.max_date)) over(partition by o.ab_period_id) as max_date,
                 sum(numenator_value) over(partition by o.ab_period_id) as numenator_sum,
                 sum(denominator_value) over(partition by o.ab_period_id) as denominator_sum
         from (
@@ -23,9 +21,7 @@ ab_observation as (
                     o.ab_period_id,
                     o.breakdown_id,
                     sum(case when o.observation_name in ({numenator_str}) then o.observation_value else 0 end) as numenator_value,
-                    sum(case when o.observation_name in ({denominator_str}) then o.observation_value else 0 end) as denominator_value,
-                    min(o.observation_date) as min_date,
-                    max(o.observation_date) as max_date
+                    sum(case when o.observation_name in ({denominator_str}) then o.observation_value else 0 end) as denominator_value
             from    dma.ab_observation o
             where   o.observation_name in ({observations_str})
                 and o.observation_date <= '{calc_date}'
@@ -34,11 +30,7 @@ ab_observation as (
         ) o
         group by 1, 2, 3, 4, 5
     ) o
-    join    dma.v_ab_period p   on  p.ab_period_id = o.ab_period_id
-    where   '{calc_date}' between p.start_time::date and p.end_time::date
-        --and min_date = p.start_time::date
-        and max_date = '{calc_date}'
-        and numenator_sum > 0
+    where   numenator_sum > 0
         and denominator_sum > 0
 ),
 ab_observation_nonzero as (

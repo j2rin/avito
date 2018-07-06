@@ -115,15 +115,21 @@ ab_records: |
     from    dma.v_ab_test                    t
     join    dma.v_ab_test_metric             m   on  m.ab_test_id = t.ab_test_id
     join    dma.v_ab_period                  p   on  p.ab_test_id = t.ab_test_id
-    join    dma.v_ab_test_period_date        d   on  d.ab_period_id = p.ab_period_id
+    join    (
+        select  *,
+                row_number() over(partition by d.ab_test_id, d.ab_period_id order by d.event_date) as day_rn
+        from    dma.v_ab_test_period_date        d
+        where   d.event_date < current_date
+    ) d on  d.ab_period_id = p.ab_period_id
     join    dma.v_ab_test_metric_breakdown   b   on  b.ab_test_metric_link_id = m.ab_test_metric_link_id
-    join    dma.v_ab_test_metric_observation o  on  o.ab_test_metric_link_id = m.ab_test_metric_link_id
+    join    dma.v_ab_test_metric_observation o   on  o.ab_test_metric_link_id = m.ab_test_metric_link_id
     join (
         select  --o.ab_split_group_id as split_group_id,
                 o.ab_period_id,
                 o.breakdown_id,
                 o.observation_name,
-                o.observation_date
+                o.observation_date,
+                row_number() over(partition by o.ab_period_id, o.breakdown_id, o.observation_name order by o.observation_date) as day_rn
         from    dma.ab_observation o
         group by 1, 2, 3, 4
     ) oa    on  oa.ab_period_id = p.ab_period_id
@@ -137,8 +143,8 @@ ab_records: |
         and m.ab_metric_name not in ('saved_searches_list_views')
         and p.is_active
         and p.period not in ('AA_retro')
-        and not d.event_date between '2018-06-14' and '2018-06-18'
-        and d.event_date < current_date
+        --and not d.event_date between '2018-06-14' and '2018-06-18'
+        and oa.day_rn = d.day_rn
     order by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
     ;
 
