@@ -372,7 +372,7 @@ class AbItersStorage:
             except Exception as e:
                 logger.error('iter_hash: {0} :: {1}'.format(it.iter_hash, e))
 
-            if save_each > 0 and len(records) > 0 (len(records) % save_each == 0 or i + 1 == total_iters):
+            if save_each > 0 and len(records) > 0 and (len(records) % save_each == 0 or i + 1 == total_iters):
                 self.save_records_to_vertica(records)
                 records = list()
 
