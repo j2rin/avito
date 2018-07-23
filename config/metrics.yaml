@@ -6,12 +6,32 @@ searches_without_query:
   observations: [searches_without_query]
   template: observations_sum
 
+searches:
+  observations: [searches_without_query, searches_with_query]
+  template: observations_sum
+
 item_views:
   observations: [item_views]
   template: observations_sum
 
+users_item_view_daily:
+  observations: [item_views]
+  template: observations_proportion_daily
+  
+users_active_daily:
+  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
+  template: observations_proportion_daily  
+  
+phone_views_snippet:
+  observations: [phone_views_snippet, phone_views_snippet_xlvas]
+  template: observations_sum
+  
 phone_views:
-  observations: [phone_views]
+  observations: [phone_views_item_right, phone_views_item_top]
+  template: observations_sum
+  
+phone_views_total:
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas]
   template: observations_sum
 
 favorites_added:
@@ -87,15 +107,68 @@ first_messages:
   template: observations_sum
 
 daily_buyers:
-  observations: [phone_views, first_messages]
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
+  template: observations_proportion_daily
+
+buyers:
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
+  template: observations_proportion
+  params: params_proportion
+
+all_main_pages:
+  observations: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  template: observations_sum 
+  
+users_all_main_page:
+  observations: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  template: observations_proportion_daily
+ 
+head_main_pages:
+  observations: [head_main_pages]
+  template: observations_sum 
+  
+users_head_main_page:
+  observations: [head_main_pages]
+  template: observations_proportion_daily
+
+transport_main_pages:
+  observations: [transport_main_pages]
+  template: observations_sum 
+  
+users_transport_main_page:
+  observations: [transport_main_pages]
+  template: observations_proportion_daily
+
+re_main_pages:
+  observations: [re_main_pages]
+  template: observations_sum 
+  
+users_re_main_page:
+  observations: [re_main_pages]
+  template: observations_proportion_daily
+  
+services_main_pages:
+  observations: [services_main_pages]
+  template: observations_sum
+  
+users_services_main_page:
+  observations: [services_main_pages]
+  template: observations_proportion_daily
+  
+vertical_main_pages:
+  observations: [transport_main_pages, re_main_pages, services_main_pages]
+  template: observations_sum
+  
+users_vertical_main_page:
+  observations: [transport_main_pages, re_main_pages, services_main_pages]
   template: observations_proportion_daily
   
 advertisement_page_views:
-  observations: [item_views, main_pages, searches_with_query, searches_without_query]
+  observations: [item_views, head_main_pages, transport_main_pages, re_main_pages, services_main_pages, searches_with_query, searches_without_query]
   template: observations_sum 
   
 contacts:
-  observations: [phone_views, first_messages]
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
   template: observations_sum 
 
 phone_views_anon_number:
@@ -120,9 +193,16 @@ item_views_realty_suspicious_user_flag:
   template: observations_sum
 
 phone_views_per_item_view:
-  observations: [phone_views, item_views]
+  observations: [phone_views_item_right, phone_views_item_top, item_views]
   template: observations_sum_2d
-  numenator: [phone_views]
+  numenator: [phone_views_item_right, phone_views_item_top]
+  denominator: [item_views]
+  params: params_ratio
+  
+contacts_per_item_view:
+  observations: [phone_views_item_right, phone_views_item_top, first_messages, item_views]
+  template: observations_sum_2d
+  numenator: [phone_views_item_right, phone_views_item_top, first_messages]
   denominator: [item_views]
   params: params_ratio
 
@@ -170,9 +250,394 @@ phone_views_per_item_view_realty_suspicious_user_flag:
   denominator: [item_views_realty_suspicious_user_flag]
   params: params_ratio
 
-contacts_public_profile_per_unique_user:
-  observations: [contacts_public_profile, public_profiles_unique]
+searches_item_view_vip:
+  observations: [searches_item_view_vip]
+  template: observations_sum
+
+searches_item_view_premium:
+  observations: [searches_item_view_premium]
+  template: observations_sum
+
+searches_item_view_push:
+  observations: [searches_item_view_push]
+  template: observations_sum
+
+searches_item_view_vas:
+  observations: [searches_item_view_vas]
+  template: observations_sum
+
+searches_item_view_serp:
+  observations: [searches_item_view_serp]
+  template: observations_sum
+
+shows_item_view_recblock:
+  observations: [shows_item_view_recblock]
+  template: observations_sum
+
+searches_contact_vip:
+  observations: [searches_contact_vip]
+  template: observations_sum
+
+searches_contact_premium:
+  observations: [searches_contact_premium]
+  template: observations_sum
+
+searches_contact_push:
+  observations: [searches_contact_push]
+  template: observations_sum
+
+searches_contact_vas:
+  observations: [searches_contact_vas]
+  template: observations_sum
+
+searches_contact_serp:
+  observations: [searches_contact_serp]
+  template: observations_sum
+
+shows_contact_recblock:
+  observations: [shows_contact_recblock]
+  template: observations_sum
+
+item_views_vip:
+  observations: [item_views_vip]
+  template: observations_sum
+
+item_views_premium:
+  observations: [item_views_premium]
+  template: observations_sum
+
+item_views_push:
+  observations: [item_views_push]
+  template: observations_sum
+
+item_views_vas:
+  observations: [item_views_vas]
+  template: observations_sum
+
+item_views_serp:
+  observations: [item_views_serp]
+  template: observations_sum
+
+item_views_rec:
+  observations: [item_views_rec]
+  template: observations_sum
+
+contacts_vip:
+  observations: [contacts_vip]
+  template: observations_sum
+
+contacts_premium:
+  observations: [contacts_premium]
+  template: observations_sum
+
+contacts_push:
+  observations: [contacts_push]
+  template: observations_sum
+
+contacts_vas:
+  observations: [contacts_vas]
+  template: observations_sum
+
+contacts_serp:
+  observations: [contacts_serp]
+  template: observations_sum
+
+contacts_rec:
+  observations: [contacts_rec]
+  template: observations_sum
+
+fav_added_vip:
+  observations: [fav_added_vip]
+  template: observations_sum
+
+fav_added_premium:
+  observations: [fav_added_premium]
+  template: observations_sum
+
+fav_added_push:
+  observations: [fav_added_push]
+  template: observations_sum
+
+fav_added_vas:
+  observations: [fav_added_vas]
+  template: observations_sum
+
+fav_added_serp:
+  observations: [fav_added_serp]
+  template: observations_sum
+
+fav_added_rec:
+  observations: [fav_added_rec]
+  template: observations_sum
+
+buyer_target_clicks_vip:
+  observations: [buyer_target_clicks_vip]
+  template: observations_sum
+
+buyer_target_clicks_premium:
+  observations: [buyer_target_clicks_premium]
+  template: observations_sum
+
+buyer_target_clicks_push:
+  observations: [buyer_target_clicks_push]
+  template: observations_sum
+
+buyer_target_clicks_vas:
+  observations: [buyer_target_clicks_vas]
+  template: observations_sum
+
+buyer_target_clicks_serp:
+  observations: [buyer_target_clicks_serp]
+  template: observations_sum
+
+buyer_target_clicks_rec:
+  observations: [buyer_target_clicks_rec]
+  template: observations_sum
+  
+users_item_view_serp:
+  observations: [item_views_serp]
+  template: observations_proportion_daily
+
+users_contact_serp:
+  observations: [contacts_serp]
+  template: observations_proportion_daily
+
+users_buyer_target_click_serp:
+  observations: [buyer_target_clicks_serp]
+  template: observations_proportion_daily
+
+users_item_view_rec:
+  observations: [item_views_rec]
+  template: observations_proportion_daily
+
+users_contact_rec:
+  observations: [contacts_rec]
+  template: observations_proportion_daily
+
+users_buyer_target_click_rec:
+  observations: [buyer_target_clicks_rec]
+  template: observations_proportion_daily
+  
+item_views_vip_per_search:
+  observations: [item_views_vip, searches_serp]
   template: observations_sum_2d
-  numenator: [contacts_public_profile]
-  denominator: [public_profiles_unique]
+  numenator: [item_views_vip]
+  denominator: [searches_serp]
+  params: params_ratio
+
+item_views_premium_per_search:
+  observations: [item_views_premium, searches_serp]
+  template: observations_sum_2d
+  numenator: [item_views_premium]
+  denominator: [searches_serp]
+  params: params_ratio
+
+item_views_push_per_search:
+  observations: [item_views_push, searches_serp]
+  template: observations_sum_2d
+  numenator: [item_views_push]
+  denominator: [searches_serp]
+  params: params_ratio
+
+item_views_vas_per_search:
+  observations: [item_views_vas, searches_serp]
+  template: observations_sum_2d
+  numenator: [item_views_vas]
+  denominator: [searches_serp]
+  params: params_ratio
+
+item_views_serp_per_search:
+  observations: [item_views_serp, searches_serp]
+  template: observations_sum_2d
+  numenator: [item_views_serp]
+  denominator: [searches_serp]
+  params: params_ratio
+
+item_views_rec_per_rec_block:
+  observations: [item_views_rec, recblock_shows]
+  template: observations_sum_2d
+  numenator: [item_views_rec]
+  denominator: [recblock_shows]
+  params: params_ratio
+
+contacts_vip_per_search:
+  observations: [contacts_vip, searches_serp]
+  template: observations_sum_2d
+  numenator: [contacts_vip]
+  denominator: [searches_serp]
+  params: params_ratio
+
+contacts_premium_per_search:
+  observations: [contacts_premium, searches_serp]
+  template: observations_sum_2d
+  numenator: [contacts_premium]
+  denominator: [searches_serp]
+  params: params_ratio
+
+contacts_push_per_search:
+  observations: [contacts_push, searches_serp]
+  template: observations_sum_2d
+  numenator: [contacts_push]
+  denominator: [searches_serp]
+  params: params_ratio
+
+contacts_vas_per_search:
+  observations: [contacts_vas, searches_serp]
+  template: observations_sum_2d
+  numenator: [contacts_vas]
+  denominator: [searches_serp]
+  params: params_ratio
+
+contacts_serp_per_search:
+  observations: [contacts_serp, searches_serp]
+  template: observations_sum_2d
+  numenator: [contacts_serp]
+  denominator: [searches_serp]
+  params: params_ratio
+
+contacts_rec_per_rec_block:
+  observations: [contacts_rec, recblock_shows]
+  template: observations_sum_2d
+  numenator: [contacts_rec]
+  denominator: [recblock_shows]
+  params: params_ratio
+
+fav_added_vip_per_search:
+  observations: [fav_added_vip, searches_serp]
+  template: observations_sum_2d
+  numenator: [fav_added_vip]
+  denominator: [searches_serp]
+  params: params_ratio
+
+fav_added_premium_per_search:
+  observations: [fav_added_premium, searches_serp]
+  template: observations_sum_2d
+  numenator: [fav_added_premium]
+  denominator: [searches_serp]
+  params: params_ratio
+
+fav_added_push_per_search:
+  observations: [fav_added_push, searches_serp]
+  template: observations_sum_2d
+  numenator: [fav_added_push]
+  denominator: [searches_serp]
+  params: params_ratio
+
+fav_added_vas_per_search:
+  observations: [fav_added_vas, searches_serp]
+  template: observations_sum_2d
+  numenator: [fav_added_vas]
+  denominator: [searches_serp]
+  params: params_ratio
+
+fav_added_serp_per_search:
+  observations: [fav_added_serp, searches_serp]
+  template: observations_sum_2d
+  numenator: [fav_added_serp]
+  denominator: [searches_serp]
+  params: params_ratio
+
+fav_added_rec_per_rec_block:
+  observations: [fav_added_rec, recblock_shows]
+  template: observations_sum_2d
+  numenator: [fav_added_rec]
+  denominator: [recblock_shows]
+  params: params_ratio
+
+buyer_target_clicks_vip_per_search:
+  observations: [buyer_target_clicks_vip, searches_serp]
+  template: observations_sum_2d
+  numenator: [buyer_target_clicks_vip]
+  denominator: [searches_serp]
+  params: params_ratio
+
+buyer_target_clicks_premium_per_search:
+  observations: [buyer_target_clicks_premium, searches_serp]
+  template: observations_sum_2d
+  numenator: [buyer_target_clicks_premium]
+  denominator: [searches_serp]
+  params: params_ratio
+
+buyer_target_clicks_push_per_search:
+  observations: [buyer_target_clicks_push, searches_serp]
+  template: observations_sum_2d
+  numenator: [buyer_target_clicks_push]
+  denominator: [searches_serp]
+  params: params_ratio
+
+buyer_target_clicks_vas_per_search:
+  observations: [buyer_target_clicks_vas, searches_serp]
+  template: observations_sum_2d
+  numenator: [buyer_target_clicks_vas]
+  denominator: [searches_serp]
+  params: params_ratio
+
+buyer_target_clicks_serp_per_search:
+  observations: [buyer_target_clicks_serp, searches_serp]
+  template: observations_sum_2d
+  numenator: [buyer_target_clicks_serp]
+  denominator: [searches_serp]
+  params: params_ratio
+
+buyer_target_clicks_rec_per_rec_block:
+  observations: [buyer_target_clicks_rec, recblock_shows]
+  template: observations_sum_2d
+  numenator: [buyer_target_clicks_rec]
+  denominator: [recblock_shows]
+  params: params_ratio
+  
+contacts_vip_per_item_views_vip:
+  observations: [contacts_vip, item_views_vip]
+  template: observations_sum_2d
+  numenator: [contacts_vip]
+  denominator: [item_views_vip]
+  params: params_ratio
+
+contacts_premium_per_item_views_premium:
+  observations: [contacts_premium, item_views_premium]
+  template: observations_sum_2d
+  numenator: [contacts_premium]
+  denominator: [item_views_premium]
+  params: params_ratio
+
+contacts_push_per_item_views_push:
+  observations: [contacts_push, item_views_push]
+  template: observations_sum_2d
+  numenator: [contacts_push]
+  denominator: [item_views_push]
+  params: params_ratio
+
+contacts_vas_per_item_views_vas:
+  observations: [contacts_vas, item_views_vas]
+  template: observations_sum_2d
+  numenator: [contacts_vas]
+  denominator: [item_views_vas]
+  params: params_ratio
+
+contacts_serp_per_item_views_serp:
+  observations: [contacts_serp, item_views_serp]
+  template: observations_sum_2d
+  numenator: [contacts_serp]
+  denominator: [item_views_serp]
+  params: params_ratio
+
+contacts_rec_per_item_views_rec:
+  observations: [contacts_rec, item_views_rec]
+  template: observations_sum_2d
+  numenator: [contacts_rec]
+  denominator: [item_views_rec]
+  params: params_ratio
+
+average_highest_click_position:
+  observations: [sum_click_min_position, searches_serp]
+  template: observations_sum_2d
+  numenator: [sum_click_min_position]
+  denominator: [searches_serp]
+  params: params_ratio
+
+average_lowest_click_position:
+  observations: [sum_click_max_position, searches_serp]
+  template: observations_sum_2d
+  numenator: [sum_click_max_position]
+  denominator: [searches_serp]
   params: params_ratio
