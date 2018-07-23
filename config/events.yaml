@@ -15,10 +15,29 @@ item_view:
   sql_bindings:
     event_types: 301
 
-phone_view:
+phone_view_item_right:
   template: click_stream
   sql_bindings:
     event_types: 303
+    filter_predicate: AND cs.phone_view_source = 'r'
+    
+phone_view_item_top:
+  template: click_stream
+  sql_bindings:
+    event_types: 303
+    filter_predicate: AND cs.phone_view_source = 't'
+
+phone_view_snippet:
+  template: click_stream
+  sql_bindings:
+    event_types: 303
+    filter_predicate: AND cs.phone_view_source = 's'
+    
+phone_view_snippet_xlvas:
+  template: click_stream
+  sql_bindings:
+    event_types: 303
+    filter_predicate: AND cs.phone_view_source = 'xs'
 
 favorite_add:
   template: click_stream
@@ -96,10 +115,28 @@ first_message:
   sql_bindings:
     event_types: 856, 857
 
-main_page:
+head_main_page:
   template: click_stream
   sql_bindings:
-    event_types: 2572    
+    event_types: 2572
+    
+transport_main_page:
+  template: click_stream
+  sql_bindings:
+    event_types: 2592 
+    filter_predicate: AND cs.category_id = 12
+    
+re_main_page:
+  template: click_stream
+  sql_bindings:
+    event_types: 2592 
+    filter_predicate: AND cs.category_id = 39
+    
+services_main_page:
+  template: click_stream
+  sql_bindings:
+    event_types: 2592 
+    filter_predicate: AND cs.category_id = 250005
 
 phone_view_anon_number:
   template: click_stream_item_anon_number
