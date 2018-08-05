@@ -44,7 +44,7 @@ def validate_config():
         list(configs[EVENTS_FILE].keys())
     schemas[METRICS_FILE]['valueschema']['schema']['observations']['allowed'] = \
         list(configs[OBSERVATIONS_FILE].keys())
-    for key in ['numenator', 'denominator']:
+    for key in ['numerator', 'denominator']:
         schemas[METRICS_FILE]['valueschema']['schema'][key]['allowed'] = \
             list(configs[OBSERVATIONS_FILE].keys())
 
