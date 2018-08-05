@@ -1,4 +1,4 @@
-with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION*/
+with
 ab_observation as (
     select  *
     from    (
