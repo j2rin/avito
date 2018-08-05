@@ -3,24 +3,24 @@ ab_observation as (
     select  o.ab_period_id,
             o.ab_split_group_id,
             o.breakdown_id,
-            o.numenator_value,
+            o.numerator_value,
             o.denominator_value,
             o.cnt
     from (
         select  ab_period_id,
                 ab_split_group_id,
                 breakdown_id,
-                numenator_value,
+                numerator_value,
                 denominator_value,
                 count(*) as cnt,
-                sum(numenator_value) over(partition by o.ab_period_id) as numenator_sum,
+                sum(numerator_value) over(partition by o.ab_period_id) as numerator_sum,
                 sum(denominator_value) over(partition by o.ab_period_id) as denominator_sum
         from (
             select  o.participant_id,
                     o.ab_split_group_id,
                     o.ab_period_id,
                     o.breakdown_id,
-                    sum(case when o.observation_name in ({numenator_str}) then o.observation_value else 0 end) as numenator_value,
+                    sum(case when o.observation_name in ({numerator_str}) then o.observation_value else 0 end) as numerator_value,
                     sum(case when o.observation_name in ({denominator_str}) then o.observation_value else 0 end) as denominator_value
             from    dma.ab_observation o
             where   o.observation_name in ({observations_str})
@@ -30,7 +30,7 @@ ab_observation as (
         ) o
         group by 1, 2, 3, 4, 5
     ) o
-    where   numenator_sum > 0
+    where   numerator_sum > 0
         and denominator_sum > 0
 ),
 ab_observation_nonzero as (
@@ -70,7 +70,7 @@ ab_observation_zero as (
 select  o.ab_period_id as period_id,
         o.ab_split_group_id as split_group_id,
         o.breakdown_id,
-        o.numenator_value,
+        o.numerator_value,
         o.denominator_value,
         cnt
 from (
