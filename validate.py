@@ -10,7 +10,7 @@ METRICS_FILE = 'metrics.yaml'
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__)) + '/'
 
 CONFIG_PATH = CUR_DIR_PATH + 'config/'
-TEMPLATES_PATH = CUR_DIR_PATH + 'config/metric_templates/'
+TEMPLATES_PATH = CUR_DIR_PATH + 'config/metric_templates/ab_templates/'
 SIGNIFICANCE_PARAMS_PATH = CUR_DIR_PATH + 'config/significance_params/'
 SCHEMAS_PATH = CUR_DIR_PATH + 'config_schemas/'
 
