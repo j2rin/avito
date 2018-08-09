@@ -10,4 +10,5 @@ from    dma.ab_observation          o
 where   o.observation_name in ({observations_str})
     and o.observation_date between '{start_date}' and '{calc_date}'
     and o.ab_period_id = {period_id}
+    and o.breakdown_id in ({breakdowns_str})
 group by 1, 2, 3, 4
