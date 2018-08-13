@@ -183,3 +183,15 @@ installment_card_view:
   sql_bindings:
     event_types: 2642
     filter_predicate: AND cs.is_delivery_active AND cs.subcategory_id = 41
+
+item_add:
+  template: click_stream
+  sql_bindings:
+    event_types: 310
+    filter_predicate: AND cs.item_id is not null
+    
+item_add_start:
+  template: click_stream
+  sql_bindings:
+    event_types: 310
+    filter_predicate: AND cs.item_id is null AND cs.location_id is null AND cs.category_id is null AND cs.subcategory_id is null AND cs.vertical_id is null AND cs.logical_category_id is null

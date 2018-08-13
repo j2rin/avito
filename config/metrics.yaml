@@ -669,3 +669,63 @@ installment_card_views_per_item_view:
   numerator: [installment_card_views]
   denominator: [item_views]
   params: ratio
+
+users_item_view_per_users:
+  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  template: observations_proportion_2d
+  numerator: [item_views]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  params: ratio
+
+bt_clicks:
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, favorites_added]
+  template: observations_sum
+  
+users_bt_click_per_users:
+  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  template: observations_proportion_2d
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, favorites_added]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  params: ratio
+  
+users_bt_click_daily:
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, favorites_added]
+  template: observations_proportion_daily  
+  
+items_added:
+  observations: [items_added]
+  template: observations_sum
+  
+sellers_daily:
+  observations: [items_added]
+  template: observations_proportion_daily
+  
+items_add_started:
+  observations: [items_add_started]
+  template: observations_sum  
+  
+users_item_add_started:
+  observations: [items_add_started]
+  template: observations_proportion_daily
+  
+items_added_per_items_add_started:
+  observations: [items_added, items_add_started]
+  template: observations_sum_2d
+  numerator: [items_added]
+  denominator: [items_add_started]
+  params: ratio
+
+buyers_per_users:
+  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  template: observations_proportion_2d
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  params: ratio
+
+serp_empty:
+  observations: [serp_empty]
+  template: observations_sum
+
+serp_small:
+  observations: [serp_small]
+  template: observations_sum
