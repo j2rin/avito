@@ -55,6 +55,7 @@ def validate_config():
     schemas[METRICS_FILE]['valueschema']['schema']['template']['allowed'] = metric_templates
 
     validator = cerberus.Validator(schemas)
+    validator.allow_unknown = True
     if not validator.validate(configs):
         raise Exception(validator.errors)
 
