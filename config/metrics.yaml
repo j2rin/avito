@@ -31,7 +31,7 @@ users_item_view_daily:
 users_active_daily:
   title: users_active
   tags: [critical, bx, user]
-  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
+  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
   template: observations_proportion_daily  
   
 phone_views_snippet:
@@ -52,6 +52,12 @@ phone_views_total:
   observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas]
   template: observations_sum
 
+delivery_orders:
+  title: delivery_orders
+  tags: [i3, bx, total]
+  observations: [delivery_order_created]
+  template: observations_sum
+  
 favorites_added:
   title: favorites_added
   tags: [i2, bx, fav, total]
@@ -141,13 +147,13 @@ first_messages:
 daily_buyers:
   title: buyers_daily
   tags: [i0, bx, user]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
   template: observations_proportion_daily
 
 buyers:
   title: buyers
   tags: [i0, bx, user]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
   template: observations_proportion
   params: proportion
 
@@ -232,7 +238,7 @@ advertisement_page_views:
 contacts:
   title: contacts
   tags: [i1, bx, total]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
   template: observations_sum 
 
 phone_views_anon_number:
@@ -268,9 +274,9 @@ phone_views_per_item_view:
 contacts_per_item_view:
   title: contacts_per_item_view
   tags: [i2, bx, ratio]
-  observations: [phone_views_item_right, phone_views_item_top, first_messages, item_views]
+  observations: [phone_views_item_right, phone_views_item_top, first_messages, item_views, delivery_order_created]
   template: observations_sum_2d
-  numerator: [phone_views_item_right, phone_views_item_top, first_messages]
+  numerator: [phone_views_item_right, phone_views_item_top, first_messages, delivery_order_created]
   denominator: [item_views]
   params: ratio
 
@@ -906,22 +912,22 @@ users_item_view_per_users:
 bt_clicks:
   title: bt_clicks
   tags: [i1, bx, total]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, favorites_added]
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, favorites_added]
   template: observations_sum
   
 users_bt_click_per_users:
   title: users_bt_click_per_users
   tags: [i1, bx, ratio]
-  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   template: observations_proportion_2d
   numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, favorites_added]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   params: ratio
   
 users_bt_click_daily:
   title: users_bt_click
   tags: [i0, bx, user]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, favorites_added]
+  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, favorites_added]
   template: observations_proportion_daily  
   
 items_added:
@@ -960,10 +966,10 @@ items_added_per_items_add_started:
 buyers_per_users:
   title: buyers_per_users
   tags: [i0, bx, ratio]
-  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   template: observations_proportion_2d
   numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   params: ratio
 
 serp_empty:
