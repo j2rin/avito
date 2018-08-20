@@ -36,7 +36,7 @@ users_item_view_daily:
 users_active_daily:
   title: users_active
   tags: [critical, bx, user]
-  numerator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
+  numerator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, phone_views_in_chat, booking_created_short_rent, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
   template: observations_proportion_daily  
   significance_params: default
   
@@ -50,14 +50,14 @@ phone_views_snippet:
 phone_views:
   title: phone_views
   tags: [i1, bx, total]
-  numerator: [phone_views_item_right, phone_views_item_top]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_in_chat]
   template: observations_sum
   significance_params: default
   
 phone_views_total:
   title: phone_views_total
   tags: [i3, bx, total]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat]
   template: observations_sum
   significance_params: default
 
@@ -171,14 +171,14 @@ first_messages:
 daily_buyers:
   title: buyers_daily
   tags: [i0, bx, user]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created]
   template: observations_proportion_daily
   significance_params: default
 
 buyers:
   title: buyers
   tags: [i0, bx, user]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created]
   template: observations_proportion
   significance_params: proportion
 
@@ -276,7 +276,7 @@ advertisement_page_views:
 contacts:
   title: contacts
   tags: [i1, bx, total]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created]
   template: observations_sum 
   significance_params: default
 
@@ -310,7 +310,7 @@ phone_views_per_item_view:
   title: phone_views_per_item_view
   tags: [i3, bx, ratio]
   template: observations_sum_2d
-  numerator: [phone_views_item_right, phone_views_item_top]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_in_chat, item_views]
   denominator: [item_views]
   significance_params: ratio
   
@@ -318,7 +318,7 @@ contacts_per_item_view:
   title: contacts_per_item_view
   tags: [i2, bx, ratio]
   template: observations_sum_2d
-  numerator: [phone_views_item_right, phone_views_item_top, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_in_chat, booking_created_short_rent, first_messages, item_views, delivery_order_created]
   denominator: [item_views]
   significance_params: ratio
 
@@ -957,13 +957,13 @@ users_item_view_per_users:
   tags: [i1, bx, ratio]
   template: observations_proportion_2d
   numerator: [item_views]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
-  significance_params: ratio
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  params: ratio
 
 bt_clicks:
   title: bt_clicks
   tags: [i1, bx, total]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, favorites_added]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created, favorites_added]
   template: observations_sum
   significance_params: default
   
@@ -971,14 +971,14 @@ users_bt_click_per_users:
   title: users_bt_click_per_users
   tags: [i1, bx, ratio]
   template: observations_proportion_2d
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, favorites_added]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
-  significance_params: ratio
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, favorites_added]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  params: ratio
   
 users_bt_click_daily:
   title: users_bt_click
   tags: [i0, bx, user]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, favorites_added]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created, favorites_added]
   template: observations_proportion_daily  
   significance_params: default
   
@@ -1022,9 +1022,9 @@ buyers_per_users:
   title: buyers_per_users
   tags: [i0, bx, ratio]
   template: observations_proportion_2d
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
-  significance_params: ratio
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  params: ratio
 
 serp_empty:
   title: serp_empty
@@ -1038,4 +1038,3 @@ serp_small:
   tags: [i2, bx, serp, total]
   numerator: [serp_small]
   template: observations_sum
-  significance_params: default
