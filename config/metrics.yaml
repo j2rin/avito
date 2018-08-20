@@ -1,985 +1,1041 @@
 searches_with_query:
   title: searches_with_query
   tags: [i3, bx, total]
-  observations: [searches_with_query]
+  numerator: [searches_with_query]
   template: observations_sum
+  significance_params: default
 
 searches_without_query:
   title: searches_without_query
   tags: [i3, bx, total]
-  observations: [searches_without_query]
+  numerator: [searches_without_query]
   template: observations_sum
+  significance_params: default
 
 searches:
   title: searches
   tags: [i1, bx, total]
-  observations: [searches_without_query, searches_with_query]
+  numerator: [searches_without_query, searches_with_query]
   template: observations_sum
+  significance_params: default
 
 item_views:
   title: item_views
   tags: [i1, bx, total]
-  observations: [item_views]
+  numerator: [item_views]
   template: observations_sum
+  significance_params: default
 
 users_item_view_daily:
   title: users_item_view
   tags: [i1, bx, user]
-  observations: [item_views]
+  numerator: [item_views]
   template: observations_proportion_daily
+  significance_params: default
   
 users_active_daily:
   title: users_active
   tags: [critical, bx, user]
-  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
+  numerator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
   template: observations_proportion_daily  
+  significance_params: default
   
 phone_views_snippet:
   title: phone_views_snippet
   tags: [i3, bx, total]
-  observations: [phone_views_snippet, phone_views_snippet_xlvas]
+  numerator: [phone_views_snippet, phone_views_snippet_xlvas]
   template: observations_sum
+  significance_params: default
   
 phone_views:
   title: phone_views
   tags: [i1, bx, total]
-  observations: [phone_views_item_right, phone_views_item_top]
+  numerator: [phone_views_item_right, phone_views_item_top]
   template: observations_sum
+  significance_params: default
   
 phone_views_total:
   title: phone_views_total
   tags: [i3, bx, total]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas]
   template: observations_sum
+  significance_params: default
 
 delivery_orders_created:
   title: delivery_orders_created
   tags: [i3, bx, total]
-  observations: [delivery_order_created]
+  numerator: [delivery_order_created]
   template: observations_sum
+  significance_params: default
   
 favorites_added:
   title: favorites_added
   tags: [i2, bx, fav, total]
-  observations: [favorites_added]
+  numerator: [favorites_added]
   template: observations_sum
+  significance_params: default
 
 favorites_removed:
   title: favorites_removed
   tags: [i4, bx, fav, total]
-  observations: [favorites_removed]
+  numerator: [favorites_removed]
   template: observations_sum
+  significance_params: default
 
 favorites_list_views:
   title: favorites_list_views
   tags: [i4, bx, fav, total]
-  observations: [favorites_list_views]
+  numerator: [favorites_list_views]
   template: observations_sum
+  significance_params: default
 
 saved_searches_added:
   title: saved_searches_added
   tags: [i4, bx, ss, total]
-  observations: [saved_searches_added]
+  numerator: [saved_searches_added]
   template: observations_sum
+  significance_params: default
 
 saved_searches_removed:
   title: saved_searches_removed
   tags: [i4, bx, ss, total]
-  observations: [saved_searches_removed]
+  numerator: [saved_searches_removed]
   template: observations_sum
+  significance_params: default
 
 saved_searches_list_views:
   title: saved_searches_list_views
   tags: [i4, bx, ss, total]
-  observations: [saved_searches_list_views]
+  numerator: [saved_searches_list_views]
   template: observations_sum
+  significance_params: default
 
 forgot_password_count:
-  observations: [forgot_password_count]
+  numerator: [forgot_password_count]
   template: observations_sum
+  significance_params: default
 
 password_restore_requests:
-  observations: [password_restore_requests]
+  numerator: [password_restore_requests]
   template: observations_sum
+  significance_params: default
 
 password_restore_request_proportion:
-  observations: [password_restore_requests]
+  numerator: [password_restore_requests]
   template: observations_proportion
   description: "1 если хотя бы один запрос на восстановление пароля, иначе 0"
-  params: proportion
+  significance_params: proportion
 
 password_restore_request_errors:
-  observations: [password_restore_request_errors]
+  numerator: [password_restore_request_errors]
   template: observations_sum
+  significance_params: default
 
 password_restore_count:
-  observations: [password_restore_count]
+  numerator: [password_restore_count]
   template: observations_sum
+  significance_params: default
 
 password_restore_proportion:
-  observations: [password_restore_count]
+  numerator: [password_restore_count]
   template: observations_proportion
-  params: proportion
+  significance_params: proportion
 
 password_restore_errors:
-  observations: [password_restore_errors]
+  numerator: [password_restore_errors]
   template: observations_sum
+  significance_params: default
 
 sign_in_count:
-  observations: [sign_in_count] 
+  numerator: [sign_in_count] 
   template: observations_sum
+  significance_params: default
 
 sign_in_proportion:
-  observations: [sign_in_count]
+  numerator: [sign_in_count]
   template: observations_proportion
-  params: proportion
+  significance_params: proportion
 
 sign_in_errors:
-  observations: [sign_in_errors] 
+  numerator: [sign_in_errors] 
   template: observations_sum
+  significance_params: default
 
 first_messages:
   title: first_messages
   tags: [i1, bx, mes, total]
-  observations: [first_messages]
+  numerator: [first_messages]
   template: observations_sum
+  significance_params: default
 
 daily_buyers:
   title: buyers_daily
   tags: [i0, bx, user]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
   template: observations_proportion_daily
+  significance_params: default
 
 buyers:
   title: buyers
   tags: [i0, bx, user]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
   template: observations_proportion
-  params: proportion
+  significance_params: proportion
 
 all_main_pages:
   title: all_main_pages
   tags: [i2, bx, rec, main, total]
-  observations: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  numerator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   template: observations_sum 
+  significance_params: default
   
 users_all_main_page_daily:
   title: users_all_main_page
   tags: [i2, bx, rec, main, user]
-  observations: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  numerator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   template: observations_proportion_daily
+  significance_params: default
  
 head_main_pages:
   title: head_main_pages
   tags: [i2, bx, rec, main, total]
-  observations: [head_main_pages]
+  numerator: [head_main_pages]
   template: observations_sum 
+  significance_params: default
   
 users_head_main_page_daily:
   title: users_head_main_page
   tags: [i2, bx, rec, main, user]
-  observations: [head_main_pages]
+  numerator: [head_main_pages]
   template: observations_proportion_daily
+  significance_params: default
 
 transport_main_pages:
   title: transport_main_pages
   tags: [i4, bx, rec, main, total]
-  observations: [transport_main_pages]
+  numerator: [transport_main_pages]
   template: observations_sum 
+  significance_params: default
   
 users_transport_main_page_daily:
   title: users_transport_main_page
   tags: [i4, bx, rec, main, user]
-  observations: [transport_main_pages]
+  numerator: [transport_main_pages]
   template: observations_proportion_daily
+  significance_params: default
 
 re_main_pages:
   title: re_main_pages
   tags: [i4, bx, rec, main, total]
-  observations: [re_main_pages]
+  numerator: [re_main_pages]
   template: observations_sum 
+  significance_params: default
   
 users_re_main_page_daily:
   title: users_re_main_page
   tags: [i4, bx, rec, main, user]
-  observations: [re_main_pages]
+  numerator: [re_main_pages]
   template: observations_proportion_daily
+  significance_params: default
   
 services_main_pages:
   title: services_main_pages
   tags: [i4, bx, rec, main, total]
-  observations: [services_main_pages]
+  numerator: [services_main_pages]
   template: observations_sum
+  significance_params: default
   
 users_services_main_page_daily:
   title: users_services_main_page
   tags: [i4, bx, rec, main, user]
-  observations: [services_main_pages]
+  numerator: [services_main_pages]
   template: observations_proportion_daily
+  significance_params: default
   
 vertical_main_pages:
   title: vertical_main_pages
   tags: [i4, bx, rec, main, total]
-  observations: [transport_main_pages, re_main_pages, services_main_pages]
+  numerator: [transport_main_pages, re_main_pages, services_main_pages]
   template: observations_sum
+  significance_params: default
   
 users_vertical_main_page_daily:
   title: users_vertical_main_page
   tags: [i3, bx, rec, main, user]
-  observations: [transport_main_pages, re_main_pages, services_main_pages]
+  numerator: [transport_main_pages, re_main_pages, services_main_pages]
   template: observations_proportion_daily
+  significance_params: default
   
 advertisement_page_views:
   title: advertisement_page_views
   tags: [critical, rise, ad, total]
-  observations: [item_views, head_main_pages, transport_main_pages, re_main_pages, services_main_pages, searches_with_query, searches_without_query]
+  numerator: [item_views, head_main_pages, transport_main_pages, re_main_pages, services_main_pages, searches_with_query, searches_without_query]
   template: observations_sum 
+  significance_params: default
   
 contacts:
   title: contacts
   tags: [i1, bx, total]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created]
   template: observations_sum 
+  significance_params: default
 
 phone_views_anon_number:
-  observations: [phone_views_anon_number]
+  numerator: [phone_views_anon_number]
   template: observations_sum
+  significance_params: default
 
 autoteka_redirs:
-  observations: [autoteka_redirs_from_item, autoteka_redirs_from_about_report]
+  numerator: [autoteka_redirs_from_item, autoteka_redirs_from_about_report]
   template: observations_sum
   description: "переход в автотеку с карточки объявления или из раздела Узнать больше об отчёте"
+  significance_params: default
 
 public_profiles:
-  observations: [public_profiles]
+  numerator: [public_profiles]
   template: observations_sum
+  significance_params: default
 
 phone_views_realty_suspicious_user_flag:
-  observations: [phone_views_realty_suspicious_user_flag]
+  numerator: [phone_views_realty_suspicious_user_flag]
   template: observations_sum
+  significance_params: default
 
 item_views_realty_suspicious_user_flag:
-  observations: [item_views_realty_suspicious_user_flag]
+  numerator: [item_views_realty_suspicious_user_flag]
   template: observations_sum
+  significance_params: default
 
 phone_views_per_item_view:
   title: phone_views_per_item_view
   tags: [i3, bx, ratio]
-  observations: [phone_views_item_right, phone_views_item_top, item_views]
   template: observations_sum_2d
   numerator: [phone_views_item_right, phone_views_item_top]
   denominator: [item_views]
-  params: ratio
+  significance_params: ratio
   
 contacts_per_item_view:
   title: contacts_per_item_view
   tags: [i2, bx, ratio]
-  observations: [phone_views_item_right, phone_views_item_top, first_messages, item_views, delivery_order_created]
   template: observations_sum_2d
   numerator: [phone_views_item_right, phone_views_item_top, first_messages, delivery_order_created]
   denominator: [item_views]
-  params: ratio
+  significance_params: ratio
 
 contacts_public_profile:
-  observations: [contacts_public_profile]
+  numerator: [contacts_public_profile]
   template: observations_sum
+  significance_params: default
 
 public_profile_paginations:
-  observations: [public_profile_paginations]
+  numerator: [public_profile_paginations]
   template: observations_sum
+  significance_params: default
 
 public_profile_paginations_proportion:
-  observations: [public_profile_paginations]
+  numerator: [public_profile_paginations]
   template: observations_proportion
-  params: proportion
+  significance_params: proportion
 
 public_profile_closed_items_tabs:
-  observations: [public_profile_closed_items_tabs]
+  numerator: [public_profile_closed_items_tabs]
   template: observations_sum
+  significance_params: default
 
 public_profile_closed_items_tabs_proportion:
-  observations: [public_profile_closed_items_tabs]
+  numerator: [public_profile_closed_items_tabs]
   template: observations_proportion
-  params: proportion
+  significance_params: proportion
 
 public_profile_closed_items_paginations:
-  observations: [public_profile_closed_items_paginations]
+  numerator: [public_profile_closed_items_paginations]
   template: observations_sum
+  significance_params: default
 
 delivery_orders_per_flow_begining:
-  observations: [delivery_flow_beginings, delivery_orders]
   template: observations_sum_2d
   numerator: [delivery_orders]
   denominator: [delivery_flow_beginings]
-  params: ratio
+  significance_params: ratio
 
 delivery_orders:
-  observations: [delivery_orders]
+  numerator: [delivery_orders]
   template: observations_sum
+  significance_params: default
 
 phone_views_per_item_view_realty_suspicious_user_flag:
-  observations: [phone_views_realty_suspicious_user_flag, item_views_realty_suspicious_user_flag]
   template: observations_sum_2d
   numerator: [phone_views_realty_suspicious_user_flag]
   denominator: [item_views_realty_suspicious_user_flag]
-  params: ratio
+  significance_params: ratio
   
 contacts_public_profile_per_unique_user:
-  observations: [contacts_public_profile, public_profiles_unique]
   template: observations_sum_2d
   numerator: [contacts_public_profile]
   denominator: [public_profiles_unique]
-  params: ratio
+  significance_params: ratio
 
 recblock_shows:
-  observations: [recblock_shows]
+  numerator: [recblock_shows]
   template: observations_sum
+  significance_params: default
 
 searches_item_view_vip:
   title: searches_item_view_vip
   tags: [i4, bx, serp, vas, has]
-  observations: [searches_item_view_vip]
+  numerator: [searches_item_view_vip]
   template: observations_sum
+  significance_params: default
 
 searches_item_view_premium:
   title: searches_item_view_premium
   tags: [i4, bx, serp, vas, has]
-  observations: [searches_item_view_premium]
+  numerator: [searches_item_view_premium]
   template: observations_sum
+  significance_params: default
 
 searches_item_view_push:
   title: searches_item_view_push
   tags: [i4, bx, serp, vas, has]
-  observations: [searches_item_view_push]
+  numerator: [searches_item_view_push]
   template: observations_sum
+  significance_params: default
 
 searches_item_view_vas:
   title: searches_item_view_vas
   tags: [i3, bx, serp, vas, has]
-  observations: [searches_item_view_vas]
+  numerator: [searches_item_view_vas]
   template: observations_sum
+  significance_params: default
 
 searches_item_view_serp:
   title: searches_item_view_serp
   tags: [i3, bx, serp, has]
-  observations: [searches_item_view_serp]
+  numerator: [searches_item_view_serp]
   template: observations_sum
+  significance_params: default
 
 shows_item_view_recblock:
   title: shows_item_view_recblock
   tags: [i3, bx, rec, has]
-  observations: [shows_item_view_recblock]
+  numerator: [shows_item_view_recblock]
   template: observations_sum
+  significance_params: default
 
 searches_contact_vip:
   title: searches_contact_vip
   tags: [i4, bx, serp, vas, has]
-  observations: [searches_contact_vip]
+  numerator: [searches_contact_vip]
   template: observations_sum
+  significance_params: default
 
 searches_contact_premium:
   title: searches_contact_premium
   tags: [i4, bx, serp, vas, has]
-  observations: [searches_contact_premium]
+  numerator: [searches_contact_premium]
   template: observations_sum
+  significance_params: default
 
 searches_contact_push:
   title: searches_contact_push
   tags: [i4, bx, serp, vas, has]
-  observations: [searches_contact_push]
+  numerator: [searches_contact_push]
   template: observations_sum
+  significance_params: default
 
 searches_contact_vas:
   title: searches_contact_vas
   tags: [i4, bx, serp, vas, has]
-  observations: [searches_contact_vas]
+  numerator: [searches_contact_vas]
   template: observations_sum
+  significance_params: default
 
 searches_contact_serp:
   title: searches_contact_serp
   tags: [i4, bx, serp, has]
-  observations: [searches_contact_serp]
+  numerator: [searches_contact_serp]
   template: observations_sum
+  significance_params: default
 
 shows_contact_recblock:
   title: shows_contact_recblock
   tags: [i3, bx, rec, has]
-  observations: [shows_contact_recblock]
+  numerator: [shows_contact_recblock]
   template: observations_sum
+  significance_params: default
 
 item_views_vip:
   title: item_views_vip
   tags: [i4, bx, serp, vas, total]
-  observations: [item_views_vip]
+  numerator: [item_views_vip]
   template: observations_sum
+  significance_params: default
 
 item_views_premium:
   title: item_views_premium
   tags: [i4, bx, serp, vas, total]
-  observations: [item_views_premium]
+  numerator: [item_views_premium]
   template: observations_sum
+  significance_params: default
 
 item_views_push:
   title: item_views_push
   tags: [i4, bx, serp, vas, total]
-  observations: [item_views_push]
+  numerator: [item_views_push]
   template: observations_sum
+  significance_params: default
 
 item_views_vas:
   title: item_views_vas
   tags: [critical, bx, serp, vas, total]
-  observations: [item_views_vas]
+  numerator: [item_views_vas]
   template: observations_sum
+  significance_params: default
 
 item_views_serp:
   title: item_views_serp
   tags: [i2, bx, serp, total]
-  observations: [item_views_serp]
+  numerator: [item_views_serp]
   template: observations_sum
+  significance_params: default
 
 item_views_rec:
   title: item_views_rec
   tags: [i2, bx, rec, total]
-  observations: [item_views_rec]
+  numerator: [item_views_rec]
   template: observations_sum
+  significance_params: default
 
 contacts_vip:
   title: contacts_vip
   tags: [i4, bx, serp, vas, total]
-  observations: [contacts_vip]
+  numerator: [contacts_vip]
   template: observations_sum
+  significance_params: default
 
 contacts_premium:
   title: contacts_premium
   tags: [i4, bx, serp, vas, total]
-  observations: [contacts_premium]
+  numerator: [contacts_premium]
   template: observations_sum
+  significance_params: default
 
 contacts_push:
   title: contacts_push
   tags: [i4, bx, serp, vas, total]
-  observations: [contacts_push]
+  numerator: [contacts_push]
   template: observations_sum
+  significance_params: default
 
 contacts_vas:
   title: contacts_vas
   tags: [i3, bx, serp, vas, total]
-  observations: [contacts_vas]
+  numerator: [contacts_vas]
   template: observations_sum
+  significance_params: default
 
 contacts_serp:
   title: contacts_serp
   tags: [i2, bx, serp, total]
-  observations: [contacts_serp]
+  numerator: [contacts_serp]
   template: observations_sum
+  significance_params: default
 
 contacts_rec:
   title: contacts_rec
   tags: [i2, bx, rec, total]
-  observations: [contacts_rec]
+  numerator: [contacts_rec]
   template: observations_sum
+  significance_params: default
 
 fav_added_vip:
   title: fav_added_vip
   tags: [i4, bx, serp, vas, fav, total]
-  observations: [fav_added_vip]
+  numerator: [fav_added_vip]
   template: observations_sum
+  significance_params: default
 
 fav_added_premium:
   title: fav_added_premium
   tags: [i4, bx, serp, vas, fav, total]
-  observations: [fav_added_premium]
+  numerator: [fav_added_premium]
   template: observations_sum
+  significance_params: default
 
 fav_added_push:
   title: fav_added_push
   tags: [i4, bx, serp, vas, fav, total]
-  observations: [fav_added_push]
+  numerator: [fav_added_push]
   template: observations_sum
+  significance_params: default
 
 fav_added_vas:
   title: fav_added_vas
   tags: [i4, bx, serp, vas, fav, total]
-  observations: [fav_added_vas]
+  numerator: [fav_added_vas]
   template: observations_sum
+  significance_params: default
 
 fav_added_serp:
   title: fav_added_serp
   tags: [i2, bx, serp, fav, total]
-  observations: [fav_added_serp]
+  numerator: [fav_added_serp]
   template: observations_sum
+  significance_params: default
 
 fav_added_rec:
   title: fav_added_rec
   tags: [i2, bx, rec, fav, total]
-  observations: [fav_added_rec]
+  numerator: [fav_added_rec]
   template: observations_sum
+  significance_params: default
 
 buyer_target_clicks_vip:
   title: bt_clicks_vip
   tags: [i4, bx, serp, vas, total]
-  observations: [buyer_target_clicks_vip]
+  numerator: [buyer_target_clicks_vip]
   template: observations_sum
+  significance_params: default
 
 buyer_target_clicks_premium:
   title: bt_clicks_premium
   tags: [i4, bx, serp, vas, total]
-  observations: [buyer_target_clicks_premium]
+  numerator: [buyer_target_clicks_premium]
   template: observations_sum
+  significance_params: default
 
 buyer_target_clicks_push:
   title: bt_clicks_push
   tags: [i4, bx, serp, vas, total]
-  observations: [buyer_target_clicks_push]
+  numerator: [buyer_target_clicks_push]
   template: observations_sum
+  significance_params: default
 
 buyer_target_clicks_vas:
   title: bt_clicks_vas
   tags: [critical, bx, serp, vas, total]
-  observations: [buyer_target_clicks_vas]
+  numerator: [buyer_target_clicks_vas]
   template: observations_sum
+  significance_params: default
 
 buyer_target_clicks_serp:
   title: bt_clicks_serp
   tags: [i2, bx, serp, total]
-  observations: [buyer_target_clicks_serp]
+  numerator: [buyer_target_clicks_serp]
   template: observations_sum
+  significance_params: default
 
 buyer_target_clicks_rec:
   title: bt_clicks_rec
   tags: [i2, bx, rec, total]
-  observations: [buyer_target_clicks_rec]
+  numerator: [buyer_target_clicks_rec]
   template: observations_sum
+  significance_params: default
   
 users_item_view_serp_daily:
   title: users_item_view_serp
   tags: [i2, bx, serp, user]
-  observations: [item_views_serp]
+  numerator: [item_views_serp]
   template: observations_proportion_daily
+  significance_params: default
 
 users_contact_serp_daily:
   title: users_contact_serp
   tags: [i1, bx, serp, user]
-  observations: [contacts_serp]
+  numerator: [contacts_serp]
   template: observations_proportion_daily
+  significance_params: default
 
 users_buyer_target_click_serp_daily:
   title: users_bt_click_serp
   tags: [i1, bx, serp, user]
-  observations: [buyer_target_clicks_serp]
+  numerator: [buyer_target_clicks_serp]
   template: observations_proportion_daily
+  significance_params: default
 
 users_item_view_rec_daily:
   title: users_item_view_rec
   tags: [i2, bx, rec, user]
-  observations: [item_views_rec]
+  numerator: [item_views_rec]
   template: observations_proportion_daily
+  significance_params: default
 
 users_contact_rec_daily:
   title: users_contact_rec
   tags: [i2, bx, rec, user]
-  observations: [contacts_rec]
+  numerator: [contacts_rec]
   template: observations_proportion_daily
+  significance_params: default
 
 users_buyer_target_click_rec_daily:
   title: users_bt_click_rec
   tags: [i2, bx, rec, user]
-  observations: [buyer_target_clicks_rec]
+  numerator: [buyer_target_clicks_rec]
   template: observations_proportion_daily
+  significance_params: default
   
 item_views_vip_per_search:
   title: item_views_vip_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [item_views_vip, searches_serp]
   template: observations_sum_2d
   numerator: [item_views_vip]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 item_views_premium_per_search:
   title: item_views_premium_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [item_views_premium, searches_serp]
   template: observations_sum_2d
   numerator: [item_views_premium]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 item_views_push_per_search:
   title: item_views_push_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [item_views_push, searches_serp]
   template: observations_sum_2d
   numerator: [item_views_push]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 item_views_vas_per_search:
   title: item_views_vas_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [item_views_vas, searches_serp]
   template: observations_sum_2d
   numerator: [item_views_vas]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 item_views_serp_per_search:
   title: item_views_serp_per_search
   tags: [i2, bx, serp, ratio]
-  observations: [item_views_serp, searches_serp]
   template: observations_sum_2d
   numerator: [item_views_serp]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 item_views_rec_per_rec_block:
   title: item_views_rec_per_recblock
   tags: [i4, bx, rec, ratio]
-  observations: [item_views_rec, recblock_shows]
   template: observations_sum_2d
   numerator: [item_views_rec]
   denominator: [recblock_shows]
-  params: ratio
+  significance_params: ratio
 
 contacts_vip_per_search:
   title: contacts_vip_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [contacts_vip, searches_serp]
   template: observations_sum_2d
   numerator: [contacts_vip]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 contacts_premium_per_search:
   title: contacts_premium_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [contacts_premium, searches_serp]
   template: observations_sum_2d
   numerator: [contacts_premium]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 contacts_push_per_search:
   title: contacts_push_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [contacts_push, searches_serp]
   template: observations_sum_2d
   numerator: [contacts_push]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 contacts_vas_per_search:
   title: contacts_vas_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [contacts_vas, searches_serp]
   template: observations_sum_2d
   numerator: [contacts_vas]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 contacts_serp_per_search:
   title: contacts_serp_per_search
   tags: [i3, bx, serp, ratio]
-  observations: [contacts_serp, searches_serp]
   template: observations_sum_2d
   numerator: [contacts_serp]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 contacts_rec_per_rec_block:
   title: contacts_rec_per_recblock
   tags: [i3, bx, rec, ratio]
-  observations: [contacts_rec, recblock_shows]
   template: observations_sum_2d
   numerator: [contacts_rec]
   denominator: [recblock_shows]
-  params: ratio
+  significance_params: ratio
 
 fav_added_vip_per_search:
   title: fav_added_vip_per_search
   tags: [i4, bx, serp, vas, fav, ratio]
-  observations: [fav_added_vip, searches_serp]
   template: observations_sum_2d
   numerator: [fav_added_vip]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 fav_added_premium_per_search:
   title: fav_added_premium_per_search
   tags: [i4, bx, serp, vas, fav, ratio]
-  observations: [fav_added_premium, searches_serp]
   template: observations_sum_2d
   numerator: [fav_added_premium]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 fav_added_push_per_search:
   title: fav_added_push_per_search
   tags: [i4, bx, serp, vas, fav, ratio]
-  observations: [fav_added_push, searches_serp]
   template: observations_sum_2d
   numerator: [fav_added_push]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 fav_added_vas_per_search:
   title: fav_added_vas_per_search
   tags: [i4, bx, serp, vas, fav, ratio]
-  observations: [fav_added_vas, searches_serp]
   template: observations_sum_2d
   numerator: [fav_added_vas]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 fav_added_serp_per_search:
   title: fav_added_serp_per_search
   tags: [i4, bx, serp, fav, ratio]
-  observations: [fav_added_serp, searches_serp]
   template: observations_sum_2d
   numerator: [fav_added_serp]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 fav_added_rec_per_rec_block:
   title: fav_added_rec_per_recblock
   tags: [i4, bx, rec, fav, ratio]
-  observations: [fav_added_rec, recblock_shows]
   template: observations_sum_2d
   numerator: [fav_added_rec]
   denominator: [recblock_shows]
-  params: ratio
+  significance_params: ratio
 
 buyer_target_clicks_vip_per_search:
   title: bt_clicks_vip_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [buyer_target_clicks_vip, searches_serp]
   template: observations_sum_2d
   numerator: [buyer_target_clicks_vip]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 buyer_target_clicks_premium_per_search:
   title: bt_clicks_premium_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [buyer_target_clicks_premium, searches_serp]
   template: observations_sum_2d
   numerator: [buyer_target_clicks_premium]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 buyer_target_clicks_push_per_search:
   title: bt_clicks_push_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [buyer_target_clicks_push, searches_serp]
   template: observations_sum_2d
   numerator: [buyer_target_clicks_push]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 buyer_target_clicks_vas_per_search:
   title: bt_clicks_vas_per_search
   tags: [i4, bx, serp, vas, ratio]
-  observations: [buyer_target_clicks_vas, searches_serp]
   template: observations_sum_2d
   numerator: [buyer_target_clicks_vas]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 buyer_target_clicks_serp_per_search:
   title: bt_clicks_serp_per_search
   tags: [i2, bx, serp, ratio]
-  observations: [buyer_target_clicks_serp, searches_serp]
   template: observations_sum_2d
   numerator: [buyer_target_clicks_serp]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 buyer_target_clicks_rec_per_rec_block:
   title: bt_clicks_rec_per_recblock
   tags: [i3, bx, rec, ratio]
-  observations: [buyer_target_clicks_rec, recblock_shows]
   template: observations_sum_2d
   numerator: [buyer_target_clicks_rec]
   denominator: [recblock_shows]
-  params: ratio
+  significance_params: ratio
   
 contacts_vip_per_item_views_vip:
   title: contacts_vip_per_item_views_vip
   tags: [i4, bx, serp, vas, ratio]
-  observations: [contacts_vip, item_views_vip]
   template: observations_sum_2d
   numerator: [contacts_vip]
   denominator: [item_views_vip]
-  params: ratio
+  significance_params: ratio
 
 contacts_premium_per_item_views_premium:
   title: contacts_premium_per_item_views_premium
   tags: [i4, bx, serp, vas, ratio]
-  observations: [contacts_premium, item_views_premium]
   template: observations_sum_2d
   numerator: [contacts_premium]
   denominator: [item_views_premium]
-  params: ratio
+  significance_params: ratio
 
 contacts_push_per_item_views_push:
   title: contacts_push_per_item_views_push
   tags: [i4, bx, serp, vas, ratio]
-  observations: [contacts_push, item_views_push]
   template: observations_sum_2d
   numerator: [contacts_push]
   denominator: [item_views_push]
-  params: ratio
+  significance_params: ratio
 
 contacts_vas_per_item_views_vas:
   title: contacts_vas_per_item_views_vas
   tags: [i4, bx, serp, vas, ratio]
-  observations: [contacts_vas, item_views_vas]
   template: observations_sum_2d
   numerator: [contacts_vas]
   denominator: [item_views_vas]
-  params: ratio
+  significance_params: ratio
 
 contacts_serp_per_item_views_serp:
   title: contacts_serp_per_item_views_serp
   tags: [i2, bx, serp, ratio]
-  observations: [contacts_serp, item_views_serp]
   template: observations_sum_2d
   numerator: [contacts_serp]
   denominator: [item_views_serp]
-  params: ratio
+  significance_params: ratio
 
 contacts_rec_per_item_views_rec:
   title: contacts_rec_per_item_views_rec
   tags: [i3, bx, rec, ratio]
-  observations: [contacts_rec, item_views_rec]
   template: observations_sum_2d
   numerator: [contacts_rec]
   denominator: [item_views_rec]
-  params: ratio
+  significance_params: ratio
 
 average_highest_click_position:
   title: average_highest_click_position
   tags: [i4, bx, serp, avg]
-  observations: [sum_click_min_position, searches_serp]
   template: observations_sum_2d
   numerator: [sum_click_min_position]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 average_lowest_click_position:
   title: average_lowest_click_position
   tags: [i4, bx, serp, avg]
-  observations: [sum_click_max_position, searches_serp]
   template: observations_sum_2d
   numerator: [sum_click_max_position]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
   
 searches_item_view_serp_per_searches_serp:
   title: searches_item_view_serp_per_searches
   tags: [i2, bx, serp, ratio]
-  observations: [searches_item_view_serp, searches_serp]
   template: observations_sum_2d
   numerator: [searches_item_view_serp]
   denominator: [searches_serp]
-  params: ratio
+  significance_params: ratio
 
 shows_item_view_recblock_per_recblock_shows:
   title: shows_item_view_recblock_per_recblock_shows
   tags: [i3, bx, rec, ratio]
-  observations: [shows_item_view_recblock, recblock_shows]
   template: observations_sum_2d
   numerator: [shows_item_view_recblock]
   denominator: [recblock_shows]
-  params: ratio
+  significance_params: ratio
 
 installment_card_views_per_item_view:
-  observations: [installment_card_views, item_views]
   template: observations_sum_2d
   numerator: [installment_card_views]
   denominator: [item_views]
-  params: ratio
+  significance_params: ratio
 
 users_item_view_per_users:
   title: users_item_view_per_users
   tags: [i1, bx, ratio]
-  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   template: observations_proportion_2d
   numerator: [item_views]
   denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
-  params: ratio
+  significance_params: ratio
 
 bt_clicks:
   title: bt_clicks
   tags: [i1, bx, total]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, favorites_added]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, favorites_added]
   template: observations_sum
+  significance_params: default
   
 users_bt_click_per_users:
   title: users_bt_click_per_users
   tags: [i1, bx, ratio]
-  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   template: observations_proportion_2d
   numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, favorites_added]
   denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
-  params: ratio
+  significance_params: ratio
   
 users_bt_click_daily:
   title: users_bt_click
   tags: [i0, bx, user]
-  observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, favorites_added]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, favorites_added]
   template: observations_proportion_daily  
+  significance_params: default
   
 items_added:
   title: items_added
   tags: [i4, sx, total]
-  observations: [items_added]
+  numerator: [items_added]
   template: observations_sum
+  significance_params: default
   
 sellers_daily:
   title: sellers
   tags: [i4, sx, user]
-  observations: [items_added]
+  numerator: [items_added]
   template: observations_proportion_daily
+  significance_params: default
   
 items_add_started:
   title: items_add_started
   tags: [i4, sx, total]
-  observations: [items_add_started]
+  numerator: [items_add_started]
   template: observations_sum  
+  significance_params: default
   
 users_item_add_started:
   title: users_item_add_started
   tags: [i4, sx, user]
-  observations: [items_add_started]
+  numerator: [items_add_started]
   template: observations_proportion_daily
+  significance_params: default
   
 items_added_per_items_add_started:
   title: items_added_per_items_add_started
   tags: [i4, sx, ratio]
-  observations: [items_added, items_add_started]
   template: observations_sum_2d
   numerator: [items_added]
   denominator: [items_add_started]
-  params: ratio
+  significance_params: ratio
 
 buyers_per_users:
   title: buyers_per_users
   tags: [i0, bx, ratio]
-  observations: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   template: observations_proportion_2d
   numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages]
   denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
-  params: ratio
+  significance_params: ratio
 
 serp_empty:
   title: serp_empty
   tags: [i2, bx, serp, total]
-  observations: [serp_empty]
+  numerator: [serp_empty]
   template: observations_sum
+  significance_params: default
 
 serp_small:
   title: serp_small
   tags: [i2, bx, serp, total]
-  observations: [serp_small]
+  numerator: [serp_small]
   template: observations_sum
+  significance_params: default

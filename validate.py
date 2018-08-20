@@ -42,16 +42,16 @@ def validate_config():
 
     schemas[OBSERVATIONS_FILE]['valueschema']['schema']['events']['allowed'] = \
         list(configs[EVENTS_FILE].keys())
-    schemas[METRICS_FILE]['valueschema']['schema']['observations']['allowed'] = \
-        list(configs[OBSERVATIONS_FILE].keys())
-    for key in ['numerator', 'denominator']:
-        schemas[METRICS_FILE]['valueschema']['schema'][key]['allowed'] = \
-            list(configs[OBSERVATIONS_FILE].keys())
 
-    metric_params = [f.split('.')[0] for f in os.listdir(SIGNIFICANCE_PARAMS_PATH)]
+    observation_names = list(configs[OBSERVATIONS_FILE].keys())
+
+    for key in ['numerator', 'denominator']:
+        schemas[METRICS_FILE]['valueschema']['schema'][key]['allowed'] = observation_names
+
+    significance_params = [f.split('.')[0] for f in os.listdir(SIGNIFICANCE_PARAMS_PATH)]
     metric_templates = [f.split('.')[0] for f in os.listdir(TEMPLATES_PATH)]
 
-    schemas[METRICS_FILE]['valueschema']['schema']['params']['allowed'] = metric_params
+    schemas[METRICS_FILE]['valueschema']['schema']['significance_params']['allowed'] = significance_params
     schemas[METRICS_FILE]['valueschema']['schema']['template']['allowed'] = metric_templates
 
     validator = cerberus.Validator(schemas)
