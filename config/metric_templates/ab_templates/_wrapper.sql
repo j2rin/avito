@@ -31,6 +31,7 @@ from    (
         select  true as exposed_only union all
         select  false as exposed_only
     ) e on true
+    where   e.exposed_only -- temporary
     group by 1, 2, 3, 4, 5, 6
 ) o
 where   (numerator_value > 0 or denominator_value > 0)
