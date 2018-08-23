@@ -4,6 +4,7 @@ select  ab_period_id as period_id,
         breakdown_id as breakdown_id,
         exposed_only as exposed_only,
         {metric_id} as metric_id,
+        '{start_date}' as start_date, 
         '{calc_date}'::date as calc_date,
         numerator_value,
         denominator_value,
@@ -31,6 +32,7 @@ from    (
         select  true as exposed_only union all
         select  false as exposed_only
     ) e on true
+    where   e.exposed_only -- temporary
     group by 1, 2, 3, 4, 5, 6
 ) o
 where   (numerator_value > 0 or denominator_value > 0)
