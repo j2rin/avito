@@ -49,10 +49,8 @@ def validate_config():
         schemas[METRICS_FILE]['valueschema']['schema'][key]['allowed'] = observation_names
 
     significance_params = [f.split('.')[0] for f in os.listdir(SIGNIFICANCE_PARAMS_PATH)]
-    metric_templates = [f.split('.')[0] for f in os.listdir(TEMPLATES_PATH)]
 
     schemas[METRICS_FILE]['valueschema']['schema']['significance_params']['allowed'] = significance_params
-    schemas[METRICS_FILE]['valueschema']['schema']['template']['allowed'] = metric_templates
 
     validator = cerberus.Validator(schemas)
     validator.allow_unknown = True
