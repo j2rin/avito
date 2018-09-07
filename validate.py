@@ -3,14 +3,11 @@ import cerberus
 import yaml
 
 
-EVENTS_FILE = 'events.yaml'
-OBSERVATIONS_FILE = 'observations.yaml'
 METRICS_FILE = 'metrics.yaml'
 
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__)) + '/'
 
 CONFIG_PATH = CUR_DIR_PATH + 'config/'
-TEMPLATES_PATH = CUR_DIR_PATH + 'config/metric_templates/ab_templates/'
 SIGNIFICANCE_PARAMS_PATH = CUR_DIR_PATH + 'config/significance_params/'
 SCHEMAS_PATH = CUR_DIR_PATH + 'config_schemas/'
 
@@ -36,17 +33,12 @@ def validate_config():
     configs = dict()
     schemas = dict()
 
-    for cn in [EVENTS_FILE, OBSERVATIONS_FILE, METRICS_FILE]:
+    for cn in [METRICS_FILE]:
         configs[cn] = get_config(cn)
         schemas[cn] = get_schema(cn)
 
-    schemas[OBSERVATIONS_FILE]['valueschema']['schema']['events']['allowed'] = \
-        list(configs[EVENTS_FILE].keys())
-
-    observation_names = list(configs[OBSERVATIONS_FILE].keys())
-
-    for key in ['numerator', 'denominator']:
-        schemas[METRICS_FILE]['valueschema']['schema'][key]['allowed'] = observation_names
+#    for key in ['numerator', 'denominator']:
+#        schemas[METRICS_FILE]['valueschema']['schema'][key]['allowed'] = observation_names
 
     significance_params = [f.split('.')[0] for f in os.listdir(SIGNIFICANCE_PARAMS_PATH)]
 
