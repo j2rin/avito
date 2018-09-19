@@ -1063,3 +1063,97 @@ success_payments_per_listing_type_pv:
   numerator: [pages_success_payment]
   denominator: [pages_listing_type]
   significance_params: ratio
+
+  item_views_freecat:
+    title: item_views_freecat
+    tags: [i3, total]
+    numerator: [item_views_freecat]
+    agg: sum
+    significance_params: default
+    description: "item views in vitrual free-item-category"
+    unit: ghcom
+    metrics_registry: false
+
+  phone_views_freecat:
+    title: phone_views_freecat
+    tags: [i3, total]
+    numerator: [phone_views_freecat]
+    agg: sum
+    significance_params: default
+    description: "phone views in virtual free-item-category"
+    unit: ghcom
+    metrics_registry: false
+
+  contacts_freecat:
+    title: contacts_freecat
+    tags: [i3, total]
+    numerator: [contacts_freecat]
+    agg: sum
+    significance_params: default
+    description: "contacts in virtual free-item-category"
+    unit: ghcom
+    metrics_registry: false
+
+  contacts_per_item_view_freecat:
+    title: contacts_per_item_view_freecat
+    tags: [i3, ratio]
+    agg: sum
+    numerator: [contacts_freecat]
+    denominator: [item_views_freecat]
+    significance_params: ratio
+    description: "contacts/item_views in virtual free-item-category"
+    unit: ghcom
+    metrics_registry: false
+
+  buyers_freecat_daily:
+    title: buyers_freecat_daily
+    tags: [i3, user]
+    numerator: [contacts_freecat]
+    agg: proportion
+    significance_params: default
+    description: "buyers in virtual free-item-category"
+    unit: ghcom
+    metrics_registry: false
+
+  users_item_view_freecat_daily:
+    title: users_item_view_freecat_daily
+    tags: [i3, user]
+    numerator: [item_views_freecat]
+    agg: proportion
+    significance_params: default
+    description: "item views daily in virtual free-item-category"
+    unit: ghcom
+    metrics_registry: false
+
+
+  phone_views_notfreecat:
+    title: phone_views_notfreecat
+    tags: [i3, total]
+    numerator: [phone_views_notfreecat]
+    agg: sum
+    significance_params: default
+    description: "phone views not in virtual free-item-category"
+    unit: ghcom
+    metrics_registry: false
+
+  contacts_notfreecat:
+    title: contacts_notfreecat
+    tags: [i3, total]
+    numerator: [contacts_notfreecat]
+    agg: sum
+    significance_params: default
+    description: "contacts not in virtual free-item-category"
+    unit: ghcom
+    metrics_registry: false
+
+  buyers_notfreecat_daily:
+    title: buyers_notfreecat_daily
+    tags: [i3, user]
+    numerator: [contacts_notfreecat]
+    agg: proportion
+    significance_params: default
+    description: "buyers not in virtual free-item-category"
+    unit: ghcom
+    metrics_registry: false
+
+
