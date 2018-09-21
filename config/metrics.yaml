@@ -1079,96 +1079,276 @@ success_payments_per_listing_type_pv:
   denominator: [pages_listing_type]
   significance_params: ratio
 
-  item_views_freecat:
-    title: item_views_freecat
-    tags: [i3, total]
-    numerator: [item_views_freecat]
-    agg: sum
-    significance_params: default
-    description: "item views in vitrual free-item-category"
-    unit: ghcom
-    metrics_registry: false
+user_enter:
+  description: "number of unique cookies with successful authorization/registration/restore, which had authorization start screen (eid=2089)"
+  unit: tns
+  tags: [i2, tns, tns_bulb, enter]
+  agg: sum
+  numerator: [enter_success]
+  significance_params: default
+  metrics_registry: true
 
-  phone_views_freecat:
-    title: phone_views_freecat
-    tags: [i3, total]
-    numerator: [phone_views_freecat]
-    agg: sum
-    significance_params: default
-    description: "phone views in virtual free-item-category"
-    unit: ghcom
-    metrics_registry: false
+user_enter_cr:
+  title: user_enter_conv
+  description: "share of unique cookies with successful authorization/registration/restore among those who had authorization start screen"
+  unit: tns
+  tags: [i0, tns, tns_bulb, auth, enter]
+  agg: sum
+  numerator: [enter_success]
+  denomimator: [auth_start]
+  significance_params: ratio
+  metrics_registry: true
 
-  contacts_freecat:
-    title: contacts_freecat
-    tags: [i3, total]
-    numerator: [contacts_freecat]
-    agg: sum
-    significance_params: default
-    description: "contacts in virtual free-item-category"
-    unit: ghcom
-    metrics_registry: false
+user_auth:
+  description: "number of unique cookies with successful authorization (phone/email/social), which had authorization start screen"
+  unit: tns
+  tags: [i2, tns, tns_bulb, auth, enter]
+  agg: sum
+  numerator: [auth_success]
+  significance_params: default
+  metrics_registry: true
 
-  contacts_per_item_view_freecat:
-    title: contacts_per_item_view_freecat
-    tags: [i3, ratio]
-    agg: sum
-    numerator: [contacts_freecat]
-    denominator: [item_views_freecat]
-    significance_params: ratio
-    description: "contacts/item_views in virtual free-item-category"
-    unit: ghcom
-    metrics_registry: false
+user_auth_cr:
+  title: user_auth_conv
+  description: "share of unique cookies with successful authorization (phone/email/social) among those who had authorization start screen"
+  unit: tns
+  tags: [i2, tns, tns_bulb, auth, enter]
+  agg: sum
+  numerator: [auth_success]
+  denomimator: [auth_start]
+  significance_params: ratio
+  metrics_registry: true
 
-  buyers_freecat_daily:
-    title: buyers_freecat_daily
-    tags: [i3, user]
-    numerator: [contacts_freecat]
-    agg: proportion
-    significance_params: default
-    description: "buyers in virtual free-item-category"
-    unit: ghcom
-    metrics_registry: false
+user_registration:
+  description: "number of unique cookies with successful registration (not social), which had authorization start screen"
+  unit: tns
+  tags: [i2, tns, tns_bulb, reg, enter]
+  agg: sum
+  numerator: [registration_success]
+  significance_params: default
+  metrics_registry: true
 
-  users_item_view_freecat_daily:
-    title: users_item_view_freecat_daily
-    tags: [i3, user]
-    numerator: [item_views_freecat]
-    agg: proportion
-    significance_params: default
-    description: "item views daily in virtual free-item-category"
-    unit: ghcom
-    metrics_registry: false
+user_registration_cr:
+  title: user_registration_conv
+  description: "share of unique cookies with successful registration (not social) among those who had registration start screen"
+  unit: tns
+  tags: [i2, tns, tns_bulb, reg, enter]
+  agg: sum
+  numerator: [registration_success]
+  denomimator: [registration_start]
+  significance_params: ratio
+  metrics_registry: true
 
+user_password_restore:
+  description: "number of unique cookies with successful password restore, which had restore start screen (including those who's changed platform while restoring by email)"
+  unit: tns
+  tags: [i2, tns, tns_bulb, restore, enter]
+  agg: sum
+  numerator: [restore_success]
+  significance_params: default
+  metrics_registry: true
 
-  phone_views_notfreecat:
-    title: phone_views_notfreecat
-    tags: [i3, total]
-    numerator: [phone_views_notfreecat]
-    agg: sum
-    significance_params: default
-    description: "phone views not in virtual free-item-category"
-    unit: ghcom
-    metrics_registry: false
+user_password_restore_cr:
+  title: user_restore_conv
+  description: "share of unique cookies with successful password restore among those who had restore start screen (including those who's changed platform while restoring by email)"
+  unit: tns
+  tags: [i2, tns, tns_bulb, restore, enter]
+  agg: sum
+  numerator: [restore_success]
+  denomimator: [restore_start]
+  significance_params: ratio
+  metrics_registry: true
 
-  contacts_notfreecat:
-    title: contacts_notfreecat
-    tags: [i3, total]
-    numerator: [contacts_notfreecat]
-    agg: sum
-    significance_params: default
-    description: "contacts not in virtual free-item-category"
-    unit: ghcom
-    metrics_registry: false
+user_auth_proportion:
+  description: "share of unique cookies with successful authorization (phone/email/social) among test participants"
+  unit: tns
+  tags: [i2, tns, tns_bulb, auth, enter]
+  agg: proportion
+  numerator: [auth_success]
+  significance_params: proportion
+  metrics_registry: false
 
-  buyers_notfreecat_daily:
-    title: buyers_notfreecat_daily
-    tags: [i3, user]
-    numerator: [contacts_notfreecat]
-    agg: proportion
-    significance_params: default
-    description: "buyers not in virtual free-item-category"
-    unit: ghcom
-    metrics_registry: false
+user_registration_proportion:
+  description: "share of unique cookies with successful registration (not social) among test participants"
+  unit: tns
+  tags: [critical, tns, tns_bulb, reg, enter]
+  agg: proportion
+  numerator: [registration_success]
+  significance_params: proportion
+  metrics_registry: false
 
+user_password_restore_proportion:
+  description: "share of unique cookies with successful password restore among test participants"
+  unit: tns
+  tags: [i2, tns, tns_bulb, restore, enter]
+  agg: proportion
+  numerator: [restore_success]
+  significance_params: proportion
+  metrics_registry: false
 
+user_enter_proportion:
+  description: "share of unique cookies with successful authorization/registration/restore among test participants"
+  unit: tns
+  tags: [critical, tns, tns_bulb, enter]
+  agg: proportion
+  numerator: [enter_success]
+  significance_params: proportion
+  metrics_registry: false
+
+registration_start_proportion:
+  description: "share of unique cookies with registration start screen among test participants"
+  unit: tns
+  tags: [critical, tns, tns_bulb, reg, enter]
+  agg: proportion
+  numerator: [registration_start]
+  significance_params: proportion
+  metrics_registry: false
+
+enter_start_proportion:
+  description: "share of unique cookies with authorization start screen among test participants"
+  unit: tns
+  tags: [critical, tns, tns_bulb, enter]
+  agg: proportion
+  numerator: [auth_start]
+  significance_params: proportion
+  metrics_registry: false
+
+restore_start_proportion:
+  description: "share of unique cookies with password restore start screen among test participants"
+  unit: tns
+  tags: [i2, tns, tns_bulb, restore, enter]
+  agg: proportion
+  numerator: [restore_start]
+  significance_params: proportion
+  metrics_registry: false
+
+auth_errors_per_user:
+  description: "average number of authorization (phone/email/social) errors per cookie"
+  unit: tns
+  tags: [i2, tns, tns_bulb, auth, enter]
+  agg: sum
+  numerator: [auth_errors]
+  denomimator: [auth_start]
+  significance_params: ratio
+  metrics_registry: true
+
+registration_errors_per_user:
+  description: "average number of registration (not social) errors per cookie"
+  unit: tns
+  tags: [i2, tns, tns_bulb, reg, enter]
+  agg: sum
+  numerator: [registration_errors]
+  denomimator: [registration_start]
+  significance_params: ratio
+  metrics_registry: true
+
+password_restore_errors_per_user:
+  description: "average number of password restore errors per cookie"
+  unit: tns
+  tags: [i4, tns, tns_bulb, restore, enter]
+  agg: sum
+  numerator: [restore_errors]
+  denomimator: [restore_start]
+  significance_params: ratio
+  metrics_registry: true
+
+enter_errors_per_user:
+  description: "average number of authorization/registration/restore errors per cookie"
+  unit: tns
+  tags: [i0, tns, tns_bulb, enter]
+  agg: sum
+  numerator: [enter_errors]
+  denomimator: [auth_start]
+  significance_params: ratio
+  metrics_registry: true
+
+item_views_freecat:
+  title: item_views_freecat
+  tags: [i3, total]
+  numerator: [item_views_freecat]
+  agg: sum
+  significance_params: default
+  description: "item views in vitrual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+phone_views_freecat:
+  title: phone_views_freecat
+  tags: [i3, total]
+  numerator: [phone_views_freecat]
+  agg: sum
+  significance_params: default
+  description: "phone views in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+contacts_freecat:
+  title: contacts_freecat
+  tags: [i3, total]
+  numerator: [contacts_freecat]
+  agg: sum
+  significance_params: default
+  description: "contacts in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+contacts_per_item_view_freecat:
+  title: contacts_per_item_view_freecat
+  tags: [i3, ratio]
+  agg: sum
+  numerator: [contacts_freecat]
+  denominator: [item_views_freecat]
+  significance_params: ratio
+  description: "contacts/item_views in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+buyers_freecat_daily:
+  title: buyers_freecat_daily
+  tags: [i3, user]
+  numerator: [contacts_freecat]
+  agg: proportion
+  significance_params: default
+  description: "buyers in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+users_item_view_freecat_daily:
+  title: users_item_view_freecat_daily
+  tags: [i3, user]
+  numerator: [item_views_freecat]
+  agg: proportion
+  significance_params: default
+  description: "item views daily in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+phone_views_notfreecat:
+  title: phone_views_notfreecat
+  tags: [i3, total]
+  numerator: [phone_views_notfreecat]
+  agg: sum
+  significance_params: default
+  description: "phone views not in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+contacts_notfreecat:
+  title: contacts_notfreecat
+  tags: [i3, total]
+  numerator: [contacts_notfreecat]
+  agg: sum
+  significance_params: default
+  description: "contacts not in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+buyers_notfreecat_daily:
+  title: buyers_notfreecat_daily
+  tags: [i3, user]
+  numerator: [contacts_notfreecat]
+  agg: proportion
+  significance_params: default
+  description: "buyers not in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
