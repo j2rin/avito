@@ -30,14 +30,14 @@ users_item_view_daily:
   title: users_item_view
   tags: [i1, bx, user]
   numerator: [item_views]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
   
 users_active_daily:
   title: users_active
   tags: [critical, bx, user]
   numerator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, phone_views_in_chat, booking_created_short_rent, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
-  agg: proportion_daily  
+  agg: proportion  
   significance_params: default
   
 phone_views_snippet:
@@ -179,7 +179,7 @@ daily_buyers:
   title: buyers_daily
   tags: [i0, bx, user]
   numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
 
 buyers:
@@ -200,7 +200,7 @@ users_all_main_page_daily:
   title: users_all_main_page
   tags: [i2, bx, rec, main, user]
   numerator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
  
 head_main_pages:
@@ -214,7 +214,7 @@ users_head_main_page_daily:
   title: users_head_main_page
   tags: [i2, bx, rec, main, user]
   numerator: [head_main_pages]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
 
 transport_main_pages:
@@ -228,7 +228,7 @@ users_transport_main_page_daily:
   title: users_transport_main_page
   tags: [i4, bx, rec, main, user]
   numerator: [transport_main_pages]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
 
 re_main_pages:
@@ -242,7 +242,7 @@ users_re_main_page_daily:
   title: users_re_main_page
   tags: [i4, bx, rec, main, user]
   numerator: [re_main_pages]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
   
 services_main_pages:
@@ -256,7 +256,7 @@ users_services_main_page_daily:
   title: users_services_main_page
   tags: [i4, bx, rec, main, user]
   numerator: [services_main_pages]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
   
 vertical_main_pages:
@@ -270,7 +270,7 @@ users_vertical_main_page_daily:
   title: users_vertical_main_page
   tags: [i3, bx, rec, main, user]
   numerator: [transport_main_pages, re_main_pages, services_main_pages]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
   
 advertisement_page_views:
@@ -296,11 +296,6 @@ autoteka_redirs:
   numerator: [autoteka_redirs_from_item, autoteka_redirs_from_about_report]
   agg: sum
   description: "переход в автотеку с карточки объявления или из раздела Узнать больше об отчёте"
-  significance_params: default
-
-public_profiles:
-  numerator: [public_profiles]
-  agg: sum
   significance_params: default
 
 phone_views_realty_suspicious_user_flag:
@@ -329,28 +324,43 @@ contacts_per_item_view:
   denominator: [item_views]
   significance_params: ratio
 
+public_profile_views:
+  numerator: [public_profile_views]
+  agg: sum
+  significance_params: default
+
+public_profile_unique_views:
+  numerator: [public_profile_unique_views]
+  agg: sum
+  significance_params: default
+
+public_profile_views_proportion:
+  numerator: [public_profile_views]
+  agg: proportion
+  significance_params: proportion
+
 contacts_public_profile:
   numerator: [contacts_public_profile]
   agg: sum
   significance_params: default
 
-public_profile_paginations:
-  numerator: [public_profile_paginations]
-  agg: sum
-  significance_params: default
-
-public_profile_paginations_proportion:
-  numerator: [public_profile_paginations]
+contacts_public_profile_proportion:
+  numerator: [contacts_public_profile]
   agg: proportion
   significance_params: proportion
 
-public_profile_closed_items_tabs:
-  numerator: [public_profile_closed_items_tabs]
+public_profile_active_items_paginations:
+  numerator: [public_profile_active_items_paginations]
   agg: sum
   significance_params: default
 
-public_profile_closed_items_tabs_proportion:
-  numerator: [public_profile_closed_items_tabs]
+public_profile_active_items_paginations_proportion:
+  numerator: [public_profile_active_items_paginations]
+  agg: proportion
+  significance_params: proportion
+
+public_profile_closed_tabs_proportion:
+  numerator: [public_profile_closed_tabs]
   agg: proportion
   significance_params: proportion
 
@@ -358,6 +368,11 @@ public_profile_closed_items_paginations:
   numerator: [public_profile_closed_items_paginations]
   agg: sum
   significance_params: default
+  
+public_profile_closed_items_paginations_proportion:
+  numerator: [public_profile_closed_items_paginations]
+  agg: proportion
+  significance_params: proportion
 
 delivery_orders_per_flow_begining:
   agg: sum
@@ -643,42 +658,42 @@ users_item_view_serp_daily:
   title: users_item_view_serp
   tags: [i2, bx, serp, user]
   numerator: [item_views_serp]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
 
 users_contact_serp_daily:
   title: users_contact_serp
   tags: [i1, bx, serp, user]
   numerator: [contacts_serp]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
 
 users_buyer_target_click_serp_daily:
   title: users_bt_click_serp
   tags: [i1, bx, serp, user]
   numerator: [buyer_target_clicks_serp]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
 
 users_item_view_rec_daily:
   title: users_item_view_rec
   tags: [i2, bx, rec, user]
   numerator: [item_views_rec]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
 
 users_contact_rec_daily:
   title: users_contact_rec
   tags: [i2, bx, rec, user]
   numerator: [contacts_rec]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
 
 users_buyer_target_click_rec_daily:
   title: users_bt_click_rec
   tags: [i2, bx, rec, user]
   numerator: [buyer_target_clicks_rec]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
   
 item_views_vip_per_search:
@@ -986,12 +1001,12 @@ users_bt_click_daily:
   title: users_bt_click
   tags: [i0, bx, user]
   numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created, favorites_added]
-  agg: proportion_daily  
+  agg: proportion  
   significance_params: default
   
 items_added:
   title: items_added
-  tags: [i4, sx, total]
+  tags: [critical, sx, total]
   numerator: [items_added]
   agg: sum
   significance_params: default
@@ -1000,7 +1015,7 @@ sellers_daily:
   title: sellers
   tags: [i4, sx, user]
   numerator: [items_added]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
   
 items_add_started:
@@ -1014,7 +1029,7 @@ users_item_add_started:
   title: users_item_add_started
   tags: [i4, sx, user]
   numerator: [items_add_started]
-  agg: proportion_daily
+  agg: proportion
   significance_params: default
   
 items_added_per_items_add_started:
@@ -1246,3 +1261,94 @@ enter_errors_per_user:
   denomimator: [auth_start]
   significance_params: ratio
   metrics_registry: true
+
+item_views_freecat:
+  title: item_views_freecat
+  tags: [i3, total]
+  numerator: [item_views_freecat]
+  agg: sum
+  significance_params: default
+  description: "item views in vitrual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+phone_views_freecat:
+  title: phone_views_freecat
+  tags: [i3, total]
+  numerator: [phone_views_freecat]
+  agg: sum
+  significance_params: default
+  description: "phone views in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+contacts_freecat:
+  title: contacts_freecat
+  tags: [i3, total]
+  numerator: [contacts_freecat]
+  agg: sum
+  significance_params: default
+  description: "contacts in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+contacts_per_item_view_freecat:
+  title: contacts_per_item_view_freecat
+  tags: [i3, ratio]
+  agg: sum
+  numerator: [contacts_freecat]
+  denominator: [item_views_freecat]
+  significance_params: ratio
+  description: "contacts/item_views in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+buyers_freecat_daily:
+  title: buyers_freecat_daily
+  tags: [i3, user]
+  numerator: [contacts_freecat]
+  agg: proportion
+  significance_params: default
+  description: "buyers in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+users_item_view_freecat_daily:
+  title: users_item_view_freecat_daily
+  tags: [i3, user]
+  numerator: [item_views_freecat]
+  agg: proportion
+  significance_params: default
+  description: "item views daily in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+phone_views_notfreecat:
+  title: phone_views_notfreecat
+  tags: [i3, total]
+  numerator: [phone_views_notfreecat]
+  agg: sum
+  significance_params: default
+  description: "phone views not in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+contacts_notfreecat:
+  title: contacts_notfreecat
+  tags: [i3, total]
+  numerator: [contacts_notfreecat]
+  agg: sum
+  significance_params: default
+  description: "contacts not in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
+
+buyers_notfreecat_daily:
+  title: buyers_notfreecat_daily
+  tags: [i3, user]
+  numerator: [contacts_notfreecat]
+  agg: proportion
+  significance_params: default
+  description: "buyers not in virtual free-item-category"
+  unit: ghcom
+  metrics_registry: false
