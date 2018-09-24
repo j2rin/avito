@@ -45,7 +45,7 @@ def validate_config():
     schemas[METRICS_FILE]['valueschema']['schema']['significance_params']['allowed'] = significance_params
 
     validator = cerberus.Validator(schemas)
-    validator.allow_unknown = True
+    # validator.allow_unknown = True
     if not validator.validate(configs):
         raise Exception(validator.errors)
 
