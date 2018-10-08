@@ -1507,3 +1507,781 @@ new_listers:
   description: "Users who started their first item in logical category. Additive across logical categories"
   unit: c2c
   metrics_registry: true
+
+buyer_delivery_orders:
+  title: buyer_delivery_orders
+  description: "All delivery orders by buyer"
+  unit: safedeal
+  tags: [i3, delivery, buyer]
+  agg: sum
+  numerator: [buyer_delivery_orders]
+  significance_params: default
+  metrics_registry: false
+  
+buyer_delivery_orders_with_pay:
+  title: buyer_delivery_orders_with_pay
+  description: "All delivery orders by buyer with pay"
+  unit: safedeal
+  tags: [i3, delivery, buyer]
+  agg: sum
+  numerator: [buyer_delivery_orders_with_pay]
+  significance_params: default
+  metrics_registry: true
+  
+buyer_delivery_orders_in_transit:
+  title: buyer_delivery_orders_in_transit
+  description: "All delivery orders by buyer in transit"
+  unit: safedeal
+  tags: [i3, delivery, buyer]
+  agg: sum
+  numerator: [buyer_delivery_orders_in_transit]
+  significance_params: default
+  metrics_registry: true
+
+buyer_delivery_deals:
+  title: buyer_delivery_deals
+  description: "All delivery deals by buyer"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [buyer_delivery_deals]
+  significance_params: default
+  metrics_registry: false
+
+buyer_delivery_orders_expired:
+  title: buyer_delivery_orders_expired
+  description: "All delivery expired orders by buyer"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [buyer_delivery_orders_expired]
+  significance_params: default
+  metrics_registry: false
+
+buyer_delivery_orders_canceled:
+  title: buyer_delivery_orders_canceled
+  description: "All delivery canceled orders by buyer"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [buyer_delivery_orders_canceled]
+  significance_params: default
+  metrics_registry: false
+  
+buyer_delivery_orders_returned:
+  title: buyer_delivery_orders_returned
+  description: "All delivery returned orders by buyer"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [buyer_delivery_orders_returned]
+  significance_params: default
+  metrics_registry: false
+  
+buyer_delivery_in_transit_ratio:
+  title: buyer_delivery_in_transit_ratio
+  description: "All delivery orders in transit ratio by buyer"
+  unit: safedeal
+  tags: [i3, delivery, buyer]
+  agg: sum
+  numerator: [buyer_delivery_orders_in_transit]
+  denominator: [buyer_delivery_orders_with_pay]
+  significance_params: ratio
+  metrics_registry: false
+
+seller_delivery_orders_returned:
+  title: seller_delivery_orders_returned
+  description: "All delivery returned order by seller"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [seller_delivery_orders_returned]
+  significance_params: default
+  metrics_registry: false
+  
+seller_delivery_deals:
+  title: seller_delivery_deals
+  description: "All delivery deals by seller"
+  unit: safedeal
+  tags: [i3, delivery, seller]
+  agg: sum
+  numerator: [seller_delivery_deals]
+  significance_params: default
+  metrics_registry: true
+  
+seller_delivery_bonuses:
+  title: seller_delivery_bonuses
+  description: "Delivery bonuses by seller"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [seller_delivery_bonuses]
+  significance_params: default
+  metrics_registry: true
+
+seller_delivery_orders_canceled:
+  title: seller_delivery_orders_canceled
+  description: "All delivery canceled orders by seller"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [seller_delivery_orders_canceled]
+  significance_params: default
+  metrics_registry: false
+
+seller_delivery_orders_expired:
+  title: seller_delivery_orders_expired
+  description: "All delivery expired orders by seller"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [seller_delivery_orders_expired]
+  significance_params: default
+  metrics_registry: false
+
+seller_delivery_orders_in_transit:
+  title: seller_delivery_orders_in_transit
+  description: "All delivery orders in transit by seller"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [seller_delivery_orders_in_transit]
+  significance_params: default
+  metrics_registry: false
+  
+seller_delivery_orders_with_pay:
+  title: seller_delivery_orders_with_pay
+  description: "All delivery order with pay by seller"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [seller_delivery_orders_with_pay]
+  significance_params: default
+  metrics_registry: false
+
+seller_delivery_in_transit_ratio:
+  title: seller_delivery_in_transit_ratio
+  description: "All delivery in transit orders ratio by seller"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [seller_delivery_orders_in_transit]
+  denominator: [seller_delivery_orders_with_pay]
+  significance_params: ratio
+  metrics_registry: false
+  
+helpdesk_vas_tag_tickets:
+  title: helpdesk_vas_tag_tickets
+  description: "Vas tickets"
+  unit: safedeal
+  tags: [i4, delivery, vas, support]
+  agg: sum
+  numerator: [helpdesk_vas_tag_tickets]
+  significance_params: default
+  metrics_registry: false
+
+helpdesk_delivery_tickets:
+  title: helpdesk_delivery_tickets
+  description: "Delivery tickets"
+  unit: safedeal
+  tags: [i4, delivery, support]
+  agg: sum
+  numerator: [helpdesk_delivery_tickets]
+  significance_params: default
+  metrics_registry: false
+  
+helpdesk_delivery_vas_tickets:
+  title: helpdesk_delivery_vas_tickets
+  description: "Delivery vas tickets"
+  unit: safedeal
+  tags: [i4, delivery, support,vas]
+  agg: sum
+  numerator: [helpdesk_delivery_vas_tickets]
+  significance_params: default
+  metrics_registry: false
+  
+delivery_seller_vas_spend_amount:
+  title: delivery_seller_vas_spend_amount
+  description: "Delivery seller vas spend amount"
+  unit: safedeal
+  tags: [i4, delivery, vas]
+  agg: sum
+  numerator: [delivery_seller_vas_spend_amount]
+  significance_params: default
+  metrics_registry: false
+  
+delivery_seller_bonuses_in_vas_spend_amount:
+  title: delivery_seller_bonuses_in_vas_spend_amount
+  description: "Delivery seller bonuses in vas spend amount"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [delivery_seller_bonuses_in_vas_spend_amount]
+  significance_params: default
+  metrics_registry: false
+
+items_with_delivery_soa:
+  title: items_with_delivery_soa
+  description: "All delviery item closed by SOA"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [items_with_delivery_soa]
+  significance_params: default
+  metrics_registry: false
+  
+items_with_delivery:
+  title: items_with_delivery
+  description: "All item with delivery"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [items_with_delivery]
+  significance_params: default
+  metrics_registry: false
+  
+item_off_delivery:
+  title: item_off_delivery
+  description: "All item off delivery"
+  unit: safedeal
+  tags: [i4, delivery, seller]
+  agg: sum
+  numerator: [item_off_delivery]
+  significance_params: default
+  metrics_registry: false
+
+delivery_item_view:
+  title: delivery_item_view
+  description: "Uniq item view of delivery item"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [item_view]
+  significance_params: default
+  metrics_registry: false
+  
+delivery_total_item_view:
+  title: delivery_total_item_view
+  description: "Total item view of delivery item"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [total_item_view]
+  significance_params: default
+  metrics_registry: false
+  
+delivery_view_delivery_click_ratio:
+  title: delivery_view_delivery_click_ratio
+  description: "Convertion from delivery item view to delivery button by uniq user"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [delivery_click]
+  denominator: [item_view]
+  significance_params: ratio
+  metrics_registry: false
+  
+delivery_total_view_delivery_click_ratio:
+  title: delivery_view_delivery_click_ratio
+  description: "Convertion from delivery item view to delivery button"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [total_delivery_click]
+  denominator: [total_item_view]
+  significance_params: ratio
+  metrics_registry: false
+
+delivery_click:
+  title: delivery_click
+  description: "Uniq delivery button click"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [delivery_click]
+  significance_params: default
+  metrics_registry: false
+  
+total_delivery_click:
+  title: total_delivery_click
+  description: "Total delivery button click"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [total_delivery_click]
+  significance_params: default
+  metrics_registry: false
+  
+delivery_click_widget_ratio:
+  title: delivery_view_delivery_click_ratio
+  description: "Convertion from delivery button click to delivery widget by uniq user"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [delivery_widget]
+  denominator: [delivery_click]
+  significance_params: ratio
+  metrics_registry: false
+  
+delivery_total_click_widget_ratio:
+  title: delivery_view_delivery_click_ratio
+  description: "Convertion from delivery button click to delivery widget"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [total_delivery_widget]
+  denominator: [total_delivery_click]
+  significance_params: ratio
+  metrics_registry: false
+
+delivery_widget:
+  title: delivery_widget
+  description: "Uniq delivery widget show"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [delivery_widget]
+  significance_params: default
+  metrics_registry: false
+  
+total_delivery_widget:
+  title: total_delivery_widget
+  description: "Total delivery widget show"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [total_delivery_widget]
+  significance_params: default
+  metrics_registry: false
+  
+delivery_widget_contact_ratio:
+  title: delivery_view_delivery_click_ratio
+  description: "Convertion from delivery widget show to delivery contact by uniq user"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [delivery_contact]
+  denominator: [delivery_widget]
+  significance_params: ratio
+  metrics_registry: false
+  
+delivery_total_widget_contact_ratio:
+  title: delivery_view_delivery_click_ratio
+  description: "Convertion from delivery widget show to delivery contact"
+  unit: safedeal
+  tags: [i4, delivery, buyer]
+  agg: sum
+  numerator: [total_delivery_contact]
+  denominator: [total_delivery_widget]
+  significance_params: ratio
+  metrics_registry: false
+  
+delivery_contact:
+  title: delivery_contact
+  description: "Uniq delivery contacts"
+  unit: safedeal
+  tags: [i3, delivery, buyer]
+  agg: sum
+  numerator: [delivery_contact]
+  significance_params: default
+  metrics_registry: false
+  
+total_delivery_contact:
+  title: total_delivery_contact
+  description: "Total delivery contacts"
+  unit: safedeal
+  tags: [i3, delivery, buyer]
+  agg: sum
+  numerator: [total_delivery_contact]
+  significance_params: default
+  metrics_registry: false
+
+buyer_str_bookings:
+  title: buyer_str_bookings
+  description: "All str bookings by buyer"
+  unit: safedeal
+  tags: [i3, str, buyer]
+  agg: sum
+  numerator: [buyer_str_bookings]
+  significance_params: default
+  metrics_registry: true
+  
+buyer_str_bookings_paid:
+  title: buyer_str_bookings_paid
+  description: "All str paid bookings by buyer"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [buyer_str_bookings_paid]
+  significance_params: default
+  metrics_registry: true
+  
+buyer_str_bookings_comfirmed:
+  title: buyer_str_bookings_comfirmed
+  description: "All str confirmed bookings by buyer"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [buyer_str_bookings_comfirmed]
+  significance_params: default
+  metrics_registry: true
+
+buyer_str_bookings_expired:
+  title: buyer_str_bookings_expired
+  description: "All str expired bookings by buyer"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [buyer_str_bookings_expired]
+  significance_params: default
+  metrics_registry: false
+
+buyer_str_bookings_canceled:
+  title: buyer_str_bookings_canceled
+  description: "All str canceled bookings for buyer"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [buyer_str_bookings_canceled]
+  significance_params: default
+  metrics_registry: false
+
+buyer_str_booking_cost:
+  title: buyer_str_booking_cost
+  description: "All buyer bookings cost, paid/not paid both"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [buyer_str_booking_cost]
+  significance_params: default
+  metrics_registry: false
+  
+buyer_str_paid:
+  title: buyer_str_paid
+  description: "Money paid for bookings by buyer"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [buyer_str_paid]
+  significance_params: default
+  metrics_registry: false
+
+buyer_str_deals:
+  title: buyer_str_deals
+  description: "All str deals by buyer"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [buyer_str_deals]
+  significance_params: default
+  metrics_registry: false
+  
+buyer_str_bookings_voided:
+  title: buyer_str_bookings_voided
+  description: "All str voided bookings by buyer"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [buyer_str_bookings_voided]
+  significance_params: default
+  metrics_registry: false
+  
+buyer_str_confirmed_ratio:
+  title: buyer_str_confirmed_ratio
+  description: "Convertion from paid to confirmed booking buyer"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [buyer_str_bookings_comfirmed]
+  denominator: [buyer_str_bookings_paid]
+  significance_params: ratio
+  metrics_registry: false
+
+seller_str_bookings:
+  title: seller_str_bookings
+  description: "All str bookings by seller"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [seller_str_bookings]
+  significance_params: default
+  metrics_registry: false
+  
+seller_str_bookings_paid:
+  title: seller_str_bookings_paid
+  description: "All str paid bookings by seller"
+  unit: safedeal
+  tags: [i3, str, seller]
+  agg: sum
+  numerator: [seller_str_bookings_paid]
+  significance_params: default
+  metrics_registry: true
+  
+seller_str_bookings_comfirmed:
+  title: seller_str_bookings_comfirmed
+  description: "All str confirmed bookings by seller"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [seller_str_bookings_comfirmed]
+  significance_params: default
+  metrics_registry: true
+
+seller_str_bookings_canceled:
+  title: seller_str_bookings_canceled
+  description: "All str canceled bookings by seller"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [seller_str_bookings_canceled]
+  significance_params: default
+  metrics_registry: false
+
+seller_str_bookings_expired:
+  title: seller_str_bookings_expired
+  description: "All str expired bookings by seller"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [seller_str_bookings_expired]
+  significance_params: default
+  metrics_registry: false
+
+seller_str_deals:
+  title: seller_str_deals
+  description: "All str deals by seller"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [seller_str_deals]
+  significance_params: default
+  metrics_registry: false
+  
+seller_str_bookings_voided:
+  title: seller_str_bookings_voided
+  description: "All str voided bookings by seller"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [seller_str_bookings_voided]
+  significance_params: default
+  metrics_registry: false
+  
+seller_str_payout_fee:
+  title: seller_payout_fee
+  description: "Money seller pay avito from booking"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [seller_payout_fee]
+  significance_params: default
+  metrics_registry: false
+  
+seller_str_payout_amount:
+  title: seller_payout_amount
+  description: "Money buyer pay for booking by seller"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [seller_payout_amount]
+  significance_params: default
+  metrics_registry: false
+  
+seller_str_confirmed_ratio:
+  title: seller_str_confirmed_ratio
+  description: "Convertion from paid to confirmed booking seller"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [seller_str_bookings_comfirmed]
+  denominator: [seller_str_bookings_paid]
+  significance_params: ratio
+  metrics_registry: false
+  
+helpdesk_str_tickets:
+  title: helpdesk_str_tickets
+  description: "Str helpdesk tickets"
+  unit: safedeal
+  tags: [i4, str]
+  agg: sum
+  numerator: [helpdesk_str_tickets]
+  significance_params: default
+  metrics_registry: false
+ 
+items_with_str:
+  title: items_with_str
+  description: "All item with str"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [items_with_str]
+  significance_params: default
+  metrics_registry: false
+  
+items_with_str_soa:
+  title: items_with_str_soa
+  description: "All str item closed with SOA"
+  unit: safedeal
+  tags: [i4, str, seller]
+  agg: sum
+  numerator: [items_with_str_soa]
+  denominator: [seller_str_bookings_paid]
+  significance_params: ratio
+  metrics_registry: false
+  
+item_off_str:
+  title: item_off_str
+  description: "All item off str"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [item_off_str]
+  significance_params: default
+  metrics_registry: FALSE
+  
+str_item_view:
+  title: str_item_view
+  description: "Uniq item view of str item"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [item_view]
+  significance_params: default
+  metrics_registry: false
+  
+str_total_item_view:
+  title: str_total_item_view
+  description: "Total item view of str item"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [total_item_view]
+  significance_params: default
+  metrics_registry: false
+  
+str_view_str_click_ratio:
+  title: str_view_str_click_ratio
+  description: "Convertion from str item view to str button by uniq user"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [str_click]
+  denominator: [item_view]
+  significance_params: ratio
+  metrics_registry: false
+  
+str_total_view_str_click_ratio:
+  title: str_view_str_click_ratio
+  description: "Convertion from str item view to str button"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [total_str_click]
+  denominator: [total_item_view]
+  significance_params: ratio
+  metrics_registry: false
+
+str_click:
+  title: str_click
+  description: "Uniq str button click"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [str_click]
+  significance_params: default
+  metrics_registry: false
+  
+total_str_click:
+  title: total_str_click
+  description: "Total str button click"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [total_str_click]
+  significance_params: default
+  metrics_registry: false
+  
+str_click_widget_ratio:
+  title: str_view_str_click_ratio
+  description: "Convertion from str button click to str widget by uniq user"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [str_widget]
+  denominator: [str_click]
+  significance_params: ratio
+  metrics_registry: false
+  
+str_total_click_widget_ratio:
+  title: str_view_str_click_ratio
+  description: "Convertion from str button click to str widget"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [total_str_widget]
+  denominator: [total_str_click]
+  significance_params: ratio
+  metrics_registry: false
+
+str_widget:
+  title: str_widget
+  description: "Uniq str widget show"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [str_widget]
+  significance_params: default
+  metrics_registry: false
+  
+total_str_widget:
+  title: total_str_widget
+  description: "Total str widget show"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [total_str_widget]
+  significance_params: default
+  metrics_registry: false
+  
+str_widget_contact_ratio:
+  title: str_view_str_click_ratio
+  description: "Convertion from str widget show to str contact by uniq user"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [str_contact]
+  denominator: [str_widget]
+  significance_params: ratio
+  metrics_registry: false
+  
+str_total_widget_contact_ratio:
+  title: str_view_str_click_ratio
+  description: "Convertion from str widget show to str contact"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [total_str_contact]
+  denominator: [total_str_widget]
+  significance_params: ratio
+  metrics_registry: false
+  
+str_contact:
+  title: str_contact
+  description: "Uniq str contacts"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [str_contact]
+  significance_params: default
+  metrics_registry: false
+  
+total_str_contact:
+  title: total_str_contact
+  description: "Total str contacts"
+  unit: safedeal
+  tags: [i4, str, buyer]
+  agg: sum
+  numerator: [total_str_contact]
+  significance_params: default
+  metrics_registry: FALSE
+  
