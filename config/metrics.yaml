@@ -195,7 +195,27 @@ users_all_main_page_daily:
   numerator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   agg: proportion
   significance_params: default
- 
+
+users_item_views_rec_u2i_per_users_all_main_pages:
+  title: users_item_views_rec_u2i_per_users_all_main_pages
+  description: "Convertion from unique visitors to uniqie viewers on main page recommendations"
+  unit: recommendations
+  tags: [i1, bx, rec, main, ratio]
+  numerator: [item_views_rec_u2i]
+  denominator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  agg: proportion
+  significance_params: ratio
+
+users_item_views_rec_i2i_per_users_item_views:
+  title: users_u2i
+  description: "Convertion from unique visitors to uniqie viewers on item page recommendations"
+  unit: recommendations
+  tags: [i1, bx, rec, ratio]
+  numerator: [item_views_rec_i2i]
+  denominator: [item_views]
+  agg: proportion
+  significance_params: ratio
+
 head_main_pages:
   title: head_main_pages
   tags: [i2, bx, rec, main, total]
@@ -518,6 +538,22 @@ item_views_rec:
   title: item_views_rec
   tags: [i2, bx, rec, total]
   numerator: [item_views_rec]
+  agg: sum
+  significance_params: default
+
+item_views_rec_i2i:
+  title: item_views_rec_i2i
+  unit: recommendations
+  tags: [i2, bx, rec, total]
+  numerator: [item_views_rec_i2i]
+  agg: sum
+  significance_params: default
+
+item_views_rec_u2i:
+  title: item_views_rec_u2i
+  unit: recommendations
+  tags: [i2, bx, rec, total]
+  numerator: [item_views_rec_u2i]
   agg: sum
   significance_params: default
 
