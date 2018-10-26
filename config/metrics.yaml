@@ -198,7 +198,7 @@ users_all_main_page_daily:
 
 users_item_views_rec_u2i_per_users_all_main_pages:
   title: u2i_viewers_per_visitors
-  description: "Convertion from unique visitors to uniqie viewers on main page recommendations"
+  description: "Conversion from unique visitors to uniqie viewers on main page recommendations"
   unit: recommendations
   tags: [i1, bx, rec, main, ratio]
   numerator: [item_views_rec_u2i]
@@ -208,10 +208,30 @@ users_item_views_rec_u2i_per_users_all_main_pages:
 
 users_item_views_rec_i2i_per_users_item_views:
   title: i2i_viewers_per_visitors
-  description: "Convertion from unique visitors to uniqie viewers on item page recommendations"
+  description: "Conversion from unique visitors to uniqie viewers on item page recommendations"
   unit: recommendations
   tags: [i1, bx, rec, ratio]
   numerator: [item_views_rec_i2i]
+  denominator: [item_views]
+  agg: proportion
+  significance_params: ratio
+
+users_contacts_rec_u2i_per_users_all_main_pages:
+  title: u2i_buyers_per_visitors
+  description: "Conversion from unique visitors to uniqie buyers on main page recommendations"
+  unit: recommendations
+  tags: [i1, bx, rec, main, ratio]
+  numerator: [contacts_rec_u2i]
+  denominator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  agg: proportion
+  significance_params: ratio
+
+users_contacts_rec_i2i_per_users_item_views:
+  title: i2i_buyers_per_visitors
+  description: "Conversion from unique visitors to uniqie buyers on item page recommendations"
+  unit: recommendations
+  tags: [i1, bx, rec, ratio]
+  numerator: [contacts_rec_i2i]
   denominator: [item_views]
   agg: proportion
   significance_params: ratio
@@ -554,6 +574,54 @@ item_views_rec_u2i:
   unit: recommendations
   tags: [i2, bx, rec, total]
   numerator: [item_views_rec_u2i]
+  agg: sum
+  significance_params: default
+
+contacts_rec_i2i:
+  title: contacts_rec_i2i
+  unit: recommendations
+  tags: [i2, bx, rec, total]
+  numerator: [contacts_rec_i2i]
+  agg: sum
+  significance_params: default
+
+contacts_rec_u2i:
+  title: contacts_rec_u2i
+  unit: recommendations
+  tags: [i2, bx, rec, total]
+  numerator: [contacts_rec_u2i]
+  agg: sum
+  significance_params: default
+
+fav_added_rec_i2i:
+  title: fav_added_rec_i2i
+  unit: recommendations
+  tags: [i2, bx, rec, total]
+  numerator: [fav_added_rec_i2i]
+  agg: sum
+  significance_params: default
+
+fav_added_rec_u2i:
+  title: fav_added_rec_u2i
+  unit: recommendations
+  tags: [i2, bx, rec, total]
+  numerator: [fav_added_rec_u2i]
+  agg: sum
+  significance_params: default
+
+buyer_target_clicks_rec_i2i:
+  title: bt_clicks_rec_i2i
+  unit: recommendations
+  tags: [i2, bx, rec, total]
+  numerator: [buyer_target_clicks_rec_i2i]
+  agg: sum
+  significance_params: default
+
+buyer_target_clicks_rec_u2i:
+  title: bt_clicks_rec_u2i
+  unit: recommendations
+  tags: [i2, bx, rec, total]
+  numerator: [buyer_target_clicks_rec_u2i]
   agg: sum
   significance_params: default
 
@@ -1821,7 +1889,7 @@ delivery_total_item_view:
   
 delivery_view_delivery_click_ratio:
   title: delivery_view_delivery_click_ratio
-  description: "Convertion from delivery item view to delivery button by uniq user"
+  description: "Conversion from delivery item view to delivery button by uniq user"
   unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
@@ -1832,7 +1900,7 @@ delivery_view_delivery_click_ratio:
   
 delivery_total_view_delivery_click_ratio:
   title: delivery_total_view_delivery_click_ratio
-  description: "Convertion from delivery item view to delivery button"
+  description: "Conversion from delivery item view to delivery button"
   unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
@@ -1863,7 +1931,7 @@ total_delivery_click:
   
 delivery_click_widget_ratio:
   title: delivery_click_widget_ratio
-  description: "Convertion from delivery button click to delivery widget by uniq user"
+  description: "Conversion from delivery button click to delivery widget by uniq user"
   unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
@@ -1874,7 +1942,7 @@ delivery_click_widget_ratio:
   
 delivery_total_click_widget_ratio:
   title: delivery_total_click_widget_ratio
-  description: "Convertion from delivery button click to delivery widget"
+  description: "Conversion from delivery button click to delivery widget"
   unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
@@ -1905,7 +1973,7 @@ total_delivery_widget:
   
 delivery_widget_contact_ratio:
   title: delivery_widget_contact_ratio
-  description: "Convertion from delivery widget show to delivery contact by uniq user"
+  description: "Conversion from delivery widget show to delivery contact by uniq user"
   unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
@@ -1916,7 +1984,7 @@ delivery_widget_contact_ratio:
   
 delivery_total_widget_contact_ratio:
   title: delivery_total_widget_contact_ratio
-  description: "Convertion from delivery widget show to delivery contact"
+  description: "Conversion from delivery widget show to delivery contact"
   unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
@@ -2037,7 +2105,7 @@ buyer_str_bookings_voided:
   
 buyer_str_confirmed_ratio:
   title: buyer_str_confirmed_ratio
-  description: "Convertion from paid to confirmed booking buyer"
+  description: "Conversion from paid to confirmed booking buyer"
   unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
@@ -2138,7 +2206,7 @@ seller_str_payout_amount:
   
 seller_str_confirmed_ratio:
   title: seller_str_confirmed_ratio
-  description: "Convertion from paid to confirmed booking seller"
+  description: "Conversion from paid to confirmed booking seller"
   unit: safedeal
   tags: [i4, str, seller]
   agg: sum
@@ -2210,7 +2278,7 @@ str_total_item_view:
   
 str_view_str_click_ratio:
   title: str_view_str_click_ratio
-  description: "Convertion from str item view to str button by uniq user"
+  description: "Conversion from str item view to str button by uniq user"
   unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
@@ -2221,7 +2289,7 @@ str_view_str_click_ratio:
   
 str_total_view_str_click_ratio:
   title: str_total_view_str_click_ratio
-  description: "Convertion from str item view to str button"
+  description: "Conversion from str item view to str button"
   unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
@@ -2252,7 +2320,7 @@ total_str_click:
   
 str_click_widget_ratio:
   title: str_click_widget_ratio
-  description: "Convertion from str button click to str widget by uniq user"
+  description: "Conversion from str button click to str widget by uniq user"
   unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
@@ -2263,7 +2331,7 @@ str_click_widget_ratio:
   
 str_total_click_widget_ratio:
   title: str_total_click_widget_ratio
-  description: "Convertion from str button click to str widget"
+  description: "Conversion from str button click to str widget"
   unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
@@ -2294,7 +2362,7 @@ total_str_widget:
   
 str_widget_contact_ratio:
   title: str_widget_contact_ratio
-  description: "Convertion from str widget show to str contact by uniq user"
+  description: "Conversion from str widget show to str contact by uniq user"
   unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
@@ -2305,7 +2373,7 @@ str_widget_contact_ratio:
   
 str_total_widget_contact_ratio:
   title: str_total_widget_contact_ratio
-  description: "Convertion from str widget show to str contact"
+  description: "Conversion from str widget show to str contact"
   unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
