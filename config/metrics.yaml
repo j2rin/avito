@@ -2427,6 +2427,77 @@ favorites_added_auto_almost_new:
   numerator: [favorites_added_auto_almost_new]
   significance_params: default
 
+payment_page_per_lf_show_block:
+  title: payment_page_per_lf_show
+  description: "Conversion from lf block show to payment page"
+  unit: Monetization
+  tags: [lf]
+  agg: sum
+  numerator: [lf_payment_page_events]
+  denominator: [lf_block_show_events]
+  significance_params: ratio
+  metrics_registry: false
+
+item_add_success_per_lf_show_block:
+  title: item_add_per_lf_show
+  description: "Conversion from lf block show to success item add"
+  unit: Monetization
+  tags: [lf]
+  agg: sum
+  numerator: [final_page_events]
+  denominator: [lf_block_show_events]
+  significance_params: ratio
+  metrics_registry: false
+
+lf_revenue:
+  title: lf_revenue
+  description: "Listing fee revenue total recognized with bonuses"
+  unit: Monetization
+  tags: [lf]
+  agg: sum
+  numerator: [lf_revenue]
+  significance_params: default
+  metrics_registry: false
+
+lf_transactions:
+  title: lf_transactions
+  description: "Listing fee transactions total (single and lf from package)"
+  unit: Monetization
+  tags: [lf]
+  agg: sum
+  numerator: [lf_transactions]
+  significance_params: default
+  metrics_registry: false
+
+lf_packages_item_add:
+  title: lf_packages
+  description: "Num of lf packages bought on item add"
+  unit: Monetization
+  tags: [lf]
+  agg: sum
+  numerator: [lf_packs]
+  significance_params: default
+  metrics_registry: false
+
+lf_revenue_single:
+  title: lf_revenue_single
+  description: "Listing fee revenue single on item add"
+  unit: Monetization
+  tags: [lf]
+  agg: sum
+  numerator: [lf_revenue_single]
+  significance_params: default
+  metrics_registry: false
+
+lf_transactions_single:
+  title: lf_transactions_single
+  description: "Listing fee single transactions"
+  unit: Monetization
+  tags: [lf]
+  agg: sum
+  numerator: [lf_transactions_single]
+  significance_params: default
+  metrics_registry: false
 express_cv_form_open_item_add_conversion:
   description: "Conversion from express cv form open to item add"
   tags: [cv]
@@ -2445,7 +2516,7 @@ express_cv_started:
   agg: sum
   significance_params: default
   metrics_registry: false
-  
+
 express_cv_started_net:
   description: "Created express cv allowed by moderation"
   tags: [cv]
@@ -2473,7 +2544,7 @@ express_cv_views:
   agg: sum
   significance_params: default
   metrics_registry: false
-  
+
 contacts_paid_express_cv:
   description: "Express cv paid contacts by platform of creation"
   tags: [cv]
@@ -2482,7 +2553,7 @@ contacts_paid_express_cv:
   agg: sum
   significance_params: default
   metrics_registry: false
-  
+
 contacts_paid_amount_express_cv:
   description: "Express cv paid contacts amount by platform of creation"
   tags: [cv]
