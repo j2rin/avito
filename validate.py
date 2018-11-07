@@ -1,6 +1,10 @@
 import os
 import cerberus
 import yaml
+import vertica_python
+import warnings
+
+warnings.filterwarnings('ignore')
 
 
 METRICS_FILE = 'metrics.yaml'
@@ -10,6 +14,31 @@ CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__)) + '/'
 CONFIG_PATH = CUR_DIR_PATH + 'config/'
 SIGNIFICANCE_PARAMS_PATH = CUR_DIR_PATH + 'config/significance_params/'
 SCHEMAS_PATH = CUR_DIR_PATH + 'config_schemas/'
+
+
+AVAILABLE_OBSERVATIONS_SQL = """
+select  observation_name
+from (
+    select  observation_name, rank() over(order by event_date desc) as rnk
+    from    DMA.observations_directory
+) d
+where   rnk = 1
+;"""
+
+
+def get_available_observations(user=None, password=None):
+    conn_info = {
+        'host': 'vertica-dwh',
+        'port': 5433,
+        'database': 'DWH',
+        'read_timeout': 3600,
+        'user': user or 'tableau',
+        'password': password or 'BestPushOnly166',
+    }
+    with vertica_python.connect(**conn_info) as con:
+        with con.cursor('dict') as cur:
+            cur.execute(AVAILABLE_OBSERVATIONS_SQL)
+            return [r['observation_name'] for r in cur.fetchall()]
 
 
 def get_file(file_path):
@@ -44,12 +73,19 @@ def validate_config():
 
     schemas[METRICS_FILE]['valueschema']['schema']['significance_params']['allowed'] = significance_params
 
+    available_observations = get_available_observations()
+    schemas[METRICS_FILE]['valueschema']['schema']['numerator']['allowed'] = available_observations
+    schemas[METRICS_FILE]['valueschema']['schema']['denominator']['allowed'] = available_observations
+
     validator = cerberus.Validator(schemas)
     # validator.allow_unknown = True
     if not validator.validate(configs):
-        raise Exception(validator.errors)
+        return validator.errors
 
 
 if __name__ == '__main__':
-    validate_config()
-    print('All good!')
+    errors = validate_config()
+    if errors:
+        print(yaml.dump(errors))
+    else:
+        print('All good!')

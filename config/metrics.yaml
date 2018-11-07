@@ -36,7 +36,7 @@ users_item_view_daily:
 users_active_daily:
   title: users_active
   tags: [critical, bx, user]
-  numerator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, phone_views_in_chat, booking_created_short_rent, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
+  numerator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, first_messages, booking_created_short_rent, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added]
   agg: proportion  
   significance_params: default
   
@@ -50,14 +50,14 @@ phone_views_snippet:
 phone_views:
   title: phone_views
   tags: [i1, bx, total]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_in_chat]
+  numerator: [phone_views_item_right, phone_views_item_top]
   agg: sum
   significance_params: default
   
 phone_views_total:
   title: phone_views_total
   tags: [i3, bx, total]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas]
   agg: sum
   significance_params: default
 
@@ -100,20 +100,6 @@ saved_searches_added:
   title: saved_searches_added
   tags: [i4, bx, ss, total]
   numerator: [saved_searches_added]
-  agg: sum
-  significance_params: default
-
-saved_searches_removed:
-  title: saved_searches_removed
-  tags: [i4, bx, ss, total]
-  numerator: [saved_searches_removed]
-  agg: sum
-  significance_params: default
-
-saved_searches_list_views:
-  title: saved_searches_list_views
-  tags: [i4, bx, ss, total]
-  numerator: [saved_searches_list_views]
   agg: sum
   significance_params: default
 
@@ -178,7 +164,7 @@ first_messages:
 buyers:
   title: buyers
   tags: [i0, bx, user]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, delivery_order_created]
   agg: proportion
   significance_params: proportion
 
@@ -309,43 +295,22 @@ users_vertical_main_page_daily:
 advertisement_page_views:
   title: advertisement_page_views
   tags: [critical, rise, ad, total]
-  numerator: [item_views, head_main_pages, transport_main_pages, re_main_pages, services_main_pages, searches_with_query, searches_without_query]
+  numerator: [advertisement_page_views]
   agg: sum 
   significance_params: default
   
 contacts:
   title: contacts
   tags: [i1, bx, total]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, delivery_order_created]
   agg: sum 
-  significance_params: default
-
-phone_views_anon_number:
-  numerator: [phone_views_anon_number]
-  agg: sum
-  significance_params: default
-
-autoteka_redirs:
-  numerator: [autoteka_redirs_from_item, autoteka_redirs_from_about_report]
-  agg: sum
-  description: "переход в автотеку с карточки объявления или из раздела Узнать больше об отчёте"
-  significance_params: default
-
-phone_views_realty_suspicious_user_flag:
-  numerator: [phone_views_realty_suspicious_user_flag]
-  agg: sum
-  significance_params: default
-
-item_views_realty_suspicious_user_flag:
-  numerator: [item_views_realty_suspicious_user_flag]
-  agg: sum
   significance_params: default
 
 phone_views_per_item_view:
   title: phone_views_per_item_view
   tags: [i3, bx, ratio]
   agg: sum
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_in_chat]
+  numerator: [phone_views_item_right, phone_views_item_top]
   denominator: [item_views]
   significance_params: ratio
   
@@ -353,7 +318,7 @@ contacts_per_item_view:
   title: contacts_per_item_view
   tags: [i2, bx, ratio]
   agg: sum
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created]
+  numerator: [phone_views_item_right, phone_views_item_top, booking_created_short_rent, first_messages, delivery_order_created]
   denominator: [item_views]
   significance_params: ratio
 
@@ -409,25 +374,14 @@ public_profile_closed_items_paginations_proportion:
 
 delivery_orders_per_flow_begining:
   agg: sum
-  numerator: [delivery_orders]
+  numerator: [delivery_order_created]
   denominator: [delivery_flow_beginings]
   significance_params: ratio
 
-delivery_orders:
-  numerator: [delivery_orders]
-  agg: sum
-  significance_params: default
-
-phone_views_per_item_view_realty_suspicious_user_flag:
-  agg: sum
-  numerator: [phone_views_realty_suspicious_user_flag]
-  denominator: [item_views_realty_suspicious_user_flag]
-  significance_params: ratio
-  
 contacts_public_profile_per_unique_user:
   agg: sum
   numerator: [contacts_public_profile]
-  denominator: [public_profiles_unique]
+  denominator: [public_profile_unique_views]
   significance_params: ratio
 
 recblock_shows:
@@ -1033,22 +987,6 @@ contacts_rec_per_item_views_rec:
   denominator: [item_views_rec]
   significance_params: ratio
 
-average_highest_click_position:
-  title: average_highest_click_position
-  tags: [i4, bx, serp, avg]
-  agg: sum
-  numerator: [sum_click_min_position]
-  denominator: [searches_serp]
-  significance_params: ratio
-
-average_lowest_click_position:
-  title: average_lowest_click_position
-  tags: [i4, bx, serp, avg]
-  agg: sum
-  numerator: [sum_click_max_position]
-  denominator: [searches_serp]
-  significance_params: ratio
-  
 searches_item_view_serp_per_searches_serp:
   title: searches_item_view_serp_per_searches
   tags: [i2, bx, serp, ratio]
@@ -1065,24 +1003,18 @@ shows_item_view_recblock_per_recblock_shows:
   denominator: [recblock_shows]
   significance_params: ratio
 
-installment_card_views_per_item_view:
-  agg: sum
-  numerator: [installment_card_views]
-  denominator: [item_views]
-  significance_params: ratio
-
 users_item_view_per_users:
   title: users_item_view_per_users
   tags: [i1, bx, ratio]
   agg: proportion
   numerator: [item_views]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   significance_params: ratio
 
 bt_clicks:
   title: bt_clicks
   tags: [i1, bx, total]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created, favorites_added]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, delivery_order_created, favorites_added]
   agg: sum
   significance_params: default
   
@@ -1090,14 +1022,14 @@ users_bt_click_per_users:
   title: users_bt_click_per_users
   tags: [i1, bx, ratio]
   agg: proportion
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, favorites_added]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, favorites_added]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   significance_params: ratio
   
 users_bt_click_daily:
   title: users_bt_click
   tags: [i0, bx, user]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created, favorites_added]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, delivery_order_created, favorites_added]
   agg: proportion  
   significance_params: default
   
@@ -1141,8 +1073,8 @@ buyers_per_users:
   title: buyers_per_users
   tags: [i0, bx, ratio]
   agg: proportion
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, phone_views_in_chat, booking_created_short_rent, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages]
+  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   significance_params: ratio
 
 serp_empty:
@@ -1525,7 +1457,7 @@ items_reactivated_net_conversion:
 new_items_blocked_or_rejected:
   title: new_items_blocked_or_rejected
   tags: [i1, user, sx]
-  numerator: [new_items_blocked,new_items_rejected]
+  numerator: [new_items_blocked, new_items_rejected]
   agg: sum
   significance_params: default
   description: "New items blocked or rejected by moderation"
@@ -1535,7 +1467,7 @@ new_items_blocked_or_rejected:
 new_items_blocked_or_rejected_conversion:
   title: new_items_blocked_or_rejected_conversion
   tags: [i1, user, sx]
-  numerator: [new_items_blocked_or_rejected]
+  numerator: [new_items_blocked, new_items_rejected]
   agg: proportion
   significance_params: default
   description: "Conversion to new item blocked or rejected by moderation"
