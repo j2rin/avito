@@ -2495,3 +2495,24 @@ contacts_paid_amount_express_cv:
   agg: sum
   significance_params: default
   metrics_registry: false
+
+successful_payment_share:
+  description: "Share of successful payments step3/step1"
+  tags: [payments]
+  unit: billing
+  agg: sum
+  numerator: [successful_payment]
+  denominator: [payment_method_page]
+  significance_params: ratio
+  metrics_registry: false
+
+main_payment_methods_share:
+  description: "Share of successful payments by cards and SBOL"
+  tags: [payments]
+  unit: billing
+  agg: sum
+  numerator: [successful_payment_card, successful_payment_SBOL]
+  denominator: [successful_payment]
+  significance_params: ratio
+  metrics_registry: false
+  
