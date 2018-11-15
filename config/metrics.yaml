@@ -2545,4 +2545,42 @@ main_payment_methods_share:
   denominator: [successful_payment]
   significance_params: ratio
   metrics_registry: false
-  
+
+searches_with_suggest_share:
+  description: "Share of searches with suggest"
+  tags: [ss, ratio, sgt]
+  unit: search
+  agg: sum
+  numerator: [queries_with_suggest]
+  denominator: [queries_no_redirect]
+  significance_params: ratio
+  metrics_registry: false
+
+suggest_users_share:
+  description: "Share of cookies, who use suggest"
+  tags: [ss, sgt, ratio]
+  unit: search
+  agg: proportion
+  numerator: [queries_with_suggest]
+  denominator: [queries_no_redirect]  
+  significance_params: ratio
+  metrics_registry: false
+
+suggest_buyers:
+  description: "Buyers, who use suggest"
+  tags: [ss, sgt]
+  unit: search
+  agg: proportion
+  numerator: [queries_no_redirect_contact]
+  significance_params: default
+  metrics_registry: false
+
+suggest_buyers_share:
+  description: "Share of buyers, who use suggest, to cookies, who use suggest"
+  tags: [ss, sgt, ratio]
+  unit: search
+  agg: proportion
+  numerator: [queries_no_redirect_contact]
+  denominator: [queries_with_suggest]  
+  significance_params: ratio
+  metrics_registry: false  
