@@ -101,6 +101,13 @@ services_main_pages:
   agg: sum
   significance_params: default
 
+bt_clicks:
+  title: bt_clicks
+  tags: [i1, bx, total]
+  numerator: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added]
+  agg: sum
+  significance_params: default
+
 ###############################################################################
 # Buyer :: Ratios
 ###############################################################################
@@ -163,7 +170,7 @@ buyers:
   significance_params: proportion
 
 users_all_main_page_daily:
-  title: users_all_main_page
+  title: users_main_page
   tags: [i2, bx, rec, main, user]
   numerator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   agg: proportion
@@ -204,6 +211,14 @@ users_vertical_main_page_daily:
   agg: proportion
   significance_params: default
 
+users_bt_click_daily:
+  title: users_bt_click
+  tags: [i0, bx, user]
+  numerator: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added]
+  agg: proportion
+  significance_params: default
+
+
 ###############################################################################
 # Buyer :: User Ratios
 ###############################################################################
@@ -213,6 +228,40 @@ buyers_per_users:
   tags: [i0, bx, ratio]
   agg: proportion
   numerator: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
+  denominator:
+    - item_views
+    - phone_views_total
+    - first_messages
+    - booking_created_short_rent
+    - delivery_flow_beginings
+    - delivery_order_created
+    - searches_without_query
+    - searches_with_query
+    - favorites_added
+  significance_params: ratio
+
+users_item_view_per_users:
+  title: users_item_view_per_users
+  tags: [i1, bx, ratio]
+  agg: proportion
+  numerator: [item_views]
+  denominator:
+    - item_views
+    - phone_views_total
+    - first_messages
+    - booking_created_short_rent
+    - delivery_flow_beginings
+    - delivery_order_created
+    - searches_without_query
+    - searches_with_query
+    - favorites_added
+  significance_params: ratio
+
+users_bt_click_per_users:
+  title: users_bt_click_per_users
+  tags: [i1, bx, ratio]
+  agg: proportion
+  numerator: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added]
   denominator:
     - item_views
     - phone_views_total
@@ -292,6 +341,20 @@ searches_serp:
   agg: sum
   significance_params: default
   description: all pages included
+
+serp_empty:
+  title: serp_empty
+  tags: [i2, bx, serp, total]
+  numerator: [serp_empty]
+  agg: sum
+  significance_params: default
+
+serp_small:
+  title: serp_small
+  tags: [i2, bx, serp, total]
+  numerator: [serp_small]
+  agg: sum
+  significance_params: default
 
 searches_item_view_vip:
   title: searches_item_view_vip
@@ -538,36 +601,12 @@ buyer_target_clicks_rec:
   agg: sum
   significance_params: default
 
-###############################################################################
-# Search :: User Totals
-###############################################################################
-
-users_item_view_serp_daily:
-  title: users_item_view_serp
-  tags: [i2, bx, serp, user]
-  numerator: [item_views_serp]
+suggest_buyers:
+  description: "Buyers, who use suggest"
+  tags: [ss, sgt]
+  unit: search
   agg: proportion
-  significance_params: default
-
-users_contact_serp_daily:
-  title: users_contact_serp
-  tags: [i1, bx, serp, user]
-  numerator: [contacts_serp]
-  agg: proportion
-  significance_params: default
-
-users_buyer_target_click_serp_daily:
-  title: users_bt_click_serp
-  tags: [i1, bx, serp, user]
-  numerator: [buyer_target_clicks_serp]
-  agg: proportion
-  significance_params: default
-
-users_buyer_target_click_rec_daily:
-  title: users_bt_click_rec
-  tags: [i2, bx, rec, user]
-  numerator: [buyer_target_clicks_rec]
-  agg: proportion
+  numerator: [queries_no_redirect_contact]
   significance_params: default
 
 ###############################################################################
@@ -790,54 +829,6 @@ searches_item_view_serp_per_searches_serp:
   denominator: [searches_serp]
   significance_params: ratio
 
-###############################################################################
-# Search :: User Ratios
-###############################################################################
-
-users_item_view_per_users:
-  title: users_item_view_per_users
-  tags: [i1, bx, ratio]
-  agg: proportion
-  numerator: [item_views]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
-  significance_params: ratio
-
-bt_clicks:
-  title: bt_clicks
-  tags: [i1, bx, total]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, delivery_order_created, favorites_added]
-  agg: sum
-  significance_params: default
-
-users_bt_click_per_users:
-  title: users_bt_click_per_users
-  tags: [i1, bx, ratio]
-  agg: proportion
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, favorites_added]
-  denominator: [item_views, phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, delivery_order_created, searches_without_query, searches_with_query, favorites_added, saved_searches_added, head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
-  significance_params: ratio
-
-users_bt_click_daily:
-  title: users_bt_click
-  tags: [i0, bx, user]
-  numerator: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas, booking_created_short_rent, first_messages, delivery_order_created, favorites_added]
-  agg: proportion
-  significance_params: default
-
-serp_empty:
-  title: serp_empty
-  tags: [i2, bx, serp, total]
-  numerator: [serp_empty]
-  agg: sum
-  significance_params: default
-
-serp_small:
-  title: serp_small
-  tags: [i2, bx, serp, total]
-  numerator: [serp_small]
-  agg: sum
-  significance_params: default
-
 searches_with_suggest_share:
   description: "Share of searches with suggest"
   tags: [ss, ratio, sgt]
@@ -847,6 +838,72 @@ searches_with_suggest_share:
   denominator: [queries_no_redirect]
   significance_params: ratio
 
+###############################################################################
+# Search :: User Totals
+###############################################################################
+
+users_search:
+  title: users_search
+  tags: [i2, bx, serp, user]
+  numerator: [searches]
+  agg: proportion
+  significance_params: default
+
+users_search_query:
+  title: users_search_query
+  tags: [i2, bx, serp, user]
+  numerator: [searches_with_query]
+  agg: proportion
+  significance_params: default
+
+users_item_view_serp_daily:
+  title: users_search_item_view
+  tags: [i2, bx, serp, user]
+  numerator: [item_views_serp]
+  agg: proportion
+  significance_params: default
+
+# TODO: add user_item_view_search_query + ratios
+
+users_contact_serp_daily:
+  title: users_search_contact
+  tags: [i1, bx, serp, user]
+  numerator: [contacts_serp]
+  agg: proportion
+  significance_params: default
+
+users_buyer_target_click_serp_daily:
+  title: users_search_bt_click
+  tags: [i1, bx, serp, user]
+  numerator: [buyer_target_clicks_serp]
+  agg: proportion
+  significance_params: default
+
+###############################################################################
+# Search :: User Ratios
+###############################################################################
+
+users_item_view_per_search:
+  tags: [i2, bx, serp, user]
+  numerator: [item_views_serp]
+  denominator: [searches]
+  agg: proportion
+  significance_params: default
+
+users_contact_per_search:
+  tags: [i2, bx, serp, user]
+  numerator: [contacts_serp]
+  denominator: [searches]
+  agg: proportion
+  significance_params: default
+
+users_contact_per_item_view_search:
+  tags: [i2, bx, serp, user]
+  numerator: [contacts_serp]
+  denominator: [item_views_serp]
+  agg: proportion
+  significance_params: default
+
 suggest_users_share:
   description: "Share of cookies, who use suggest"
   tags: [ss, sgt, ratio]
@@ -855,14 +912,6 @@ suggest_users_share:
   numerator: [queries_with_suggest]
   denominator: [queries_no_redirect]
   significance_params: ratio
-
-suggest_buyers:
-  description: "Buyers, who use suggest"
-  tags: [ss, sgt]
-  unit: search
-  agg: proportion
-  numerator: [queries_no_redirect_contact]
-  significance_params: default
 
 suggest_buyers_share:
   description: "Share of buyers, who use suggest, to cookies, who use suggest"
@@ -1046,6 +1095,13 @@ users_contact_rec_daily:
   title: users_contact_rec
   tags: [i2, bx, rec, user]
   numerator: [contacts_rec]
+  agg: proportion
+  significance_params: default
+
+users_buyer_target_click_rec_daily:
+  title: users_bt_click_rec
+  tags: [i2, bx, rec, user]
+  numerator: [buyer_target_clicks_rec]
   agg: proportion
   significance_params: default
 
