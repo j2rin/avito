@@ -869,7 +869,11 @@ users_item_view_serp_daily:
   agg: proportion
   significance_params: default
 
-# TODO: add user_item_view_search_query + ratios
+users_item_view_search_query:
+  tags: [i2, bx, serp, user]
+  numerator: [searches_query_item_view]
+  agg: proportion
+  significance_params: default
 
 users_contact_serp_daily:
   title: users_search_contact
@@ -882,6 +886,12 @@ users_buyer_target_click_serp_daily:
   title: users_search_bt_click
   tags: [i1, bx, serp, user]
   numerator: [buyer_target_clicks_serp]
+  agg: proportion
+  significance_params: default
+
+users_contact_search_query:
+  tags: [i2, bx, serp, user]
+  numerator: [searches_query_contact]
   agg: proportion
   significance_params: default
 
@@ -907,6 +917,20 @@ users_contact_per_item_view_search:
   tags: [i2, bx, serp, user]
   numerator: [contacts_serp]
   denominator: [item_views_serp]
+  agg: proportion
+  significance_params: default
+
+users_item_view_per_search_query:
+  tags: [i2, bx, serp, user]
+  numerator: [searches_query_item_view]
+  denominator: [searches_with_query]
+  agg: proportion
+  significance_params: default
+
+users_contact_per_search_query:
+  tags: [i2, bx, serp, user]
+  numerator: [searches_query_contact]
+  denominator: [searches_with_query]
   agg: proportion
   significance_params: default
 
