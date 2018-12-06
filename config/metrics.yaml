@@ -1199,12 +1199,35 @@ phone_views_in_chat:
   agg: sum
   significance_params: default
 
+messenger_total_messages:
+  title: total_messages
+  tags: [i3, messenger, total]
+  numerator: [messenger_total_messeges]
+  agg: sum
+  significance_params: default
+
 write_button_clicks:
   title: write_button_clicks
   tags: [i4, messenger, total]
   numerator: [write_button_clicks]
   agg: sum
   significance_params: default
+
+messenger_chat_deleted:
+  title: deleted_chats
+  tags: [i4, messenger, total]
+  numerator: [messenger_chat_deleted]
+  agg: sum
+  significance_params: default
+
+messenger_users_blocked:
+  title: blocked_users_in_chat
+  tags: [i4, messenger, total]
+  numerator: [messenger_chat_deleted]
+  agg: sum
+  significance_params: default
+
+
 
 ###############################################################################
 # Messenger :: Ratios
@@ -1226,6 +1249,16 @@ first_mess_per_write_button_clicks:
   denominator: [write_button_clicks]
   significance_params: ratio
 
+###############################################################################
+# Messenger :: proportion
+###############################################################################
+
+messenger_only_buyers:
+  title: messenger_only_buyers
+  tags: [i3, messenger, user]
+  numerator: [first_messages]
+  agg: proportion
+  significance_params: proportion
 
 ########  ######## ##       #### ##     ## ######## ########  ##    ##
 ##     ## ##       ##        ##  ##     ## ##       ##     ##  ##  ##
