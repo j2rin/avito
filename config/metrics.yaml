@@ -1262,6 +1262,34 @@ users_buyer_target_click_rec_daily:
   agg: proportion
   significance_params: default
 
+users_contact_rec_i2i:
+  title: users_contact_rec_i2i
+  tags: [i2, bx, rec, user]
+  numerator: [contacts_rec_i2i]
+  agg: proportion
+  significance_params: default
+
+users_contact_rec_u2i:
+  title: users_contact_rec_u2i
+  tags: [i2, bx, rec, user]
+  numerator: [contacts_rec_u2i]
+  agg: proportion
+  significance_params: default
+
+users_item_view_rec_i2i:
+  title: users_item_view_rec_i2i
+  tags: [i2, bx, rec, user]
+  numerator: [item_views_rec_i2i]
+  agg: proportion
+  significance_params: default
+
+users_item_view_rec_u2i:
+  title: users_item_view_rec_u2i
+  tags: [i2, bx, rec, user]
+  numerator: [item_views_rec_u2i]
+  agg: proportion
+  significance_params: default
+
 ###############################################################################
 # Rec :: User Ratios
 ###############################################################################
@@ -1303,6 +1331,26 @@ users_contacts_rec_i2i_per_users_item_views:
   tags: [i1, bx, rec, ratio]
   numerator: [contacts_rec_i2i]
   denominator: [item_views]
+  agg: proportion
+  significance_params: ratio
+
+users_contacts_rec_i2i_per_users_item_views_rec_i2i:
+  title: i2i_buyers_per_viewers
+  description: "Conversion from unique viewers to uniqie buyers on item page recommendations"
+  unit: recommendations
+  tags: [i1, bx, rec, ratio]
+  numerator: [contacts_rec_i2i]
+  denominator: [item_views_rec_i2i]
+  agg: proportion
+  significance_params: ratio
+
+users_contacts_rec_u2i_per_users_item_views_rec_u2i:
+  title: u2i_buyers_per_viewers
+  description: "Conversion from unique viewers to uniqie buyers on item page recommendations"
+  unit: recommendations
+  tags: [i1, bx, rec, ratio]
+  numerator: [contacts_rec_u2i]
+  denominator: [item_views_rec_u2i]
   agg: proportion
   significance_params: ratio
 
