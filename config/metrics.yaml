@@ -114,19 +114,7 @@ bt_clicks:
   agg: sum
   significance_params: default
   
-loc_window_opens:
-  title: loc_window_opens
-  tags: [i4, bx, total]
-  numerator: [location_window_displays]
-  agg: sum
-  significance_params: default
-  
-location_text_inputs:
-  title: location_text_inputs
-  tags: [i4, bx, total]
-  numerator: [location_text_inputs]
-  agg: sum
-  significance_params: default
+
 
 ###############################################################################
 # Buyer :: Ratios
@@ -154,22 +142,7 @@ delivery_orders_per_flow_begining:
   denominator: [delivery_flow_beginings]
   significance_params: ratio
 
-  
-loc_window_saves_per_opens:
-  title: loc_window_saves_per_opens
-  tags: [i4, bx, total]
-  agg: sum
-  numerator: [location_window_save_clicks]
-  denominator: [location_window_displays]
-  significance_params: ratio
-  
-loc_suggests_per_text_inputs:
-  title: loc_suggests_per_text_inputs
-  tags: [i4, bx, total]
-  agg: sum
-  numerator: [location_suggest_clicks]
-  denominator: [location_text_inputs]
-  significance_params: ratio
+
 
 
 ###############################################################################
@@ -253,7 +226,9 @@ users_bt_click_daily:
   tags: [i0, bx, user]
   numerator: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added]
   agg: proportion
-  significance_params: default
+  significance_params: default 
+  
+
 
 
 ###############################################################################
@@ -335,6 +310,51 @@ saved_searches_added:
   numerator: [saved_searches_added]
   agg: sum
   significance_params: default
+  
+loc_window_opens:
+  title: loc_window_opens
+  tags: [i4, bx, total]
+  numerator: [location_window_displays]
+  agg: sum
+  significance_params: default
+  
+location_text_inputs:
+  title: location_text_inputs
+  tags: [i4, bx, total]
+  numerator: [location_text_inputs]
+  agg: sum
+  significance_params: default
+  
+loc_window_saves_per_opens:
+  title: loc_window_saves_per_opens
+  tags: [i4, bx, total]
+  agg: sum
+  numerator: [location_window_save_clicks]
+  denominator: [location_window_displays]
+  significance_params: ratio
+
+loc_suggests_per_text_inputs:
+  title: loc_suggests_per_text_inputs
+  tags: [i4, bx, total]
+  agg: sum
+  numerator: [location_suggest_clicks]
+  denominator: [location_text_inputs]
+  significance_params: ratio 
+  
+users_loc_window_opens:
+  title: users_loc_window_opens
+  tags: [i4, bx,  user]
+  numerator: [location_window_displays]
+  agg: proportion
+  significance_params: default
+  
+users_loc_suggest_clicks:
+  title: users_loc_suggest_clicks
+  tags: [i4, bx,  user]
+  numerator: [location_suggest_clicks]
+  agg: proportion
+  significance_params: default
+  
 
 ###############################################################################
 # Buyer :: Performance (Time To Content) Ratios
@@ -1048,6 +1068,7 @@ users_contact_search_query:
   numerator: [searches_query_contact]
   agg: proportion
   significance_params: default
+
 
 ###############################################################################
 # Search :: User Ratios
