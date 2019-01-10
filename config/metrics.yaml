@@ -113,6 +113,20 @@ bt_clicks:
   numerator: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added]
   agg: sum
   significance_params: default
+  
+loc_window_opens:
+  title: loc_window_opens
+  tags: [i4, bx, total]
+  numerator: [location_window_displays]
+  agg: sum
+  significance_params: default
+  
+location_text_inputs:
+  title: location_text_inputs
+  tags: [i4, bx, total]
+  numerator: [location_text_inputs]
+  agg: sum
+  significance_params: default
 
 ###############################################################################
 # Buyer :: Ratios
@@ -138,6 +152,23 @@ delivery_orders_per_flow_begining:
   agg: sum
   numerator: [delivery_order_created]
   denominator: [delivery_flow_beginings]
+  significance_params: ratio
+
+  
+loc_window_saves_per_opens:
+  title: loc_window_saves_per_opens
+  tags: [i4, bx, total]
+  agg: sum
+  numerator: [location_window_save_clicks]
+  denominator: [location_window_displays]
+  significance_params: ratio
+  
+loc_suggests_per_text_inputs:
+  title: loc_suggests_per_text_inputs
+  tags: [i4, bx, total]
+  agg: sum
+  numerator: [location_suggest_clicks]
+  denominator: [location_text_inputs]
   significance_params: ratio
 
 
