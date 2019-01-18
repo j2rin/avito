@@ -113,7 +113,7 @@ bt_clicks:
   numerator: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added]
   agg: sum
   significance_params: default
-
+  
 ###############################################################################
 # Buyer :: Ratios
 ###############################################################################
@@ -139,7 +139,6 @@ delivery_orders_per_flow_begining:
   numerator: [delivery_order_created]
   denominator: [delivery_flow_beginings]
   significance_params: ratio
-
 
 ###############################################################################
 # Buyer :: User Totals
@@ -222,8 +221,7 @@ users_bt_click_daily:
   tags: [i0, bx, user]
   numerator: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added]
   agg: proportion
-  significance_params: default
-
+  significance_params: default 
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -304,6 +302,51 @@ saved_searches_added:
   numerator: [saved_searches_added]
   agg: sum
   significance_params: default
+  
+loc_window_opens:
+  title: loc_window_opens
+  tags: [i4, bx, total]
+  numerator: [location_window_displays]
+  agg: sum
+  significance_params: default
+  
+location_text_inputs:
+  title: location_text_inputs
+  tags: [i4, bx, total]
+  numerator: [location_text_inputs]
+  agg: sum
+  significance_params: default
+  
+loc_window_saves_per_opens:
+  title: loc_window_saves_per_opens
+  tags: [i4, bx, total]
+  agg: sum
+  numerator: [location_window_save_clicks]
+  denominator: [location_window_displays]
+  significance_params: ratio
+
+loc_suggests_per_text_inputs:
+  title: loc_suggests_per_text_inputs
+  tags: [i4, bx, total]
+  agg: sum
+  numerator: [location_suggest_clicks]
+  denominator: [location_text_inputs]
+  significance_params: ratio 
+  
+users_loc_window_opens:
+  title: users_loc_window_opens
+  tags: [i4, bx,  user]
+  numerator: [location_window_displays]
+  agg: proportion
+  significance_params: default
+  
+users_loc_suggest_clicks:
+  title: users_loc_suggest_clicks
+  tags: [i4, bx,  user]
+  numerator: [location_suggest_clicks]
+  agg: proportion
+  significance_params: default
+  
 
 ###############################################################################
 # Buyer :: Performance (Time To Content) Ratios
@@ -384,16 +427,14 @@ mean_time_to_content_other_screen:
       performance_time_to_content_authorization,
       performance_time_to_content_shop_info,
       performance_time_to_content_profile,
-      performance_time_to_content_shops_list
-  ]
+      performance_time_to_content_shops_list]
   denominator: [
       performance_measures_count_publish_wizard,
       performance_measures_count_edit_item,
       performance_measures_count_authorization,
       performance_measures_count_shop_info,
       performance_measures_count_profile,
-      performance_measures_count_shops_list
-  ]
+      performance_measures_count_shops_list]
   significance_params: default
 
 mean_screen_exception_proba:
@@ -413,8 +454,7 @@ mean_screen_exception_proba:
       performance_exceptions_count_authorization,
       performance_exceptions_count_shop_info,
       performance_exceptions_count_profile,
-      performance_exceptions_count_shops_list
-  ]
+      performance_exceptions_count_shops_list]
   denominator: [
       performance_events_count_item,
       performance_events_count_serp,
@@ -429,9 +469,8 @@ mean_screen_exception_proba:
       performance_events_count_authorization,
       performance_events_count_shop_info,
       performance_events_count_profile,
-      performance_events_count_shops_list
-  ]
-  significance_params: default
+      performance_events_count_shops_list]
+  significance_params: default 
 
  ######  ########    ###    ########   ######  ##     ##
 ##    ## ##         ## ##   ##     ## ##    ## ##     ##
@@ -1262,6 +1301,34 @@ users_buyer_target_click_rec_daily:
   agg: proportion
   significance_params: default
 
+users_contact_rec_i2i:
+  title: users_contact_rec_i2i
+  tags: [i2, bx, rec, user]
+  numerator: [contacts_rec_i2i]
+  agg: proportion
+  significance_params: default
+
+users_contact_rec_u2i:
+  title: users_contact_rec_u2i
+  tags: [i2, bx, rec, user]
+  numerator: [contacts_rec_u2i]
+  agg: proportion
+  significance_params: default
+
+users_item_view_rec_i2i:
+  title: users_item_view_rec_i2i
+  tags: [i2, bx, rec, user]
+  numerator: [item_views_rec_i2i]
+  agg: proportion
+  significance_params: default
+
+users_item_view_rec_u2i:
+  title: users_item_view_rec_u2i
+  tags: [i2, bx, rec, user]
+  numerator: [item_views_rec_u2i]
+  agg: proportion
+  significance_params: default
+
 ###############################################################################
 # Rec :: User Ratios
 ###############################################################################
@@ -1303,6 +1370,26 @@ users_contacts_rec_i2i_per_users_item_views:
   tags: [i1, bx, rec, ratio]
   numerator: [contacts_rec_i2i]
   denominator: [item_views]
+  agg: proportion
+  significance_params: ratio
+
+users_contacts_rec_i2i_per_users_item_views_rec_i2i:
+  title: i2i_buyers_per_viewers
+  description: "Conversion from unique viewers to uniqie buyers on item page recommendations"
+  unit: recommendations
+  tags: [i1, bx, rec, ratio]
+  numerator: [contacts_rec_i2i]
+  denominator: [item_views_rec_i2i]
+  agg: proportion
+  significance_params: ratio
+
+users_contacts_rec_u2i_per_users_item_views_rec_u2i:
+  title: u2i_buyers_per_viewers
+  description: "Conversion from unique viewers to uniqie buyers on item page recommendations"
+  unit: recommendations
+  tags: [i1, bx, rec, ratio]
+  numerator: [contacts_rec_u2i]
+  denominator: [item_views_rec_u2i]
   agg: proportion
   significance_params: ratio
 
@@ -3090,38 +3177,6 @@ sellers_favorite_removed_start_date:
 listings_single_paid:
   numerator: [listings_single_paid]
   agg: sum
-  significance_params: default
-
-vas_revenue:
-  title: vas_revenue
-  description: "Sum of payments with bonuses with transaction_type = 'VAS' from dma.current_payment"
-  tags: [vas]
-  agg: sum
-  numerator: [vas_revenue]
-  significance_params: default
-
-vas_payments:
-  title: vas_payments
-  description: "Number of payments with bonuses with transaction_type = 'VAS' from dma.current_payment"
-  tags: [vas]
-  agg: sum
-  numerator: [vas_payments]
-  significance_params: default
-
-listing_fee_revenue:
-  title: listing_fee_revenue
-  description: "Sum of payments with bonuses with transaction_type = 'listing.fee' from dma.current_payment"
-  tags: [lf]
-  agg: sum
-  numerator: [listing_fee_revenue]
-  significance_params: default
-
-listing_fee_payments:
-  title: listing_fee_payments
-  description: "Number of payments with bonuses with transaction_type = 'listing.fee' from dma.current_payment"
-  tags: [lf]
-  agg: sum
-  numerator: [listing_fee_payments]
   significance_params: default
 
 lf_revenue:
