@@ -2652,28 +2652,21 @@ restore_start_proportion:
 ###############################################################################
 
 items_added:
-  title: items_added
   tags: [critical, sx, total]
   numerator: [items_added]
   agg: sum
   significance_params: default
-
-sellers_daily:
-  title: sellers
-  tags: [i4, sx, user]
-  numerator: [items_added]
-  agg: proportion
-  significance_params: default
+  description: "Items started for paticipant_type='cookie'"
 
 items_add_started:
-  title: items_add_started
   tags: [i4, sx, total]
   numerator: [items_add_started]
   agg: sum
   significance_params: default
+  description: "Items add started for paticipant_type='cookie'"
 
 items_started_net:
-  title: item_started_net
+  title: items_started_net
   tags: [i1, user, sx]
   numerator: [items_started_net]
   agg: sum
@@ -2717,6 +2710,33 @@ items_sold_onavito:
   description: "Items closed with reason Sold on Avito"
   unit: sx
 
+items_sold_onavito_start_date:
+  title: items_sold_onavito
+  tags: [i1, user, sx]
+  numerator: [items_sold_onavito]
+  agg: sum
+  significance_params: default
+  description: "Items closed with reason Sold on Avito for items created after exposure"
+  unit: sx
+
+items_closed_no_answer:
+  title: items_closed_no_answer
+  tags: [i1, user, sx]
+  numerator: [items_closed_no_answer]
+  agg: sum
+  significance_params: default
+  description: "Items closed without answer by platform of closing"
+  unit: sx
+
+items_closed_with_answer:
+  title: items_closed_with_answer
+  tags: [i1, user, sx]
+  numerator: [items_closed_with_answer]
+  agg: sum
+  significance_params: default
+  description: "Items closed with answer by platform of closing"
+  unit: sx
+
 items_reactivated_by_ttl_net:
   title: items_reactivated_by_ttl_net
   tags: [i1, user, sx]
@@ -2743,7 +2763,7 @@ active_items:
   significance_params: default
 
 seller_deals:
-  description: "Deals"
+  description: "Seller deals"
   unit: sx
   tags: [seller]
   agg: sum
@@ -2751,7 +2771,7 @@ seller_deals:
   significance_params: default
 
 seller_contacts:
-  description: "Contacts"
+  description: "Seller contacts"
   unit: sx
   tags: [seller]
   agg: sum
@@ -2759,7 +2779,7 @@ seller_contacts:
   significance_params: default
 
 seller_contacts_start_date:
-  description: "Contacts"
+  description: "Seller contacts for items created after exposure"
   unit: sx
   tags: [seller]
   agg: sum
@@ -2774,8 +2794,24 @@ vas_amount_net:
   numerator: [vas_amount_net]
   significance_params: default
 
+vas_amount_net_start_date:
+  description: "Vas amount without bonuses paid by seller for items created after exposure"
+  unit: sx
+  tags: [seller]
+  agg: sum
+  numerator: [vas_amount_net]
+  significance_params: default
+
 lf_amount_net:
   description: "Lf amount without bonuses paid by seller"
+  unit: sx
+  tags: [seller]
+  agg: sum
+  numerator: [lf_amount_net]
+  significance_params: default
+
+lf_amount_net_start_date:
+  description: "Lf amount without bonuses paid by seller for items created after exposure"
   unit: sx
   tags: [seller]
   agg: sum
@@ -2790,6 +2826,14 @@ items_allowed:
   numerator: [items_allowed]
   significance_params: default
 
+items_allowed_start_date:
+  description: "Items created after exposure and allowed by moderation"
+  unit: sx
+  tags: [seller]
+  agg: sum
+  numerator: [items_allowed]
+  significance_params: default
+
 items_blocked_rejected:
   description: "Blocked or rejected items"
   unit: sx
@@ -2798,7 +2842,23 @@ items_blocked_rejected:
   numerator: [items_blocked_rejected]
   significance_params: default
 
+items_blocked_rejected_start_date:
+  description: "Blocked or rejected items for items created after exposure"
+  unit: sx
+  tags: [seller]
+  agg: sum
+  numerator: [items_blocked_rejected]
+  significance_params: default
+
 item_edits:
+  description: "Items edits"
+  unit: sx
+  tags: [seller]
+  agg: sum
+  numerator: [item_edits]
+  significance_params: default
+
+item_edits_start_date:
   description: "Items edits"
   unit: sx
   tags: [seller]
@@ -2814,12 +2874,37 @@ seller_favorites_added:
   numerator: [favorites_add]
   significance_params: default
 
+seller_favorites_added_start_date:
+  description: "Favorites add for items created after exposure"
+  unit: sx
+  tags: [seller]
+  agg: sum
+  numerator: [favorites_add]
+  significance_params: default
+
 seller_favorites_removed:
   description: "Favorites removed"
   unit: sx
   tags: [seller]
   agg: sum
   numerator: [favorites_removed]
+  significance_params: default
+
+seller_favorites_removed_start_date:
+  description: "Favorites removed for items created after exposure"
+  unit: sx
+  tags: [seller]
+  agg: sum
+  numerator: [favorites_removed]
+  significance_params: default
+
+item_chains_started:
+  title: items_add_started
+  description: "Items add started"
+  unit: sx
+  tags: [seller]
+  agg: sum
+  numerator: [item_chains_started]
   significance_params: default
 
 ###############################################################################
@@ -2838,56 +2923,65 @@ items_added_per_items_add_started:
 # Seller :: User Totals
 ###############################################################################
 
+sellers_daily:
+  title: cookies_item_started
+  tags: [i4, sx, user]
+  numerator: [items_added]
+  agg: proportion
+  significance_params: default
+  description: "Cookies item started"
+
 users_item_add_started:
-  title: users_item_add_started
+  title: cookies_item_add_started
   tags: [i4, sx, user]
   numerator: [items_add_started]
   agg: proportion
   significance_params: default
+  description: "Cookies item add started"
 
 items_started_net_conversion:
-  title: items_started_net_conversion
+  title: users_item_started_net
   tags: [i1, user, sx]
   numerator: [items_started_net]
   agg: proportion
   significance_params: default
-  description: "Conversion to item created, activated (paid) and allowed by moderation"
+  description: "Users created and activated (paid) items allowed by moderation"
   unit: sx
 
 items_reactivated_net_conversion:
-  title: items_reactivated_net_conversion
+  title: users_item_reactivated_net
   tags: [i1, user, sx]
   numerator: [items_reactivated_net]
   agg: proportion
   significance_params: default
-  description: "Conversion to item reactivated and allowed by moderation"
+  description: "Users reactivated items allowed by moderation"
   unit: sx
 
 new_items_blocked_or_rejected_conversion:
-  title: new_items_blocked_or_rejected_conversion
+  title: users_new_item_blocked_or_rejected
   tags: [i1, user, sx]
   numerator: [new_items_blocked, new_items_rejected]
   agg: proportion
   significance_params: default
-  description: "Conversion to new item blocked or rejected by moderation"
+  description: "Users created blocked or rejected by moderation items"
   unit: sx
 
 reactivated_items_rejected_conversion:
-  title: reactivated_items_rejected_conversion
+  title: users_reactivated_item_rejected
   tags: [i2, user, sx]
   numerator: [reactivated_items_rejected]
   agg: proportion
   significance_params: default
-  description: "Conversion to reactivated item rejected by moderation"
+  description: "Users reactivated items blocked or rejected by moderation afterwards"
   unit: sx
 
 items_sold_onavito_conversion:
-  title: items_sold_onavito_conversion
+  title: users_item_sold_onavito
   tags: [i1, user, sx]
   numerator: [items_sold_onavito]
   agg: proportion
   significance_params: default
-  description: "Conversion to item closed with reason Sold on Avito"
+  description: "Users closed items with reason Sold on Avito"
   unit: sx
 
 items_reactivated_by_ttl_net_conversion:
@@ -2896,9 +2990,177 @@ items_reactivated_by_ttl_net_conversion:
   numerator: [items_reactivated_by_ttl_net]
   agg: proportion
   significance_params: default
-  description: "Conversion to item reactivated after TTL (expiration) and allowed by moderation"
+  description: "Users reactivated items after TTL (expiration) allowed by moderation afterwards"
   unit: sx
 
+users_item_closed_no_answer:
+  tags: [i1, user, sx]
+  numerator: [items_closed_no_answer]
+  agg: proportion
+  significance_params: default
+  description: "Users who closed items without answer by platforn of closing"
+  unit: sx
+
+users_item_closed_with_answer:
+  title: items_closed_with_answer
+  tags: [i1, user, sx]
+  numerator: [items_closed_with_answer]
+  agg: proportion
+  significance_params: default
+  description: "Users who closed items with answer by platform of closing"
+  unit: sx
+
+users_item_closed_by_user:
+  description: "Users who closed items"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [items_closed_by_user]
+  significance_params: default
+
+users_active_items:
+  description: "Users with active items"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [active_items]
+  significance_params: default
+
+sellers_with_contacts:
+  description: "Sellers with contacted items"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [contacts]
+  significance_params: default
+
+sellers_with_contacts_start_date:
+  description: "Sellers with contacted items created after exposure"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [contacts]
+  significance_params: default
+
+users_vas:
+  description: "Users applied VAS"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [vas_amount_net]
+  significance_params: default
+
+users_vas_start_date:
+  description: "Users applied VAS to items created after exposure"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [vas_amount_net]
+  significance_params: default
+
+users_lf:
+  description: "Users paid LF"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [lf_amount_net]
+  significance_params: default
+
+users_lf_start_date:
+  description: "Users paid LF to new items"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [lf_amount_net]
+  significance_params: default
+
+users_item_allowed:
+  description: "Users with items allowed by moderation"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [items_allowed]
+  significance_params: default
+
+users_item_allowed_start_date:
+  description: "Users with items created after exposure and allowed by moderation"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [items_allowed]
+  significance_params: default
+
+users_item_blocked_rejected:
+  description: "Users with blocked or rejected items"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [items_blocked_rejected]
+  significance_params: default
+
+users_item_blocked_rejected_start_date:
+  description: "Users with blocked or rejected items created after exposure"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [items_blocked_rejected]
+  significance_params: default
+
+users_item_edit:
+  description: "Users edited items"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [item_edits]
+  significance_params: default
+
+users_item_edit_start_date:
+  description: "Users edited items created after exposure"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [item_edits]
+  significance_params: default
+
+users_item_chain_started:
+  description: "Users started item add"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [item_chains_started]
+  significance_params: default
+
+sellers_favorite_added:
+  description: "Sellers with items added to favorites"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [favorites_add]
+  significance_params: default
+
+sellers_favorite_added_start_date:
+  description: "Sellers with items created after exposure and added to favorites"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [favorites_add]
+  significance_params: default
+
+sellers_favorite_removed:
+  description: "Sellers with items removed from favorites"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [favorites_removed]
+  significance_params: default
+
+sellers_favorite_removed_start_date:
+  description: "Sellers with items created after exposure and removed from favorites"
+  unit: sx
+  tags: [sx]
+  agg: proportion
+  numerator: [favorites_removed]
+  significance_params: default
 
 ##     ## ##    ## ########
 ###   ### ###   ##      ##
