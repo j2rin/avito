@@ -15,104 +15,89 @@ item_views:
   tags: [i1, bx, total]
   numerator: [item_views]
   agg: sum
-  significance_params: default
 
 contacts:
   numerator: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
   tags: [i1, bx, total]
   agg: sum
-  significance_params: default
 
 advertisement_page_views:
   title: advertisement_page_views
   tags: [critical, rise, ad, total]
   numerator: [advertisement_page_views]
   agg: sum
-  significance_params: default
 
 phone_views_snippet:
   title: phone_views_snippet
   tags: [i3, bx, total]
   numerator: [phone_views_snippet, phone_views_snippet_xlvas]
   agg: sum
-  significance_params: default
 
 phone_views:
   title: phone_views
   tags: [i1, bx, total]
   numerator: [phone_views_item_right, phone_views_item_top]
   agg: sum
-  significance_params: default
 
 phone_views_total:
   title: phone_views_total
   tags: [i3, bx, total]
   numerator: [phone_views_total]
   agg: sum
-  significance_params: default
 
 favorites_added:
   title: favorites_added
   tags: [i2, bx, fav, total]
   numerator: [favorites_added]
   agg: sum
-  significance_params: default
 
 first_messages:
   title: first_messages
   tags: [i1, bx, mes, total]
   numerator: [first_messages]
   agg: sum
-  significance_params: default
 
 all_main_pages:
   title: all_main_pages
   tags: [i2, bx, rec, main, total]
   numerator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   agg: sum
-  significance_params: default
 
 head_main_pages:
   title: head_main_pages
   tags: [i2, bx, rec, main, total]
   numerator: [head_main_pages]
   agg: sum
-  significance_params: default
 
 vertical_main_pages:
   title: vertical_main_pages
   tags: [i4, bx, rec, main, total]
   numerator: [transport_main_pages, re_main_pages, services_main_pages]
   agg: sum
-  significance_params: default
 
 transport_main_pages:
   title: transport_main_pages
   tags: [i4, bx, rec, main, total]
   numerator: [transport_main_pages]
   agg: sum
-  significance_params: default
 
 re_main_pages:
   title: re_main_pages
   tags: [i4, bx, rec, main, total]
   numerator: [re_main_pages]
   agg: sum
-  significance_params: default
 
 services_main_pages:
   title: services_main_pages
   tags: [i4, bx, rec, main, total]
   numerator: [services_main_pages]
   agg: sum
-  significance_params: default
 
 bt_clicks:
   title: bt_clicks
   tags: [i1, bx, total]
   numerator: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added]
   agg: sum
-  significance_params: default
   
 ###############################################################################
 # Buyer :: Ratios
@@ -124,7 +109,6 @@ phone_views_per_item_view:
   agg: sum
   numerator: [phone_views_item_right, phone_views_item_top]
   denominator: [item_views]
-  significance_params: ratio
 
 contacts_per_item_view:
   title: contacts_per_item_view
@@ -132,13 +116,11 @@ contacts_per_item_view:
   agg: sum
   numerator: [phone_views_item_right, phone_views_item_top, booking_created_short_rent, first_messages, delivery_order_created]
   denominator: [item_views]
-  significance_params: ratio
 
 delivery_orders_per_flow_begining:
   agg: sum
   numerator: [delivery_order_created]
   denominator: [delivery_flow_beginings]
-  significance_params: ratio
 
 ###############################################################################
 # Buyer :: User Totals
@@ -158,70 +140,60 @@ users_active_daily:
     - searches_with_query
     - favorites_added
   agg: proportion
-  significance_params: default
 
 users_item_view_daily:
   title: users_item_view
   tags: [i1, bx, user]
   numerator: [item_views]
   agg: proportion
-  significance_params: default
 
 buyers:
   title: buyers
   tags: [i0, bx, user]
   numerator: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
   agg: proportion
-  significance_params: proportion
 
 users_all_main_page_daily:
   title: users_main_page
   tags: [i2, bx, rec, main, user]
   numerator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   agg: proportion
-  significance_params: default
 
 users_head_main_page_daily:
   title: users_head_main_page
   tags: [i2, bx, rec, main, user]
   numerator: [head_main_pages]
   agg: proportion
-  significance_params: default
 
 users_transport_main_page_daily:
   title: users_transport_main_page
   tags: [i4, bx, rec, main, user]
   numerator: [transport_main_pages]
   agg: proportion
-  significance_params: default
 
 users_re_main_page_daily:
   title: users_re_main_page
   tags: [i4, bx, rec, main, user]
   numerator: [re_main_pages]
   agg: proportion
-  significance_params: default
 
 users_services_main_page_daily:
   title: users_services_main_page
   tags: [i4, bx, rec, main, user]
   numerator: [services_main_pages]
   agg: proportion
-  significance_params: default
 
 users_vertical_main_page_daily:
   title: users_vertical_main_page
   tags: [i3, bx, rec, main, user]
   numerator: [transport_main_pages, re_main_pages, services_main_pages]
   agg: proportion
-  significance_params: default
 
 users_bt_click_daily:
   title: users_bt_click
   tags: [i0, bx, user]
   numerator: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added]
   agg: proportion
-  significance_params: default 
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -242,7 +214,6 @@ buyers_per_users:
     - searches_without_query
     - searches_with_query
     - favorites_added
-  significance_params: ratio
 
 users_item_view_per_users:
   title: users_item_view_per_users
@@ -259,7 +230,6 @@ users_item_view_per_users:
     - searches_without_query
     - searches_with_query
     - favorites_added
-  significance_params: ratio
 
 users_bt_click_per_users:
   title: users_bt_click_per_users
@@ -276,7 +246,6 @@ users_bt_click_per_users:
     - searches_without_query
     - searches_with_query
     - favorites_added
-  significance_params: ratio
 
 ###############################################################################
 # Buyer :: Other
@@ -287,35 +256,30 @@ favorites_removed:
   tags: [i4, bx, fav, total]
   numerator: [favorites_removed]
   agg: sum
-  significance_params: default
 
 favorites_list_views:
   title: favorites_list_views
   tags: [i4, bx, fav, total]
   numerator: [favorites_list_views]
   agg: sum
-  significance_params: default
 
 saved_searches_added:
   title: saved_searches_added
   tags: [i4, bx, ss, total]
   numerator: [saved_searches_added]
   agg: sum
-  significance_params: default
   
 loc_window_opens:
   title: loc_window_opens
   tags: [i4, bx, total]
   numerator: [location_window_displays]
   agg: sum
-  significance_params: default
   
 location_text_inputs:
   title: location_text_inputs
   tags: [i4, bx, total]
   numerator: [location_text_inputs]
   agg: sum
-  significance_params: default
   
 loc_window_saves_per_opens:
   title: loc_window_saves_per_opens
@@ -323,7 +287,6 @@ loc_window_saves_per_opens:
   agg: sum
   numerator: [location_window_save_clicks]
   denominator: [location_window_displays]
-  significance_params: ratio
 
 loc_suggests_per_text_inputs:
   title: loc_suggests_per_text_inputs
@@ -331,22 +294,19 @@ loc_suggests_per_text_inputs:
   agg: sum
   numerator: [location_suggest_clicks]
   denominator: [location_text_inputs]
-  significance_params: ratio 
   
 users_loc_window_opens:
   title: users_loc_window_opens
   tags: [i4, bx,  user]
   numerator: [location_window_displays]
   agg: proportion
-  significance_params: default
   
 users_loc_suggest_clicks:
   title: users_loc_suggest_clicks
   tags: [i4, bx,  user]
   numerator: [location_suggest_clicks]
   agg: proportion
-  significance_params: default
-  
+
 
 ###############################################################################
 # Buyer :: Performance (Time To Content) Ratios
@@ -357,29 +317,25 @@ mean_time_to_content_item_screen:
   agg: sum
   numerator: [performance_time_to_content_item]
   denominator: [performance_measures_count_item]
-  significance_params: default
 
 mean_time_to_content_serp_screen:
   tags: [bx, performance, serp, ttc, ratio]
   agg: sum
   numerator: [performance_time_to_content_serp]
   denominator: [performance_measures_count_serp]
-  significance_params: default
 
 mean_time_to_content_main_screen:
   tags: [bx, performance, main, ttc, ratio]
   agg: sum
   numerator: [performance_time_to_content_main]
   denominator: [performance_measures_count_main]
-  significance_params: default
-  
+
 mean_time_to_content_channel_screen:
   tags: [bx, performance, channel, ttc, ratio]
   description: "mean time to content evaluation for chatting screen"
   agg: sum
   numerator: [performance_time_to_content_channel]
   denominator: [performance_measures_count_channel]
-  significance_params: default
 
 mean_time_to_content_channels_screen:
   tags: [bx, performance, channels, ttc, ratio]
@@ -387,21 +343,18 @@ mean_time_to_content_channels_screen:
   agg: sum
   numerator: [performance_time_to_content_channels]
   denominator: [performance_measures_count_channels]
-  significance_params: default
 
 mean_time_to_content_public_profile_screen:
   tags: [bx, performance, public_profile, ttc, ratio]
   agg: sum
   numerator: [performance_time_to_content_public_profile]
   denominator: [performance_measures_count_public_profile]
-  significance_params: default
 
 mean_time_to_content_profile_item_screen:
   tags: [bx, performance, profile_item, ttc, ratio]
   agg: sum
   numerator: [performance_time_to_content_profile_item]
   denominator: [performance_measures_count_profile_item]
-  significance_params: default
 
 mean_time_to_content_account_screen:
   tags: [bx, performance, account, ttc, ratio]
@@ -409,14 +362,12 @@ mean_time_to_content_account_screen:
   agg: sum
   numerator: [performance_time_to_content_account]
   denominator: [performance_measures_count_account]
-  significance_params: default
 
 mean_time_to_content_favorite_items_screen:
   tags: [bx, performance, favorite_items, ttc, ratio]
   agg: sum
   numerator: [performance_time_to_content_favorite_items]
   denominator: [performance_measures_count_favorite_items]
-  significance_params: default
 
 mean_time_to_content_other_screen:
   tags: [bx, performance, other, ttc, ratio]
@@ -435,7 +386,6 @@ mean_time_to_content_other_screen:
       performance_measures_count_shop_info,
       performance_measures_count_profile,
       performance_measures_count_shops_list]
-  significance_params: default
 
 mean_screen_exception_proba:
   tags: [bx, performance, exception, ttc, ratio]
@@ -470,7 +420,6 @@ mean_screen_exception_proba:
       performance_events_count_shop_info,
       performance_events_count_profile,
       performance_events_count_shops_list]
-  significance_params: default 
 
  ######  ########    ###    ########   ######  ##     ##
 ##    ## ##         ## ##   ##     ## ##    ## ##     ##
@@ -489,21 +438,18 @@ searches_with_query:
   tags: [i3, bx, total]
   numerator: [searches_with_query]
   agg: sum
-  significance_params: default
 
 searches_without_query:
   title: searches_without_query
   tags: [i3, bx, total]
   numerator: [searches_without_query]
   agg: sum
-  significance_params: default
 
 searches:
   title: searches
   tags: [i1, bx, total]
   numerator: [searches]
   agg: sum
-  significance_params: default
   description: only first page
 
 searches_serp:
@@ -511,7 +457,6 @@ searches_serp:
   tags: [i1, bx, total]
   numerator: [searches_serp]
   agg: sum
-  significance_params: default
   description: all pages included
 
 serp_empty:
@@ -519,267 +464,228 @@ serp_empty:
   tags: [i2, bx, serp, total]
   numerator: [serp_empty]
   agg: sum
-  significance_params: default
 
 serp_small:
   title: serp_small
   tags: [i2, bx, serp, total]
   numerator: [serp_small]
   agg: sum
-  significance_params: default
 
 searches_item_view_vip:
   title: searches_item_view_vip
   tags: [i4, bx, serp, vas, has]
   numerator: [searches_item_view_vip]
   agg: sum
-  significance_params: default
 
 searches_item_view_premium:
   title: searches_item_view_premium
   tags: [i4, bx, serp, vas, has]
   numerator: [searches_item_view_premium]
   agg: sum
-  significance_params: default
 
 searches_item_view_push:
   title: searches_item_view_push
   tags: [i4, bx, serp, vas, has]
   numerator: [searches_item_view_push]
   agg: sum
-  significance_params: default
 
 searches_item_view_vas:
   title: searches_item_view_vas
   tags: [i3, bx, serp, vas, has]
   numerator: [searches_item_view_vas]
   agg: sum
-  significance_params: default
 
 searches_item_view_serp:
   title: searches_item_view_serp
   tags: [i3, bx, serp, has]
   numerator: [searches_item_view_serp]
   agg: sum
-  significance_params: default
 
 shows_item_view_recblock:
   title: shows_item_view_recblock
   tags: [i3, bx, rec, has]
   numerator: [shows_item_view_recblock]
   agg: sum
-  significance_params: default
 
 searches_contact_vip:
   title: searches_contact_vip
   tags: [i4, bx, serp, vas, has]
   numerator: [searches_contact_vip]
   agg: sum
-  significance_params: default
 
 searches_contact_premium:
   title: searches_contact_premium
   tags: [i4, bx, serp, vas, has]
   numerator: [searches_contact_premium]
   agg: sum
-  significance_params: default
 
 searches_contact_push:
   title: searches_contact_push
   tags: [i4, bx, serp, vas, has]
   numerator: [searches_contact_push]
   agg: sum
-  significance_params: default
 
 searches_contact_vas:
   title: searches_contact_vas
   tags: [i4, bx, serp, vas, has]
   numerator: [searches_contact_vas]
   agg: sum
-  significance_params: default
 
 searches_contact_serp:
   title: searches_contact_serp
   tags: [i4, bx, serp, has]
   numerator: [searches_contact_serp]
   agg: sum
-  significance_params: default
 
 shows_contact_recblock:
   title: shows_contact_recblock
   tags: [i3, bx, rec, has]
   numerator: [shows_contact_recblock]
   agg: sum
-  significance_params: default
 
 item_views_vip:
   title: item_views_vip
   tags: [bx, vas, total]
   numerator: [item_views_vip]
   agg: sum
-  significance_params: default
 
 item_views_premium:
   title: item_views_premium
   tags: [bx, vas, total]
   numerator: [item_views_premium]
   agg: sum
-  significance_params: default
 
 item_views_push:
   title: item_views_push
   tags: [bx, vas, total]
   numerator: [item_views_push]
   agg: sum
-  significance_params: default
 
 item_views_vas:
   title: item_views_vas
   tags: [critical, bx, vas, total]
   numerator: [item_views_vas]
   agg: sum
-  significance_params: default
 
 item_views_serp:
   title: item_views_serp
   tags: [i2, bx, serp, total]
   numerator: [item_views_serp]
   agg: sum
-  significance_params: default
 
 contacts_vip:
   title: contacts_vip
   tags: [bx, vas, total]
   numerator: [contacts_vip]
   agg: sum
-  significance_params: default
 
 contacts_premium:
   title: contacts_premium
   tags: [bx, vas, total]
   numerator: [contacts_premium]
   agg: sum
-  significance_params: default
 
 contacts_push:
   title: contacts_push
   tags: [i4, bx, vas, total]
   numerator: [contacts_push]
   agg: sum
-  significance_params: default
 
 contacts_vas:
   title: contacts_vas
   tags: [i3, bx, vas, total]
   numerator: [contacts_vas]
   agg: sum
-  significance_params: default
 
 contacts_serp:
   title: contacts_serp
   tags: [i2, bx, serp, total]
   numerator: [contacts_serp]
   agg: sum
-  significance_params: default
 
 contacts_rec:
   title: contacts_rec
   tags: [i2, bx, rec, total]
   numerator: [contacts_rec]
   agg: sum
-  significance_params: default
 
 fav_added_vip:
   title: fav_added_vip
   tags: [bx, vas, fav, total]
   numerator: [fav_added_vip]
   agg: sum
-  significance_params: default
 
 fav_added_premium:
   title: fav_added_premium
   tags: [bx, vas, fav, total]
   numerator: [fav_added_premium]
   agg: sum
-  significance_params: default
 
 fav_added_push:
   title: fav_added_push
   tags: [i4, bx, vas, fav, total]
   numerator: [fav_added_push]
   agg: sum
-  significance_params: default
 
 fav_added_vas:
   title: fav_added_vas
   tags: [i4, bx, vas, fav, total]
   numerator: [fav_added_vas]
   agg: sum
-  significance_params: default
 
 fav_added_serp:
   title: fav_added_serp
   tags: [i2, bx, serp, fav, total]
   numerator: [fav_added_serp]
   agg: sum
-  significance_params: default
 
 fav_added_rec:
   title: fav_added_rec
   tags: [i2, bx, rec, fav, total]
   numerator: [fav_added_rec]
   agg: sum
-  significance_params: default
 
 buyer_target_clicks_vip:
   title: bt_clicks_vip
   tags: [i4, bx, serp, vas, total]
   numerator: [buyer_target_clicks_vip]
   agg: sum
-  significance_params: default
 
 buyer_target_clicks_premium:
   title: bt_clicks_premium
   tags: [bx, vas, total]
   numerator: [buyer_target_clicks_premium]
   agg: sum
-  significance_params: default
 
 buyer_target_clicks_push:
   title: bt_clicks_push
   tags: [bx, vas, total]
   numerator: [buyer_target_clicks_push]
   agg: sum
-  significance_params: default
 
 buyer_target_clicks_vas:
   title: bt_clicks_vas
   tags: [critical, bx, vas, total]
   numerator: [buyer_target_clicks_vas]
   agg: sum
-  significance_params: default
 
 buyer_target_clicks_serp:
   title: bt_clicks_serp
   tags: [i2, bx, serp, total]
   numerator: [buyer_target_clicks_serp]
   agg: sum
-  significance_params: default
 
 buyer_target_clicks_rec:
   title: bt_clicks_rec
   tags: [i2, bx, rec, total]
   numerator: [buyer_target_clicks_rec]
   agg: sum
-  significance_params: default
 
 suggest_buyers:
   description: "Buyers, who use suggest"
   tags: [ss, sgt]
-  unit: search
   agg: proportion
   numerator: [queries_no_redirect_contact]
-  significance_params: default
 
 ###############################################################################
 # Search :: Ratios
@@ -791,7 +697,6 @@ item_views_vip_per_search:
   agg: sum
   numerator: [item_views_vip]
   denominator: [searches_serp]
-  significance_params: ratio
 
 item_views_premium_per_search:
   title: item_views_premium_per_search
@@ -799,7 +704,6 @@ item_views_premium_per_search:
   agg: sum
   numerator: [item_views_premium]
   denominator: [searches_serp]
-  significance_params: ratio
 
 item_views_push_per_search:
   title: item_views_push_per_search
@@ -807,7 +711,6 @@ item_views_push_per_search:
   agg: sum
   numerator: [item_views_push]
   denominator: [searches_serp]
-  significance_params: ratio
 
 item_views_vas_per_search:
   title: item_views_vas_per_search
@@ -815,7 +718,6 @@ item_views_vas_per_search:
   agg: sum
   numerator: [item_views_vas]
   denominator: [searches_serp]
-  significance_params: ratio
 
 item_views_serp_per_search:
   title: item_views_serp_per_search
@@ -823,7 +725,6 @@ item_views_serp_per_search:
   agg: sum
   numerator: [item_views_serp]
   denominator: [searches_serp]
-  significance_params: ratio
 
 item_views_rec_per_rec_block:
   title: item_views_rec_per_recblock
@@ -831,7 +732,6 @@ item_views_rec_per_rec_block:
   agg: sum
   numerator: [item_views_rec]
   denominator: [recblock_shows]
-  significance_params: ratio
 
 contacts_vip_per_search:
   title: contacts_vip_per_search
@@ -839,7 +739,6 @@ contacts_vip_per_search:
   agg: sum
   numerator: [contacts_vip]
   denominator: [searches_serp]
-  significance_params: ratio
 
 contacts_premium_per_search:
   title: contacts_premium_per_search
@@ -847,7 +746,6 @@ contacts_premium_per_search:
   agg: sum
   numerator: [contacts_premium]
   denominator: [searches_serp]
-  significance_params: ratio
 
 contacts_push_per_search:
   title: contacts_push_per_search
@@ -855,7 +753,6 @@ contacts_push_per_search:
   agg: sum
   numerator: [contacts_push]
   denominator: [searches_serp]
-  significance_params: ratio
 
 contacts_vas_per_search:
   title: contacts_vas_per_search
@@ -863,7 +760,6 @@ contacts_vas_per_search:
   agg: sum
   numerator: [contacts_vas]
   denominator: [searches_serp]
-  significance_params: ratio
 
 contacts_serp_per_search:
   title: contacts_serp_per_search
@@ -871,7 +767,6 @@ contacts_serp_per_search:
   agg: sum
   numerator: [contacts_serp]
   denominator: [searches_serp]
-  significance_params: ratio
 
 fav_added_vip_per_search:
   title: fav_added_vip_per_search
@@ -879,7 +774,6 @@ fav_added_vip_per_search:
   agg: sum
   numerator: [fav_added_vip]
   denominator: [searches_serp]
-  significance_params: ratio
 
 fav_added_premium_per_search:
   title: fav_added_premium_per_search
@@ -887,7 +781,6 @@ fav_added_premium_per_search:
   agg: sum
   numerator: [fav_added_premium]
   denominator: [searches_serp]
-  significance_params: ratio
 
 fav_added_push_per_search:
   title: fav_added_push_per_search
@@ -895,7 +788,6 @@ fav_added_push_per_search:
   agg: sum
   numerator: [fav_added_push]
   denominator: [searches_serp]
-  significance_params: ratio
 
 fav_added_vas_per_search:
   title: fav_added_vas_per_search
@@ -903,7 +795,6 @@ fav_added_vas_per_search:
   agg: sum
   numerator: [fav_added_vas]
   denominator: [searches_serp]
-  significance_params: ratio
 
 fav_added_serp_per_search:
   title: fav_added_serp_per_search
@@ -911,7 +802,6 @@ fav_added_serp_per_search:
   agg: sum
   numerator: [fav_added_serp]
   denominator: [searches_serp]
-  significance_params: ratio
 
 buyer_target_clicks_vip_per_search:
   title: bt_clicks_vip_per_search
@@ -919,7 +809,6 @@ buyer_target_clicks_vip_per_search:
   agg: sum
   numerator: [buyer_target_clicks_vip]
   denominator: [searches_serp]
-  significance_params: ratio
 
 buyer_target_clicks_premium_per_search:
   title: bt_clicks_premium_per_search
@@ -927,7 +816,6 @@ buyer_target_clicks_premium_per_search:
   agg: sum
   numerator: [buyer_target_clicks_premium]
   denominator: [searches_serp]
-  significance_params: ratio
 
 buyer_target_clicks_push_per_search:
   title: bt_clicks_push_per_search
@@ -935,7 +823,6 @@ buyer_target_clicks_push_per_search:
   agg: sum
   numerator: [buyer_target_clicks_push]
   denominator: [searches_serp]
-  significance_params: ratio
 
 buyer_target_clicks_vas_per_search:
   title: bt_clicks_vas_per_search
@@ -943,7 +830,6 @@ buyer_target_clicks_vas_per_search:
   agg: sum
   numerator: [buyer_target_clicks_vas]
   denominator: [searches_serp]
-  significance_params: ratio
 
 buyer_target_clicks_serp_per_search:
   title: bt_clicks_serp_per_search
@@ -951,7 +837,6 @@ buyer_target_clicks_serp_per_search:
   agg: sum
   numerator: [buyer_target_clicks_serp]
   denominator: [searches_serp]
-  significance_params: ratio
 
 contacts_vip_per_item_views_vip:
   title: contacts_vip_per_item_views_vip
@@ -959,7 +844,6 @@ contacts_vip_per_item_views_vip:
   agg: sum
   numerator: [contacts_vip]
   denominator: [item_views_vip]
-  significance_params: ratio
 
 contacts_premium_per_item_views_premium:
   title: contacts_premium_per_item_views_premium
@@ -967,7 +851,6 @@ contacts_premium_per_item_views_premium:
   agg: sum
   numerator: [contacts_premium]
   denominator: [item_views_premium]
-  significance_params: ratio
 
 contacts_push_per_item_views_push:
   title: contacts_push_per_item_views_push
@@ -975,7 +858,6 @@ contacts_push_per_item_views_push:
   agg: sum
   numerator: [contacts_push]
   denominator: [item_views_push]
-  significance_params: ratio
 
 contacts_vas_per_item_views_vas:
   title: contacts_vas_per_item_views_vas
@@ -983,7 +865,6 @@ contacts_vas_per_item_views_vas:
   agg: sum
   numerator: [contacts_vas]
   denominator: [item_views_vas]
-  significance_params: ratio
 
 contacts_serp_per_item_views_serp:
   title: contacts_serp_per_item_views_serp
@@ -991,7 +872,6 @@ contacts_serp_per_item_views_serp:
   agg: sum
   numerator: [contacts_serp]
   denominator: [item_views_serp]
-  significance_params: ratio
 
 searches_item_view_serp_per_searches_serp:
   title: searches_item_view_serp_per_searches
@@ -999,16 +879,13 @@ searches_item_view_serp_per_searches_serp:
   agg: sum
   numerator: [searches_item_view_serp]
   denominator: [searches_serp]
-  significance_params: ratio
 
 searches_with_suggest_share:
   description: "Share of searches with suggest"
   tags: [ss, ratio, sgt]
-  unit: search
   agg: sum
   numerator: [queries_with_suggest]
   denominator: [queries_no_redirect]
-  significance_params: ratio
 
 ###############################################################################
 # Search :: User Totals
@@ -1019,47 +896,40 @@ users_search:
   tags: [i2, bx, serp, user]
   numerator: [searches]
   agg: proportion
-  significance_params: default
 
 users_search_query:
   title: users_search_query
   tags: [i2, bx, serp, user]
   numerator: [searches_with_query]
   agg: proportion
-  significance_params: default
 
 users_item_view_serp_daily:
   title: users_search_item_view
   tags: [i2, bx, serp, user]
   numerator: [item_views_serp]
   agg: proportion
-  significance_params: default
 
 users_item_view_search_query:
   tags: [i2, bx, serp, user]
   numerator: [searches_query_item_view]
   agg: proportion
-  significance_params: default
 
 users_contact_serp_daily:
   title: users_search_contact
   tags: [i1, bx, serp, user]
   numerator: [contacts_serp]
   agg: proportion
-  significance_params: default
 
 users_buyer_target_click_serp_daily:
   title: users_search_bt_click
   tags: [i1, bx, serp, user]
   numerator: [buyer_target_clicks_serp]
   agg: proportion
-  significance_params: default
 
 users_contact_search_query:
   tags: [i2, bx, serp, user]
   numerator: [searches_query_contact]
   agg: proportion
-  significance_params: default
 
 ###############################################################################
 # Search :: User Ratios
@@ -1070,53 +940,44 @@ users_item_view_per_search:
   numerator: [item_views_serp]
   denominator: [searches]
   agg: proportion
-  significance_params: default
 
 users_contact_per_search:
   tags: [i2, bx, serp, user]
   numerator: [contacts_serp]
   denominator: [searches]
   agg: proportion
-  significance_params: default
 
 users_contact_per_item_view_search:
   tags: [i2, bx, serp, user]
   numerator: [contacts_serp]
   denominator: [item_views_serp]
   agg: proportion
-  significance_params: default
 
 users_item_view_per_search_query:
   tags: [i2, bx, serp, user]
   numerator: [searches_query_item_view]
   denominator: [searches_with_query]
   agg: proportion
-  significance_params: default
 
 users_contact_per_search_query:
   tags: [i2, bx, serp, user]
   numerator: [searches_query_contact]
   denominator: [searches_with_query]
   agg: proportion
-  significance_params: default
 
 suggest_users_share:
   description: "Share of cookies, who use suggest"
   tags: [ss, sgt, ratio]
-  unit: search
   agg: proportion
   numerator: [queries_with_suggest]
   denominator: [queries_no_redirect]
-  significance_params: ratio
 
 suggest_buyers_share:
   description: "Share of buyers, who use suggest, to cookies, who use suggest"
   tags: [ss, sgt, ratio]
-  unit: search
   agg: proportion
   numerator: [queries_no_redirect_contact]
   denominator: [queries_with_suggest]
-  significance_params: ratio
 
 
 ########  ########  ######
@@ -1134,103 +995,81 @@ suggest_buyers_share:
 recblock_shows:
   numerator: [recblock_shows]
   agg: sum
-  significance_params: default
 
 item_views_rec:
   title: item_views_rec
   tags: [i2, bx, rec, total]
   numerator: [item_views_rec]
   agg: sum
-  significance_params: default
 
 item_views_rec_i2i:
   title: item_views_rec_i2i
-  unit: recommendations
   tags: [i2, bx, rec, total]
   numerator: [item_views_rec_i2i]
   agg: sum
-  significance_params: default
 
 item_views_rec_u2i:
   title: item_views_rec_u2i
-  unit: recommendations
   tags: [i2, bx, rec, total]
   numerator: [item_views_rec_u2i]
   agg: sum
-  significance_params: default
 
 contacts_rec_i2i:
   title: contacts_rec_i2i
-  unit: recommendations
   tags: [i2, bx, rec, total]
   numerator: [contacts_rec_i2i]
   agg: sum
-  significance_params: default
 
 contacts_rec_u2i:
   title: contacts_rec_u2i
-  unit: recommendations
   tags: [i2, bx, rec, total]
   numerator: [contacts_rec_u2i]
   agg: sum
-  significance_params: default
 
 fav_added_rec_i2i:
   title: fav_added_rec_i2i
-  unit: recommendations
   tags: [i2, bx, rec, total]
   numerator: [fav_added_rec_i2i]
   agg: sum
-  significance_params: default
 
 fav_added_rec_u2i:
   title: fav_added_rec_u2i
-  unit: recommendations
   tags: [i2, bx, rec, total]
   numerator: [fav_added_rec_u2i]
   agg: sum
-  significance_params: default
 
 buyer_target_clicks_rec_i2i:
   title: bt_clicks_rec_i2i
-  unit: recommendations
   tags: [i2, bx, rec, total]
   numerator: [buyer_target_clicks_rec_i2i]
   agg: sum
-  significance_params: default
 
 buyer_target_clicks_rec_u2i:
   title: bt_clicks_rec_u2i
-  unit: recommendations
   tags: [i2, bx, rec, total]
   numerator: [buyer_target_clicks_rec_u2i]
   agg: sum
-  significance_params: default
 
 item_views_auto_almost_new_net:
   tags: [i4, bx]
   agg: sum
   numerator: [item_views_auto_almost_new_net]
-  significance_params: default
 
 contacts_auto_almost_new_net:
   tags: [i4, bx]
   agg: sum
   numerator: [contacts_auto_almost_new_net]
-  significance_params: default
 
 buyers_auto_almost_new:
   tags: [i4, bx]
   agg: proportion
   numerator: [contacts_auto_almost_new_net]
-  significance_params: default
 
 favorites_added_auto_almost_new:
   title: fav_auto_almost_new
   tags: [i4, bx]
   agg: sum
   numerator: [favorites_added_auto_almost_new]
-  significance_params: default
 
 ###############################################################################
 # Rec :: Ratios
@@ -1242,7 +1081,6 @@ contacts_rec_per_rec_block:
   agg: sum
   numerator: [contacts_rec]
   denominator: [recblock_shows]
-  significance_params: ratio
 
 fav_added_rec_per_rec_block:
   title: fav_added_rec_per_recblock
@@ -1250,7 +1088,6 @@ fav_added_rec_per_rec_block:
   agg: sum
   numerator: [fav_added_rec]
   denominator: [recblock_shows]
-  significance_params: ratio
 
 buyer_target_clicks_rec_per_rec_block:
   title: bt_clicks_rec_per_recblock
@@ -1258,7 +1095,6 @@ buyer_target_clicks_rec_per_rec_block:
   agg: sum
   numerator: [buyer_target_clicks_rec]
   denominator: [recblock_shows]
-  significance_params: ratio
 
 contacts_rec_per_item_views_rec:
   title: contacts_rec_per_item_views_rec
@@ -1266,7 +1102,6 @@ contacts_rec_per_item_views_rec:
   agg: sum
   numerator: [contacts_rec]
   denominator: [item_views_rec]
-  significance_params: ratio
 
 shows_item_view_recblock_per_recblock_shows:
   title: shows_item_view_recblock_per_recblock_shows
@@ -1274,7 +1109,6 @@ shows_item_view_recblock_per_recblock_shows:
   agg: sum
   numerator: [shows_item_view_recblock]
   denominator: [recblock_shows]
-  significance_params: ratio
 
 ###############################################################################
 # Rec :: User Totals
@@ -1285,49 +1119,42 @@ users_item_view_rec_daily:
   tags: [i2, bx, rec, user]
   numerator: [item_views_rec]
   agg: proportion
-  significance_params: default
 
 users_contact_rec_daily:
   title: users_contact_rec
   tags: [i2, bx, rec, user]
   numerator: [contacts_rec]
   agg: proportion
-  significance_params: default
 
 users_buyer_target_click_rec_daily:
   title: users_bt_click_rec
   tags: [i2, bx, rec, user]
   numerator: [buyer_target_clicks_rec]
   agg: proportion
-  significance_params: default
 
 users_contact_rec_i2i:
   title: users_contact_rec_i2i
   tags: [i2, bx, rec, user]
   numerator: [contacts_rec_i2i]
   agg: proportion
-  significance_params: default
 
 users_contact_rec_u2i:
   title: users_contact_rec_u2i
   tags: [i2, bx, rec, user]
   numerator: [contacts_rec_u2i]
   agg: proportion
-  significance_params: default
 
 users_item_view_rec_i2i:
   title: users_item_view_rec_i2i
   tags: [i2, bx, rec, user]
   numerator: [item_views_rec_i2i]
   agg: proportion
-  significance_params: default
 
 users_item_view_rec_u2i:
   title: users_item_view_rec_u2i
   tags: [i2, bx, rec, user]
   numerator: [item_views_rec_u2i]
   agg: proportion
-  significance_params: default
 
 ###############################################################################
 # Rec :: User Ratios
@@ -1336,62 +1163,50 @@ users_item_view_rec_u2i:
 users_item_views_rec_u2i_per_users_all_main_pages:
   title: u2i_viewers_per_visitors
   description: "Conversion from unique visitors to uniqie viewers on main page recommendations"
-  unit: recommendations
   tags: [i1, bx, rec, main, ratio]
   numerator: [item_views_rec_u2i]
   denominator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   agg: proportion
-  significance_params: ratio
 
 users_item_views_rec_i2i_per_users_item_views:
   title: i2i_viewers_per_visitors
   description: "Conversion from unique visitors to uniqie viewers on item page recommendations"
-  unit: recommendations
   tags: [i1, bx, rec, ratio]
   numerator: [item_views_rec_i2i]
   denominator: [item_views]
   agg: proportion
-  significance_params: ratio
 
 users_contacts_rec_u2i_per_users_all_main_pages:
   title: u2i_buyers_per_visitors
   description: "Conversion from unique visitors to uniqie buyers on main page recommendations"
-  unit: recommendations
   tags: [i1, bx, rec, main, ratio]
   numerator: [contacts_rec_u2i]
   denominator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
   agg: proportion
-  significance_params: ratio
 
 users_contacts_rec_i2i_per_users_item_views:
   title: i2i_buyers_per_visitors
   description: "Conversion from unique visitors to uniqie buyers on item page recommendations"
-  unit: recommendations
   tags: [i1, bx, rec, ratio]
   numerator: [contacts_rec_i2i]
   denominator: [item_views]
   agg: proportion
-  significance_params: ratio
 
 users_contacts_rec_i2i_per_users_item_views_rec_i2i:
   title: i2i_buyers_per_viewers
   description: "Conversion from unique viewers to uniqie buyers on item page recommendations"
-  unit: recommendations
   tags: [i1, bx, rec, ratio]
   numerator: [contacts_rec_i2i]
   denominator: [item_views_rec_i2i]
   agg: proportion
-  significance_params: ratio
 
 users_contacts_rec_u2i_per_users_item_views_rec_u2i:
   title: u2i_buyers_per_viewers
   description: "Conversion from unique viewers to uniqie buyers on item page recommendations"
-  unit: recommendations
   tags: [i1, bx, rec, ratio]
   numerator: [contacts_rec_u2i]
   denominator: [item_views_rec_u2i]
   agg: proportion
-  significance_params: ratio
 
 
 ##     ## ########  ######   ######  ######## ##    ##  ######   ######## ########
@@ -1411,35 +1226,30 @@ phone_views_in_chat:
   tags: [i3, messenger, total]
   numerator: [phone_views_in_chat]
   agg: sum
-  significance_params: default
 
 total_messages:
   title: total_messages
   tags: [i3, messenger, total]
   numerator: [messenger_total_messeges]
   agg: sum
-  significance_params: default
 
 write_button_clicks:
   title: write_button_clicks
   tags: [i4, messenger, total]
   numerator: [write_button_clicks]
   agg: sum
-  significance_params: default
 
 chats_deleted:
   title: chats_deleted
   tags: [i4, messenger, total]
   numerator: [messenger_chat_deleted]
   agg: sum
-  significance_params: default
 
 messenger_users_blocked:
   title: messenger_users_blocked
   tags: [i4, messenger, total]
   numerator: [messenger_users_blocked]
   agg: sum
-  significance_params: default
 
 
 
@@ -1453,7 +1263,6 @@ write_button_clicks_per_item_views:
   agg: sum
   numerator: [write_button_clicks]
   denominator: [item_views]
-  significance_params: ratio
 
 first_mess_per_write_button_clicks:
   title: first_mess_per_write_button_clicks
@@ -1461,7 +1270,6 @@ first_mess_per_write_button_clicks:
   agg: sum
   numerator: [first_messages]
   denominator: [write_button_clicks]
-  significance_params: ratio
 
 ###############################################################################
 # Messenger :: proportion
@@ -1472,14 +1280,12 @@ messenger_only_buyers:
   tags: [i3, messenger, user]
   numerator: [first_messages]
   agg: proportion
-  significance_params: proportion
 
 messenger_dau:
   title: messenger_dau
   tags: [i3, messenger, user]
   numerator: [messenger_total_messeges]
   agg: proportion
-  significance_params: proportion
 
 ########  ######## ##       #### ##     ## ######## ########  ##    ##
 ##     ## ##       ##        ##  ##     ## ##       ##     ##  ##  ##
@@ -1498,281 +1304,216 @@ delivery_orders_created:
   tags: [i3, bx, total]
   numerator: [delivery_order_created]
   agg: sum
-  significance_params: default
 
 buyer_delivery_orders:
   title: buyer_delivery_orders
   description: "All delivery orders by buyer"
-  unit: safedeal
   tags: [i3, delivery, buyer]
   agg: sum
   numerator: [buyer_delivery_orders]
-  significance_params: default
 
 buyer_delivery_orders_with_pay:
   title: buyer_delivery_orders_with_pay
   description: "All delivery orders by buyer with pay"
-  unit: safedeal
   tags: [i3, delivery, buyer]
   agg: sum
   numerator: [buyer_delivery_orders_with_pay]
-  significance_params: default
-  metrics_registry: true
 
 buyer_delivery_orders_in_transit:
   title: buyer_delivery_orders_in_transit
   description: "All delivery orders by buyer in transit"
-  unit: safedeal
   tags: [i3, delivery, buyer]
   agg: sum
   numerator: [buyer_delivery_orders_in_transit]
-  significance_params: default
-  metrics_registry: true
 
 buyer_delivery_deals:
   title: buyer_delivery_deals
   description: "All delivery deals by buyer"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [buyer_delivery_deals]
-  significance_params: default
 
 buyer_delivery_orders_expired:
   title: buyer_delivery_orders_expired
   description: "All delivery expired orders by buyer"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [buyer_delivery_orders_expired]
-  significance_params: default
 
 buyer_delivery_orders_canceled:
   title: buyer_delivery_orders_canceled
   description: "All delivery canceled orders by buyer"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [buyer_delivery_orders_canceled]
-  significance_params: default
 
 buyer_delivery_orders_returned:
   title: buyer_delivery_orders_returned
   description: "All delivery returned orders by buyer"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [buyer_delivery_orders_returned]
-  significance_params: default
 
 seller_delivery_orders_returned:
   title: seller_delivery_orders_returned
   description: "All delivery returned order by seller"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [seller_delivery_orders_returned]
-  significance_params: default
 
 seller_delivery_deals:
   title: seller_delivery_deals
   description: "All delivery deals by seller"
-  unit: safedeal
   tags: [i3, delivery, seller]
   agg: sum
   numerator: [seller_delivery_deals]
-  significance_params: default
-  metrics_registry: true
 
 seller_delivery_bonuses:
   title: seller_delivery_bonuses
   description: "Delivery bonuses by seller"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [seller_delivery_bonuses]
-  significance_params: default
-  metrics_registry: true
 
 seller_delivery_orders_canceled:
   title: seller_delivery_orders_canceled
   description: "All delivery canceled orders by seller"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [seller_delivery_orders_canceled]
-  significance_params: default
 
 seller_delivery_orders_expired:
   title: seller_delivery_orders_expired
   description: "All delivery expired orders by seller"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [seller_delivery_orders_expired]
-  significance_params: default
 
 seller_delivery_orders_in_transit:
   title: seller_delivery_orders_in_transit
   description: "All delivery orders in transit by seller"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [seller_delivery_orders_in_transit]
-  significance_params: default
 
 seller_delivery_orders_with_pay:
   title: seller_delivery_orders_with_pay
   description: "All delivery order with pay by seller"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [seller_delivery_orders_with_pay]
-  significance_params: default
 
 helpdesk_vas_tag_tickets:
   title: helpdesk_vas_tag_tickets
   description: "Vas tickets"
-  unit: safedeal
   tags: [i4, delivery, vas, support]
   agg: sum
   numerator: [helpdesk_vas_tag_tickets]
-  significance_params: default
 
 helpdesk_delivery_tickets:
   title: helpdesk_delivery_tickets
   description: "Delivery tickets"
-  unit: safedeal
   tags: [i4, delivery, support]
   agg: sum
   numerator: [helpdesk_delivery_tickets]
-  significance_params: default
 
 helpdesk_delivery_vas_tickets:
   title: helpdesk_delivery_vas_tickets
   description: "Delivery vas tickets"
-  unit: safedeal
   tags: [i4, delivery, support,vas]
   agg: sum
   numerator: [helpdesk_delivery_vas_tickets]
-  significance_params: default
 
 delivery_seller_vas_spend_amount:
   title: delivery_seller_vas_spend_amount
   description: "Delivery seller vas spend amount"
-  unit: safedeal
   tags: [i4, delivery, vas]
   agg: sum
   numerator: [delivery_seller_vas_spend_amount]
-  significance_params: default
 
 delivery_seller_bonuses_in_vas_spend_amount:
   title: delivery_seller_bonuses_in_vas_spend_amount
   description: "Delivery seller bonuses in vas spend amount"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [delivery_seller_bonuses_in_vas_spend_amount]
-  significance_params: default
 
 items_with_delivery_soa:
   title: items_with_delivery_soa
   description: "All delviery item closed by SOA"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [items_with_delivery_soa]
-  significance_params: default
 
 items_with_delivery:
   title: items_with_delivery
   description: "All item with delivery"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [items_with_delivery]
-  significance_params: default
 
 item_off_delivery:
   title: item_off_delivery
   description: "All item off delivery"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [item_off_delivery]
-  significance_params: default
 
 delivery_item_view:
   title: delivery_item_view
   description: "Uniq item view of delivery item"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [item_view]
-  significance_params: default
 
 delivery_total_item_view:
   title: delivery_total_item_view
   description: "Total item view of delivery item"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [total_item_view]
-  significance_params: default
 
 delivery_click:
   title: delivery_click
   description: "Uniq delivery button click"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [delivery_click]
-  significance_params: default
 
 total_delivery_click:
   title: total_delivery_click
   description: "Total delivery button click"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [total_delivery_click]
-  significance_params: default
 
 delivery_widget:
   title: delivery_widget
   description: "Uniq delivery widget show"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [delivery_widget]
-  significance_params: default
 
 total_delivery_widget:
   title: total_delivery_widget
   description: "Total delivery widget show"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [total_delivery_widget]
-  significance_params: default
 
 delivery_contact:
   title: delivery_contact
   description: "Uniq delivery contacts"
-  unit: safedeal
   tags: [i3, delivery, buyer]
   agg: sum
   numerator: [delivery_contact]
-  significance_params: default
 
 total_delivery_contact:
   title: total_delivery_contact
   description: "Total delivery contacts"
-  unit: safedeal
   tags: [i3, delivery, buyer]
   agg: sum
   numerator: [total_delivery_contact]
-  significance_params: default
 
 ###############################################################################
 # Delivery :: Ratios
@@ -1781,82 +1522,66 @@ total_delivery_contact:
 buyer_delivery_in_transit_ratio:
   title: buyer_delivery_in_transit_ratio
   description: "All delivery orders in transit ratio by buyer"
-  unit: safedeal
   tags: [i3, delivery, buyer]
   agg: sum
   numerator: [buyer_delivery_orders_in_transit]
   denominator: [buyer_delivery_orders_with_pay]
-  significance_params: ratio
 
 seller_delivery_in_transit_ratio:
   title: seller_delivery_in_transit_ratio
   description: "All delivery in transit orders ratio by seller"
-  unit: safedeal
   tags: [i4, delivery, seller]
   agg: sum
   numerator: [seller_delivery_orders_in_transit]
   denominator: [seller_delivery_orders_with_pay]
-  significance_params: ratio
 
 delivery_view_delivery_click_ratio:
   title: delivery_view_delivery_click_ratio
   description: "Conversion from delivery item view to delivery button by uniq user"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [delivery_click]
   denominator: [item_view]
-  significance_params: ratio
 
 delivery_total_view_delivery_click_ratio:
   title: delivery_total_view_delivery_click_ratio
   description: "Conversion from delivery item view to delivery button"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [total_delivery_click]
   denominator: [total_item_view]
-  significance_params: ratio
 
 delivery_click_widget_ratio:
   title: delivery_click_widget_ratio
   description: "Conversion from delivery button click to delivery widget by uniq user"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [delivery_widget]
   denominator: [delivery_click]
-  significance_params: ratio
 
 delivery_total_click_widget_ratio:
   title: delivery_total_click_widget_ratio
   description: "Conversion from delivery button click to delivery widget"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [total_delivery_widget]
   denominator: [total_delivery_click]
-  significance_params: ratio
 
 delivery_widget_contact_ratio:
   title: delivery_widget_contact_ratio
   description: "Conversion from delivery widget show to delivery contact by uniq user"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [delivery_contact]
   denominator: [delivery_widget]
-  significance_params: ratio
 
 delivery_total_widget_contact_ratio:
   title: delivery_total_widget_contact_ratio
   description: "Conversion from delivery widget show to delivery contact"
-  unit: safedeal
   tags: [i4, delivery, buyer]
   agg: sum
   numerator: [total_delivery_contact]
   denominator: [total_delivery_widget]
-  significance_params: ratio
 
 
  ######  ##     ##  #######  ########  ########       ########  ######## ##    ## ########
@@ -1876,284 +1601,217 @@ booking_created_short_rent:
   tags: [i4, bx, total]
   numerator: [booking_created_short_rent]
   agg: sum
-  significance_params: default
 
 buyer_str_bookings:
   title: buyer_str_bookings
   description: "All str bookings by buyer"
-  unit: safedeal
   tags: [i3, str, buyer]
   agg: sum
   numerator: [buyer_str_bookings]
-  significance_params: default
-  metrics_registry: true
 
 buyer_str_bookings_paid:
   title: buyer_str_bookings_paid
   description: "All str paid bookings by buyer"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [buyer_str_bookings_paid]
-  significance_params: default
-  metrics_registry: true
 
 buyer_str_bookings_comfirmed:
   title: buyer_str_bookings_comfirmed
   description: "All str confirmed bookings by buyer"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [buyer_str_bookings_comfirmed]
-  significance_params: default
-  metrics_registry: true
 
 buyer_str_bookings_expired:
   title: buyer_str_bookings_expired
   description: "All str expired bookings by buyer"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [buyer_str_bookings_expired]
-  significance_params: default
 
 buyer_str_bookings_canceled:
   title: buyer_str_bookings_canceled
   description: "All str canceled bookings for buyer"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [buyer_str_bookings_canceled]
-  significance_params: default
 
 buyer_str_booking_cost:
   title: buyer_str_booking_cost
   description: "All buyer bookings cost, paid/not paid both"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [buyer_str_booking_cost]
-  significance_params: default
 
 buyer_str_paid:
   title: buyer_str_paid
   description: "Money paid for bookings by buyer"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [buyer_str_paid]
-  significance_params: default
 
 buyer_str_deals:
   title: buyer_str_deals
   description: "All str deals by buyer"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [buyer_str_deals]
-  significance_params: default
 
 buyer_str_bookings_voided:
   title: buyer_str_bookings_voided
   description: "All str voided bookings by buyer"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [buyer_str_bookings_voided]
-  significance_params: default
 
 seller_str_bookings:
   title: seller_str_bookings
   description: "All str bookings by seller"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [seller_str_bookings]
-  significance_params: default
 
 seller_str_bookings_paid:
   title: seller_str_bookings_paid
   description: "All str paid bookings by seller"
-  unit: safedeal
   tags: [i3, str, seller]
   agg: sum
   numerator: [seller_str_bookings_paid]
-  significance_params: default
-  metrics_registry: true
 
 seller_str_bookings_comfirmed:
   title: seller_str_bookings_comfirmed
   description: "All str confirmed bookings by seller"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [seller_str_bookings_comfirmed]
-  significance_params: default
-  metrics_registry: true
 
 seller_str_bookings_canceled:
   title: seller_str_bookings_canceled
   description: "All str canceled bookings by seller"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [seller_str_bookings_canceled]
-  significance_params: default
 
 seller_str_bookings_expired:
   title: seller_str_bookings_expired
   description: "All str expired bookings by seller"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [seller_str_bookings_expired]
-  significance_params: default
 
 seller_str_deals:
   title: seller_str_deals
   description: "All str deals by seller"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [seller_str_deals]
-  significance_params: default
 
 seller_str_bookings_voided:
   title: seller_str_bookings_voided
   description: "All str voided bookings by seller"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [seller_str_bookings_voided]
-  significance_params: default
 
 seller_str_payout_fee:
   title: seller_payout_fee
   description: "Money seller pay avito from booking"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [seller_payout_fee]
-  significance_params: default
 
 seller_str_payout_amount:
   title: seller_payout_amount
   description: "Money buyer pay for booking by seller"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [seller_payout_amount]
-  significance_params: default
 
 helpdesk_str_tickets:
   title: helpdesk_str_tickets
   description: "Str helpdesk tickets"
-  unit: safedeal
   tags: [i4, str]
   agg: sum
   numerator: [helpdesk_str_tickets]
-  significance_params: default
 
 items_with_str:
   title: items_with_str
   description: "All item with str"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [items_with_str]
-  significance_params: default
 
 items_with_str_soa:
   title: items_with_str_soa
   description: "All str item closed with SOA"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [items_with_str_soa]
   denominator: [seller_str_bookings_paid]
-  significance_params: ratio
 
 item_off_str:
   title: item_off_str
   description: "All item off str"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [item_off_str]
-  significance_params: default
-  metrics_registry: FALSE
 
 str_item_view:
   title: str_item_view
   description: "Uniq item view of str item"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [item_view]
-  significance_params: default
 
 str_total_item_view:
   title: str_total_item_view
   description: "Total item view of str item"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [total_item_view]
-  significance_params: default
 
 str_click:
   title: str_click
   description: "Uniq str button click"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [str_click]
-  significance_params: default
 
 total_str_click:
   title: total_str_click
   description: "Total str button click"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [total_str_click]
-  significance_params: default
 
 str_widget:
   title: str_widget
   description: "Uniq str widget show"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [str_widget]
-  significance_params: default
 
 total_str_widget:
   title: total_str_widget
   description: "Total str widget show"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [total_str_widget]
-  significance_params: default
 
 str_contact:
   title: str_contact
   description: "Uniq str contacts"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [str_contact]
-  significance_params: default
 
 total_str_contact:
   title: total_str_contact
   description: "Total str contacts"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [total_str_contact]
-  significance_params: default
 
 ###############################################################################
 # Short Rent :: Ratios
@@ -2162,82 +1820,66 @@ total_str_contact:
 buyer_str_confirmed_ratio:
   title: buyer_str_confirmed_ratio
   description: "Conversion from paid to confirmed booking buyer"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [buyer_str_bookings_comfirmed]
   denominator: [buyer_str_bookings_paid]
-  significance_params: ratio
 
 seller_str_confirmed_ratio:
   title: seller_str_confirmed_ratio
   description: "Conversion from paid to confirmed booking seller"
-  unit: safedeal
   tags: [i4, str, seller]
   agg: sum
   numerator: [seller_str_bookings_comfirmed]
   denominator: [seller_str_bookings_paid]
-  significance_params: ratio
 
 str_view_str_click_ratio:
   title: str_view_str_click_ratio
   description: "Conversion from str item view to str button by uniq user"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [str_click]
   denominator: [item_view]
-  significance_params: ratio
 
 str_total_view_str_click_ratio:
   title: str_total_view_str_click_ratio
   description: "Conversion from str item view to str button"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [total_str_click]
   denominator: [total_item_view]
-  significance_params: ratio
 
 str_click_widget_ratio:
   title: str_click_widget_ratio
   description: "Conversion from str button click to str widget by uniq user"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [str_widget]
   denominator: [str_click]
-  significance_params: ratio
 
 str_total_click_widget_ratio:
   title: str_total_click_widget_ratio
   description: "Conversion from str button click to str widget"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [total_str_widget]
   denominator: [total_str_click]
-  significance_params: ratio
 
 str_widget_contact_ratio:
   title: str_widget_contact_ratio
   description: "Conversion from str widget show to str contact by uniq user"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [str_contact]
   denominator: [str_widget]
-  significance_params: ratio
 
 str_total_widget_contact_ratio:
   title: str_total_widget_contact_ratio
   description: "Conversion from str widget show to str contact"
-  unit: safedeal
   tags: [i4, str, buyer]
   agg: sum
   numerator: [total_str_contact]
   denominator: [total_str_widget]
-  significance_params: ratio
 
 
  ######   ########   #######  ##      ## ######## ##     ##
@@ -2257,9 +1899,7 @@ contacts_freecat:
   tags: [i3, total]
   numerator: [contacts_freecat]
   agg: sum
-  significance_params: default
   description: "contacts in virtual free-item-category"
-  unit: ghcom
 
 contacts_per_item_view_freecat:
   title: contacts_per_item_view_freecat
@@ -2267,72 +1907,56 @@ contacts_per_item_view_freecat:
   agg: sum
   numerator: [contacts_freecat]
   denominator: [item_views_freecat]
-  significance_params: ratio
   description: "contacts/item_views in virtual free-item-category"
-  unit: ghcom
 
 buyers_freecat_daily:
   title: buyers_freecat
   tags: [i3, user]
   numerator: [contacts_freecat]
   agg: proportion
-  significance_params: default
   description: "buyers in virtual free-item-category"
-  unit: ghcom
 
 users_item_view_freecat_daily:
   title: users_item_view_freecat
   tags: [i3, user]
   numerator: [item_views_freecat]
   agg: proportion
-  significance_params: default
   description: "item views daily in virtual free-item-category"
-  unit: ghcom
 
 phone_views_notfreecat:
   title: phone_views_notfreecat
   tags: [i3, total]
   numerator: [phone_views_notfreecat]
   agg: sum
-  significance_params: default
   description: "phone views not in virtual free-item-category"
-  unit: ghcom
 
 contacts_notfreecat:
   title: contacts_notfreecat
   tags: [i3, total]
   numerator: [contacts_notfreecat]
   agg: sum
-  significance_params: default
   description: "contacts not in virtual free-item-category"
-  unit: ghcom
 
 buyers_notfreecat_daily:
   title: buyers_notfreecat
   tags: [i3, user]
   numerator: [contacts_notfreecat]
   agg: proportion
-  significance_params: default
   description: "buyers not in virtual free-item-category"
-  unit: ghcom
 
 item_views_freecat:
   title: item_views_freecat
   tags: [i3, total]
   numerator: [item_views_freecat]
   agg: sum
-  significance_params: default
   description: "item views in vitrual free-item-category"
-  unit: ghcom
 
 phone_views_freecat:
   title: phone_views_freecat
   tags: [i3, total]
   numerator: [phone_views_freecat]
   agg: sum
-  significance_params: default
   description: "phone views in virtual free-item-category"
-  unit: ghcom
 
 
 ######## ##    ##  ######
@@ -2350,104 +1974,79 @@ phone_views_freecat:
 forgot_password_count:
   numerator: [forgot_password_count]
   agg: sum
-  significance_params: default
 
 password_restore_requests:
   numerator: [password_restore_requests]
   agg: sum
-  significance_params: default
 
 contacts_public_profile_per_unique_user:
   agg: sum
   numerator: [contacts_public_profile]
   denominator: [public_profile_unique_views]
-  significance_params: ratio
 
 password_restore_request_errors:
   numerator: [password_restore_request_errors]
   agg: sum
-  significance_params: default
 
 password_restore_count:
   numerator: [password_restore_count]
   agg: sum
-  significance_params: default
 
 password_restore_errors:
   numerator: [password_restore_errors]
   agg: sum
-  significance_params: default
 
 sign_in_count:
   numerator: [sign_in_count]
   agg: sum
-  significance_params: default
 
 sign_in_errors:
   numerator: [sign_in_errors]
   agg: sum
-  significance_params: default
 
 public_profile_views:
   numerator: [public_profile_views]
   agg: sum
-  significance_params: default
 
 public_profile_unique_views:
   numerator: [public_profile_unique_views]
   agg: sum
-  significance_params: default
 
 contacts_public_profile:
   numerator: [contacts_public_profile]
   agg: sum
-  significance_params: default
 
 public_profile_active_items_paginations:
   numerator: [public_profile_active_items_paginations]
   agg: sum
-  significance_params: default
 
 public_profile_closed_items_paginations:
   numerator: [public_profile_closed_items_paginations]
   agg: sum
-  significance_params: default
 
 user_enter:
   description: "number of unique cookies with successful authorization/registration/restore, which had authorization start screen (eid=2089)"
-  unit: tns
   tags: [i2, tns, tns_bulb, enter]
   agg: sum
   numerator: [enter_success]
-  significance_params: default
-  metrics_registry: true
 
 user_auth:
   description: "number of unique cookies with successful authorization (phone/email/social), which had authorization start screen"
-  unit: tns
   tags: [i2, tns, tns_bulb, auth, enter]
   agg: sum
   numerator: [auth_success]
-  significance_params: default
-  metrics_registry: true
 
 user_registration:
   description: "number of unique cookies with successful registration (not social), which had authorization start screen"
-  unit: tns
   tags: [i2, tns, tns_bulb, reg, enter]
   agg: sum
   numerator: [registration_success]
-  significance_params: default
-  metrics_registry: true
 
 user_password_restore:
   description: "number of unique cookies with successful password restore, which had restore start screen (including those who's changed platform while restoring by email)"
-  unit: tns
   tags: [i2, tns, tns_bulb, restore, enter]
   agg: sum
   numerator: [restore_success]
-  significance_params: default
-  metrics_registry: true
 
 ###############################################################################
 # TNS :: Ratios
@@ -2456,86 +2055,62 @@ user_password_restore:
 user_registration_cr:
   title: user_registration_conv
   description: "share of unique cookies with successful registration (not social) among those who had registration start screen"
-  unit: tns
   tags: [i2, tns, tns_bulb, reg, enter]
   agg: sum
   numerator: [registration_success]
   denominator: [registration_start]
-  significance_params: ratio
-  metrics_registry: true
 
 user_password_restore_cr:
   title: user_restore_conv
   description: "share of unique cookies with successful password restore among those who had restore start screen (including those who's changed platform while restoring by email)"
-  unit: tns
   tags: [i2, tns, tns_bulb, restore, enter]
   agg: sum
   numerator: [restore_success]
   denominator: [restore_start]
-  significance_params: ratio
-  metrics_registry: true
 
 user_auth_cr:
   title: user_auth_conv
   description: "share of unique cookies with successful authorization (phone/email/social) among those who had authorization start screen"
-  unit: tns
   tags: [i2, tns, tns_bulb, auth, enter]
   agg: sum
   numerator: [auth_success]
   denominator: [auth_start]
-  significance_params: ratio
-  metrics_registry: true
 
 user_enter_cr:
   title: user_enter_conv
   description: "share of unique cookies with successful authorization/registration/restore among those who had authorization start screen"
-  unit: tns
   tags: [i0, tns, tns_bulb, auth, enter]
   agg: sum
   numerator: [enter_success]
   denominator: [auth_start]
-  significance_params: ratio
-  metrics_registry: true
 
 auth_errors_per_user:
   description: "average number of authorization (phone/email/social) errors per cookie"
-  unit: tns
   tags: [i2, tns, tns_bulb, auth, enter]
   agg: sum
   numerator: [auth_errors]
   denominator: [auth_start]
-  significance_params: ratio
-  metrics_registry: true
 
 registration_errors_per_user:
   description: "average number of registration (not social) errors per cookie"
-  unit: tns
   tags: [i2, tns, tns_bulb, reg, enter]
   agg: sum
   numerator: [registration_errors]
   denominator: [registration_start]
-  significance_params: ratio
-  metrics_registry: true
 
 password_restore_errors_per_user:
   description: "average number of password restore errors per cookie"
-  unit: tns
   tags: [i4, tns, tns_bulb, restore, enter]
   agg: sum
   numerator: [restore_errors]
   denominator: [restore_start]
-  significance_params: ratio
-  metrics_registry: true
 
 enter_errors_per_user:
   description: "average number of authorization/registration/restore errors per cookie"
-  unit: tns
   tags: [i0, tns, tns_bulb, enter]
   agg: sum
   numerator: [enter_errors]
   denominator: [auth_start]
-  significance_params: ratio
-  metrics_registry: true
 
 ###############################################################################
 # TNS :: User Totals
@@ -2545,98 +2120,76 @@ password_restore_request_proportion:
   numerator: [password_restore_requests]
   agg: proportion
   description: "1 если хотя бы один запрос на восстановление пароля, иначе 0"
-  significance_params: proportion
 
 password_restore_proportion:
   numerator: [password_restore_count]
   agg: proportion
-  significance_params: proportion
 
 sign_in_proportion:
   numerator: [sign_in_count]
   agg: proportion
-  significance_params: proportion
 
 public_profile_views_proportion:
   numerator: [public_profile_views]
   agg: proportion
-  significance_params: proportion
 
 contacts_public_profile_proportion:
   numerator: [contacts_public_profile]
   agg: proportion
-  significance_params: proportion
 
 public_profile_active_items_paginations_proportion:
   numerator: [public_profile_active_items_paginations]
   agg: proportion
-  significance_params: proportion
 
 public_profile_closed_tabs_proportion:
   numerator: [public_profile_closed_tabs]
   agg: proportion
-  significance_params: proportion
 
 public_profile_closed_items_paginations_proportion:
   numerator: [public_profile_closed_items_paginations]
   agg: proportion
-  significance_params: proportion
 
 user_auth_proportion:
   description: "share of unique cookies with successful authorization (phone/email/social) among test participants"
-  unit: tns
   tags: [i2, tns, tns_bulb, auth, enter]
   agg: proportion
   numerator: [auth_success]
-  significance_params: proportion
 
 user_registration_proportion:
   description: "share of unique cookies with successful registration (not social) among test participants"
-  unit: tns
   tags: [critical, tns, tns_bulb, reg, enter]
   agg: proportion
   numerator: [registration_success]
-  significance_params: proportion
 
 user_password_restore_proportion:
   description: "share of unique cookies with successful password restore among test participants"
-  unit: tns
   tags: [i2, tns, tns_bulb, restore, enter]
   agg: proportion
   numerator: [restore_success]
-  significance_params: proportion
 
 user_enter_proportion:
   description: "share of unique cookies with successful authorization/registration/restore among test participants"
-  unit: tns
   tags: [critical, tns, tns_bulb, enter]
   agg: proportion
   numerator: [enter_success]
-  significance_params: proportion
 
 registration_start_proportion:
   description: "share of unique cookies with registration start screen among test participants"
-  unit: tns
   tags: [critical, tns, tns_bulb, reg, enter]
   agg: proportion
   numerator: [registration_start]
-  significance_params: proportion
 
 enter_start_proportion:
   description: "share of unique cookies with authorization start screen among test participants"
-  unit: tns
   tags: [critical, tns, tns_bulb, enter]
   agg: proportion
   numerator: [auth_start]
-  significance_params: proportion
 
 restore_start_proportion:
   description: "share of unique cookies with password restore start screen among test participants"
-  unit: tns
   tags: [i2, tns, tns_bulb, restore, enter]
   agg: proportion
   numerator: [restore_start]
-  significance_params: proportion
 
 
  ######  ######## ##       ##       ######## ########
@@ -2655,14 +2208,12 @@ items_added:
   tags: [critical, sx, total]
   numerator: [items_added]
   agg: sum
-  significance_params: default
   description: "Items started for paticipant_type='cookie'"
 
 items_add_started:
   tags: [i4, sx, total]
   numerator: [items_add_started]
   agg: sum
-  significance_params: default
   description: "Items add started for paticipant_type='cookie'"
 
 items_started_net:
@@ -2670,242 +2221,184 @@ items_started_net:
   tags: [i1, user, sx]
   numerator: [items_started_net]
   agg: sum
-  significance_params: default
   description: "Items created, activated (paid) and allowed by moderation"
-  unit: sx
 
 items_reactivated_net:
   title: items_reactivated_net
   tags: [i1, user, sx]
   numerator: [items_reactivated_net]
   agg: sum
-  significance_params: default
   description: "Items reactivated and allowed by moderation"
-  unit: sx
 
 new_items_blocked_or_rejected:
   title: new_items_blocked_or_rejected
   tags: [i1, user, sx]
   numerator: [new_items_blocked, new_items_rejected]
   agg: sum
-  significance_params: default
   description: "New items blocked or rejected by moderation"
-  unit: sx
 
 reactivated_items_rejected:
   title: reactivated_items_rejected
   tags: [i2, user, sx]
   numerator: [reactivated_items_rejected]
   agg: sum
-  significance_params: default
   description: "Reactivated items rejected by moderation"
-  unit: sx
 
 items_sold_onavito:
   title: items_sold_onavito
   tags: [i1, user, sx]
   numerator: [items_sold_onavito]
   agg: sum
-  significance_params: default
   description: "Items closed with reason Sold on Avito"
-  unit: sx
 
 items_sold_onavito_start_date:
   title: items_sold_onavito
   tags: [i1, user, sx]
   numerator: [items_sold_onavito]
   agg: sum
-  significance_params: default
   description: "Items closed with reason Sold on Avito for items created after exposure"
-  unit: sx
 
 items_closed_no_answer:
   title: items_closed_no_answer
   tags: [i1, user, sx]
   numerator: [items_closed_no_answer]
   agg: sum
-  significance_params: default
   description: "Items closed without answer by platform of closing"
-  unit: sx
 
 items_closed_with_answer:
   title: items_closed_with_answer
   tags: [i1, user, sx]
   numerator: [items_closed_with_answer]
   agg: sum
-  significance_params: default
   description: "Items closed with answer by platform of closing"
-  unit: sx
 
 items_reactivated_by_ttl_net:
   title: items_reactivated_by_ttl_net
   tags: [i1, user, sx]
   numerator: [items_reactivated_by_ttl_net]
   agg: sum
-  significance_params: default
   description: "Items reactivated after TTL (expiration) and allowed by moderation"
-  unit: sx
 
 items_closed_by_user:
   description: "Items closed by user"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [items_closed_by_user]
-  significance_params: default
 
 active_items:
   description: "Active items"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [active_items]
-  significance_params: default
 
 seller_deals:
   description: "Seller deals"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [deals]
-  significance_params: default
 
 seller_contacts:
   description: "Seller contacts"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [contacts]
-  significance_params: default
 
 seller_contacts_start_date:
   description: "Seller contacts for items created after exposure"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [contacts]
-  significance_params: default
 
 vas_amount_net:
   description: "Vas amount without bonuses paid by seller"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [vas_amount_net]
-  significance_params: default
 
 vas_amount_net_start_date:
   description: "Vas amount without bonuses paid by seller for items created after exposure"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [vas_amount_net]
-  significance_params: default
 
 lf_amount_net:
   description: "Lf amount without bonuses paid by seller"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [lf_amount_net]
-  significance_params: default
 
 lf_amount_net_start_date:
   description: "Lf amount without bonuses paid by seller for items created after exposure"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [lf_amount_net]
-  significance_params: default
 
 items_allowed:
   description: "Items allowed by moderation"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [items_allowed]
-  significance_params: default
 
 items_allowed_start_date:
   description: "Items created after exposure and allowed by moderation"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [items_allowed]
-  significance_params: default
 
 items_blocked_rejected:
   description: "Blocked or rejected items"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [items_blocked_rejected]
-  significance_params: default
 
 items_blocked_rejected_start_date:
   description: "Blocked or rejected items for items created after exposure"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [items_blocked_rejected]
-  significance_params: default
 
 item_edits:
   description: "Items edits"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [item_edits]
-  significance_params: default
 
 item_edits_start_date:
   description: "Items edits"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [item_edits]
-  significance_params: default
 
 seller_favorites_added:
   description: "Favorites add"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [favorites_add]
-  significance_params: default
 
 seller_favorites_added_start_date:
   description: "Favorites add for items created after exposure"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [favorites_add]
-  significance_params: default
 
 seller_favorites_removed:
   description: "Favorites removed"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [favorites_removed]
-  significance_params: default
 
 seller_favorites_removed_start_date:
   description: "Favorites removed for items created after exposure"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [favorites_removed]
-  significance_params: default
 
 item_chains_started:
   title: items_add_started
   description: "Items add started"
-  unit: sx
   tags: [seller]
   agg: sum
   numerator: [item_chains_started]
-  significance_params: default
 
 ###############################################################################
 # Seller :: Ratios
@@ -2917,7 +2410,6 @@ items_added_per_items_add_started:
   agg: sum
   numerator: [items_added]
   denominator: [items_add_started]
-  significance_params: ratio
 
 ###############################################################################
 # Seller :: User Totals
@@ -2928,7 +2420,6 @@ sellers_daily:
   tags: [i4, sx, user]
   numerator: [items_added]
   agg: proportion
-  significance_params: default
   description: "Cookies item started"
 
 users_item_add_started:
@@ -2936,7 +2427,6 @@ users_item_add_started:
   tags: [i4, sx, user]
   numerator: [items_add_started]
   agg: proportion
-  significance_params: default
   description: "Cookies item add started"
 
 items_started_net_conversion:
@@ -2944,223 +2434,169 @@ items_started_net_conversion:
   tags: [i1, user, sx]
   numerator: [items_started_net]
   agg: proportion
-  significance_params: default
   description: "Users created and activated (paid) items allowed by moderation"
-  unit: sx
 
 items_reactivated_net_conversion:
   title: users_item_reactivated_net
   tags: [i1, user, sx]
   numerator: [items_reactivated_net]
   agg: proportion
-  significance_params: default
   description: "Users reactivated items allowed by moderation"
-  unit: sx
 
 new_items_blocked_or_rejected_conversion:
   title: users_new_item_blocked_or_rejected
   tags: [i1, user, sx]
   numerator: [new_items_blocked, new_items_rejected]
   agg: proportion
-  significance_params: default
   description: "Users created blocked or rejected by moderation items"
-  unit: sx
 
 reactivated_items_rejected_conversion:
   title: users_reactivated_item_rejected
   tags: [i2, user, sx]
   numerator: [reactivated_items_rejected]
   agg: proportion
-  significance_params: default
   description: "Users reactivated items blocked or rejected by moderation afterwards"
-  unit: sx
 
 items_sold_onavito_conversion:
   title: users_item_sold_onavito
   tags: [i1, user, sx]
   numerator: [items_sold_onavito]
   agg: proportion
-  significance_params: default
   description: "Users closed items with reason Sold on Avito"
-  unit: sx
 
 items_reactivated_by_ttl_net_conversion:
   title: items_reactivated_by_ttl_net_conversion
   tags: [i1, user, sx]
   numerator: [items_reactivated_by_ttl_net]
   agg: proportion
-  significance_params: default
   description: "Users reactivated items after TTL (expiration) allowed by moderation afterwards"
-  unit: sx
 
 users_item_closed_no_answer:
   tags: [i1, user, sx]
   numerator: [items_closed_no_answer]
   agg: proportion
-  significance_params: default
   description: "Users who closed items without answer by platforn of closing"
-  unit: sx
 
 users_item_closed_with_answer:
   title: items_closed_with_answer
   tags: [i1, user, sx]
   numerator: [items_closed_with_answer]
   agg: proportion
-  significance_params: default
   description: "Users who closed items with answer by platform of closing"
-  unit: sx
 
 users_item_closed_by_user:
   description: "Users who closed items"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [items_closed_by_user]
-  significance_params: default
 
 users_active_items:
   description: "Users with active items"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [active_items]
-  significance_params: default
 
 sellers_with_contacts:
   description: "Sellers with contacted items"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [contacts]
-  significance_params: default
 
 sellers_with_contacts_start_date:
   description: "Sellers with contacted items created after exposure"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [contacts]
-  significance_params: default
 
 users_vas:
   description: "Users applied VAS"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [vas_amount_net]
-  significance_params: default
 
 users_vas_start_date:
   description: "Users applied VAS to items created after exposure"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [vas_amount_net]
-  significance_params: default
 
 users_lf:
   description: "Users paid LF"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [lf_amount_net]
-  significance_params: default
 
 users_lf_start_date:
   description: "Users paid LF to new items"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [lf_amount_net]
-  significance_params: default
 
 users_item_allowed:
   description: "Users with items allowed by moderation"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [items_allowed]
-  significance_params: default
 
 users_item_allowed_start_date:
   description: "Users with items created after exposure and allowed by moderation"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [items_allowed]
-  significance_params: default
 
 users_item_blocked_rejected:
   description: "Users with blocked or rejected items"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [items_blocked_rejected]
-  significance_params: default
 
 users_item_blocked_rejected_start_date:
   description: "Users with blocked or rejected items created after exposure"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [items_blocked_rejected]
-  significance_params: default
 
 users_item_edit:
   description: "Users edited items"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [item_edits]
-  significance_params: default
 
 users_item_edit_start_date:
   description: "Users edited items created after exposure"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [item_edits]
-  significance_params: default
 
 users_item_chain_started:
   description: "Users started item add"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [item_chains_started]
-  significance_params: default
 
 sellers_favorite_added:
   description: "Sellers with items added to favorites"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [favorites_add]
-  significance_params: default
 
 sellers_favorite_added_start_date:
   description: "Sellers with items created after exposure and added to favorites"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [favorites_add]
-  significance_params: default
 
 sellers_favorite_removed:
   description: "Sellers with items removed from favorites"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [favorites_removed]
-  significance_params: default
 
 sellers_favorite_removed_start_date:
   description: "Sellers with items created after exposure and removed from favorites"
-  unit: sx
   tags: [sx]
   agg: proportion
   numerator: [favorites_removed]
-  significance_params: default
 
 ##     ## ##    ## ########
 ###   ### ###   ##      ##
@@ -3177,100 +2613,77 @@ sellers_favorite_removed_start_date:
 listings_single_paid:
   numerator: [listings_single_paid]
   agg: sum
-  significance_params: default
 
 lf_revenue:
   title: lf_revenue
   description: "Listing fee revenue total recognized with bonuses"
-  unit: Monetization
   tags: [lf]
   agg: sum
   numerator: [lf_revenue]
-  significance_params: default
 
 lf_transactions:
   title: lf_transactions
   description: "Listing fee transactions total (single and lf from package)"
-  unit: Monetization
   tags: [lf]
   agg: sum
   numerator: [lf_transactions]
-  significance_params: default
 
 lf_packages_item_add:
   title: lf_packages
   description: "Num of lf packages bought on item add"
-  unit: Monetization
   tags: [lf]
   agg: sum
   numerator: [lf_packs]
-  significance_params: default
 
 lf_revenue_single:
   title: lf_revenue_single
   description: "Listing fee revenue single on item add"
-  unit: Monetization
   tags: [lf]
   agg: sum
   numerator: [lf_revenue_single]
-  significance_params: default
 
 lf_transactions_single:
   title: lf_transactions_single
   description: "Listing fee single transactions"
-  unit: Monetization
   tags: [lf]
   agg: sum
   numerator: [lf_transactions_single]
-  significance_params: default
 
 express_cv_started:
   description: "Created express cv"
   tags: [cv]
-  unit: avitopro
   numerator: [express_cv_started]
   agg: sum
-  significance_params: default
 
 express_cv_started_net:
   description: "Created express cv allowed by moderation"
   tags: [cv]
-  unit: avitopro
   numerator: [express_cv_started_net]
   agg: sum
-  significance_params: default
 
 express_cv_published:
   description: "Created express cv which were not hide from employers"
   tags: [cv]
-  unit: avitopro
   numerator: [express_cv_published]
   agg: sum
-  significance_params: default
 
 express_cv_views:
   description: "Express cv views by platform of creation"
   tags: [cv]
-  unit: avitopro
   numerator: [express_cv_views]
   agg: sum
-  significance_params: default
 
 contacts_paid_express_cv:
   description: "Express cv paid contacts by platform of creation"
   tags: [cv]
-  unit: avitopro
   numerator: [contacts_paid_express_cv]
   agg: sum
-  significance_params: default
 
 contacts_paid_amount_express_cv:
   description: "Express cv paid contacts amount by platform of creation"
   tags: [cv]
-  unit: avitopro
   numerator: [contacts_paid_amount_express_cv]
   agg: sum
-  significance_params: default
 
 ###############################################################################
 # MNZ :: Ratios
@@ -3280,51 +2693,41 @@ payment_method_pv_per_listing_type_pv:
   agg: sum
   numerator: [pages_payment_method]
   denominator: [pages_listing_type]
-  significance_params: ratio
 
 success_payments_per_listing_type_pv:
   agg: sum
   numerator: [pages_success_payment]
   denominator: [pages_listing_type]
-  significance_params: ratio
 
 payment_page_per_lf_show_block:
   title: payment_page_per_lf_show
   description: "Conversion from lf block show to payment page"
-  unit: Monetization
   tags: [lf]
   agg: sum
   numerator: [lf_payment_page_events]
   denominator: [lf_block_show_events]
-  significance_params: ratio
 
 item_add_success_per_lf_show_block:
   title: item_add_per_lf_show
   description: "Conversion from lf block show to success item add"
-  unit: Monetization
   tags: [lf]
   agg: sum
   numerator: [final_page_events]
   denominator: [lf_block_show_events]
-  significance_params: ratio
 
 express_cv_form_open_item_add_conversion:
   description: "Conversion from express cv form open to item add"
   tags: [cv]
-  unit: avitopro
   agg: sum
   numerator: [express_cv_started]
   denominator: [express_cv_form_open]
-  significance_params: ratio
 
 express_cv_allowed_conversion:
   description: "Conversion from created express cv to allowed by moderation"
   tags: [cv]
-  unit: avitopro
   agg: sum
   numerator: [express_cv_started_net]
   denominator: [express_cv_started]
-  significance_params: ratio
 
 
 ########  #### ##       ##       #### ##    ##  ######
@@ -3342,20 +2745,16 @@ express_cv_allowed_conversion:
 successful_payment_share:
   description: "Share of successful payments step3/step1"
   tags: [payments]
-  unit: billing
   agg: sum
   numerator: [successful_payment]
   denominator: [payment_method_page]
-  significance_params: ratio
 
 main_payment_methods_share:
   description: "Share of successful payments by cards and SBOL"
   tags: [payments]
-  unit: billing
   agg: sum
   numerator: [successful_payment_card, successful_payment_SBOL]
   denominator: [successful_payment]
-  significance_params: ratio
 
 
  ######   #######   ######         ######   #######  ########  ########
@@ -3375,96 +2774,74 @@ new_listers:
   tags: [i1]
   numerator: [new_listers]
   agg: sum
-  significance_params: default
   description: "Users who started their first item in logical category. Additive across logical categories"
-  unit: c2c
 
 active_listers:
   title: active_listers
   tags: [i0, m42, tree]
   numerator: [active_listers]
   agg: sum
-  significance_params: default
   description: "Users who have at least 1 active item in a logical category. Additive across logical_category"
-  unit: c2c
 
 activated_listers:
   title: activated_listers
   tags: [i1, m42, tree]
   numerator: [activated_listers]
   agg: sum
-  significance_params: default
   description: "Active listers in (logical_category X user_segment) that were not active yesterday. Additive across logical_category, user_segment"
-  unit: c2c
 
 activated_listers_changed_segment:
   title: activated_listers_changed_segment
   tags: [i2, m42, tree]
   numerator: [activated_listers_changed_segment]
   agg: sum
-  significance_params: default
   description: "Active listers in (logical_category X user_segment) that had a different user_segment in this logical_category yesterday. Additive across logical_category, user_segment"
-  unit: c2c
 
 returned_listers:
   title: returned_listers
   tags: [i2, m42, tree]
   numerator: [returned_listers]
   agg: sum
-  significance_params: default
   description: "Activated listers in (logical_category X user_segment) that aren't new listers. Additive across logical categories"
-  unit: c2c
 
 deactivated_listers:
   title: deactivated_listers
   tags: [i1, m42, tree]
   numerator: [deactivated_listers]
   agg: sum
-  significance_params: default
   description: "Users who were active listers in (logical_category X user_segment) yesterday but aren't active today. Additive across logical_category, user_segment"
-  unit: c2c
 
 deactivated_listers_voluntary:
   title: deactivated_listers_voluntary
   tags: [i2, m42, tree]
   numerator: [deactivated_listers_voluntary]
   agg: sum
-  significance_params: default
   description: "Listers that were deactivated because their last active item was closed by user. Additive across logical_category, user_segment"
-  unit: c2c
 
 deactivated_listers_involuntary:
   title: deactivated_listers_involuntary
   tags: [i2, m42, tree]
   numerator: [deactivated_listers_involuntary]
   agg: sum
-  significance_params: default
   description: "Listers that were deactivated because their last active item was blocked/rejected. Additive across logical_category, user_segment"
-  unit: c2c
 
 deactivated_listers_changed_segment:
   title: deactivated_listers_changed_segment
   tags: [i2, m42, tree]
   numerator: [deactivated_listers_changed_segment]
   agg: sum
-  significance_params: default
   description: "Listers that were deactivated because they changed user_segment. Additive across logical_category, user_segment"
-  unit: c2c
 
 new_buyers:
   title: new_buyers
   tags: [i1, m42, tree]
   numerator: [new_buyers]
   agg: sum
-  significance_params: default
   description: "Cookies that made their first contact in a logical_category. Additive across logical_category"
-  unit: c2c
 
 returned_buyers:
   title: returned_buyers
   tags: [i1, m42, tree]
   numerator: [returned_buyers]
   agg: sum
-  significance_params: default
   description: "Cookies that made contact in a logical_category that are not new buyers. Additive across logical_category"
-  unit: c2c
