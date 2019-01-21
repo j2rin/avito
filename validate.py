@@ -12,7 +12,6 @@ METRICS_FILE = 'metrics.yaml'
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__)) + '/'
 
 CONFIG_PATH = CUR_DIR_PATH + 'config/'
-SIGNIFICANCE_PARAMS_PATH = CUR_DIR_PATH + 'config/significance_params/'
 SCHEMAS_PATH = CUR_DIR_PATH + 'config_schemas/'
 
 
@@ -68,10 +67,6 @@ def validate_config():
 
 #    for key in ['numerator', 'denominator']:
 #        schemas[METRICS_FILE]['valueschema']['schema'][key]['allowed'] = observation_names
-
-    significance_params = [f.split('.')[0] for f in os.listdir(SIGNIFICANCE_PARAMS_PATH)]
-
-    schemas[METRICS_FILE]['valueschema']['schema']['significance_params']['allowed'] = significance_params
 
     available_observations = get_available_observations()
     schemas[METRICS_FILE]['valueschema']['schema']['numerator']['allowed'] = available_observations
