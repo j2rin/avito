@@ -195,6 +195,12 @@ users_bt_click_daily:
   numerator: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added]
   agg: proportion
 
+users_favorites:
+  title: users_favorites
+  tags: [i0, bx, user]
+  numerator: [favorites_added]
+  agg: proportion
+
 ###############################################################################
 # Buyer :: User Ratios
 ###############################################################################
@@ -246,6 +252,13 @@ users_bt_click_per_users:
     - searches_without_query
     - searches_with_query
     - favorites_added
+
+buyers_per_users_favorites:
+  title: buyers_per_users_favorites
+  tags: [i1, bx, ratio]
+  agg: proportion
+  numerator: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
+  deniminator: [favorites_added]
 
 ###############################################################################
 # Buyer :: Other
