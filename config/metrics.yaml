@@ -2767,15 +2767,111 @@ express_cv_allowed_conversion:
 ########  #### ######## ######## #### ##    ##  ######
 
 ###############################################################################
+# Billing :: Totals
+###############################################################################
+
+payment_method_page:
+  title: payment_method_page
+  tags: [payments]
+  numerator: [payment_method_page]
+  agg: sum
+  description: "Number of started payment sessions"
+
+payment_method_choice:
+  title: payment_method_choice
+  tags: [payments]
+  numerator: [payment_method_choice]
+  agg: sum
+  description: "Number of payment sessions with selected payment method"
+
+successful_payment:
+  title: successful_payment
+  tags: [payments]
+  numerator: [successful_payment]
+  agg: sum
+  description: "Number of successful payment sessions"
+
+payment_method_page_cv:
+  title: payment_method_page_CV
+  tags: [payments]
+  numerator: [payment_method_page_CV]
+  agg: sum
+  description: "Number of started CV payment sessions"
+
+payment_method_choice_cv:
+  title: payment_method_choice_CV
+  tags: [payments]
+  numerator: [payment_method_choice_CV]
+  agg: sum
+  description: "Number of CV payment sessions with selected payment method"
+
+successful_payment_cv:
+  title: successful_payment_CV
+  tags: [payments]
+  numerator: [successful_payment_CV]
+  agg: sum
+  description: "Number of successful CV payment sessions"
+
+###############################################################################
 # Billing :: Ratios
 ###############################################################################
 
 successful_payment_share:
   description: "Share of successful payments step3/step1"
   tags: [payments]
+  tags: [payments, m42]
   agg: sum
   numerator: [successful_payment]
   denominator: [payment_method_page]
+
+successful_payment_share_proportion:
+  description: "Share of successful payments step3/step1 (proportion)"
+  tags: [payments]
+  agg: proportion
+  numerator: [successful_payment]
+  denominator: [payment_method_page]
+
+selected_payment_method_share:
+  description: "Share of payment sessions with selected payment method step2/step1"
+  tags: [payments]
+  agg: sum
+  numerator: [payment_method_choice]
+  denominator: [payment_method_page]
+
+selected_payment_method_share_proportion:
+  description: "Share of payment sessions with selected payment method step2/step1 (proportion)"
+  tags: [payments]
+  agg: proportion
+  numerator: [payment_method_choice]
+  denominator: [payment_method_page]
+
+successful_payment_share_cv:
+  description: "Share of successful payments CV step3/step1"
+  tags: [payments]
+  agg: sum
+  numerator: [successful_payment_CV]
+  denominator: [payment_method_page_CV]
+
+successful_payment_share_proportion_cv:
+  description: "Share of successful payments CV step3/step1 (proportion)"
+  tags: [payments]
+  agg: proportion
+  numerator: [successful_payment_CV]
+  denominator: [payment_method_page_CV]
+
+selected_payment_method_share_cv:
+  description: "Share of CV payment sessions with selected payment method step2/step1"
+  tags: [payments]
+  agg: sum
+  numerator: [payment_method_choice_CV]
+  denominator: [payment_method_page_CV]
+
+selected_payment_method_share_proportion_cv:
+  description: "Share of CV payment sessions with selected payment method step2/step1 (proportion)"
+  tags: [payments]
+  agg: proportion
+  numerator: [payment_method_choice_CV]
+  denominator: [payment_method_page_CV]
 
 main_payment_methods_share:
   description: "Share of successful payments by cards and SBOL"
