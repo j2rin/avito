@@ -98,7 +98,7 @@ bt_clicks:
   tags: [i1, bx, total]
   numerator: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added]
   agg: sum
-  
+
 ###############################################################################
 # Buyer :: Ratios
 ###############################################################################
@@ -293,19 +293,19 @@ saved_searches_added:
   tags: [i4, bx, ss, total]
   numerator: [saved_searches_added]
   agg: sum
-  
+
 loc_window_opens:
   title: loc_window_opens
   tags: [i4, bx, total]
   numerator: [location_window_displays]
   agg: sum
-  
+
 location_text_inputs:
   title: location_text_inputs
   tags: [i4, bx, total]
   numerator: [location_text_inputs]
   agg: sum
-  
+
 loc_window_saves_per_opens:
   title: loc_window_saves_per_opens
   tags: [i4, bx, total]
@@ -319,13 +319,13 @@ loc_suggests_per_text_inputs:
   agg: sum
   numerator: [location_suggest_clicks]
   denominator: [location_text_inputs]
-  
+
 users_loc_window_opens:
   title: users_loc_window_opens
   tags: [i4, bx,  user]
   numerator: [location_window_displays]
   agg: proportion
-  
+
 users_loc_suggest_clicks:
   title: users_loc_suggest_clicks
   tags: [i4, bx,  user]
@@ -337,19 +337,19 @@ searches_and_item_views_to_contact:
   tags: [i3, bx]
   numerator: [searches_and_iv_to_contact]
   agg: sum
-  
+
 ad_pages_to_contact:
   title: ad_pages_to_contact
   tags: [i3, bx]
   numerator: [ad_pages_to_contact]
-  agg: sum 
-  
+  agg: sum
+
 item_views_to_contact:
   title: iv_to_contact
   tags: [i3, bx]
   numerator: [item_views_to_contact]
   agg: sum
-  
+
 searches_to_contact:
   title: searches_to_contact
   tags: [i3, bx]
@@ -2282,7 +2282,7 @@ items_add_started:
 items_started_net:
   title: items_started_net
   tags: [sx, item_add]
-  numerator: [items_started_net] 
+  numerator: [items_started_net]
   agg: sum
   description: "Items created, activated (paid) and allowed by moderation"
 
@@ -2473,6 +2473,40 @@ items_added_per_items_add_started:
   agg: sum
   numerator: [items_added]
   denominator: [items_add_started]
+
+seller_contacts_per_items_started_net_start_date:
+  description: "Seller contacts for items created after exposure per item"
+  tags: [sx, liquidity, ratio]
+  agg: sum
+  numerator: [contacts]
+  denominator: [items_started_net]
+
+items_sold_onavito_per_items_started_net_start_date:
+  description: "Items closed with reason Sold on Avito for items created after exposure per item"
+  tags: [sx, liquidity, ratio]
+  agg: sum
+  numerator: [items_sold_onavito]
+  denominator: [items_started_net]
+
+items_closed_by_user_per_items_started_net_start_date:
+  description: "Items closed by user for items created after exposure per item"
+  tags: [sx, liquidity, ratio]
+  agg: sum
+  numerator: [items_closed_by_user]
+  denominator: [items_started_net]
+
+seller_favorites_added_per_items_started_net_start_date:
+  description: "Favorites add for items created after exposure per item"
+  tags: [sx, liquidity, ratio]
+  agg: sum
+  numerator: [favorites_add]
+  denominator: [items_started_net]
+
+item_edits_per_items_started_net_start_date:
+  tags: [sx, item_edit, ratio]
+  agg: sum
+  numerator: [item_edits]
+  denominator: [items_started_net]
 
 ###############################################################################
 # Seller :: User Totals
