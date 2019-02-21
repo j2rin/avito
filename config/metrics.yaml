@@ -1292,13 +1292,13 @@ phone_views_in_chat:
 
 total_messages:
   title: total_messages
-  tags: [i3, messenger, total]
+  tags: [i2, messenger, total]
   numerator: [messenger_total_messeges]
   agg: sum
 
 write_button_clicks:
   title: write_button_clicks
-  tags: [i4, messenger, total]
+  tags: [i3, messenger, total]
   numerator: [write_button_clicks]
   agg: sum
 
@@ -1314,7 +1314,18 @@ messenger_users_blocked:
   numerator: [messenger_users_blocked]
   agg: sum
 
+item_views_from_messenger:
+  title: item_views_from_messenger
+  tags: [i3, messenger, total, web]
+  numerator: [item_views_from_messenger]
+  agg: sum
 
+messenger_geo_messages:
+  title: messenger_geo_messages
+  tags: [i3, messenger, total]
+  agg: sum
+  numerator: [messenger_geo_messages]
+  agg: sum
 
 ###############################################################################
 # Messenger :: Ratios
@@ -1326,6 +1337,20 @@ write_button_clicks_per_item_views:
   agg: sum
   numerator: [write_button_clicks]
   denominator: [item_views]
+
+messenger_geo_conversion:
+  title: messenger_geo_conversion
+  tags: [i4, messenger, ratio, apps]
+  agg: sum
+  numerator: [geo_button_clicks]
+  denominator: [attach_button_clicks]
+
+messenger_send_text_conversion:
+  title: messenger_send_text_conversion
+  tags: [i4, messenger, ratio, web]
+  agg: sum
+  numerator: [total_text_send_button_clicks]
+  denominator: [message_start_writing]
 
 first_mess_per_write_button_clicks:
   title: first_mess_per_write_button_clicks
@@ -1340,13 +1365,19 @@ first_mess_per_write_button_clicks:
 
 messenger_only_buyers:
   title: messenger_only_buyers
-  tags: [i3, messenger, user]
+  tags: [i2, messenger, user]
   numerator: [first_messages]
+  agg: proportion
+
+messenger_visitors:
+  title: messenger_visitors
+  tags: [i2, messenger, user]
+  numerator: [chat_list_views, chat_views]
   agg: proportion
 
 messenger_dau:
   title: messenger_dau
-  tags: [i3, messenger, user]
+  tags: [i2, messenger, user]
   numerator: [messenger_total_messeges]
   agg: proportion
 
