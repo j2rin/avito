@@ -15,10 +15,22 @@ item_views:
   tags: [i2, bx, total]
   numerator: [item_views]
   agg: sum
+  
+item_views_grouped:
+  title: item_views_grouped
+  tags: [i2, bx, total, grouped]
+  numerator: [item_views_net]
+  agg: sum
 
 contacts:
   numerator: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
   tags: [i1, bx, total]
+  agg: sum
+  
+contacts_grouped:
+  title:   contacts_groupped
+  numerator: [contacts_net]
+  tags: [i1, bx, total, grouped]
   agg: sum
 
 advertisement_page_views:
@@ -39,6 +51,12 @@ phone_views:
   numerator: [phone_views_item_right, phone_views_item_top]
   agg: sum
 
+phone_views_grouped:
+  title: phone_views_grouped
+  tags: [i3, bx, total,grouped]
+  numerator: [phone_views_total_net]
+  agg: sum
+  
 phone_views_total:
   title: phone_views_total
   tags: [i3, bx, total]
@@ -97,6 +115,18 @@ bt_clicks:
   title: bt_clicks
   tags: [i1, bx, total]
   numerator: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added,write_button_clicks]
+  agg: sum
+  
+map_searches:
+  title: map_searches
+  tags: [i3, bx, total, map]
+  numerator: [map_searches]
+  agg: sum
+  
+pin_clicks:
+  title: pin_clicks
+  tags: [i3, bx, total, map]
+  numerator: [pin_clicks]
   agg: sum
 
 ###############################################################################
@@ -201,7 +231,19 @@ users_favorites:
   numerator: [favorites_added]
   agg: proportion
   groupby: [participant]
+  
+map_users:
+  title: map_users
+  tags: [i3, bx, user, map]
+  numerator: [map_searches]
+  agg: proportion
 
+pin_clickers:
+  title: pin_clickers
+  tags: [i3, bx, user, map]
+  numerator: [pin_clicks]
+  agg: proportion  
+  
 ###############################################################################
 # Buyer :: Sessions Totals
 ###############################################################################
@@ -1308,6 +1350,12 @@ phone_views_in_chat:
   tags: [i3, messenger, total]
   numerator: [phone_views_in_chat]
   agg: sum
+  
+phone_views_in_chat_grouped:
+  title: phone_views_in_chat_grouped
+  tags: [i3, messenger, total,grouped]
+  numerator: [phone_views_in_chat_net]
+  agg: sum
 
 total_messages:
   title: total_messages
@@ -1319,6 +1367,12 @@ write_button_clicks:
   title: write_button_clicks
   tags: [i3, messenger, total]
   numerator: [write_button_clicks]
+  agg: sum
+  
+write_button_clicks_grouped:
+  title: write_button_clicks_grouped
+  tags: [i3, messenger, total,grouped]
+  numerator: [write_button_clicks_net]
   agg: sum
 
 chats_deleted:
