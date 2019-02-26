@@ -2407,12 +2407,26 @@ items_add_started:
   agg: sum
   description: "Items add started for paticipant_type='cookie'"
 
+items_started:
+  title: items_started
+  tags: [sx, item_add]
+  numerator: [items_started]
+  agg: sum
+  description: "Items created and activated (paid)"
+
 items_started_net:
   title: items_started_net
   tags: [sx, item_add]
   numerator: [items_started_net]
   agg: sum
   description: "Items created, activated (paid) and allowed by moderation"
+
+items_reactivated:
+  title: items_reactivated
+  tags: [sx, reactivation]
+  numerator: [items_reactivated]
+  agg: sum
+  description: "Items reactivated"
 
 items_reactivated_net:
   title: items_reactivated_net
@@ -2483,12 +2497,6 @@ active_items:
   agg: sum
   numerator: [active_items]
 
-seller_deals:
-  description: "Seller deals"
-  tags: [sx]
-  agg: sum
-  numerator: [deals]
-
 seller_contacts:
   description: "Seller contacts"
   tags: [sx, liquidity]
@@ -2554,6 +2562,32 @@ items_blocked_rejected_start_date:
   numerator: [items_blocked_rejected]
   date_filter: [start]
 
+items_blocked:
+  description: "Blocked items"
+  tags: [sx, moderation]
+  agg: sum
+  numerator: [items_blocked]
+  
+items_blocked_start_date:
+  description: "Blocked items"
+  tags: [sx, moderation]
+  agg: sum
+  numerator: [items_blocked]
+  date_filter: [start]
+  
+items_rejected:
+  description: "Rejected items"
+  tags: [sx, moderation]
+  agg: sum
+  numerator: [items_rejected]
+  
+items_rejected_start_date:
+  description: "Rejected items"
+  tags: [sx, moderation]
+  agg: sum
+  numerator: [items_rejected]
+  date_filter: [start]
+
 item_edits:
   description: "Items edits"
   tags: [sx, item_edit]
@@ -2594,7 +2628,7 @@ seller_favorites_removed_start_date:
   date_filter: [start]
 
 item_chains_started:
-  title: items_add_started
+  title: item_chains_started
   description: "Items add started"
   tags: [sx, item_add]
   agg: sum
@@ -2610,6 +2644,18 @@ items_added_per_items_add_started:
   agg: sum
   numerator: [items_added]
   denominator: [items_add_started]
+
+item_started_net_per_items_started:
+  tags: [sx, item_add, ratio]
+  agg: sum
+  numerator: [items_started_net]
+  denominator: [items_started]
+  
+item_reactivated_net_per_items_reactivated:
+  tags: [sx, reactivation, ratio]
+  agg: sum
+  numerator: [items_reactivated_net]
+  denominator: [items_reactivated]
 
 seller_contacts_per_items_started_net_start_date:
   description: "Seller contacts for items created after exposure per item"
@@ -2668,12 +2714,26 @@ users_item_add_started:
   agg: proportion
   description: "Cookies item add started"
 
+users_item_started:
+  title: users_item_started
+  tags: [sx, item_add]
+  numerator: [items_started]
+  agg: proportion
+  description: "Users created and activated items"
+
 items_started_net_conversion:
   title: users_item_started_net
   tags: [sx, item_add]
   numerator: [items_started_net]
   agg: proportion
   description: "Users created and activated (paid) items allowed by moderation"
+
+users_item_reactivated:
+  title: users_item_reactivated
+  tags: [sx, reactivation]
+  numerator: [items_started]
+  agg: proportion
+  description: "Users reactivated items"
 
 items_reactivated_net_conversion:
   title: users_item_reactivated_net
@@ -2798,6 +2858,32 @@ users_item_blocked_rejected_start_date:
   tags: [sx, moderation]
   agg: proportion
   numerator: [items_blocked_rejected]
+  date_filter: [start]
+
+users_item_blocked:
+  description: "Users with blocked items"
+  tags: [sx, moderation]
+  agg: proportion
+  numerator: [items_blocked]
+
+users_item_blocked_start_date:
+  description: "Users with blocked items"
+  tags: [sx, moderation]
+  agg: proportion
+  numerator: [items_blocked]
+  date_filter: [start]
+
+users_item_rejected:
+  description: "Users with rejected items"
+  tags: [sx, moderation]
+  agg: proportion
+  numerator: [items_rejected] 
+
+users_item_rejected_start_date:
+  description: "Users with rejected items"
+  tags: [sx, moderation]
+  agg: proportion
+  numerator: [items_rejected] 
   date_filter: [start]
 
 users_item_edit:
