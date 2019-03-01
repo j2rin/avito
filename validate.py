@@ -14,10 +14,12 @@ except ImportError:
 
 
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'ab_config_presets')
 METRICS_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics.yaml')
 
 AB_CONFIGURATOR_HOST = 'ab-configurator.k.avito.ru'
 METRICS_CONFIG_VALIDATOR_URL = '/api/validator/metrics_config/validate'
+PRESETS_CONFIG_VALIDATOR_URL = '/api/validator/metrics_preset/validate'
 
 
 def unroot(messages):
@@ -28,13 +30,13 @@ def pretify(data):
     return json.dumps(data, indent=2, sort_keys=True)
 
 
-if __name__ == '__main__':
-    print('Validating {}...\n'.format(METRICS_FILE))
+def validate(file_name, url):
+    print('\nValidating {}...'.format(file_name))
 
     conn = httplib.HTTPConnection(AB_CONFIGURATOR_HOST)
 
-    with open(METRICS_FILE, 'rb') as f:
-        conn.request('POST', METRICS_CONFIG_VALIDATOR_URL, f)
+    with open(file_name, 'rb') as f:
+        conn.request('POST', url, f)
         response = conn.getresponse()
 
     if response.status != 200:
@@ -57,4 +59,12 @@ if __name__ == '__main__':
         )
 
     else:
-        print('PASSED.')
+        print('PASSED.\n')
+
+
+if __name__ == '__main__':
+    validate(METRICS_FILE, METRICS_CONFIG_VALIDATOR_URL)
+
+    for preset_file_name in os.listdir(PRESETS_PATH):
+        if preset_file_name.endswith('yaml'):
+            validate(os.path.join(PRESETS_PATH, preset_file_name), PRESETS_CONFIG_VALIDATOR_URL)
