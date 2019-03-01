@@ -534,14 +534,19 @@ searches_date_sort:
   numerator: [searches_date_sort]
   agg: sum
 
+searches_price_sort:
+  tags: [i3, bx, total]
+  numerator: [searches_price_sort]
+  agg: sum
+
+searches_default_sort:
+  tags: [i3, bx, total]
+  numerator: [searches_default_sort]
+  agg: sum
+
 searches_with_query_date_sort:
   tags: [i3, bx, total]
   numerator: [searches_with_query_date_sort]
-  agg: sum
-
-searches_without_query_date_sort:
-  tags: [i3, bx, total]
-  numerator: [searches_without_query_date_sort]
   agg: sum
 
 searches_with_query:
@@ -996,7 +1001,7 @@ searches_item_view_serp_per_searches_serp:
   tags: [i2, bx, serp, ratio]
   agg: sum
   numerator: [searches_item_view_serp]
-  denominator: [searches_serp]
+  denominator: [searches]
 
 searches_with_suggest_share:
   description: "Share of searches with suggest"
@@ -1004,6 +1009,78 @@ searches_with_suggest_share:
   agg: sum
   numerator: [queries_with_suggest]
   denominator: [queries_no_redirect]
+
+s_iv_per_s_date_sort:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [searches_item_view_date_sort]
+  denominator: [searches_date_sort]
+
+s_iv_per_s_price_sort:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [searches_item_view_price_sort]
+  denominator: [searches_price_sort]
+
+s_iv_per_s_default_sort:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [searches_item_view_default_sort]
+  denominator: [searches_default_sort]
+
+s_iv_per_s_query:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [searches_query_item_view]
+  denominator: [searches_with_query]
+
+s_iv_per_s_noquery:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [searches_noquery_item_view]
+  denominator: [searches_without_query]
+
+s_btc_per_s_date_sort:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [searches_btc_date_sort]
+  denominator: [searches_date_sort]
+
+s_btc_per_s_price_sort:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [searches_btc_price_sort]
+  denominator: [searches_price_sort]
+
+s_btc_per_s_default_sort:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [searches_btc_default_sort]
+  denominator: [searches_default_sort]
+
+s_btc_per_s_query:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [search_btc_query]
+  denominator: [searches_with_query]
+
+s_btc_per_s_noquery:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [search_btc_noquery]
+  denominator: [searches_without_query]
+
+s_query_per_s:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [search_with_query]
+  denominator: [searches]
+
+s_pages_per_s:
+  tags: [i2, bx, serp, ratio]
+  agg: sum
+  numerator: [search_serp]
+  denominator: [searches]
 
 ###############################################################################
 # Search :: User Totals
