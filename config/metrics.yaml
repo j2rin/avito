@@ -3050,3 +3050,122 @@ returned_buyers:
   tags: [i1, m42, tree]
   numerator: [returned_buyers]
   description: "Cookies that made contact in a logical_category that are not new buyers. Additive across logical_category"
+  
+  
+ ######  ##     ## ########  ########   #######  ########  ########
+##    ## ##     ## ##     ## ##     ## ##     ## ##     ##    ##
+##       ##     ## ##     ## ##     ## ##     ## ##     ##    ##
+ ######  ##     ## ########  ########  ##     ## ########     ##
+      ## ##     ## ##        ##        ##     ## ##   ##      ##
+##    ## ##     ## ##        ##        ##     ## ##    ##     ##
+ ######   #######  ##        ##         #######  ##     ##    ##
+
+###############################################################################
+# Support Metrics
+###############################################################################
+
+support_email_tickets_created:
+  title: email_tickets_created
+  tags: [support, other]
+  numerator: [ticket_email_created]
+  groupby: []
+  description: "Number of created tickets via email"
+
+support_email_tickets_creators:
+  title: email_tickets_creators
+  tags: [support, other]
+  numerator: [ticket_email_created]
+  groupby: [participant]
+  description: "Number of users created tickets via email"
+
+support_wizard_tickets_created:
+  title: hc_tickets_created
+  tags: [support, other]
+  numerator: [ticket_wizard_created]
+  groupby: []
+  description: "Number of created tickets via HelpCenter form: Desktop/MAV/iOs/Android"
+
+support_wizard_tickets_creators:
+  title: hc_tickets_creators
+  tags: [support, other]
+  numerator: [ticket_wizard_created]
+  groupby: [participant]
+  description: "Number of users created tickets via HelpCenter form: Desktop/MAV/iOs/Android"
+
+support_email_wizard_tickets_created:
+  title: tickets_created
+  tags: [support, other]
+  numerator: [ticket_wizard_created, ticket_email_created]
+  groupby: []
+  description: "Number of created tickets via HelpCenter and email"
+
+support_email_wizard_tickets_creators:
+  title: tickets_creators
+  tags: [support, other]
+  numerator: [ticket_wizard_created, ticket_email_created]
+  groupby: [participant]
+  description: "Number of users created tickets via HelpCenter and email"
+
+support_ticket_with_changed_problem_rate:
+  title: tickets_changed_problem
+  tags: [support, other]
+  numerator: [tickets_problem_changed]
+  denominator: [ticket_wizard_created, ticket_email_created]
+  groupby: []
+  description: "Ratio of tickets with changed problem"
+
+support_callcenter_calls:
+  title: callcenter_calls
+  tags: [support, other]
+  numerator: [callcenter_calls]
+  groupby: []
+  description: "Number of calls to Support Callcenter"
+
+support_callcenter_callers:
+  title: callcenter_callers
+  tags: [support, other]
+  numerator: [callcenter_calls]
+  groupby: [participant]
+  description: "Number of callers to Support Callcenter"
+
+support_helpcenter_wizard_visits:
+  title: helpcenter_wizard_visits
+  tags: [support, other]
+  numerator: [helpcenter_wizard_sessions]
+  groupby: []
+  description: "Number of sessions in HC + Wizard"
+
+support_helpcenter_wizard_visits:
+  title: helpcenter_wizard_visitors
+  tags: [support, other]
+  numerator: [helpcenter_wizard_sessions]
+  groupby: [participant]
+  description: "Number of visitors in HC + Wizard"
+
+support_wizard_visits:
+  title: wizard_visits
+  tags: [support, other]
+  numerator: [wizard_sessions]
+  groupby: []
+  description: "Number of sessions in Wizard"
+
+support_wizard_visitors:
+  title: wizard_visitors
+  tags: [support, other]
+  numerator: [wizard_sessions]
+  groupby: [participant]
+  description: "Number of visitors in Wizard"
+
+support_helpcenter_article_views:
+  title: helpcenter_article_views
+  tags: [support, other]
+  numerator: [article_views]
+  groupby: []
+  description: "Number of article views in HC & Wizard"
+
+support_helpcenter_article_viewers:
+  title: helpcenter_article_viewers
+  tags: [support, other]
+  numerator: [article_views]
+  groupby: [participant]
+  description: "Number of article viewers in HC & Wizard"
