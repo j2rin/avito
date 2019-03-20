@@ -212,7 +212,6 @@ users_favorites:
   tags: [i2, bx, user]
   numerator: [favorites_added]
   groupby: [participant]
-  groupby: [participant]
   
 map_users:
   title: map_users
@@ -972,6 +971,269 @@ serp_small_per_s:
   tags: [i2, bx, serp, total]
   numerator: [serp_small]
   denominator: [searches]
+
+###############################################################################
+# Session :: Totals
+###############################################################################
+
+sessions_active:
+  groupby: [participant, session]
+  numerator: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [critical, bx, session]
+
+sessions_iv:
+  groupby: [participant, session]
+  numerator: [item_views_serp, item_views_rec]
+  tags: [i0, bx, session]
+
+sessions_btc:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_c:
+  groupby: [participant, session]
+  numerator: [contacts_serp, contacts_rec]
+  tags: [i0, bx, session]
+
+sessions_iv_r:
+  groupby: [participant, session]
+  numerator: [item_views_rec]
+  tags: [i0, bx, session]
+
+sessions_btc_r:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_c_r:
+  groupby: [participant, session]
+  numerator: [contacts_rec]
+  tags: [i0, bx, session]
+
+###
+
+sessions_iv_s:
+  groupby: [participant, session]
+  numerator: [item_views_serp]
+  tags: [i0, bx, session]
+
+sessions_btc_s:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp]
+  tags: [i0, bx, session]
+
+sessions_c_s:
+  groupby: [participant, session]
+  numerator: [contacts_serp]
+  tags: [i0, bx, session]
+
+sessions_iv_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_item_view]
+  tags: [i0, bx, session]
+
+sessions_btc_s_q:
+  groupby: [participant, session]
+  numerator: [search_btc_query]
+  tags: [i0, bx, session]
+
+sessions_c_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_contact]
+  tags: [i0, bx, session]
+
+sessions_iv_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_item_view]
+  tags: [i0, bx, session]
+
+sessions_btc_s_noq:
+  groupby: [participant, session]
+  numerator: [search_btc_noquery]
+  tags: [i0, bx, session]
+
+sessions_c_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_contact]
+  tags: [i0, bx, session]
+
+###
+
+
+contacts_rec_i2i
+contacts_rec_u2i
+
+###############################################################################
+# Session :: Ratios
+###############################################################################
+
+buyers_per_users:
+  denominator: [item_views, phone_views_total, first_messages, booking_created_short_rent,
+    delivery_flow_beginings, delivery_order_created, searches_without_query, searches_with_query,
+    favorites_added]
+  groupby: [participant]
+  numerator: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
+  tags: [i0, bx, ratio]
+  title: buyers_per_users
+
+
+
+users_bt_click_per_users:
+  denominator: [item_views, phone_views_total, first_messages, booking_created_short_rent,
+    delivery_flow_beginings, delivery_order_created, searches_without_query, searches_with_query,
+    favorites_added]
+  groupby: [participant]
+  numerator: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created,
+    favorites_added]
+  tags: [i1, bx, ratio]
+  title: users_bt_click_per_users
+
+users_contact_per_item_view_search:
+  denominator: [item_views_serp]
+  groupby: [participant]
+  numerator: [contacts_serp]
+  tags: [i2, bx, serp, user]
+users_contact_per_search:
+  denominator: [searches]
+  groupby: [participant]
+  numerator: [contacts_serp]
+  tags: [i1, bx, serp, user]
+users_contact_per_search_query:
+  denominator: [searches_with_query]
+  groupby: [participant]
+  numerator: [searches_query_contact]
+  tags: [i2, bx, serp, user]
+users_contact_rec_daily:
+  groupby: [participant]
+  numerator: [contacts_rec]
+  tags: [i1, bx, rec, user]
+  title: users_contact_rec
+users_contact_rec_i2i:
+  groupby: [participant]
+  numerator: [contacts_rec_i2i]
+  tags: [i2, bx, rec, user]
+  title: users_contact_rec_i2i
+users_contact_rec_u2i:
+  groupby: [participant]
+  numerator: [contacts_rec_u2i]
+  tags: [i2, bx, rec, user]
+  title: users_contact_rec_u2i
+users_contact_search_query:
+  groupby: [participant]
+  numerator: [searches_query_contact]
+  tags: [i2, bx, serp, user]
+users_contact_serp_daily:
+  groupby: [participant]
+  numerator: [contacts_serp]
+  tags: [i1, bx, serp, user]
+  title: users_search_contact
+users_contacts_rec_i2i_per_users_item_views:
+  denominator: [item_views]
+  description: Conversion from unique visitors to uniqie buyers on item page recommendations
+  groupby: [participant]
+  numerator: [contacts_rec_i2i]
+  tags: [i2, bx, rec, ratio]
+  title: i2i_buyers_per_visitors
+users_contacts_rec_u2i_per_users_all_main_pages:
+  denominator: [head_main_pages, transport_main_pages, re_main_pages, services_main_pages]
+  description: Conversion from unique visitors to uniqie buyers on main page recommendations
+  groupby: [participant]
+  numerator: [contacts_rec_u2i]
+  tags: [i2, bx, rec, main, ratio]
+  title: u2i_buyers_per_visitors
+users_favorites:
+  groupby: [participant]
+  numerator: [favorites_added]
+  tags: [i2, bx, user]
+  title: users_favorites
+users_first_messages:
+  groupby: [participant]
+  numerator: [first_messages]
+  tags: [i2, messenger, user]
+  title: users_first_messages
+users_head_main_page_daily:
+  groupby: [participant]
+  numerator: [head_main_pages]
+  tags: [i2, bx, rec, main, user]
+  title: users_head_main_page
+users_item_started:
+  description: Users created and activated items
+  groupby: [participant]
+  numerator: [items_started]
+  tags: [sx, item_add, i1]
+  title: users_item_started
+users_item_view_daily:
+  groupby: [participant]
+  numerator: [item_views]
+  tags: [i1, bx, user]
+  title: users_item_view
+users_item_view_per_search:
+  denominator: [searches]
+  groupby: [participant]
+  numerator: [item_views_serp]
+  tags: [i2, bx, serp, user]
+users_item_view_per_search_query:
+  denominator: [searches_with_query]
+  groupby: [participant]
+  numerator: [searches_query_item_view]
+  tags: [i2, bx, serp, user]
+users_item_view_per_users:
+  denominator: [item_views, phone_views_total, first_messages, booking_created_short_rent,
+    delivery_flow_beginings, delivery_order_created, searches_without_query, searches_with_query,
+    favorites_added]
+  groupby: [participant]
+  numerator: [item_views]
+  tags: [i1, bx, ratio]
+  title: users_item_view_per_users
+
+users_item_view_search_query:
+  groupby: [participant]
+  numerator: [searches_query_item_view]
+  tags: [i2, bx, serp, user]
+
+users_item_view_serp_daily:
+  groupby: [participant]
+  numerator: [item_views_serp]
+  tags: [i2, bx, serp, user]
+  title: users_search_item_view
+
+users_s_btc_per_s:
+  denominator: [searches]
+  groupby: [participant]
+  numerator: [search_btc]
+  tags: [i1, bx, serp, ratio, user]
+
+users_s_btc_per_s_query:
+  denominator: [searches_with_query]
+  groupby: [participant]
+  numerator: [search_btc_query]
+  tags: [i2, bx, serp, ratio, user]
+
+users_search:
+  groupby: [participant]
+  numerator: [searches]
+  tags: [i2, bx, serp, user]
+  title: users_search
+
+users_search_new:
+  groupby: [participant]
+  numerator: [searches]
+  tags: [i2, bx, serp, user]
+  title: users_search_new
+
+users_search_query:
+  groupby: [participant]
+  numerator: [searches_with_query]
+  tags: [i2, bx, serp, user]
+  title: users_search_query
+
+users_search_session_new:
+  groupby: [participant, session]
+  numerator: [searches]
+  tags: [i2, bx, serp, user]
+  title: users_search_session_new
+
 
 ###############################################################################
 # Search :: User Totals
@@ -2915,7 +3177,6 @@ successful_payment_cv:
 
 successful_payment_share:
   description: "Share of successful payments step3/step1"
-  tags: [payments]
   tags: [payments, m42]
   numerator: [successful_payment]
   denominator: [payment_method_page]
