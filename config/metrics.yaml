@@ -212,7 +212,6 @@ users_favorites:
   tags: [i2, bx, user]
   numerator: [favorites_added]
   groupby: [participant]
-  groupby: [participant]
   
 map_users:
   title: map_users
@@ -2915,7 +2914,6 @@ successful_payment_cv:
 
 successful_payment_share:
   description: "Share of successful payments step3/step1"
-  tags: [payments]
   tags: [payments, m42]
   numerator: [successful_payment]
   denominator: [payment_method_page]
@@ -3169,3 +3167,282 @@ support_helpcenter_article_viewers:
   numerator: [article_views]
   groupby: [participant]
   description: "Number of article viewers in HC & Wizard"
+
+
+
+########   #######  ########        ######   #######  ########  ########
+##     ## ##     ## ##     ##      ##    ## ##     ## ##     ## ##
+##     ##        ## ##     ##      ##       ##     ## ##     ## ##
+########    ##      ########       ##       ##     ## ########  ######
+##     ## ##        ##     ##      ##       ##     ## ##   ##   ##
+##     ## ##        ##     ##      ##    ## ##     ## ##    ##  ##
+########  ######### ########        ######   #######  ##     ## ########
+
+###############################################################################
+# B2B Core :: Totals
+###############################################################################
+
+paid_contact_amount_net_adj:
+  title: paid_contact_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [paid_contact_amount_net_adj]
+  description: "Net revenue from paid contacts without VAT"
+
+autoteka_amount_net_adj:
+  title: autoteka_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [autoteka_amount_net_adj]
+  description: "Net revenue from autoteka product without VAT"
+
+domofond_amount_net_adj:
+  title: domofond_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [domofond_amount_net_adj]
+  description: "Net revenue from domofond products without VAT"
+
+delivery_revenue_net_adj:
+  title: delivery_revenue_net_adj
+  tags: [i0, m42, tree]
+  numerator: [delivery_revenue_net_adj]
+  description: "Net revenue from delivery products without VAT"
+
+vas_amount_net_adj:
+  title: vas_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [vas_amount_net_adj]
+  description: "Net revenue from VAS products without VAT"
+
+lf_amount_net_adj:
+  title: lf_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [lf_amount_net_adj]
+  description: "Net revenue from LF products without VAT"
+
+subs_amount_net_adj:
+  title: subs_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [subs_amount_net_adj]
+  description: "Net revenue from subscription products without VAT"
+
+extensions_amount_net_adj:
+  title: extensions_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [ext_amount_net_adj]
+  description: "Net revenue from subscription extensions without VAT"
+
+subs_w_extensions_amount_net_adj:
+  title: subs_w_extensions_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [subs_amount_net_adj, ext_amount_net_adj]
+  description: "Net revenue from Subscription and extension products without VAT"
+
+classified_amount_net_adj:
+  title: classified_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [vas_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj, ext_amount_net_adj]
+  description: "Net revenue from classified products without VAT: vas,lf,subscriptions,extensions."
+
+other_projects_amount_net_adj:
+  title: other_projects_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator: [autoteka_amount_net_adj, delivery_amount_net_adj, domofond_amount_net_adj]
+  description: "Net revenue from Other projects without VAT: autoteka, delivery, domofond."
+
+vas_transactions:
+  title: vas_transactions
+  tags: [i0, m42, tree]
+  numerator: [vas_transactions]
+  description: "VAS products transactions"
+
+subs_transactions:
+  title: subs_transactions
+  tags: [i0, m42, tree]
+  numerator: [subs_transactions]
+  description: "Subscription products transactions"
+
+extensions_transactions:
+  title: extensions_transactions
+  tags: [i0, m42, tree]
+  numerator: [ext_transactions]
+  description: "Extension products transactions"
+
+subs_w_extensions_transactions:
+  title: subs_w_extensions_transactions
+  tags: [i0, m42, tree]
+  numerator: [subs_transactions, ext_transactions]
+  description: "Subscription and extension products transactions without VAT"
+
+classified_transactions:
+  title: classified_transactions
+  tags: [i0, m42, tree]
+  numerator: [vas_transactions, lf_transactions, subs_transactions, ext_transactions]
+  description: "Classified products transactions: vas,lf,subscriptions,extensions."
+
+vas_users:
+  title: vas_users
+  tags: [i0, m42, tree]
+  numerator: [vas_users]
+  description: "VAS users"
+
+lf_users:
+  title: lf_users
+  tags: [i0, m42, tree]
+  numerator: [lf_users]
+  description: "LF products users"
+
+subs_users:
+  title: subs_users
+  tags: [i0, m42, tree]
+  numerator: [subs_users]
+  description: "Subscription products users"
+
+extensions_users:
+  title: extensions_users
+  tags: [i0, m42, tree]
+  numerator: [ext_users]
+  description: "Extension products users"
+
+classified_users:
+  title: classified_users
+  tags: [i0, m42, tree]
+  numerator: [vas_users, lf_users, subs_users, ext_users]
+  description: "classified products users"
+
+###############################################################################
+# B2B Core :: Ratios
+###############################################################################
+
+vas_ARPU_net_adj:
+  title: vas_ARPU_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator: [vas_amount_net_adj]
+  denominator: [active_listers]
+  description: "VAS average rate per user: VAS products revenue divided by total number of active listers"
+
+lf_ARPU_net_adj:
+  title: lf_ARPU_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator: [lf_amount_net_adj]
+  denominator: [active_listers]
+  description: "LF average rate per user: LF products revenue divided by total number of active listers"
+
+subs_w_extensions_ARPU_net_adj:
+  title: subs_w_extensions_ARPU_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator: [subs_amount_net_adj, ext_amount_net_adj]
+  denominator: [active_listers]
+  description: "Subscription and extension products average rate per user: revenue divided by total number of active listers"
+
+classified_ARPU_net_adj:
+  title: classified_ARPU_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator: [vas_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj, ext_amount_net_adj]
+  denominator: [active_listers]
+  description: "Classified products revenue divided by total number of active listers: vas,lf,subscriptions,extensions."
+
+vas_paying_users_ratio:
+  title: vas_paying_users_ratio
+  tags: [i0, m42, tree, ratio]
+  numerator: [vas_users]
+  denominator: [active_listers]
+  description: "VAS products users divided by total number of active listers"
+
+lf_paying_users_ratio:
+  title: lf_paying_users_ratio
+  tags: [i0, m42, tree, ratio]
+  numerator: [lf_users]
+  denominator: [active_listers]
+  agg: proportion
+  description: "LF products users divided by total number of active listers"
+
+subs_paying_users_ratio:
+  title: subs_paying_users_ratio
+  tags: [i0, m42, tree, ratio]
+  numerator: [subs_users]
+  denominator: [active_listers]
+  agg: proportion
+  description: "Subscription users divided by total number of active listers"
+
+extensions_paying_users_ratio:
+  title: extensions_paying_users_ratio
+  tags: [i0, m42, tree, ratio]
+  numerator: [ext_users]
+  denominator: [active_listers]
+  description: "Extension products users divided by total number of active listers"
+
+classified_paying_users_ratio:
+  title: classified_paying_users_ratio
+  tags: [i0, m42, tree, ratio]
+  numerator: [vas_users, lf_users, subs_users, ext_users]
+  denominator: [active_listers]
+  description: "Classified products users divided by total number of active listers: vas,lf,subscriptions,extensions."
+
+vas_transactions_per_user:
+  title: vas_transactions_per_user
+  tags: [i0, m42, tree, ratio]
+  numerator: [vas_transactions]
+  denominator: [vas_users]
+  description: "VAS products transactions divided by number of users"
+
+lf_transactions_per_user:
+  title: lf_transactions_per_user
+  tags: [i0, m42, tree, ratio]
+  numerator: [lf_transactions]
+  denominator: [lf_users]
+  description: "LF products transactions divided by number of users"
+
+subs_transactions_per_user:
+  title: subs_transactions_per_user
+  tags: [i0, m42, tree, ratio]
+  numerator: [subs_transactions]
+  denominator: [subs_users]
+  description: "Subscription products transactions divided by number of users"
+
+extensions_transactions_per_user:
+  title: extensions_transactions_per_user
+  tags: [i0, m42, tree, ratio]
+  numerator: [ext_transactions]
+  denominator: [ext_users]
+  description: "Extension products transactions divided by number of users"
+
+classified_transactions_per_user:
+  title: classified_transactions_per_user
+  tags: [i0, m42, tree, ratio]
+  numerator: [vas_transactions, lf_transactions, subs_transactions, ext_transactions]
+  denominator: [vas_users, lf_users, subs_users, ext_users]
+  description: "Classified products transactions divided by number of users: vas,lf,subscriptions,extensions."
+
+vas_price_net_adj:
+  title: vas_price_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator: [vas_amount_net_adj]
+  denominator: [vas_transactions]
+  description: "VAS products revenue divided by number of transactions"
+
+lf_price_net_adj:
+  title: lf_price_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator: [lf_amount_net_adj]
+  denominator: [lf_transactions]
+  description: "LF products revenue divided by number of transactions"
+
+subs_price_net_adj:
+  title: subs_price_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator: [subs_amount_net_adj]
+  denominator: [subs_transactions]
+  description: "Subscription products revenue divided by number of transactions"
+
+extensions_price_net_adj:
+  title: extensions_price_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator: [ext_amount_net_adj]
+  denominator: [ext_transactions]
+  description: "Extension products revenue divided by number of transactions"
+
+classified_price_net_adj:
+  title: classified_price_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator: [vas_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj, ext_amount_net_adj]
+  denominator: [vas_transactions, lf_transactions, subs_transactions, ext_transactions]
+  description: "Classified products revenue divided by number of transactionss: vas,lf,subscriptions,extensions."
