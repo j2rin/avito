@@ -715,6 +715,12 @@ suggest_buyers:
   groupby: [participant]
   numerator: [queries_no_redirect_contact]
 
+share_suggest_buyers_to_all_users:
+  description: "Buyers, who use suggest"
+  tags: [ss, sgt]
+  groupby: [participant]
+  numerator: [sessions_with_suggest_click_and_contact]
+
 ###############################################################################
 # Search :: Ratios
 ###############################################################################
@@ -886,6 +892,12 @@ searches_with_suggest_share:
   tags: [ss, ratio, sgt]
   numerator: [queries_with_suggest]
   denominator: [queries_no_redirect]
+
+share_suggest_searches_to_all:
+  description: "Share of searches with suggest"
+  tags: [ss, ratio, sgt]
+  numerator: [search_suggest_clicks]
+  denominator: [session_searches_with_uniq_query]
 
 s_iv_per_s_date_sort:
   tags: [i2, bx, serp, ratio]
@@ -1326,6 +1338,12 @@ users_contact_search_query:
   numerator: [searches_query_contact]
   groupby: [participant]
 
+search_suggest_clicks:
+  description: "Clicks on search suggest"
+  tags: [ss, sgt]
+  numerator: [search_suggest_clicks]
+  groupby: [participant]
+
 ###############################################################################
 # Search :: User Ratios
 ###############################################################################
@@ -1386,6 +1404,19 @@ suggest_buyers_share:
   numerator: [queries_no_redirect_contact]
   denominator: [queries_with_suggest]
 
+share_suggest_users_to_users_with_search:
+  description: "Share of cookies, who use suggest, to users with query, based on 2443 event"
+  tags: [ss, sgt, ratio]
+  groupby: [participant]
+  numerator: [search_suggest_clicks]
+  denominator: [session_searches_with_uniq_query]
+
+share_suggest_buyers_to_suggest_users:
+  description: "Share of buyers, who use suggest, to cookies, who use suggest, based on 2443 event"
+  tags: [ss, sgt, ratio]
+  groupby: [participant]
+  numerator: [sessions_with_suggest_click_and_contact]
+  denominator: [search_suggest_clicks]
 
 ########  ########  ######
 ##     ## ##       ##    ##
