@@ -212,7 +212,6 @@ users_favorites:
   tags: [i2, bx, user]
   numerator: [favorites_added]
   groupby: [participant]
-  groupby: [participant]
   
 map_users:
   title: map_users
@@ -972,6 +971,304 @@ serp_small_per_s:
   tags: [i2, bx, serp, total]
   numerator: [serp_small]
   denominator: [searches]
+
+###############################################################################
+# Session :: Totals
+###############################################################################
+
+sessions_active:
+  groupby: [participant, session]
+  numerator: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [critical, bx, session]
+
+sessions_iv:
+  groupby: [participant, session]
+  numerator: [item_views_serp, item_views_rec]
+  tags: [i0, bx, session]
+
+sessions_btc:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_c:
+  groupby: [participant, session]
+  numerator: [contacts_serp, contacts_rec]
+  tags: [i0, bx, session]
+
+###
+
+sessions_iv_s:
+  groupby: [participant, session]
+  numerator: [item_views_serp]
+  tags: [i0, bx, session]
+
+sessions_btc_s:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp]
+  tags: [i0, bx, session]
+
+sessions_c_s:
+  groupby: [participant, session]
+  numerator: [contacts_serp]
+  tags: [i0, bx, session]
+
+sessions_iv_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_item_view]
+  tags: [i0, bx, session]
+
+sessions_btc_s_q:
+  groupby: [participant, session]
+  numerator: [search_btc_query]
+  tags: [i0, bx, session]
+
+sessions_c_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_contact]
+  tags: [i0, bx, session]
+
+sessions_iv_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_item_view]
+  tags: [i0, bx, session]
+
+sessions_btc_s_noq:
+  groupby: [participant, session]
+  numerator: [search_btc_noquery]
+  tags: [i0, bx, session]
+
+sessions_c_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_contact]
+  tags: [i0, bx, session]
+
+###
+
+sessions_iv_r:
+  groupby: [participant, session]
+  numerator: [item_views_rec]
+  tags: [i0, bx, session]
+
+sessions_btc_r:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_c_r:
+  groupby: [participant, session]
+  numerator: [contacts_rec]
+  tags: [i0, bx, session]
+
+sessions_iv_r_u2i:
+  groupby: [participant, session]
+  numerator: [item_views_rec_u2i]
+  tags: [i0, bx, session]
+
+sessions_btc_r_u2i:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec_u2i]
+  tags: [i0, bx, session]
+
+sessions_c_r_u2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_u2i]
+  tags: [i0, bx, session]
+
+sessions_iv_r_i2i:
+  groupby: [participant, session]
+  numerator: [item_views_rec_i2i]
+  tags: [i0, bx, session]
+
+sessions_btc_r_i2i:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec_i2i]
+  tags: [i0, bx, session]
+
+sessions_c_r_i2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_i2i]
+  tags: [i0, bx, session]
+
+
+###############################################################################
+# Session :: Ratios
+###############################################################################
+
+sessions_iv_per_active:
+  groupby: [participant, session]
+  numerator: [item_views_serp, item_views_rec]
+  denominator: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_btc_per_active:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp, buyer_target_clicks_rec]
+  denominator: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_c_per_active:
+  groupby: [participant, session]
+  numerator: [contacts_serp, contacts_rec]
+  denominator: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+###
+
+sessions_iv_s_per_s:
+  groupby: [participant, session]
+  numerator: [item_views_serp]
+  denominator: [searches]
+  tags: [i1, bx, session]
+
+sessions_btc_s_per_s:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp]
+  denominator: [searches]
+  tags: [i1, bx, session]
+
+sessions_c_s_per_s:
+  groupby: [participant, session]
+  numerator: [contacts_serp]
+  denominator: [searches]
+  tags: [i1, bx, session]
+
+sessions_iv_s_q_per_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_item_view]
+  denominator: [searches_with_query]
+  tags: [i1, bx, session]
+
+sessions_btc_s_q_per_s_q:
+  groupby: [participant, session]
+  numerator: [search_btc_query]
+  denominator: [searches_with_query]
+  tags: [i1, bx, session]
+
+sessions_c_s_q_per_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_contact]
+  denominator: [searches_with_query]
+  tags: [i1, bx, session]
+
+sessions_iv_s_noq_per_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_item_view]
+  denominator: [searches_without_query]
+  tags: [i1, bx, session]
+
+sessions_btc_s_noq_per_s_noq:
+  groupby: [participant, session]
+  numerator: [search_btc_noquery]
+  denominator: [searches_without_query]
+  tags: [i1, bx, session]
+
+sessions_c_s_noq_per_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_contact]
+  denominator: [searches_without_query]
+  tags: [i1, bx, session]
+
+###
+
+sessions_iv_r_per_r:
+  groupby: [participant, session]
+  numerator: [item_views_rec]
+  denominator: [recblock_shows]
+  tags: [i1, bx, session]
+
+sessions_btc_r_per_r:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec]
+  denominator: [recblock_shows]
+  tags: [i1, bx, session]
+
+sessions_c_r_per_r:
+  groupby: [participant, session]
+  numerator: [contacts_rec]
+  denominator: [recblock_shows]
+  tags: [i1, bx, session]
+
+sessions_iv_r_u2i_per_r_u2i:
+  groupby: [participant, session]
+  numerator: [item_views_rec_u2i]
+  denominator: [recblock_shows_u2i]
+  tags: [i1, bx, session]
+
+sessions_btc_r_u2i_per_r_u2i:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec_u2i]
+  denominator: [recblock_shows_u2i]
+  tags: [i1, bx, session]
+
+sessions_c_r_u2i_per_r_u2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_u2i]
+  denominator: [recblock_shows_u2i]
+  tags: [i1, bx, session]
+
+sessions_iv_r_i2i_per_r_i2i:
+  groupby: [participant, session]
+  numerator: [item_views_rec_i2i]
+  denominator: [recblock_shows_i2i]
+  tags: [i1, bx, session]
+
+sessions_btc_r_i2i_per_r_i2i:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec_i2i]
+  denominator: [recblock_shows_i2i]
+  tags: [i1, bx, session]
+
+sessions_c_r_i2i_per_r_i2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_i2i]
+  denominator: [recblock_shows_i2i]
+  tags: [i1, bx, session]
+
+###
+
+sessions_c_per_iv:
+  groupby: [participant, session]
+  numerator: [contacts_serp, contacts_rec]
+  denominator: [item_views_serp, item_views_rec]
+  tags: [i2, bx, session]
+
+sessions_c_s_per_iv_s:
+  groupby: [participant, session]
+  numerator: [contacts_serp]
+  denominator: [item_views_serp]
+  tags: [i2, bx, session]
+
+sessions_c_s_q_per_iv_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_contact]
+  denominator: [searches_query_item_view]
+  tags: [i2, bx, session]
+
+sessions_c_s_noq_per_iv_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_contact]
+  denominator: [searches_noquery_item_view]
+  tags: [i2, bx, session]
+
+sessions_c_rec_per_iv_rec:
+  groupby: [participant, session]
+  numerator: [contacts_rec]
+  denominator: [item_views_rec]
+  tags: [i2, bx, session]
+
+sessions_c_rec_u2i_per_iv_rec_u2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_u2i]
+  denominator: [item_views_rec_u2i]
+  tags: [i2, bx, session]
+
+sessions_c_rec_i2i_per_iv_rec_i2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_i2i]
+  denominator: [item_views_rec_i2i]
+  tags: [i2, bx, session]
+
 
 ###############################################################################
 # Search :: User Totals
@@ -2915,7 +3212,6 @@ successful_payment_cv:
 
 successful_payment_share:
   description: "Share of successful payments step3/step1"
-  tags: [payments]
   tags: [payments, m42]
   numerator: [successful_payment]
   denominator: [payment_method_page]
