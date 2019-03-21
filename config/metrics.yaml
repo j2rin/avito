@@ -3346,7 +3346,19 @@ returned_buyers:
   tags: [i1, m42, tree]
   numerator: [returned_buyers]
   description: "Cookies that made contact in a logical_category that are not new buyers. Additive across logical_category"
-  
+
+contacts_canonical:
+  title: contacts_canonical
+  tags: [i1, m42, tree]
+  numerator: [contacts_csc_cannonical]
+  description: "First contact of cookie per item/day. Additive across all dimensions. Source is dma.contacts_stream_observation"
+
+buyers_canonical:
+  title: buyers_canonical
+  tags: [i0, m42, tree]
+  numerator: [contacts_csc_cannonical]
+  groupby: [participant]
+  description: "Buyers from dma.contacts_stream_observation. Source of buyers from Big10.Source is dma.contacts_stream_observation"
   
  ######  ##     ## ########  ########   #######  ########  ########
 ##    ## ##     ## ##     ## ##     ## ##     ## ##     ##    ##
