@@ -1625,6 +1625,11 @@ total_messages:
   tags: [i2, messenger, total]
   numerator: [messenger_total_messeges]
 
+first_response_messages:
+  title: first_response_messages
+  tags: [i2, messenger, total]
+  numerator: [first_response_messages]
+
 write_button_clicks:
   title: write_button_clicks
   tags: [i3, messenger, total]
@@ -1645,6 +1650,11 @@ messenger_users_blocked:
   tags: [i4, messenger, total]
   numerator: [messenger_users_blocked]
 
+messenger_spam_blocks:
+  title: messenger_spam_blocks
+  tags: [i3, messenger, total]
+  numerator: [messenger_spam_blocks]
+
 item_views_from_messenger:
   title: item_views_from_messenger
   tags: [i3, messenger, total, web]
@@ -1654,6 +1664,11 @@ messenger_geo_messages:
   title: messenger_geo_messages
   tags: [i3, messenger, total]
   numerator: [messenger_geo_messages]
+
+messenger_active_chats:
+  title: messenger_active_chats
+  tags: [i2, messenger, total]
+  numerator: [messenger_active_chats]
 
 ###############################################################################
 # Messenger :: Ratios
@@ -1683,6 +1698,18 @@ first_mess_per_write_button_clicks:
   numerator: [first_messages]
   denominator: [write_button_clicks]
 
+messenger_response_ratio:
+  title: messenger_response_ratio
+  tags: [i2, messenger, ratio]
+  numerator: [first_response_messages]
+  denominator: [first_messages]
+
+messenger_spam_ratio:
+  title: messenger_spam_ratio
+  tags: [i2, messenger, ratio]
+  numerator: [messenger_spam_blocks]
+  denominator: [messenger_active_chats]
+
 ###############################################################################
 # Messenger :: proportion
 ###############################################################################
@@ -1691,6 +1718,12 @@ users_first_messages:
   title: users_first_messages
   tags: [i2, messenger, user]
   numerator: [first_messages]
+  groupby: [participant]
+
+users_first_response_messages:
+  title: users_first_response_messages
+  tags: [i2, messenger, user]
+  numerator: [first_response_messages]
   groupby: [participant]
 
 users_phone_views_in_chat:
