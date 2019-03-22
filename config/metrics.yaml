@@ -715,6 +715,12 @@ suggest_buyers:
   groupby: [participant]
   numerator: [queries_no_redirect_contact]
 
+share_suggest_buyers_to_all_users:
+  description: "Buyers, who use suggest"
+  tags: [ss, sgt]
+  groupby: [participant]
+  numerator: [sessions_with_suggest_click_and_contact]
+
 ###############################################################################
 # Search :: Ratios
 ###############################################################################
@@ -887,6 +893,12 @@ searches_with_suggest_share:
   numerator: [queries_with_suggest]
   denominator: [queries_no_redirect]
 
+share_suggest_searches_to_all:
+  description: "Share of searches with suggest"
+  tags: [ss, ratio, sgt]
+  numerator: [search_suggest_clicks]
+  denominator: [session_searches_with_uniq_query]
+
 s_iv_per_s_date_sort:
   tags: [i2, bx, serp, ratio]
   numerator: [searches_item_view_date_sort]
@@ -973,6 +985,304 @@ serp_small_per_s:
   denominator: [searches]
 
 ###############################################################################
+# Session :: Totals
+###############################################################################
+
+sessions_active:
+  groupby: [participant, session]
+  numerator: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [critical, bx, session]
+
+sessions_iv:
+  groupby: [participant, session]
+  numerator: [item_views_serp, item_views_rec]
+  tags: [i0, bx, session]
+
+sessions_btc:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_c:
+  groupby: [participant, session]
+  numerator: [contacts_serp, contacts_rec]
+  tags: [i0, bx, session]
+
+###
+
+sessions_iv_s:
+  groupby: [participant, session]
+  numerator: [item_views_serp]
+  tags: [i0, bx, session]
+
+sessions_btc_s:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp]
+  tags: [i0, bx, session]
+
+sessions_c_s:
+  groupby: [participant, session]
+  numerator: [contacts_serp]
+  tags: [i0, bx, session]
+
+sessions_iv_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_item_view]
+  tags: [i0, bx, session]
+
+sessions_btc_s_q:
+  groupby: [participant, session]
+  numerator: [search_btc_query]
+  tags: [i0, bx, session]
+
+sessions_c_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_contact]
+  tags: [i0, bx, session]
+
+sessions_iv_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_item_view]
+  tags: [i0, bx, session]
+
+sessions_btc_s_noq:
+  groupby: [participant, session]
+  numerator: [search_btc_noquery]
+  tags: [i0, bx, session]
+
+sessions_c_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_contact]
+  tags: [i0, bx, session]
+
+###
+
+sessions_iv_r:
+  groupby: [participant, session]
+  numerator: [item_views_rec]
+  tags: [i0, bx, session]
+
+sessions_btc_r:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_c_r:
+  groupby: [participant, session]
+  numerator: [contacts_rec]
+  tags: [i0, bx, session]
+
+sessions_iv_r_u2i:
+  groupby: [participant, session]
+  numerator: [item_views_rec_u2i]
+  tags: [i0, bx, session]
+
+sessions_btc_r_u2i:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec_u2i]
+  tags: [i0, bx, session]
+
+sessions_c_r_u2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_u2i]
+  tags: [i0, bx, session]
+
+sessions_iv_r_i2i:
+  groupby: [participant, session]
+  numerator: [item_views_rec_i2i]
+  tags: [i0, bx, session]
+
+sessions_btc_r_i2i:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec_i2i]
+  tags: [i0, bx, session]
+
+sessions_c_r_i2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_i2i]
+  tags: [i0, bx, session]
+
+
+###############################################################################
+# Session :: Ratios
+###############################################################################
+
+sessions_iv_per_active:
+  groupby: [participant, session]
+  numerator: [item_views_serp, item_views_rec]
+  denominator: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_btc_per_active:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp, buyer_target_clicks_rec]
+  denominator: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+sessions_c_per_active:
+  groupby: [participant, session]
+  numerator: [contacts_serp, contacts_rec]
+  denominator: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+  tags: [i0, bx, session]
+
+###
+
+sessions_iv_s_per_s:
+  groupby: [participant, session]
+  numerator: [item_views_serp]
+  denominator: [searches]
+  tags: [i1, bx, session]
+
+sessions_btc_s_per_s:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_serp]
+  denominator: [searches]
+  tags: [i1, bx, session]
+
+sessions_c_s_per_s:
+  groupby: [participant, session]
+  numerator: [contacts_serp]
+  denominator: [searches]
+  tags: [i1, bx, session]
+
+sessions_iv_s_q_per_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_item_view]
+  denominator: [searches_with_query]
+  tags: [i1, bx, session]
+
+sessions_btc_s_q_per_s_q:
+  groupby: [participant, session]
+  numerator: [search_btc_query]
+  denominator: [searches_with_query]
+  tags: [i1, bx, session]
+
+sessions_c_s_q_per_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_contact]
+  denominator: [searches_with_query]
+  tags: [i1, bx, session]
+
+sessions_iv_s_noq_per_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_item_view]
+  denominator: [searches_without_query]
+  tags: [i1, bx, session]
+
+sessions_btc_s_noq_per_s_noq:
+  groupby: [participant, session]
+  numerator: [search_btc_noquery]
+  denominator: [searches_without_query]
+  tags: [i1, bx, session]
+
+sessions_c_s_noq_per_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_contact]
+  denominator: [searches_without_query]
+  tags: [i1, bx, session]
+
+###
+
+sessions_iv_r_per_r:
+  groupby: [participant, session]
+  numerator: [item_views_rec]
+  denominator: [recblock_shows]
+  tags: [i1, bx, session]
+
+sessions_btc_r_per_r:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec]
+  denominator: [recblock_shows]
+  tags: [i1, bx, session]
+
+sessions_c_r_per_r:
+  groupby: [participant, session]
+  numerator: [contacts_rec]
+  denominator: [recblock_shows]
+  tags: [i1, bx, session]
+
+sessions_iv_r_u2i_per_r_u2i:
+  groupby: [participant, session]
+  numerator: [item_views_rec_u2i]
+  denominator: [recblock_shows_u2i]
+  tags: [i1, bx, session]
+
+sessions_btc_r_u2i_per_r_u2i:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec_u2i]
+  denominator: [recblock_shows_u2i]
+  tags: [i1, bx, session]
+
+sessions_c_r_u2i_per_r_u2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_u2i]
+  denominator: [recblock_shows_u2i]
+  tags: [i1, bx, session]
+
+sessions_iv_r_i2i_per_r_i2i:
+  groupby: [participant, session]
+  numerator: [item_views_rec_i2i]
+  denominator: [recblock_shows_i2i]
+  tags: [i1, bx, session]
+
+sessions_btc_r_i2i_per_r_i2i:
+  groupby: [participant, session]
+  numerator: [buyer_target_clicks_rec_i2i]
+  denominator: [recblock_shows_i2i]
+  tags: [i1, bx, session]
+
+sessions_c_r_i2i_per_r_i2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_i2i]
+  denominator: [recblock_shows_i2i]
+  tags: [i1, bx, session]
+
+###
+
+sessions_c_per_iv:
+  groupby: [participant, session]
+  numerator: [contacts_serp, contacts_rec]
+  denominator: [item_views_serp, item_views_rec]
+  tags: [i2, bx, session]
+
+sessions_c_s_per_iv_s:
+  groupby: [participant, session]
+  numerator: [contacts_serp]
+  denominator: [item_views_serp]
+  tags: [i2, bx, session]
+
+sessions_c_s_q_per_iv_s_q:
+  groupby: [participant, session]
+  numerator: [searches_query_contact]
+  denominator: [searches_query_item_view]
+  tags: [i2, bx, session]
+
+sessions_c_s_noq_per_iv_s_noq:
+  groupby: [participant, session]
+  numerator: [searches_noquery_contact]
+  denominator: [searches_noquery_item_view]
+  tags: [i2, bx, session]
+
+sessions_c_rec_per_iv_rec:
+  groupby: [participant, session]
+  numerator: [contacts_rec]
+  denominator: [item_views_rec]
+  tags: [i2, bx, session]
+
+sessions_c_rec_u2i_per_iv_rec_u2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_u2i]
+  denominator: [item_views_rec_u2i]
+  tags: [i2, bx, session]
+
+sessions_c_rec_i2i_per_iv_rec_i2i:
+  groupby: [participant, session]
+  numerator: [contacts_rec_i2i]
+  denominator: [item_views_rec_i2i]
+  tags: [i2, bx, session]
+
+
+###############################################################################
 # Search :: User Totals
 ###############################################################################
 
@@ -1026,6 +1336,12 @@ users_buyer_target_click_serp_daily:
 users_contact_search_query:
   tags: [i2, bx, serp, user]
   numerator: [searches_query_contact]
+  groupby: [participant]
+
+search_suggest_clicks:
+  description: "Clicks on search suggest"
+  tags: [ss, sgt]
+  numerator: [search_suggest_clicks]
   groupby: [participant]
 
 ###############################################################################
@@ -1088,6 +1404,19 @@ suggest_buyers_share:
   numerator: [queries_no_redirect_contact]
   denominator: [queries_with_suggest]
 
+share_suggest_users_to_users_with_search:
+  description: "Share of cookies, who use suggest, to users with query, based on 2443 event"
+  tags: [ss, sgt, ratio]
+  groupby: [participant]
+  numerator: [search_suggest_clicks]
+  denominator: [session_searches_with_uniq_query]
+
+share_suggest_buyers_to_suggest_users:
+  description: "Share of buyers, who use suggest, to cookies, who use suggest, based on 2443 event"
+  tags: [ss, sgt, ratio]
+  groupby: [participant]
+  numerator: [sessions_with_suggest_click_and_contact]
+  denominator: [search_suggest_clicks]
 
 ########  ########  ######
 ##     ## ##       ##    ##
@@ -1327,6 +1656,11 @@ total_messages:
   tags: [i2, messenger, total]
   numerator: [messenger_total_messeges]
 
+first_response_messages:
+  title: first_response_messages
+  tags: [i2, messenger, total]
+  numerator: [first_response_messages]
+
 write_button_clicks:
   title: write_button_clicks
   tags: [i3, messenger, total]
@@ -1347,6 +1681,11 @@ messenger_users_blocked:
   tags: [i4, messenger, total]
   numerator: [messenger_users_blocked]
 
+messenger_spam_blocks:
+  title: messenger_spam_blocks
+  tags: [i3, messenger, total]
+  numerator: [messenger_spam_blocks]
+
 item_views_from_messenger:
   title: item_views_from_messenger
   tags: [i3, messenger, total, web]
@@ -1356,6 +1695,11 @@ messenger_geo_messages:
   title: messenger_geo_messages
   tags: [i3, messenger, total]
   numerator: [messenger_geo_messages]
+
+messenger_active_chats:
+  title: messenger_active_chats
+  tags: [i2, messenger, total]
+  numerator: [messenger_active_chats]
 
 ###############################################################################
 # Messenger :: Ratios
@@ -1385,6 +1729,18 @@ first_mess_per_write_button_clicks:
   numerator: [first_messages]
   denominator: [write_button_clicks]
 
+messenger_response_ratio:
+  title: messenger_response_ratio
+  tags: [i2, messenger, ratio]
+  numerator: [first_response_messages]
+  denominator: [first_messages]
+
+messenger_spam_ratio:
+  title: messenger_spam_ratio
+  tags: [i2, messenger, ratio]
+  numerator: [messenger_spam_blocks]
+  denominator: [messenger_active_chats]
+
 ###############################################################################
 # Messenger :: proportion
 ###############################################################################
@@ -1393,6 +1749,12 @@ users_first_messages:
   title: users_first_messages
   tags: [i2, messenger, user]
   numerator: [first_messages]
+  groupby: [participant]
+
+users_first_response_messages:
+  title: users_first_response_messages
+  tags: [i2, messenger, user]
+  numerator: [first_response_messages]
   groupby: [participant]
 
 users_phone_views_in_chat:
@@ -2105,6 +2467,115 @@ abuses:
   title: abuses
   tags: [tns, moderation]
   numerator: [abuses]
+  
+reviews_added:
+  title: reviews_added
+  description: "Number of all reviews added"
+  tags: [i1, tns, reviews, ratings]
+  numerator: [reviews_added]
+  
+sellers_with_rating:
+  title: sellers_with_rating
+  description: "Number of sellers with any rating"
+  tags: [i1, tns, reviews, ratings, sellers]
+  numerator: [seller_has_rating_any]
+  
+sellers_with_rating_1:
+  title: sellers_with_rating_1
+  description: "Number of sellers 1-star rating"
+  tags: [i3, tns, reviews, ratings, sellers]
+  numerator: [seller_has_rating_1]
+  
+sellers_with_rating_2:
+  title: sellers_with_rating_2
+  description: "Number of sellers 2-stars rating"
+  tags: [i3, tns, reviews, ratings, sellers]
+  numerator: [seller_has_rating_2]
+  
+sellers_with_rating_3:
+  title: sellers_with_rating_3
+  description: "Number of sellers 3-stars rating"
+  tags: [i3, tns, reviews, ratings, sellers]
+  numerator: [seller_has_rating_3]
+  
+sellers_with_rating_4:
+  title: sellers_with_rating_4
+  description: "Number of sellers 4-stars rating"
+  tags: [i3, tns, reviews, ratings, sellers]
+  numerator: [seller_has_rating_4]
+  
+sellers_with_rating_5:
+  title: sellers_with_rating_5
+  description: "Number of sellers 5-stars rating"
+  tags: [i3, tns, reviews, ratings, sellers]
+  numerator: [seller_has_rating_5]
+  
+items_with_rating:
+  title: items_with_rating
+  description: "Number of active items with any rating"
+  tags: [i2, tns, reviews, ratings, items]
+  numerator: [active_items_with_rating]
+  
+buyers_on_rating_1:
+  title: buyers_on_rating_1
+  description: "Number of buyers on 1-star rating"
+  tags: [i2, tns, reviews, ratings, buyers]
+  numerator: [is_buyer_on_rating_1]
+  
+buyers_on_rating_2:
+  title: buyers_on_rating_2
+  description: "Number of buyers on 2-stars rating"
+  tags: [i2, tns, reviews, ratings, buyers]
+  numerator: [is_buyer_on_rating_2]
+  
+buyers_on_rating_3:
+  title: buyers_on_rating_3
+  description: "Number of buyers on 3-stars rating"
+  tags: [i2, tns, reviews, ratings, buyers]
+  numerator: [is_buyer_on_rating_3]
+  
+buyers_on_rating_4:
+  title: buyers_on_rating_4
+  description: "Number of buyers on 4-stars rating"
+  tags: [i2, tns, reviews, ratings, buyers]
+  numerator: [is_buyer_on_rating_4]
+  
+buyers_on_rating_5:
+  title: buyers_on_rating_5
+  description: "Number of buyers on 5-stars rating"
+  tags: [i2, tns, reviews, ratings, buyers]
+  numerator: [is_buyer_on_rating_5]
+  
+item_views_on_rating_1:
+  title: item_views_on_rating_1
+  description: "Item views on 1-star rating"
+  tags: [i3, tns, reviews, ratings, item_views]
+  numerator: [itemviews_on_rating_1]
+  
+item_views_on_rating_2:
+  title: item_views_on_rating_2
+  description: "Item views on 2-stars rating"
+  tags: [i3, tns, reviews, ratings, item_views]
+  numerator: [itemviews_on_rating_2]
+  
+item_views_on_rating_3:
+  title: item_views_on_rating_3
+  description: "Item views on 3-stars rating"
+  tags: [i3, tns, reviews, ratings, item_views]
+  numerator: [itemviews_on_rating_3]
+  
+item_views_on_rating_4:
+  title: item_views_on_rating_4
+  description: "Item views on 4-stars rating"
+  tags: [i3, tns, reviews, ratings, item_views]
+  numerator: [itemviews_on_rating_4]
+  
+item_views_on_rating_5:
+  title: item_views_on_rating_5
+  description: "Item views on 5-stars rating"
+  tags: [i3, tns, reviews, ratings, item_views]
+  numerator: [itemviews_on_rating_5]
+    
 
 ###############################################################################
 # TNS :: Ratios
@@ -2161,6 +2632,55 @@ enter_errors_per_user:
   tags: [i3, tns, tns_bulb, enter]
   numerator: [enter_errors]
   denominator: [auth_start]
+  
+reviews_avg_score:
+  description: "Reviews added average score"
+  tags: [i3, tns, reviews, ratings, score]
+  numerator: [reviews_score_sum]
+  denominator: [reviews_added]
+  
+contacts_per_item_view_on_rating_1:
+  description: "Contacts per item views on 1-star rating"
+  tags: [i1, tns, reviews, ratings, contacts]
+  numerator: [contacts_on_rating_1]
+  denominator: [itemviews_on_rating_1]
+
+contacts_per_item_view_on_rating_2:
+  description: "Contacts per item views on 2-stars rating"
+  tags: [i1, tns, reviews, ratings, contacts]
+  numerator: [contacts_on_rating_2]
+  denominator: [itemviews_on_rating_2]
+  
+contacts_per_item_view_on_rating_3:
+  description: "Contacts per item views on 3-stars rating"
+  tags: [i1, tns, reviews, ratings, contacts]
+  numerator: [contacts_on_rating_3]
+  denominator: [itemviews_on_rating_3]
+  
+contacts_per_item_view_on_rating_4:
+  description: "Contacts per item views on 4-stars rating"
+  tags: [i1, tns, reviews, ratings, contacts]
+  numerator: [contacts_on_rating_4]
+  denominator: [itemviews_on_rating_4]
+  
+contacts_per_item_view_on_rating_5:
+  description: "Contacts per item views on 5-stars rating"
+  tags: [i1, tns, reviews, ratings, contacts]
+  numerator: [contacts_on_rating_5]
+  denominator: [itemviews_on_rating_5]
+  
+search_items_ratings_coverage:
+  description: "Search items with rating per search items"
+  tags: [i1, tns, reviews, ratings, search]
+  numerator: [search_items_with_rating]
+  denominator: [search_items]
+
+searches_with_ratings_per_searches:
+  description: "Searches with ratings per all searches"
+  tags: [i4, tns, reviews, ratings, search]
+  numerator: [searches_with_rating]
+  denominator: [searches]
+
 
 ###############################################################################
 # TNS :: User Totals
@@ -3048,7 +3568,19 @@ returned_buyers:
   tags: [i1, m42, tree]
   numerator: [returned_buyers]
   description: "Cookies that made contact in a logical_category that are not new buyers. Additive across logical_category"
-  
+
+contacts_canonical:
+  title: contacts_canonical
+  tags: [i1, m42, tree]
+  numerator: [contacts_csc_cannonical]
+  description: "First contact of cookie per item/day. Additive across all dimensions. Source is dma.contacts_stream_observation"
+
+buyers_canonical:
+  title: buyers_canonical
+  tags: [i0, m42, tree]
+  numerator: [contacts_csc_cannonical]
+  groupby: [participant]
+  description: "Buyers from dma.contacts_stream_observation. Source of buyers from Big10.Source is dma.contacts_stream_observation"
   
  ######  ##     ## ########  ########   #######  ########  ########
 ##    ## ##     ## ##     ## ##     ## ##     ## ##     ##    ##
