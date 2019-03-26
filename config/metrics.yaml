@@ -3113,6 +3113,51 @@ item_views_on_rating_5:
   tags: [i3, tns, reviews, ratings, item_views]
   numerator: [itemviews_on_rating_5]
     
+buyers_with_fs_subscriptions:
+  title: buyers_with_fs_subscriptions
+  description: "number of buyers with subscriptions on favourite sellers"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator: [favourite_sellers_subscriptions_active_new, favourite_sellers_subscriptions_active_old, 
+    favourite_sellers_subscriptions_inactive_new, favourite_sellers_subscriptions_inactive_old]
+  groupby: [participant]
+  
+active_buyers_with_fs_subscriptions:
+  title: active_buyers_with_fs_subscriptions
+  description: "number of active (in feature) buyers with subscriptions on favourite sellers"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator: [favourite_sellers_subscriptions_active_new, favourite_sellers_subscriptions_active_old]
+  groupby: [participant]
+  
+sellers_with_fs_subscribers:
+  title: sellers_with_fs_subscribers
+  description: "number of sellers with subscribers"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator: [favourite_sellers_subscribers_active_new, favourite_sellers_subscribers_active_old, 
+    favourite_sellers_subscribers_inactive_new, favourite_sellers_subscribers_inactive_old]
+  groupby: [participant]
+  
+active_sellers_with_fs_subscribers:
+  title: active_sellers_with_fs_subscribers
+  description: "number of sellers with subscribers and active items"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator: [favourite_sellers_subscribers_active_new, favourite_sellers_subscribers_active_old]
+  groupby: [participant] 
+  
+fs_subscriptions_per_buyer:
+  title: fs_subscriptions_per_buyer
+  description: "number of subscriptions per buyer"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator: [favourite_sellers_subscriptions_active_new, favourite_sellers_subscriptions_active_old, 
+    favourite_sellers_subscriptions_inactive_new, favourite_sellers_subscriptions_inactive_old]
+  groupby: []
+  
+fs_subscribers_per_seller:
+  title: fs_subscribers_per_seller
+  description: "number of subscribers per seller"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator: [favourite_sellers_subscribers_active_new, favourite_sellers_subscribers_active_old, 
+    favourite_sellers_subscribers_inactive_new, favourite_sellers_subscribers_inactive_old]
+  groupby: []
 
 ###############################################################################
 # TNS :: Ratios
@@ -3218,6 +3263,21 @@ searches_with_ratings_per_searches:
   numerator: [searches_with_rating]
   denominator: [searches]
 
+active_buyers_with_fs_subscriptions_share:
+  title: active_buyers_with_fs_subscriptions_share
+  description: "active favsellers users with subscriptions share from total buyers"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator: [favourite_sellers_subscriptions_active_new, favourite_sellers_subscriptions_active_old]
+  denominator: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
+  groupby: [participant]
+
+active_sellers_with_fs_subscribers_share:
+  title: active_sellers_with_fs_subscribers_share
+  description: "sellers with subscriptions and active items share from sellers with active items"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator: [favourite_sellers_subscribers_active_new, favourite_sellers_subscribers_active_old]
+  denominator: [active_items]
+  groupby: [participant]
 
 ###############################################################################
 # TNS :: User Totals
