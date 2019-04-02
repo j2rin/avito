@@ -1,3 +1,6 @@
+# Check for duplicates
+# (cat ./bx_auto.yaml) | grep -E ' *- [a-z_]+' | grep -vE '^[^#]*:' | awk -v FS='-' '{print $2}' | awk -v FS='#' '{print $1}' | awk '{print "\""$1"\""}' | sort | uniq -c | sort | grep -E "^ *[2-9]" | awk -v FS='"' -v ORS='|' '{print $2}' | sed 's/|$//' | awk '{print "grep -nE \"("$1")\" ./bx_auto.yaml"}'
+
 breakdowns:
     breakdown_1:
         - {}
@@ -183,11 +186,6 @@ metrics_by_breakdowns:
         - users_contact_per_item_view_search
         - users_contact_per_search_query
         - users_transport_main_page_daily
-        - searches_and_item_views_to_contact
-        - ad_pages_to_contact
-        - item_views_to_contact
-        - searches_to_contact
-        - users_item_view_per_users
         - users_item_view_per_search
         - users_item_view_per_search_query
         - item_views_grouped
