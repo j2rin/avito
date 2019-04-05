@@ -1,0 +1,235 @@
+# Check for skipped metrics
+# (cat ./bx_realty.yaml; cat ./bx.yaml) | grep -E ' *- [a-z_]+' | grep -vE '^[^#]*:' | awk -v FS='-' '{print $2}' | awk -v FS='#' '{print $1}' | awk '{print "\""$1"\""}' | sort | uniq -c | sort | grep -E "^ *1" | awk -v FS='"' -v ORS='|' '{print $2}' | sed 's/|$//' | awk '{print "grep -nE \"("$1")\" ./bx.yaml"}'
+
+breakdowns:
+    breakdown_1:
+        - {}
+        - is_cookie_new: ['false']
+        - is_logged_in: ['true']
+        - vertical: ['Real Estate']
+        - {vertical: ['Real Estate'], is_cookie_new: ['false']}
+        - {vertical: ['Real Estate'], is_logged_in: ['true']}
+        - {vertical: ['Real Estate'], category: [Недвижимость], subcategory: ['Квартиры', 'Комнаты']}
+        - {vertical: ['Real Estate'], category: [Недвижимость], subcategory: ['Коммерческая недвижимость']}
+        - {vertical: ['Real Estate'], category: [Недвижимость], subcategory: ['Дома, дачи, коттеджи', 'Земельные участки', 'Недвижимость за рубежом']}
+        - vertical: ['Real Estate']
+          category: [Недвижимость]
+          region: [
+                # https://cf.avito.ru/pages/viewpage.action?pageId=87280575
+                # есть сильные региональные игроки
+                'Новосибирская область', 'Омская область', 
+                'Пензенская область', 'Челябинская область', 
+                'Нижегородская область' 
+                ]
+        - vertical: ['Real Estate']
+          category: [Недвижимость]
+          region: [
+                # столица
+                'Москва', 'Московская область', 'Ленинградская область', 'Санкт-Петербург'
+                ]
+        - vertical: ['Real Estate']
+          category: [Недвижимость]                
+          region: [
+                # CIAN сильнее по pageviews
+                'Москва', 'Московская область', 'Ленинградская область', 'Санкт-Петербург',
+                'Новгородская область', 'Тверская область', 'Владимирская область',
+                'Тюменская область', 'Томская область', 'Новосибирская область', 
+                'Приморский край', 'Сахалинская область'
+                ]
+        - vertical: ['Real Estate']
+          category: [Недвижимость]                
+          region: [
+                # паритет по pageviews
+                'Красноярский край', 'Омская область', 'Ярославская область', 
+                'Архангельская область', 'Костромская область'
+                ]
+        - vertical: ['Real Estate']
+          category: [Недвижимость]                
+          region: [
+                # Авито Сильнее
+                'Дагестан', 'Ингушетия', 'Чеченская Республика',
+                'Калмыкия', 'Кабардино-Балкария', 'Карачаево-Черкесия',
+                'Ульяновская область', 'Вологодская область', 'Карелия',
+                'Ямало-Ненецкий АО', 'Ненецкий АО', 'Оренбургская область', 
+                'Иркутская область', 'Тыва', 'Камчатский край', 'Еврейская АО'
+                ]
+
+metrics_by_breakdowns:        
+    breakdown_1:
+        # critical
+        - advertisement_page_views  # critical /  / growth, mnz
+        - buyer_target_clicks_vas  # critical /  / buyer, growth, mnz
+        - item_views_vas  # critical /  / buyer, growth, mnz
+        - items_added  # critical /  / growth, seller
+        - users_active_daily  # critical / user / buyer
+        # i0
+        - buyers  # i0 / user / buyer
+        - buyers_per_users  # i0 / ratio / buyer
+        - users_bt_click_daily  # i0 / user / buyer
+        - users_favorites  # i0 / user / buyer
+        # i1
+        - bt_clicks  # i1 /  / buyer, growth
+        - bt_clicks_grouped  # i1 /  / buyer, growth
+        - buyers_per_users_favorites  # i1 / ratio / buyer
+        - contacts  # i1 /  / buyer, growth
+        - contacts_grouped  # i1 /  / buyer, growth
+        - items_sold_onavito_start_date  # i1 / user / seller
+        - new_buyers  # i1 /  / c2c_core
+        - returned_buyers  # i1 /  / c2c_core
+        - users_bt_click_per_users  # i1 / ratio / buyer
+        - users_buyer_target_click_serp_daily  # i1 / user / buyer, search
+        - users_contact_serp_daily  # i1 / user / buyer, search
+        - users_item_view_daily  # i1 / user / buyer
+        - users_item_view_per_users  # i1 / ratio / buyer
+        # i2
+        - all_main_pages  # i2 /  / buyer, growth, rec
+        - buyer_target_clicks_rec  # i2 /  / buyer, growth, rec
+        - buyer_target_clicks_serp  # i2 /  / buyer, growth, search
+        - buyer_target_clicks_serp_per_search  # i2 / ratio / buyer, search
+        - contacts_per_item_view  # i2 / ratio / buyer
+        - contacts_rec  # i2 /  / buyer, growth, rec
+        - contacts_serp  # i2 /  / buyer, growth, search
+        - contacts_serp_per_item_views_serp  # i2 / ratio / buyer, search
+        - fav_added_rec  # i2 /  / buyer, growth, rec
+        - fav_added_serp  # i2 /  / buyer, growth, search
+        - favorites_added  # i2 /  / buyer, growth
+        - first_messages  # i2 /  / buyer, growth
+        - head_main_pages  # i2 /  / buyer, growth, rec
+        - item_views  # i2 /  / buyer, growth
+        - item_views_grouped  # i2 /  / buyer, growth
+        - item_views_rec  # i2 /  / buyer, growth, rec
+        - item_views_serp  # i2 /  / buyer, growth, search
+        - item_views_serp_per_search  # i2 / ratio / buyer, search
+        - phone_views  # i2 /  / buyer, growth
+        - searches  # i2 /  / buyer, growth
+        - searches_item_view_serp_per_searches_serp  # i2 / ratio / buyer, search
+        - searches_new  # i2 /  / buyer, growth
+        - searches_serp  # i2 /  / buyer, growth
+        - serp_empty  # i2 /  / buyer, growth, search
+        - serp_small  # i2 /  / buyer, growth, search
+        - users_all_main_page_daily  # i2 / user / buyer, rec
+        - users_contact_per_item_view_search  # i2 / user / buyer, search
+        - users_contact_per_search  # i2 / user / buyer, search
+        - users_contact_per_search_query  # i2 / user / buyer, search
+        - users_contact_search_query  # i2 / user / buyer, search
+        - users_head_main_page_daily  # i2 / user / buyer, rec
+        - users_item_view_per_search  # i2 / user / buyer, search
+        - users_item_view_per_search_query  # i2 / user / buyer, search
+        - users_item_view_search_query  # i2 / user / buyer, search
+        - users_item_view_serp_daily  # i2 / user / buyer, search
+        - users_search  # i2 / user / buyer, search
+        - users_search_new  # i2 / user / buyer, search
+        - users_search_query  # i2 / user / buyer, search
+        - users_search_session_new  # i2 / user / buyer, search
+        # i3
+        - ad_pages_to_contact  # i3 /  / buyer
+        - buyer_str_bookings  # i3 /  / buyer, short_rent
+        - contacts_serp_per_search  # i3 / ratio / buyer, search
+        - contacts_vas  # i3 /  / buyer, growth, mnz
+        - item_views_to_contact  # i3 /  / buyer
+        - map_searches  # i3 /  / buyer, growth
+        - map_users  # i3 / user / buyer
+        - phone_views_grouped  # i3 /  / buyer, growth
+        - phone_views_in_chat_grouped  # i3 /  / growth, messenger
+        - phone_views_per_item_view  # i3 / ratio / buyer
+        - phone_views_snippet  # i3 /  / buyer, growth
+        - phone_views_total  # i3 /  / buyer, growth
+        - pin_clickers  # i3 / user / buyer
+        - pin_clicks  # i3 /  / buyer, growth
+        - searches_and_item_views_to_contact  # i3 /  / buyer
+        - searches_date_sort  # i3 /  / buyer, growth
+        - searches_item_view_serp  # i3 /  / buyer, search
+        - searches_item_view_vas  # i3 /  / buyer, mnz, search
+        - searches_to_contact  # i3 /  / buyer
+        - searches_with_query  # i3 /  / buyer, growth
+        - searches_with_query_date_sort  # i3 /  / buyer, growth
+        - searches_without_query  # i3 /  / buyer, growth
+        - searches_default_sort  # i3 /  / buyer, growth
+        - shows_contact_recblock  # i3 /  / buyer, rec
+        - shows_item_view_recblock  # i3 /  / buyer, rec
+        - shows_item_view_recblock_per_recblock_shows  # i3 / ratio / buyer, rec
+        - write_button_clicks_grouped  # i3 /  / growth, messenger
+        # i4
+        - booking_created_short_rent  # i4 /  / buyer, growth
+        - booking_created_short_rent_grouped  # i4 /  / buyer, growth
+        - buyer_str_booking_cost  # i4 /  / buyer, short_rent
+        - buyer_str_bookings_canceled  # i4 /  / buyer, short_rent
+        - buyer_str_bookings_comfirmed  # i4 /  / buyer, short_rent
+        - buyer_str_bookings_expired  # i4 /  / buyer, short_rent
+        - buyer_str_bookings_paid  # i4 /  / buyer, short_rent
+        - buyer_str_bookings_voided  # i4 /  / buyer, short_rent
+        - buyer_str_confirmed_ratio  # i4 /  / buyer, short_rent
+        - buyer_str_deals  # i4 /  / buyer, short_rent
+        - buyer_str_paid  # i4 /  / buyer, short_rent
+        - buyer_target_clicks_vas_per_search  # i4 / ratio / buyer, mnz
+        - buyer_target_clicks_vip  # i4 /  / buyer, growth, mnz, search
+        - contacts_push  # i4 /  / buyer, growth, mnz
+        - contacts_vas_per_item_views_vas  # i4 / ratio / buyer, mnz
+        - contacts_vas_per_search  # i4 / ratio / buyer, mnz, search
+        - fav_added_push  # i4 /  / buyer, growth, mnz
+        - fav_added_serp_per_search  # i4 / ratio / buyer, growth, search
+        - fav_added_vas  # i4 /  / buyer, growth, mnz
+        - favorites_list_views  # i4 /  / buyer, growth
+        - favorites_removed  # i4 /  / buyer, growth
+        - item_off_str  # i4 /  / buyer, short_rent
+        - item_views_vas_per_search  # i4 / ratio / buyer, mnz, search
+        - loc_suggests_per_text_inputs  # i4 /  / buyer, growth
+        - loc_window_opens  # i4 /  / buyer, growth
+        - loc_window_saves_per_opens  # i4 /  / buyer, growth
+        - location_text_inputs  # i4 /  / buyer, growth
+        - re_main_pages  # i4 /  / buyer, growth, rec
+        - saved_searches_added  # i4 /  / buyer, growth, search
+        - searches_contact_premium  # i4 /  / buyer, mnz, search
+        - searches_contact_push  # i4 /  / buyer, mnz, search
+        - searches_contact_serp  # i4 /  / buyer, search
+        - searches_contact_vas  # i4 /  / buyer, mnz, search
+        - searches_contact_vip  # i4 /  / buyer, mnz, search
+        - searches_item_view_premium  # i4 /  / buyer, mnz, search
+        - searches_item_view_push  # i4 /  / buyer, mnz, search
+        - searches_item_view_vip  # i4 /  / buyer, mnz, search
+        - str_click  # i4 /  / buyer, short_rent
+        - str_click_widget_ratio  # i4 /  / buyer, short_rent
+        - str_contact  # i4 /  / buyer, short_rent
+        - str_item_view  # i4 /  / buyer, short_rent
+        - str_total_click_widget_ratio  # i4 /  / buyer, short_rent
+        - str_total_item_view  # i4 /  / buyer, short_rent
+        - str_total_view_str_click_ratio  # i4 /  / buyer, short_rent
+        - str_total_widget_contact_ratio  # i4 /  / buyer, short_rent
+        - str_view_str_click_ratio  # i4 /  / buyer, short_rent
+        - str_widget  # i4 /  / buyer, short_rent
+        - str_widget_contact_ratio  # i4 /  / buyer, short_rent
+        - total_str_click  # i4 /  / buyer, short_rent
+        - total_str_contact  # i4 /  / buyer, short_rent
+        - total_str_widget  # i4 /  / buyer, short_rent
+        - users_loc_suggest_clicks  # i4 / user / buyer
+        - users_loc_window_opens  # i4 / user / buyer
+        - users_re_main_page_daily  # i4 / user / buyer, rec
+        # rest buyers metrices
+        - buyer_target_clicks_premium  #  /  / buyer, growth, mnz
+        - buyer_target_clicks_premium_per_search  #  / ratio / buyer, mnz
+        - buyer_target_clicks_push  #  /  / buyer, growth, mnz
+        - buyer_target_clicks_push_per_search  #  / ratio / buyer, mnz
+        - buyer_target_clicks_vip_per_search  #  / ratio / buyer, mnz
+        - contacts_premium  #  /  / buyer, growth, mnz
+        - contacts_premium_per_item_views_premium  #  / ratio / buyer, mnz
+        - contacts_premium_per_search  #  / ratio / buyer, mnz
+        - contacts_push_per_item_views_push  #  / ratio / buyer, mnz
+        - contacts_push_per_search  #  / ratio / buyer, mnz
+        - contacts_vip  #  /  / buyer, growth, mnz
+        - contacts_vip_per_item_views_vip  #  / ratio / buyer, mnz
+        - contacts_vip_per_search  #  / ratio / buyer, mnz
+        - fav_added_premium  #  /  / buyer, growth, mnz
+        - fav_added_premium_per_search  #  / ratio / buyer, growth, mnz
+        - fav_added_push_per_search  #  / ratio / buyer, growth, mnz
+        - fav_added_vas_per_search  #  / ratio / buyer, growth, mnz
+        - fav_added_vip  #  /  / buyer, growth, mnz
+        - fav_added_vip_per_search  #  / ratio / buyer, growth, mnz
+        - item_views_premium  #  /  / buyer, growth, mnz
+        - item_views_premium_per_search  #  / ratio / buyer, mnz
+        - item_views_push  #  /  / buyer, growth, mnz
+        - item_views_push_per_search  #  / ratio / buyer, mnz
+        - item_views_vip  #  /  / buyer, growth, mnz
+        - item_views_vip_per_search  #  / ratio / buyer, mnz
+        - users_contact_rec_daily
+        - users_item_view_rec_daily
+        - contacts_rec_per_item_views_rec
