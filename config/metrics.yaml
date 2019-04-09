@@ -114,6 +114,18 @@ pin_clicks:
   tags: [i3, bx, total, map]
   numerator: [pin_clicks]
 
+ad_clicks:
+  tags: [critical, bx]
+  numerator: [ad_clicks]
+
+ad_successes:
+  tags: [i1, bx]
+  numerator: [ad_successes]
+
+ad_fails:
+  tags: [i1, bx]
+  numerator: [ad_fails]
+
 ###############################################################################
 # Buyer :: Ratios
 ###############################################################################
@@ -683,6 +695,26 @@ serp_small:
   title: serp_small
   tags: [i2, bx, serp, total]
   numerator: [serp_small]
+  
+serp_with_query_empty:
+  title: serp_with_query_empty
+  tags: [i2, bx, serp, total]
+  numerator: [serp_with_query_empty]
+  
+serp_with_query_small:
+  title: serp_with_query_small
+  tags: [i2, bx, serp, total]
+  numerator: [serp_with_query_small]
+  
+serp_without_query_empty:
+  title: serp_without_query_empty
+  tags: [i2, bx, serp, total]
+  numerator: [serp_without_query_empty]
+  
+serp_without_query_small:
+  title: serp_without_query_small
+  tags: [i2, bx, serp, total]
+  numerator: [serp_without_query_small]
 
 searches_item_view_vip:
   title: searches_item_view_vip
@@ -1227,6 +1259,7 @@ serp_empty_per_s:
   denominator: [searches]
 
 serp_small_per_s:
+  title: serp_small_per_s
   tags: [i2, bx, serp, total]
   numerator: [serp_small]
   denominator: [searches]
@@ -1590,198 +1623,6 @@ search_suggest_clicks:
   tags: [ss, sgt]
   numerator: [search_suggest_clicks]
   groupby: [participant]
-
-misspell_replace:
-  title: misspell_replace
-  tags: [misspell]
-  numerator: [misspell_replace]
-  groupby: [participant, session]
-
-misspell_suggest:
-  title: misspell_suggest
-  tags: [misspell]
-  numerator: [misspell_suggest]
-  groupby: [participant, session]
-
-teleport_replace:
-  title: teleport_replace
-  tags: [misspell]
-  numerator: [teleport_replace]
-  groupby: [participant, session]
-
-teleport_suggest:
-  title: teleport_suggest
-  tags: [misspell]
-  numerator: [teleport_suggest]
-  groupby: [participant, session]
-
-search_redirect_replace:
-  title: search_redirect_replace
-  tags: [misspell]
-  numerator: [search_redirect_replace]
-  groupby: [participant, session]
-
-search_redirect_suggest:
-  title: search_redirect_suggest
-  tags: [misspell]
-  numerator: [search_redirect_suggest]
-  groupby: [participant, session]
-
-geo_redirect_replace:
-  title: geo_redirect_replace
-  tags: [misspell]
-  numerator: [geo_redirect_replace]
-  groupby: [participant, session]
-
-geo_redirect_suggest:
-  title: geo_redirect_suggest
-  tags: [misspell]
-  numerator: [geo_redirect_suggest]
-  groupby: [participant, session]
-
-typo_replace:
-  title: typo_replace
-  tags: [misspell]
-  numerator: [typo_replace]
-  groupby: [participant, session]
-
-typo_suggest:
-  title: typo_suggest
-  tags: [misspell]
-  numerator: [typo_suggest]
-  groupby: [participant, session]
-
-keyboard_replace:
-  title: keyboard_replace
-  tags: [misspell]
-  numerator: [keyboard_replace]
-  groupby: [participant, session]
-
-keyboard_suggest:
-  title: keyboard_suggest
-  tags: [misspell]
-  numerator: [keyboard_suggest]
-  groupby: [participant, session]
-
-wordbreaker_replace:
-  title: wordbreaker_replace
-  tags: [misspell]
-  numerator: [wordbreaker_replace]
-  groupby: [participant, session]
-
-wordbreaker_suggest:
-  title: wordbreaker_suggest
-  tags: [misspell]
-  numerator: [wordbreaker_suggest]
-  groupby: [participant, session]
-
-wordbreaker_digit_replace:
-  title: wordbreaker_digit_replace
-  tags: [misspell]
-  numerator: [wordbreaker_digit_replace]
-  groupby: [participant, session]
-
-wordbreaker_digit_suggest:
-  title: wordbreaker_digit_suggest
-  tags: [misspell]
-  numerator: [wordbreaker_digit_suggest]
-  groupby: [participant, session]
-
-misspell_disabled:
-  title: misspell_disabled
-  tags: [misspell]
-  numerator: [misspell_disabled]
-  groupby: [participant, session]
-
-misspell_suggest_disabled:
-  title: misspell_suggest_disabled
-  tags: [misspell]
-  numerator: [misspell_suggest_disabled]
-  groupby: [participant, session]
-
-teleport_disabled:
-  title: teleport_disabled
-  tags: [misspell]
-  numerator: [teleport_disabled]
-  groupby: [participant, session]
-
-teleport_suggest_disabled:
-  title: teleport_suggest_disabled
-  tags: [misspell]
-  numerator: [teleport_suggest_disabled]
-  groupby: [participant, session]
-
-search_redirect_disabled:
-  title: search_redirect_disabled
-  tags: [misspell]
-  numerator: [search_redirect_disabled]
-  groupby: [participant, session]
-
-search_redirect_suggest_disabled:
-  title: search_redirect_suggest_disabled
-  tags: [misspell]
-  numerator: [search_redirect_suggest_disabled]
-  groupby: [participant, session]
-
-geo_redirect_disabled:
-  title: geo_redirect_disabled
-  tags: [misspell]
-  numerator: [geo_redirect_disabled]
-  groupby: [participant, session]
-
-geo_redirect_suggest_disabled:
-  title: geo_redirect_suggest_disabled
-  tags: [misspell]
-  numerator: [geo_redirect_suggest_disabled]
-  groupby: [participant, session]
-
-typo_disabled:
-  title: typo_disabled
-  tags: [misspell]
-  numerator: [typo_disabled]
-  groupby: [participant, session]
-
-typo_suggest_disabled:
-  title: typo_suggest_disabled
-  tags: [misspell]
-  numerator: [typo_suggest_disabled]
-  groupby: [participant, session]
-
-keyboard_disabled:
-  title: keyboard_disabled
-  tags: [misspell]
-  numerator: [keyboard_disabled]
-  groupby: [participant, session]
-
-keyboard_suggest_disabled:
-  title: keyboard_suggest_disabled
-  tags: [misspell]
-  numerator: [keyboard_suggest_disabled]
-  groupby: [participant, session]
-
-wordbreaker_disabled:
-  title: wordbreaker_disabled
-  tags: [misspell]
-  numerator: [wordbreaker_disabled]
-  groupby: [participant, session]
-
-wordbreaker_suggest_disabled:
-  title: wordbreaker_suggest_disabled
-  tags: [misspell]
-  numerator: [wordbreaker_suggest_disabled]
-  groupby: [participant, session]
-
-wordbreaker_digit_disabled:
-  title: wordbreaker_digit_disabled
-  tags: [misspell]
-  numerator: [wordbreaker_digit_disabled]
-  groupby: [participant, session]
-
-wordbreaker_digit_suggest_disabled:
-  title: wordbreaker_digit_suggest_disabled
-  tags: [misspell]
-  numerator: [wordbreaker_digit_suggest_disabled]
-  groupby: [participant, session]
 
 ###############################################################################
 # Search :: User Ratios
@@ -3446,17 +3287,6 @@ seller_contacts_start_date:
   numerator: [seller_contacts]
   date_filter: [start]
 
-vas_amount_net:
-  description: "Vas amount without bonuses paid by seller"
-  tags: [sx, monetization]
-  numerator: [vas_amount_net]
-
-vas_amount_net_start_date:
-  description: "Vas amount without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization]
-  numerator: [vas_amount_net]
-  date_filter: [start]
-
 lf_amount_net:
   description: "Lf amount without bonuses paid by seller"
   tags: [sx, monetization]
@@ -3802,19 +3632,6 @@ sellers_with_contacts_start_date:
   numerator: [seller_contacts]
   date_filter: [start]
 
-users_vas:
-  description: "Users applied VAS"
-  tags: [sx, monetization]
-  groupby: [participant]
-  numerator: [vas_amount_net]
-
-users_vas_start_date:
-  description: "Users applied VAS to items created after exposure"
-  tags: [sx, monetization]
-  groupby: [participant]
-  numerator: [vas_amount_net]
-  date_filter: [start]
-
 users_lf:
   description: "Users paid LF"
   tags: [sx, monetization]
@@ -4041,6 +3858,439 @@ contacts_paid_amount_express_cv:
   description: "Express cv paid contacts amount by platform of creation"
   tags: [cv]
   numerator: [contacts_paid_amount_express_cv]
+ 
+vas_amount:
+  description: "Vas amount with bonuses paid by seller"
+  tags: [sx, monetization, vas, i0]
+  numerator: [vas_amount]
+
+vas_amount_start_date:
+  description: "Vas amount with bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i0]
+  numerator: [vas_amount]
+  date_filter: [start]
+
+vas_amount_net:
+  description: "Vas amount without bonuses paid by seller"
+  tags: [sx, monetization, vas, i0]
+  numerator: [vas_amount_net]
+
+vas_amount_net_start_date:
+  description: "Vas amount without bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i0]
+  numerator: [vas_amount_net]
+  date_filter: [start]
+
+users_vas:
+  description: "Users applied VAS"
+  tags: [sx, monetization, vas, i0]
+  groupby: [participant]
+  numerator: [vas_amount_net]
+
+users_vas_start_date:
+  description: "Users applied VAS to items created after exposure"
+  tags: [sx, monetization, vas, i0]
+  groupby: [participant]
+  numerator: [vas_amount_net]
+  date_filter: [start]
+
+vas_transactions:
+  title: vas_transactions
+  description: "VAS products transactions"
+  tags: [sx, monetization, vas, i0, m42, tree]
+  numerator: [vas_transactions]
+
+vas_transactions_start_date:
+  title: vas_transactions_start_date
+  description: "VAS products transactions for items created after exposure"
+  tags: [sx, monetization, vas, i0]
+  numerator: [vas_transactions]
+  date_filter: [start]
+
+vas_amount_turbo:
+  description: "vas amount (turbo) with bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_turbo]
+
+vas_amount_turbo_start_date:
+  description: "vas amount (turbo) with bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_turbo]
+  date_filter: [start]
+
+vas_amount_net_turbo:
+  description: "vas amount (turbo) without bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_turbo]
+
+vas_amount_net_turbo_start_date:
+  description: "vas amount (turbo) without bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_turbo]
+  date_filter: [start]
+
+users_vas_turbo:
+  description: "Users applied VAS (turbo)"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_turbo]
+
+users_vas_turbo_start_date:
+  description: "Users applied VAS (turbo) to items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_turbo]
+  date_filter: [start]
+
+vas_transactions_turbo:
+  title: vas_transactions_turbo
+  description: "VAS (turbo) products transactions"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_turbo]
+
+vas_transactions_turbo_start_date:
+  title: vas_transactions_turbo_start_date
+  description: "VAS (turbo) products transactions for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_turbo]
+  date_filter: [start]
+
+vas_amount_fast:
+  description: "vas amount (fast) with bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_fast]
+
+vas_amount_fast_start_date:
+  description: "vas amount (fast) with bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_fast]
+  date_filter: [start]
+
+vas_amount_net_fast:
+  description: "vas amount (fast) without bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_fast]
+
+vas_amount_net_fast_start_date:
+  description: "vas amount (fast) without bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_fast]
+  date_filter: [start]
+
+users_vas_fast:
+  description: "Users applied VAS (fast)"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_fast]
+
+users_vas_fast_start_date:
+  description: "Users applied VAS (fast) to items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_fast]
+  date_filter: [start]
+
+vas_transactions_fast:
+  title: vas_transactions_fast
+  description: "VAS (fast) products transactions"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_fast]
+
+vas_transactions_fast_start_date:
+  title: vas_transactions_fast_start_date
+  description: "VAS (fast) products transactions for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_fast]
+  date_filter: [start]
+
+vas_amount_pushup:
+  description: "vas amount (pushup) with bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_pushup]
+
+vas_amount_pushup_start_date:
+  description: "vas amount (pushup) with bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_pushup]
+  date_filter: [start]
+
+vas_amount_net_pushup:
+  description: "vas amount (pushup) without bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_pushup]
+
+vas_amount_net_pushup_start_date:
+  description: "vas amount (pushup) without bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_pushup]
+  date_filter: [start]
+
+users_vas_pushup:
+  description: "Users applied VAS (pushup)"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_pushup]
+
+users_vas_pushup_start_date:
+  description: "Users applied VAS (pushup) to items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_pushup]
+  date_filter: [start]
+
+vas_transactions_pushup:
+  title: vas_transactions_pushup
+  description: "VAS (pushup) products transactions"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_pushup]
+
+vas_transactions_pushup_start_date:
+  title: vas_transactions_pushup_start_date
+  description: "VAS (pushup) products transactions for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_pushup]
+  date_filter: [start]
+
+vas_amount_premium:
+  description: "vas amount (premium) with bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_premium]
+
+vas_amount_premium_start_date:
+  description: "vas amount (premium) with bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_premium]
+  date_filter: [start]
+
+vas_amount_net_premium:
+  description: "vas amount (premium) without bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_premium]
+
+vas_amount_net_premium_start_date:
+  description: "vas amount (premium) without bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_premium]
+  date_filter: [start]
+
+users_vas_premium:
+  description: "Users applied VAS (premium)"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_premium]
+
+users_vas_premium_start_date:
+  description: "Users applied VAS (premium) to items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_premium]
+  date_filter: [start]
+
+vas_transactions_premium:
+  title: vas_transactions_premium
+  description: "VAS (premium) products transactions"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_premium]
+
+vas_transactions_premium_start_date:
+  title: vas_transactions_premium_start_date
+  description: "VAS (premium) products transactions for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_premium]
+  date_filter: [start]
+
+vas_amount_vip:
+  description: "vas amount (vip) with bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_vip]
+
+vas_amount_vip_start_date:
+  description: "vas amount (vip) with bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_vip]
+  date_filter: [start]
+
+vas_amount_net_vip:
+  description: "vas amount (vip) without bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_vip]
+
+vas_amount_net_vip_start_date:
+  description: "vas amount (vip) without bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_vip]
+  date_filter: [start]
+
+users_vas_vip:
+  description: "Users applied VAS (vip)"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_vip]
+
+users_vas_vip_start_date:
+  description: "Users applied VAS (vip) to items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_vip]
+  date_filter: [start]
+
+vas_transactions_vip:
+  title: vas_transactions_vip
+  description: "VAS (vip) products transactions"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_vip]
+
+vas_transactions_vip_start_date:
+  title: vas_transactions_vip_start_date
+  description: "VAS (vip) products transactions for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_vip]
+  date_filter: [start]
+
+vas_amount_xl:
+  description: "vas amount (xl) with bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_xl]
+
+vas_amount_xl_start_date:
+  description: "vas amount (xl) with bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_xl]
+  date_filter: [start]
+
+vas_amount_net_xl:
+  description: "vas amount (xl) without bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_xl]
+
+vas_amount_net_xl_start_date:
+  description: "vas amount (xl) without bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_xl]
+  date_filter: [start]
+
+users_vas_xl:
+  description: "Users applied VAS (xl)"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_xl]
+
+users_vas_xl_start_date:
+  description: "Users applied VAS (xl) to items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_xl]
+  date_filter: [start]
+
+vas_transactions_xl:
+  title: vas_transactions_xl
+  description: "VAS (xl) products transactions"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_xl]
+
+vas_transactions_xl_start_date:
+  title: vas_transactions_xl_start_date
+  description: "VAS (xl) products transactions for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_xl]
+  date_filter: [start]
+
+vas_amount_highlight:
+  description: "vas amount (highlight) with bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_highlight]
+
+vas_amount_highlight_start_date:
+  description: "vas amount (highlight) with bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_highlight]
+  date_filter: [start]
+
+vas_amount_net_highlight:
+  description: "vas amount (highlight) without bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_highlight]
+
+vas_amount_net_highlight_start_date:
+  description: "vas amount (highlight) without bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_highlight]
+  date_filter: [start]
+
+users_vas_highlight:
+  description: "Users applied VAS (highlight)"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_highlight]
+
+users_vas_highlight_start_date:
+  description: "Users applied VAS (highlight) to items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_highlight]
+  date_filter: [start]
+
+vas_transactions_highlight:
+  title: vas_transactions_highlight
+  description: "VAS (highlight) products transactions"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_highlight]
+
+vas_transactions_highlight_start_date:
+  title: vas_transactions_highlight_start_date
+  description: "VAS (highlight) products transactions for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_highlight]
+  date_filter: [start]
+
+vas_amount_activation:
+  description: "vas amount (activation) with bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_activation]
+
+vas_amount_activation_start_date:
+  description: "vas amount (activation) with bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_activation]
+  date_filter: [start]
+
+vas_amount_net_activation:
+  description: "vas amount (activation) without bonuses paid by seller"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_activation]
+
+vas_amount_net_activation_start_date:
+  description: "vas amount (activation) without bonuses paid by seller for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_activation]
+  date_filter: [start]
+
+users_vas_activation:
+  description: "Users applied VAS (activation)"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_activation]
+
+users_vas_activation_start_date:
+  description: "Users applied VAS (activation) to items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  groupby: [participant]
+  numerator: [vas_amount_net_activation]
+  date_filter: [start]
+
+vas_transactions_activation:
+  title: vas_transactions_activation
+  description: "VAS (activation) products transactions"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_activation]
+
+vas_transactions_activation_start_date:
+  title: vas_transactions_activation_start_date
+  description: "VAS (activation) products transactions for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_transactions_activation]
+  date_filter: [start]
+
 
 ###############################################################################
 # MNZ :: Ratios
@@ -4080,7 +4330,277 @@ express_cv_allowed_conversion:
   numerator: [express_cv_started_net]
   denominator: [express_cv_started]
 
+vas_avo_net:
+  title: vas_avo_net
+  description: "Vas amount without bonuses paid by seller divided by number of transactions (AVO - average value order)"
+  tags: [sx, monetization, vas, i0]
+  numerator: [vas_amount_net]
+  denominator: [vas_transactions]
 
+vas_avo_net_start_date:
+  title: vas_avo_net_start_date
+  description: "Vas amount without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i0]
+  numerator: [vas_amount_net]
+  denominator: [vas_transactions]
+  date_filter: [start]
+
+vas_avo:
+  title: vas_avo
+  description: "Vas amount with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
+  tags: [sx, monetization, vas, i0]
+  numerator: [vas_amount]
+  denominator: [vas_transactions]
+
+vas_avo_start_date:
+  title: vas_avo_start_date
+  description: "Vas amount with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i0]
+  numerator: [vas_amount]
+  denominator: [vas_transactions]
+  date_filter: [start]
+
+vas_avo_net_turbo:
+  title: vas_avo_net_turbo
+  description: "vas amount (turbo) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_turbo]
+  denominator: [vas_transactions_turbo]
+
+vas_avo_net_turbo_start_date:
+  title: vas_avo_net_turbo_start_date
+  description: "vas amount (turbo) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_turbo]
+  denominator: [vas_transactions_turbo]
+  date_filter: [start]
+
+vas_avo_turbo:
+  title: vas_avo_turbo
+  description: "vas amount (turbo) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_turbo]
+  denominator: [vas_transactions_turbo]
+
+vas_avo_turbo_start_date:
+  title: vas_avo_turbo_start_date
+  description: "vas amount (turbo) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_turbo]
+  denominator: [vas_transactions_turbo]
+  date_filter: [start]
+
+vas_avo_net_fast:
+  title: vas_avo_net_fast
+  description: "vas amount (fast) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_fast]
+  denominator: [vas_transactions_fast]
+
+vas_avo_net_fast_start_date:
+  title: vas_avo_net_fast_start_date
+  description: "vas amount (fast) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_fast]
+  denominator: [vas_transactions_fast]
+  date_filter: [start]
+
+vas_avo_fast:
+  title: vas_avo_fast
+  description: "vas amount (fast) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_fast]
+  denominator: [vas_transactions_fast]
+
+vas_avo_fast_start_date:
+  title: vas_avo_fast_start_date
+  description: "vas amount (fast) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_fast]
+  denominator: [vas_transactions_fast]
+  date_filter: [start]
+
+vas_avo_net_pushup:
+  title: vas_avo_net_pushup
+  description: "vas amount (pushup) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_pushup]
+  denominator: [vas_transactions_pushup]
+
+vas_avo_net_pushup_start_date:
+  title: vas_avo_net_pushup_start_date
+  description: "vas amount (pushup) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_pushup]
+  denominator: [vas_transactions_pushup]
+  date_filter: [start]
+
+vas_avo_pushup:
+  title: vas_avo_pushup
+  description: "vas amount (pushup) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_pushup]
+  denominator: [vas_transactions_pushup]
+
+vas_avo_pushup_start_date:
+  title: vas_avo_pushup_start_date
+  description: "vas amount (pushup) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_pushup]
+  denominator: [vas_transactions_pushup]
+  date_filter: [start]
+
+vas_avo_net_premium:
+  title: vas_avo_net_premium
+  description: "vas amount (premium) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_premium]
+  denominator: [vas_transactions_premium]
+
+vas_avo_net_premium_start_date:
+  title: vas_avo_net_premium_start_date
+  description: "vas amount (premium) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_premium]
+  denominator: [vas_transactions_premium]
+  date_filter: [start]
+
+vas_avo_premium:
+  title: vas_avo_premium
+  description: "vas amount (premium) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_premium]
+  denominator: [vas_transactions_premium]
+
+vas_avo_premium_start_date:
+  title: vas_avo_premium_start_date
+  description: "vas amount (premium) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_premium]
+  denominator: [vas_transactions_premium]
+  date_filter: [start]
+
+vas_avo_net_vip:
+  title: vas_avo_net_vip
+  description: "vas amount (vip) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_vip]
+  denominator: [vas_transactions_vip]
+
+vas_avo_net_vip_start_date:
+  title: vas_avo_net_vip_start_date
+  description: "vas amount (vip) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_vip]
+  denominator: [vas_transactions_vip]
+  date_filter: [start]
+
+vas_avo_vip:
+  title: vas_avo_vip
+  description: "vas amount (vip) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_vip]
+  denominator: [vas_transactions_vip]
+
+vas_avo_vip_start_date:
+  title: vas_avo_vip_start_date
+  description: "vas amount (vip) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_vip]
+  denominator: [vas_transactions_vip]
+  date_filter: [start]
+
+vas_avo_net_xl:
+  title: vas_avo_net_xl
+  description: "vas amount (xl) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_xl]
+  denominator: [vas_transactions_xl]
+
+vas_avo_net_xl_start_date:
+  title: vas_avo_net_xl_start_date
+  description: "vas amount (xl) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_xl]
+  denominator: [vas_transactions_xl]
+  date_filter: [start]
+
+vas_avo_xl:
+  title: vas_avo_xl
+  description: "vas amount (xl) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_xl]
+  denominator: [vas_transactions_xl]
+
+vas_avo_xl_start_date:
+  title: vas_avo_xl_start_date
+  description: "vas amount (xl) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_xl]
+  denominator: [vas_transactions_xl]
+  date_filter: [start]
+
+vas_avo_net_highlight:
+  title: vas_avo_net_highlight
+  description: "vas amount (highlight) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_highlight]
+  denominator: [vas_transactions_highlight]
+
+vas_avo_net_highlight_start_date:
+  title: vas_avo_net_highlight_start_date
+  description: "vas amount (highlight) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_highlight]
+  denominator: [vas_transactions_highlight]
+  date_filter: [start]
+
+vas_avo_highlight:
+  title: vas_avo_highlight
+  description: "vas amount (highlight) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_highlight]
+  denominator: [vas_transactions_highlight]
+
+vas_avo_highlight_start_date:
+  title: vas_avo_highlight_start_date
+  description: "vas amount (highlight) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_highlight]
+  denominator: [vas_transactions_highlight]
+  date_filter: [start]
+
+vas_avo_net_activation:
+  title: vas_avo_net_activation
+  description: "vas amount (activation) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_activation]
+  denominator: [vas_transactions_activation]
+
+vas_avo_net_activation_start_date:
+  title: vas_avo_net_activation_start_date
+  description: "vas amount (activation) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_net_activation]
+  denominator: [vas_transactions_activation]
+  date_filter: [start]
+
+vas_avo_activation:
+  title: vas_avo_activation
+  description: "vas amount (activation) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_activation]
+  denominator: [vas_transactions_activation]
+
+vas_avo_activation_start_date:
+  title: vas_avo_activation_start_date
+  description: "vas amount (activation) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
+  tags: [sx, monetization, vas, i1]
+  numerator: [vas_amount_activation]
+  denominator: [vas_transactions_activation]
+  date_filter: [start]
+
+  
 ########  #### ##       ##       #### ##    ##  ######
 ##     ##  ##  ##       ##        ##  ###   ## ##    ##
 ##     ##  ##  ##       ##        ##  ####  ## ##
@@ -4215,6 +4735,18 @@ active_listers:
   tags: [i0, m42, tree]
   numerator: [active_listers]
   description: "Users who have at least 1 active item in a logical category. Additive across logical_category"
+
+active_items_c2c:
+  title: active_items_big10
+  tags: [i0, m42, tree, big10]
+  numerator: [active_items_c2c]
+  description: "Quantity of active items from lister_day. No filters."
+
+soa_items_c2c:
+  title: soa_items_big10
+  tags: [i0, m42, tree, big10]
+  numerator: [soa_items_c2c]
+  description: "Quantity sold on avito items. Similar to user_report"
 
 activated_listers:
   title: activated_listers
@@ -4433,10 +4965,10 @@ domofond_amount_net_adj:
   numerator: [domofond_amount_net_adj]
   description: "Net revenue from domofond products without VAT"
 
-delivery_revenue_net_adj:
-  title: delivery_revenue_net_adj
+delivery_amount_net_adj:
+  title: delivery_amount_net_adj
   tags: [i0, m42, tree]
-  numerator: [delivery_revenue_net_adj]
+  numerator: [delivery_amount_net_adj]
   description: "Net revenue from delivery products without VAT"
 
 vas_amount_net_adj:
@@ -4486,12 +5018,6 @@ lf_transactions:
   tags: [i0, m42, tree]
   numerator: [lf_transactions]
   description: "lf products transactions"
-
-vas_transactions:
-  title: vas_transactions
-  tags: [i0, m42, tree]
-  numerator: [vas_transactions]
-  description: "VAS products transactions"
 
 subs_transactions:
   title: subs_transactions
