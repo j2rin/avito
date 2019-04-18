@@ -4684,19 +4684,25 @@ payment_method_page_services:
 payment_method_choice_services:
   title: payment_method_choice_services
   tags: [payments]
-  numerator: [payment_method_choice_services]
+  numerator:
+    observations: [payment_method_choice_services]
+    groupby: []
   description: "Number of payment sessions with selected payment method except wallet pay in"
 
 successful_payment_services:
   title: successful_payment_services
   tags: [payments]
-  numerator: [successful_payment_services]
+  numerator: 
+    observations: [successful_payment_services]
+    groupby: []
   description: "Number of successful payment sessions except wallet pay in"
 
 successful_payment_services_amount:
   title: successful_payment_services_amount
   tags: [payments]
-  numerator: [services_amount]
+  numerator: 
+    observations: [services_amount]
+    groupby: []
   description: "Amount of successful payments except wallet pay in"
 
 ###############################################################################
@@ -4758,28 +4764,42 @@ selected_payment_method_share_proportion_cv:
 successful_payment_share_services:
   description: "Share of successful payments except wallet pay in step3/step1"
   tags: [payments]
-  numerator: [successful_payment_services]
-  denominator: [payment_method_page_services]
+  numerator:
+    observations: [successful_payment_services]
+    groupby: []
+  denominator:
+    observations: [payment_method_page_services]
+    groupby: []
 
 successful_payment_share_proportion_services:
   description: "Share of successful payments except wallet pay in step3/step1 (proportion)"
   tags: [payments]
-  groupby: [participant]
-  numerator: [successful_payment_services]
-  denominator: [payment_method_page_services]
+  numerator:
+    observations: [successful_payment_services]
+    groupby: [participant]
+  denominator:
+    observations: [payment_method_page_services]
+    groupby: [participant]
 
 selected_payment_method_share_services:
   description: "Share of payment sessions except wallet pay in with selected payment method step2/step1"
   tags: [payments]
-  numerator: [payment_method_choice_services]
-  denominator: [payment_method_page_services]
+  numerator:
+    observations: [payment_method_choice_services]
+    groupby: []
+  denominator:
+    observations: [payment_method_page_services]
+    groupby: []
 
 selected_payment_method_share_proportion_services:
   description: "Share of payment sessions except wallet pay in with selected payment method step2/step1 (proportion)"
   tags: [payments]
-  groupby: [participant]
-  numerator: [payment_method_choice_services]
-  denominator: [payment_method_page_services]
+  numerator:
+    observations: [payment_method_choice_services]
+    groupby: [participant]
+  denominator:
+    observations: [payment_method_page_services]
+    groupby: [participant]
 
 main_payment_methods_share:
   description: "Share of successful payments by cards and SBOL"
