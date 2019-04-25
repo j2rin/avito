@@ -73,6 +73,13 @@ favorites_added:
   tags: [i2, bx, fav, total]
   numerator:
     observations: [favorites_added]
+    
+favorites_net:
+  title: favorites_net
+  description: "Favorites added - favorites removed"
+  tags: [i2, bx, fav, total]
+  numerator:
+    observations: [favorites_net]
 
 first_messages:
   title: first_messages
@@ -155,6 +162,13 @@ ad_fails:
   tags: [i1, bx]
   numerator:
     observations: [ad_fails]
+    
+call_phones:
+  description: "Показ экрана набора номера. Актуально для Андроида"
+  tags: [i1, bx]
+  numerator:
+    observations: [call_phone_screen_views]
+    
 
 ###############################################################################
 # Buyer :: Ratios
@@ -181,6 +195,13 @@ delivery_orders_per_flow_begining:
     observations: [delivery_order_created]
   denominator:
     observations: [delivery_flow_beginings]
+    
+call_phones_per_phone_views:
+  tags: [i1, bx]
+  numerator:
+    observations: [call_phone_screen_views]
+  denominator:
+    observations: [phone_views_item_right, phone_views_item_top]
 
 ###############################################################################
 # Buyer :: User Totals
@@ -289,11 +310,19 @@ pin_clickers:
 
 users_2plus_actions:
   title: users_2plus_actions
-  tags: [i1, bx, user, map]
+  tags: [i1, bx, user]
   numerator:
     observations: [active_actions_2plus]
     groupby: [participant]    
     
+users_phone_calls:
+  title: users_phone_calls
+  tags: [i1, bx, user]
+  numerator:
+    observations: [call_phone_screen_views]
+    groupby: [participant]  
+    
+
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -819,8 +848,8 @@ searches:
   tags: [i2, bx, total]
   numerator:
     observations: [searches]
-  description: only first page
-
+  description: only first page 
+  
 searches_new:
   title: searches_new
   tags: [i2, bx, total]
@@ -1093,6 +1122,54 @@ share_suggest_buyers_to_all_users:
   numerator:
     observations: [sessions_with_suggest_click_and_contact]
     groupby: [participant]
+    
+filters_screen_shows:
+  title: filters_screen_shows
+  tags: [i4, bx, total]
+  numerator:
+    observations: [filters_screen_shows]
+    
+filters_price_searches:
+  title: filters_price_searches
+  tags: [i4, bx, total]
+  numerator:
+    observations: [price_filter_searches]
+    
+filters_rubricator_searches:
+  description: "Without prices, local geo, radius etc"
+  title: filters_rubricator_searches
+  tags: [i4, bx, total]
+  numerator:
+    observations: [filter_searches]
+    
+filters_local_geo_searches:
+  description: "Metro, district, road"
+  title: filters_local_geo_searches
+  tags: [i4, bx, total]
+  numerator:
+    observations: [local_geo_filter_searches]
+    
+filters_radius_searches:
+  description: "All radius searches with radius >0"
+  title: filters_radius_searches
+  tags: [i4, bx, total]
+  numerator:
+    observations: [radius_searches]
+
+filters_prc_rubr_searches:
+  description: "price and/or rubricator filters"
+  title: filters_prc_rubr_searches
+  tags: [i4, bx, total]
+  numerator:
+    observations: [filter_searches,price_filter_searches]
+    
+filters_any_searches:
+  description: "All filters: rubricator, geo, radius, prices"
+  title: filters_any_searches
+  tags: [i4, bx, total]
+  numerator:
+    observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
+    
 
 ###############################################################################
 # Search :: Ratios
@@ -1610,6 +1687,42 @@ serp_noq_small_per_s_noq:
     observations: [serp_without_query_small]
   denominator:
     observations: [searches_without_query]
+    
+filters_local_geo_per_searches:
+  description: "Metro, district, road usage per search"
+  title: filters_local_geo_per_searches
+  tags: [i4, bx, ratio]
+  numerator:
+    observations: [local_geo_filter_searches]
+  denominator:
+    observations: [searches]
+    
+filters_radius_per_searches:
+  description: "All radius searches with radius >0 per search"
+  title: filters_radius_per_searches
+  tags: [i4, bx, ratio]
+  numerator:
+    observations: [radius_searches]
+  denominator:
+    observations: [searches]
+
+filters_pr_rubr_per_searches:
+  description: "price and/or rubricator filters usage per search"
+  title: filters_pr_rubr_per_searches
+  tags: [i4, bx, ratio]
+  numerator:
+    observations: [filter_searches,price_filter_searches]
+  denominator:
+    observations: [searches]
+
+filters_any_per_searches:
+  description: "Any filters per search"
+  title: filters_any_per_searches
+  tags: [i4, bx, ratio]
+  numerator:
+    observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
+  denominator:
+    observations: [searches]
 
 ###############################################################################
 # Session :: Totals
@@ -2085,6 +2198,38 @@ search_suggest_clicks:
   tags: [ss, sgt]
   numerator:
     observations: [search_suggest_clicks]
+    groupby: [participant]
+    
+filters_pr_rubr_users:
+  description: "price and/or rubricator filters users"
+  title: filters_pr_rubr_users
+  tags: [i4, bx, user]
+  numerator:
+    observations: [filter_searches,price_filter_searches]
+    groupby: [participant]
+    
+filters_local_geo_users:
+  description: local geo filters users"
+  title: filters_local_geo_users
+  tags: [i4, bx, user]
+  numerator:
+    observations: [local_geo_filter_searches]
+    groupby: [participant]
+    
+filters_radius_users:
+  description: "radius filters users"
+  title: filters_radius_users
+  tags: [i4, bx, user]
+  numerator:
+    observations: [radius_searches]
+    groupby: [participant]
+    
+filters_any_users:
+  description: "Any filters users"
+  title: filters_any_users
+  tags: [i4, bx, user]
+  numerator:
+    observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
     groupby: [participant]
 
 ###############################################################################
