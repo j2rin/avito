@@ -4068,16 +4068,16 @@ restore_start_proportion:
 ###############################################################################
 
 items_added:
-  tags: [critical, sx, total, item_add]
+  tags: [critical, sx, item_add]
   numerator:
     observations: [items_added]
-  description: "Items started for paticipant_type='cookie'"
+  description: "Items created before payment and moderation, calculates for cookie and user"
 
 items_add_started:
-  tags: [i3, sx, total, item_add]
+  tags: [i3, sx, item_add]
   numerator:
     observations: [items_add_started]
-  description: "Items add started for paticipant_type='cookie'"
+  description: "Item add start, calculates for cookie and user"
 
 items_started:
   title: items_started
@@ -4112,14 +4112,27 @@ items_sold_onavito:
   tags: [sx, liquidity, i0]
   numerator:
     observations: [items_sold_onavito]
-  description: "Items closed with reason Sold on Avito"
+  description: "Items closed with reason Sold on Avito by platform of last activation"
+
+items_sold_onavito_total:
+  tags: [sx, liquidity, i0]
+  numerator:
+    observations: [items_sold_onavito_total]
+  description: "Items closed with reason Sold on Avito total"
 
 items_sold_onavito_start_date:
   title: items_sold_onavito_start_date
   tags: [i2, user, sx, liquidity]
   numerator:
     observations: [items_sold_onavito]
-  description: "Items closed with reason Sold on Avito for items created after exposure"
+  description: "Items closed with reason Sold on Avito for items created after exposure by platform of last activation"
+  date_filter: [start]
+
+items_sold_onavito_total_start_date:
+  tags: [i2, user, sx, liquidity]
+  numerator:
+    observations: [items_sold_onavito_total]
+  description: "Items closed with reason Sold on Avito for items created after exposure total"
   date_filter: [start]
 
 items_closed_no_answer:
@@ -4137,28 +4150,53 @@ items_closed_with_answer:
   description: "Items closed with answer by platform of closing"
 
 items_closed_by_user:
-  description: "Items closed by user"
+  description: "Items closed by user by platform of last activation"
   tags: [sx, liquidity, i1]
   numerator:
     observations: [items_closed_by_user]
 
+items_closed_by_user_total:
+  description: "Items closed by user total"
+  tags: [sx, liquidity, i1]
+  numerator:
+    observations: [items_closed_by_user_total]
+
 active_items:
-  description: "Active items"
+  description: "Active items by platform of last activation"
   tags: [sx, i1]
   numerator:
     observations: [active_items]
 
+active_items_total:
+  description: "Active items total"
+  tags: [sx, i1]
+  numerator:
+    observations: [active_items_total]
+
 seller_contacts:
-  description: "Seller contacts"
+  description: "Seller contacts by platform of last activation"
   tags: [sx, liquidity, i4]
   numerator:
     observations: [seller_contacts]
 
+seller_contacts_total:
+  description: "Seller contacts total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_contacts_total]
+
 seller_contacts_start_date:
-  description: "Seller contacts for items created after exposure"
+  description: "Seller contacts for items created after exposure by platfrom of last activation"
   tags: [sx, liquidity, i4]
   numerator:
     observations: [seller_contacts]
+  date_filter: [start]
+
+seller_contacts_total_start_date:
+  description: "Seller contacts for items created after exposure total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_contacts_total]
   date_filter: [start]
 
 lf_amount_net:
@@ -4175,55 +4213,107 @@ lf_amount_net_start_date:
   date_filter: [start]
 
 items_allowed:
-  description: "Items allowed by moderation"
+  description: "Items allowed by moderation by platform of last activation"
   tags: [sx, item_add, moderation, i2]
   numerator:
     observations: [items_allowed]
 
 items_allowed_start_date:
-  description: "Items created after exposure and allowed by moderation"
+  description: "Items created after exposure and allowed by moderation by platform of last activation"
   tags: [sx, item_add, moderation, i3]
   numerator:
     observations: [items_allowed]
   date_filter: [start]
 
+items_allowed_total:
+  description: "Items allowed by moderation total"
+  tags: [sx, item_add, moderation, i2]
+  numerator:
+    observations: [items_allowed_total]
+
+items_allowed_total_start_date:
+  description: "Items created after exposure and allowed by moderation total"
+  tags: [sx, item_add, moderation, i3]
+  numerator:
+    observations: [items_allowed_total]
+  date_filter: [start]
+
 items_blocked_rejected:
-  description: "Blocked or rejected items"
+  description: "Blocked or rejected items by platform of last activation"
   tags: [sx, moderation, i2]
   numerator:
     observations: [items_blocked_rejected]
 
 items_blocked_rejected_start_date:
-  description: "Blocked or rejected items for items created after exposure"
+  description: "Blocked or rejected items for items created after exposure by platfrorm of last activation"
   tags: [sx, moderation, i3]
   numerator:
     observations: [items_blocked_rejected]
   date_filter: [start]
 
+items_blocked_rejected_total:
+  description: "Blocked or rejected items total"
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_blocked_rejected_total]
+
+items_blocked_rejected_total_start_date:
+  description: "Blocked or rejected items for items created after exposure total"
+  tags: [sx, moderation, i3]
+  numerator:
+    observations: [items_blocked_rejected_total]
+  date_filter: [start]
+
 items_blocked:
-  description: "Blocked items"
+  description: "Blocked items by platform of last activation"
   tags: [sx, moderation, i2]
   numerator:
     observations: [items_blocked]
 
+items_blocked_total:
+  description: "Blocked items total"
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_blocked_total]
+
 items_blocked_start_date:
-  description: "Blocked items"
+  description: "Blocked items for items created after exposure by platform of last activation"
   tags: [sx, moderation, i3]
   numerator:
     observations: [items_blocked]
   date_filter: [start]
 
+items_blocked_total_start_date:
+  description: "Blocked items total for items created after exposure"
+  tags: [sx, moderation, i3]
+  numerator:
+    observations: [items_blocked_total]
+  date_filter: [start]
+
 items_rejected:
-  description: "Rejected items"
+  description: "Rejected items by platform of last activation"
   tags: [sx, moderation, i2]
   numerator:
     observations: [items_rejected]
 
+items_rejected_total:
+  description: "Rejected items total"
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_rejected_total]
+
 items_rejected_start_date:
-  description: "Rejected items"
+  description: "Rejected items created after exposure"
   tags: [sx, moderation, i3]
   numerator:
     observations: [items_rejected]
+  date_filter: [start]
+
+items_rejected_total_start_date:
+  description: "Rejected items created after exposure total"
+  tags: [sx, moderation, i3]
+  numerator:
+    observations: [items_rejected_total]
   date_filter: [start]
 
 seller_favorites_added:
@@ -4232,21 +4322,40 @@ seller_favorites_added:
   numerator:
     observations: [seller_favorites_added]
 
+seller_favorites_added_total:
+  description: "Favorites add total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_favorites_added_total]
+
 seller_favorites_added_start_date:
-  description: "Favorites add for items created after exposure"
+  description: "Favorites add for items created after exposure by platform of last activation"
   tags: [sx, liquidity, i4]
   numerator:
     observations: [seller_favorites_added]
   date_filter: [start]
 
+seller_favorites_added_start_date_total:
+  description: "Favorites add for items created after exposure total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_favorites_added_total]
+  date_filter: [start]
+
 seller_favorites_removed:
-  description: "Favorites removed"
+  description: "Favorites removed by platform of last activation"
   tags: [sx, liquidity, i4]
   numerator:
     observations: [seller_favorites_removed]
 
+seller_favorites_removed_total:
+  description: "Favorites removed total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_favorites_removed_total]
+
 seller_favorites_removed_start_date:
-  description: "Favorites removed for items created after exposure"
+  description: "Favorites removed for items created after exposure by platform of last activation"
   tags: [sx, liquidity, i4]
   numerator:
     observations: [seller_favorites_removed]
@@ -4346,7 +4455,7 @@ items_edited_by_src:
     observations: [items_edited_by_src]
 
 helpdesk_seller_tickets:
-  description: "Items edits"
+  description: "Helpdesk tickets created by user"
   tags: [sx, support, i3]
   numerator:
     observations: [helpdesk_seller_tickets]
@@ -4364,10 +4473,40 @@ seller_items_favorites_removed:
     observations: [seller_items_favorites_removed]
 
 sellers_items_with_contacts:
-  description: "Items with contacts"
+  description: "Items with contacts by platform of last activation"
   tags: [sx, liquidity, i4]
   numerator:
     observations: [sellers_items_with_contacts]
+
+sellers_items_with_contacts_total:
+  description: "Items with contacts total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [sellers_items_with_contacts_total]
+
+item_added_chains_3min:
+  description: "Successful item add chains <= 3min"
+  tags: [sx, item_add, i4]
+  numerator:
+    observations: [item_added_chains_3min]
+
+item_added_chains_3_6min:
+  description: "Successful item add chains (3min,6min] long"
+  tags: [sx, item_add, i4]
+  numerator:
+    observations: [item_added_chains_3_6min]
+
+item_added_chains_6_15min:
+  description: "Successful item add chains (6min,15min] long"
+  tags: [sx, item_add, i4]
+  numerator:
+    observations: [item_added_chains_6_15min]
+
+ item_added_chains_15min:
+  description: "Successful item add chains > 15min"
+  tags: [sx, item_add, i4]
+  numerator:
+    observations: [item_added_chains_15min]
 
 ###############################################################################
 # Seller :: Ratios
@@ -4474,6 +4613,35 @@ items_edited_per_items_edit_started_by_src:
   denominator:
     observations: [items_edit_started_by_src]
 
+item_added_chains_3min_share:
+  tags: [sx, item_add, ratio, i4]
+  numerator:
+    observations: [item_added_chains_3min]
+  denominator:
+    observations: [item_added_chains_3min, item_added_chains_3_6min, item_added_chains_6_15min, item_added_chains_15min]
+
+item_added_chains_3_6min_share:
+  tags: [sx, item_add, ratio, i4]
+  numerator:
+    observations: [item_added_chains_3_6min]
+  denominator:
+    observations: [item_added_chains_3min, item_added_chains_3_6min, item_added_chains_6_15min, item_added_chains_15min]
+
+item_added_chains_6_15min_share:
+  tags: [sx, item_add, ratio, i4]
+  numerator:
+    observations: [item_added_chains_6_15min]
+  denominator:
+    observations: [item_added_chains_3min, item_added_chains_3_6min, item_added_chains_6_15min, item_added_chains_15min]
+
+item_added_chains_15min_share:
+  tags: [sx, item_add, ratio, i4]
+  numerator:
+    observations: [item_added_chains_15min]
+  denominator:
+    observations: [item_added_chains_3min, item_added_chains_3_6min, item_added_chains_6_15min, item_added_chains_15min]
+
+
 ###############################################################################
 # Seller :: User Totals
 ###############################################################################
@@ -4532,7 +4700,14 @@ items_sold_onavito_conversion:
   numerator:
     observations: [items_sold_onavito]
     groupby: [participant]
-  description: "Users closed items with reason Sold on Avito"
+  description: "Users closed items with reason Sold on Avito by platform of last activation"
+
+users_item_sold_onavito_total:
+  tags: [sx, liquidity, i0]
+  numerator:
+    observations: [items_sold_onavito_total]
+    groupby: [participant]
+  description: "Users closed items with reason Sold on Avito total"
 
 users_item_closed_no_answer:
   tags: [sx, liquidity, i4]
@@ -4550,31 +4725,60 @@ users_item_closed_with_answer:
   description: "Users who closed items with answer by platform of closing"
 
 users_item_closed_by_user:
-  description: "Users who closed items"
+  description: "Users who closed items by platfrom of last activation"
   tags: [sx, liquidity, i2]
   numerator:
     observations: [items_closed_by_user]
     groupby: [participant]
 
+users_item_closed_by_user_total:
+  description: "Users who closed items total"
+  tags: [sx, liquidity, i2]
+  numerator:
+    observations: [items_closed_by_user_total]
+    groupby: [participant]
+
 users_active_items:
-  description: "Users with active items"
+  description: "Users with active items by platform of last activation"
   tags: [sx, i2]
   numerator:
     observations: [active_items]
     groupby: [participant]
 
+users_active_items_total:
+  description: "Users with active items total"
+  tags: [sx, i2]
+  numerator:
+    observations: [active_items_total]
+    groupby: [participant]
+
 sellers_with_contacts:
-  description: "Sellers with contacted items"
+  description: "Sellers with contacted items by platform of last activation"
   tags: [sx, liquidity, i4]
   numerator:
     observations: [seller_contacts]
     groupby: [participant]
 
+sellers_with_contacts_total:
+  description: "Sellers with contacted items total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_contacts_total]
+    groupby: [participant]
+
 sellers_with_contacts_start_date:
-  description: "Sellers with contacted items created after exposure"
+  description: "Sellers with contacted items created after exposure by platfrom of last activation"
   tags: [sx, liquidity, i4]
   numerator:
     observations: [seller_contacts]
+    groupby: [participant]
+  date_filter: [start]
+
+sellers_with_contacts_total_start_date:
+  description: "Sellers with contacted items created after exposure total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_contacts_total]
     groupby: [participant]
   date_filter: [start]
 
@@ -4608,48 +4812,108 @@ users_item_allowed_start_date:
     groupby: [participant]
   date_filter: [start]
 
+users_item_allowed_total:
+  description: "Users with items allowed by moderation total"
+  tags: [sx, item_add, moderation, i2]
+  numerator:
+    observations: [items_allowed_total]
+    groupby: [participant]
+
+users_item_allowed_start_date_total:
+  description: "Users with items created after exposure and allowed by moderation total"
+  tags: [sx, item_add, moderation, i3]
+  numerator:
+    observations: [items_allowed_total]
+    groupby: [participant]
+  date_filter: [start]
+
 users_item_blocked_rejected:
-  description: "Users with blocked or rejected items"
+  description: "Users with blocked or rejected items by platform of last activation"
   tags: [sx, moderation, i2]
   numerator:
     observations: [items_blocked_rejected]
     groupby: [participant]
 
+users_item_blocked_rejected_total:
+  description: "Users with blocked or rejected items total"
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_blocked_rejected_total]
+    groupby: [participant]
+
 users_item_blocked_rejected_start_date:
-  description: "Users with blocked or rejected items created after exposure"
+  description: "Users with blocked or rejected items created after exposure by platfrorm of last activation"
   tags: [sx, moderation, i3]
   numerator:
     observations: [items_blocked_rejected]
+    groupby: [participant]
+  date_filter: [start]
+
+users_item_blocked_rejected_total_start_date:
+  description: "Users with blocked or rejected items created after exposure total"
+  tags: [sx, moderation, i3]
+  numerator:
+    observations: [items_blocked_rejected_total]
     groupby: [participant]
   date_filter: [start]
 
 users_item_blocked:
-  description: "Users with blocked items"
+  description: "Users with blocked items by platform of last activation"
   tags: [sx, moderation, i2]
   numerator:
     observations: [items_blocked]
     groupby: [participant]
 
+users_item_blocked_total:
+  description: "Users with blocked items total"
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_blocked_total]
+    groupby: [participant]
+
 users_item_blocked_start_date:
-  description: "Users with blocked items"
+  description: "Users with blocked items by platform of last activation"
   tags: [sx, moderation, i3]
   numerator:
     observations: [items_blocked]
     groupby: [participant]
   date_filter: [start]
 
+users_item_blocked_total_start_date:
+  description: "Users with blocked items total for items created after exposure"
+  tags: [sx, moderation, i3]
+  numerator:
+    observations: [items_blocked_total]
+    groupby: [participant]
+  date_filter: [start]
+
 users_item_rejected:
-  description: "Users with rejected items"
+  description: "Users with rejected items by platform of last activation"
   tags: [sx, moderation, i2]
   numerator:
     observations: [items_rejected]
     groupby: [participant]
 
+users_item_rejected_total:
+  description: "Users with rejected items total"
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_rejected_total]
+    groupby: [participant]
+
 users_item_rejected_start_date:
-  description: "Users with rejected items"
+  description: "Users with rejected items created after exposure by platform of last activation"
   tags: [sx, moderation, i3]
   numerator:
     observations: [items_rejected]
+    groupby: [participant]
+  date_filter: [start]
+
+users_item_rejected_total_start_date:
+  description: "Users with rejected items created after exposure total"
+  tags: [sx, moderation, i3]
+  numerator:
+    observations: [items_rejected_total]
     groupby: [participant]
   date_filter: [start]
 
@@ -4667,6 +4931,13 @@ sellers_favorite_added:
     observations: [seller_favorites_added]
     groupby: [participant]
 
+sellers_favorite_added_total:
+  description: "Sellers with items added to favorites total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_favorites_added_total]
+    groupby: [participant]
+
 sellers_favorite_added_start_date:
   description: "Sellers with items created after exposure and added to favorites"
   tags: [sx, liquidity, i4]
@@ -4675,11 +4946,26 @@ sellers_favorite_added_start_date:
     groupby: [participant]
   date_filter: [start]
 
+sellers_favorite_added_total_start_date:
+  description: "Sellers with items created after exposure and added to favorites total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_favorites_added_total]
+    groupby: [participant]
+  date_filter: [start]
+
 sellers_favorite_removed:
   description: "Sellers with items removed from favorites"
   tags: [sx, liquidity, i4]
   numerator:
     observations: [seller_favorites_removed]
+    groupby: [participant]
+
+sellers_favorite_removed_total:
+  description: "Sellers with items removed from favorites total"
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [seller_favorites_removed_total]
     groupby: [participant]
 
 sellers_favorite_removed_start_date:
@@ -4752,6 +5038,41 @@ users_item_edited_by_src:
   tags: [sx, item_edit, i3]
   numerator:
     observations: [item_edits_by_src]
+    groupby: [participant]
+
+users_with_helpdesk_tickets:
+  description: "Users created helpdesk tickets"
+  tags: [sx, item_add, i4]
+  numerator:
+    observations: [helpdesk_seller_tickets]
+    groupby: [participant]
+
+users_with_item_added_chains_3min:
+  description: "Users with successful item add chains <= 3min"
+  tags: [sx, item_add, i4]
+  numerator:
+    observations: [item_added_chains_3min]
+    groupby: [participant]
+
+users_with_item_added_chains_3_6min:
+  description: "Users with successful item add chains (3min,6min] long"
+  tags: [sx, item_add, i4]
+  numerator:
+    observations: [item_added_chains_3_6min]
+    groupby: [participant]
+
+users_with_item_added_chains_6_15min:
+  description: "Users with successful item add chains (6min,15min] long"
+  tags: [sx, item_add, i4]
+  numerator:
+    observations: [item_added_chains_6_15min]
+    groupby: [participant]
+
+users_with_item_added_chains_15min:
+  description: "Users with successful item add chains > 15min"
+  tags: [sx, item_add, i4]
+  numerator:
+    observations: [item_added_chains_15min]
     groupby: [participant]
 
 ##     ## ##    ## ########
@@ -4843,40 +5164,40 @@ contacts_paid_amount_express_cv:
  
 vas_amount:
   description: "Vas amount with bonuses paid by seller"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount]
 
 vas_amount_start_date:
   description: "Vas amount with bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount]
   date_filter: [start]
 
 vas_amount_net:
   description: "Vas amount without bonuses paid by seller"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount_net]
 
 vas_amount_net_start_date:
   description: "Vas amount without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount_net]
   date_filter: [start]
 
 users_vas:
   description: "Users applied VAS"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount_net]
     groupby: [participant]
 
 users_vas_start_date:
   description: "Users applied VAS to items created after exposure"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount_net]
     groupby: [participant]
@@ -4885,54 +5206,54 @@ users_vas_start_date:
 vas_transactions:
   title: vas_transactions
   description: "VAS products transactions"
-  tags: [sx, monetization, vas, i0, m42, tree]
+  tags: [monetization, vas, i0, m42, tree]
   numerator:
     observations: [vas_transactions]
 
 vas_transactions_start_date:
   title: vas_transactions_start_date
   description: "VAS products transactions for items created after exposure"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_transactions]
   date_filter: [start]
 
 vas_amount_turbo:
   description: "vas amount (turbo) with bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_turbo]
 
 vas_amount_turbo_start_date:
   description: "vas amount (turbo) with bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_turbo]
   date_filter: [start]
 
 vas_amount_net_turbo:
   description: "vas amount (turbo) without bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_turbo]
 
 vas_amount_net_turbo_start_date:
   description: "vas amount (turbo) without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_turbo]
   date_filter: [start]
 
 users_vas_turbo:
   description: "Users applied VAS (turbo)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_turbo]
     groupby: [participant]
 
 users_vas_turbo_start_date:
   description: "Users applied VAS (turbo) to items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_turbo]
     groupby: [participant]
@@ -4941,54 +5262,54 @@ users_vas_turbo_start_date:
 vas_transactions_turbo:
   title: vas_transactions_turbo
   description: "VAS (turbo) products transactions"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_turbo]
 
 vas_transactions_turbo_start_date:
   title: vas_transactions_turbo_start_date
   description: "VAS (turbo) products transactions for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_turbo]
   date_filter: [start]
 
 vas_amount_fast:
   description: "vas amount (fast) with bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_fast]
 
 vas_amount_fast_start_date:
   description: "vas amount (fast) with bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_fast]
   date_filter: [start]
 
 vas_amount_net_fast:
   description: "vas amount (fast) without bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_fast]
 
 vas_amount_net_fast_start_date:
   description: "vas amount (fast) without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_fast]
   date_filter: [start]
 
 users_vas_fast:
   description: "Users applied VAS (fast)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_fast]
     groupby: [participant]
 
 users_vas_fast_start_date:
   description: "Users applied VAS (fast) to items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_fast]
     groupby: [participant]
@@ -4997,54 +5318,54 @@ users_vas_fast_start_date:
 vas_transactions_fast:
   title: vas_transactions_fast
   description: "VAS (fast) products transactions"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_fast]
 
 vas_transactions_fast_start_date:
   title: vas_transactions_fast_start_date
   description: "VAS (fast) products transactions for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_fast]
   date_filter: [start]
 
 vas_amount_pushup:
   description: "vas amount (pushup) with bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_pushup]
 
 vas_amount_pushup_start_date:
   description: "vas amount (pushup) with bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_pushup]
   date_filter: [start]
 
 vas_amount_net_pushup:
   description: "vas amount (pushup) without bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_pushup]
 
 vas_amount_net_pushup_start_date:
   description: "vas amount (pushup) without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_pushup]
   date_filter: [start]
 
 users_vas_pushup:
   description: "Users applied VAS (pushup)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_pushup]
     groupby: [participant]
 
 users_vas_pushup_start_date:
   description: "Users applied VAS (pushup) to items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_pushup]
     groupby: [participant]
@@ -5053,54 +5374,54 @@ users_vas_pushup_start_date:
 vas_transactions_pushup:
   title: vas_transactions_pushup
   description: "VAS (pushup) products transactions"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_pushup]
 
 vas_transactions_pushup_start_date:
   title: vas_transactions_pushup_start_date
   description: "VAS (pushup) products transactions for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_pushup]
   date_filter: [start]
 
 vas_amount_premium:
   description: "vas amount (premium) with bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_premium]
 
 vas_amount_premium_start_date:
   description: "vas amount (premium) with bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_premium]
   date_filter: [start]
 
 vas_amount_net_premium:
   description: "vas amount (premium) without bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_premium]
 
 vas_amount_net_premium_start_date:
   description: "vas amount (premium) without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_premium]
   date_filter: [start]
 
 users_vas_premium:
   description: "Users applied VAS (premium)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_premium]
     groupby: [participant]
 
 users_vas_premium_start_date:
   description: "Users applied VAS (premium) to items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_premium]
     groupby: [participant]
@@ -5109,54 +5430,54 @@ users_vas_premium_start_date:
 vas_transactions_premium:
   title: vas_transactions_premium
   description: "VAS (premium) products transactions"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_premium]
 
 vas_transactions_premium_start_date:
   title: vas_transactions_premium_start_date
   description: "VAS (premium) products transactions for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_premium]
   date_filter: [start]
 
 vas_amount_vip:
   description: "vas amount (vip) with bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_vip]
 
 vas_amount_vip_start_date:
   description: "vas amount (vip) with bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_vip]
   date_filter: [start]
 
 vas_amount_net_vip:
   description: "vas amount (vip) without bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_vip]
 
 vas_amount_net_vip_start_date:
   description: "vas amount (vip) without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_vip]
   date_filter: [start]
 
 users_vas_vip:
   description: "Users applied VAS (vip)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_vip]
     groupby: [participant]
 
 users_vas_vip_start_date:
   description: "Users applied VAS (vip) to items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_vip]
     groupby: [participant]
@@ -5165,54 +5486,54 @@ users_vas_vip_start_date:
 vas_transactions_vip:
   title: vas_transactions_vip
   description: "VAS (vip) products transactions"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_vip]
 
 vas_transactions_vip_start_date:
   title: vas_transactions_vip_start_date
   description: "VAS (vip) products transactions for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_vip]
   date_filter: [start]
 
 vas_amount_xl:
   description: "vas amount (xl) with bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_xl]
 
 vas_amount_xl_start_date:
   description: "vas amount (xl) with bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_xl]
   date_filter: [start]
 
 vas_amount_net_xl:
   description: "vas amount (xl) without bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_xl]
 
 vas_amount_net_xl_start_date:
   description: "vas amount (xl) without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_xl]
   date_filter: [start]
 
 users_vas_xl:
   description: "Users applied VAS (xl)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_xl]
     groupby: [participant]
 
 users_vas_xl_start_date:
   description: "Users applied VAS (xl) to items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_xl]
     groupby: [participant]
@@ -5221,54 +5542,54 @@ users_vas_xl_start_date:
 vas_transactions_xl:
   title: vas_transactions_xl
   description: "VAS (xl) products transactions"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_xl]
 
 vas_transactions_xl_start_date:
   title: vas_transactions_xl_start_date
   description: "VAS (xl) products transactions for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_xl]
   date_filter: [start]
 
 vas_amount_highlight:
   description: "vas amount (highlight) with bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_highlight]
 
 vas_amount_highlight_start_date:
   description: "vas amount (highlight) with bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_highlight]
   date_filter: [start]
 
 vas_amount_net_highlight:
   description: "vas amount (highlight) without bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_highlight]
 
 vas_amount_net_highlight_start_date:
   description: "vas amount (highlight) without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_highlight]
   date_filter: [start]
 
 users_vas_highlight:
   description: "Users applied VAS (highlight)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_highlight]
     groupby: [participant]
 
 users_vas_highlight_start_date:
   description: "Users applied VAS (highlight) to items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_highlight]
     groupby: [participant]
@@ -5277,54 +5598,54 @@ users_vas_highlight_start_date:
 vas_transactions_highlight:
   title: vas_transactions_highlight
   description: "VAS (highlight) products transactions"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_highlight]
 
 vas_transactions_highlight_start_date:
   title: vas_transactions_highlight_start_date
   description: "VAS (highlight) products transactions for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_highlight]
   date_filter: [start]
 
 vas_amount_activation:
   description: "vas amount (activation) with bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_activation]
 
 vas_amount_activation_start_date:
   description: "vas amount (activation) with bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_activation]
   date_filter: [start]
 
 vas_amount_net_activation:
   description: "vas amount (activation) without bonuses paid by seller"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_activation]
 
 vas_amount_net_activation_start_date:
   description: "vas amount (activation) without bonuses paid by seller for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_activation]
   date_filter: [start]
 
 users_vas_activation:
   description: "Users applied VAS (activation)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_activation]
     groupby: [participant]
 
 users_vas_activation_start_date:
   description: "Users applied VAS (activation) to items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_activation]
     groupby: [participant]
@@ -5333,14 +5654,14 @@ users_vas_activation_start_date:
 vas_transactions_activation:
   title: vas_transactions_activation
   description: "VAS (activation) products transactions"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_activation]
 
 vas_transactions_activation_start_date:
   title: vas_transactions_activation_start_date
   description: "VAS (activation) products transactions for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_transactions_activation]
   date_filter: [start]
@@ -5399,7 +5720,7 @@ express_cv_allowed_conversion:
 vas_avo_net:
   title: vas_avo_net
   description: "Vas amount without bonuses paid by seller divided by number of transactions (AVO - average value order)"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount_net]
   denominator:
@@ -5408,7 +5729,7 @@ vas_avo_net:
 vas_avo_net_start_date:
   title: vas_avo_net_start_date
   description: "Vas amount without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount_net]
   denominator:
@@ -5418,7 +5739,7 @@ vas_avo_net_start_date:
 vas_avo:
   title: vas_avo
   description: "Vas amount with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount]
   denominator:
@@ -5427,7 +5748,7 @@ vas_avo:
 vas_avo_start_date:
   title: vas_avo_start_date
   description: "Vas amount with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i0]
+  tags: [monetization, vas, i0]
   numerator:
     observations: [vas_amount]
   denominator:
@@ -5437,7 +5758,7 @@ vas_avo_start_date:
 vas_avo_net_turbo:
   title: vas_avo_net_turbo
   description: "vas amount (turbo) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_turbo]
   denominator:
@@ -5446,7 +5767,7 @@ vas_avo_net_turbo:
 vas_avo_net_turbo_start_date:
   title: vas_avo_net_turbo_start_date
   description: "vas amount (turbo) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_turbo]
   denominator:
@@ -5456,7 +5777,7 @@ vas_avo_net_turbo_start_date:
 vas_avo_turbo:
   title: vas_avo_turbo
   description: "vas amount (turbo) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_turbo]
   denominator:
@@ -5465,7 +5786,7 @@ vas_avo_turbo:
 vas_avo_turbo_start_date:
   title: vas_avo_turbo_start_date
   description: "vas amount (turbo) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_turbo]
   denominator:
@@ -5475,7 +5796,7 @@ vas_avo_turbo_start_date:
 vas_avo_net_fast:
   title: vas_avo_net_fast
   description: "vas amount (fast) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_fast]
   denominator:
@@ -5484,7 +5805,7 @@ vas_avo_net_fast:
 vas_avo_net_fast_start_date:
   title: vas_avo_net_fast_start_date
   description: "vas amount (fast) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_fast]
   denominator:
@@ -5494,7 +5815,7 @@ vas_avo_net_fast_start_date:
 vas_avo_fast:
   title: vas_avo_fast
   description: "vas amount (fast) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_fast]
   denominator:
@@ -5503,7 +5824,7 @@ vas_avo_fast:
 vas_avo_fast_start_date:
   title: vas_avo_fast_start_date
   description: "vas amount (fast) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_fast]
   denominator:
@@ -5513,7 +5834,7 @@ vas_avo_fast_start_date:
 vas_avo_net_pushup:
   title: vas_avo_net_pushup
   description: "vas amount (pushup) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_pushup]
   denominator:
@@ -5522,7 +5843,7 @@ vas_avo_net_pushup:
 vas_avo_net_pushup_start_date:
   title: vas_avo_net_pushup_start_date
   description: "vas amount (pushup) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_pushup]
   denominator:
@@ -5532,7 +5853,7 @@ vas_avo_net_pushup_start_date:
 vas_avo_pushup:
   title: vas_avo_pushup
   description: "vas amount (pushup) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_pushup]
   denominator:
@@ -5541,7 +5862,7 @@ vas_avo_pushup:
 vas_avo_pushup_start_date:
   title: vas_avo_pushup_start_date
   description: "vas amount (pushup) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_pushup]
   denominator:
@@ -5551,7 +5872,7 @@ vas_avo_pushup_start_date:
 vas_avo_net_premium:
   title: vas_avo_net_premium
   description: "vas amount (premium) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_premium]
   denominator:
@@ -5560,7 +5881,7 @@ vas_avo_net_premium:
 vas_avo_net_premium_start_date:
   title: vas_avo_net_premium_start_date
   description: "vas amount (premium) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_premium]
   denominator:
@@ -5570,7 +5891,7 @@ vas_avo_net_premium_start_date:
 vas_avo_premium:
   title: vas_avo_premium
   description: "vas amount (premium) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_premium]
   denominator:
@@ -5579,7 +5900,7 @@ vas_avo_premium:
 vas_avo_premium_start_date:
   title: vas_avo_premium_start_date
   description: "vas amount (premium) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_premium]
   denominator:
@@ -5589,7 +5910,7 @@ vas_avo_premium_start_date:
 vas_avo_net_vip:
   title: vas_avo_net_vip
   description: "vas amount (vip) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_vip]
   denominator:
@@ -5598,7 +5919,7 @@ vas_avo_net_vip:
 vas_avo_net_vip_start_date:
   title: vas_avo_net_vip_start_date
   description: "vas amount (vip) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_vip]
   denominator:
@@ -5608,7 +5929,7 @@ vas_avo_net_vip_start_date:
 vas_avo_vip:
   title: vas_avo_vip
   description: "vas amount (vip) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_vip]
   denominator:
@@ -5617,7 +5938,7 @@ vas_avo_vip:
 vas_avo_vip_start_date:
   title: vas_avo_vip_start_date
   description: "vas amount (vip) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_vip]
   denominator:
@@ -5627,7 +5948,7 @@ vas_avo_vip_start_date:
 vas_avo_net_xl:
   title: vas_avo_net_xl
   description: "vas amount (xl) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_xl]
   denominator:
@@ -5636,7 +5957,7 @@ vas_avo_net_xl:
 vas_avo_net_xl_start_date:
   title: vas_avo_net_xl_start_date
   description: "vas amount (xl) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_xl]
   denominator:
@@ -5646,7 +5967,7 @@ vas_avo_net_xl_start_date:
 vas_avo_xl:
   title: vas_avo_xl
   description: "vas amount (xl) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_xl]
   denominator:
@@ -5655,7 +5976,7 @@ vas_avo_xl:
 vas_avo_xl_start_date:
   title: vas_avo_xl_start_date
   description: "vas amount (xl) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_xl]
   denominator:
@@ -5665,7 +5986,7 @@ vas_avo_xl_start_date:
 vas_avo_net_highlight:
   title: vas_avo_net_highlight
   description: "vas amount (highlight) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_highlight]
   denominator:
@@ -5674,7 +5995,7 @@ vas_avo_net_highlight:
 vas_avo_net_highlight_start_date:
   title: vas_avo_net_highlight_start_date
   description: "vas amount (highlight) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_highlight]
   denominator:
@@ -5684,7 +6005,7 @@ vas_avo_net_highlight_start_date:
 vas_avo_highlight:
   title: vas_avo_highlight
   description: "vas amount (highlight) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_highlight]
   denominator:
@@ -5693,7 +6014,7 @@ vas_avo_highlight:
 vas_avo_highlight_start_date:
   title: vas_avo_highlight_start_date
   description: "vas amount (highlight) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_highlight]
   denominator:
@@ -5703,7 +6024,7 @@ vas_avo_highlight_start_date:
 vas_avo_net_activation:
   title: vas_avo_net_activation
   description: "vas amount (activation) without bonuses paid by seller divided by number of transactions (AVO - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_activation]
   denominator:
@@ -5712,7 +6033,7 @@ vas_avo_net_activation:
 vas_avo_net_activation_start_date:
   title: vas_avo_net_activation_start_date
   description: "vas amount (activation) without bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_net_activation]
   denominator:
@@ -5722,7 +6043,7 @@ vas_avo_net_activation_start_date:
 vas_avo_activation:
   title: vas_avo_activation
   description: "vas amount (activation) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_activation]
   denominator:
@@ -5731,7 +6052,7 @@ vas_avo_activation:
 vas_avo_activation_start_date:
   title: vas_avo_activation_start_date
   description: "vas amount (activation) with bonuses paid by seller divided by number of transactions (AVO_net - average value order)  for items created after exposure"
-  tags: [sx, monetization, vas, i1]
+  tags: [monetization, vas, i1]
   numerator:
     observations: [vas_amount_activation]
   denominator:
