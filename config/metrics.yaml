@@ -3813,6 +3813,15 @@ fs_subscribers_per_seller:
 # TNS :: Ratios
 ###############################################################################
 
+authorized_visitors_share:
+  numerator:
+    observations: [page_views_authorized]
+    groupby: [participant]
+  denominator:
+    observations: [page_views_all]
+    groupby: [participant]
+  description: "Доля авторизованных пользователей из активных, совершивших page view"
+
 user_registration_cr:
   title: user_registration_conv
   description: "share of unique cookies with successful registration (not social) among those who had registration start screen"
@@ -3968,6 +3977,28 @@ active_sellers_with_fs_subscribers_share:
 ###############################################################################
 # TNS :: User Totals
 ###############################################################################
+
+daily_active_users:
+  numerator:
+    observations: [page_views_all]
+    groupby: [participant]
+  description: "Количество пользователей, совершивших хотя бы 1 page view"
+  
+daily_active_authorized_users:
+  numerator:
+    observations: [page_views_authorized]
+    groupby: [participant]
+  description: "Количество пользователей, совершивших хотя бы 1 page view"
+  
+page_views:
+  numerator:
+    observations: [page_views_all]
+  description: "Количество page view"
+  
+authorized_page_views:
+  numerator:
+    observations: [page_views_authorized]
+  description: "Количество page view в авторизованном состоянии"
 
 password_restore_request_proportion:
   numerator:
