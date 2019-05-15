@@ -72,14 +72,7 @@ favorites_added:
   title: favorites_added
   tags: [i2, bx, fav, total]
   numerator:
-    observations: [favorites_added]
-    
-favorites_net:
-  title: favorites_net
-  description: "Favorites added - favorites removed"
-  tags: [i2, bx, fav, total]
-  numerator:
-    observations: [favorites_net]
+    observations: [favorites_added]   
 
 first_messages:
   title: first_messages
@@ -128,6 +121,21 @@ bt_clicks:
   tags: [i1, bx, total]
   numerator:
     observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks]
+    
+favorites_net:
+  title: favorites_net
+  description: "Чистое число добавленных в избранное. Прежде всего полезно для чистки мискликов. Если пользователь добавил айтем в избранное, затем его удалил, значение будет 0. Если потом снова добавил, то 1"
+  tags: [i2, bx, fav, total]
+  numerator:
+    observations: [favorites_net]
+    groupby: [item, participant]
+    
+favorites_added_grouped:
+  title: favorites_added_grouped
+  tags: [i2, bx, fav, total, group]
+  numerator:
+    observations: [favorites_added]  
+    groupby: [item, participant]
 
 bt_clicks_grouped:
   title: bt_clicks_grouped
