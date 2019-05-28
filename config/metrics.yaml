@@ -181,6 +181,18 @@ call_phones:
   tags: [i1, bx]
   numerator:
     observations: [call_phone_screen_views]
+ 
+calls:
+  description: "Показ экрана набора номера. Актуально для Андроида. То же самое, что call_phones, но с клиента"
+  tags: [i1, bx]
+  numerator:
+    observations: [call_phone_screen_views_client]
+    
+calls_dialogues:
+  description: "Показ экрана диалога звонить/не звонить. Актуально для Андроида."
+  tags: [i2, bx]
+  numerator:
+    observations: [call_phone_dialogues]
     
 
 ###############################################################################
@@ -210,11 +222,27 @@ delivery_orders_per_flow_begining:
     observations: [delivery_flow_beginings]
     
 call_phones_per_phone_views:
-  tags: [i1, bx]
+  tags: [i2, bx, ratio]
   numerator:
     observations: [call_phone_screen_views]
   denominator:
     observations: [phone_views_total]
+    
+calls_per_dialogue:
+  tags: [i2, bx, ratio]
+  numerator:
+    observations: [call_phone_screen_views_client]
+  denominator:
+    observations: [calls_dialogues]
+    
+calls_per_phone_views:
+  tags: [i2, bx, ratio]
+  numerator:
+    observations: [call_phone_screen_views_client]
+  denominator:
+    observations: [phone_views_total]
+    
+    
 
 ###############################################################################
 # Buyer :: User Totals
