@@ -1,4 +1,5 @@
 # Headers generator — http://patorjk.com/software/taag/#p=display&f=Banner3&t=buyer
+# Headers generator — http://patorjk.com/software/taag/#p=display&f=Banner3&t=buyer
 
 ########  ##     ## ##    ## ######## ########
 ##     ## ##     ##  ##  ##  ##       ##     ##
@@ -3781,8 +3782,7 @@ buyers_with_fs_subscriptions:
   description: "number of buyers with subscriptions on favourite sellers"
   tags: [i3, tns, tns_bulb, favsellers]
   numerator:
-    observations: [favourite_sellers_subscriptions_active_new, favourite_sellers_subscriptions_active_old,
-    favourite_sellers_subscriptions_inactive_new, favourite_sellers_subscriptions_inactive_old]
+    observations: [favourite_sellers_subscriptions_active_new, favourite_sellers_subscriptions_active_old, favourite_sellers_subscriptions_inactive_old]
     groupby: [participant]
 
 active_buyers_with_fs_subscriptions:
@@ -3815,8 +3815,7 @@ fs_subscriptions_per_buyer:
   description: "number of subscriptions per buyer"
   tags: [i3, tns, tns_bulb, favsellers]
   numerator:
-    observations: [favourite_sellers_subscriptions_active_new, favourite_sellers_subscriptions_active_old,
-    favourite_sellers_subscriptions_inactive_new, favourite_sellers_subscriptions_inactive_old]
+    observations: [favourite_sellers_subscriptions_active_new, favourite_sellers_subscriptions_active_old, favourite_sellers_subscriptions_inactive_old]
     groupby: []
 
 fs_subscribers_per_seller:
@@ -3826,6 +3825,90 @@ fs_subscribers_per_seller:
   numerator:
     observations: [favourite_sellers_subscribers_active_new, favourite_sellers_subscribers_active_old,
     favourite_sellers_subscribers_inactive_new, favourite_sellers_subscribers_inactive_old]
+    groupby: []
+    
+favouriteseller_adds:
+  description: "number of favourite seller subscriptions per buyer"
+  tags: [i4, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_add]
+    groupby: []
+        
+favouriteseller_deletes:
+  description: "number of favourite seller unsubscriptions per buyer"
+  tags: [i4, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_delete]
+    groupby: []
+        
+favouriteseller_page_opens:
+  description: "number of favourite seller page opens per buyer"
+  tags: [i4, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [user_favouritesellers_open]
+    groupby: []
+        
+favouriteseller_notifications_ons:
+  description: "number of favourite seller notifications subscriptions per buyer"
+  tags: [i4, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_notifications_on]
+    groupby: []
+
+favouriteseller_notifications_offs:
+  description: "number of favourite seller notifications unsubscriptions per buyer"
+  tags: [i4, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_notifications_off]
+    groupby: []
+    
+favouriteseller_activities:
+  description: "number of favourite seller activities per buyer"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_add, buyer_favouriteseller_delete, user_favouritesellers_open, buyer_favouriteseller_notifications_on, buyer_favouriteseller_notifications_off]
+    groupby: []
+
+saved_searches_list_views:
+  description: "number of saved searches list views per buyer"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_list_views]
+    groupby: []
+    
+saved_searches_views:
+  description: "number of saved searches views per buyer"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_list_views]
+    groupby: []
+    
+saved_searches_removals:
+  description: "number of saved searches removals per buyer"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_removals]
+    groupby: []
+
+saved_searches_notifications_ons:
+  description: "number of saved searches notifications on per buyer"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_notifications_add]
+    groupby: []
+    
+saved_searches_notifications_offs:
+  description: "number of saved searches notifications off per buyer"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_notifications_delete]
+    groupby: []
+    
+saved_searches_email_item_clicks:
+  description: "number of saved searches email item clicks per buyer"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_email_item_clicks]
     groupby: []
 
 ###############################################################################
@@ -4110,7 +4193,97 @@ restore_start_proportion:
   numerator:
     observations: [restore_start]
     groupby: [participant]
+    
+users_favouriteseller_add:
+  description: "number of participants, who subscribed on a seller"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_add]
+    groupby: [participant]
+        
+users_favouriteseller_delete:
+  description: "number of participants, who unsubscribed from a seller"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_delete]
+    groupby: [participant]
+        
+users_favouriteseller_page_open:
+  description: "number of participants, who visited favourite sellers page"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [user_favouritesellers_open]
+    groupby: [participant]
+        
+users_favouriteseller_notifications_on:
+  description: "number of participants, who subscribed on favourite seller push-notifications"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_notifications_on]
+    groupby: [participant]
 
+users_favouriteseller_notifications_off:
+  description: "number of participants, who unsubscribed from favourite seller push-notifications"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_notifications_off]
+    groupby: [participant]
+    
+users_favouriteseller_activity:
+  description: "number of participants, who performed any favourite seller activity"
+  tags: [i3, tns, tns_bulb, favsellers]
+  numerator:
+    observations: [buyer_favouriteseller_add, buyer_favouriteseller_delete, user_favouritesellers_open, buyer_favouriteseller_notifications_on, buyer_favouriteseller_notifications_off]
+    groupby: [participant]
+    
+users_saved_searches_list_view:
+  description: "number of participants, who opened search subscriprions page"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_list_views]
+    groupby: [participant]
+    
+users_saved_searches_view:
+  description: "number of participants, who viewed a search subscriprion"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_list_views]
+    groupby: [participant]
+    
+users_saved_searches_added:
+  description: "number of participants, who added search subscriprion"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [saved_searches_added]
+    groupby: [participant]
+    
+users_saved_searches_removed:
+  description: "number of participants, who removed search subscriprion"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_removals]
+    groupby: [participant]
+
+users_saved_searches_notifications_on:
+  description: "number of participants, who turned on search subscriprions notifications"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_notifications_add]
+    groupby: [participant]
+    
+users_saved_searches_notifications_off:
+  description: "number of participants, who turned off search subscriprions notifications"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_notifications_delete]
+    groupby: [participant]
+    
+users_saved_searches_email_item_click:
+  description: "number of participants, who clicked search subscriprions email"
+  tags: [i4, tns, tns_bulb, ss]
+  numerator:
+    observations: [search_subscription_email_item_clicks]
+    groupby: [participant]
 
  ######  ######## ##       ##       ######## ########
 ##    ## ##       ##       ##       ##       ##     ##
