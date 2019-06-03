@@ -7201,3 +7201,170 @@ di_exc:
   tags: [performance]
   numerator:
     observations: [di_exceptions]
+
+ ######   #######  ##     ## ##     ## ##     ## ##    ## ####  ######     ###    ######## ####  #######  ##    ##  ######  
+##    ## ##     ## ###   ### ###   ### ##     ## ###   ##  ##  ##    ##   ## ##      ##     ##  ##     ## ###   ## ##    ## 
+##       ##     ## #### #### #### #### ##     ## ####  ##  ##  ##        ##   ##     ##     ##  ##     ## ####  ## ##       
+##       ##     ## ## ### ## ## ### ## ##     ## ## ## ##  ##  ##       ##     ##    ##     ##  ##     ## ## ## ##  ######  
+##       ##     ## ##     ## ##     ## ##     ## ##  ####  ##  ##       #########    ##     ##  ##     ## ##  ####       ## 
+##    ## ##     ## ##     ## ##     ## ##     ## ##   ###  ##  ##    ## ##     ##    ##     ##  ##     ## ##   ### ##    ## 
+ ######   #######  ##     ## ##     ##  #######  ##    ## ####  ######  ##     ##    ##    ####  #######  ##    ##  ######  
+###############################################################################
+# Communications :: Totals
+###############################################################################
+anonnumber_calls:
+  title: anonnumber_calls
+  description: "Количество незаблокированных звонков на привязанные к объявлениям номера сервиса Анонимный Номер"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_calls]
+
+anonnumber_users:
+  title: anonnumber_users
+  description: "Количество пользователей, которым звонили через сервис Анонимный Номер"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
+
+anonnumber_success_calls:
+  title: anonnumber_success_calls
+  description: "Количество звонков сервиса Анонимный Номер с длительностью соединения более 3 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_calls]
+
+anonnumber_success_users:
+  title: anonnumber_success_users
+  description: "Количество пользователей, которым поступали звонки через сервис Анонимный Номер с длительностью соединения более 3 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_calls]
+    groupby: [participant]
+
+anonnumber_success_talks:
+  title: anonnumber_success_talks
+  description: "Количество звонков сервиса Анонимный Номер с длительностью разговора более 3 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_talks]
+
+anonnumber_success_talkers:
+  title: anonnumber_success_talkers
+  description: "Количество пользователей, которым поступали звонки через сервис Анонимный Номер с длительностью разговора более 3 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_talks]
+    groupby: [participant]
+
+anonnumber_calls_dur:
+  title: anonnumber_calls_dur
+  description: "Общая длительность (сек.) незаблокированных звонков на привязанные к объявлениям номера сервиса Анонимный Номер"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_calls_duration]
+
+anonnumber_talks_dur:
+  title: anonnumber_talks_dur
+  description: "Длительность разоворов (сек.) по звонкам на привязанные к объявлениям номера сервиса Анонимный Номер"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_talks_duration]
+
+###############################################################################
+# Communications :: Ratios
+###############################################################################
+anonnumber_calls_per_user:
+  title: anonnumber_calls_per_user
+  description: "Среднее количество звонков на пользователя"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_calls]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
+
+anonnumber_success_calls_per_user:
+  title: anonnumber_success_calls_per_user
+  description: "Среднее количество успешных звонков (длительность соединения больше 3 секунд) на пользователя"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_calls]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
+
+anonnumber_success_talks_per_user:
+  title: anonnumber_success_talks_per_user
+  description: "Среднее количество успешных разговоров (длительность разговора больше 3 секунд) на пользователя"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_talks]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
+
+anonnumber_success_calls_ratio:
+  title: anonnumber_success_calls_ratio
+  description: "Доля звонков сервиса Анонимный Номер с длительностью соединения более 3 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_calls]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: []
+
+anonnumber_success_talks_ratio:
+  title: anonnumber_success_talks_ratio
+  description: "Доля звонков сервиса Анонимный Номер с длительностью соединения более 3 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_talks]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: []
+
+anonnumber_call_dur_per_call:
+  title: anonnumber_call_dur_per_call
+  description: "Средняя общая продолжительность звонка"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_calls_duration]
+  denominator:
+    observations: [anonnumber_calls]
+
+anonnumber_call_dur_per_user:
+  title: anonnumber_call_dur_per_user
+  description: "Средняя общая продолжительность звонков на пользователя"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_calls_duration]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
+
+anonnumber_talk_dur_per_call:
+  title: anonnumber_talk_dur_per_call
+  description: "Средняя продолжительность разговора звонка"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_talks_duration]
+  denominator:
+    observations: [anonnumber_calls]
+
+anonnumber_talk_dur_per_user:
+  title: anonnumber_talk_dur_per_user
+  description: "Средняя продолжительность разговоров пользователя"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_talks_duration]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
