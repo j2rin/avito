@@ -4449,11 +4449,24 @@ items_sold_onavito:
     observations: [items_sold_onavito]
   description: "Items closed with reason Sold on Avito by platform of last activation"
 
+items_sold_notonavito:
+  title: items_sold_notonavito
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_notonavito]
+  description: "Items closed with reason Sold not on Avito by platform of last activation"
+
 items_sold_onavito_total:
   tags: [sx, liquidity, i0]
   numerator:
     observations: [items_sold_onavito_total]
   description: "Items closed with reason Sold on Avito total"
+
+items_sold_notonavito_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_notonavito_total]
+  description: "Items closed with reason Sold not on Avito total"
 
 items_sold_onavito_start_date:
   title: items_sold_onavito_start_date
@@ -4463,6 +4476,14 @@ items_sold_onavito_start_date:
   description: "Items closed with reason Sold on Avito for items created after exposure by platform of last activation"
   date_filter: [start]
 
+items_sold_notonavito_start_date:
+  title: items_sold_notonavito_start_date
+  tags: [i4, user, sx, liquidity]
+  numerator:
+    observations: [items_sold_notonavito]
+  description: "Items closed with reason Sold not on Avito for items created after exposure by platform of last activation"
+  date_filter: [start]
+
 items_sold_onavito_total_start_date:
   tags: [i2, user, sx, liquidity]
   numerator:
@@ -4470,19 +4491,40 @@ items_sold_onavito_total_start_date:
   description: "Items closed with reason Sold on Avito for items created after exposure total"
   date_filter: [start]
 
+items_sold_notonavito_total_start_date:
+  tags: [i4, user, sx, liquidity]
+  numerator:
+    observations: [items_sold_notonavito_total]
+  description: "Items closed with reason Sold not on Avito for items created after exposure total"
+  date_filter: [start]
+
 items_closed_no_answer:
   title: items_closed_no_answer
   tags: [sx, liquidity, i4]
   numerator:
     observations: [items_closed_no_answer]
-  description: "Items closed without answer by platform of closing"
+  description: "Items closed without answer by platform of last activation"
 
 items_closed_with_answer:
   title: items_closed_with_answer
   tags: [sx, liquidity, i4]
   numerator:
     observations: [items_closed_with_answer]
-  description: "Items closed with answer by platform of closing"
+  description: "Items closed with answer by platform of last activation"
+
+items_closed_by_ttl:
+  title: items_closed_by_ttl
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_by_ttl]
+  description: "Items closed by ttl by platform of last activation"
+
+items_archived:
+  title: items_archived
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_archived]
+  description: "Items archived (usualy new unpaid items) by platform of last activation"
 
 items_closed_by_user:
   description: "Items closed by user by platform of last activation"
@@ -5037,6 +5079,14 @@ items_sold_onavito_conversion:
     groupby: [participant]
   description: "Users closed items with reason Sold on Avito by platform of last activation"
 
+users_item_sold_notonavito:
+  title: users_item_sold_notonavito
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_notonavito]
+    groupby: [participant]
+  description: "Users closed items with reason Sold not on Avito by platform of last activation"
+
 users_item_sold_onavito_total:
   tags: [sx, liquidity, i0]
   numerator:
@@ -5044,12 +5094,19 @@ users_item_sold_onavito_total:
     groupby: [participant]
   description: "Users closed items with reason Sold on Avito total"
 
+users_item_sold_notonavito_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_notonavito_total]
+    groupby: [participant]
+  description: "Users closed items with reason Sold not on Avito total"
+
 users_item_closed_no_answer:
   tags: [sx, liquidity, i4]
   numerator:
     observations: [items_closed_no_answer]
     groupby: [participant]
-  description: "Users who closed items without answer by platforn of closing"
+  description: "Users who closed items without answer by platform of last activation"
 
 users_item_closed_with_answer:
   title: users_item_closed_with_answer
@@ -5057,7 +5114,23 @@ users_item_closed_with_answer:
   numerator:
     observations: [items_closed_with_answer]
     groupby: [participant]
-  description: "Users who closed items with answer by platform of closing"
+  description: "Users who closed items with answer by platform of last activation"
+
+users_item_closed_by_ttl:
+  title: users_item_closed_by_ttl
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_by_ttl]
+    groupby: [participant]
+  description: "Users with items closed by ttl by platform of last activation"
+
+users_item_archived:
+  title: users_item_archived
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_archived]
+    groupby: [participant]
+  description: "Users with items archived (usualy new unpaid items) by platform of last activation"
 
 users_item_closed_by_user:
   description: "Users who closed items by platfrom of last activation"
