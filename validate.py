@@ -25,7 +25,7 @@ PRESETS_CONFIG_VALIDATOR_URL = '/api/validator/metrics_preset/validate'
 
 
 def unroot(messages):
-    return [x.get('root', x) for x in messages]
+    return [x.get('root', x) if isinstance(x, dict) else x for x in messages]
 
 
 def pretify(data):
