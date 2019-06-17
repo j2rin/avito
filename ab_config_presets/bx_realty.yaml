@@ -10,13 +10,14 @@ breakdowns:
         - {vertical: ['Real Estate'], is_cookie_new: ['false']}
         - {vertical: ['Real Estate'], is_cookie_new: ['true']}
         - {vertical: ['Real Estate'], is_logged_in: ['true']}
-        - {vertical: ['Real Estate'], category: [Недвижимость], subcategory: ['Комнаты']}
-        - {vertical: ['Real Estate'], category: [Недвижимость], subcategory: ['Квартиры']}
-        - {vertical: ['Real Estate'], category: [Недвижимость], subcategory: ['Квартиры'], logical_category: ['Realty.CommercialPrimary']}
-        - {vertical: ['Real Estate'], category: [Недвижимость], subcategory: ['Коммерческая недвижимость']}
-        - {vertical: ['Real Estate'], category: [Недвижимость], subcategory: ['Дома, дачи, коттеджи', 'Земельные участки', 'Недвижимость за рубежом']}
+        - {vertical: ['Real Estate'], subcategory: ['Комнаты'], logical_category: ['Realty.SecondarySell']}
+        - {vertical: ['Real Estate'], subcategory: ['Квартиры']}
+        - {vertical: ['Real Estate'], subcategory: ['Квартиры'], logical_category: ['Realty.SecondarySell']}  # Вторичка
+        - {vertical: ['Real Estate'], subcategory: ['Квартиры'], logical_category: ['Realty.CommercialPrimary']}  # Новостройки
+        - {vertical: ['Real Estate'], subcategory: ['Коммерческая недвижимость']}  # Без новостроек
+        - {vertical: ['Real Estate'], logical_category: ['Realty.SecondarySell']}  # Вся вторичка: Комнаты, Дома, дачи, коттеджи, Квартиры
+        - {vertical: ['Real Estate'], logical_category: ['Realty.Other']} # куплю, сниму, за рубежом, гаражи и т.п
         - vertical: ['Real Estate']
-          category: [Недвижимость]
           region: [
                 # https://cf.avito.ru/pages/viewpage.action?pageId=87280575
                 # есть сильные региональные игроки
@@ -25,13 +26,11 @@ breakdowns:
                 'Нижегородская область' 
                 ]
         - vertical: ['Real Estate']
-          category: [Недвижимость]
           region: [
                 # столица
                 'Москва', 'Московская область', 'Ленинградская область', 'Санкт-Петербург'
                 ]
         - vertical: ['Real Estate']
-          category: [Недвижимость]                
           region: [
                 # CIAN сильнее по pageviews
                 'Москва', 'Московская область', 'Ленинградская область', 'Санкт-Петербург',
@@ -40,14 +39,12 @@ breakdowns:
                 'Приморский край', 'Сахалинская область'
                 ]
         - vertical: ['Real Estate']
-          category: [Недвижимость]                
           region: [
                 # паритет по pageviews
                 'Красноярский край', 'Омская область', 'Ярославская область', 
                 'Архангельская область', 'Костромская область'
                 ]
         - vertical: ['Real Estate']
-          category: [Недвижимость]                
           region: [
                 # Авито Сильнее
                 'Дагестан', 'Ингушетия', 'Чеченская Республика',
@@ -237,3 +234,87 @@ metrics_by_breakdowns:
         - write_button_clicks
         - serp_empty_per_s
         - serp_small_per_s
+        - sessions_active
+        - sessions_iv
+        - sessions_btc
+        - sessions_c
+        - sessions_iv_s
+        - sessions_btc_s
+        - sessions_c_s
+        - sessions_iv_s_q
+        - sessions_btc_s_q
+        - sessions_c_s_q
+        - sessions_iv_s_noq
+        - sessions_btc_s_noq
+        - sessions_c_s_noq
+        - sessions_iv_r
+        - sessions_btc_r
+        - sessions_c_r
+        - sessions_iv_r_u2i
+        - sessions_btc_r_u2i
+        - sessions_c_r_u2i
+        - sessions_iv_r_i2i
+        - sessions_btc_r_i2i
+        - sessions_c_r_i2i
+        - sessions_iv_per_active
+        - sessions_btc_per_active
+        - sessions_c_per_active
+        - sessions_iv_s_per_s
+        - sessions_btc_s_per_s
+        - sessions_c_s_per_s
+        - sessions_iv_s_q_per_s_q
+        - sessions_btc_s_q_per_s_q
+        - sessions_c_s_q_per_s_q
+        - sessions_iv_s_noq_per_s_noq
+        - sessions_btc_s_noq_per_s_noq
+        - sessions_c_s_noq_per_s_noq
+        - sessions_iv_r_per_r
+        - sessions_btc_r_per_r
+        - sessions_c_r_per_r
+        - sessions_iv_r_u2i_per_r_u2i
+        - sessions_btc_r_u2i_per_r_u2i
+        - sessions_c_r_u2i_per_r_u2i
+        - sessions_iv_r_i2i_per_r_i2i
+        - sessions_btc_r_i2i_per_r_i2i
+        - sessions_c_r_i2i_per_r_i2i
+        - sessions_c_per_iv
+        - sessions_c_s_per_iv_s
+        - sessions_c_s_q_per_iv_s_q
+        - sessions_c_s_noq_per_iv_s_noq
+        - sessions_c_rec_per_iv_rec
+        - sessions_c_rec_u2i_per_iv_rec_u2i
+        - sessions_c_rec_i2i_per_iv_rec_i2i
+        - ad_clicks
+        - serp_with_query_empty
+        - serp_with_query_small
+        - serp_without_query_empty
+        - serp_without_query_small
+        - serp_wq_empty_per_s_wq
+        - serp_wq_small_per_s_wq
+        - serp_noq_empty_per_s_noq
+        - serp_noq_small_per_s_noq
+        - favorites_net
+        - call_phones
+        - call_phones_per_phone_views
+        - calls
+        - calls_dialogues
+        - calls_per_dialogue
+        - calls_per_phone_views
+        - users_phone_calls
+        - filters_screen_shows
+        - filters_price_searches
+        - filters_rubricator_searches
+        - filters_local_geo_searches
+        - filters_radius_searches
+        - filters_prc_rubr_searches
+        - filters_any_searches
+        - filters_local_geo_per_searches
+        - filters_radius_per_searches
+        - filters_pr_rubr_per_searches
+        - filters_any_per_searches
+        - filters_pr_rubr_users
+        - filters_local_geo_users
+        - filters_radius_users
+        - filters_any_users
+        - ad_revenue_predict
+
