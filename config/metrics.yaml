@@ -1,5 +1,4 @@
 # Headers generator — http://patorjk.com/software/taag/#p=display&f=Banner3&t=buyer
-# Headers generator — http://patorjk.com/software/taag/#p=display&f=Banner3&t=buyer
 
 ########  ##     ## ##    ## ######## ########
 ##     ## ##     ##  ##  ##  ##       ##     ##
@@ -34,7 +33,7 @@ contacts:
 contacts_grouped:
   title:   contacts_groupped
   numerator:
-    observations: [contacts]
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
     groupby: [participant, item]
   tags: [i1, bx, total, grouped]
 
@@ -2377,8 +2376,19 @@ share_suggest_buyers_to_suggest_users:
 ###############################################################################
 
 recblock_shows:
+  tags: [i4, bx, rec, total]
   numerator:
     observations: [recblock_shows]
+
+recblock_shows_i2i:
+  tags: [i4, bx, rec, total]
+  numerator:
+    observations: [recblock_shows_i2i]
+
+recblock_shows_u2i:
+  tags: [i4, bx, rec, total]
+  numerator:
+    observations: [recblock_shows_u2i]
 
 item_views_rec:
   title: item_views_rec
@@ -2639,11 +2649,23 @@ first_response_messages:
   numerator:
     observations: [first_response_messages]
 
+first_messages_hidden_phone:
+  title: first_messages_hidden_phone
+  tags: [i4, messenger, total]
+  numerator:
+    observations: [first_messages_hidden_phone]    
+
 write_button_clicks:
   title: write_button_clicks
   tags: [i3, messenger, total]
   numerator:
     observations: [write_button_clicks]
+
+write_button_clicks_hidden_phone:
+  title: write_button_clicks_hidden_phone
+  tags: [i4, messenger, total]
+  numerator:
+    observations: [write_button_clicks_hidden_phone]
 
 write_button_clicks_grouped:
   title: write_button_clicks_grouped
@@ -2748,6 +2770,14 @@ first_mess_per_write_button_clicks:
   denominator:
     observations: [write_button_clicks]
 
+first_mess_per_write_button_clicks_hidden_phone:
+  title: first_mess_per_write_button_clicks_hidden_phone
+  tags: [i4, messenger, ratio]
+  numerator:
+    observations: [first_messages_hidden_phone]
+  denominator:
+    observations: [write_button_clicks_hidden_phone]    
+
 messenger_response_ratio:
   title: messenger_response_ratio
   tags: [i2, messenger, ratio]
@@ -2775,6 +2805,13 @@ users_first_messages:
     observations: [first_messages]
     groupby: [participant]
 
+users_first_messages_hidden_phone:
+  title: users_first_messages_hidden_phone
+  tags: [i4, messenger, user]
+  numerator:
+    observations: [first_messages_hidden_phone]
+    groupby: [participant]
+
 users_first_response_messages:
   title: users_first_response_messages
   tags: [i2, messenger, user]
@@ -2794,6 +2831,13 @@ users_write_button_clicks:
   tags: [i3, messenger, user]
   numerator:
     observations: [write_button_clicks]
+    groupby: [participant]
+
+users_write_button_clicks_hidden_phone:
+  title: users_write_button_clicks_hidden_phone
+  tags: [i4, messenger, user]
+  numerator:
+    observations: [write_button_clicks_hidden_phone]
     groupby: [participant]
 
 users_messenger_geo_messages:
@@ -3682,6 +3726,46 @@ users_reviews_added:
   numerator:
     observations: [reviews_added]
     groupby: [participant]
+    
+created_reviews_list_open:
+  title: created_reviews_list_open
+  description: "Количество просмотров в ЛК списка оставленных отзывов"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [created_reviews_list_open]
+    groupby: [participant]
+
+received_reviews_list_open:
+  title: received_reviews_list_open
+  description: "Количество просмотров в ЛК списка отправленных отзывов"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [received_reviews_list_open]
+    groupby: [participant]
+
+review_add_open_page:
+  title: review_add_open_page
+  description: "Открытие страницы написания отзыва"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [review_add_open_page]
+    groupby: [participant]
+
+review_delete:
+  title: review_delete
+  description: "Удаление отзыва"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [review_delete]
+    groupby: [participant]
+
+reviews_list_open:
+  title: reviews_list_open
+  description: "Просмотр списка отзывов на продавца"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [reviews_list_open]
+    groupby: [participant]
 
 sellers_with_rating:
   title: sellers_with_rating
@@ -3910,7 +3994,7 @@ saved_searches_views:
   description: "number of saved searches views per buyer"
   tags: [i4, tns, tns_bulb, ss]
   numerator:
-    observations: [search_subscription_list_views]
+    observations: [search_subscription_views]
     groupby: []
     
 saved_searches_removals:
@@ -4277,7 +4361,7 @@ users_saved_searches_view:
   description: "number of participants, who viewed a search subscriprion"
   tags: [i4, tns, tns_bulb, ss]
   numerator:
-    observations: [search_subscription_list_views]
+    observations: [search_subscription_views]
     groupby: [participant]
     
 users_saved_searches_added:
@@ -4374,11 +4458,24 @@ items_sold_onavito:
     observations: [items_sold_onavito]
   description: "Items closed with reason Sold on Avito by platform of last activation"
 
+items_sold_notonavito:
+  title: items_sold_notonavito
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_notonavito]
+  description: "Items closed with reason Sold not on Avito by platform of last activation"
+
 items_sold_onavito_total:
   tags: [sx, liquidity, i0]
   numerator:
     observations: [items_sold_onavito_total]
   description: "Items closed with reason Sold on Avito total"
+
+items_sold_notonavito_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_notonavito_total]
+  description: "Items closed with reason Sold not on Avito total"
 
 items_sold_onavito_start_date:
   title: items_sold_onavito_start_date
@@ -4388,6 +4485,14 @@ items_sold_onavito_start_date:
   description: "Items closed with reason Sold on Avito for items created after exposure by platform of last activation"
   date_filter: [start]
 
+items_sold_notonavito_start_date:
+  title: items_sold_notonavito_start_date
+  tags: [i4, user, sx, liquidity]
+  numerator:
+    observations: [items_sold_notonavito]
+  description: "Items closed with reason Sold not on Avito for items created after exposure by platform of last activation"
+  date_filter: [start]
+
 items_sold_onavito_total_start_date:
   tags: [i2, user, sx, liquidity]
   numerator:
@@ -4395,19 +4500,40 @@ items_sold_onavito_total_start_date:
   description: "Items closed with reason Sold on Avito for items created after exposure total"
   date_filter: [start]
 
+items_sold_notonavito_total_start_date:
+  tags: [i4, user, sx, liquidity]
+  numerator:
+    observations: [items_sold_notonavito_total]
+  description: "Items closed with reason Sold not on Avito for items created after exposure total"
+  date_filter: [start]
+
 items_closed_no_answer:
   title: items_closed_no_answer
   tags: [sx, liquidity, i4]
   numerator:
     observations: [items_closed_no_answer]
-  description: "Items closed without answer by platform of closing"
+  description: "Items closed without answer by platform of last activation"
 
 items_closed_with_answer:
   title: items_closed_with_answer
   tags: [sx, liquidity, i4]
   numerator:
     observations: [items_closed_with_answer]
-  description: "Items closed with answer by platform of closing"
+  description: "Items closed with answer by platform of last activation"
+
+items_closed_by_ttl:
+  title: items_closed_by_ttl
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_by_ttl]
+  description: "Items closed by ttl by platform of last activation"
+
+items_archived:
+  title: items_archived
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_archived]
+  description: "Items archived (usualy new unpaid items) by platform of last activation"
 
 items_closed_by_user:
   description: "Items closed by user by platform of last activation"
@@ -4962,6 +5088,14 @@ items_sold_onavito_conversion:
     groupby: [participant]
   description: "Users closed items with reason Sold on Avito by platform of last activation"
 
+users_item_sold_notonavito:
+  title: users_item_sold_notonavito
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_notonavito]
+    groupby: [participant]
+  description: "Users closed items with reason Sold not on Avito by platform of last activation"
+
 users_item_sold_onavito_total:
   tags: [sx, liquidity, i0]
   numerator:
@@ -4969,12 +5103,19 @@ users_item_sold_onavito_total:
     groupby: [participant]
   description: "Users closed items with reason Sold on Avito total"
 
+users_item_sold_notonavito_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_notonavito_total]
+    groupby: [participant]
+  description: "Users closed items with reason Sold not on Avito total"
+
 users_item_closed_no_answer:
   tags: [sx, liquidity, i4]
   numerator:
     observations: [items_closed_no_answer]
     groupby: [participant]
-  description: "Users who closed items without answer by platforn of closing"
+  description: "Users who closed items without answer by platform of last activation"
 
 users_item_closed_with_answer:
   title: users_item_closed_with_answer
@@ -4982,7 +5123,23 @@ users_item_closed_with_answer:
   numerator:
     observations: [items_closed_with_answer]
     groupby: [participant]
-  description: "Users who closed items with answer by platform of closing"
+  description: "Users who closed items with answer by platform of last activation"
+
+users_item_closed_by_ttl:
+  title: users_item_closed_by_ttl
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_by_ttl]
+    groupby: [participant]
+  description: "Users with items closed by ttl by platform of last activation"
+
+users_item_archived:
+  title: users_item_archived
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_archived]
+    groupby: [participant]
+  description: "Users with items archived (usualy new unpaid items) by platform of last activation"
 
 users_item_closed_by_user:
   description: "Users who closed items by platfrom of last activation"
@@ -6820,6 +6977,13 @@ delivery_amount_net_adj:
     observations: [delivery_amount_net_adj]
   description: "Net revenue from delivery products without VAT"
 
+advertisement_amount_net_adj:
+  title: advertisement_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator:
+    observations: [advertisement_amount_net_adj]
+  description: "Net revenue from advertising products without VAT"
+
 vas_amount_net_adj:
   title: vas_amount_net_adj
   tags: [i0, m42, tree]
@@ -7114,6 +7278,15 @@ classified_price_net_adj:
     observations: [vas_transactions, lf_transactions, subs_transactions, ext_transactions]
   description: "Classified products revenue divided by number of transactionss: vas,lf,subscriptions,extensions."
 
+advertisement_rpm_net_adj:
+  title: advertisement_rpm_net_adj
+  tags: [i0, m42, tree, ratio]
+  numerator:
+    observations: [advertisement_amount_net_adj_increased_for_RPM]
+  denominator:
+    observations: [advertisement_page_views]
+  description: "Revenue from advertisement per 1000 views"
+
 
 ########  ######## ########  ########  #######  ########  ##     ##    ###    ##    ##  ######  ########
 ##     ## ##       ##     ## ##       ##     ## ##     ## ###   ###   ## ##   ###   ## ##    ## ##
@@ -7201,6 +7374,13 @@ di_exc:
   tags: [performance]
   numerator:
     observations: [di_exceptions]
+
+app_load_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_interact_ms]
+  denominator:
+    observations: [time_to_interact_count]
 
  ######   #######  ##     ## ##     ## ##     ## ##    ## ####  ######     ###    ######## ####  #######  ##    ##  ######  
 ##    ## ##     ## ###   ### ###   ### ##     ## ###   ##  ##  ##    ##   ## ##      ##     ##  ##     ## ###   ## ##    ## 
