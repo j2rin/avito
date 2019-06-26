@@ -1671,28 +1671,48 @@ filters_any_per_searches:
 ###############################################################################
 # Session :: Totals
 ###############################################################################
-
 sessions_active:
   numerator:
-    observations: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+    observations:
+      - searches
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - favorites_added
+      - write_button_clicks
     groupby: [participant, session]
   tags: [critical, bx, session]
 
 sessions_iv:
   numerator:
-    observations: [item_views_serp, item_views_rec]
+    observations: [item_views]
     groupby: [participant, session]
   tags: [i3, bx, session]
 
 sessions_btc:
   numerator:
-    observations: [buyer_target_clicks_serp, buyer_target_clicks_rec]
+    observations:
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - favorites_added
+      - write_button_clicks
     groupby: [participant, session]
   tags: [i3, bx, session]
 
 sessions_c:
   numerator:
-    observations: [contacts_serp, contacts_rec]
+    observations:
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
     groupby: [participant, session]
   tags: [i3, bx, session]
 
