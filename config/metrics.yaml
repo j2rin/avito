@@ -3660,12 +3660,6 @@ password_restore_requests:
   numerator:
     observations: [password_restore_requests]
 
-contacts_public_profile_per_unique_user:
-  numerator:
-    observations: [contacts_public_profile]
-  denominator:
-    observations: [public_profile_unique_views]
-
 password_restore_request_errors:
   numerator:
     observations: [password_restore_request_errors]
@@ -3687,22 +3681,26 @@ sign_in_errors:
     observations: [sign_in_errors]
 
 public_profile_views:
+  description: "Количество просмотров публичного профиля на юзера (cookie)"
+  tags: [i4, public_profile, tns, rar]
   numerator:
     observations: [public_profile_views]
 
 public_profile_unique_views:
+  description: "count (distint cookie_id, public_profile_user_id)"
+  tags: [i4, public_profile, tns, rar]
   numerator:
     observations: [public_profile_unique_views]
 
-contacts_public_profile:
-  numerator:
-    observations: [contacts_public_profile]
-
 public_profile_active_items_paginations:
+  description: "Количество пагинаций (скролов) по активным айтемам на юзера"
+  tags: [i4, public_profile, tns, rar]
   numerator:
     observations: [public_profile_active_items_paginations]
 
 public_profile_closed_items_paginations:
+  description: "Количество пагинаций(скроллов) по завершенным айтемам в ПП"
+  tags: [i4, public_profile, tns, rar]
   numerator:
     observations: [public_profile_closed_items_paginations]
 
@@ -3739,37 +3737,58 @@ abuses:
 reviews_added:
   title: reviews_added
   description: "Number of all reviews added"
-  tags: [i1, tns, reviews, ratings]
+  tags: [i2, tns, reviews, ratings]
   numerator:
     observations: [reviews_added]
 
 users_reviews_added:
   title: users_reviews_added
   description: "Number of users added reviews"
-  tags: [i1, tns, reviews, ratings]
+  tags: [i2, tns, reviews, ratings]
   numerator:
     observations: [reviews_added]
     groupby: [participant]
     
 created_reviews_list_open:
   title: created_reviews_list_open
-  description: "Количество просмотров в ЛК списка оставленных отзывов"
+  description: "Количество просмотров списка оставленных отзывов в ЛК"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [created_reviews_list_open]
+
+user_created_reviews_list_open:
+  title: created_reviews_list_open
+  description: "Количество пользователей, просмотревших список оставленных отзывов в ЛК"
   tags: [i4, tns, reviews, ratings]
   numerator:
     observations: [created_reviews_list_open]
     groupby: [participant]
-
+    
 received_reviews_list_open:
   title: received_reviews_list_open
-  description: "Количество просмотров в ЛК списка отправленных отзывов"
+  description: "Количество просмотров списка отправленных отзывов в ЛК"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [received_reviews_list_open]
+
+user_received_reviews_list_open:
+  title: received_reviews_list_open
+  description: "Количество пользователей, просмотревших список отправленных отзывов в ЛК"
   tags: [i4, tns, reviews, ratings]
   numerator:
     observations: [received_reviews_list_open]
     groupby: [participant]
-
+    
 review_add_open_page:
   title: review_add_open_page
-  description: "Открытие страницы написания отзыва"
+  description: "Количество открытий страницы написания отзыва"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [review_add_open_page]
+
+user_review_add_open_page:
+  title: review_add_open_page
+  description: "Количество пользователей, открывших страницу написания отзыва"
   tags: [i4, tns, reviews, ratings]
   numerator:
     observations: [review_add_open_page]
@@ -3777,7 +3796,14 @@ review_add_open_page:
 
 review_delete:
   title: review_delete
-  description: "Удаление отзыва"
+  description: "Количество удалений отзывов"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [review_delete]
+
+user_review_delete:
+  title: review_delete
+  description: "Количество пользователей, удаливших отзыв"
   tags: [i4, tns, reviews, ratings]
   numerator:
     observations: [review_delete]
@@ -3785,7 +3811,14 @@ review_delete:
 
 reviews_list_open:
   title: reviews_list_open
-  description: "Просмотр списка отзывов на продавца"
+  description: "Количество просмотров списка отзывов на продавца"
+  tags: [i4, tns, reviews, ratings]
+  numerator:
+    observations: [reviews_list_open]
+
+user_reviews_list_open:
+  title: reviews_list_open
+  description: "Количество пользователей, просмотревишх список отзывов на продавца"
   tags: [i4, tns, reviews, ratings]
   numerator:
     observations: [reviews_list_open]
@@ -3794,7 +3827,7 @@ reviews_list_open:
 sellers_with_rating:
   title: sellers_with_rating
   description: "Number of sellers with any rating"
-  tags: [i1, tns, reviews, ratings, sellers]
+  tags: [i2, tns, reviews, ratings, sellers]
   numerator:
     observations: [seller_has_rating_any]
 
@@ -4132,7 +4165,7 @@ enter_errors_per_user:
 
 reviews_avg_score:
   description: "Reviews added average score"
-  tags: [i3, tns, reviews, ratings, score]
+  tags: [i4, tns, reviews, ratings, score]
   numerator:
     observations: [reviews_score_sum]
   denominator:
@@ -4259,26 +4292,29 @@ sign_in_proportion:
     groupby: [participant]
 
 public_profile_views_proportion:
+  description: "Количество пользователей, заходивших в ПП"
+  tags: [i2, public_profile, tns, rar]
   numerator:
     observations: [public_profile_views]
     groupby: [participant]
 
-contacts_public_profile_proportion:
-  numerator:
-    observations: [contacts_public_profile]
-    groupby: [participant]
-
 public_profile_active_items_paginations_proportion:
+  description: "Количество пользователей, совершивших скролл по вкладке активных объявлений в ПП"
+  tags: [i4, public_profile, tns, rar]  
   numerator:
     observations: [public_profile_active_items_paginations]
     groupby: [participant]
 
 public_profile_closed_tabs_proportion:
+  description: "Количество пользователей, просмотревших вкладку завершенных объявлений в ПП"
+  tags: [i4, public_profile, tns, rar]  
   numerator:
     observations: [public_profile_closed_tabs]
     groupby: [participant]
 
 public_profile_closed_items_paginations_proportion:
+  description: "Количество пользователей, совершивших скролл по вкладке завершенных объявлений в ПП"
+  tags: [i4, public_profile, tns, rar]  
   numerator:
     observations: [public_profile_closed_items_paginations]
     groupby: [participant]
@@ -7755,20 +7791,6 @@ user_favorites_list_views:
   tags: [tns]
   numerator:
     observations: [favorites_list_views]
-    groupby: [participant]
-
-user_created_reviews_list_open:
-  description: "Количество уникальных пользователей, которые просматривали в ЛК список оставленных отзывов"
-  tags: [tns]
-  numerator:
-    observations: [created_reviews_list_open]
-    groupby: [participant]
-
-user_received_reviews_list_open:
-  description: "Количество уникальных пользователей, которые просматривали в ЛК список отправленных отзывов"
-  tags: [tns]
-  numerator:
-    observations: [received_reviews_list_open]
     groupby: [participant]
 
 # AvitoPro 
