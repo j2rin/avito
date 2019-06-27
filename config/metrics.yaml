@@ -351,8 +351,18 @@ users_2plus_actions:
   title: users_2plus_actions
   tags: [i3, bx, user]
   numerator:
-    observations: [active_actions_2plus]
-    groupby: [participant]    
+    observations:
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - searches_without_query
+      - searches_with_query
+      - favorites_added
+    groupby: [participant]
+    threshold: 2
     
 users_phone_calls:
   title: users_phone_calls
@@ -368,6 +378,11 @@ users_phone_calls_client:
     observations: [call_phone_screen_views_client]
     groupby: [participant] 
 
+ad_click_users:
+  tags: [critical, bx]
+  numerator:
+    observations: [ad_clicks]
+    groupby: [participant]
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -528,129 +543,20 @@ searches_to_contact:
   numerator:
     observations: [searches_to_contact]
 
-###############################################################################
-# Buyer :: Performance (Time To Content) Ratios
-###############################################################################
-
-mean_time_to_content_item_screen:
-  tags: [bx, performance, item, ttc, ratio]
+ad_click_sessions:
+  tags: [critical, bx]
   numerator:
-    observations: [performance_time_to_content_item]
-  denominator:
-    observations: [performance_measures_count_item]
+    observations: [ad_clicks]
+    groupby: [participant, session]
 
-mean_time_to_content_serp_screen:
-  tags: [bx, performance, serp, ttc, ratio]
+ad_click_sessions_per_show:
+  tags: [critical, bx]
   numerator:
-    observations: [performance_time_to_content_serp]
+    observations: [ad_clicks]
+    groupby: [participant, session]
   denominator:
-    observations: [performance_measures_count_serp]
-
-mean_time_to_content_main_screen:
-  tags: [bx, performance, main, ttc, ratio]
-  numerator:
-    observations: [performance_time_to_content_main]
-  denominator:
-    observations: [performance_measures_count_main]
-
-mean_time_to_content_channel_screen:
-  tags: [bx, performance, channel, ttc, ratio]
-  description: "mean time to content evaluation for chatting screen"
-  numerator:
-    observations: [performance_time_to_content_channel]
-  denominator:
-    observations: [performance_measures_count_channel]
-
-mean_time_to_content_channels_screen:
-  tags: [bx, performance, channels, ttc, ratio]
-  description: "mean time to content evaluation for screen with list of chats"
-  numerator:
-    observations: [performance_time_to_content_channels]
-  denominator:
-    observations: [performance_measures_count_channels]
-
-mean_time_to_content_public_profile_screen:
-  tags: [bx, performance, public_profile, ttc, ratio]
-  numerator:
-    observations: [performance_time_to_content_public_profile]
-  denominator:
-    observations: [performance_measures_count_public_profile]
-
-mean_time_to_content_profile_item_screen:
-  tags: [bx, performance, profile_item, ttc, ratio]
-  numerator:
-    observations: [performance_time_to_content_profile_item]
-  denominator:
-    observations: [performance_measures_count_profile_item]
-
-mean_time_to_content_account_screen:
-  tags: [bx, performance, account, ttc, ratio]
-  description: "mean time to content evaluation for screen with list of users items"
-  numerator:
-    observations: [performance_time_to_content_account]
-  denominator:
-    observations: [performance_measures_count_account]
-
-mean_time_to_content_favorite_items_screen:
-  tags: [bx, performance, favorite_items, ttc, ratio]
-  numerator:
-    observations: [performance_time_to_content_favorite_items]
-  denominator:
-    observations: [performance_measures_count_favorite_items]
-
-mean_time_to_content_other_screen:
-  tags: [bx, performance, other, ttc, ratio]
-  numerator:
-    observations: [
-      performance_time_to_content_publish_wizard,
-      performance_time_to_content_edit_item,
-      performance_time_to_content_authorization,
-      performance_time_to_content_shop_info,
-      performance_time_to_content_profile,
-      performance_time_to_content_shops_list]
-  denominator:
-    observations: [
-      performance_measures_count_publish_wizard,
-      performance_measures_count_edit_item,
-      performance_measures_count_authorization,
-      performance_measures_count_shop_info,
-      performance_measures_count_profile,
-      performance_measures_count_shops_list]
-
-mean_screen_exception_proba:
-  tags: [bx, performance, exception, ttc, ratio]
-  numerator:
-    observations: [
-      performance_exceptions_count_item,
-      performance_exceptions_count_serp,
-      performance_exceptions_count_main,
-      performance_exceptions_count_channel,
-      performance_exceptions_count_channels,
-      performance_exceptions_count_public_profile,
-      performance_exceptions_count_profile_item,
-      performance_exceptions_count_account,
-      performance_exceptions_count_publish_wizard,
-      performance_exceptions_count_edit_item,
-      performance_exceptions_count_authorization,
-      performance_exceptions_count_shop_info,
-      performance_exceptions_count_profile,
-      performance_exceptions_count_shops_list]
-  denominator:
-    observations: [
-      performance_events_count_item,
-      performance_events_count_serp,
-      performance_events_count_main,
-      performance_events_count_channel,
-      performance_events_count_channels,
-      performance_events_count_public_profile,
-      performance_events_count_profile_item,
-      performance_events_count_account,
-      performance_events_count_publish_wizard,
-      performance_events_count_edit_item,
-      performance_events_count_authorization,
-      performance_events_count_shop_info,
-      performance_events_count_profile,
-      performance_events_count_shops_list]
+    observations: [ad_head_mp, ad_vertical_mp, ad_searches, ad_item_views]
+    groupby: [participant, session]
 
  ######  ########    ###    ########   ######  ##     ##
 ##    ## ##         ## ##   ##     ## ##    ## ##     ##
@@ -1765,28 +1671,48 @@ filters_any_per_searches:
 ###############################################################################
 # Session :: Totals
 ###############################################################################
-
 sessions_active:
   numerator:
-    observations: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+    observations:
+      - searches
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - favorites_added
+      - write_button_clicks
     groupby: [participant, session]
   tags: [critical, bx, session]
 
 sessions_iv:
   numerator:
-    observations: [item_views_serp, item_views_rec]
+    observations: [item_views]
     groupby: [participant, session]
   tags: [i3, bx, session]
 
 sessions_btc:
   numerator:
-    observations: [buyer_target_clicks_serp, buyer_target_clicks_rec]
+    observations:
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - favorites_added
+      - write_button_clicks
     groupby: [participant, session]
   tags: [i3, bx, session]
 
 sessions_c:
   numerator:
-    observations: [contacts_serp, contacts_rec]
+    observations:
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
     groupby: [participant, session]
   tags: [i3, bx, session]
 
@@ -2191,6 +2117,12 @@ users_item_view_serp_daily:
     observations: [item_views_serp]
     groupby: [participant]
 
+item_views_s_item_attr_users:
+  tags: [i1, bx, serp, user]
+  numerator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]
+
 users_item_view_search_query:
   tags: [i2, bx, serp, user]
   numerator:
@@ -2204,11 +2136,23 @@ users_contact_serp_daily:
     observations: [contacts_serp]
     groupby: [participant]
 
+contact_s_item_attr_users:
+  tags: [i1, bx, serp, user]
+  numerator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]
+
 users_buyer_target_click_serp_daily:
   title: users_search_bt_click
   tags: [i1, bx, serp, user]
   numerator:
     observations: [buyer_target_clicks_serp]
+    groupby: [participant]
+
+btc_s_item_attr_users:
+  tags: [i1, bx, serp, user]
+  numerator:
+    observations: [btc_search_item_attr]
     groupby: [participant]
 
 users_contact_search_query:
