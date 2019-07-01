@@ -66,10 +66,21 @@ def validate(file_name, url, show_passed=False):
     elif show_passed:
         print('\n{} PASSED'.format(short_name))
 
+    return success
+
 
 if __name__ == '__main__':
     validate(METRICS_FILE, METRICS_CONFIG_VALIDATOR_URL, show_passed=True)
 
+    failed = []
+
     for preset_file_name in os.listdir(PRESETS_PATH):
         if preset_file_name.endswith('yaml'):
-            validate(os.path.join(PRESETS_PATH, preset_file_name), PRESETS_CONFIG_VALIDATOR_URL)
+            success = validate(os.path.join(PRESETS_PATH, preset_file_name), PRESETS_CONFIG_VALIDATOR_URL)
+            if not success:
+                failed.append(preset_file_name)
+
+    if not failed:
+        print('\nAll presets are PASSED')
+    else:
+        print('\nFAILED presets: {}'.format(', '.join(failed)))
