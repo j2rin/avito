@@ -24,17 +24,17 @@ METRICS_CONFIG_VALIDATOR_URL = '/api/validator/metrics_config/validate'
 PRESETS_CONFIG_VALIDATOR_URL = '/api/validator/metrics_preset/validate'
 
 
-def unroot(messages):
-    return [x.get('root', x) if isinstance(x, dict) else x for x in messages]
+def marks_to_str(file_name, data, marks_attribute):
+    return '\n'.join(
+        '{}:{} {}'.format(
+            file_name,
+            m['line'], m['message']
+        )
+        for m in data[marks_attribute]
+    )
 
 
-def pretify(data):
-    return json.dumps(data, indent=2, sort_keys=True)
-
-
-def validate(file_name, url):
-    print('\nValidating {}...'.format(file_name))
-
+def validate(file_name, url, show_passed=False):
     conn = httplib.HTTPConnection(AB_CONFIGURATOR_HOST)
 
     with open(file_name, 'rb') as f:
@@ -47,26 +47,40 @@ def validate(file_name, url):
 
     result = json.loads(response.read().decode())
     success = result['success']
+    short_name = file_name.rsplit('/')[-1].rsplit('\\')[-1]
 
     if not success:
-        print('FAILED:')
-        print(
-            pretify(unroot(result['errors']))
-        )
+        print('\n{} FAILED:'.format(short_name))
+        if 'error_marks' in result:
+            print(
+                marks_to_str(file_name, result, 'error_marks')
+            )
+        else:
+            print(result['errors'])
 
     elif 'warnings' in result:
-        print('PASSED with warnings:')
+        print('\n{} PASSED with warnings:'.format(short_name))
         print(
-            pretify(unroot(result['warnings']))
+            marks_to_str(file_name, result, 'warning_marks')
         )
+    elif show_passed:
+        print('\n{} PASSED'.format(short_name))
 
-    else:
-        print('PASSED.\n')
+    return success
 
 
 if __name__ == '__main__':
-    validate(METRICS_FILE, METRICS_CONFIG_VALIDATOR_URL)
+    validate(METRICS_FILE, METRICS_CONFIG_VALIDATOR_URL, show_passed=True)
+
+    failed = []
 
     for preset_file_name in os.listdir(PRESETS_PATH):
         if preset_file_name.endswith('yaml'):
-            validate(os.path.join(PRESETS_PATH, preset_file_name), PRESETS_CONFIG_VALIDATOR_URL)
+            success = validate(os.path.join(PRESETS_PATH, preset_file_name), PRESETS_CONFIG_VALIDATOR_URL)
+            if not success:
+                failed.append(preset_file_name)
+
+    if not failed:
+        print('\nAll presets are PASSED')
+    else:
+        print('\nFAILED presets: {}'.format(', '.join(failed)))
