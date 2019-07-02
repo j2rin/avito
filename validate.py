@@ -17,11 +17,13 @@ except ImportError:
 
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'ab_config_presets')
+BREAKDOWNS_PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'breakdown_presets')
 METRICS_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics.yaml')
 
 AB_CONFIGURATOR_HOST = 'ab-configurator.k.avito.ru'
 METRICS_CONFIG_VALIDATOR_URL = '/api/validator/metrics_config/validate'
 PRESETS_CONFIG_VALIDATOR_URL = '/api/validator/metrics_preset/validate'
+BREAKDOWNS_PRESETS_CONFIG_VALIDATOR_URL = '/api/validator/breakdowns_preset/validate'
 
 
 def marks_to_str(file_name, data, marks_attribute):
@@ -69,18 +71,23 @@ def validate(file_name, url, show_passed=False):
     return success
 
 
-if __name__ == '__main__':
-    validate(METRICS_FILE, METRICS_CONFIG_VALIDATOR_URL, show_passed=True)
-
+def validate_presets_group(path, url, preset_type):
     failed = []
 
-    for preset_file_name in os.listdir(PRESETS_PATH):
+    for preset_file_name in os.listdir(path):
         if preset_file_name.endswith('yaml'):
-            success = validate(os.path.join(PRESETS_PATH, preset_file_name), PRESETS_CONFIG_VALIDATOR_URL)
+            success = validate(os.path.join(path, preset_file_name), url)
             if not success:
                 failed.append(preset_file_name)
 
     if not failed:
-        print('\nAll presets are PASSED')
+        print('\nAll {} presets are PASSED'.format(preset_type))
     else:
-        print('\nFAILED presets: {}'.format(', '.join(failed)))
+        print('\nFAILED {} presets: {}'.format(preset_type, ', '.join(failed)))
+
+
+if __name__ == '__main__':
+    validate(METRICS_FILE, METRICS_CONFIG_VALIDATOR_URL, show_passed=True)
+
+    validate_presets_group(PRESETS_PATH, PRESETS_CONFIG_VALIDATOR_URL, 'metrics')
+    validate_presets_group(BREAKDOWNS_PRESETS_PATH, BREAKDOWNS_PRESETS_CONFIG_VALIDATOR_URL, 'breakdowns')
