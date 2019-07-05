@@ -218,6 +218,18 @@ phone_view_button_clicks:
   tags: [i3, bx]
   numerator:
     observations: [phone_view_button_clicks]
+        
+fatal_app_errors:
+  title: fatal_app_errors
+  tags: [critical, bx]
+  numerator:
+    observations: [fatal_app_error]
+    
+non_fatal_app_errors:
+  title: non_fatal_app_errors
+  tags: [i2, bx]
+  numerator:
+    observations: [non_fatal_app_error]
     
 
 ###############################################################################
@@ -467,6 +479,21 @@ users_pv_button_clicks:
   numerator:
     observations: [phone_view_button_clicks]
     groupby: [participant] 
+    
+users_fatal_app_errors:
+  title: users_fatal_app_errors
+  tags: [i0, bx, user]
+  numerator:
+    observations: [fatal_app_error]
+    groupby: [participant] 
+    
+users_non_fatal_app_errors:
+  title: users_non_fatal_app_errors
+  tags: [i2, bx, user]
+  numerator:
+    observations: [non_fatal_app_error]
+    groupby: [participant] 
+
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -551,6 +578,46 @@ shortcut_users_per_search_user:
   denominator:
     observations: [searches]
     groupby: [participant]
+    
+user_fatal_error_per_users:
+  title: user_fatal_error_per_users
+  tags: [i0, bx, ratio]
+  numerator:
+    observations: [fatal_app_error]
+    groupby: [participant]
+  denominator:
+    observations:
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_creasted
+      - searches_without_query
+      - searches_with_query
+      - favorites_added
+      - realty_development_phone_views
+    groupby: [participant]    
+
+user_non_fatal_error_per_users:
+  title: user_non_fatal_error_per_users
+  tags: [i2, bx, ratio]
+  numerator:
+    observations: [non_fatal_app_error]
+    groupby: [participant]
+  denominator:
+    observations:
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - searches_without_query
+      - searches_with_query
+      - favorites_added
+      - realty_development_phone_views
+    groupby: [participant]    
 
 ###############################################################################
 # Buyer :: Other
