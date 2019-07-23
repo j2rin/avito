@@ -1634,6 +1634,13 @@ searches_item_view_serp_per_searches_serp:
   denominator:
     observations: [searches]
 
+searches_contact_per_search:
+  tags: [serp]
+  numerator:
+    observations: [searches_contact_serp]
+  denominator:
+    observations: [searches]
+
 searches_with_suggest_share:
   description: "Share of searches with suggest"
   tags: [ss, ratio, sgt]
@@ -2009,28 +2016,72 @@ sessions_c_r_i2i:
 
 sessions_iv_per_active:
   numerator:
-    observations: [item_views_serp, item_views_rec]
+    observations: [item_views]
     groupby: [participant, session]
   denominator:
-    observations: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+    observations:
+      - searches
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - favorites_added
+      - write_button_clicks
+      - realty_development_phone_views
     groupby: [participant, session]
   tags: [bx, session]
 
 sessions_btc_per_active:
   numerator:
-    observations: [buyer_target_clicks_serp, buyer_target_clicks_rec]
+    observations:
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - favorites_added
+      - write_button_clicks
+      - realty_development_phone_views
     groupby: [participant, session]
   denominator:
-    observations: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+    observations:
+      - searches
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - favorites_added
+      - write_button_clicks
+      - realty_development_phone_views
     groupby: [participant, session]
   tags: [bx, session]
 
 sessions_c_per_active:
   numerator:
-    observations: [contacts_serp, contacts_rec]
+    observations:
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - realty_development_phone_views
     groupby: [participant, session]
   denominator:
-    observations: [searches, recblock_shows, item_views_serp, item_views_rec, buyer_target_clicks_serp, buyer_target_clicks_rec]
+    observations:
+      - searches
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - favorites_added
+      - write_button_clicks
+      - realty_development_phone_views
     groupby: [participant, session]
   tags: [bx, session]
 
