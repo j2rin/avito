@@ -7963,12 +7963,48 @@ anonnumber_success_talkers:
     observations: [anonnumber_success_talks]
     groupby: [participant]
 
+anonnumber_useless_talks:
+  title: anonnumber_useless_talks
+  description: "Количество успешных, но малополезных звонков - с длительностью разговора более 3 секунд, но менее 30 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_useless_talks]
+   
+anonnumber_usefull_talks:
+  title: anonnumber_usefull_talks
+  description: "Количество содержательных звонков - с длительностью разговора более 60 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_usefull_talks]
+    
+anonnumber_long_talks:
+  title: anonnumber_long_talks
+  description: "Количество очень длинных звонков - с длительностью разговора более 240 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_long_talks]
+    
+anonnumber_long_talksers:
+  title: anonnumber_long_talkers
+  description: "Количество долго говоривших пользователей - имели звонки длительностью более 240 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_long_talks]
+    groupby: [participant]
+
 anonnumber_calls_dur:
   title: anonnumber_calls_dur
   description: "Общая длительность (сек.) незаблокированных звонков на привязанные к объявлениям номера сервиса Анонимный Номер"
   tags: [comn, anonnumber]
   numerator:
     observations: [anonnumber_calls_duration]
+    
+anonnumber_success_calls_dur:
+  title: anonnumber_success_calls_dur
+  description: "Общая длительность (сек.) успешных (с длительностью соединения более 3 секунд) незаблокированных звонков на привязанные к объявлениям номера сервиса Анонимный Номер"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_calls_duration]
 
 anonnumber_talks_dur:
   title: anonnumber_talks_dur
@@ -7976,6 +8012,14 @@ anonnumber_talks_dur:
   tags: [comn, anonnumber]
   numerator:
     observations: [anonnumber_talks_duration]
+    
+anonnumber_success_talks_dur:
+  title: anonnumber_success_talks_dur
+  description: "Длительность разоворов (сек.) по успешным звонкам (более 3 сек. разговора) на привязанные к объявлениям номера сервиса Анонимный Номер"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_talks_duration]
+
 
 ###############################################################################
 # Communications :: Ratios
@@ -8008,6 +8052,39 @@ anonnumber_success_talks_per_user:
   tags: [comn, anonnumber]
   numerator:
     observations: [anonnumber_success_talks]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
+    
+anonnumber_useless_talks_per_user:
+  title: anonnumber_useless_talks_per_user
+  description: "Среднее количество успешных, но малополезных звонков на пользователя - с длительностью разговора более 3 секунд, но менее 30 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_useless_talks]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
+    
+anonnumber_usefull_talks_per_user:
+  title: anonnumber_usefull_talks_per_user
+  description: "Среднее количество содержательных звонков на пользователя - с длительностью разговора более 60 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_usefull_talks]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
+    
+anonnumber_long_talks_per_user:
+  title: anonnumber_long_talks_per_user
+  description: "Среднее количество очень длинных звонков на пользователя - с длительностью разговора более 240 секунд"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_long_talks]
     groupby: []
   denominator:
     observations: [anonnumber_calls]
@@ -8054,6 +8131,17 @@ anonnumber_call_dur_per_user:
   denominator:
     observations: [anonnumber_calls]
     groupby: [participant]
+    
+anonnumber_success_calls_dur_per_user:
+  title: anonnumber_success_calls_dur_per_user
+  description: "Средняя продолжительность успешных звонков (соединение более 3 секунд) на пользователя"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_calls_duration]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
 
 anonnumber_talk_dur_per_call:
   title: anonnumber_talk_dur_per_call
@@ -8070,6 +8158,17 @@ anonnumber_talk_dur_per_user:
   tags: [comn, anonnumber]
   numerator:
     observations: [anonnumber_talks_duration]
+    groupby: []
+  denominator:
+    observations: [anonnumber_calls]
+    groupby: [participant]
+    
+anonnumber_success_talk_dur_per_user:
+  title: anonnumber_success_talk_dur_per_user
+  description: "Средняя продолжительность успешных разговоров (разговор более 3 секунд) на пользователя"
+  tags: [comn, anonnumber]
+  numerator:
+    observations: [anonnumber_success_talks_duration]
     groupby: []
   denominator:
     observations: [anonnumber_calls]
