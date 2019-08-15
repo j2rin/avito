@@ -684,7 +684,7 @@ users_loc_suggest_clicks:
     groupby: [participant]
 
 searches_and_item_views_to_contact:
-  title: siv_to_contact
+  title: s_all_and_iv_to_contact
   tags: [i3, bx]
   numerator:
     observations: [searches_and_iv_to_contact]
@@ -702,10 +702,46 @@ item_views_to_contact:
     observations: [item_views_to_contact]
 
 searches_to_contact:
-  title: searches_to_contact
+  title: searches_all_to_contact
+  description: All 300 events to first contact (including map searches and scrolls). Ex-'searches_to_contact' metric
   tags: [i3, bx]
   numerator:
     observations: [searches_to_contact]
+    
+correct_searches_to_contact:
+  title: searches_serp_to_contact
+  description: Searches serp to first contact.
+  tags: [i3, bx]
+  numerator:
+    observations: [correct_searches_to_contact]
+    
+correct_searches_and_iv_to_contact:
+  title: ss_and_iv_to_contact
+  tags: [i3, bx]
+  description: Searches serp and item views to first contact
+  numerator:
+    observations: [correct_searches_and_iv_to_contact]
+    
+map_searches_to_contact:
+  title: maps_to_contact
+  tags: [i3, bx]
+  description: Map searches (based on 2743 event) to first contact
+  numerator:
+    observations: [map_searches_to_contact]
+    
+map_searches_and_iv_to_contact:
+  title: maps_and_iv_to_contact
+  tags: [i3, bx]
+  description: Map searches (based on 2743 event) and all item views (no matter from map or not) to first contact
+  numerator:
+    observations: [map_searches_and_iv_to_contact]
+  
+correct_and_map_searches_and_iv_to_contact:
+  title: maps_ss_iv_to_contact
+  tags: [i3, bx]
+  description: Map searches (based on 2743 event), searches serp and item views to first_contact
+  numerator:
+    observations: [correct_and_map_searches_and_iv_to_contact]  
 
 ad_click_sessions:
   tags: [critical, bx]
@@ -8165,6 +8201,87 @@ app_load_dur:
     observations: [time_to_interact_ms]
   denominator:
     observations: [time_to_interact_count]
+    
+init_pages_loads:
+  tags: [performance]
+  numerator:
+    observations: [initial_pages_finished_events]
+    
+init_page_interrupts:
+  tags: [performance]
+  numerator:
+    observations: [initial_pages_unfinished_events]
+    
+dom_ready_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_dom_ready]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+first_interactive_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_first_interactive]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+first_byte_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_firstbyte]
+  denominator:
+    observations: [initial_pages_finished_events]
+
+on_load_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_on_load]
+  denominator:
+    observations: [initial_pages_finished_events]
+
+target_content_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_target_content]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+on_load_catalog_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_catalog]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+on_load_item_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_item]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+on_load_main_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_main]
+  denominator:
+    observations: [initial_pages_finished_events]
+
+on_load_messenger_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_messenger]
+  denominator:
+    observations: [initial_pages_finished_events]
+
+on_load_profile_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_profile]
+  denominator:
+    observations: [initial_pages_finished_events]
+
 
  ######   #######  ##     ## ##     ## ##     ## ##    ## ####  ######     ###    ######## ####  #######  ##    ##  ######  
 ##    ## ##     ## ###   ### ###   ### ##     ## ###   ##  ##  ##    ##   ## ##      ##     ##  ##     ## ###   ## ##    ## 
