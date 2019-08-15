@@ -27,13 +27,13 @@ item_views_grouped:
 
 contacts:
   numerator:
-    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
   tags: [i1, bx, total]
 
 contacts_grouped:
   title:   contacts_groupped
   numerator:
-    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant, item]
   tags: [i1, bx, total, grouped]
 
@@ -120,7 +120,7 @@ bt_clicks:
   title: bt_clicks
   tags: [i1, bx, total]
   numerator:
-    observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks]
+    observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
     
 favorites_net:
   title: favorites_net
@@ -141,7 +141,7 @@ bt_clicks_grouped:
   title: bt_clicks_grouped
   tags: [i1, bx, total, group]
   numerator:
-    observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks]
+    observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
     groupby: [participant, item]
 
 map_searches:
@@ -193,6 +193,43 @@ calls_dialogues:
   tags: [i2, bx]
   numerator:
     observations: [call_phone_dialogues]
+ 
+   
+realty_dev_views:
+  title: realty_dev_views
+  tags: [i4, bx]
+  numerator:
+    observations: [realty_development_views]
+    
+realty_dev_phone_views:
+  title: realty_dev_phone_views
+  tags: [i4, bx]
+  numerator:
+    observations: [realty_development_phone_views]
+    
+shortcut_clicks:
+  title: shortcut_clicks
+  tags: [i4, bx]
+  numerator:
+    observations: [shortcut_clicks]
+
+phone_view_button_clicks:
+  title: phone_view_button_clicks
+  tags: [i3, bx]
+  numerator:
+    observations: [phone_view_button_clicks]
+        
+fatal_app_errors:
+  title: fatal_app_errors
+  tags: [critical, bx]
+  numerator:
+    observations: [fatal_app_error]
+    
+non_fatal_app_errors:
+  title: non_fatal_app_errors
+  tags: [i2, bx]
+  numerator:
+    observations: [non_fatal_app_error]
     
 
 ###############################################################################
@@ -211,7 +248,7 @@ contacts_per_item_view:
   title: contacts_per_item_view
   tags: [i2, bx, ratio]
   numerator:
-    observations: [phone_views_item_right, phone_views_item_top, booking_created_short_rent, first_messages, delivery_order_created]
+    observations: [phone_views_item_right, phone_views_item_top, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
   denominator:
     observations: [item_views]
 
@@ -242,6 +279,35 @@ calls_per_phone_views:
   denominator:
     observations: [phone_views_total]
     
+realty_dev_phone_per_views:
+  tags: [i4, bx, ratio]
+  numerator:
+    observations: [realty_development_phone_views]
+  denominator:
+    observations: [realty_development_views]    
+    
+realty_dev_views_per_search:
+  tags: [i4, bx, ratio]
+  numerator:
+    observations: [realty_development_views]
+  denominator:
+    observations: [searches]   
+    
+shortcut_clicks_per_search:
+  tags: [i4, bx, ratio]
+  numerator:
+    observations: [shortcut_clicks]
+  denominator:
+    observations: [searches]   
+    
+phone_view_button_clicks_per_item_view:
+  title: pv_button_per_item_view
+  tags: [i3, bx, ratio]
+  numerator:
+    observations: [phone_view_button_clicks]
+  denominator:
+    observations: [item_views]   
+    
 ###############################################################################
 # Buyer :: User Totals
 ###############################################################################
@@ -260,6 +326,7 @@ users_active_daily:
       - searches_without_query
       - searches_with_query
       - favorites_added
+      - realty_development_phone_views
     groupby: [participant]
 
 users_item_view_daily:
@@ -273,7 +340,7 @@ buyers:
   title: buyers
   tags: [i0, bx, user]
   numerator:
-    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant]
 
 users_all_main_page_daily:
@@ -322,7 +389,7 @@ users_bt_click_daily:
   title: users_bt_click
   tags: [i0, bx, user]
   numerator:
-    observations: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added]
+    observations: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added, realty_development_phone_views]
     groupby: [participant]
 
 users_favorites:
@@ -361,6 +428,7 @@ users_2plus_actions:
       - searches_without_query
       - searches_with_query
       - favorites_added
+      - realty_development_phone_views
     groupby: [participant]
     threshold: 2
     
@@ -383,6 +451,49 @@ ad_click_users:
   numerator:
     observations: [ad_clicks]
     groupby: [participant]
+    
+users_realty_dev_view:
+  title: users_realty_dev_view
+  tags: [i4, bx, user]
+  numerator:
+    observations: [realty_development_views]
+    groupby: [participant] 
+
+users_realty_dev_phone_view:
+  title: users_realty_dev_phone_view
+  tags: [i4, bx, user]
+  numerator:
+    observations: [realty_development_phone_views]
+    groupby: [participant] 
+
+shortcut_users:
+  title: shortcut_users
+  tags: [i4, bx, user]
+  numerator:
+    observations: [shortcut_clicks]
+    groupby: [participant]
+
+users_pv_button_clicks:
+  title: users_pv_button_clicks
+  tags: [i3, bx, user]
+  numerator:
+    observations: [phone_view_button_clicks]
+    groupby: [participant] 
+    
+users_fatal_app_errors:
+  title: users_fatal_app_errors
+  tags: [i0, bx, user]
+  numerator:
+    observations: [fatal_app_error]
+    groupby: [participant] 
+    
+users_non_fatal_app_errors:
+  title: users_non_fatal_app_errors
+  tags: [i2, bx, user]
+  numerator:
+    observations: [non_fatal_app_error]
+    groupby: [participant] 
+
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -392,7 +503,7 @@ buyers_per_users:
   title: buyers_per_users
   tags: [i0, bx, ratio]
   numerator:
-    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant]
   denominator:
     observations:
@@ -405,6 +516,7 @@ buyers_per_users:
       - searches_without_query
       - searches_with_query
       - favorites_added
+      - realty_development_phone_views
     groupby: [participant]
 
 users_item_view_per_users:
@@ -424,13 +536,14 @@ users_item_view_per_users:
       - searches_without_query
       - searches_with_query
       - favorites_added
+      - realty_development_phone_views
     groupby: [participant]
 
 users_bt_click_per_users:
   title: users_bt_click_per_users
   tags: [i1, bx, ratio]
   numerator:
-    observations: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added]
+    observations: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added, realty_development_phone_views]
     groupby: [participant]
   denominator:
     observations:
@@ -443,17 +556,68 @@ users_bt_click_per_users:
       - searches_without_query
       - searches_with_query
       - favorites_added
+      - realty_development_phone_views
     groupby: [participant]
 
 buyers_per_users_favorites:
   title: buyers_per_users_favorites
   tags: [bx, ratio]
   numerator:
-    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created]
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant]
   denominator:
     observations: [favorites_added]
     groupby: [participant]
+    
+shortcut_users_per_search_user:
+  title: shortcut_users_per_search_user
+  tags: [bx, ratio]
+  numerator:
+    observations: [shortcut_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+    
+user_fatal_error_per_users:
+  title: user_fatal_error_per_users
+  tags: [i0, bx, ratio]
+  numerator:
+    observations: [fatal_app_error]
+    groupby: [participant]
+  denominator:
+    observations:
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_creasted
+      - searches_without_query
+      - searches_with_query
+      - favorites_added
+      - realty_development_phone_views
+    groupby: [participant]    
+
+user_non_fatal_error_per_users:
+  title: user_non_fatal_error_per_users
+  tags: [i2, bx, ratio]
+  numerator:
+    observations: [non_fatal_app_error]
+    groupby: [participant]
+  denominator:
+    observations:
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - searches_without_query
+      - searches_with_query
+      - favorites_added
+      - realty_development_phone_views
+    groupby: [participant]    
 
 ###############################################################################
 # Buyer :: Other
@@ -520,7 +684,7 @@ users_loc_suggest_clicks:
     groupby: [participant]
 
 searches_and_item_views_to_contact:
-  title: siv_to_contact
+  title:s_all_and_iv_to_contact
   tags: [i3, bx]
   numerator:
     observations: [searches_and_iv_to_contact]
@@ -538,10 +702,46 @@ item_views_to_contact:
     observations: [item_views_to_contact]
 
 searches_to_contact:
-  title: searches_to_contact
+  title: searches_all_to_contact
+  description: All 300 events to first contact (including map searches and scrolls). Ex-'searches_to_contact' metric
   tags: [i3, bx]
   numerator:
     observations: [searches_to_contact]
+    
+correct_searches_to_contact:
+  title: searches_serp_to_contact
+  description: Searches serp to first contact.
+  tags: [i3, bx]
+  numerator:
+    observations: [correct_searches_to_contact]
+    
+correct_searches_and_iv_to_contact:
+  title: ss_and_iv_to_contact
+  tags: [i3, bx]
+  description: Searches serp and item views to first contact
+  numerator:
+    observations: [correct_searches_and_iv_to_contact]
+    
+map_searches_to_contact:
+  title: maps_to_contact
+  tags: [i3, bx]
+  description: Map searches (based on 2743 event) to first contact
+  numerator:
+    observations: [map_searches_to_contact]
+    
+map_searches_and_iv_to_contact:
+  title: maps_and_iv_to_contact
+  tags: [i3, bx]
+  description: Map searches (based on 2743 event) and all item views (no matter from map or not) to first contact
+  numerator:
+    observations: [map_searches_and_iv_to_contact]
+  
+correct_and_map_searches_and_iv_to_contact:
+  title: maps_ss_iv_to_contact
+  tags: [i3, bx]
+  description: Map searches (based on 2743 event), searches serp and item views to first_contact
+  numerator:
+    observations: [correct_and_map_searches_and_iv_to_contact]  
 
 ad_click_sessions:
   tags: [critical, bx]
@@ -1072,6 +1272,13 @@ filters_screen_shows:
   tags: [i4, bx, total]
   numerator:
     observations: [filters_screen_shows]
+    
+user_filters_screen_shows:
+  title: user_filters_screen_shows
+  tags: [i4, bx, user]
+  numerator:
+    observations: [filters_screen_shows]
+    groupby: [participant]
     
 filters_price_searches:
   title: filters_price_searches
@@ -1683,6 +1890,7 @@ sessions_active:
       - delivery_order_created
       - favorites_added
       - write_button_clicks
+      - realty_development_phone_views
     groupby: [participant, session]
   tags: [critical, bx, session]
 
@@ -1702,6 +1910,7 @@ sessions_btc:
       - delivery_order_created
       - favorites_added
       - write_button_clicks
+      - realty_development_phone_views
     groupby: [participant, session]
   tags: [i3, bx, session]
 
@@ -1713,6 +1922,7 @@ sessions_c:
       - booking_created_short_rent
       - delivery_flow_beginings
       - delivery_order_created
+      - realty_development_phone_views
     groupby: [participant, session]
   tags: [i3, bx, session]
 
@@ -7542,6 +7752,87 @@ app_load_dur:
     observations: [time_to_interact_ms]
   denominator:
     observations: [time_to_interact_count]
+    
+init_pages_loads:
+  tags: [performance]
+  numerator:
+    observations: [initial_pages_finished_events]
+    
+init_page_interrupts:
+  tags: [performance]
+  numerator:
+    observations: [initial_pages_unfinished_events]
+    
+dom_ready_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_dom_ready]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+first_interactive_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_first_interactive]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+first_byte_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_firstbyte]
+  denominator:
+    observations: [initial_pages_finished_events]
+
+on_load_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_on_load]
+  denominator:
+    observations: [initial_pages_finished_events]
+
+target_content_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_target_content]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+on_load_catalog_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_catalog]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+on_load_item_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_item]
+  denominator:
+    observations: [initial_pages_finished_events]
+    
+on_load_main_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_main]
+  denominator:
+    observations: [initial_pages_finished_events]
+
+on_load_messenger_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_messenger]
+  denominator:
+    observations: [initial_pages_finished_events]
+
+on_load_profile_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_profile]
+  denominator:
+    observations: [initial_pages_finished_events]
+
 
  ######   #######  ##     ## ##     ## ##     ## ##    ## ####  ######     ###    ######## ####  #######  ##    ##  ######  
 ##    ## ##     ## ###   ### ###   ### ##     ## ###   ##  ##  ##    ##   ## ##      ##     ##  ##     ## ###   ## ##    ## 
