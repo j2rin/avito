@@ -4913,12 +4913,39 @@ items_sold_notonavito_total_start_date:
   description: "Items closed with reason Sold not on Avito for items created after exposure total"
   date_filter: [start]
 
+items_sold_another_reason:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_another_reason]
+
+items_sold_another_reason_start_date:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_another_reason]   
+  date_filter: [start]    
+
+items_sold_another_reason_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_another_reason_total]
+
+items_sold_another_reason_total_start_date:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_another_reason_total]   
+  date_filter: [start]      
+
 items_closed_no_answer:
   title: items_closed_no_answer
   tags: [sx, liquidity, i4]
   numerator:
     observations: [items_closed_no_answer]
-  description: "Items closed without answer by platform of last activation"
+  description: "Items closed without answer by platform of last activation" 
+ 
+items_closed_no_answer_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_no_answer_total] 
 
 items_closed_with_answer:
   title: items_closed_with_answer
@@ -4927,12 +4954,22 @@ items_closed_with_answer:
     observations: [items_closed_with_answer]
   description: "Items closed with answer by platform of last activation"
 
+items_closed_with_answer_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_with_answer_total]  
+
 items_closed_by_ttl:
   title: items_closed_by_ttl
   tags: [sx, liquidity, i4]
   numerator:
     observations: [items_closed_by_ttl]
   description: "Items closed by ttl by platform of last activation"
+
+items_closed_by_ttl_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_by_ttl_total]
 
 items_archived:
   title: items_archived
@@ -5108,6 +5145,28 @@ items_rejected_total_start_date:
     observations: [items_rejected_total]
   date_filter: [start]
 
+items_category_changed_by_moderator:
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_category_changed_by_moderator]  
+
+items_category_changed_by_moderator_start_date:
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_category_changed_by_moderator]  
+  date_filter: [start]
+
+items_category_changed_by_moderator_total:
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_category_changed_by_moderator_total]  
+
+items_category_changed_by_moderator_total_start_date:
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_category_changed_by_moderator_total]  
+  date_filter: [start]  
+
 seller_favorites_added:
   description: "Favorites add"
   tags: [sx, liquidity, i4]
@@ -5161,16 +5220,31 @@ item_chains_started:
     observations: [item_chains_started]
 
 item_add_category_first_clicks:
-  description: "Category select first clicks on item add"
+  description: "Category select first click on item add"
   tags: [sx, item_add, i3]
   numerator:
-    observations: [item_add_category_first_clicks]
+    observations: [item_add_chains_category_first_click]
 
 item_add_category_last_clicks:
-  description: "Category select last clicks on item add"
+  description: "Category select last click on item add"
   tags: [sx, item_add, i3]
   numerator:
-    observations: [item_add_category_last_clicks]
+    observations: [item_add_chains_category_last_click]
+
+item_add_chains_form_input:
+  tags: [sx, item_add, i3]
+  numerator:
+    observations: [item_add_chains_form_input]
+
+item_add_chains_confirm:
+  tags: [sx, item_add, i3]
+  numerator:
+    observations: [item_add_chains_confirm]    
+
+items_created:
+  tags: [sx, item_add, i3]
+  numerator:
+    observations: [item_add_chains_item_create]    
 
 seller_own_item_views:
   description: "Views own seller item"
@@ -5369,6 +5443,27 @@ seller_favorites_added_per_items_started_net_start_date:
     observations: [items_started_net]
   date_filter: [start]
 
+seller_contacts_per_items_reactivated_net:
+  tags: [sx, liquidity, ratio, i4]
+  numerator:
+    observations: [seller_contacts]
+  denominator:
+    observations: [items_reactivated_net]
+
+seller_favorites_added_items_reactivated_net:
+  tags: [sx, liquidity, ratio, i4]
+  numerator:
+    observations: [seller_favorites_added]
+  denominator:
+    observations: [items_reactivated_net]
+
+items_sold_onavito_per_items_reactivated_net:
+  tags: [sx, liquidity, ratio, i4]
+  numerator:
+    observations: [items_sold_onavito]
+  denominator:
+    observations: [items_reactivated_net]        
+
 item_edits_per_items_started_net_start_date:
   tags: [sx, item_edit, ratio, i4]
   numerator:
@@ -5516,12 +5611,44 @@ users_item_sold_notonavito_total:
     groupby: [participant]
   description: "Users closed items with reason Sold not on Avito total"
 
+users_item_sold_another_reason:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_another_reason]
+    groupby: [participant]
+
+users_item_sold_another_reason_start_date:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_another_reason]   
+    groupby: [participant]
+  date_filter: [start]    
+
+users_item_sold_another_reason_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_another_reason_total]
+    groupby: [participant]
+
+users_item_sold_another_reason_total_start_date:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_sold_another_reason_total] 
+    groupby: [participant]  
+  date_filter: [start]    
+
 users_item_closed_no_answer:
   tags: [sx, liquidity, i4]
   numerator:
     observations: [items_closed_no_answer]
     groupby: [participant]
   description: "Users who closed items without answer by platform of last activation"
+
+users_item_closed_no_answer_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_no_answer_total]
+    groupby: [participant]
 
 users_item_closed_with_answer:
   title: users_item_closed_with_answer
@@ -5531,6 +5658,12 @@ users_item_closed_with_answer:
     groupby: [participant]
   description: "Users who closed items with answer by platform of last activation"
 
+users_item_closed_with_answer_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_with_answer_total]
+    groupby: [participant] 
+
 users_item_closed_by_ttl:
   title: users_item_closed_by_ttl
   tags: [sx, liquidity, i4]
@@ -5538,6 +5671,12 @@ users_item_closed_by_ttl:
     observations: [items_closed_by_ttl]
     groupby: [participant]
   description: "Users with items closed by ttl by platform of last activation"
+
+users_item_closed_by_ttl_total:
+  tags: [sx, liquidity, i4]
+  numerator:
+    observations: [items_closed_by_ttl_total]
+    groupby: [participant]
 
 users_item_archived:
   title: users_item_archived
@@ -5740,6 +5879,32 @@ users_item_rejected_total_start_date:
     groupby: [participant]
   date_filter: [start]
 
+users_item_category_changed_by_moderator:
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_category_changed_by_moderator]
+    groupby: [participant]
+
+users_item_category_changed_by_moderator_total:
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_category_changed_by_moderator_total]
+    groupby: [participant]  
+
+users_item_category_changed_by_moderator_start_date:
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_category_changed_by_moderator]
+    groupby: [participant]
+  date_filter: [start]
+
+users_item_category_changed_by_moderator_total_start_date:
+  tags: [sx, moderation, i2]
+  numerator:
+    observations: [items_category_changed_by_moderator_total]
+    groupby: [participant]   
+  date_filter: [start]   
+
 users_item_chain_started:
   description: "Users started item add"
   tags: [sx, item_add, i4]
@@ -5803,15 +5968,33 @@ users_item_add_category_first_click:
   description: "Users who made first click on item add category selection"
   tags: [sx, item_add, i3]
   numerator:
-    observations: [item_add_category_first_clicks]
+    observations: [item_add_chains_category_first_click]
     groupby: [participant]
 
 users_item_add_category_last_click:
   description: "Users who made last click on item add category selection"
   tags: [sx, item_add, i3]
   numerator:
-    observations: [item_add_category_last_clicks]
+    observations: [item_add_chains_category_last_click]
     groupby: [participant]
+
+users_item_add_form_input:
+  tags: [sx, item_add, i3]
+  numerator:
+    observations: [item_add_chains_form_input]
+    groupby: [participant]
+
+users_item_add_confirm:
+  tags: [sx, item_add, i3]
+  numerator:
+    observations: [item_add_chains_confirm]
+    groupby: [participant]    
+
+users_item_add_created:
+  tags: [sx, item_add, i3]
+  numerator:
+    observations: [item_add_chains_item_create]
+    groupby: [participant]    
 
 sellers_own_item_viewed:
   description: "Sellers viewed own items"
