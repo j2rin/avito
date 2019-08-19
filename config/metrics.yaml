@@ -8210,7 +8210,12 @@ init_pages_loads:
 init_page_interrupts:
   tags: [performance]
   numerator:
-    observations: [initial_pages_unfinished_events]
+    observations: [initial_pages_unfinished_events] 
+    
+init_page_interrupts_percent:
+  tags: [performance]
+  numerator:
+    observations: [initial_pages_unfinished_events,initial_pages_unfinished_events]
     
 dom_ready_dur:
   tags: [performance]
@@ -8245,42 +8250,56 @@ target_content_dur:
   numerator:
     observations: [time_to_target_content]
   denominator:
-    observations: [initial_pages_finished_events]
+    observations: [initial_pages_finished_events_main]
+    
+async_target_content_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_for_async_target_content]
+  denominator:
+    observations: [initial_pages_finished_events_main]
     
 on_load_catalog_dur:
   tags: [performance]
   numerator:
     observations: [time_to_load_catalog]
   denominator:
-    observations: [initial_pages_finished_events]
+    observations: [initial_pages_finished_events_catalog]
     
 on_load_item_dur:
   tags: [performance]
   numerator:
     observations: [time_to_load_item]
   denominator:
-    observations: [initial_pages_finished_events]
+    observations: [initial_pages_finished_events_item]
     
 on_load_main_dur:
   tags: [performance]
   numerator:
     observations: [time_to_load_main]
   denominator:
-    observations: [initial_pages_finished_events]
+    observations: [initial_pages_finished_events_main]
 
 on_load_messenger_dur:
   tags: [performance]
   numerator:
     observations: [time_to_load_messenger]
   denominator:
-    observations: [initial_pages_finished_events]
+    observations: [initial_pages_finished_events_messenger]
 
 on_load_profile_dur:
   tags: [performance]
   numerator:
     observations: [time_to_load_profile]
   denominator:
-    observations: [initial_pages_finished_events]
+    observations: [initial_pages_finished_events_profile]
+    
+on_load_other_dur:
+  tags: [performance]
+  numerator:
+    observations: [time_to_load_other_pages]
+  denominator:
+    observations: [initial_pages_finished_events_other_pages]
 
 
  ######   #######  ##     ## ##     ## ##     ## ##    ## ####  ######     ###    ######## ####  #######  ##    ##  ######  
