@@ -72,7 +72,31 @@ favorites_added:
   title: favorites_added
   tags: [i2, bx, fav, total]
   numerator:
-    observations: [favorites_added]   
+    observations: [favorites_added]
+
+item_views_fav_list:
+  title: item_views_fav_list
+  tags: [i2, bx, fav, tns, total]
+  numerator:
+    observations: [item_views_fav_list]
+
+contacts_fav_list:
+  title: contacts_fav_list
+  tags: [i2, bx, fav, tns, total]
+  numerator:
+    observations: [contacts_fav_list]
+
+fav_list_item_view:
+  title: fav_list_item_view
+  tags: [i2, bx, fav, tns, total]
+  numerator:
+    observations: [fav_list_item_view]
+
+fav_list_contact:
+  title: fav_list_contact
+  tags: [i2, bx, fav, tns, total]
+  numerator:
+    observations: [fav_list_contact]
 
 first_messages:
   title: first_messages
@@ -230,7 +254,6 @@ non_fatal_app_errors:
   tags: [i2, bx]
   numerator:
     observations: [non_fatal_app_error]
-    
 
 ###############################################################################
 # Buyer :: Ratios
@@ -306,7 +329,23 @@ phone_view_button_clicks_per_item_view:
   numerator:
     observations: [phone_view_button_clicks]
   denominator:
-    observations: [item_views]   
+    observations: [item_views]
+
+fav_list_item_view_per_fav_list:
+  title: fav_list_item_view_per_fav_list
+  tags: [i4, bx, fav, ratio]
+  numerator:
+    observations: [fav_list_item_view]
+  denominator:
+    observations: [favorites_list_views]
+
+fav_list_contact_per_fav_list:
+  title: fav_list_contact_per_fav_list
+  tags: [i4, bx, fav, ratio]
+  numerator:
+    observations: [fav_list_contact]
+  denominator:
+    observations: [favorites_list_views]
     
 ###############################################################################
 # Buyer :: User Totals
@@ -393,10 +432,24 @@ users_bt_click_daily:
     groupby: [participant]
 
 users_favorites:
-  title: users_favorites
+  title: users_favorites_added
   tags: [i2, bx, user]
   numerator:
     observations: [favorites_added]
+    groupby: [participant]
+
+users_item_views_fav_list:
+  title: item_views_fav_list
+  tags: [i2, bx, fav, tns, user]
+  numerator:
+    observations: [item_views_fav_list]
+    groupby: [participant]
+
+users_contacts_fav_list:
+  title: contacts_fav_list
+  tags: [i2, bx, fav, tns, user]
+  numerator:
+    observations: [contacts_fav_list]
     groupby: [participant]
 
 map_users:
@@ -412,7 +465,6 @@ pin_clickers:
   numerator:
     observations: [pin_clicks]
     groupby: [participant]
-    
 
 users_2plus_actions:
   title: users_2plus_actions
@@ -493,7 +545,6 @@ users_non_fatal_app_errors:
   numerator:
     observations: [non_fatal_app_error]
     groupby: [participant] 
-
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -1290,7 +1341,6 @@ filters_any_searches:
   tags: [i4, bx, total]
   numerator:
     observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
-    
 
 ###############################################################################
 # Search :: Ratios
