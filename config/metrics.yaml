@@ -181,18 +181,6 @@ bt_clicks_grouped:
     observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
     groupby: [participant, item]
 
-map_searches:
-  title: map_searches
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [map_searches]
-
-pin_clicks:
-  title: pin_clicks
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [pin_clicks]
-
 ad_clicks:
   tags: [critical, bx]
   numerator:
@@ -480,20 +468,6 @@ users_contacts_fav_list:
     observations: [contacts_fav_list]
     groupby: [participant]
 
-map_users:
-  title: map_users
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [map_searches]
-    groupby: [participant]
-
-pin_clickers:
-  title: pin_clickers
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [pin_clicks]
-    groupby: [participant]
-
 users_2plus_actions:
   title: users_2plus_actions
   tags: [i3, bx, user]
@@ -719,48 +693,6 @@ saved_searches_added:
   tags: [i4, bx, ss, total]
   numerator:
     observations: [saved_searches_added]
-
-loc_window_opens:
-  title: loc_window_opens
-  tags: [i4, bx, total]
-  numerator:
-    observations: [location_window_displays]
-
-location_text_inputs:
-  title: location_text_inputs
-  tags: [i4, bx, total]
-  numerator:
-    observations: [location_text_inputs]
-
-loc_window_saves_per_opens:
-  title: loc_window_saves_per_opens
-  tags: [i4, bx, total]
-  numerator:
-    observations: [location_window_save_clicks]
-  denominator:
-    observations: [location_window_displays]
-
-loc_suggests_per_text_inputs:
-  title: loc_suggests_per_text_inputs
-  tags: [i4, bx, total]
-  numerator:
-    observations: [location_suggest_clicks]
-  denominator:
-    observations: [location_text_inputs]
-
-users_loc_window_opens:
-  title: users_loc_window_opens
-  tags: [i4, bx,  user]
-  numerator:
-    observations: [location_window_displays]
-    groupby: [participant]
-
-users_loc_suggest_clicks:
-  title: users_loc_suggest_clicks
-  tags: [i4, bx,  user]
-  numerator:
-    observations: [location_suggest_clicks]
-    groupby: [participant]
 
 searches_and_item_views_to_contact:
   title: s_all_and_iv_to_contact
@@ -1944,6 +1876,12 @@ sessions_active:
 sessions_iv:
   numerator:
     observations: [item_views]
+    groupby: [participant, session]
+  tags: [i3, bx, session]
+  
+sessions_s:
+  numerator:
+    observations: [searches]
     groupby: [participant, session]
   tags: [i3, bx, session]
 
@@ -10165,3 +10103,317 @@ user_account_asd_click_write_review_asd:
   numerator:
     observations: [account_asd_click_write_review_asd]
     groupby: [participant]
+
+
+ ######   ########  #######  
+##    ##  ##       ##     ## 
+##        ##       ##     ## 
+##   #### ######   ##     ## 
+##    ##  ##       ##     ## 
+##    ##  ##       ##     ## 
+ ######   ########  #######  
+
+###############################################################################
+# Geo :: Totals
+###############################################################################
+
+loc_window_opens:
+  title: loc_window_opens
+  tags: [i3, bx, total]
+  numerator:
+    observations: [location_dialogue_opens]
+    
+loc_window_closings:
+  title: loc_window_closings
+  tags: [i3, bx, total]
+  numerator:
+    observations: [location_dialogue_closings]
+    
+loc_window_savings:
+  title: loc_window_savings
+  tags: [i3, bx, total]
+  numerator:
+    observations: [location_dialogue_savings]
+
+location_text_inputs:
+  title: location_text_inputs
+  tags: [i4, bx, total]
+  numerator:
+    observations: [location_text_inputs]
+
+users_loc_window_opens:
+  title: users_loc_window_opens
+  tags: [i3, bx,  user]
+  numerator:
+    observations: [location_dialogue_opens]
+    groupby: [participant]
+
+users_loc_suggest_clicks:
+  title: users_loc_suggest_clicks
+  tags: [i4, bx,  user]
+  numerator:
+    observations: [location_suggest_clicks]
+    groupby: [participant]
+    
+map_searches:
+  title: map_searches
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [map_searches]
+
+pin_clicks:
+  title: pin_clicks
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [pin_clicks]
+    
+map_users:
+  title: map_users
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant]
+
+pin_clickers:
+  title: pin_clickers
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [pin_clicks]
+    groupby: [participant]
+    
+loc_chng:
+  description: "Число смен локаций"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings]
+    
+loc_bad_chng:
+  description: "Т.н. плохие смены локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings_bad]
+    
+loc_susp_chng:
+  description: "Т.н. подозрительные смены локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_suspicious]
+    
+loc_neutral_chng:
+  description: "Т.н. нейтральные смены локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_neutral]
+    
+loc_bad_susp_chng:
+  description: "Т.н. плохие и подозрительные смены локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_bad, location_changings_suspicious]
+    
+loc_expanded_chng:
+  description: "Смена локации с расширением, например с города на регион"
+  title: loc_expanded_changings
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_expanded]
+    
+loc_detailed_chng:
+  description: "Смена локации с сужением, например с региона на город"
+  title: loc_detailed_chng
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_detailed]
+    
+loc_horizontal_chng:
+  description: "Смена локации на одном уровне, например с региона на регион"
+  title: loc_horizontal_chng
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_horizontal]
+    
+loc_chng_sessions:
+  description: "Число сессий со сменой локации"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings]
+    groupby: [participant, session]
+    
+loc_bad_chng_sessions:
+  description: "Число сессий с т.н. плохими сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings_bad]
+    groupby: [participant, session]
+    
+loc_susp_chng_sessions:
+  description: "Число сессий с т.н. подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_suspicious]
+    groupby: [participant, session]
+    
+loc_neutral_chng_sessions:
+  description: "Число сессий с т.н. нейтральными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_neutral]
+    groupby: [participant, session]
+    
+loc_bad_and_chng_sessions:
+  description: "Число сессий с т.н. плохими и подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_bad, location_changings_suspicious]
+    groupby: [participant, session]
+    
+users_loc_chng:
+  description: "Число юзеров со сменой локации"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings]
+    groupby: [participant]
+    
+users_loc_bad_chng:
+  description: "Число юзеров с т.н. плохими сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings_bad]
+    groupby: [participant]
+    
+users_loc_susp_chng:
+  description: "Число юзеров с т.н. подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_suspicious]
+    groupby: [participant]
+    
+users_loc_neutral_chng:
+  description: "Число юзеров с т.н. нейтральными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_neutral]
+    groupby: [participant]
+    
+users_loc_bad_and_chng:
+  description: "Число юзеров с т.н. плохими и подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_bad, location_changings_suspicious]
+    groupby: [participant]
+    
+users_loc_expanded_chng:
+  description: "Число юзеров со сменой локаций на расширение"
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_expanded]
+    groupby: [participant] 
+ 
+users_loc_detailed_chng:
+  description: "Число юзеров со сменой локаций на сужение"
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_detailed]
+    groupby: [participant] 
+    
+users_loc_horizontal_chng:
+  description: "Число юзеров с горизонтальными сменами локации"
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_horizontal]
+    groupby: [participant] 
+ 
+default_loc_tooltip_shows:
+  tags: [i3, geo]
+  numerator: 
+    observations: [tooltip_opens]
+  
+users_default_loc_tooltip:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens]
+    groupby: [participant]
+  
+default_loc_tooltip_accepts:
+  tags: [i3, geo]
+  numerator:
+    observations: [tooltip_accepts]
+  
+users_default_loc_tooltip_accepts:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_accepts]
+    groupby: [participant]
+  
+default_loc_tooltip_declines:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_not_accepts]
+  
+users_default_loc_tooltip_declines:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_not_accepts]
+    groupby: [participant]
+
+
+###############################################################################
+# Geo :: Ratios
+###############################################################################
+
+loc_chng_sessions_per_s_session:
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+    
+loc_bad_chng_sessions_per_s_sessions:
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_bad]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+
+loc_bad__susp_chng_sessions_per_s_sessions:
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_bad]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+    
+loc_window_saves_per_opens:
+  title: loc_window_saves_per_opens
+  tags: [i3, bx, total]
+  numerator:
+    observations: [location_dialogue_savings]
+  denominator:
+    observations: [location_dialogue_opens]
+
+loc_suggests_per_text_inputs:
+  title: loc_suggests_per_text_inputs
+  tags: [i4, bx, total]
+  numerator:
+    observations: [location_suggest_clicks]
+  denominator:
+    observations: [location_text_inputs]
+
+default_loc_tooltip_accepts_per_shows:
+  tags: [i3, geo]
+  numerator:
+    observations: [tooltip_accepts]
+  denominator:
+    observations: [tooltip_opens]
+    
+default_loc_tooltip_declines_per_shows:
+  tags: [i3, geo]
+  numerator:
+    observations: [tooltip_not_accepts]
+  denominator:
+    observations: [tooltip_opens]
