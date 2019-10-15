@@ -202,16 +202,41 @@ ad_revenue_predict:
     observations: [ad_revenue_predict]
 
 call_phones:
-  description: "Показ экрана набора номера. Актуально для Андроида"
+  title: calls_backend
+  description: "Показ экрана набора номера. Актуально для Андроида. 299 событие"
   tags: [i1, bx]
   numerator:
     observations: [call_phone_screen_views]
  
 calls:
-  description: "Показ экрана набора номера. Актуально для Андроида. То же самое, что call_phones, но с клиента"
+  description: "Аппроксимация звонков. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
   tags: [i1, bx]
   numerator:
-    observations: [call_phone_screen_views_client]
+    observations: [call_phone_screen_views_client, missed_proxy_calls, answered_proxy_calls]
+    
+calls_serp:
+  description: "Аппроксимация звонков с СЕРПа. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls_serp, answered_proxy_calls_serp]
+    
+calls_rec:
+  description: "Аппроксимация звонков с рекомендаций. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls_rec, answered_proxy_calls_rec]
+    
+calls_fav:
+  description: "Аппроксимация звонков из избранного. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls_fav, answered_proxy_calls_fav]
+    
+calls_map:
+  description: "Аппроксимация звонков с карты. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls_map, answered_proxy_calls_map]
     
 calls_dialogues:
   description: "Показ экрана диалога звонить/не звонить. Актуально для Андроида."
@@ -255,6 +280,66 @@ non_fatal_app_errors:
   tags: [i2, bx]
   numerator:
     observations: [non_fatal_app_error]
+    
+answered_proxy_calls:
+  title: answered_proxy_calls
+  tags: [i2, bx]
+  numerator:
+    observations: [answered_proxy_calls]
+    
+answered_proxy_calls_serp:
+  title: answered_proxy_calls_serp
+  tags: [i4, bx]
+  numerator:
+    observations: [answered_proxy_calls_serp]
+    
+answered_proxy_calls_rec:
+  title: answered_proxy_calls_rec
+  tags: [i4, bx]
+  numerator:
+    observations: [answered_proxy_calls_rec]
+    
+answered_proxy_calls_fav:
+  title: answered_proxy_calls_fav
+  tags: [i4, bx]
+  numerator:
+    observations: [answered_proxy_calls_fav]
+    
+answered_proxy_calls_map:
+  title: answered_proxy_calls_map
+  tags: [i4, bx]
+  numerator:
+    observations: [answered_proxy_calls_map]   
+    
+missed_proxy_calls:
+  title: missed_proxy_calls
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls]
+
+missed_proxy_calls_serp:
+  title: missed_proxy_calls_serp
+  tags: [i4, bx]
+  numerator:
+    observations: [missed_proxy_calls_serp]
+
+missed_proxy_calls_rec:
+  title: missed_proxy_calls_rec
+  tags: [i4, bx]
+  numerator:
+    observations: [missed_proxy_calls_rec]
+
+missed_proxy_calls_fav:
+  title: missed_proxy_calls_fav
+  tags: [i4, bx]
+  numerator:
+    observations: [missed_proxy_calls_fav]   
+
+missed_proxy_calls_map:
+  title: missed_proxy_calls_map
+  tags: [i4, bx]
+  numerator:
+    observations: [missed_proxy_calls_map]
 
 ###############################################################################
 # Buyer :: Ratios
@@ -283,6 +368,7 @@ delivery_orders_per_flow_begining:
     observations: [delivery_flow_beginings]
     
 call_phones_per_phone_views:
+  title: calls_backend_per_phone_views
   tags: [i2, bx, ratio]
   numerator:
     observations: [call_phone_screen_views]
@@ -292,14 +378,14 @@ call_phones_per_phone_views:
 calls_per_dialogue:
   tags: [i2, bx, ratio]
   numerator:
-    observations: [call_phone_screen_views_client]
+    observations: [call_phone_screen_views_client,missed_proxy_calls, answered_proxy_calls]
   denominator:
     observations: [call_phone_dialogues]
     
 calls_per_phone_views:
   tags: [i2, bx, ratio]
   numerator:
-    observations: [call_phone_screen_views_client]
+    observations: [call_phone_screen_views_client,missed_proxy_calls, answered_proxy_calls]
   denominator:
     observations: [phone_views_total]
     
@@ -487,19 +573,47 @@ users_2plus_actions:
     threshold: 2
     
 users_phone_calls:
-  title: users_phone_calls
+  title: users_calls_backend
   tags: [i1, bx, user]
   numerator:
     observations: [call_phone_screen_views]
     groupby: [participant]  
     
 users_phone_calls_client:
-  title: users_phone_calls_client
+  title: users_calls
   tags: [i1, bx, user]
   numerator:
-    observations: [call_phone_screen_views_client]
+    observations: [call_phone_screen_views_client, missed_proxy_calls, answered_proxy_calls]
     groupby: [participant] 
 
+users_phone_calls_client_serp:
+  title: users_calls_serp
+  tags: [i3, bx, user]
+  numerator:
+    observations: [missed_proxy_calls_serp, answered_proxy_calls_serp]
+    groupby: [participant] 
+
+users_phone_calls_client_rec:
+  title: users_calls_rec
+  tags: [i3, bx, user]
+  numerator:
+    observations: [ missed_proxy_rec, answered_proxy_rec]
+    groupby: [participant] 
+
+users_phone_calls_client_fav:
+  title: users_calls_fav
+  tags: [i1, bx, user]
+  numerator:
+    observations: [missed_proxy_calls_fav, answered_proxy_calls_fav]
+    groupby: [participant] 
+
+users_phone_calls_client_map:
+  title: users_calls_map
+  tags: [i1, bx, user]
+  numerator:
+    observations: [missed_proxy_calls_map, answered_proxy_calls_map]
+    groupby: [participant]     
+    
 ad_click_users:
   tags: [critical, bx]
   numerator:
