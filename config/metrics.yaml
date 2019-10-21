@@ -1355,11 +1355,18 @@ suggest_buyers:
     observations: [queries_no_redirect_contact]
     groupby: [participant]
 
-share_suggest_buyers_to_all_users:
+suggest_buyers:
   description: "Buyers, who use suggest"
   tags: [ss, sgt]
   numerator:
     observations: [sessions_with_suggest_click_and_contact]
+    groupby: [participant]
+
+share_suggest_buyers_to_all_users:
+  description: "Buyers, who use suggest"
+  tags: [ss, sgt]
+  numerator:
+    observations: [sessions_with_query_suggest_click_contact]
     groupby: [participant]
     
 filters_screen_shows:
@@ -2651,6 +2658,16 @@ share_suggest_users_to_users_with_search:
     groupby: [participant]
 
 share_suggest_buyers_to_suggest_users:
+  description: "Share of buyers, who use suggest, to cookies, who use suggest, based on 2443 event"
+  tags: [ss, sgt, ratio]
+  numerator:
+    observations: [sessions_with_query_suggest_click_contact]
+    groupby: [participant]
+  denominator:
+    observations: [search_suggest_clicks]
+    groupby: [participant]
+
+all_suggest_buyers_to_suggest_users:
   description: "Share of buyers, who use suggest, to cookies, who use suggest, based on 2443 event"
   tags: [ss, sgt, ratio]
   numerator:
