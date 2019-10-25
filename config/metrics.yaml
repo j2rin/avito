@@ -202,16 +202,41 @@ ad_revenue_predict:
     observations: [ad_revenue_predict]
 
 call_phones:
-  description: "Показ экрана набора номера. Актуально для Андроида"
+  title: calls_backend
+  description: "Показ экрана набора номера. Актуально для Андроида. 299 событие"
   tags: [i1, bx]
   numerator:
     observations: [call_phone_screen_views]
  
 calls:
-  description: "Показ экрана набора номера. Актуально для Андроида. То же самое, что call_phones, но с клиента"
+  description: "Аппроксимация звонков. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
   tags: [i1, bx]
   numerator:
-    observations: [call_phone_screen_views_client]
+    observations: [call_phone_screen_views_client, missed_proxy_calls, answered_proxy_calls]
+    
+calls_serp:
+  description: "Аппроксимация звонков с СЕРПа. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls_serp, answered_proxy_calls_serp]
+    
+calls_rec:
+  description: "Аппроксимация звонков с рекомендаций. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls_rec, answered_proxy_calls_rec]
+    
+calls_fav:
+  description: "Аппроксимация звонков из избранного. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls_fav, answered_proxy_calls_fav]
+    
+calls_map:
+  description: "Аппроксимация звонков с карты. Для Андроида - показ экрана набора номера (системный) 3381, для iOS - прокси звонки 2545, 2546"
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls_map, answered_proxy_calls_map]
     
 calls_dialogues:
   description: "Показ экрана диалога звонить/не звонить. Актуально для Андроида."
@@ -255,6 +280,66 @@ non_fatal_app_errors:
   tags: [i2, bx]
   numerator:
     observations: [non_fatal_app_error]
+    
+answered_proxy_calls:
+  title: answered_proxy_calls
+  tags: [i2, bx]
+  numerator:
+    observations: [answered_proxy_calls]
+    
+answered_proxy_calls_serp:
+  title: answered_proxy_calls_serp
+  tags: [i4, bx]
+  numerator:
+    observations: [answered_proxy_calls_serp]
+    
+answered_proxy_calls_rec:
+  title: answered_proxy_calls_rec
+  tags: [i4, bx]
+  numerator:
+    observations: [answered_proxy_calls_rec]
+    
+answered_proxy_calls_fav:
+  title: answered_proxy_calls_fav
+  tags: [i4, bx]
+  numerator:
+    observations: [answered_proxy_calls_fav]
+    
+answered_proxy_calls_map:
+  title: answered_proxy_calls_map
+  tags: [i4, bx]
+  numerator:
+    observations: [answered_proxy_calls_map]   
+    
+missed_proxy_calls:
+  title: missed_proxy_calls
+  tags: [i2, bx]
+  numerator:
+    observations: [missed_proxy_calls]
+
+missed_proxy_calls_serp:
+  title: missed_proxy_calls_serp
+  tags: [i4, bx]
+  numerator:
+    observations: [missed_proxy_calls_serp]
+
+missed_proxy_calls_rec:
+  title: missed_proxy_calls_rec
+  tags: [i4, bx]
+  numerator:
+    observations: [missed_proxy_calls_rec]
+
+missed_proxy_calls_fav:
+  title: missed_proxy_calls_fav
+  tags: [i4, bx]
+  numerator:
+    observations: [missed_proxy_calls_fav]   
+
+missed_proxy_calls_map:
+  title: missed_proxy_calls_map
+  tags: [i4, bx]
+  numerator:
+    observations: [missed_proxy_calls_map]
 
 ###############################################################################
 # Buyer :: Ratios
@@ -283,6 +368,7 @@ delivery_orders_per_flow_begining:
     observations: [delivery_flow_beginings]
     
 call_phones_per_phone_views:
+  title: calls_backend_per_phone_views
   tags: [i2, bx, ratio]
   numerator:
     observations: [call_phone_screen_views]
@@ -292,14 +378,14 @@ call_phones_per_phone_views:
 calls_per_dialogue:
   tags: [i2, bx, ratio]
   numerator:
-    observations: [call_phone_screen_views_client]
+    observations: [call_phone_screen_views_client,missed_proxy_calls, answered_proxy_calls]
   denominator:
     observations: [call_phone_dialogues]
     
 calls_per_phone_views:
   tags: [i2, bx, ratio]
   numerator:
-    observations: [call_phone_screen_views_client]
+    observations: [call_phone_screen_views_client,missed_proxy_calls, answered_proxy_calls]
   denominator:
     observations: [phone_views_total]
     
@@ -487,19 +573,47 @@ users_2plus_actions:
     threshold: 2
     
 users_phone_calls:
-  title: users_phone_calls
+  title: users_calls_backend
   tags: [i1, bx, user]
   numerator:
     observations: [call_phone_screen_views]
     groupby: [participant]  
     
 users_phone_calls_client:
-  title: users_phone_calls_client
+  title: users_calls
   tags: [i1, bx, user]
   numerator:
-    observations: [call_phone_screen_views_client]
+    observations: [call_phone_screen_views_client, missed_proxy_calls, answered_proxy_calls]
     groupby: [participant] 
 
+users_phone_calls_client_serp:
+  title: users_calls_serp
+  tags: [i3, bx, user]
+  numerator:
+    observations: [missed_proxy_calls_serp, answered_proxy_calls_serp]
+    groupby: [participant] 
+
+users_phone_calls_client_rec:
+  title: users_calls_rec
+  tags: [i3, bx, user]
+  numerator:
+    observations: [ missed_proxy_rec, answered_proxy_rec]
+    groupby: [participant] 
+
+users_phone_calls_client_fav:
+  title: users_calls_fav
+  tags: [i1, bx, user]
+  numerator:
+    observations: [missed_proxy_calls_fav, answered_proxy_calls_fav]
+    groupby: [participant] 
+
+users_phone_calls_client_map:
+  title: users_calls_map
+  tags: [i1, bx, user]
+  numerator:
+    observations: [missed_proxy_calls_map, answered_proxy_calls_map]
+    groupby: [participant]     
+    
 ad_click_users:
   tags: [critical, bx]
   numerator:
@@ -1235,17 +1349,26 @@ buyer_target_clicks_serp:
     observations: [buyer_target_clicks_serp]
 
 suggest_buyers:
+  title: suggest_buyers_old
   description: "Buyers, who use suggest"
   tags: [ss, sgt]
   numerator:
     observations: [queries_no_redirect_contact]
     groupby: [participant]
 
-share_suggest_buyers_to_all_users:
+suggest_buyers_with_all_queries:
+  title: suggest_buyers
   description: "Buyers, who use suggest"
   tags: [ss, sgt]
   numerator:
     observations: [sessions_with_suggest_click_and_contact]
+    groupby: [participant]
+
+share_suggest_buyers_to_all_users:
+  description: "Buyers, who use suggest"
+  tags: [ss, sgt]
+  numerator:
+    observations: [sessions_with_query_suggest_click_contact]
     groupby: [participant]
     
 filters_screen_shows:
@@ -2537,6 +2660,17 @@ share_suggest_users_to_users_with_search:
     groupby: [participant]
 
 share_suggest_buyers_to_suggest_users:
+  title: old_share_suggest_buyers_to_suggest_users
+  description: "Share of buyers, who use suggest, to cookies, who use suggest, based on 2443 event"
+  tags: [ss, sgt, ratio]
+  numerator:
+    observations: [sessions_with_query_suggest_click_contact]
+    groupby: [participant]
+  denominator:
+    observations: [search_suggest_clicks]
+    groupby: [participant]
+
+suggest_buyers_to_suggest_users:
   description: "Share of buyers, who use suggest, to cookies, who use suggest, based on 2443 event"
   tags: [ss, sgt, ratio]
   numerator:
@@ -3015,6 +3149,24 @@ answered_first_messages_within_1hour_7hour:
   numerator:
     observations: [answered_first_messages_within_1hour_7hour]
 
+answered_first_messages_within_1day:
+  title: answered_first_messages_within_1day
+  tags: [i2, messenger, total]
+  numerator:
+    observations: [answered_first_messages_within_1day]
+
+items_closed_from_messenger:
+  title: items_closed_from_messenger
+  tags: [i3, messenger, total]
+  numerator:
+    observations: [closed_items_from_messenger]
+
+items_sold_onavito_from_messenger:
+  title: items_sold_onavito_from_messenger
+  tags: [i2, messenger, total]
+  numerator:
+    observations: [items_sold_onavito_from_messenger]
+
 ###############################################################################
 # Messenger :: Ratios
 ###############################################################################
@@ -3186,6 +3338,20 @@ users_chat_open_errors:
   tags: [i4, messenger, user]
   numerator:
     observations: [chat_open_errors]
+    groupby: [participant]
+    
+users_item_closed_from_messenger:
+  title: users_item_closed_from_messenger
+  tags: [i3, messenger, user]
+  numerator:
+    observations: [closed_items_from_messenger]
+    groupby: [participant]
+
+users_item_sold_onavito_from_messenger:
+  title: users_item_sold_onavito_from_messenger
+  tags: [i2, messenger, user]
+  numerator:
+    observations: [items_sold_onavito_from_messenger]
     groupby: [participant]
 
 ########  ######## ##       #### ##     ## ######## ########  ##    ##
@@ -3394,6 +3560,20 @@ total_delivery_widget:
   tags: [i3, delivery, buyer]
   numerator:
     observations: [total_delivery_widget]
+
+delivery_confirm:
+  title: delivery_confirm
+  description: "Уникальные нажатия на кнопку - Продолжить оформление - в поп-апе доставке"
+  tags: [i2, delivery, buyer]
+  numerator:
+    observations: [delivery_confirm]
+
+total_delivery_confirm:
+  title: total_delivery_confirm
+  description: "Все нажатия на кнопку - Продолжить оформление - в поп-апе доставке"
+  tags: [i3, delivery, buyer]
+  numerator:
+    observations: [total_delivery_confirm]
 
 delivery_contact:
   title: delivery_contact
@@ -3609,12 +3789,30 @@ delivery_widget_contact_ratio:
   denominator:
     observations: [delivery_widget]
 
+delivery_widget_confirm_ratio:
+  title: delivery_widget_confirm_ratio
+  description: "Conversion from delivery widget show to delivery confirm by uniq user"
+  tags: [i3, delivery, buyer]
+  numerator:
+    observations: [delivery_confirm]
+  denominator:
+    observations: [delivery_widget]
+
 delivery_total_widget_contact_ratio:
   title: delivery_total_widget_contact_ratio
   description: "Conversion from delivery widget show to delivery contact"
   tags: [i4, delivery, buyer]
   numerator:
     observations: [total_delivery_contact]
+  denominator:
+    observations: [total_delivery_widget]
+
+delivery_total_widget_confirm_ratio:
+  title: delivery_total_widget_confirm_ratio
+  description: "Conversion from delivery widget show to delivery confirm"
+  tags: [i4, delivery, buyer]
+  numerator:
+    observations: [total_delivery_confirm]
   denominator:
     observations: [total_delivery_widget]
 
