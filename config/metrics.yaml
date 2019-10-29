@@ -1940,6 +1940,14 @@ share_suggest_searches_to_all:
   denominator:
     observations: [session_searches_with_uniq_query]
 
+suggest_searches_to_all_searches:
+  description: "Share of searches with suggest"
+  tags: [ss, ratio, sgt]
+  numerator:
+    observations: [search_suggest_clicks]
+  denominator:
+    observations: [session_searches_with_empty_or_uniq_query]
+
 s_iv_per_s_date_sort:
   tags: [i2, bx, serp, ratio]
   numerator:
@@ -2819,6 +2827,16 @@ share_suggest_users_to_users_with_search:
     observations: [session_searches_with_uniq_query]
     groupby: [participant]
 
+suggest_users_to_users_with_search:
+  description: "Share of cookies, who use suggest, to users with query, based on 2443 event"
+  tags: [ss, sgt, ratio]
+  numerator:
+    observations: [search_suggest_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [session_searches_with_empty_or_uniq_query]
+    groupby: [participant]
+
 share_suggest_buyers_to_suggest_users:
   title: old_share_suggest_buyers_to_suggest_users
   description: "Share of buyers, who use suggest, to cookies, who use suggest, based on 2443 event"
@@ -2838,6 +2856,262 @@ suggest_buyers_to_suggest_users:
     groupby: [participant]
   denominator:
     observations: [search_suggest_clicks]
+    groupby: [participant]
+
+misspell_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [misspell_suggest]
+  denominator:
+    observations: [searches]
+
+misspell_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [misspell_replace]
+  denominator:
+    observations: [searches]
+
+teleport_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [teleport_suggest]
+  denominator:
+    observations: [searches]
+
+teleport_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [teleport_replace]
+  denominator:
+    observations: [searches]
+
+search_redirect_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [search_redirect_suggest]
+  denominator:
+    observations: [searches]
+
+search_redirect_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [search_redirect_replace]
+  denominator:
+    observations: [searches]
+
+geo_redirect_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [geo_redirect_suggest]
+  denominator:
+    observations: [searches]
+
+geo_redirect_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [geo_redirect_replace]
+  denominator:
+    observations: [searches]
+
+typo_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [typo_suggest]
+  denominator:
+    observations: [searches]
+
+typo_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [typo_replace]
+  denominator:
+    observations: [searches]
+
+keyboard_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [keyboard_suggest]
+  denominator:
+    observations: [searches]
+
+keyboard_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [keyboard_replace]
+  denominator:
+    observations: [searches]
+
+wordbreaker_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_suggest]
+  denominator:
+    observations: [searches]
+
+wordbreaker_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_replace]
+  denominator:
+    observations: [searches]
+
+wordbreaker_digit_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_digit_suggest]
+  denominator:
+    observations: [searches]
+
+wordbreaker_digit_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_digit_replace]
+  denominator:
+    observations: [searches]
+
+misspell_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [misspell_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+misspell_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [misspell_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+teleport_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [teleport_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+teleport_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [teleport_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+search_redirect_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [search_redirect_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+search_redirect_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [search_redirect_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+geo_redirect_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [geo_redirect_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+geo_redirect_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [geo_redirect_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+typo_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [typo_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+typo_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [typo_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+keyboard_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [keyboard_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+keyboard_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [keyboard_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+wordbreaker_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+wordbreaker_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+wordbreaker_digit_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_digit_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+wordbreaker_digit_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_digit_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
     groupby: [participant]
 
 ########  ########  ######
