@@ -1168,6 +1168,18 @@ serp_without_query_small:
   numerator:
     observations: [serp_without_query_small]
 
+searches_item_view_delivery:
+  title: iv_block_delivery
+  tags: [i4, bx, serp, has]
+  numerator:
+    observations: [searches_item_view_delivery]
+
+searches_item_view_regions:
+  title: iv_block_ext_reg
+  tags: [i4, bx, serp, has]
+  numerator:
+    observations: [searches_item_view_regions]
+
 searches_item_view_vip:
   title: searches_item_view_vip
   tags: [i4, bx, serp, vas, has]
@@ -1197,6 +1209,18 @@ searches_item_view_serp:
   tags: [i3, bx, serp, has]
   numerator:
     observations: [searches_item_view_serp]
+
+searches_contact_delivery:
+  title: searches_contact_delivery
+  tags: [i4, bx, serp, has]
+  numerator:
+    observations: [searches_contact_delivery]
+
+searches_contact_regions:
+  title: searches_contact_regions
+  tags: [i4, bx, serp, has]
+  numerator:
+    observations: [searches_contact_regions]
 
 searches_contact_vip:
   title: searches_contact_vip
@@ -1228,6 +1252,18 @@ searches_contact_serp:
   numerator:
     observations: [searches_contact_serp]
 
+item_views_regions:
+  title: item_views_regions
+  tags: [bx, total]
+  numerator:
+    observations: [item_views_regions]
+
+item_views_delivery:
+  title: item_views_delivery
+  tags: [bx, total]
+  numerator:
+    observations: [item_views_delivery]
+
 item_views_vip:
   title: item_views_vip
   tags: [bx, vas, total]
@@ -1257,6 +1293,18 @@ item_views_serp:
   tags: [i2, bx, serp, total]
   numerator:
     observations: [item_views_serp]
+
+contacts_regions:
+  title: contacts_block_ext_reg
+  tags: [bx, total]
+  numerator:
+    observations: [contacts_regions]
+
+contacts_delivery:
+  title: contacts_block_delivery
+  tags: [bx, total]
+  numerator:
+    observations: [contacts_delivery]
 
 contacts_vip:
   title: contacts_vip
@@ -1288,6 +1336,18 @@ contacts_serp:
   numerator:
     observations: [contacts_serp]
 
+fav_added_regions:
+  title: fav_added_regions
+  tags: [bx, fav, total]
+  numerator:
+    observations: [fav_added_regions]
+
+fav_added_delivery:
+  title: fav_added_delivery
+  tags: [bx, fav, total]
+  numerator:
+    observations: [fav_added_delivery]
+
 fav_added_vip:
   title: fav_added_vip
   tags: [bx, vas, fav, total]
@@ -1317,6 +1377,18 @@ fav_added_serp:
   tags: [i2, bx, serp, fav, total]
   numerator:
     observations: [fav_added_serp]
+
+buyer_target_clicks_regions:
+  title: bt_clicks_regions
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [buyer_target_clicks_regions]
+
+buyer_target_clicks_delivery:
+  title: bt_clicks_delivery
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [buyer_target_clicks_delivery]
 
 buyer_target_clicks_vip:
   title: bt_clicks_vip
@@ -1349,17 +1421,26 @@ buyer_target_clicks_serp:
     observations: [buyer_target_clicks_serp]
 
 suggest_buyers:
+  title: suggest_buyers_old
   description: "Buyers, who use suggest"
   tags: [ss, sgt]
   numerator:
     observations: [queries_no_redirect_contact]
     groupby: [participant]
 
-share_suggest_buyers_to_all_users:
+suggest_buyers_with_all_queries:
+  title: suggest_buyers
   description: "Buyers, who use suggest"
   tags: [ss, sgt]
   numerator:
     observations: [sessions_with_suggest_click_and_contact]
+    groupby: [participant]
+
+share_suggest_buyers_to_all_users:
+  description: "Buyers, who use suggest"
+  tags: [ss, sgt]
+  numerator:
+    observations: [sessions_with_query_suggest_click_contact]
     groupby: [participant]
     
 filters_screen_shows:
@@ -1548,6 +1629,22 @@ wordbreaker_digit_suggest_ctr_disable:
   denominator:
     observations: [wordbreaker_digit_suggest]
 
+item_views_regions_per_search:
+  title: item_views_regions_per_search
+  tags: [bx, ratio]
+  numerator:
+    observations: [item_views_regions]
+  denominator:
+    observations: [searches_serp]
+
+item_views_delivery_per_search:
+  title: item_views_delivery_per_search
+  tags: [bx, ratio]
+  numerator:
+    observations: [item_views_delivery]
+  denominator:
+    observations: [searches_serp]
+
 item_views_vip_per_search:
   title: item_views_vip_per_search
   tags: [bx, vas, ratio]
@@ -1585,6 +1682,22 @@ item_views_serp_per_search:
   tags: [i2, bx, serp, ratio]
   numerator:
     observations: [item_views_serp]
+  denominator:
+    observations: [searches_serp]
+
+contacts_regions_per_search:
+  title: contacts_regions_per_search
+  tags: [bx, ratio]
+  numerator:
+    observations: [contacts_regions]
+  denominator:
+    observations: [searches_serp]
+
+contacts_delivery_per_search:
+  title: contacts_delivery_per_search
+  tags: [bx, ratio]
+  numerator:
+    observations: [contacts_delivery]
   denominator:
     observations: [searches_serp]
 
@@ -1628,6 +1741,22 @@ contacts_serp_per_search:
   denominator:
     observations: [searches_serp]
 
+fav_added_regions_per_search:
+  title: fav_added_regions_per_search
+  tags: [bx, fav, ratio]
+  numerator:
+    observations: [fav_added_regions]
+  denominator:
+    observations: [searches_serp]
+
+fav_added_delivery_per_search:
+  title: fav_added_delivery_per_search
+  tags: [bx, fav, ratio]
+  numerator:
+    observations: [fav_added_delivery]
+  denominator:
+    observations: [searches_serp]
+
 fav_added_vip_per_search:
   title: fav_added_vip_per_search
   tags: [bx, vas, fav, ratio]
@@ -1665,6 +1794,22 @@ fav_added_serp_per_search:
   tags: [i4, bx, serp, fav, ratio]
   numerator:
     observations: [fav_added_serp]
+  denominator:
+    observations: [searches_serp]
+
+buyer_target_clicks_regions_per_search:
+  title: bt_clicks_regions_per_search
+  tags: [bx, ratio]
+  numerator:
+    observations: [buyer_target_clicks_regions]
+  denominator:
+    observations: [searches_serp]
+
+buyer_target_clicks_delivery_per_search:
+  title: bt_clicks_delivery_per_search
+  tags: [bx, ratio]
+  numerator:
+    observations: [buyer_target_clicks_delivery]
   denominator:
     observations: [searches_serp]
 
@@ -1707,6 +1852,22 @@ buyer_target_clicks_serp_per_search:
     observations: [buyer_target_clicks_serp]
   denominator:
     observations: [searches_serp]
+
+contacts_regions_per_item_views_regions:
+  title: contacts_regions_per_item_views_regions
+  tags: [bx, ratio]
+  numerator:
+    observations: [contacts_regions]
+  denominator:
+    observations: [item_views_vip]
+
+contacts_delivery_per_item_views_delivery:
+  title: contacts_delivery_per_item_views_delivery
+  tags: [bx, ratio]
+  numerator:
+    observations: [contacts_delivery]
+  denominator:
+    observations: [item_views_delivery]
 
 contacts_vip_per_item_views_vip:
   title: contacts_vip_per_item_views_vip
@@ -1778,6 +1939,14 @@ share_suggest_searches_to_all:
     observations: [search_suggest_clicks]
   denominator:
     observations: [session_searches_with_uniq_query]
+
+suggest_searches_to_all_searches:
+  description: "Share of searches with suggest"
+  tags: [ss, ratio, sgt]
+  numerator:
+    observations: [search_suggest_clicks]
+  denominator:
+    observations: [session_searches_with_empty_or_uniq_query]
 
 s_iv_per_s_date_sort:
   tags: [i2, bx, serp, ratio]
@@ -1967,6 +2136,14 @@ filters_any_per_searches:
     observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
   denominator:
     observations: [searches_serp]
+
+ ######  ########  ######   ######  ######   ######  ##    ##
+##    ## ##       ##    ## ##    ##   ##    ##    ## ###   ##
+##       ##       ##       ##         ##    ##    ## ####  ##
+ ######  ######    ######   ######    ##    ##    ## ## ## ##
+      ## ##             ##       ##   ##    ##    ## ##  ####
+##    ## ##       ##    ## ##    ##   ##    ##    ## ##   ###
+ ######  ########  ######   ######  ######   ######  ##    ##
 
 ###############################################################################
 # Session :: Totals
@@ -2650,7 +2827,28 @@ share_suggest_users_to_users_with_search:
     observations: [session_searches_with_uniq_query]
     groupby: [participant]
 
+suggest_users_to_users_with_search:
+  description: "Share of cookies, who use suggest, to users with query, based on 2443 event"
+  tags: [ss, sgt, ratio]
+  numerator:
+    observations: [search_suggest_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [session_searches_with_empty_or_uniq_query]
+    groupby: [participant]
+
 share_suggest_buyers_to_suggest_users:
+  title: old_share_suggest_buyers_to_suggest_users
+  description: "Share of buyers, who use suggest, to cookies, who use suggest, based on 2443 event"
+  tags: [ss, sgt, ratio]
+  numerator:
+    observations: [sessions_with_query_suggest_click_contact]
+    groupby: [participant]
+  denominator:
+    observations: [search_suggest_clicks]
+    groupby: [participant]
+
+suggest_buyers_to_suggest_users:
   description: "Share of buyers, who use suggest, to cookies, who use suggest, based on 2443 event"
   tags: [ss, sgt, ratio]
   numerator:
@@ -2658,6 +2856,262 @@ share_suggest_buyers_to_suggest_users:
     groupby: [participant]
   denominator:
     observations: [search_suggest_clicks]
+    groupby: [participant]
+
+misspell_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [misspell_suggest]
+  denominator:
+    observations: [searches]
+
+misspell_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [misspell_replace]
+  denominator:
+    observations: [searches]
+
+teleport_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [teleport_suggest]
+  denominator:
+    observations: [searches]
+
+teleport_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [teleport_replace]
+  denominator:
+    observations: [searches]
+
+search_redirect_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [search_redirect_suggest]
+  denominator:
+    observations: [searches]
+
+search_redirect_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [search_redirect_replace]
+  denominator:
+    observations: [searches]
+
+geo_redirect_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [geo_redirect_suggest]
+  denominator:
+    observations: [searches]
+
+geo_redirect_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [geo_redirect_replace]
+  denominator:
+    observations: [searches]
+
+typo_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [typo_suggest]
+  denominator:
+    observations: [searches]
+
+typo_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [typo_replace]
+  denominator:
+    observations: [searches]
+
+keyboard_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [keyboard_suggest]
+  denominator:
+    observations: [searches]
+
+keyboard_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [keyboard_replace]
+  denominator:
+    observations: [searches]
+
+wordbreaker_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_suggest]
+  denominator:
+    observations: [searches]
+
+wordbreaker_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_replace]
+  denominator:
+    observations: [searches]
+
+wordbreaker_digit_suggest_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_digit_suggest]
+  denominator:
+    observations: [searches]
+
+wordbreaker_digit_replace_to_searches:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_digit_replace]
+  denominator:
+    observations: [searches]
+
+misspell_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [misspell_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+misspell_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [misspell_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+teleport_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [teleport_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+teleport_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [teleport_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+search_redirect_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [search_redirect_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+search_redirect_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [search_redirect_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+geo_redirect_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [geo_redirect_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+geo_redirect_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [geo_redirect_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+typo_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [typo_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+typo_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [typo_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+keyboard_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [keyboard_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+keyboard_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [keyboard_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+wordbreaker_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+wordbreaker_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+wordbreaker_digit_suggest_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_digit_suggest]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+wordbreaker_digit_replace_users_share:
+  tags: [ss, ratio, misspell]
+  numerator:
+    observations: [wordbreaker_digit_replace]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
     groupby: [participant]
 
 ########  ########  ######
@@ -3000,25 +3454,13 @@ first_response_messages:
   title: first_response_messages
   tags: [i2, messenger, total]
   numerator:
-    observations: [first_response_messages]
-
-first_messages_hidden_phone:
-  title: first_messages_hidden_phone
-  tags: [i4, messenger, total]
-  numerator:
-    observations: [first_messages_hidden_phone]    
+    observations: [first_response_messages]  
 
 write_button_clicks:
   title: write_button_clicks
   tags: [i3, messenger, total]
   numerator:
     observations: [write_button_clicks]
-
-write_button_clicks_hidden_phone:
-  title: write_button_clicks_hidden_phone
-  tags: [i4, messenger, total]
-  numerator:
-    observations: [write_button_clicks_hidden_phone]
 
 write_button_clicks_grouped:
   title: write_button_clicks_grouped
@@ -3050,6 +3492,12 @@ item_views_from_messenger:
   tags: [i3, messenger, total, web]
   numerator:
     observations: [item_views_from_messenger]
+    
+item_views_client_rec_from_msg:
+  title: item_views_client_rec_from_msg
+  tags: [i4, messenger, total, mobile]
+  numerator:
+    observations: [item_views_client_rec_from_msg]
 
 chat_open_errors:
   title: chat_open_errors
@@ -3128,6 +3576,24 @@ answered_first_messages_within_1hour_7hour:
   tags: [i2, messenger, total]
   numerator:
     observations: [answered_first_messages_within_1hour_7hour]
+
+answered_first_messages_within_1day:
+  title: answered_first_messages_within_1day
+  tags: [i2, messenger, total]
+  numerator:
+    observations: [answered_first_messages_within_1day]
+
+items_closed_from_messenger:
+  title: items_closed_from_messenger
+  tags: [i3, messenger, total]
+  numerator:
+    observations: [closed_items_from_messenger]
+
+items_sold_onavito_from_messenger:
+  title: items_sold_onavito_from_messenger
+  tags: [i2, messenger, total]
+  numerator:
+    observations: [items_sold_onavito_from_messenger]
 
 ###############################################################################
 # Messenger :: Ratios
@@ -3232,13 +3698,6 @@ users_first_messages:
     observations: [first_messages]
     groupby: [participant]
 
-users_first_messages_hidden_phone:
-  title: users_first_messages_hidden_phone
-  tags: [i4, messenger, user]
-  numerator:
-    observations: [first_messages_hidden_phone]
-    groupby: [participant]
-
 users_first_response_messages:
   title: users_first_response_messages
   tags: [i2, messenger, user]
@@ -3258,13 +3717,6 @@ users_write_button_clicks:
   tags: [i3, messenger, user]
   numerator:
     observations: [write_button_clicks]
-    groupby: [participant]
-
-users_write_button_clicks_hidden_phone:
-  title: users_write_button_clicks_hidden_phone
-  tags: [i4, messenger, user]
-  numerator:
-    observations: [write_button_clicks_hidden_phone]
     groupby: [participant]
 
 users_messenger_geo_messages:
@@ -3300,6 +3752,20 @@ users_chat_open_errors:
   tags: [i4, messenger, user]
   numerator:
     observations: [chat_open_errors]
+    groupby: [participant]
+    
+users_item_closed_from_messenger:
+  title: users_item_closed_from_messenger
+  tags: [i3, messenger, user]
+  numerator:
+    observations: [closed_items_from_messenger]
+    groupby: [participant]
+
+users_item_sold_onavito_from_messenger:
+  title: users_item_sold_onavito_from_messenger
+  tags: [i2, messenger, user]
+  numerator:
+    observations: [items_sold_onavito_from_messenger]
     groupby: [participant]
 
 ########  ######## ##       #### ##     ## ######## ########  ##    ##
@@ -3508,6 +3974,20 @@ total_delivery_widget:
   tags: [i3, delivery, buyer]
   numerator:
     observations: [total_delivery_widget]
+
+delivery_confirm:
+  title: delivery_confirm
+  description: "Уникальные нажатия на кнопку - Продолжить оформление - в поп-апе доставке"
+  tags: [i2, delivery, buyer]
+  numerator:
+    observations: [delivery_confirm]
+
+total_delivery_confirm:
+  title: total_delivery_confirm
+  description: "Все нажатия на кнопку - Продолжить оформление - в поп-апе доставке"
+  tags: [i3, delivery, buyer]
+  numerator:
+    observations: [total_delivery_confirm]
 
 delivery_contact:
   title: delivery_contact
@@ -3723,12 +4203,30 @@ delivery_widget_contact_ratio:
   denominator:
     observations: [delivery_widget]
 
+delivery_widget_confirm_ratio:
+  title: delivery_widget_confirm_ratio
+  description: "Conversion from delivery widget show to delivery confirm by uniq user"
+  tags: [i3, delivery, buyer]
+  numerator:
+    observations: [delivery_confirm]
+  denominator:
+    observations: [delivery_widget]
+
 delivery_total_widget_contact_ratio:
   title: delivery_total_widget_contact_ratio
   description: "Conversion from delivery widget show to delivery contact"
   tags: [i4, delivery, buyer]
   numerator:
     observations: [total_delivery_contact]
+  denominator:
+    observations: [total_delivery_widget]
+
+delivery_total_widget_confirm_ratio:
+  title: delivery_total_widget_confirm_ratio
+  description: "Conversion from delivery widget show to delivery confirm"
+  tags: [i4, delivery, buyer]
+  numerator:
+    observations: [total_delivery_confirm]
   denominator:
     observations: [total_delivery_widget]
 
@@ -8880,92 +9378,6 @@ advertisement_rpm_net_adj:
 ##        ##       ##   ##   ##       ##     ## ##   ##   ##     ## ######### ##  #### ##       ##
 ##        ##       ##    ##  ##       ##     ## ##    ##  ##     ## ##     ## ##   ### ##    ## ##
 ##        ######## ##     ## ##        #######  ##     ## ##     ## ##     ## ##    ##  ######  ########
-
-server_loading_dur:
-  tags: [performance]
-  numerator:
-    observations: [serverloading_duration]
-  denominator:
-    observations: [serverloading_events]
-
-draw_dur:
-  tags: [performance]
-  numerator:
-    observations: [draw_duration]
-  denominator:
-    observations: [draw_events]
-
-prepare_dur:
-  tags: [performance]
-  numerator:
-    observations: [prepare_duration]
-  denominator:
-    observations: [prepare_events]
-
-init_dur:
-  tags: [performance]
-  numerator:
-    observations: [init_duration]
-  denominator:
-    observations: [init_events]
-
-local_loading_dur:
-  tags: [performance]
-  numerator:
-    observations: [localloading_duration]
-  denominator:
-    observations: [localloading_events]
-
-di_dur:
-  tags: [performance]
-  numerator:
-    observations: [di_duration]
-  denominator:
-    observations: [di_events]
-
-screen_total_dur:
-  tags: [performance]
-  numerator:
-    observations: [serverloading_duration, draw_duration, prepare_duration, init_duration, localloading_duration, di_duration]
-  denominator:
-    observations: [uniq_screen_sessions]
-
-server_loading_exc:
-  tags: [performance]
-  numerator:
-    observations: [serverloading_exceptions]
-
-draw_exc:
-  tags: [performance]
-  numerator:
-    observations: [draw_exceptions]
-
-prepare_exc:
-  tags: [performance]
-  numerator:
-    observations: [prepare_exceptions]
-
-init_exc:
-  tags: [performance]
-  numerator:
-    observations: [init_exceptions]
-
-local_loading_exc:
-  tags: [performance]
-  numerator:
-    observations: [localloading_exceptions]
-
-di_exc:
-  tags: [performance]
-  numerator:
-    observations: [di_exceptions]
-
-app_load_dur:
-  tags: [performance]
-  numerator:
-    observations: [time_to_interact_ms]
-  denominator:
-    observations: [time_to_interact_count]
     
 init_pages_loads:
   tags: [performance]
@@ -9068,6 +9480,240 @@ on_load_other_dur:
   denominator:
     observations: [initial_pages_finished_events_other_pages]
 
+###############################################################################
+# Performance :: new_metrics
+###############################################################################
+di_percent_p25:
+  tags: [performance]
+  numerator:
+    observations: [di_events_p25]
+  denominator:
+    observations: [di_events]
+    
+di_percent_p50:
+  tags: [performance]
+  numerator:
+    observations: [di_events_p50]
+  denominator:
+    observations: [di_events]
+    
+di_percent_p75:
+  tags: [performance]
+  numerator:
+    observations: [di_events_p75]
+  denominator:
+    observations: [di_events]
+    
+draw_percent_p25:
+  tags: [performance]
+  numerator:
+    observations: [draw_events_p25]
+  denominator:
+    observations: [draw_events]
+    
+draw_percent_p50:
+  tags: [performance]
+  numerator:
+    observations: [draw_events_p50]
+  denominator:
+    observations: [draw_events]
+    
+draw_percent_p75:
+  tags: [performance]
+  numerator:
+    observations: [draw_events_p75]
+  denominator:
+    observations: [draw_events]
+    
+draw_percent_exceptions:
+  tags: [performance]
+  numerator:
+    observations: [draw_exceptions]
+  denominator:
+    observations: [draw_exceptions, draw_events]
+    
+init_percent_p25:
+  tags: [performance]
+  numerator:
+    observations: [init_events_p25]
+  denominator:
+    observations: [init_events]
+    
+init_percent_p50:
+  tags: [performance]
+  numerator:
+    observations: [init_events_p50]
+  denominator:
+    observations: [init_events]
+    
+init_percent_p75:
+  tags: [performance]
+  numerator:
+    observations: [init_events_p75]
+  denominator:
+    observations: [init_events]
+    
+localloading_percent_p50:
+  tags: [performance]
+  numerator:
+    observations: [localloading_events_p50]
+  denominator:
+    observations: [localloading_events]
+    
+localloading_percent_p75:
+  tags: [performance]
+  numerator:
+    observations: [localloading_events_p75]
+  denominator:
+    observations: [localloading_events]
+    
+prepare_percent_p50:
+  tags: [performance]
+  numerator:
+    observations: [prepare_events_p50]
+  denominator:
+    observations: [prepare_events]
+    
+prepare_percent_p75:
+  tags: [performance]
+  numerator:
+    observations: [prepare_events_p75]
+  denominator:
+    observations: [prepare_events]
+    
+prepare_percent_exceptions:
+  tags: [performance]
+  numerator:
+    observations: [prepare_exceptions]
+  denominator:
+    observations: [prepare_exceptions, prepare_events]
+    
+serverloading_percent_p25:
+  tags: [performance]
+  numerator:
+    observations: [serverloading_events_p25]
+  denominator:
+    observations: [serverloading_events]
+    
+serverloading_percent_p50:
+  tags: [performance]
+  numerator:
+    observations: [serverloading_events_p50]
+  denominator:
+    observations: [serverloading_events]
+    
+serverloading_percent_p75:
+  tags: [performance]
+  numerator:
+    observations: [serverloading_events_p75]
+  denominator:
+    observations: [serverloading_events]
+    
+serverloading_percent_exceptions:
+  tags: [performance]
+  numerator:
+    observations: [serverloading_exceptions]
+  denominator:
+    observations: [serverloading_exceptions, serverloading_events]
+
+draw_session_percent_sla:
+  tags: [performance]
+  numerator:
+    observations: [draw_sessions_sla]
+  denominator:
+    observations: [draw_sessions]
+    
+init_session_percent_p50:
+  tags: [performance]
+  numerator:
+    observations: [init_sessions_p50]
+  denominator:
+    observations: [init_sessions]
+    
+init_session_percent_p75:
+  tags: [performance]
+  numerator:
+    observations: [init_sessions_p75]
+  denominator:
+    observations: [init_sessions]
+    
+init_session_percent_sla:
+  tags: [performance]
+  numerator:
+    observations: [init_sessions_sla]
+  denominator:
+    observations: [init_sessions]
+
+di_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [di_session_duration]
+  denominator:
+    observations: [di_session_duration_events]
+    
+draw_duration:
+  tags: [performance]
+  numerator:
+    observations: [draw_duration]
+  denominator:
+    observations: [draw_duration_events]
+    
+draw_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [draw_session_duration]
+  denominator:
+    observations: [draw_session_duration_events]
+    
+init_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [init_session_duration]
+  denominator:
+    observations: [init_session_duration_events]
+    
+localloading_duration:
+  tags: [performance]
+  numerator:
+    observations: [localloading_duration]
+  denominator:
+    observations: [localloading_duration_events]
+    
+localloading_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [localloading_session_duration]
+  denominator:
+    observations: [localloading_session_duration_events]
+    
+prepare_duration:
+  tags: [performance]
+  numerator:
+    observations: [prepare_duration]
+  denominator:
+    observations: [prepare_duration_events]
+    
+prepare_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [prepare_session_duration]
+  denominator:
+    observations: [prepare_session_duration_events]
+    
+serverloading_duration:
+  tags: [performance]
+  numerator:
+    observations: [serverloading_duration]
+  denominator:
+    observations: [serverloading_duration_events]
+    
+serverloading_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [serverloading_session_duration]
+  denominator:
+    observations: [serverloading_session_duration_events]  
+        
 
  ######   #######  ##     ## ##     ## ##     ## ##    ## ####  ######     ###    ######## ####  #######  ##    ##  ######  
 ##    ## ##     ## ###   ### ###   ### ##     ## ###   ##  ##  ##    ##   ## ##      ##     ##  ##     ## ###   ## ##    ## 
