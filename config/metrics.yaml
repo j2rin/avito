@@ -10396,31 +10396,6 @@ users_loc_suggest_clicks:
     observations: [location_suggest_clicks]
     groupby: [participant]
     
-map_searches:
-  title: map_searches
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [map_searches]
-
-pin_clicks:
-  title: pin_clicks
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [pin_clicks]
-    
-map_users:
-  title: map_users
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [map_searches]
-    groupby: [participant]
-
-pin_clickers:
-  title: pin_clickers
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [pin_clicks]
-    groupby: [participant]
     
 loc_chng:
   description: "Число смен локаций"
@@ -10658,3 +10633,293 @@ default_loc_tooltip_declines_per_shows:
     observations: [tooltip_not_accepts]
   denominator:
     observations: [tooltip_opens]
+
+
+##     ##    ###    ########  
+###   ###   ## ##   ##     ## 
+#### ####  ##   ##  ##     ## 
+## ### ## ##     ## ########  
+##     ## ######### ##        
+##     ## ##     ## ##        
+##     ## ##     ## ##        
+
+###############################################################################
+# Map :: Totals
+###############################################################################
+
+map_searches:
+  title: map_searches
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [map_searches]
+
+pin_clicks:
+  title: pin_clicks
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [pin_clicks]
+    
+map_searches_sessions:
+  title: sess_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [map_searches]    
+    groupby: [participant, session]
+     
+pin_clicks_sessions:
+  title: sess_pin
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [pin_clicks]    
+    groupby: [participant, session]
+          
+map_users:
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant]
+
+pin_clickers:
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [pin_clicks]
+    groupby: [participant]
+    
+map_searches_with_item_view:
+  title: map_search_iv
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches_with_item_view]
+    
+map_searches_with_contact:
+  title: map_search_c
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches_with_contact]
+   
+map_searches_with_btc:
+  title: map_search_btc
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches_with_btc]
+    
+buyer_target_clicks_from_map:
+  title: btc_map
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+    
+item_views_from_map:
+  title: iv_map
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [item_views_from_map]
+    
+contacts_from_map:
+  title: contacts_map
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [contacts_from_map]
+    
+fav_added_from_map:
+  title: fav_map
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [fav_added_from_map]
+
+users_buyer_target_click_from_map:
+  title: users_btc_map
+  tags: [i2, bx, user, map]
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+    groupby: [participant]
+    
+users_item_views_from_map:
+  title: users_iv_map
+  tags: [i2, bx, user, map]
+  numerator:
+    observations: [item_views_from_map]  
+    groupby: [participant]
+    
+buyers_from_map:
+  title: buyers_map
+  tags: [i2, bx, user, map]
+  numerator:
+    observations: [contacts_from_map]  
+    groupby: [participant]
+    
+users_fav_from_map:
+  title: users_fav_map
+  tags: [i2, bx, user, map]
+  numerator:
+    observations: [fav_added_from_map]  
+    groupby: [participant]
+    
+contact_sessions_from_map:
+  title: sess_c_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [contacts_from_map]    
+    groupby: [participant, session]
+    
+btc_sessions_from_map:
+  title: sess_btc_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [buyer_target_clicks_from_map]    
+    groupby: [participant, session]
+
+iv_sessions_from_map:
+  title: sess_iv_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [item_views_from_map]    
+    groupby: [participant, session]    
+ 
+    
+###############################################################################
+# Map :: Ratios
+###############################################################################
+
+
+map_searches_per_search:
+  title: map_s_per_s
+  tags: [other, bx,  map]
+  description: "Отношение поисков на карте к обычным поискам"
+  numerator:
+    observations: [map_searches]
+  denominator:
+    observations: [searches]
+    
+pins_per_map_s:
+  title: pins_per_map
+  tags: [i3, bx,  map]
+  description: "Отношение кликов на пин к поискам по карте"
+  numerator:
+    observations: [pin_clicks]
+  denominator:
+    observations: [map_searches]
+    
+pin_clickers_per_map_serchers:
+  title: users_pin_per_users_map
+  tags: [i3, bx,  map]
+  description: "Отношение пиннеров к мапперам"
+  numerator:
+    observations: [pin_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+map_buyers_per_map_serchers:
+  title: buyers_map_per_users_map
+  tags: [i2, bx,  map]
+  description: "Отношение баеров с карты к мапперам"
+  numerator:
+    observations: [contacts_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+map_item_viewers_per_map_serchers:
+  title: users_iv_map_per_users_map
+  tags: [i3, bx,  map]
+  description: "Отношение item viewers с карты к мапперам"
+  numerator:
+    observations: [item_views_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+
+map_btc_users_per_map_serchers:
+  title: users_btc_map_per_users_map
+  tags: [i3, bx,  map]
+  description: "Отношение бтц юзеров с карты к мапперам"
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+
+contacts_from_map_per_map_search:
+  title: contacts_map_per_map_s
+  tags: [i3, bx,  map]
+  description: "Контакты с карты к поискам по карте"
+  numerator:
+    observations: [contacts_from_map]
+  denominator:
+    observations: [map_searches]
+    
+item_views_from_map_per_map_search:
+  title: iv_map_per_map_s
+  tags: [i3, bx,  map]
+  description: "IV с карты к поискам по карте"
+  numerator:
+    observations: [item_views_from_map]
+  denominator:
+    observations: [map_searches]
+    
+btc_from_map_per_map_search:
+  title: btc_map_per_map_s
+  tags: [i3, bx,  map]
+  description: "IV с карты к поискам по карте"
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+  denominator:
+    observations: [map_searches]
+    
+fav_added_from_map_per_map_search:
+  title: fav_map_per_map_s
+  tags: [i3, bx,  map]
+  description: "Добавление в избранное с карты к поискам по карте"
+  numerator:
+    observations: [fav_added_from_map]
+  denominator:
+    observations: [map_searches]
+    
+sess_c_map_per_sess_map:
+  title: sess_c_map_per_sess_map
+  tags: [i3, bx,  map]
+  description: "Сессии с контактом с карты к сессиям с поисками по карте"
+  numerator:
+    observations: [contacts_from_map]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    
+sess_btc_map_per_sess_map:
+  title: sess_btc_map_per_sess_map
+  tags: [i3, bx,  map]
+  description: "Сессии с BTC с карты к сессиям с поисками по карте"
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    
+sess_iv_map_per_sess_map:
+  title: sess_iv_map_per_sess_map
+  tags: [i3, bx,  map]
+  description: "Сессии с IV с карты к сессиям с поисками по карте"
+  numerator:
+    observations: [item_views_from_map]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    
+sess_pin_per_sess_map:
+  title: sess_pin_per_sess_map
+  tags: [i3, bx,  map]
+  description: "Сессии с кликами по пину с карты к сессиям с поисками по карте"
+  numerator:
+    observations: [pin_clicks]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
