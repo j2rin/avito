@@ -11770,6 +11770,14 @@ searches_road_per_search:
   denominator:
     observations: [searches]   
     
+searches_local_geo_per_search:
+  tags: [i3, geo, bx]
+  title: s_local_geo_per_s
+  numerator: 
+    observations: [searches_metro,searches_district,searches_road]
+  denominator:
+    observations: [searches]   
+    
 searches_radius_per_search:
   tags: [i4, geo, bx]
   title: s_radius_per_s
@@ -11971,6 +11979,56 @@ buyer_target_clicks_serp_radius_per_search_radius:
     observations: [searches_radius] 
     
 #целевые действия с поисков по юзерам 
+users_searches_metro_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_metro_per_users_search
+  numerator: 
+    observations: [searches_metro]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+    
+users_searches_district_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_district_per_users_search
+  numerator: 
+    observations: [searches_district]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+users_searches_road_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_road_per_users_search
+  numerator: 
+    observations: [searches_road]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+    
+users_searches_local_geo_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_local_geo_per_users_search
+  numerator: 
+    observations: [searches_metro, searches_district, searches_road]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+    
+users_searches_radius_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_radius_per_users_search
+  numerator: 
+    observations: [searches_radius]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
 users_item_views_serp_metro_per_users_metro:
   tags: [i4, geo, bx, user]
   title: users_iv_metro_per_users_metro
