@@ -10946,6 +10946,7 @@ users_avitopro:
     observations: [users_avitopro]
     groupby: [participant]
 
+
  ######   ########  #######  
 ##    ##  ##       ##     ## 
 ##        ##       ##     ## 
@@ -10995,8 +10996,7 @@ users_loc_suggest_clicks:
   numerator:
     observations: [location_suggest_clicks]
     groupby: [participant]
-    
-    
+       
 loc_chng:
   description: "Число смен локаций"
   tags: [i1, geo]
@@ -11138,45 +11138,196 @@ users_loc_horizontal_chng:
   numerator:
     observations: [location_changings_horizontal]
     groupby: [participant] 
+  
+loc_chng_region_russia:
+  tags: [other, geo]
+  description: "Смена локации с уровня региона на Россию"
+  numerator:
+    observations: [location_changings_region_russia]
+    
+loc_chng_city_region:
+  tags: [other, geo]
+  description: "Смена локации с уровня города на регион"
+  numerator:
+    observations: [location_changings_city_region]
  
+loc_chng_russia_region:
+  tags: [other, geo]
+  description: "Смена локации с уровня России на регион"
+  numerator:
+    observations: [location_changings_russia_region]
+
+loc_chng_russia_city:
+  tags: [other, geo]
+  description: "Смена локации с уровня России на город"
+  numerator:
+    observations: [location_changings_russia_city]
+    
+loc_chng_region_city:
+  tags: [other, geo]
+  description: "Смена локации с уровня региона на город"
+  numerator:
+    observations: [location_changings_region_city]
+
+loc_chng_region_region:
+  tags: [other, geo]
+  description: "Смена локации с уровня региона на регион"
+  numerator:
+    observations: [location_changings_region_region]
+
+loc_chng_city_city:
+  tags: [other, geo]
+  description: "Смена локации с уровня города на город"
+  numerator:
+    observations: [location_changings_city_city]
+    
+loc_chng_bad_russia:
+  tags: [other, geo]
+  description: "Плохие смены локации с уровня Россия"
+  numerator:
+    observations: [location_changings_bad_russia]
+    
+loc_chng_bad_region:
+  tags: [other, geo]
+  description: "Плохие смены локации с уровня региона"
+  numerator:
+    observations: [location_changings_bad_regions]
+    
+loc_chng_bad_city:
+  tags: [other, geo]
+  description: "Плохие смены локации с уровня города"
+  numerator:
+    observations: [location_changings_bad_city]
+    
+loc_chng_suspicious_russia:
+  tags: [other, geo]
+  description: "Подозрительные смены локации с уровня России"
+  numerator:
+    observations: [location_changings_suspicious_russia]
+
+loc_chng_suspicious_region:
+  tags: [other, geo]
+  description: "Подозрительные смены локации с уровня региона"
+  numerator:
+    observations: [location_changings_suspicious_regions]
+
+loc_chng_suspicious_city:
+  tags: [other, geo]
+  description: "Подозрительные смены локации с уровня города"
+  numerator:
+    observations: [location_changings_suspicious_city]
+
+loc_chng_neutral_russia:
+  tags: [other, geo]
+  description: "Нейтральные смены локации с уровня России"
+  numerator:
+    observations: [location_changings_neutral_russia]
+
+loc_chng_neutral_region:
+  tags: [other, geo]
+  description: "Нейтральные смены локации с уровня региона"
+  numerator:
+    observations: [location_changings_neutral_regions]
+
+loc_chng_neutral_city:
+  tags: [other, geo]
+  description: "Нейтральные смены локации с уровня города"
+  numerator:
+    observations: [location_changings_neutral_city]
+
 default_loc_tooltip_shows:
   tags: [i3, geo]
   numerator: 
     observations: [tooltip_opens]
-  
+
 users_default_loc_tooltip:
   tags: [i4, geo]
   numerator:
     observations: [tooltip_opens]
     groupby: [participant]
-  
+
 default_loc_tooltip_accepts:
   tags: [i3, geo]
   numerator:
     observations: [tooltip_accepts]
-  
+
 users_default_loc_tooltip_accepts:
   tags: [i4, geo]
   numerator:
     observations: [tooltip_accepts]
     groupby: [participant]
-  
+
 default_loc_tooltip_declines:
   tags: [i4, geo]
   numerator:
     observations: [tooltip_not_accepts]
-  
+
 users_default_loc_tooltip_declines:
   tags: [i4, geo]
   numerator:
     observations: [tooltip_not_accepts]
     groupby: [participant]
 
+default_loc_tooltip_accepts_russia:
+  tags: [other, geo]
+  description: "Принятие тултипа по всей России"
+  numerator:
+    observations: [tooltip_accepts_russia]
+    groupby: [participant]
+
+default_loc_tooltip_declines_russia:
+  tags: [other, geo]
+  description: "Отклонение тултипа по всей России"
+  numerator:
+    observations: [tooltip_not_accepts_russia]
+    groupby: [participant]
+
+default_loc_tooltip_accepts_region:
+  tags: [other, geo]
+  description: "Принятие тултипа уровня регион"
+  numerator:
+    observations: [tooltip_accepts_region]
+    groupby: [participant]
+
+default_loc_tooltip_declines_region:
+  tags: [other, geo]
+  description: "Отклонение тултипа  уровня регион"
+  numerator:
+    observations: [tooltip_not_accepts_region]
+    groupby: [participant]
+
+default_loc_tooltip_accepts_city:
+  tags: [other, geo]
+  description: "Принятие тултипа уровня город"
+  numerator:
+    observations: [tooltip_accepts_city]
+    groupby: [participant]
+
+default_loc_tooltip_declines_city:
+  tags: [other, geo]
+  description: "Отклонение тултипа  уровня город"
+  numerator:
+    observations: [tooltip_not_accepts_city]
+    groupby: [participant]
+
+default_loc_tooltip_shows_russia:
+  tags: [other, geo]
+  numerator: 
+    observations: [tooltip_opens_russia]
+
+default_loc_tooltip_shows_region:
+  tags: [other, geo]
+  numerator: 
+    observations: [tooltip_opens_region]
+
+default_loc_tooltip_shows_city:
+  tags: [other, geo]
+  numerator: 
+    observations: [tooltip_opens_city]
 
 ###############################################################################
 # Geo :: Ratios
 ###############################################################################
-
 loc_chng_sessions_per_s_session:
   tags: [i2, geo]
   numerator:
@@ -11233,6 +11384,29 @@ default_loc_tooltip_declines_per_shows:
     observations: [tooltip_not_accepts]
   denominator:
     observations: [tooltip_opens]
+    
+default_loc_tooltip_russia_share:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens_russia]
+  denominator:
+    observations: [tooltip_opens]   
+    
+default_loc_tooltip_region_share:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens_region]
+  denominator:
+    observations: [tooltip_opens]   
+
+default_loc_tooltip_city_share:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens_city]
+  denominator:
+    observations: [tooltip_opens]   
+
+
 
 
 ##     ##    ###    ########  
