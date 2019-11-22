@@ -10961,9 +10961,27 @@ users_avitopro:
 
 loc_window_opens:
   title: loc_window_opens
-  tags: [i3, bx, total]
+  tags: [i3, geo, total]
   numerator:
     observations: [location_dialogue_opens]
+    
+loc_window_opens_search:
+  title: loc_window_opens_search
+  tags: [other, geo, total]
+  numerator:
+    observations: [location_dialogue_opens_search]
+    
+loc_window_opens_radius:
+  title: loc_window_opens_radius
+  tags: [other, geo, total]
+  numerator:
+    observations: [location_dialogue_opens]
+    
+loc_window_opens_app_settings:
+  title: loc_window_opens_app_settings
+  tags: [other, geo, total]
+  numerator:
+    observations: [location_dialogue_opens_app_Settings]
     
 loc_window_closings:
   title: loc_window_closings
@@ -10989,6 +11007,20 @@ users_loc_window_opens:
   numerator:
     observations: [location_dialogue_opens]
     groupby: [participant]
+    
+users_loc_window_opens_radius:
+  title: users_loc_window_opens_radius
+  tags: [other, geo,  user]
+  numerator:
+    observations: [location_dialogue_opens_radius]
+    groupby: [participant]
+    
+users_loc_window_opens_search:
+  title: users_loc_window_opens_search
+  tags: [other, geo,  user]
+  numerator:
+    observations: [location_dialogue_opens_search]
+    groupby: [participant]
 
 users_loc_suggest_clicks:
   title: users_loc_suggest_clicks
@@ -11002,6 +11034,29 @@ loc_chng:
   tags: [i1, geo]
   numerator:
     observations: [location_changings]
+   
+loc_chng_search:
+  description: "Число смен локаций из поисковых фильтров (основной сценарий)"
+  title: loc_chng_search
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_search]
+    
+loc_chng_app_settings:
+  description: "Число смен локаций из экрана настроек аппов"
+  title: loc_chng_app_settings
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_app_settings]
+    
+    
+loc_chng_radius:
+  description: "Число смен локаций из экрана радиуса"
+  title: loc_chng_radius
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_radius]
+    
     
 loc_bad_chng:
   description: "Т.н. плохие смены локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
@@ -11357,11 +11412,27 @@ loc_bad__susp_chng_sessions_per_s_sessions:
     
 loc_window_saves_per_opens:
   title: loc_window_saves_per_opens
-  tags: [i3, bx, total]
+  tags: [i3, geo, total]
   numerator:
     observations: [location_dialogue_savings]
   denominator:
     observations: [location_dialogue_opens]
+
+loc_window_saves_per_opens_radius:
+  title: loc_window_saves_per_opens_radius
+  tags: [other, geo, total]
+  numerator:
+    observations: [location_dialogue_savings_radius]
+  denominator:
+    observations: [location_dialogue_opens_radius]
+    
+loc_window_saves_per_opens_search:
+  title: loc_window_saves_per_opens_search
+  tags: [other, geo, total]
+  numerator:
+    observations: [location_dialogue_savings_search]
+  denominator:
+    observations: [location_dialogue_opens_search]
 
 loc_suggests_per_text_inputs:
   title: loc_suggests_per_text_inputs
