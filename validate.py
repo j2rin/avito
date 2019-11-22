@@ -138,11 +138,12 @@ def validate(url, config, presets):
 
     if not failed_presets:
         print('\nAll presets are PASSED')
-    else:
-        for preset_type, names in failed_presets.items():
-            print('\nFAILED {} presets: {}'.format(preset_type, ', '.join(sorted(names))))
+        return True
 
-    return True
+    for preset_type, names in failed_presets.items():
+        print('\nFAILED {} presets: {}'.format(preset_type, ', '.join(sorted(names))))
+
+    return False
 
 
 if __name__ == '__main__':
