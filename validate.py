@@ -102,13 +102,13 @@ def validate(url, config, presets):
     }
 
     for preset_type, path in presets:
+        data[preset_type] = {}
+
         for fn in os.listdir(path):
             full_path = os.path.join(path, fn)
             if fn.endswith('.yaml'):
                 short_name = get_short_name(fn)
-                data[preset_type] = {
-                    short_name: open(full_path).read()
-                }
+                data[preset_type][short_name] = open(full_path).read()
 
                 file_name_map[preset_type][short_name] = full_path
 
