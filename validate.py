@@ -4,6 +4,7 @@
 
 Отправляет запрос в валидационный API АБ Конфигуратора и выводит результат проверки в терминал.
 """
+from __future__ import unicode_literals
 
 import json
 import os
