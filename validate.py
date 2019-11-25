@@ -98,7 +98,7 @@ def validate(url, config, presets):
     file_name_map = {x[0]: {} for x in presets}
 
     data = {
-        'config': open(config).read()
+        'config': open(config, encoding = 'utf-8').read()
     }
 
     for preset_type, path in presets:
@@ -108,7 +108,7 @@ def validate(url, config, presets):
             full_path = os.path.join(path, fn)
             if fn.endswith('.yaml'):
                 short_name = get_short_name(fn)
-                data[preset_type][short_name] = open(full_path).read()
+                data[preset_type][short_name] = open(full_path, encoding = 'utf-8').read()
 
                 file_name_map[preset_type][short_name] = full_path
 
