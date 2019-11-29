@@ -12812,6 +12812,12 @@ contacts_serp_road:
   title: c_serp_road
   numerator: 
     observations: [contacts_serp_road]
+    
+contacts_serp_local_geo:
+  tags: [i4, geo, bx]
+  title: c_serp_local_geo
+  numerator: 
+    observations: [contacts_serp_metro, contacts_serp_district, contacts_serp_road]
 
 contacts_serp_radius:
   tags: [i4, geo, bx]
@@ -13179,6 +13185,14 @@ searches_road_with_item_view_per_search_road:
   denominator:
     observations: [searches_road]
     
+searches_local_geo_with_item_view_per_search_local_geo:
+  tags: [i4, geo, bx]
+  title: local_geo_iv_per_local_geo
+  numerator: 
+    observations: [searches_metro_with_item_view, searches_district_with_item_view, searches_road_with_item_view]
+  denominator:
+    observations: [searches_metro,searches_district, searches_road]
+    
 searches_radius_with_item_view_per_search_radius:
   tags: [i4, geo, bx]
   title: s_radius_iv_per_s_radius
@@ -13306,6 +13320,14 @@ contacts_serp_road_per_search_road:
     observations: [contacts_serp_road]
   denominator:
     observations: [searches_road] 
+    
+contacts_serp_local_geo_per_search_local_geo:
+  tags: [i4, geo, bx]
+  title: c_local_geo_per_local_geo
+  numerator: 
+    observations: [contacts_serp_metro, contacts_serp_district, contacts_serp_road]
+  denominator:
+    observations: [searches_metro,searches_district, searches_road] 
     
 contacts_serp_radius_per_search_radius:
   tags: [i4, geo, bx]
@@ -13466,6 +13488,16 @@ users_contacts_serp_road_per_users_road:
     groupby: [participant]
   denominator: 
     observations: [searches_road]
+    groupby: [participant]
+    
+users_contacts_serp_local_geo_per_users_local_geo:
+  tags: [i3, geo, bx, user]
+  title: buyers_local_geo_per_users_local_geo
+  numerator: 
+    observations: [contacts_serp_metro,contacts_serp_district,contacts_serp_road]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_metro,searches_district, searches_road]
     groupby: [participant]
 
 users_contacts_serp_radius_per_users_radius:
