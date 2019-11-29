@@ -1589,6 +1589,18 @@ buyer_target_clicks_serp:
   numerator:
     observations: [buyer_target_clicks_serp]
 
+btc_serp_query:
+  title: btc_serp_query
+  tags: [i3, bx, serp, total]
+  numerator:
+    observations: [btc_serp_query]
+
+btc_serp_noquery:
+  title: btc_serp_noquery
+  tags: [i3, bx, serp, total]
+  numerator:
+    observations: [btc_serp_noquery]
+
 suggest_buyers:
   title: suggest_buyers_old
   description: "Buyers, who use suggest"
@@ -2254,6 +2266,38 @@ s_default_sort_per_s:
   denominator:
     observations: [searches]
 
+searches_query_contact_per_sq:
+  title: searches_query_contact_per_sq
+  tags: [i4, bx, serp, ratio]
+  numerator:
+    observations: [searches_query_contact]
+  denominator:
+    observations: [searches_with_query]
+
+searches_query_contact_per_noq:
+  title: searches_query_contact_per_noq
+  tags: [i4, bx, serp, ratio]
+  numerator:
+    observations: [searches_noquery_contact]
+  denominator:
+    observations: [searches_without_query]
+
+btc_serp_q_per_s_q:
+  title: btc_serp_q_per_s_q
+  tags: [i4, bx, serp, ratio]
+  numerator:
+    observations: [btc_serp_query]
+  denominator:
+    observations: [searches_with_query]
+
+btc_serp_noq_per_s_noq:
+  title: btc_serp_noq_per_s_noq
+  tags: [i4, bx, serp, ratio]
+  numerator:
+    observations: [btc_serp_noquery]
+  denominator:
+    observations: [searches_without_query]
+
 serp_empty_per_s:
   title: serp_empty_per_search
   tags: [i2, bx, serp, ratio]
@@ -2416,6 +2460,18 @@ sessions_btc_s:
     observations: [buyer_target_clicks_serp]
     groupby: [participant, session]
   tags: [i3, bx, session]
+
+sessions_btc_sq:
+  numerator:
+    observations: [btc_serp_query]
+    groupby: [participant, session]
+  tags: [i4, bx, session]
+
+sessions_btc_snoq:
+  numerator:
+    observations: [btc_serp_noquery]
+    groupby: [participant, session]
+  tags: [i4, bx, session]
 
 sessions_c_s:
   numerator:
