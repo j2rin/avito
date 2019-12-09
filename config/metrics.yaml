@@ -9347,6 +9347,14 @@ support_email_tickets_created:
     groupby: []
   description: "Number of created tickets via email"
 
+support_call_tickets_created:
+  title: call_tickets_created
+  tags: [support, other]
+  numerator:
+    observations: [ticket_call_created]
+    groupby: []
+  description: "Number of created tickets via call-center"
+
 support_email_tickets_creators:
   title: email_tickets_creators
   tags: [support, other]
@@ -9372,15 +9380,23 @@ support_wizard_tickets_creators:
   description: "Number of users created tickets via HelpCenter form: Desktop/MAV/iOs/Android"
 
 support_email_wizard_tickets_created:
-  title: tickets_created
+  title: tickets_created_old
   tags: [support, other]
   numerator:
     observations: [ticket_wizard_created, ticket_email_created]
     groupby: []
   description: "Number of created tickets via HelpCenter and email"
 
+support_email_wizard_call_tickets_created:
+  title: tickets_created
+  tags: [support, other]
+  numerator:
+    observations: [ticket_wizard_created, ticket_email_created, ticket_call_created]
+    groupby: []
+  description: "Number of created tickets via HelpCenter + email + call-center"
+
 support_email_wizard_tickets_creators:
-  title: tickets_creators
+  title: tickets_creators_old
   tags: [support, other]
   numerator:
     observations: [ticket_wizard_created, ticket_email_created]
@@ -9487,126 +9503,6 @@ support_mav_tickets_created:
     observations: [ticket_mav_created]
     groupby: []
   description: "Number of created tickets via HelpCenter from: MAV"
-
-support_web_reject_tickets_created:
-  title: hc_web_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_web_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: WEB"
-
-support_android_reject_tickets_created:
-  title: hc_android_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_android_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: Android"
-
-support_ios_reject_tickets_created:
-  title: hc_ios_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_ios_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: iOs"
-
-support_mav_reject_tickets_created:
-  title: hc_mav_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_mav_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: MAV"
-
-support_web_block_tickets_created:
-  title: hc_web_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_web_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: WEB"
-
-support_android_block_tickets_created:
-  title: hc_android_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_android_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: Android"
-
-support_ios_block_tickets_created:
-  title: hc_ios_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_ios_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: iOs"
-
-support_mav_block_tickets_created:
-  title: hc_mav_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_mav_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: MAV"
-
-support_web_moder_tickets_created:
-  title: hc_web_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_web_created, ticket_item_reject_web_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: WEB"
-
-support_android_moder_tickets_created:
-  title: hc_android_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_android_created, ticket_item_reject_android_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: Android"
-
-support_ios_moder_tickets_created:
-  title: hc_ios_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_ios_created, ticket_item_reject_ios_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: iOs"
-
-support_mav_moder_tickets_created:
-  title: hc_mav_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_mav_created, ticket_item_reject_mav_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: MAV"
-
-support_hc_moder_tickets_created:
-  title: hc_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_web_created, ticket_item_reject_web_created, ticket_item_block_android_created, ticket_item_reject_android_created, ticket_item_block_ios_created, ticket_item_reject_ios_created, ticket_item_block_mav_created, ticket_item_reject_mav_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: WEB/MAV/iOs/Android"
-
-support_hc_block_tickets_created:
-  title: hc_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_web_created, ticket_item_block_android_created, ticket_item_block_ios_created, ticket_item_block_mav_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: WEB/MAV/iOs/Android"
-
-support_hc_reject_tickets_created:
-  title: hc_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_web_created, ticket_item_reject_android_created, ticket_item_reject_ios_created, ticket_item_reject_mav_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: WEB/MAV/iOs/Android"
 
 support_hc_article_like:
   title: hc_article_like
