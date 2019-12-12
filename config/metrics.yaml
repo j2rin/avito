@@ -13102,6 +13102,110 @@ sess_searches_radius:
   numerator: 
     observations: [searches_radius]
     groupby: [participant, session]    
+    
+default_radius_searches:
+  tags: [i4, geo, bx]
+  title: radius_default
+  numerator: 
+    observations: [radius_default]
+   
+radius_0_searches:
+  tags: [i4, geo, bx]
+  title: radius_0
+  numerator: 
+    observations: [radius_0]
+
+radius_1_searches:
+  tags: [i4, geo, bx]
+  title: radius_1
+  numerator: 
+    observations: [radius_1]
+    
+radius_5_searches:
+  tags: [i4, geo, bx]
+  title: radius_5
+  numerator: 
+    observations: [radius_5]
+    
+radius_10_searches:
+  tags: [i4, geo, bx]
+  title: radius_10
+  numerator: 
+    observations: [radius_10]
+    
+radius_25_searches:
+  tags: [i4, geo, bx]
+  title: radius_25
+  numerator: 
+    observations: [radius_25]
+
+radius_50_searches:
+  tags: [i4, geo, bx]
+  title: radius_50
+  numerator: 
+    observations: [radius_50]
+    
+radius_100_searches:
+  tags: [i4, geo, bx]
+  title: radius_100
+  numerator: 
+    observations: [radius_100]
+    
+radius_short_searches:
+  tags: [i4, geo, bx]
+  title: radius_short
+  numerator: 
+    observations: [radius_100,radius_50,radius_25,radius_10,radius_5,radius_1]    
+
+radius_200_searches:
+  tags: [i4, geo, bx]
+  title: radius_200
+  numerator: 
+    observations: [radius_200]
+    
+radius_300_searches:
+  tags: [i4, geo, bx]
+  title: radius_300
+  numerator: 
+    observations: [radius_300]
+
+radius_400_searches:
+  tags: [i4, geo, bx]
+  title: radius_400
+  numerator: 
+    observations: [radius_400]
+    
+radius_500_searches:
+  tags: [i4, geo, bx]
+  title: radius_500
+  numerator: 
+    observations: [radius_500]
+
+radius_1000_searches:
+  tags: [i4, geo, bx]
+  title: radius_1000
+  numerator: 
+    observations: [radius_1000]
+    
+radius_big_searches:
+  tags: [i4, geo, bx]
+  title: radius_big
+  numerator: 
+    observations: [radius_100, radius_200, radius_300, radius_400, radius_500, radius_1000]
+
+total_metros_in_searches:
+  tags: [i4, geo, bx]
+  description: "Общее число станций метро, выбранных в поисках"
+  title: metro_stations
+  numerator: 
+    observations: [total_metros_in_searches]
+    
+total_districts_in_searches:
+  tags: [i4, geo, bx]
+  description: "Общее число районов, выбранных в поисках"
+  title: districts
+  numerator: 
+    observations: [total_districts_in_searches]    
 
 ###############################################################################
 # Geo :: Ratios
@@ -13632,7 +13736,33 @@ users_btc_serp_radius_per_users_radius:
   denominator: 
     observations: [searches_radius]
     groupby: [participant]
+    
+districts_per_district_search:
+  tags: [i4, geo, bx, ratio]
+  description: "Среднее число районов на поиск с районом"
+  title: districts_per_district_s
+  numerator: 
+    observations: [total_districts_in_searches]  
+  denominator: 
+    observations: [searches_district]
 
+metros_per_metro_search:
+  tags: [i4, geo, bx, ratio]
+  description: "Среднее число станций метро на поиск с районом"
+  title: metros_per_metro_s
+  numerator: 
+    observations: [total_metros_in_searches]  
+  denominator: 
+    observations: [searches_metro]
+    
+default_radius_per_search_radius:
+  tags: [i4, geo, bx, ratio]
+  description: "Доля поисков с дефолтным радиусом относительно всех поисков с радиусом"
+  title: default_radius_per_radius
+  numerator: 
+    observations: [default_radius_searches]    
+  denominator: 
+    observations: [searches_radius]
 
 ##     ##    ###    ########  
 ###   ###   ## ##   ##     ## 
