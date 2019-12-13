@@ -3,12 +3,15 @@
 """Скрипт валидации конфигураций метрик.
 
 Отправляет запрос в валидационный API АБ Конфигуратора и выводит результат проверки в терминал.
+
+Внезапно этот же скрипт используется для отправки пресетов и конфига из CI в конфигуратор.
 """
 from __future__ import unicode_literals
 
 import io
 import json
 import os
+import sys
 
 try:
     from http import client as httplib  # python 3
@@ -23,7 +26,8 @@ METRICS_LISTS_PATH = os.path.join(CUR_DIR_PATH, 'metrics_lists')
 METRICS_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics.yaml')
 
 AB_CONFIGURATOR_HOST = 'ab-configurator.k.avito.ru'
-PRESETS_CONFIG_VALIDATOR_URL = '/api/validateMetricsRepo'
+PRESETS_CONFIG_VALIDATE_URL = '/api/validateMetricsRepo'
+PRESETS_CONFIG_PUBLISH_URL = '/api/publishMetricsRepo'
 
 
 def marks_to_str(file_name, data, marks_attribute):
@@ -96,12 +100,14 @@ def show_errors(file_name_map, name, info):
     return result
 
 
-def validate(url, config, presets):
+def send_all(url, config, presets, api_key=None):
     file_name_map = {x[0]: {} for x in presets}
-
     data = {
         'config': io.open(config, encoding='utf-8').read()
     }
+
+    if api_key:
+        data['api_key'] = api_key
 
     for preset_type, path in presets:
         data[preset_type] = {}
@@ -115,6 +121,11 @@ def validate(url, config, presets):
                 file_name_map[preset_type][short_name] = full_path
 
     result = post(url, data)
+    return result, file_name_map
+
+
+def validate(url, config, presets):
+    result, file_name_map = send_all(url, config, presets)
 
     if result['success']:
         print('\nAll presets are PASSED')
@@ -149,8 +160,36 @@ def validate(url, config, presets):
 
 
 if __name__ == '__main__':
+
+    if len(sys.argv) == 2 and sys.argv[1] == '--publish':
+        key = os.getenv('API_KEY')
+
+        if not key:
+            print('No API_KEY in the env')
+            exit(2)
+
+        result, _ = send_all(
+            PRESETS_CONFIG_PUBLISH_URL,
+            METRICS_FILE,
+            [
+                ('breakdown_presets', BREAKDOWNS_PRESETS_PATH),
+                ('ab_config_presets', PRESETS_PATH),
+                ('metrics_lists', METRICS_LISTS_PATH),
+            ],
+            os.getenv('API_KEY')
+        )
+
+        if not result.get('success'):
+            print('Cannot publish metrics config')
+            print(result)
+            exit(1)
+
+        print('Metrics repo has been successfully updated')
+
+        exit(0)
+
     success = validate(
-        PRESETS_CONFIG_VALIDATOR_URL,
+        PRESETS_CONFIG_VALIDATE_URL,
         METRICS_FILE,
         [
             ('breakdown_presets', BREAKDOWNS_PRESETS_PATH),
