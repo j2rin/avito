@@ -6,6 +6,7 @@
 """
 from __future__ import unicode_literals
 
+import io
 import json
 import os
 
@@ -18,6 +19,7 @@ except ImportError:
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'ab_config_presets')
 BREAKDOWNS_PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'breakdown_presets')
+METRICS_LISTS_PATH = os.path.join(CUR_DIR_PATH, 'metrics_lists')
 METRICS_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics.yaml')
 
 AB_CONFIGURATOR_HOST = 'ab-configurator.k.avito.ru'
@@ -98,7 +100,7 @@ def validate(url, config, presets):
     file_name_map = {x[0]: {} for x in presets}
 
     data = {
-        'config': open(config, encoding = 'utf-8').read()
+        'config': io.open(config, encoding='utf-8').read()
     }
 
     for preset_type, path in presets:
@@ -108,7 +110,7 @@ def validate(url, config, presets):
             full_path = os.path.join(path, fn)
             if fn.endswith('.yaml'):
                 short_name = get_short_name(fn)
-                data[preset_type][short_name] = open(full_path, encoding = 'utf-8').read()
+                data[preset_type][short_name] = io.open(full_path, encoding='utf-8').read()
 
                 file_name_map[preset_type][short_name] = full_path
 
@@ -153,6 +155,7 @@ if __name__ == '__main__':
         [
             ('breakdown_presets', BREAKDOWNS_PRESETS_PATH),
             ('ab_config_presets', PRESETS_PATH),
+            ('metrics_lists', METRICS_LISTS_PATH),
         ]
     )
 
