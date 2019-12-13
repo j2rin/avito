@@ -1656,7 +1656,7 @@ filters_local_geo_searches:
   tags: [i4, bx, total]
   numerator:
     observations: [local_geo_filter_searches]
-    
+       
 filters_radius_searches:
   description: "All radius searches with radius >0"
   title: filters_radius_searches
@@ -2991,7 +2991,7 @@ filters_any_users:
   numerator:
     observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
     groupby: [participant]
-
+    
 ###############################################################################
 # Search :: User Ratios
 ###############################################################################
@@ -12776,6 +12776,13 @@ searches_local_geo:
   tags: [i3, geo, bx]
   numerator: 
     observations: [searches_metro,searches_district,searches_road]
+   
+searches_geo:
+  tags: [i3, geo, bx]
+  title: geo_search
+  description: "Поиски с локальным геофильтром (метро, район, направление) или радиусом>0"
+  numerator: 
+    observations: [searches_metro,searches_district,searches_road, searches_radius]
     
 searches_radius:
   tags: [i3, geo, bx]
@@ -13078,7 +13085,6 @@ users_buyer_target_clicks_serp_radius:
     observations: [buyer_target_clicks_serp_radius]
     groupby: [participant]
     
-#целевые действия с поисков по сессиям
 sess_metro:
   tags: [i3, geo, bx]
   numerator: 
@@ -13103,11 +13109,28 @@ sess_searches_radius:
     observations: [searches_radius]
     groupby: [participant, session]    
     
+buyer_target_clicks_geo_sess:
+  tags: [i2, geo, bx, user]
+  title:  btc_geo_sess
+  numerator: 
+    observations: [buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro, buyer_target_clicks_serp_road, buyer_target_clicks_serp_radius]
+    groupby: [participant, session]
+
+
+##радиус и локальные геофильтры подробно 
 default_radius_searches:
   tags: [i4, geo, bx]
+  description: "Поиски с дефолтным радиусом"
   title: radius_default
   numerator: 
-    observations: [radius_default]
+    observations: [default_radius_searches]
+    
+not_default_radius_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски с НЕ дефолтным радиусом"
+  title: radius_not_default
+  numerator: 
+    observations: [not_default_radius_searches]
    
 radius_0_searches:
   tags: [i4, geo, bx]
@@ -13205,7 +13228,35 @@ total_districts_in_searches:
   description: "Общее число районов, выбранных в поисках"
   title: districts
   numerator: 
-    observations: [total_districts_in_searches]    
+    observations: [total_districts_in_searches]
+    
+city_level_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски на уровне города"
+  title: search_city
+  numerator: 
+    observations: [city_level_searches, federal_city_level_searches]
+    
+meta_regions_level_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски на уровне метарегионов (Москва и МО)"
+  title: search_metaregion
+  numerator: 
+    observations: [meta_regions_level_searches]
+    
+regions_level_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски на уровне регионов, областей"
+  title: search_regions
+  numerator: 
+    observations: [regions_level_searches]
+    
+russia_level_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски на уровне России"
+  title: search_russia
+  numerator: 
+    observations: [russia_level_searches]
 
 ###############################################################################
 # Geo :: Ratios
@@ -13337,6 +13388,15 @@ searches_local_geo_per_search:
   title: s_local_geo_per_s
   numerator: 
     observations: [searches_metro,searches_district,searches_road]
+  denominator:
+    observations: [searches]   
+    
+searches_geo_per_search:
+  tags: [i3, geo, bx]
+  title: s_geo_per_s
+  description: "Доля поисков с локальным геофильтром (метро, район, направление) или радиусом>0"
+  numerator: 
+    observations: [searches_metro,searches_district,searches_road, searches_radius]
   denominator:
     observations: [searches]   
     
@@ -13554,7 +13614,33 @@ buyer_target_clicks_serp_radius_per_search_radius:
   numerator: 
     observations: [buyer_target_clicks_serp_radius]
   denominator:
-    observations: [searches_radius] 
+    observations: [searches_radius]  
+    
+buyer_target_clicks_serp_local_geo_per_local_geo:
+  tags: [i4, geo, bx]
+  title: btc_local_geo_per_s_local_geo
+  numerator: 
+    observations: [buyer_target_clicks_serp_road, buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro]
+  denominator:
+    observations: [searches_road, searches_district, searches_metro] 
+    
+buyer_target_clicks_serp_geo_per_search_geo:
+  tags: [i4, geo, bx]
+  title: btc_geo_per_s_geo
+  numerator: 
+    observations: [buyer_target_clicks_serp_radius, buyer_target_clicks_serp_road, buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro]
+  denominator:
+    observations: [searches_radius, searches_road, searches_district, searches_metro] 
+    
+buyer_target_clicks_serp_geo_sess_per_search_geo_sess:
+  tags: [i4, geo, bx]
+  title: btc_geo_sess_per_geo_sess
+  numerator: 
+    observations: [buyer_target_clicks_serp_radius, buyer_target_clicks_serp_road, buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches_radius, searches_road, searches_district, searches_metro] 
+    groupby: [participant, session]
     
 #целевые действия с поисков по юзерам 
 users_searches_metro_per_users_search:
@@ -13763,6 +13849,16 @@ default_radius_per_search_radius:
     observations: [default_radius_searches]    
   denominator: 
     observations: [searches_radius]
+    
+not_default_radius_per_search_radius:
+  tags: [i4, geo, bx, ratio]
+  description: "Доля поисков с НЕ дефолтным радиусом относительно всех поисков с радиусом"
+  title: not_default_radius_per_radius
+  numerator: 
+    observations: [not_default_radius_searches]    
+  denominator: 
+    observations: [searches_radius]
+
 
 ##     ##    ###    ########  
 ###   ###   ## ##   ##     ## 
