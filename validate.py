@@ -60,7 +60,7 @@ def post(url, data):
 
 
 def get_short_name(file_name):
-    return file_name.rsplit('/')[-1].rsplit('\\')[-1]
+    return file_name.rsplit('/')[-1].rsplit('\\')[-1].rsplit('.')[0]
 
 
 def get_errors(result, file_name):
