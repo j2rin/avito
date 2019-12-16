@@ -159,35 +159,33 @@ def validate(url, config, presets):
     return False
 
 
-if __name__ == '__main__':
+def publish_repo():
+    key = os.getenv('API_KEY')
 
-    if len(sys.argv) == 2 and sys.argv[1] == '--publish':
-        key = os.getenv('API_KEY')
+    if not key:
+        print('No API_KEY in the env')
+        exit(2)
 
-        if not key:
-            print('No API_KEY in the env')
-            exit(2)
+    result, _ = send_all(
+        PRESETS_CONFIG_PUBLISH_URL,
+        METRICS_FILE,
+        [
+            ('breakdown_presets', BREAKDOWNS_PRESETS_PATH),
+            ('ab_config_presets', PRESETS_PATH),
+            ('metrics_lists', METRICS_LISTS_PATH),
+        ],
+        os.getenv('API_KEY')
+    )
 
-        result, _ = send_all(
-            PRESETS_CONFIG_PUBLISH_URL,
-            METRICS_FILE,
-            [
-                ('breakdown_presets', BREAKDOWNS_PRESETS_PATH),
-                ('ab_config_presets', PRESETS_PATH),
-                ('metrics_lists', METRICS_LISTS_PATH),
-            ],
-            os.getenv('API_KEY')
-        )
+    if not result.get('success'):
+        print('Cannot publish metrics config')
+        print(result)
+        exit(1)
 
-        if not result.get('success'):
-            print('Cannot publish metrics config')
-            print(result)
-            exit(1)
+    print('Metrics repo has been successfully updated')
 
-        print('Metrics repo has been successfully updated')
 
-        exit(0)
-
+def validate_repo():
     success = validate(
         PRESETS_CONFIG_VALIDATE_URL,
         METRICS_FILE,
@@ -200,3 +198,10 @@ if __name__ == '__main__':
 
     if not success:
         exit(1)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) == 2 and sys.argv[1] == '--publish':
+        publish_repo()
+    else:
+        validate_repo()
