@@ -20,9 +20,9 @@ except ImportError:
 
 
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
-PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'ab_config_presets')
-BREAKDOWNS_PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'breakdown_presets')
-METRICS_LISTS_PATH = os.path.join(CUR_DIR_PATH, 'metrics_lists')
+PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'presets')
+BREAKDOWNS_PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'presets/breakdowns')
+METRICS_LISTS_PATH = os.path.join(CUR_DIR_PATH, 'presets/metrics')
 METRICS_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics.yaml')
 
 AB_CONFIGURATOR_HOST = 'ab-configurator.k.avito.ru'
