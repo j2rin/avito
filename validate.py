@@ -78,6 +78,7 @@ def get_errors(result, file_name):
 
 
 def show_errors(file_name_map, name, info):
+    result = False
     fn = file_name_map[name]
     success, messages = get_errors(info, fn)
 
@@ -86,7 +87,7 @@ def show_errors(file_name_map, name, info):
 
         if not success:
             print('\n{} FAILED:'.format(short_fn))
-            return True
+            result = True
         else:
             print('\n{} PASSED with warnings:'.format(short_fn))
 
@@ -96,7 +97,7 @@ def show_errors(file_name_map, name, info):
     elif success and name == 'metrics':
         print('Metrics config PASSED')
 
-    return False
+    return result
 
 
 def send_all(url, config, presets, api_key=None):
