@@ -12784,6 +12784,53 @@ loc_chng_neutral_city:
   description: "Нейтральные смены локации с уровня города"
   numerator:
     observations: [location_changings_neutral_city]
+    
+#число локаций в поисках 
+locations_in_search:
+  description: "Число различных локаций поисках в рамках одной сессии и одной микрокатегории"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    
+cities_in_search:
+  description: "Число различных локаций уровня город поисках в рамках одной сессии и одной микрокатегории"
+  tags: [other, geo]
+  numerator:
+    observations: [cities_in_searches]
+    
+regions_in_search:
+  description: "Число различных локаций уровня Регион поисках в рамках одной сессии и одной микрокатегории"
+  tags: [other, geo]
+  numerator:
+    observations: [regions_in_searches]
+    
+multiloc_sess:
+  description: "Число сессий, в которых были поиски в 2+ локациях (в рамках одной микрокатегории)"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant, session]
+    threshold: 2
+    
+multiloc_users:
+  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории)"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant]
+    threshold: 2
+    
+cities_in_searches:
+  description: "Число различных локаций уровня город поисках в рамках одной сессии и одной микрокатегории"
+  tags: [other, geo]
+  numerator:
+    observations: [cities_in_searches]
+    
+regions_in_searches:
+  description: "Число различных локаций уровня Регион поисках в рамках одной сессии и одной микрокатегории"
+  tags: [other, geo]
+  numerator:
+    observations: [regions_in_searches]
 
 #тултип
 default_loc_tooltip_shows:
@@ -13441,6 +13488,37 @@ loc_suggests_per_text_inputs:
     observations: [location_suggest_clicks]
   denominator:
     observations: [location_text_inputs]
+
+#число локаций в поисках 
+multiloc_user_per_user_search:
+  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число серчеров"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant]
+    threshold: 2
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+    
+multiloc_sess_per_sess_search:
+  description: "Число сессий, в которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число поисковых сессий"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant, session]
+    threshold: 2
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+    
+locations_per_search:
+  description: "Число разных локаций (в рамках одной микрокатегории) на число поисков"
+  tags: [i4, geo]
+  numerator:
+    observations: [locations_in_searches]
+  denominator:
+    observations: [searches]
 
 #тултип
 default_loc_tooltip_accepts_per_shows:
