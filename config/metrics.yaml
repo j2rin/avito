@@ -601,6 +601,13 @@ buyers:
   numerator:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant]
+    
+user_pv:
+  description: "Юзеры, сделавшие просмотр телефона"
+  numerator:
+    observations: [phone_views_total, realty_development_phone_views]
+    groupby: [participant]
+  tags: [i3, bx, user]
 
 buyers_vas:
   title: buyers_vas
@@ -12820,17 +12827,21 @@ multiloc_users:
     groupby: [participant]
     threshold: 2
     
-cities_in_searches:
-  description: "Число различных локаций уровня город поисках в рамках одной сессии и одной микрокатегории"
+multi_city_sess:
+  description: "Число юзеров, у которых были поиски в 2+ ГОРОДАХ (в рамках одной микрокатегории)"
   tags: [other, geo]
   numerator:
     observations: [cities_in_searches]
+    groupby: [participant, session]
+    threshold: 2
     
-regions_in_searches:
-  description: "Число различных локаций уровня Регион поисках в рамках одной сессии и одной микрокатегории"
+multi_region_sess:
+  description: "Число юзеров, у которых были поиски в 2+ РЕГИОНАХ (в рамках одной микрокатегории)"
   tags: [other, geo]
   numerator:
     observations: [regions_in_searches]
+    groupby: [participant, session]
+    threshold: 2
 
 #тултип
 default_loc_tooltip_shows:
@@ -13488,6 +13499,42 @@ loc_suggests_per_text_inputs:
     observations: [location_suggest_clicks]
   denominator:
     observations: [location_text_inputs]
+
+city_level_search_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне города"
+  title: search_city_per_search
+  numerator: 
+    observations: [city_level_searches, federal_city_level_searches]
+  denominator:
+    observations: [searches]
+    
+meta_regions_level_searches_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне метарегионов (Москва и МО)"
+  title: search_metaregion_per_search
+  numerator: 
+    observations: [meta_regions_level_searches]
+  denominator:
+    observations: [searches]
+    
+regions_level_searches_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне регионов, областей"
+  title: search_regions_per_search
+  numerator: 
+    observations: [regions_level_searches]
+  denominator:
+    observations: [searches]
+    
+russia_level_searches_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне России"
+  title: search_russia_per_search
+  numerator: 
+    observations: [russia_level_searches]
+  denominator:
+    observations: [searches]
 
 #число локаций в поисках 
 multiloc_user_per_user_search:
