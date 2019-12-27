@@ -66,6 +66,13 @@ contacts:
   numerator:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
   tags: [i1, bx, total]
+  
+# JOB-496
+contacts_new:
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  numerator:
+    observations: [phone_views_total, booking_created_short_rent, new_first_messages, delivery_order_created, realty_development_phone_views]
+  tags: [i1, bx, total]  
 
 contacts_total_vas:
   title: contacts_total_vas
@@ -79,6 +86,15 @@ contacts_grouped:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant, item]
   tags: [i1, bx, total, grouped]
+
+# JOB-496  
+contacts_grouped_new:
+  title:   contacts_groupped_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  numerator:
+    observations: [phone_views_total, booking_created_short_rent, new_first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant, item]
+  tags: [i1, bx, total, grouped]  
 
 advertisement_page_views:
   title: advertisement_page_views
@@ -171,6 +187,14 @@ first_messages:
   numerator:
     observations: [first_messages]
 
+# JOB-496
+new_first_messages:
+  title: new_first_messages
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i2, bx, mes, total]
+  numerator:
+    observations: [new_first_messages]
+
 first_messages_vas:
   title: first_messages_vas
   tags: [i3, bx, mes, vas, total]
@@ -219,6 +243,14 @@ bt_clicks:
   numerator:
     observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
     
+# JOB-496
+bt_clicks_new:
+  title: bt_clicks_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i1, bx, total]
+  numerator:
+    observations: [phone_views_total, new_first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
+    
 favorites_net:
   title: favorites_net
   description: "Чистое число добавленных в избранное. Прежде всего полезно для чистки мискликов. Если пользователь добавил айтем в избранное, затем его удалил, значение будет 0. Если потом снова добавил, то 1"
@@ -240,6 +272,15 @@ bt_clicks_grouped:
   numerator:
     observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
     groupby: [participant, item]
+
+# JOB-496
+bt_clicks_grouped_new:
+  title: bt_clicks_grouped_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i1, bx, total, group]
+  numerator:
+    observations: [phone_views_total, new_first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
+    groupby: [participant, item]    
 
 ad_clicks:
   tags: [critical, bx]
@@ -601,6 +642,15 @@ buyers:
   numerator:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant]
+
+# JOB-496
+buyers_new:
+  title: buyers_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i0, bx, user]
+  numerator:
+    observations: [phone_views_total, booking_created_short_rent, new_first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]    
     
 user_pv:
   description: "Юзеры, сделавшие просмотр телефона"
@@ -664,6 +714,15 @@ users_bt_click_daily:
   numerator:
     observations: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added, realty_development_phone_views]
     groupby: [participant]
+
+# JOB-496
+users_bt_click_daily_new:
+  title: users_bt_click_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i0, bx, user]
+  numerator:
+    observations: [phone_views_total, new_first_messages, booking_created_short_rent, delivery_order_created, favorites_added, realty_development_phone_views]
+    groupby: [participant]    
 
 users_favorites:
   title: users_favorites_added
@@ -4294,6 +4353,16 @@ first_mess_per_write_button_clicks:
     observations: [first_messages]
   denominator:
     observations: [write_button_clicks]
+
+# JOB-496
+first_mess_per_write_button_clicks_new:
+  title: first_mess_per_write_button_clicks_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i3, messenger, ratio]
+  numerator:
+    observations: [new_first_messages]
+  denominator:
+    observations: [write_button_clicks]    
     
 first_mess_per_active_items_with_msg:
   title: first_mess_per_active_items_with_msg
@@ -4345,6 +4414,15 @@ users_first_messages:
   numerator:
     observations: [first_messages]
     groupby: [participant]
+
+# JOB-496
+users_first_messages_new:
+  title: users_first_messages_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i2, messenger, user]
+  numerator:
+    observations: [new_first_messages]
+    groupby: [participant]    
 
 users_first_response_messages:
   title: users_first_response_messages
