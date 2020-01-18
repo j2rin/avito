@@ -401,6 +401,68 @@ missed_proxy_calls_map:
   numerator:
     observations: [missed_proxy_calls_map]
 
+
+########сохраненные поиски 
+####действия 
+saved_searches:
+  title: search_sav
+  tags: [i3, bx, tns]
+  description: "Сохр поиски"
+  numerator:
+    observations: [searches_saved]
+  
+#### сохраненные поиски, закончившиеся целевым действием  
+searches_saved_with_item_view:
+  title: search_sav_iv
+  tags: [i3, bx, tns]
+  description: "Сохр поиски с iv"
+  numerator:
+    observations: [searches_saved_with_item_view]
+    
+searches_saved_with_contact:
+  title: search_sav_c
+  description: "Сохр поиски с контактами"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [searches_saved_with_contact]
+    
+searches_saved_with_btc:
+  title: search_sav_btc
+  description: "Сохр поиски с бтц"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [searches_saved_with_btc]
+
+#### целевые действия с сохраненных поисков 
+item_views_serp_saved:
+  title: iv_serp_sav
+  description: "IV с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+    
+contacts_serp_saved:
+  title: c_serp_sav
+  description: "Контакты с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+    
+fav_added_serp_saved:
+  title: fav_serp_sav
+  description: "Добавление в избранное с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+
+buyer_target_clicks_serp_saved:
+  title: btc_serp_sav
+  description: "BTC с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+
+
 ###############################################################################
 # Buyer :: Ratios
 ###############################################################################
@@ -518,6 +580,44 @@ fav_list_contact_per_fav_list:
   denominator:
     observations: [favorites_list_views]
     
+
+########сохраненные поиски
+item_views_serp_saved_per_search_saved:
+  title: iv_serp_sav_per_sav
+  description: "IV с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+  denominator:
+    observations: [saved_searches]
+    
+contacts_serp_saved_per_search_saved:
+  title: c_serp_sav_per_sav
+  description: "Контакты с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+  denominator:
+    observations: [saved_searches] 
+    
+fav_added_serp_saved_per_search_saved:
+  title: fav_serp_sav_per_sav
+  description: "Добавление в избранное с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+  denominator:
+    observations: [saved_searches]
+    
+buyer_target_clicks_serp_saved_per_search_saved:
+  title: btc_serp_sav_per_sav
+  description: "BTC с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+  denominator:
+    observations: [saved_searches]
+
 ###############################################################################
 # Buyer :: User Totals
 ###############################################################################
@@ -793,6 +893,48 @@ users_non_fatal_app_errors:
   numerator:
     observations: [non_fatal_app_error]
     groupby: [participant] 
+    
+########сохраненные поиски  
+users_saved_searches:
+  title: user_search_sav
+  tags: [i3, bx, tns]
+  description: "Юзеры, сделавшие сохр. поиски"
+  numerator:
+    observations: [searches_saved]
+    groupby: [participant]
+
+#### целевые действия с сохраненных поисков 
+user_item_views_serp_saved:
+  title: user_iv_serp_sav
+  description: "Юзеры с IV с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+    groupby: [participant]
+    
+user_contacts_serp_saved:
+  title: buyers_serp_sav
+  description: "Юзеры с  Контактами с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+    groupby: [participant]
+    
+user_fav_added_serp_saved:
+  title: user_fav_serp_sav
+  description: "Юзеры с  Добавлением в избранное с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+    groupby: [participant]
+
+user_buyer_target_clicks_serp_saved:
+  title: user_btc_serp_sav
+  description: "Юзеры с  BTC с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+    groupby: [participant]
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -917,6 +1059,54 @@ user_non_fatal_error_per_users:
       - favorites_added
       - realty_development_phone_views
     groupby: [participant]    
+
+
+######## сохраненные поиски
+user_item_views_serp_saved_per_user_search_saved:
+  title: user_iv_serp_sav_per_sav
+  description: "Юзеры с IV с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+    
+user_contacts_serp_saved_per_user_search_saved:
+  title: buyers_serp_sav_per_sav
+  description: "Юзеры с  Контактами с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+    
+user_fav_added_serp_saved_per_user_search_saved:
+  title: user_fav_serp_sav_per_sav
+  description: "Юзеры с  Добавлением в избранное с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+
+user_buyer_target_clicks_serp_saved_per_user_search_saved:
+  title: user_btc_serp_sav_per_sav
+  description: "Юзеры с  BTC с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+
+
 
 ###############################################################################
 # Buyer :: Other
