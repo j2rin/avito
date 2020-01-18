@@ -14349,7 +14349,6 @@ pin_clicks:
     observations: [pin_clicks]
     
 
-
 #### поиски по области карты (300е событие) 
 searches_map_area:
   title: map_area
@@ -15020,7 +15019,18 @@ sess_c_map_total_per_sess_map:
   denominator:
     observations: [map_searches]
     groupby: [participant, session]
-  
+
+sess_iv_map_total_per_sess_map:
+  title: sess_iv_map_total_per_sess_map
+  tags: [i3, bx,  map, map_serp]
+  description: "Сессии с iv с карты или с поиска по области карты к сессиям с поисками по карте"
+  numerator:
+    observations: [item_views_from_map, item_views_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    
 ###############################################################################
 # Map :: Users Ratios
 ###############################################################################
@@ -15083,7 +15093,7 @@ buyers_map_per_user_pin:
 user_iv_map_per_user_pin:
   title: user_iv_map_per_user_pin
   tags: [i4, bx, map]
-  description:  "Отношение юзеров с iv, добавлявших в избранное с карты к пиннерам"
+  description:  "Отношение юзеров с iv, добавлявших в избранное с карты, к пиннерам"
   numerator:
     observations: [item_views_from_map]
     groupby: [participant]
