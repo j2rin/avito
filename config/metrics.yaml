@@ -12497,19 +12497,27 @@ users_avitopro:
     groupby: [participant]
 
 
- ######   ########  #######  
-##    ##  ##       ##     ## 
-##        ##       ##     ## 
-##   #### ######   ##     ## 
-##    ##  ##       ##     ## 
-##    ##  ##       ##     ## 
- ######   ########  #######  
+
+#   #######   ########  #######  
+#   ##    ##  ##       ##     ## 
+#   ##        ##       ##     ## 
+#   ##   #### ######   ##     ## 
+#   ##    ##  ##       ##     ## 
+#   ##    ##  ##       ##     ## 
+#   #######   ########  #######  
+#                                                                       
+#    #       ####   ####      ####  #    #   ##   #    #  ####  ######  ####  
+#    #      #    # #    #    #    # #    #  #  #  ##   # #    # #      #      
+#    #      #    # #         #      ###### #    # # #  # #      #####   ####  
+#    #      #    # #         #      #    # ###### #  # # #  ### #           # 
+#    #      #    # #    #    #    # #    # #    # #   ## #    # #      #    # 
+#    ######  ####   ####      ####  #    # #    # #    #  ####  ######  ####  
 
 ###############################################################################
-# Geo :: Totals
+# Location changings :: Totals Events
 ###############################################################################
 
-#смена локаций
+####Окно выбора локаций
 loc_window_opens:
   title: loc_window_opens
   tags: [i3, bx, total]
@@ -12552,34 +12560,7 @@ location_text_inputs:
   numerator:
     observations: [location_text_inputs]
 
-users_loc_window_opens:
-  title: users_loc_window_opens
-  tags: [i3, bx,  user]
-  numerator:
-    observations: [location_dialogue_opens]
-    groupby: [participant]
-    
-users_loc_window_opens_radius:
-  title: users_loc_window_opens_radius
-  tags: [other, geo,  user]
-  numerator:
-    observations: [location_dialogue_opens_radius]
-    groupby: [participant]
-    
-users_loc_window_opens_search:
-  title: users_loc_window_opens_search
-  tags: [other, geo,  user]
-  numerator:
-    observations: [location_dialogue_opens_search]
-    groupby: [participant]
-
-users_loc_suggest_clicks:
-  title: users_loc_suggest_clicks
-  tags: [i4, bx,  user]
-  numerator:
-    observations: [location_suggest_clicks]
-    groupby: [participant]
-       
+####Смены локаций
 loc_chng:
   description: "Число смен локаций"
   tags: [i1, geo]
@@ -12652,97 +12633,6 @@ loc_horizontal_chng:
   numerator:
     observations: [location_changings_horizontal]
     
-loc_chng_sessions:
-  description: "Число сессий со сменой локации"
-  tags: [i1, geo]
-  numerator:
-    observations: [location_changings]
-    groupby: [participant, session]
-    
-loc_bad_chng_sessions:
-  description: "Число сессий с т.н. плохими сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
-  tags: [i1, geo]
-  numerator:
-    observations: [location_changings_bad]
-    groupby: [participant, session]
-    
-loc_susp_chng_sessions:
-  description: "Число сессий с т.н. подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
-  tags: [i2, geo]
-  numerator:
-    observations: [location_changings_suspicious]
-    groupby: [participant, session]
-    
-loc_neutral_chng_sessions:
-  description: "Число сессий с т.н. нейтральными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
-  tags: [i2, geo]
-  numerator:
-    observations: [location_changings_neutral]
-    groupby: [participant, session]
-    
-loc_bad_and_chng_sessions:
-  description: "Число сессий с т.н. плохими и подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
-  tags: [i2, geo]
-  numerator:
-    observations: [location_changings_bad, location_changings_suspicious]
-    groupby: [participant, session]
-    
-users_loc_chng:
-  description: "Число юзеров со сменой локации"
-  tags: [i1, geo]
-  numerator:
-    observations: [location_changings]
-    groupby: [participant]
-    
-users_loc_bad_chng:
-  description: "Число юзеров с т.н. плохими сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
-  tags: [i1, geo]
-  numerator:
-    observations: [location_changings_bad]
-    groupby: [participant]
-    
-users_loc_susp_chng:
-  description: "Число юзеров с т.н. подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
-  tags: [i2, geo]
-  numerator:
-    observations: [location_changings_suspicious]
-    groupby: [participant]
-    
-users_loc_neutral_chng:
-  description: "Число юзеров с т.н. нейтральными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
-  tags: [i2, geo]
-  numerator:
-    observations: [location_changings_neutral]
-    groupby: [participant]
-    
-users_loc_bad_and_chng:
-  description: "Число юзеров с т.н. плохими и подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
-  tags: [i2, geo]
-  numerator:
-    observations: [location_changings_bad, location_changings_suspicious]
-    groupby: [participant]
-    
-users_loc_expanded_chng:
-  description: "Число юзеров со сменой локаций на расширение"
-  tags: [i4, geo]
-  numerator:
-    observations: [location_changings_expanded]
-    groupby: [participant] 
- 
-users_loc_detailed_chng:
-  description: "Число юзеров со сменой локаций на сужение"
-  tags: [i4, geo]
-  numerator:
-    observations: [location_changings_detailed]
-    groupby: [participant] 
-    
-users_loc_horizontal_chng:
-  description: "Число юзеров с горизонтальными сменами локации"
-  tags: [i4, geo]
-  numerator:
-    observations: [location_changings_horizontal]
-    groupby: [participant] 
-  
 loc_chng_region_russia:
   tags: [other, geo]
   description: "Смена локации с уровня региона на Россию"
@@ -12845,7 +12735,230 @@ loc_chng_neutral_city:
   numerator:
     observations: [location_changings_neutral_city]
     
-#число локаций в поисках 
+
+
+###############################################################################
+# Location changings :: Totals Sessions
+###############################################################################
+
+loc_chng_sessions:
+  description: "Число сессий со сменой локации"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings]
+    groupby: [participant, session]
+    
+loc_bad_chng_sessions:
+  description: "Число сессий с т.н. плохими сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings_bad]
+    groupby: [participant, session]
+    
+loc_susp_chng_sessions:
+  description: "Число сессий с т.н. подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_suspicious]
+    groupby: [participant, session]
+    
+loc_neutral_chng_sessions:
+  description: "Число сессий с т.н. нейтральными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_neutral]
+    groupby: [participant, session]
+    
+loc_bad_and_chng_sessions:
+  description: "Число сессий с т.н. плохими и подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_bad, location_changings_suspicious]
+    groupby: [participant, session]
+    
+
+
+users_loc_window_opens:
+  title: users_loc_window_opens
+  tags: [i3, bx,  user]
+  numerator:
+    observations: [location_dialogue_opens]
+    groupby: [participant]
+    
+users_loc_window_opens_radius:
+  title: users_loc_window_opens_radius
+  tags: [other, geo,  user]
+  numerator:
+    observations: [location_dialogue_opens_radius]
+    groupby: [participant]
+    
+users_loc_window_opens_search:
+  title: users_loc_window_opens_search
+  tags: [other, geo,  user]
+  numerator:
+    observations: [location_dialogue_opens_search]
+    groupby: [participant]
+
+users_loc_suggest_clicks:
+  title: users_loc_suggest_clicks
+  tags: [i4, bx,  user]
+  numerator:
+    observations: [location_suggest_clicks]
+    groupby: [participant]
+       
+
+
+
+###############################################################################
+# Location changings :: Totals Users
+###############################################################################
+
+users_loc_chng:
+  description: "Число юзеров со сменой локации"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings]
+    groupby: [participant]
+    
+users_loc_bad_chng:
+  description: "Число юзеров с т.н. плохими сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i1, geo]
+  numerator:
+    observations: [location_changings_bad]
+    groupby: [participant]
+    
+users_loc_susp_chng:
+  description: "Число юзеров с т.н. подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_suspicious]
+    groupby: [participant]
+    
+users_loc_neutral_chng:
+  description: "Число юзеров с т.н. нейтральными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_neutral]
+    groupby: [participant]
+    
+users_loc_bad_and_chng:
+  description: "Число юзеров с т.н. плохими и подозрительными сменами локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_bad, location_changings_suspicious]
+    groupby: [participant]
+    
+users_loc_expanded_chng:
+  description: "Число юзеров со сменой локаций на расширение"
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_expanded]
+    groupby: [participant] 
+ 
+users_loc_detailed_chng:
+  description: "Число юзеров со сменой локаций на сужение"
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_detailed]
+    groupby: [participant] 
+    
+users_loc_horizontal_chng:
+  description: "Число юзеров с горизонтальными сменами локации"
+  tags: [i4, geo]
+  numerator:
+    observations: [location_changings_horizontal]
+    groupby: [participant] 
+  
+
+
+###############################################################################
+# Location changings :: Ratios Events
+###############################################################################
+
+#### окно смены локаций ratio
+loc_window_saves_per_opens:
+  title: loc_window_saves_per_opens
+  tags: [i3, bx, total]
+  numerator:
+    observations: [location_dialogue_savings]
+  denominator:
+    observations: [location_dialogue_opens]
+    
+loc_window_saves_per_opens_radius:
+  title: loc_window_saves_per_opens_radius
+  tags: [other, geo, ratio]
+  numerator:
+    observations: [location_dialogue_savings_radius]
+  denominator:
+    observations: [location_dialogue_opens_radius]
+    
+loc_window_saves_per_opens_search:
+  title: loc_window_saves_per_opens_search
+  tags: [other, geo, ratio]
+  numerator:
+    observations: [location_dialogue_savings_search]
+  denominator:
+    observations: [location_dialogue_opens_search]
+
+loc_suggests_per_text_inputs:
+  title: loc_suggests_per_text_inputs
+  tags: [i4, bx, total]
+  numerator:
+    observations: [location_suggest_clicks]
+  denominator:
+    observations: [location_text_inputs]
+
+    
+
+
+###############################################################################
+# Location changings :: Ratios Sessions
+###############################################################################
+
+#### сами смены локаций ratio
+loc_chng_sessions_per_s_session:
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+    
+loc_bad_chng_sessions_per_s_sessions:
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_bad]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+
+loc_bad__susp_chng_sessions_per_s_sessions:
+  tags: [i2, geo]
+  numerator:
+    observations: [location_changings_bad, location_changings_suspicious]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+
+
+###############################################################################
+# Location changings :: Ratios Users
+###############################################################################
+
+
+#    # #    # #      ##### #    #       ####   ####  
+##  ## #    # #        #   #    #      #    # #    # 
+# ## # #    # #        #   #    #      #    # #      
+#    # #    # #        #   #    #      #    # #      
+#    # #    # #        #   #    #      #    # #    # 
+#    #  ####  ######   #   #    ######  ####   ####  
+
+###############################################################################
+# Multi locations :: Totals Events
+###############################################################################
 locations_in_search:
   description: "Число различных локаций поисках в рамках одной сессии и одной микрокатегории"
   tags: [i3, geo]
@@ -12864,20 +12977,16 @@ regions_in_search:
   numerator:
     observations: [regions_in_searches]
     
+
+###############################################################################
+# Multi locations :: Totals Sessions
+###############################################################################
 multiloc_sess:
   description: "Число сессий, в которых были поиски в 2+ локациях (в рамках одной микрокатегории)"
   tags: [i3, geo]
   numerator:
     observations: [locations_in_searches]
     groupby: [participant, session]
-    threshold: 2
-    
-multiloc_users:
-  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории)"
-  tags: [i3, geo]
-  numerator:
-    observations: [locations_in_searches]
-    groupby: [participant]
     threshold: 2
     
 multi_city_sess:
@@ -12896,39 +13005,88 @@ multi_region_sess:
     groupby: [participant, session]
     threshold: 2
 
-#тултип
+
+
+
+###############################################################################
+# Multi locations :: Totals Users
+###############################################################################
+multiloc_users:
+  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории)"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant]
+    threshold: 2
+    
+
+
+###############################################################################
+# Multi locations :: Ratios Events
+###############################################################################
+locations_per_search:
+  description: "Число разных локаций (в рамках одной микрокатегории) на число поисков"
+  tags: [i4, geo]
+  numerator:
+    observations: [locations_in_searches]
+  denominator:
+    observations: [searches]
+
+
+###############################################################################
+# Multi locations :: Ratios Sessions
+###############################################################################
+multiloc_sess_per_sess_search:
+  description: "Число сессий, в которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число поисковых сессий"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant, session]
+    threshold: 2
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+    
+
+###############################################################################
+# Multi locations :: Ratios Users
+###############################################################################
+multiloc_user_per_user_search:
+  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число серчеров"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant]
+    threshold: 2
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+
+########  ####   ####  #     ######## # #####  
+#   #    #    # #    # #        #     # #    # 
+#   #    #    # #    # #        #     # #    # 
+#   #    #    # #    # #        #     # #####  
+#   #    #    # #    # #        #     # #      
+#   #     ####   ####  ######   #     # #     
+#
+###############################################################################
+# Tooltip :: Totals Events
+###############################################################################
 default_loc_tooltip_shows:
   tags: [i3, geo]
   numerator: 
     observations: [tooltip_opens]
-
-users_default_loc_tooltip:
-  tags: [i4, geo]
-  numerator:
-    observations: [tooltip_opens]
-    groupby: [participant]
 
 default_loc_tooltip_accepts:
   tags: [i3, geo]
   numerator:
     observations: [tooltip_accepts]
 
-users_default_loc_tooltip_accepts:
-  tags: [i4, geo]
-  numerator:
-    observations: [tooltip_accepts]
-    groupby: [participant]
-
 default_loc_tooltip_declines:
   tags: [i4, geo]
   numerator:
     observations: [tooltip_not_accepts]
-
-users_default_loc_tooltip_declines:
-  tags: [i4, geo]
-  numerator:
-    observations: [tooltip_not_accepts]
-    groupby: [participant]
 
 default_loc_tooltip_accepts_russia:
   tags: [other, geo]
@@ -12986,8 +13144,89 @@ default_loc_tooltip_shows_city:
   tags: [other, geo]
   numerator: 
     observations: [tooltip_opens_city]
+       
+
+###############################################################################
+# Tooltip :: Totals Users
+###############################################################################
+users_default_loc_tooltip_declines:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_not_accepts]
+    groupby: [participant]
+
+users_default_loc_tooltip_accepts:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_accepts]
+    groupby: [participant]
+
+users_default_loc_tooltip:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens]
+    groupby: [participant]
+
+
+
+
+
+###############################################################################
+# Tooltip :: Ratios Events
+###############################################################################
+default_loc_tooltip_accepts_per_shows:
+  tags: [i3, geo]
+  numerator:
+    observations: [tooltip_accepts]
+  denominator:
+    observations: [tooltip_opens]
     
-#целевые действия с поисков     
+default_loc_tooltip_declines_per_shows:
+  tags: [i3, geo]
+  numerator:
+    observations: [tooltip_not_accepts]
+  denominator:
+    observations: [tooltip_opens]
+    
+default_loc_tooltip_russia_share:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens_russia]
+  denominator:
+    observations: [tooltip_opens]   
+    
+default_loc_tooltip_region_share:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens_region]
+  denominator:
+    observations: [tooltip_opens]   
+
+default_loc_tooltip_city_share:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens_city]
+  denominator:
+    observations: [tooltip_opens]   
+
+
+###############################################################################
+# Tooltip :: Ratios Users
+###############################################################################
+
+
+#####  ######  ####      ####  ######   ##   #####   ####  #    # ######  ####  
+#    # #      #    #    #      #       #  #  #    # #    # #    # #      #      
+#      #####  #    #     ####  #####  #    # #    # #      ###### #####   ####  
+#  ### #      #    #         # #      ###### #####  #      #    # #           # 
+#    # #      #    #    #    # #      #    # #   #  #    # #    # #      #    # 
+#####  ######  ####      ####  ###### #    # #    #  ####  #    # ######  ####  
+# 
+###############################################################################
+# Geo searches :: Totals Events
+###############################################################################
+# 
+#### сами гео поиски 
 searches_metro:
   tags: [i3, geo, bx]
   numerator: 
@@ -13020,6 +13259,8 @@ searches_radius:
   numerator: 
     observations: [searches_radius]  
 
+
+#### has метрики геопоисков с целевыми действиями
 searches_metro_with_item_view:
   tags: [i4, geo, bx]
   title: searches_metro_iv
@@ -13092,6 +13333,8 @@ searches_radius_with_btc:
   numerator: 
     observations: [searches_radius_with_btc]    
     
+
+#### целевые действия с геопоисков
 item_views_serp_metro:
   tags: [i4, geo, bx]
   title: iv_serp_metro
@@ -13194,161 +13437,8 @@ buyer_target_clicks_serp_radius:
   numerator: 
     observations: [buyer_target_clicks_serp_radius]
     
-#целевые действия с поисков по юзерам 
-users_searches_metro:
-  tags: [i3, geo, bx]
-  numerator: 
-    observations: [searches_metro]
-    groupby: [participant]
-    
-users_searches_district:
-  tags: [i3, geo, bx, user]
-  numerator: 
-    observations: [searches_district]
-    groupby: [participant]
-    
-users_searches_road:
-  tags: [i3, geo, bx, user]
-  numerator: 
-    observations: [searches_road]
-    groupby: [participant]
-    
-users_searches_radius:
-  tags: [i3, geo, bx, user]
-  numerator: 
-    observations: [searches_radius]
-    groupby: [participant]
-    
-users_searches_local_geo:
-  tags: [i3, geo, bx]
-  numerator: 
-    observations: [searches_metro,searches_district,searches_road]
-    groupby: [participant]
-    
-users_item_views_serp_metro:
-  tags: [i4, geo, bx, user]
-  title: users_iv_serp_metro
-  numerator: 
-    observations: [item_views_serp_metro]
-    groupby: [participant]
-    
-users_item_views_serp_district:
-  tags: [i4, geo, bx, user]
-  title: users_iv_serp_district
-  numerator: 
-    observations: [item_views_serp_district]
-    groupby: [participant]
-    
-users_item_views_serp_road:
-  tags: [i4, geo, bx, user]
-  title: users_iv_serp_road
-  numerator: 
-    observations: [item_views_serp_road]
-    groupby: [participant]
-    
-users_item_views_serp_radius:
-  tags: [i4, geo, bx, user]
-  title: users_iv_serp_radius
-  numerator: 
-    observations: [item_views_serp_radius]
-    groupby: [participant]
-    
-users_contacts_serp_metro:
-  tags: [i2, geo, bx, user]
-  title: buyers_serp_metro
-  numerator: 
-    observations: [contacts_serp_metro]
-    groupby: [participant]
-    
-users_contacts_serp_district:
-  tags: [i2, geo, bx, user]
-  title:  buyers_serp_district
-  numerator: 
-    observations: [contacts_serp_district]
-    groupby: [participant]
-    
-users_contacts_serp_road:
-  tags: [i2, geo, bx, user]
-  title: buyers_serp_road
-  numerator: 
-    observations: [contacts_serp_road]
-    groupby: [participant]
-    
-users_contacts_serp_local_geo:
-  tags: [i2, geo, bx, user]
-  title:  buyers_local_geo
-  numerator: 
-    observations: [contacts_serp_district, contacts_serp_metro, contacts_serp_road]
-    groupby: [participant]
-    
-users_contacts_serp_radius:
-  tags: [i2, geo, bx, user]
-  title: buyers_serp_radius
-  numerator: 
-    observations: [contacts_serp_radius]
-    groupby: [participant]
-    
-users_buyer_target_clicks_serp_metro:
-  tags: [i4, geo, bx, user]
-  title: users_btc_serp_metro
-  numerator: 
-    observations: [buyer_target_clicks_serp_metro]
-    groupby: [participant]
-    
-users_buyer_target_clicks_serp_district:
-  tags: [i4, geo, bx, user]
-  title: users_btc_serp_district
-  numerator: 
-    observations: [buyer_target_clicks_serp_district]
-    groupby: [participant]
-    
-users_buyer_target_clicks_serp_road:
-  tags: [i4, geo, bx, user]
-  title: users_btc_serp_road
-  numerator: 
-    observations: [buyer_target_clicks_serp_road]
-    groupby: [participant]
-    
-users_buyer_target_clicks_serp_radius:
-  tags: [i4, geo, bx, user]
-  title: users_btc_serp_radius
-  numerator: 
-    observations: [buyer_target_clicks_serp_radius]
-    groupby: [participant]
-    
-sess_metro:
-  tags: [i3, geo, bx]
-  numerator: 
-    observations: [searches_metro]
-    groupby: [participant, session]
-    
-sess_searches_district:
-  tags: [i3, geo, bx, user]
-  numerator: 
-    observations: [searches_district]
-    groupby: [participant, session]
-    
-sess_searches_road:
-  tags: [i3, geo, bx, user]
-  numerator: 
-    observations: [searches_road]
-    groupby: [participant, session]
-    
-sess_searches_radius:
-  tags: [i3, geo, bx, user]
-  numerator: 
-    observations: [searches_radius]
-    groupby: [participant, session]    
-    
-buyer_target_clicks_geo_sess:
-  tags: [i2, geo, bx, user]
-  title:  btc_geo_sess
-  numerator: 
-    observations: [buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro, buyer_target_clicks_serp_road, buyer_target_clicks_serp_radius]
-    groupby: [participant, session]
 
-
-##радиус и локальные геофильтры подробно 
+#### детализация гео поисков 
 default_radius_searches:
   tags: [i4, geo, bx]
   description: "Поиски с дефолтным радиусом"
@@ -13461,6 +13551,13 @@ total_districts_in_searches:
   numerator: 
     observations: [total_districts_in_searches]
     
+
+###############################################################################
+# Geo searches :: Totals Users
+###############################################################################
+ 
+
+#### географические уровни поисков
 city_level_searches:
   tags: [i4, geo, bx]
   description: "Поиски на уровне города"
@@ -13489,174 +13586,180 @@ russia_level_searches:
   numerator: 
     observations: [russia_level_searches]
 
+
+
 ###############################################################################
-# Geo :: Ratios
+# Geo searches :: Totals Sessions
 ###############################################################################
-
-#смены локаций
-loc_chng_sessions_per_s_session:
-  tags: [i2, geo]
-  numerator:
-    observations: [location_changings]
-    groupby: [participant, session]
-  denominator:
-    observations: [searches]
-    groupby: [participant, session]
-    
-loc_bad_chng_sessions_per_s_sessions:
-  tags: [i2, geo]
-  numerator:
-    observations: [location_changings_bad]
-    groupby: [participant, session]
-  denominator:
-    observations: [searches]
-    groupby: [participant, session]
-
-loc_bad__susp_chng_sessions_per_s_sessions:
-  tags: [i2, geo]
-  numerator:
-    observations: [location_changings_bad, location_changings_suspicious]
-    groupby: [participant, session]
-  denominator:
-    observations: [searches]
-    groupby: [participant, session]
-    
-loc_window_saves_per_opens:
-  title: loc_window_saves_per_opens
-  tags: [i3, bx, total]
-  numerator:
-    observations: [location_dialogue_savings]
-  denominator:
-    observations: [location_dialogue_opens]
-    
-loc_window_saves_per_opens_radius:
-  title: loc_window_saves_per_opens_radius
-  tags: [other, geo, ratio]
-  numerator:
-    observations: [location_dialogue_savings_radius]
-  denominator:
-    observations: [location_dialogue_opens_radius]
-    
-loc_window_saves_per_opens_search:
-  title: loc_window_saves_per_opens_search
-  tags: [other, geo, ratio]
-  numerator:
-    observations: [location_dialogue_savings_search]
-  denominator:
-    observations: [location_dialogue_opens_search]
-
-loc_suggests_per_text_inputs:
-  title: loc_suggests_per_text_inputs
-  tags: [i4, bx, total]
-  numerator:
-    observations: [location_suggest_clicks]
-  denominator:
-    observations: [location_text_inputs]
-
-city_level_search_per_search:
-  tags: [i4, geo, bx]
-  description: "Доля поисков на уровне города"
-  title: search_city_per_search
+sess_metro:
+  tags: [i3, geo, bx]
   numerator: 
-    observations: [city_level_searches, federal_city_level_searches]
-  denominator:
-    observations: [searches]
+    observations: [searches_metro]
+    groupby: [participant, session]
     
-meta_regions_level_searches_per_search:
-  tags: [i4, geo, bx]
-  description: "Доля поисков на уровне метарегионов (Москва и МО)"
-  title: search_metaregion_per_search
+sess_searches_district:
+  tags: [i3, geo, bx, user]
   numerator: 
-    observations: [meta_regions_level_searches]
-  denominator:
-    observations: [searches]
+    observations: [searches_district]
+    groupby: [participant, session]
     
-regions_level_searches_per_search:
-  tags: [i4, geo, bx]
-  description: "Доля поисков на уровне регионов, областей"
-  title: search_regions_per_search
+sess_searches_road:
+  tags: [i3, geo, bx, user]
   numerator: 
-    observations: [regions_level_searches]
-  denominator:
-    observations: [searches]
+    observations: [searches_road]
+    groupby: [participant, session]
     
-russia_level_searches_per_search:
-  tags: [i4, geo, bx]
-  description: "Доля поисков на уровне России"
-  title: search_russia_per_search
+sess_searches_radius:
+  tags: [i3, geo, bx, user]
   numerator: 
-    observations: [russia_level_searches]
-  denominator:
-    observations: [searches]
+    observations: [searches_radius]
+    groupby: [participant, session]    
+    
+buyer_target_clicks_geo_sess:
+  tags: [i2, geo, bx, user]
+  title:  btc_geo_sess
+  numerator: 
+    observations: [buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro, buyer_target_clicks_serp_road, buyer_target_clicks_serp_radius]
+    groupby: [participant, session]
 
-#число локаций в поисках 
-multiloc_user_per_user_search:
-  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число серчеров"
-  tags: [i3, geo]
-  numerator:
-    observations: [locations_in_searches]
-    groupby: [participant]
-    threshold: 2
-  denominator:
-    observations: [searches]
+
+
+
+###############################################################################
+# Geo searches :: Totals Users
+###############################################################################
+#### сами юзеры гео поисков 
+users_searches_metro:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_metro]
     groupby: [participant]
     
-multiloc_sess_per_sess_search:
-  description: "Число сессий, в которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число поисковых сессий"
-  tags: [i3, geo]
-  numerator:
-    observations: [locations_in_searches]
-    groupby: [participant, session]
-    threshold: 2
-  denominator:
-    observations: [searches]
-    groupby: [participant, session]
+users_searches_district:
+  tags: [i3, geo, bx, user]
+  numerator: 
+    observations: [searches_district]
+    groupby: [participant]
     
-locations_per_search:
-  description: "Число разных локаций (в рамках одной микрокатегории) на число поисков"
-  tags: [i4, geo]
-  numerator:
-    observations: [locations_in_searches]
-  denominator:
-    observations: [searches]
+users_searches_road:
+  tags: [i3, geo, bx, user]
+  numerator: 
+    observations: [searches_road]
+    groupby: [participant]
+    
+users_searches_radius:
+  tags: [i3, geo, bx, user]
+  numerator: 
+    observations: [searches_radius]
+    groupby: [participant]
+    
+users_searches_local_geo:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_metro,searches_district,searches_road]
+    groupby: [participant]
+    
 
-#тултип
-default_loc_tooltip_accepts_per_shows:
-  tags: [i3, geo]
-  numerator:
-    observations: [tooltip_accepts]
-  denominator:
-    observations: [tooltip_opens]
+#### юзеры с целевыми действиями с гео поисков 
+users_item_views_serp_metro:
+  tags: [i4, geo, bx, user]
+  title: users_iv_serp_metro
+  numerator: 
+    observations: [item_views_serp_metro]
+    groupby: [participant]
     
-default_loc_tooltip_declines_per_shows:
-  tags: [i3, geo]
-  numerator:
-    observations: [tooltip_not_accepts]
-  denominator:
-    observations: [tooltip_opens]
+users_item_views_serp_district:
+  tags: [i4, geo, bx, user]
+  title: users_iv_serp_district
+  numerator: 
+    observations: [item_views_serp_district]
+    groupby: [participant]
     
-default_loc_tooltip_russia_share:
-  tags: [i4, geo]
-  numerator:
-    observations: [tooltip_opens_russia]
-  denominator:
-    observations: [tooltip_opens]   
+users_item_views_serp_road:
+  tags: [i4, geo, bx, user]
+  title: users_iv_serp_road
+  numerator: 
+    observations: [item_views_serp_road]
+    groupby: [participant]
     
-default_loc_tooltip_region_share:
-  tags: [i4, geo]
-  numerator:
-    observations: [tooltip_opens_region]
-  denominator:
-    observations: [tooltip_opens]   
+users_item_views_serp_radius:
+  tags: [i4, geo, bx, user]
+  title: users_iv_serp_radius
+  numerator: 
+    observations: [item_views_serp_radius]
+    groupby: [participant]
+    
+users_contacts_serp_metro:
+  tags: [i2, geo, bx, user]
+  title: buyers_serp_metro
+  numerator: 
+    observations: [contacts_serp_metro]
+    groupby: [participant]
+    
+users_contacts_serp_district:
+  tags: [i2, geo, bx, user]
+  title:  buyers_serp_district
+  numerator: 
+    observations: [contacts_serp_district]
+    groupby: [participant]
+    
+users_contacts_serp_road:
+  tags: [i2, geo, bx, user]
+  title: buyers_serp_road
+  numerator: 
+    observations: [contacts_serp_road]
+    groupby: [participant]
+    
+users_contacts_serp_local_geo:
+  tags: [i2, geo, bx, user]
+  title:  buyers_local_geo
+  numerator: 
+    observations: [contacts_serp_district, contacts_serp_metro, contacts_serp_road]
+    groupby: [participant]
+    
+users_contacts_serp_radius:
+  tags: [i2, geo, bx, user]
+  title: buyers_serp_radius
+  numerator: 
+    observations: [contacts_serp_radius]
+    groupby: [participant]
+    
+users_buyer_target_clicks_serp_metro:
+  tags: [i4, geo, bx, user]
+  title: users_btc_serp_metro
+  numerator: 
+    observations: [buyer_target_clicks_serp_metro]
+    groupby: [participant]
+    
+users_buyer_target_clicks_serp_district:
+  tags: [i4, geo, bx, user]
+  title: users_btc_serp_district
+  numerator: 
+    observations: [buyer_target_clicks_serp_district]
+    groupby: [participant]
+    
+users_buyer_target_clicks_serp_road:
+  tags: [i4, geo, bx, user]
+  title: users_btc_serp_road
+  numerator: 
+    observations: [buyer_target_clicks_serp_road]
+    groupby: [participant]
+    
+users_buyer_target_clicks_serp_radius:
+  tags: [i4, geo, bx, user]
+  title: users_btc_serp_radius
+  numerator: 
+    observations: [buyer_target_clicks_serp_radius]
+    groupby: [participant]
+    
 
-default_loc_tooltip_city_share:
-  tags: [i4, geo]
-  numerator:
-    observations: [tooltip_opens_city]
-  denominator:
-    observations: [tooltip_opens]   
 
-#целевые действия с поисков  
+
+
+###############################################################################
+# Geo searches :: Ratios Events
+###############################################################################
+#### сами гео поиски ratio
 searches_metro_per_search:
   tags: [i4, geo, bx]
   title: s_metro_per_s
@@ -13706,6 +13809,8 @@ searches_radius_per_search:
   denominator:
     observations: [searches]
     
+
+#### гео поиски, закончившиеся целевым действием ratio
 searches_metro_with_item_view_per_search_metro:
   tags: [i4, geo, bx]
   title: s_metro_iv_per_s_metro
@@ -13810,6 +13915,8 @@ searches_radius_with_btc_per_search_radius:
   denominator:
     observations: [searches_radius] 
     
+
+#### целевые действия с гео поисков ratio
 item_views_serp_metro_per_search_metro:
   tags: [i4, geo, bx]
   title: iv_metro_per_s_metro
@@ -13940,7 +14047,98 @@ buyer_target_clicks_serp_geo_sess_per_search_geo_sess:
     observations: [searches_radius, searches_road, searches_district, searches_metro] 
     groupby: [participant, session]
     
-#целевые действия с поисков по юзерам 
+
+
+
+#### детализация гео поисков ratio
+districts_per_district_search:
+  tags: [i4, geo, bx, ratio]
+  description: "Среднее число районов на поиск с районом"
+  title: districts_per_district_s
+  numerator: 
+    observations: [total_districts_in_searches]  
+  denominator: 
+    observations: [searches_district]
+
+metros_per_metro_search:
+  tags: [i4, geo, bx, ratio]
+  description: "Среднее число станций метро на поиск с районом"
+  title: metros_per_metro_s
+  numerator: 
+    observations: [total_metros_in_searches]  
+  denominator: 
+    observations: [searches_metro]
+    
+default_radius_per_search_radius:
+  tags: [i4, geo, bx, ratio]
+  description: "Доля поисков с дефолтным радиусом относительно всех поисков с радиусом"
+  title: default_radius_per_radius
+  numerator: 
+    observations: [default_radius_searches]    
+  denominator: 
+    observations: [searches_radius]
+    
+not_default_radius_per_search_radius:
+  tags: [i4, geo, bx, ratio]
+  description: "Доля поисков с НЕ дефолтным радиусом относительно всех поисков с радиусом"
+  title: not_default_radius_per_radius
+  numerator: 
+    observations: [not_default_radius_searches]    
+  denominator: 
+    observations: [searches_radius]
+
+
+
+
+#### географические уровни поисков ratio
+city_level_search_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне города"
+  title: search_city_per_search
+  numerator: 
+    observations: [city_level_searches, federal_city_level_searches]
+  denominator:
+    observations: [searches]
+    
+meta_regions_level_searches_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне метарегионов (Москва и МО)"
+  title: search_metaregion_per_search
+  numerator: 
+    observations: [meta_regions_level_searches]
+  denominator:
+    observations: [searches]
+    
+regions_level_searches_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне регионов, областей"
+  title: search_regions_per_search
+  numerator: 
+    observations: [regions_level_searches]
+  denominator:
+    observations: [searches]
+    
+russia_level_searches_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне России"
+  title: search_russia_per_search
+  numerator: 
+    observations: [russia_level_searches]
+  denominator:
+    observations: [searches]
+
+
+
+
+###############################################################################
+# Geo searches :: Ratios Sessions
+###############################################################################
+
+
+###############################################################################
+# Geo searches :: Ratios Users
+###############################################################################
+#### юзеры гео поисков  ratio
 users_searches_metro_per_users_search:
   tags: [i4, geo, bx]
   title: users_metro_per_users_search
@@ -13991,6 +14189,8 @@ users_searches_radius_per_users_search:
     observations: [searches]
     groupby: [participant]
 
+
+#### юзеры, сделавшие целевые действия с гео поисков ratio
 users_item_views_serp_metro_per_users_metro:
   tags: [i4, geo, bx, user]
   title: users_iv_metro_per_users_metro
@@ -14121,55 +14321,21 @@ users_btc_serp_radius_per_users_radius:
     observations: [searches_radius]
     groupby: [participant]
     
-districts_per_district_search:
-  tags: [i4, geo, bx, ratio]
-  description: "Среднее число районов на поиск с районом"
-  title: districts_per_district_s
-  numerator: 
-    observations: [total_districts_in_searches]  
-  denominator: 
-    observations: [searches_district]
-
-metros_per_metro_search:
-  tags: [i4, geo, bx, ratio]
-  description: "Среднее число станций метро на поиск с районом"
-  title: metros_per_metro_s
-  numerator: 
-    observations: [total_metros_in_searches]  
-  denominator: 
-    observations: [searches_metro]
-    
-default_radius_per_search_radius:
-  tags: [i4, geo, bx, ratio]
-  description: "Доля поисков с дефолтным радиусом относительно всех поисков с радиусом"
-  title: default_radius_per_radius
-  numerator: 
-    observations: [default_radius_searches]    
-  denominator: 
-    observations: [searches_radius]
-    
-not_default_radius_per_search_radius:
-  tags: [i4, geo, bx, ratio]
-  description: "Доля поисков с НЕ дефолтным радиусом относительно всех поисков с радиусом"
-  title: not_default_radius_per_radius
-  numerator: 
-    observations: [not_default_radius_searches]    
-  denominator: 
-    observations: [searches_radius]
 
 
-##     ##    ###    ########  
-###   ###   ## ##   ##     ## 
-#### ####  ##   ##  ##     ## 
-## ### ## ##     ## ########  
-##     ## ######### ##        
-##     ## ##     ## ##        
-##     ## ##     ## ##        
 
+
+
+#    #   ##   #####  
+##  ##  #  #  #    # 
+# ## # #    # #    # 
+#    # ###### #####  
+#    # #    # #      
+#    # #    # #      
 ###############################################################################
-# Map :: Totals
+# Map :: Totals Events 
 ###############################################################################
-
+#### сами поиски
 map_searches:
   title: map_searches
   tags: [i3, bx, total, map]
@@ -14182,38 +14348,13 @@ pin_clicks:
   numerator:
     observations: [pin_clicks]
     
-map_searches_sessions:
-  title: sess_map
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [map_searches]    
-    groupby: [participant, session]
-     
-pin_clicks_sessions:
-  title: sess_pin
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [pin_clicks]    
-    groupby: [participant, session]
-          
-map_users:
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [map_searches]
-    groupby: [participant]
-
-pin_clickers:
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [pin_clicks]
-    groupby: [participant]
-    
 map_searches_with_item_view:
   title: map_search_iv
   tags: [i3, bx, user, map]
   numerator:
     observations: [map_searches_with_item_view]
-    
+
+#### поиски по карте, закончившиеся целевым действием    
 map_searches_with_contact:
   title: map_search_c
   tags: [i3, bx, user, map]
@@ -14278,6 +14419,68 @@ fav_added_from_map_grouped:
     observations: [fav_added_from_map]
     groupby: [participant,item]
 
+
+###############################################################################
+# Map :: Totals Sessions 
+###############################################################################
+#### сами поиски
+map_searches_sessions:
+  title: sess_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [map_searches]    
+    groupby: [participant, session]
+     
+pin_clicks_sessions:
+  title: sess_pin
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [pin_clicks]    
+    groupby: [participant, session]
+          
+#### поиски по карте, закончившиеся целевым действием    
+contact_sessions_from_map:
+  title: sess_c_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [contacts_from_map]    
+    groupby: [participant, session]
+    
+btc_sessions_from_map:
+  title: sess_btc_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [buyer_target_clicks_from_map]    
+    groupby: [participant, session]
+
+iv_sessions_from_map:
+  title: sess_iv_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [item_views_from_map]    
+    groupby: [participant, session]    
+ 
+    
+
+
+###############################################################################
+# Map :: Totals Users 
+###############################################################################
+#### сами поиски
+map_users:
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant]
+
+pin_clickers:
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [pin_clicks]
+    groupby: [participant]
+    
+
+#### поиски по карте, закончившиеся целевым действием    
 users_buyer_target_click_from_map:
   title: users_btc_map
   tags: [i2, bx, user, map]
@@ -14306,33 +14509,13 @@ users_fav_from_map:
     observations: [fav_added_from_map]  
     groupby: [participant]
     
-contact_sessions_from_map:
-  title: sess_c_map
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [contacts_from_map]    
-    groupby: [participant, session]
-    
-btc_sessions_from_map:
-  title: sess_btc_map
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [buyer_target_clicks_from_map]    
-    groupby: [participant, session]
 
-iv_sessions_from_map:
-  title: sess_iv_map
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [item_views_from_map]    
-    groupby: [participant, session]    
- 
-    
+
+
 ###############################################################################
-# Map :: Ratios
+# Map :: Events Ratios
 ###############################################################################
-
-
+#### сами поиски ratio 
 map_searches_per_search:
   title: map_s_per_s
   tags: [other, bx,  map]
@@ -14350,51 +14533,8 @@ pins_per_map_s:
     observations: [pin_clicks]
   denominator:
     observations: [map_searches]
-    
-pin_clickers_per_map_serchers:
-  title: users_pin_per_users_map
-  tags: [i3, bx,  map]
-  description: "Отношение пиннеров к мапперам"
-  numerator:
-    observations: [pin_clicks]
-    groupby: [participant]
-  denominator:
-    observations: [map_searches]
-    groupby: [participant]
-    
-map_buyers_per_map_serchers:
-  title: buyers_map_per_users_map
-  tags: [i2, bx,  map]
-  description: "Отношение баеров с карты к мапперам"
-  numerator:
-    observations: [contacts_from_map]
-    groupby: [participant]
-  denominator:
-    observations: [map_searches]
-    groupby: [participant]
-    
-map_item_viewers_per_map_serchers:
-  title: users_iv_map_per_users_map
-  tags: [i3, bx,  map]
-  description: "Отношение item viewers с карты к мапперам"
-  numerator:
-    observations: [item_views_from_map]
-    groupby: [participant]
-  denominator:
-    observations: [map_searches]
-    groupby: [participant]
 
-map_btc_users_per_map_serchers:
-  title: users_btc_map_per_users_map
-  tags: [i3, bx,  map]
-  description: "Отношение бтц юзеров с карты к мапперам"
-  numerator:
-    observations: [buyer_target_clicks_from_map]
-    groupby: [participant]
-  denominator:
-    observations: [map_searches]
-    groupby: [participant]
-
+#### целевые действия с карты ratio 
 contacts_from_map_per_map_search:
   title: contacts_map_per_map_s
   tags: [i3, bx,  map]
@@ -14431,17 +14571,25 @@ fav_added_from_map_per_map_search:
   denominator:
     observations: [map_searches]
     
-sess_c_map_per_sess_map:
-  title: sess_c_map_per_sess_map
+    
+
+###############################################################################
+# Map :: Sessions Ratios
+###############################################################################
+#### сами поиски по карте ratio 
+sess_pin_per_sess_map:
+  title: sess_pin_per_sess_map
   tags: [i3, bx,  map]
-  description: "Сессии с контактом с карты к сессиям с поисками по карте"
+  description: "Сессии с кликами по пину с карты к сессиям с поисками по карте"
   numerator:
-    observations: [contacts_from_map]
+    observations: [pin_clicks]
     groupby: [participant, session]
   denominator:
     observations: [map_searches]
     groupby: [participant, session]
-    
+
+
+#### сесссии с целевыми действиями с карты ratio 
 sess_btc_map_per_sess_map:
   title: sess_btc_map_per_sess_map
   tags: [i3, bx,  map]
@@ -14464,21 +14612,81 @@ sess_iv_map_per_sess_map:
     observations: [map_searches]
     groupby: [participant, session]
     
-sess_pin_per_sess_map:
-  title: sess_pin_per_sess_map
+
+###############################################################################
+# Map :: Users Ratios
+###############################################################################
+pin_clickers_per_map_serchers:
+  title: users_pin_per_users_map
   tags: [i3, bx,  map]
-  description: "Сессии с кликами по пину с карты к сессиям с поисками по карте"
+  description: "Отношение пиннеров к мапперам"
   numerator:
     observations: [pin_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+#### юзеры с целевыми действиями с карты ratio
+map_buyers_per_map_serchers:
+  title: buyers_map_per_users_map
+  tags: [i2, bx,  map]
+  description: "Отношение баеров с карты к мапперам"
+  numerator:
+    observations: [contacts_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+map_item_viewers_per_map_serchers:
+  title: users_iv_map_per_users_map
+  tags: [i3, bx,  map]
+  description: "Отношение item viewers с карты к мапперам"
+  numerator:
+    observations: [item_views_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+
+map_btc_users_per_map_serchers:
+  title: users_btc_map_per_users_map
+  tags: [i3, bx,  map]
+  description: "Отношение бтц юзеров с карты к мапперам"
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+
+sess_c_map_per_sess_map:
+  title: sess_c_map_per_sess_map
+  tags: [i3, bx,  map]
+  description: "Сессии с контактом с карты к сессиям с поисками по карте"
+  numerator:
+    observations: [contacts_from_map]
     groupby: [participant, session]
   denominator:
     observations: [map_searches]
     groupby: [participant, session]
+  
 
+
+
+########     ###    ########    ###        #######  ##     ##    ###    ##       #### ######## ##    ##     ######   ########  #######  
+##     ##   ## ##      ##      ## ##      ##     ## ##     ##   ## ##   ##        ##     ##     ##  ##     ##    ##  ##       ##     ## 
+##     ##  ##   ##     ##     ##   ##     ##     ## ##     ##  ##   ##  ##        ##     ##      ####      ##        ##       ##     ## 
+##     ## ##     ##    ##    ##     ##    ##     ## ##     ## ##     ## ##        ##     ##       ##       ##   #### ######   ##     ## 
+##     ## #########    ##    #########    ##  ## ## ##     ## ######### ##        ##     ##       ##       ##    ##  ##       ##     ## 
+##     ## ##     ##    ##    ##     ##    ##    ##  ##     ## ##     ## ##        ##     ##       ##       ##    ##  ##       ##     ## 
+########  ##     ##    ##    ##     ##     ##### ##  #######  ##     ## ######## ####    ##       ##        ######   ########  #######  
 ###############################################################################
-# Geo :: Totals SX
+# Geo :: Totals Items
 ###############################################################################
 
+#### редактирование адреса 
 item_edits_address:
   title: items_edits_addr
   tags: [i4, geo, sx, geo_dq]
@@ -14493,14 +14701,8 @@ items_edited_address:
   numerator:
     observations: [items_edited_address]
     
-sellers_edited_address:
-  title: address_editors
-  tags: [i4, geo, sx, geo_dq]
-  description: "Число юзеров, редактировавших адрес в айтеме"
-  numerator:
-    observations: [items_edited_address]
-    groupby: [participant] 
-    
+
+#### качество адреса 
 items_20m_from_location:
   title: items_20m_loc
   tags: [i4, geo, geo_dq]
@@ -14564,6 +14766,8 @@ items_with_coordinates:
   numerator:
     observations: [item_with_coordinates]
     
+
+#### качество адреса у новых айтемов 
 items_20m_from_location_new:
   title: items_20m_loc_new
   tags: [other, geo, geo_dq]
@@ -14627,6 +14831,8 @@ items_with_coordinates_new:
   numerator:
     observations: [item_with_coordinates_new]
     
+
+#### качество адреса у реактивированных айтемов 
 items_20m_from_location_reactivated:
   title: items_20m_loc_react
   tags: [other, geo, geo_dq]
@@ -14690,10 +14896,25 @@ items_with_coordinates_reactivated:
   numerator:
     observations: [item_with_coordinates_reactivated]
     
+
 ###############################################################################
-# Geo :: Ratio SX
+# Geo :: Totals Users
+###############################################################################
+sellers_edited_address:
+  title: address_editors
+  tags: [i4, geo, sx, geo_dq]
+  description: "Число юзеров, редактировавших адрес в айтеме"
+  numerator:
+    observations: [items_edited_address]
+    groupby: [participant] 
+    
+
+
+###############################################################################
+# Geo :: Ratios Items
 ###############################################################################
 
+####редактирование адреса  ratio
 item_edits_address_per_item:
   title: items_edits_addr_per_item
   tags: [i4, geo, sx, geo_dq]
@@ -14712,17 +14933,8 @@ items_edited_address_per_items_edited:
   denominator:
     observations: [items_edited]
 
-sellers_edited_address_per_editor:
-  title: addr_editor_per_editor
-  tags: [i4, geo, sx, geo_dq]
-  description: "Доля юзеров, редактировавших адрес в айтеме, относительно всех редактировавших айтемы"
-  numerator:
-    observations: [items_edited_address]
-    groupby: [participant] 
-  denominator:
-    observations: [items_edited]
-    groupby: [participant]
-       
+
+####качество адреса ratio
 avg_item_address_length:
   title: avg_item_addr_len
   tags: [i4, geo, sx, geo_dq]
@@ -14732,24 +14944,8 @@ avg_item_address_length:
   denominator:
     observations: [item_with_address_string]
         
-avg_item_address_length_new:
-  title: avg_item_addr_len_new
-  tags: [i4, geo, sx, geo_dq]
-  description: "Средняя длина адреса нового айтема"
-  numerator:
-    observations: [item_address_length_new]
-  denominator:
-    observations: [item_with_address_string_new]
-    
-avg_item_address_length_react:
-  title: avg_item_addr_len_react
-  tags: [i4, geo, sx, geo_dq]
-  description: "Средняя длина адреса реактивированного айтема"
-  numerator:
-    observations: [item_address_length_reactivated]
-  denominator:
-    observations: [item_with_address_string_reactivated]
-    
+
+####качество адреса новых айтемов ratio
 items_20m_from_location_new_per_new:
   title: items_20m_loc_new_per_new
   tags: [i4, geo, geo_dq]
@@ -14831,6 +15027,17 @@ items_with_coordinates_new_per_new:
   denominator:
     observations: [items_started]  
     
+avg_item_address_length_new:
+  title: avg_item_addr_len_new
+  tags: [i4, geo, sx, geo_dq]
+  description: "Средняя длина адреса нового айтема"
+  numerator:
+    observations: [item_address_length_new]
+  denominator:
+    observations: [item_with_address_string_new]
+    
+
+####качество адреса реактивированных айтемов ratio
 items_20m_from_location_reactivated_per_react:
   title: items_20m_loc_react_per_react
   tags: [i4, geo, geo_dq]
@@ -14911,3 +15118,29 @@ items_with_coordinates_reactivated_per_react:
     observations: [item_with_coordinates_reactivated]
   denominator:
     observations: [items_reactivated]  
+    
+avg_item_address_length_react:
+  title: avg_item_addr_len_react
+  tags: [i4, geo, sx, geo_dq]
+  description: "Средняя длина адреса реактивированного айтема"
+  numerator:
+    observations: [item_address_length_reactivated]
+  denominator:
+    observations: [item_with_address_string_reactivated]
+    
+
+###############################################################################
+# Geo :: Ratios Users
+###############################################################################
+
+sellers_edited_address_per_editor:
+  title: addr_editor_per_editor
+  tags: [i4, geo, sx, geo_dq]
+  description: "Доля юзеров, редактировавших адрес в айтеме, относительно всех редактировавших айтемы"
+  numerator:
+    observations: [items_edited_address]
+    groupby: [participant] 
+  denominator:
+    observations: [items_edited]
+    groupby: [participant]
+       
