@@ -442,6 +442,68 @@ missed_proxy_calls_map:
   numerator:
     observations: [missed_proxy_calls_map]
 
+
+########сохраненные поиски 
+####действия 
+saved_searches:
+  title: search_sav
+  tags: [i3, bx, tns]
+  description: "Сохр поиски"
+  numerator:
+    observations: [searches_saved]
+  
+#### сохраненные поиски, закончившиеся целевым действием  
+searches_saved_with_item_view:
+  title: search_sav_iv
+  tags: [i3, bx, tns]
+  description: "Сохр поиски с iv"
+  numerator:
+    observations: [searches_saved_with_item_view]
+    
+searches_saved_with_contact:
+  title: search_sav_c
+  description: "Сохр поиски с контактами"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [searches_saved_with_contact]
+    
+searches_saved_with_btc:
+  title: search_sav_btc
+  description: "Сохр поиски с бтц"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [searches_saved_with_btc]
+
+#### целевые действия с сохраненных поисков 
+item_views_serp_saved:
+  title: iv_serp_sav
+  description: "IV с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+    
+contacts_serp_saved:
+  title: c_serp_sav
+  description: "Контакты с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+    
+fav_added_serp_saved:
+  title: fav_serp_sav
+  description: "Добавление в избранное с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+
+buyer_target_clicks_serp_saved:
+  title: btc_serp_sav
+  description: "BTC с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+
+
 ###############################################################################
 # Buyer :: Ratios
 ###############################################################################
@@ -559,6 +621,44 @@ fav_list_contact_per_fav_list:
   denominator:
     observations: [favorites_list_views]
     
+
+########сохраненные поиски
+item_views_serp_saved_per_search_saved:
+  title: iv_serp_sav_per_sav
+  description: "IV с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+  denominator:
+    observations: [saved_searches]
+    
+contacts_serp_saved_per_search_saved:
+  title: c_serp_sav_per_sav
+  description: "Контакты с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+  denominator:
+    observations: [saved_searches] 
+    
+fav_added_serp_saved_per_search_saved:
+  title: fav_serp_sav_per_sav
+  description: "Добавление в избранное с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+  denominator:
+    observations: [saved_searches]
+    
+buyer_target_clicks_serp_saved_per_search_saved:
+  title: btc_serp_sav_per_sav
+  description: "BTC с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+  denominator:
+    observations: [saved_searches]
+
 ###############################################################################
 # Buyer :: User Totals
 ###############################################################################
@@ -852,6 +952,48 @@ users_non_fatal_app_errors:
   numerator:
     observations: [non_fatal_app_error]
     groupby: [participant] 
+    
+########сохраненные поиски  
+users_saved_searches:
+  title: user_search_sav
+  tags: [i3, bx, tns]
+  description: "Юзеры, сделавшие сохр. поиски"
+  numerator:
+    observations: [searches_saved]
+    groupby: [participant]
+
+#### целевые действия с сохраненных поисков 
+user_item_views_serp_saved:
+  title: user_iv_serp_sav
+  description: "Юзеры с IV с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+    groupby: [participant]
+    
+user_contacts_serp_saved:
+  title: buyers_serp_sav
+  description: "Юзеры с  Контактами с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+    groupby: [participant]
+    
+user_fav_added_serp_saved:
+  title: user_fav_serp_sav
+  description: "Юзеры с  Добавлением в избранное с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+    groupby: [participant]
+
+user_buyer_target_clicks_serp_saved:
+  title: user_btc_serp_sav
+  description: "Юзеры с  BTC с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+    groupby: [participant]
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -976,6 +1118,54 @@ user_non_fatal_error_per_users:
       - favorites_added
       - realty_development_phone_views
     groupby: [participant]    
+
+
+######## сохраненные поиски
+user_item_views_serp_saved_per_user_search_saved:
+  title: user_iv_serp_sav_per_sav
+  description: "Юзеры с IV с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+    
+user_contacts_serp_saved_per_user_search_saved:
+  title: buyers_serp_sav_per_sav
+  description: "Юзеры с  Контактами с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+    
+user_fav_added_serp_saved_per_user_search_saved:
+  title: user_fav_serp_sav_per_sav
+  description: "Юзеры с  Добавлением в избранное с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+
+user_buyer_target_clicks_serp_saved_per_user_search_saved:
+  title: user_btc_serp_sav_per_sav
+  description: "Юзеры с  BTC с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+
+
 
 ###############################################################################
 # Buyer :: Other
@@ -14426,11 +14616,13 @@ pin_clicks:
   numerator:
     observations: [pin_clicks]
     
-map_searches_with_item_view:
-  title: map_search_iv
-  tags: [i3, bx, user, map]
+
+#### поиски по области карты (300е событие) 
+searches_map_area:
+  title: map_area
+  tags: [i3, bx, total, map]
   numerator:
-    observations: [map_searches_with_item_view]
+    observations: [searches_map_serp]
 
 #### поиски по карте, закончившиеся целевым действием    
 map_searches_with_contact:
@@ -14444,7 +14636,14 @@ map_searches_with_btc:
   tags: [i3, bx, user, map]
   numerator:
     observations: [map_searches_with_btc]
-    
+
+map_searches_with_item_view:
+  title: map_search_iv
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches_with_item_view]
+
+#### целевые действия с поисков по карте 
 buyer_target_clicks_from_map:
   title: btc_map
   tags: [i3, bx, user, map]
@@ -14498,6 +14697,77 @@ fav_added_from_map_grouped:
     groupby: [participant,item]
 
 
+#### поиски по области на карте (300е), закончившиеся целевым действием    
+map_area_searches_with_contact:
+  title: map_serp_c
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [searches_map_area_with_contact]
+   
+map_area_searches_with_btc:
+  title: map_serp_btc
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [searches_map_area_with_btc]
+
+map_area_searches_with_item_view:
+  title: map_serp_iv
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [searches_map_area_with_item_view]
+      
+#### целевые действия с поисков по области карты (300е событие)      
+buyer_target_clicks_from_map_area:
+  title: btc_serp_map
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]
+    
+item_views_from_map_area:
+  title: iv_serp_map
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [item_views_serp_map_area]  
+    
+contacts_serp_map_area:
+  title: contacts_serp_map
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [contacts_serp_map_area]
+    
+fav_added_serp_map_area:
+  title: fav_serp_map
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [fav_added_serp_map_area]
+ 
+     
+#### целевые действия как с карты, так и с поисков по области карты (300е событие)      
+buyer_target_clicks_from_map_total:
+  title: btc_map_total
+  tags: [i4, bx, user, map_serp,map, map]
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area, buyer_target_clicks_from_map]
+    
+item_views_from_map_total:
+  title: iv_map_total
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [item_views_serp_map_area, item_views_from_map]  
+    
+contacts_serp_map_total:
+  title: contacts_map_total
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [contacts_serp_map_area, contacts_from_map]
+    
+fav_added_serp_map_total:
+  title: fav_map_total
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [fav_added_serp_map_area, fav_added_from_map]
+     
+
 ###############################################################################
 # Map :: Totals Sessions 
 ###############################################################################
@@ -14516,6 +14786,16 @@ pin_clicks_sessions:
     observations: [pin_clicks]    
     groupby: [participant, session]
           
+
+map_area_sessions:
+  title: sess_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  tags: [i3, bx, total, map_serp]
+  numerator:
+    observations: [searches_map_serp]    
+    groupby: [participant, session]
+          
+
 #### поиски по карте, закончившиеся целевым действием    
 contact_sessions_from_map:
   title: sess_c_map
@@ -14541,9 +14821,37 @@ iv_sessions_from_map:
     
 
 
+
+#### поиски по области карты (300е событие), закончившиеся целевым действием    
+contact_sessions_from_map_area:
+  title: sess_c_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, total, map_serp]
+  numerator:
+    observations: [contacts_serp_map_area]    
+    groupby: [participant, session]
+    
+btc_sessions_from_map_area:
+  title: sess_btc_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, total, map_serp]
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]    
+    groupby: [participant, session]
+
+iv_sessions_from_map_area:
+  title: sess_iv_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, total, map_serp]
+  numerator:
+    observations: [item_views_serp_map_area]    
+    groupby: [participant, session]    
+ 
+    
 ###############################################################################
 # Map :: Totals Users 
 ###############################################################################
+
 #### сами поиски
 map_users:
   tags: [i3, bx, user, map]
@@ -14558,7 +14866,15 @@ pin_clickers:
     groupby: [participant]
     
 
-#### поиски по карте, закончившиеся целевым действием    
+map_area_users:
+  title: user_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i3, bx, total, map_serp]
+  numerator:
+    observations: [searches_map_serp]    
+    groupby: [participant]
+          
+#### поиски по карте
 users_buyer_target_click_from_map:
   title: users_btc_map
   tags: [i2, bx, user, map]
@@ -14590,9 +14906,76 @@ users_fav_from_map:
 
 
 
+#### поиски по области карты (300е событие)
+users_buyer_target_click_from_map_area:
+  title: user_btc_serp_map
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]
+    groupby: [participant]
+    
+users_item_views_from_map_area:
+  title: user_iv_serp_map
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [item_views_serp_map_area]  
+    groupby: [participant]
+    
+buyers_from_map_area:
+  title: buyer_serp_map
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i3, bx, user, map_serp]
+  numerator:
+    observations: [contacts_serp_map_area]  
+    groupby: [participant]
+    
+users_fav_from_map_area:
+  title: user_fav_serp_map
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [fav_added_serp_map_area]  
+    groupby: [participant]
+    
+#### целевые действия как с карты, так и с поисков по области карты 
+buyers_from_map_total:
+  title: buyer_map_total
+  description: "Баеры как с карты, так и с поисков по области карты"
+  tags: [i3, bx, user, map_serp, map]
+  numerator:
+    observations: [contacts_serp_map_area, contacts_from_map]  
+    groupby: [participant]
+    
+user_item_view_from_map_total:
+  title: user_iv_map_total
+  description: "Юзеры с iv как с карты, так и с поисков по области карты"
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [item_views_serp_map_area, item_views_from_map]  
+    groupby: [participant]
+    
+user_btc_from_map_total:
+  title: user_btc_map_total
+  description: "Юзеры с btc как с карты, так и с поисков по области карты"
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area, buyer_target_clicks_from_map]  
+    groupby: [participant]
+    
+user_fav_from_map_total:
+  title: user_fav_map_total
+  description: "Юзеры с добавлением в избранное как с карты, так и с поисков по области карты"
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [fav_added_serp_map_area, fav_added_from_map]  
+    groupby: [participant]
+
 ###############################################################################
 # Map :: Events Ratios
 ###############################################################################
+
 #### сами поиски ratio 
 map_searches_per_search:
   title: map_s_per_s
@@ -14611,6 +14994,16 @@ pins_per_map_s:
     observations: [pin_clicks]
   denominator:
     observations: [map_searches]
+
+map_area_per_map_search:
+  title: map_serp_per_map
+  tags: [i3, bx,  map]
+  description: "Конверсия из поисков на карте в поиск по области карты"
+  numerator:
+    observations: [searches_map_area]
+  denominator:
+    observations: [map_searches]
+
 
 #### целевые действия с карты ratio 
 contacts_from_map_per_map_search:
@@ -14651,9 +15044,116 @@ fav_added_from_map_per_map_search:
     
     
 
+
+contacts_from_map_per_pin:
+  title: contacts_map_per_pin
+  tags: [i3, bx,  map]
+  description: "Контакты с карты к поискам по карте"
+  numerator:
+    observations: [contacts_from_map]
+  denominator:
+    observations: [pin_clicks]
+    
+item_views_from_map_per_pin:
+  title: iv_map_per_pin
+  tags: [i3, bx,  map]
+  description: "IV с карты к пинам"
+  numerator:
+    observations: [item_views_from_map]
+  denominator:
+    observations: [pin_clicks]
+    
+btc_from_map_per_pin:
+  title: btc_map_per_pin
+  tags: [i3, bx,  map]
+  description: "BTC с карты к пинам"
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+  denominator:
+    observations: [pin_clicks]
+    
+fav_added_from_map_per_pin:
+  title: fav_map_per_pin
+  tags: [i3, bx,  map]
+  description: "Добавление в избранное с карты к пинам"
+  numerator:
+    observations: [fav_added_from_map]
+  denominator:
+    observations: [pin_clicks]
+    
+    
+#### целевые действия с поиска по области карты ratio 
+contacts_from_map_area_per_map_area:
+  title: c_map_serp_per_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  numerator:
+    observations: [contacts_serp_map_area]
+  denominator:
+    observations: [searches_map_area]
+    
+item_views_from_map_per_map_area:
+  title: iv_map_serp_per_map_serp
+  tags: [i4, bx,  map]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  numerator:
+    observations: [item_views_serp_map_area]
+  denominator:
+    observations: [searches_map_area]
+    
+btc_from_map_per_map_search_area:
+  title: btc_map_serp_per_map_serp
+  tags: [i4, bx,  map]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]
+  denominator:
+    observations: [searches_map_area]
+    
+fav_added_from_map_per_map_area:
+  title: fav_map_serp_per_map_serp
+  tags: [i4, bx,  map]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  numerator:
+    observations: [fav_added_serp_map_area]
+  denominator:
+    observations: [searches_map_area]
+ 
+
+#### целевые действия как с самой карты, так и с поиска по области карты ratio 
+contacts_from_map_total_per_map_search:
+  title: c_map_total_per_map
+  tags: [i4, bx,  map_serp, map]
+  description: "Контакты как с самой карты, так и с области карты, деленные на поиски по карте"
+  numerator:
+    observations: [contacts_serp_map_area, contacts_from_map]
+  denominator:
+    observations: [map_searches] 
+    
+iv_from_map_total_per_map_search:
+  title: iv_map_total_per_map
+  tags: [i4, bx,  map_serp, map]
+  description: "IV как с самой карты, так и с области карты, деленные на поиски по карте"
+  numerator:
+    observations: [item_views_serp_map_area, item_views_from_map]
+  denominator:
+    observations: [map_searches] 
+    
+fav_from_map_total_per_map_search:
+  title: fav_map_total_per_map
+  tags: [i4, bx,  map_serp, map]
+  description: "Добавление в избранное как с самой карты, так и с области карты, деленные на поиски по карте"
+  numerator:
+    observations: [fav_added_from_map, fav_added_serp_map_area]
+  denominator:
+    observations: [map_searches] 
+    
+ 
+
 ###############################################################################
 # Map :: Sessions Ratios
 ###############################################################################
+
 #### сами поиски по карте ratio 
 sess_pin_per_sess_map:
   title: sess_pin_per_sess_map
@@ -14665,6 +15165,19 @@ sess_pin_per_sess_map:
   denominator:
     observations: [map_searches]
     groupby: [participant, session]
+
+
+sess_map_area_per_sess_map:
+  title: sess_map_serp_per_sess_map
+  tags: [i3, bx,  map]
+  description: "Сессии с поисками по области карты, деленные на сессии с поисками по карте"
+  numerator:
+    observations: [searches_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+
 
 
 #### сесссии с целевыми действиями с карты ratio 
@@ -14691,6 +15204,101 @@ sess_iv_map_per_sess_map:
     groupby: [participant, session]
     
 
+sess_c_map_per_sess_map:
+  title: sess_c_map_per_sess_map
+  tags: [i3, bx,  map]
+  description: "Сессии с контактом с карты к сессиям с поисками по карте"
+  numerator:
+    observations: [contacts_from_map]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+  
+
+
+sess_c_map_per_sess_pin:
+  title: sess_c_map_per_sess_pin
+  tags: [i4, bx,  map]
+  description: "Сессии с контактом с карты к сессиям с кликом по пину"
+  numerator:
+    observations: [contacts_from_map]
+    groupby: [participant, session]
+  denominator:
+    observations: [pin_clicks]
+    groupby: [participant, session]
+
+sess_iv_map_per_sess_pin:
+  title: sess_iv_map_per_sess_pin
+  tags: [i4, bx,  map, map_serp]
+  description: "Сессии с iv с карты  к сессиям с кликом по пину"
+  numerator:
+    observations: [item_views_from_map]
+    groupby: [participant, session]
+  denominator:
+    observations: [pin_clicks]
+    groupby: [participant, session]
+    
+
+#### сесссии с целевыми действиями с поиска по области карты ratio 
+sess_btc_map_area_per_sess_map_area:
+  title: sess_btc_map_serp_per_sess_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant, session]
+    
+sess_iv_map_area_per_sess_map_area:
+  title: sess_iv_map_serp_per_sess_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [item_views_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant, session]
+    
+
+sess_c_map_area_per_sess_map_area:
+  title: sess_c_map_serp_per_sess_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [contacts_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant, session]
+  
+
+#### целевые действия как с карты, так и с области по карте ratio
+sess_c_map_total_per_sess_map:
+  title: sess_c_map_total_per_sess_map
+  tags: [i3, bx,  map, map_serp]
+  description: "Сессии с контактом с карты или с поиска по области карты к сессиям с поисками по карте"
+  numerator:
+    observations: [contacts_from_map, contacts_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+
+sess_iv_map_total_per_sess_map:
+  title: sess_iv_map_total_per_sess_map
+  tags: [i3, bx,  map, map_serp]
+  description: "Сессии с iv с карты или с поиска по области карты к сессиям с поисками по карте"
+  numerator:
+    observations: [item_views_from_map, item_views_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    
 ###############################################################################
 # Map :: Users Ratios
 ###############################################################################
@@ -14708,7 +15316,7 @@ pin_clickers_per_map_serchers:
 #### юзеры с целевыми действиями с карты ratio
 map_buyers_per_map_serchers:
   title: buyers_map_per_users_map
-  tags: [i2, bx,  map]
+  tags: [i3, bx,  map]
   description: "Отношение баеров с карты к мапперам"
   numerator:
     observations: [contacts_from_map]
@@ -14738,21 +15346,99 @@ map_btc_users_per_map_serchers:
   denominator:
     observations: [map_searches]
     groupby: [participant]
-
-sess_c_map_per_sess_map:
-  title: sess_c_map_per_sess_map
-  tags: [i3, bx,  map]
-  description: "Сессии с контактом с карты к сессиям с поисками по карте"
+  
+buyers_map_per_user_pin:
+  title: buyers_map_per_user_pin
+  tags: [i2, bx,  map]
+  description: "Отношение баеров с карты карты к пиннерам"
   numerator:
     observations: [contacts_from_map]
-    groupby: [participant, session]
+    groupby: [participant]
+  denominator:
+    observations: [pin_clicks]
+    groupby: [participant]
+    
+user_iv_map_per_user_pin:
+  title: user_iv_map_per_user_pin
+  tags: [i4, bx, map]
+  description:  "Отношение юзеров с iv, добавлявших в избранное с карты, к пиннерам"
+  numerator:
+    observations: [item_views_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [pin_clicks]
+    groupby: [participant]
+
+#### юзеры с целевыми действиями по области карты (300е событие) ratio
+map_area_buyers_per_map_area_serchers:
+  title: buyers_map_serp_per_user_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [contacts_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant]
+    
+map_area_item_viewers_per_map_serchers:
+  title: user_iv_map_serp_per_users_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [item_views_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant]
+
+map_area_btc_users_per_map_serchers:
+  title: users_btc_map_serp_per_users_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant]
+
+#### целевые действия как с карты, так и с области по карте ratio
+map_total_buyers_per_map_serchers:
+  title: buyers_map_total_per_users_map
+  tags: [i2, bx,  map, map_serp]
+  description: "Отношение баеров с карты или с поиска по области карты к мапперам"
+  numerator:
+    observations: [contacts_from_map, contacts_serp_map_area]
+    groupby: [participant]
   denominator:
     observations: [map_searches]
-    groupby: [participant, session]
-  
-
-
-
+    groupby: [participant]
+    
+user_iv_map_total_per_user_map:
+  title: user_iv_map_total_per_user_map
+  tags: [i4, bx,  map, map_serp]
+  description:  "Отношение юзеров с iv, добавлявших в избранное с карты или с поиска по области карты к мапперам"
+  numerator:
+    observations: [item_views_from_map, item_views_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+user_fav_map_total_per_user_map:
+  title: user_fav_map_total_per_user_map
+  tags: [i4, bx,  map, map_serp]
+  description: "Отношение юзеров, добавлявших в избранное с карты или с поиска по области карты к мапперам"
+  numerator:
+    observations: [fav_added_from_map, fav_added_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+ 
+    
+    
 ########     ###    ########    ###        #######  ##     ##    ###    ##       #### ######## ##    ##     ######   ########  #######  
 ##     ##   ## ##      ##      ## ##      ##     ## ##     ##   ## ##   ##        ##     ##     ##  ##     ##    ##  ##       ##     ## 
 ##     ##  ##   ##     ##     ##   ##     ##     ## ##     ##  ##   ##  ##        ##     ##      ####      ##        ##       ##     ## 
