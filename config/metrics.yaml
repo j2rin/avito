@@ -18,6 +18,30 @@ item_views:
   numerator:
     observations: [item_views]
 
+item_views_total_vas:
+  title: item_views_total_vas
+  tags: [i2, bx, vas, total]
+  numerator:
+    observations: [item_views_total_vas]
+
+item_views_total_vip:
+  title: item_views_total_vip
+  tags: [i3, bx, vas, total]
+  numerator:
+    observations: [item_views_total_vip]
+
+item_views_total_premium:
+  title: item_views_total_premium
+  tags: [i3, bx, vas, total]
+  numerator:
+    observations: [item_views_total_premium]
+
+item_views_total_push:
+  title: item_views_total_push
+  tags: [i3, bx, vas, total]
+  numerator:
+    observations: [item_views_total_push]
+
 item_views_grouped:
   title: item_views_grouped
   tags: [i2, bx, total, grouped]
@@ -42,6 +66,19 @@ contacts:
   numerator:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
   tags: [i1, bx, total]
+  
+# JOB-496
+contacts_new:
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  numerator:
+    observations: [phone_views_total, booking_created_short_rent, new_first_messages, delivery_order_created, realty_development_phone_views]
+  tags: [i1, bx, total]  
+
+contacts_total_vas:
+  title: contacts_total_vas
+  tags: [i1, bx, vas, total]
+  numerator:
+    observations: [phone_views_total_vas, booking_created_short_rent_vas, first_messages_vas, delivery_order_created_vas, realty_development_phone_views_vas]
 
 contacts_grouped:
   title:   contacts_groupped
@@ -49,6 +86,15 @@ contacts_grouped:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant, item]
   tags: [i1, bx, total, grouped]
+
+# JOB-496  
+contacts_grouped_new:
+  title:   contacts_groupped_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  numerator:
+    observations: [phone_views_total, booking_created_short_rent, new_first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant, item]
+  tags: [i1, bx, total, grouped]  
 
 advertisement_page_views:
   title: advertisement_page_views
@@ -80,6 +126,30 @@ phone_views_total:
   tags: [i3, bx, total]
   numerator:
     observations: [phone_views_total]
+
+phone_views_total_vas:
+  title: phone_views_total_vas
+  tags: [i3, bx, vas, total]
+  numerator:
+    observations: [phone_views_total_vas]
+
+phone_views_total_vip:
+  title: phone_views_total_vip
+  tags: [i4, bx, vas, total]
+  numerator:
+    observations: [phone_views_total_vip]
+
+phone_views_total_premium:
+  title: phone_views_total_premium
+  tags: [i4, bx, vas, total]
+  numerator:
+    observations: [phone_views_total_premium]
+
+phone_views_total_push:
+  title: phone_views_total_push
+  tags: [i4, bx, vas, total]
+  numerator:
+    observations: [phone_views_total_push]
 
 favorites_added:
   title: favorites_added
@@ -116,6 +186,20 @@ first_messages:
   tags: [i2, bx, mes, total]
   numerator:
     observations: [first_messages]
+
+# JOB-496
+new_first_messages:
+  title: new_first_messages
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i2, bx, mes, total]
+  numerator:
+    observations: [new_first_messages]
+
+first_messages_vas:
+  title: first_messages_vas
+  tags: [i3, bx, mes, vas, total]
+  numerator:
+    observations: [first_messages_vas]
 
 all_main_pages:
   title: all_main_pages
@@ -159,6 +243,14 @@ bt_clicks:
   numerator:
     observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
     
+# JOB-496
+bt_clicks_new:
+  title: bt_clicks_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i1, bx, total]
+  numerator:
+    observations: [phone_views_total, new_first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
+    
 favorites_net:
   title: favorites_net
   description: "Чистое число добавленных в избранное. Прежде всего полезно для чистки мискликов. Если пользователь добавил айтем в избранное, затем его удалил, значение будет 0. Если потом снова добавил, то 1"
@@ -180,6 +272,15 @@ bt_clicks_grouped:
   numerator:
     observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
     groupby: [participant, item]
+
+# JOB-496
+bt_clicks_grouped_new:
+  title: bt_clicks_grouped_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i1, bx, total, group]
+  numerator:
+    observations: [phone_views_total, new_first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
+    groupby: [participant, item]    
 
 ad_clicks:
   tags: [critical, bx]
@@ -341,6 +442,68 @@ missed_proxy_calls_map:
   numerator:
     observations: [missed_proxy_calls_map]
 
+
+########сохраненные поиски 
+####действия 
+saved_searches:
+  title: search_sav
+  tags: [i3, bx, tns]
+  description: "Сохр поиски"
+  numerator:
+    observations: [searches_saved]
+  
+#### сохраненные поиски, закончившиеся целевым действием  
+searches_saved_with_item_view:
+  title: search_sav_iv
+  tags: [i3, bx, tns]
+  description: "Сохр поиски с iv"
+  numerator:
+    observations: [searches_saved_with_item_view]
+    
+searches_saved_with_contact:
+  title: search_sav_c
+  description: "Сохр поиски с контактами"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [searches_saved_with_contact]
+    
+searches_saved_with_btc:
+  title: search_sav_btc
+  description: "Сохр поиски с бтц"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [searches_saved_with_btc]
+
+#### целевые действия с сохраненных поисков 
+item_views_serp_saved:
+  title: iv_serp_sav
+  description: "IV с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+    
+contacts_serp_saved:
+  title: c_serp_sav
+  description: "Контакты с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+    
+fav_added_serp_saved:
+  title: fav_serp_sav
+  description: "Добавление в избранное с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+
+buyer_target_clicks_serp_saved:
+  title: btc_serp_sav
+  description: "BTC с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+
+
 ###############################################################################
 # Buyer :: Ratios
 ###############################################################################
@@ -360,6 +523,22 @@ contacts_per_item_view:
     observations: [phone_views_item_right, phone_views_item_top, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
   denominator:
     observations: [item_views]
+
+item_views_total_vas_per_item_view:
+  title: iv_vas_per_iv
+  tags: [i4, bx, vas, ratio]
+  numerator:
+    observations: [item_views_total_vas]
+  denominator:
+    observations: [item_views]
+
+contacts_total_vas_per_contacts:
+  title: contacts_vas_per_c
+  tags: [i1, bx, vas, ratio]
+  numerator:
+    observations: [phone_views_total_vas, booking_created_short_rent_vas, first_messages_vas, delivery_order_created_vas, realty_development_phone_views_vas]
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
 
 delivery_orders_per_flow_begining:
   numerator:
@@ -442,6 +621,44 @@ fav_list_contact_per_fav_list:
   denominator:
     observations: [favorites_list_views]
     
+
+########сохраненные поиски
+item_views_serp_saved_per_search_saved:
+  title: iv_serp_sav_per_sav
+  description: "IV с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+  denominator:
+    observations: [saved_searches]
+    
+contacts_serp_saved_per_search_saved:
+  title: c_serp_sav_per_sav
+  description: "Контакты с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+  denominator:
+    observations: [saved_searches] 
+    
+fav_added_serp_saved_per_search_saved:
+  title: fav_serp_sav_per_sav
+  description: "Добавление в избранное с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+  denominator:
+    observations: [saved_searches]
+    
+buyer_target_clicks_serp_saved_per_search_saved:
+  title: btc_serp_sav_per_sav
+  description: "BTC с сохраненного поиска на все сохр. поиски"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+  denominator:
+    observations: [saved_searches]
+
 ###############################################################################
 # Buyer :: User Totals
 ###############################################################################
@@ -469,7 +686,35 @@ users_item_view_daily:
   numerator:
     observations: [item_views]
     groupby: [participant]
-    
+
+user_item_views_total_vas:
+  title: user_item_views_total_vas
+  tags: [i1, bx, vas, user]
+  numerator:
+    observations: [item_views_total_vas]
+    groupby: [participant]
+
+user_item_views_total_vip:
+  title: user_item_views_total_vip
+  tags: [i2, bx, vas, user]
+  numerator:
+    observations: [item_views_total_vip]
+    groupby: [participant]
+
+user_item_views_total_premium:
+  title: user_item_views_total_premium
+  tags: [i2, bx, vas, user]
+  numerator:
+    observations: [item_views_total_premium]
+    groupby: [participant]
+
+user_item_views_total_push:
+  title: user_item_views_total_push
+  tags: [i2, bx, vas, user]
+  numerator:
+    observations: [item_views_total_push]
+    groupby: [participant]
+
 users_item_view_client_daily:
   title: users_item_view_client
   tags: [i1, bx, user]
@@ -477,11 +722,48 @@ users_item_view_client_daily:
     observations: [item_views_client]
     groupby: [participant]
 
+users_searches_extra_regions:
+  title: users_searches_extra_regions
+  tags: [i3, bx, user]
+  numerator:
+    observations: [searches_extra_regions]
+    groupby: [participant]
+
+users_searches_extra_delivery:
+  title: users_searches_extra_delivery
+  tags: [i3, bx, user]
+  numerator:
+    observations: [searches_extra_delivery]
+    groupby: [participant]
+
 buyers:
   title: buyers
   tags: [i0, bx, user]
   numerator:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
+
+# JOB-496
+buyers_new:
+  title: buyers_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i0, bx, user]
+  numerator:
+    observations: [phone_views_total, booking_created_short_rent, new_first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]    
+    
+user_pv:
+  description: "Юзеры, сделавшие просмотр телефона"
+  numerator:
+    observations: [phone_views_total, realty_development_phone_views]
+    groupby: [participant]
+  tags: [i3, bx, user]
+
+buyers_vas:
+  title: buyers_vas
+  tags: [i0, bx, vas, user]
+  numerator:
+    observations: [phone_views_total_vas, booking_created_short_rent_vas, first_messages_vas, delivery_order_created_vas, realty_development_phone_views_vas]
     groupby: [participant]
 
 users_all_main_page_daily:
@@ -532,6 +814,15 @@ users_bt_click_daily:
   numerator:
     observations: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added, realty_development_phone_views]
     groupby: [participant]
+
+# JOB-496
+users_bt_click_daily_new:
+  title: users_bt_click_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i0, bx, user]
+  numerator:
+    observations: [phone_views_total, new_first_messages, booking_created_short_rent, delivery_order_created, favorites_added, realty_development_phone_views]
+    groupby: [participant]    
 
 users_favorites:
   title: users_favorites_added
@@ -661,6 +952,48 @@ users_non_fatal_app_errors:
   numerator:
     observations: [non_fatal_app_error]
     groupby: [participant] 
+    
+########сохраненные поиски  
+users_saved_searches:
+  title: user_search_sav
+  tags: [i3, bx, tns]
+  description: "Юзеры, сделавшие сохр. поиски"
+  numerator:
+    observations: [searches_saved]
+    groupby: [participant]
+
+#### целевые действия с сохраненных поисков 
+user_item_views_serp_saved:
+  title: user_iv_serp_sav
+  description: "Юзеры с IV с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+    groupby: [participant]
+    
+user_contacts_serp_saved:
+  title: buyers_serp_sav
+  description: "Юзеры с  Контактами с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+    groupby: [participant]
+    
+user_fav_added_serp_saved:
+  title: user_fav_serp_sav
+  description: "Юзеры с  Добавлением в избранное с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+    groupby: [participant]
+
+user_buyer_target_clicks_serp_saved:
+  title: user_btc_serp_sav
+  description: "Юзеры с  BTC с сохраненного поиска"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+    groupby: [participant]
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -785,6 +1118,54 @@ user_non_fatal_error_per_users:
       - favorites_added
       - realty_development_phone_views
     groupby: [participant]    
+
+
+######## сохраненные поиски
+user_item_views_serp_saved_per_user_search_saved:
+  title: user_iv_serp_sav_per_sav
+  description: "Юзеры с IV с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [item_views_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+    
+user_contacts_serp_saved_per_user_search_saved:
+  title: buyers_serp_sav_per_sav
+  description: "Юзеры с  Контактами с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [contacts_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+    
+user_fav_added_serp_saved_per_user_search_saved:
+  title: user_fav_serp_sav_per_sav
+  description: "Юзеры с  Добавлением в избранное с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [fav_added_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+
+user_buyer_target_clicks_serp_saved_per_user_search_saved:
+  title: user_btc_serp_sav_per_sav
+  description: "Юзеры с  BTC с сохраненного поиска на всех юзеров, сделавших сохр. поиск"
+  tags: [i3, bx, tns]
+  numerator:
+    observations: [buyer_target_clicks_serp_saved]
+    groupby: [participant]
+  denominator:
+    observations: [searches_saved]
+    groupby: [participant]
+
+
 
 ###############################################################################
 # Buyer :: Other
@@ -1143,6 +1524,18 @@ serp_small:
   tags: [i4, bx, serp, total]
   numerator:
     observations: [serp_small]
+
+base_serp_empty:
+  title: base_serp_empty
+  tags: [bx, serp, total]
+  numerator:
+    observations: [base_serp_empty]
+
+base_serp_small:
+  title: base_serp_small
+  tags: [bx, serp, total]
+  numerator:
+    observations: [base_serp_small]
   
 serp_with_query_empty:
   title: serp_with_query_empty
@@ -1156,6 +1549,18 @@ serp_with_query_small:
   numerator:
     observations: [serp_with_query_small]
   
+base_serp_with_query_empty:
+  title: base_serp_with_query_empty
+  tags: [bx, serp, total]
+  numerator:
+    observations: [base_serp_with_query_empty]
+  
+base_serp_with_query_small:
+  title: base_serp_with_query_small
+  tags: [bx, serp, total]
+  numerator:
+    observations: [base_serp_with_query_small]
+
 serp_without_query_empty:
   title: serp_no_query_empty
   tags: [i2, bx, serp, total]
@@ -1165,6 +1570,18 @@ serp_without_query_empty:
 serp_without_query_small:
   title: serp_no_query_small
   tags: [i2, bx, serp, total]
+  numerator:
+    observations: [serp_without_query_small]
+
+base_serp_without_query_empty:
+  title: base_serp_no_query_empty
+  tags: [bx, serp, total]
+  numerator:
+    observations: [serp_without_query_empty]
+  
+base_serp_without_query_small:
+  title: base_serp_no_query_small
+  tags: [bx, serp, total]
   numerator:
     observations: [serp_without_query_small]
 
@@ -1209,6 +1626,30 @@ searches_item_view_serp:
   tags: [i3, bx, serp, has]
   numerator:
     observations: [searches_item_view_serp]
+
+searches_extra_regions:
+  title: searches_extra_regions
+  tags: [i3, bx, serp, has]
+  numerator:
+    observations: [searches_extra_regions]
+
+searches_extra_delivery:
+  title: searches_extra_delivery
+  tags: [i3, bx, serp, has]
+  numerator:
+    observations: [searches_extra_delivery]
+
+searches_serp_extra_regions:
+  title: searches_serp_extra_regions
+  tags: [i3, bx, serp, has]
+  numerator:
+    observations: [searches_serp_extra_regions]
+
+searches_serp_extra_delivery:
+  title: searches_serp_extra_delivery
+  tags: [i3, bx, serp, has]
+  numerator:
+    observations: [searches_serp_extra_delivery]
 
 searches_contact_delivery:
   title: searches_contact_delivery
@@ -1420,6 +1861,18 @@ buyer_target_clicks_serp:
   numerator:
     observations: [buyer_target_clicks_serp]
 
+btc_serp_query:
+  title: btc_serp_query
+  tags: [i3, bx, serp, total]
+  numerator:
+    observations: [btc_serp_query]
+
+btc_serp_noquery:
+  title: btc_serp_noquery
+  tags: [i3, bx, serp, total]
+  numerator:
+    observations: [btc_serp_noquery]
+
 suggest_buyers:
   title: suggest_buyers_old
   description: "Buyers, who use suggest"
@@ -1475,7 +1928,7 @@ filters_local_geo_searches:
   tags: [i4, bx, total]
   numerator:
     observations: [local_geo_filter_searches]
-    
+       
 filters_radius_searches:
   description: "All radius searches with radius >0"
   title: filters_radius_searches
@@ -1645,6 +2098,22 @@ item_views_delivery_per_search:
   denominator:
     observations: [searches_serp]
 
+item_views_regions_per_search_regions:
+  title: item_views_regions_per_search_regions
+  tags: [bx, ratio]
+  numerator:
+    observations: [item_views_regions]
+  denominator:
+    observations: [searches_serp_extra_regions]
+
+item_views_delivery_per_search_delivery:
+  title: item_views_delivery_per_search_delivery
+  tags: [bx, ratio]
+  numerator:
+    observations: [item_views_delivery]
+  denominator:
+    observations: [searches_serp_extra_delivery]
+
 item_views_vip_per_search:
   title: item_views_vip_per_search
   tags: [bx, vas, ratio]
@@ -1700,6 +2169,22 @@ contacts_delivery_per_search:
     observations: [contacts_delivery]
   denominator:
     observations: [searches_serp]
+
+contacts_regions_per_search_regions:
+  title: contacts_regions_per_search_regions
+  tags: [bx, ratio]
+  numerator:
+    observations: [contacts_regions]
+  denominator:
+    observations: [searches_serp_extra_regions]
+
+contacts_delivery_per_search_delivery:
+  title: contacts_delivery_per_search_delivery
+  tags: [bx, ratio]
+  numerator:
+    observations: [contacts_delivery]
+  denominator:
+    observations: [searches_serp_extra_delivery]
 
 contacts_vip_per_search:
   title: contacts_vip_per_search
@@ -2053,6 +2538,38 @@ s_default_sort_per_s:
   denominator:
     observations: [searches]
 
+searches_query_contact_per_sq:
+  title: searches_query_contact_per_sq
+  tags: [i4, bx, serp, ratio]
+  numerator:
+    observations: [searches_query_contact]
+  denominator:
+    observations: [searches_with_query]
+
+searches_query_contact_per_noq:
+  title: searches_query_contact_per_noq
+  tags: [i4, bx, serp, ratio]
+  numerator:
+    observations: [searches_noquery_contact]
+  denominator:
+    observations: [searches_without_query]
+
+btc_serp_q_per_s_q:
+  title: btc_serp_q_per_s_q
+  tags: [i4, bx, serp, ratio]
+  numerator:
+    observations: [btc_serp_query]
+  denominator:
+    observations: [searches_with_query]
+
+btc_serp_noq_per_s_noq:
+  title: btc_serp_noq_per_s_noq
+  tags: [i4, bx, serp, ratio]
+  numerator:
+    observations: [btc_serp_noquery]
+  denominator:
+    observations: [searches_without_query]
+
 serp_empty_per_s:
   title: serp_empty_per_search
   tags: [i2, bx, serp, ratio]
@@ -2216,6 +2733,18 @@ sessions_btc_s:
     groupby: [participant, session]
   tags: [i3, bx, session]
 
+sessions_btc_sq:
+  numerator:
+    observations: [btc_serp_query]
+    groupby: [participant, session]
+  tags: [i4, bx, session]
+
+sessions_btc_snoq:
+  numerator:
+    observations: [btc_serp_noquery]
+    groupby: [participant, session]
+  tags: [i4, bx, session]
+
 sessions_c_s:
   numerator:
     observations: [contacts_serp]
@@ -2314,6 +2843,11 @@ sessions_c_r_i2i:
     groupby: [participant, session]
   tags: [i4, bx, session]
 
+suggest_clicks:
+  description: "clicks on search suggest"
+  tags: [ss, sgt]
+  numerator:
+    observations: [search_suggest_clicks]
 
 ###############################################################################
 # Session :: Ratios
@@ -2692,7 +3226,7 @@ users_contact_search_query:
     groupby: [participant]
 
 search_suggest_clicks:
-  description: "Clicks on search suggest"
+  description: "Users with clicks on search suggest"
   tags: [ss, sgt]
   numerator:
     observations: [search_suggest_clicks]
@@ -2729,7 +3263,7 @@ filters_any_users:
   numerator:
     observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
     groupby: [participant]
-
+    
 ###############################################################################
 # Search :: User Ratios
 ###############################################################################
@@ -3141,6 +3675,11 @@ recblock_shows_u2i:
   numerator:
     observations: [recblock_shows_u2i]
 
+search_u2i:
+  tags: [i4, bx, rec, total]
+  numerator:
+    observations: [searches_u2i]
+
 shows_item_view_recblock:
   title: shows_item_view_recblock
   tags: [i3, bx, rec, has]
@@ -3171,6 +3710,21 @@ shows_btc_recblock_u2i:
   numerator:
       observations: [recshow_btc_u2i]
 
+search_u2i_iv:
+  tags: [i3, bx, rec, has]
+  numerator: 
+    observations: [searches_u2i_item_view]
+
+search_u2i_contact:
+  tags: [i3, bx, rec, has]
+  numerator: 
+    observations: [searches_u2i_contact]
+
+searches_u2i_btc:
+  tags: [i3, bx, rec, has]
+  numerator: 
+    observations: [searches_u2i_btc]
+
 item_views_rec:
   title: item_views_rec
   tags: [i3, bx, rec, total]
@@ -3188,6 +3742,11 @@ item_views_rec_u2i:
   tags: [i3, bx, rec, total]
   numerator:
     observations: [item_views_rec_u2i]
+
+iv_searches_u2i:
+  tags: [i3, bx, rec, total]
+  numerator:
+    observations: [item_views_searches_u2i]
 
 contacts_rec:
   title: contacts_rec
@@ -3207,6 +3766,11 @@ contacts_rec_u2i:
   numerator:
     observations: [contacts_rec_u2i]
 
+contacts_searches_u2i:
+  tags: [i2, bx, rec, total]
+  numerator:
+    observations: [contacts_searches_u2i]
+
 fav_added_rec:
   title: fav_added_rec
   tags: [i2, bx, rec, fav, total]
@@ -3224,6 +3788,11 @@ fav_added_rec_u2i:
   tags: [i3, bx, rec, total]
   numerator:
     observations: [fav_added_rec_u2i]
+
+fav_added_searches_u2i:
+  tags: [i3, bx, rec, fav, total]
+  numerator:
+    observations: [fav_added_searches_u2i]
 
 buyer_target_clicks_rec:
   title: bt_clicks_rec
@@ -3243,6 +3812,251 @@ buyer_target_clicks_rec_u2i:
   numerator:
     observations: [buyer_target_clicks_rec_u2i]
 
+buyer_target_clicks_searches_u2i:
+  tags: [i2, bx, rec, total]
+  numerator:
+    observations: [buyer_target_clicks_searches_u2i]
+
+item_views_rec_vas:
+  tags: [i3, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_vas]
+
+item_views_rec_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_vip]
+
+item_views_rec_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_push]
+
+item_views_rec_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_premium]
+
+item_views_rec_i2i_vas:
+  tags: [i3, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_i2i_vas]
+
+item_views_rec_i2i_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_i2i_vip]
+
+item_views_rec_i2i_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_i2i_push]
+
+item_views_rec_i2i_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_i2i_premium]
+
+item_views_rec_u2i_vas:
+  tags: [i3, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_u2i_vas]
+
+item_views_rec_u2i_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_u2i_vip]
+
+item_views_rec_u2i_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_u2i_push]
+
+item_views_rec_u2i_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [item_views_rec_u2i_premium]
+
+contacts_rec_vas:
+  tags: [i3, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_vas]
+
+contacts_rec_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_vip]
+
+contacts_rec_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_push]
+
+contacts_rec_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_premium]
+
+contacts_rec_i2i_vas:
+  tags: [i3, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_i2i_vas]
+
+contacts_rec_i2i_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_i2i_vip]
+
+contacts_rec_i2i_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_i2i_push]
+
+contacts_rec_i2i_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_i2i_premium]
+
+contacts_rec_u2i_vas:
+  tags: [i3, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_u2i_vas]
+
+contacts_rec_u2i_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_u2i_vip]
+
+contacts_rec_u2i_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_u2i_push]
+
+contacts_rec_u2i_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [contacts_rec_u2i_premium]
+
+fav_added_rec_vas:
+  tags: [i3, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_vas]
+
+fav_added_rec_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_vip]
+
+fav_added_rec_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_push]
+
+fav_added_rec_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_premium]
+
+fav_added_rec_i2i_vas:
+  tags: [i3, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_i2i_vas]
+
+fav_added_rec_i2i_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_i2i_vip]
+
+fav_added_rec_i2i_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_i2i_push]
+
+fav_added_rec_i2i_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_i2i_premium]
+
+fav_added_rec_u2i_vas:
+  tags: [i3, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_u2i_vas]
+
+fav_added_rec_u2i_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_u2i_vip]
+
+fav_added_rec_u2i_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_u2i_push]
+
+fav_added_rec_u2i_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [fav_added_rec_u2i_premium]
+
+bt_clicks_rec_vas:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_vas]
+
+bt_clicks_rec_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_vip]
+
+bt_clicks_rec_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_push]
+
+bt_clicks_rec_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_premium]
+
+bt_clicks_rec_i2i_vas:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_i2i_vas]
+
+bt_clicks_rec_i2i_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_i2i_vip]
+
+bt_clicks_rec_i2i_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_i2i_push]
+
+bt_clicks_rec_i2i_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_i2i_premium]
+
+bt_clicks_rec_u2i_vas:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_u2i_vas]
+
+bt_clicks_rec_u2i_vip:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_u2i_vip]
+
+bt_clicks_rec_u2i_push:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_u2i_push]
+
+bt_clicks_rec_u2i_premium:
+  tags: [i4, bx, rec, total, vas]
+  numerator:
+    observations: [bt_clicks_rec_u2i_premium]
+
 ###############################################################################
 # Rec :: Ratios
 ###############################################################################
@@ -3255,6 +4069,27 @@ item_views_rec_per_rec_block:
   denominator:
     observations: [recblock_shows]
 
+item_views_rec_vas_per_item_views_rec:
+  tags: [i4, bx, rec, ratio, vas]
+  numerator:
+    observations: [item_views_rec_vas]
+  denominator:
+    observations: [item_views_rec]
+
+item_views_rec_i2i_vas_per_item_views_rec_i2i:
+  tags: [i4, bx, rec, ratio, vas]
+  numerator:
+    observations: [item_views_rec_i2i_vas]
+  denominator:
+    observations: [item_views_rec_i2i]
+
+item_views_rec_u2i_vas_per_item_views_rec_u2i:
+  tags: [i4, bx, rec, ratio, vas]
+  numerator:
+    observations: [item_views_rec_u2i_vas]
+  denominator:
+    observations: [item_views_rec_u2i]
+
 contacts_rec_per_rec_block:
   title: contacts_rec_per_recblock
   tags: [i3, bx, rec, ratio]
@@ -3262,6 +4097,27 @@ contacts_rec_per_rec_block:
     observations: [contacts_rec]
   denominator:
     observations: [recblock_shows]
+
+contacts_rec_vas_per_contacts_rec:
+  tags: [i3, bx, rec, ratio, vas]
+  numerator:
+    observations: [contacts_rec_vas]
+  denominator:
+    observations: [contacts_rec]
+
+contacts_rec_i2i_vas_per_contacts_rec_i2i:
+  tags: [i3, bx, rec, ratio, vas]
+  numerator:
+    observations: [contacts_rec_i2i_vas]
+  denominator:
+    observations: [contacts_rec_i2i]
+
+contacts_rec_u2i_vas_per_contacts_rec_u2i:
+  tags: [i3, bx, rec, ratio, vas]
+  numerator:
+    observations: [contacts_rec_u2i_vas]
+  denominator:
+    observations: [contacts_rec_u2i]
 
 fav_added_rec_per_rec_block:
   title: fav_added_rec_per_recblock
@@ -3334,6 +4190,12 @@ users_contact_rec_u2i:
     observations: [contacts_rec_u2i]
     groupby: [participant]
 
+users_contact_search_u2i:
+  tags: [i1, bx, rec, user]
+  numerator:
+    observations: [contacts_searches_u2i]
+    groupby: [participant]
+
 users_item_view_rec_i2i:
   title: users_item_view_rec_i2i
   tags: [i2, bx, rec, user]
@@ -3347,6 +4209,62 @@ users_item_view_rec_u2i:
   numerator:
     observations: [item_views_rec_u2i]
     groupby: [participant]
+
+users_item_view_search_u2i:
+  tags: [i2, bx, rec, user]
+  numerator:
+    observations: [item_views_searches_u2i]
+    groupby: [participant]
+
+users_item_view_rec_daily_vas:
+  title: users_item_view_rec_vas
+  tags: [i2, bx, rec, user, vas]
+  numerator:
+    observations: [item_views_rec_vas]
+    groupby: [participant]
+
+users_contact_rec_daily_vas:
+  title: users_contact_rec_vas
+  tags: [i1, bx, rec, user, vas]
+  numerator:
+    observations: [contacts_rec_vas]
+    groupby: [participant]
+
+users_buyer_target_click_rec_daily_vas:
+  title: users_bt_click_rec_vas
+  tags: [i2, bx, rec, user, vas]
+  numerator:
+    observations: [buyer_target_clicks_rec_vas]
+    groupby: [participant]
+
+users_contact_rec_i2i_vas:
+  title: users_contact_rec_i2i_vas
+  tags: [i1, bx, rec, user, vas]
+  numerator:
+    observations: [contacts_rec_i2i_vas]
+    groupby: [participant]
+
+users_contact_rec_u2i_vas:
+  title: users_contact_rec_u2i_vas
+  tags: [i1, bx, rec, user, vas]
+  numerator:
+    observations: [contacts_rec_u2i_vas]
+    groupby: [participant]
+
+users_item_view_rec_i2i_vas:
+  title: users_item_view_rec_i2i_vas
+  tags: [i2, bx, rec, user, vas]
+  numerator:
+    observations: [item_views_rec_i2i_vas]
+    groupby: [participant]
+
+users_item_view_rec_u2i_vas:
+  title: users_item_view_rec_u2i_vas
+  tags: [i2, bx, rec, user, vas]
+  numerator:
+    observations: [item_views_rec_u2i_vas]
+    groupby: [participant]
+
 
 ###############################################################################
 # Rec :: User Ratios
@@ -3418,6 +4336,17 @@ users_contacts_rec_u2i_per_users_item_views_rec_u2i:
     observations: [item_views_rec_u2i]
     groupby: [participant]
 
+###############################################################################
+# Rec :: Antibot
+###############################################################################
+
+phone_views_back_front_ratio:
+  title: phone_views_back_front_ratio
+  description: "Ratio between item_viewphone and button_callphone_tap"
+  numerator:
+    observations: [phone_views_item_right, phone_views_item_top, phone_views_snippet, phone_views_snippet_xlvas]
+  denominator:
+    observations: [phone_view_button_clicks]
 
 ##     ## ########  ######   ######  ######## ##    ##  ######   ######## ########
 ###   ### ##       ##    ## ##    ## ##       ###   ## ##    ##  ##       ##     ##
@@ -3614,6 +4543,16 @@ first_mess_per_write_button_clicks:
     observations: [first_messages]
   denominator:
     observations: [write_button_clicks]
+
+# JOB-496
+first_mess_per_write_button_clicks_new:
+  title: first_mess_per_write_button_clicks_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i3, messenger, ratio]
+  numerator:
+    observations: [new_first_messages]
+  denominator:
+    observations: [write_button_clicks]    
     
 first_mess_per_active_items_with_msg:
   title: first_mess_per_active_items_with_msg
@@ -3665,6 +4604,15 @@ users_first_messages:
   numerator:
     observations: [first_messages]
     groupby: [participant]
+
+# JOB-496
+users_first_messages_new:
+  title: users_first_messages_new
+  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
+  tags: [i2, messenger, user]
+  numerator:
+    observations: [new_first_messages]
+    groupby: [participant]    
 
 users_first_response_messages:
   title: users_first_response_messages
@@ -3984,6 +4932,20 @@ users_off_delivery:
   tags: [i2, delivery, seller]
   numerator:
     observations: [users_off_delivery]
+
+items_started_with_delivery:
+  title: items_started_with_delivery
+  description: "Количество айтемов, которы в текущую дату были созданы с подключенной доставкой"
+  tags: [i2, delivery, seller]
+  numerator:
+    observations: [items_started_with_delivery]
+    
+items_reactivated_with_delivery:
+  title: items_reactivated_with_delivery
+  description: "Количество айтемов, которы в текущую дату были реактивированы с подключенной доставкой"
+  tags: [i2, delivery, seller]
+  numerator:
+    observations: [items_reactivated_with_delivery]
 
 items_delivery_available:
   title: items_delivery_available
@@ -6401,6 +7363,96 @@ items_edited_photo_add_start_date:
 # Seller :: Ratios
 ###############################################################################
 
+users_item_add_last_click_per_users_item_add_first_click:
+  title: users_ia_last_click_per_first_click
+  tags: [i3, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_category_last_click]
+    groupby: [participant]
+  denominator:
+    observations: [item_add_chains_category_first_click]
+    groupby: [participant]
+
+users_item_add_form_input_per_users_item_chain_started:
+  title: users_ia_form_input_per_chain_started
+  tags: [i3, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_form_input]
+    groupby: [participant]
+  denominator:
+    observations: [item_chains_started]
+    groupby: [participant]
+
+users_item_create_per_users_item_add_last_click:
+  title: users_item_create_per_last_click
+  tags: [i3, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_item_create]
+    groupby: [participant]
+  denominator:
+    observations: [item_add_chains_category_last_click]
+    groupby: [participant]
+
+users_item_create_per_users_item_add_first_click:
+  title: users_item_create_per_first_click
+  tags: [ii, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_item_create]
+    groupby: [participant]
+  denominator:
+    observations: [item_add_chains_category_first_click]
+    groupby: [participant]
+
+users_item_create_per_users_item_chain_started:
+  title: users_item_create_per_chain_started
+  tags: [ii, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_item_create]
+    groupby: [participant]
+  denominator:
+    observations: [item_chains_started]
+    groupby: [participant]
+
+item_add_category_last_click_per_item_add_category_first_click:
+  title: ia_last_click_per_ia_first_click
+  tags: [i3, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_category_last_click]
+  denominator:
+    observations: [item_add_chains_category_first_click]
+
+item_add_form_input_per_item_chains_started:
+  title: ia_form_input_per_chains_started
+  tags: [i3, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_form_input]
+  denominator:
+    observations: [item_chains_started]
+
+item_create_per_item_add_last_click:
+  title: item_create_per_last_click
+  tags: [i3, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_item_create]
+  denominator:
+    observations: [item_add_chains_category_last_click]
+
+item_create_per_item_add_first_click: 
+  title: item_create_per_first_click
+  tags: [ii, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_item_create]
+  denominator:
+    observations: [item_add_chains_category_first_click]
+
+item_create_per_item_chains_started:
+  title: item_create_per_chains_started
+  tags: [ii, sx, ratio, item_add]
+  numerator:
+    observations: [item_add_chains_item_create]
+  denominator:
+    observations: [item_chains_started]
+
 items_added_per_items_add_started:
   title: items_added_per_items_add_started
   tags: [i4, sx, ratio, item_add]
@@ -6592,7 +7644,7 @@ users_item_reactivated:
   title: users_item_reactivated
   tags: [sx, reactivation, i3]
   numerator:
-    observations: [items_started]
+    observations: [items_reactivated]
     groupby: [participant]
   description: "Users reactivated items"
 
@@ -7360,44 +8412,119 @@ users_item_edit_photo_add_start_date:
 # MNZ :: Totals
 ###############################################################################
 
-listings_single_paid:
-  numerator:
-    observations: [listings_single_paid]
-
 lf_revenue:
-  title: lf_revenue
-  description: "Listing fee revenue total recognized with bonuses"
-  tags: [lf]
+  description: "Listing fee total revenue with bonuses"
+  tags: [monetization, lf, i0]
   numerator:
-    observations: [lf_revenue]
+    observations: [total_amount]
 
-lf_transactions_by_platform:
-  title: lf_transactions_by_platform
-  description: "Listing fee transactions total (single and lf from package)"
-  tags: [lf]
+lf_revenue_net:
+  description: "Listing fee total revenue without bonuses"
+  tags: [monetization, lf, i0]
   numerator:
-    observations: [lf_transactions_by_platform]
+    observations: [total_amount_net]
 
-lf_packages_item_add:
-  title: lf_packages
-  description: "Num of lf packages bought on item add"
-  tags: [lf]
+listings_number:
+  description: "Number of activations"
+  tags: [monetization, lf, i0]
   numerator:
-    observations: [lf_packs]
+    observations: [listings]
 
 lf_revenue_single:
-  title: lf_revenue_single
-  description: "Listing fee revenue single on item add"
-  tags: [lf]
+  description: "Single listing fee revenue with bonuses"
+  tags: [monetization, lf, i1]
   numerator:
-    observations: [lf_revenue_single]
+    observations: [lf_amount_single_listing]
 
-lf_transactions_single:
-  title: lf_transactions_single
-  description: "Listing fee single transactions"
-  tags: [lf]
+lf_revenue_single_net:
+  description: "Single listing fee revenue without bonuses"
+  tags: [monetization, lf, i1]
   numerator:
-    observations: [lf_transactions_single]
+    observations: [lf_amount_net_single_listing]
+
+lf_revenue_package:
+  description: "Listed from package revenue with bonuses"
+  tags: [monetization, lf, i1]
+  numerator:
+    observations: [lf_amount_listing_from_package]
+
+lf_revenue_package_net:
+  description: "Listed from package revenue without bonuses"
+  tags: [monetization, lf, i1]
+  numerator:
+    observations: [lf_amount_net_listing_from_package]
+
+lf_revenue_package_burned:
+  description: "Package burned revenue with bonuses"
+  tags: [monetization, lf, i1]
+  numerator:
+    observations: [lf_amount_burned_from_package]
+
+lf_revenue_package_burned_net:
+  description: "Package burned revenue without bonuses"
+  tags: [monetization, lf, i1]
+  numerator:
+    observations: [lf_amount_net_burned_from_package]
+
+tariff_base_revenue:
+  description: "Base tariff revenue with bonuses"
+  tags: [monetization, lf, i1]
+  numerator:
+    observations: [tariff_amount_base]
+
+tariff_base_revenue_net:
+  description: "Base tariff revenue without bonuses"
+  tags: [monetization, lf, i1]
+  numerator:
+    observations: [tariff_amount_net_base]
+
+tariff_pro_revenue:
+  description: "Pro tariff (extended+maximum) revenue with bonuses"
+  tags: [monetization, lf, i1]
+  numerator:
+    observations: [tariff_amount_pro]
+
+tariff_pro_revenue_net:
+  description: "Pro tariff (extended+maximum) revenue without bonuses"
+  tags: [monetization, lf, i1]
+  numerator:
+    observations: [tariff_amount_net_pro]
+
+tariff_users_single_revenue:
+  description: "Tariff users spent on single listings revenue with bonuses"
+  tags: [monetization, lf, i2]
+  numerator:
+    observations: [tariff_amount_single_listing]
+
+tariff_users_single_revenue_net:
+  description: "Tariff users spent on single listings revenue without bonuses"
+  tags: [monetization, lf, i2]
+  numerator:
+    observations: [tariff_amount_net_single_listing]
+
+tariff_users_package_revenue:
+  description: "Tariff users spent on listing from package revenue with bonuses"
+  tags: [monetization, lf, i2]
+  numerator:
+    observations: [tariff_amount_listing_from_package]
+
+tariff_users_package_revenue_net:
+  description: "Tariff users spent on listing from package revenue without bonuses"
+  tags: [monetization, lf, i2]
+  numerator:
+    observations: [tariff_amount_net_listing_from_package]
+
+tariff_users_package_burned_revenue:
+  description: "Tariff users package burned revenue with bonuses"
+  tags: [monetization, lf, i2]
+  numerator:
+    observations: [tariff_amount_burned_from_package]
+
+tariff_users_package_burned_revenue_net:
+  description: "Tariff users package burned revenue without bonuses"
+  tags: [monetization, lf, i2]
+  numerator:
+    observations: [tariff_amount_net_burned_from_package]
 
 express_cv_started:
   description: "Created express cv"
@@ -8668,6 +9795,14 @@ support_email_tickets_created:
     groupby: []
   description: "Number of created tickets via email"
 
+support_call_tickets_created:
+  title: call_tickets_created
+  tags: [support, other]
+  numerator:
+    observations: [ticket_call_created]
+    groupby: []
+  description: "Number of created tickets via call-center"
+
 support_email_tickets_creators:
   title: email_tickets_creators
   tags: [support, other]
@@ -8693,15 +9828,23 @@ support_wizard_tickets_creators:
   description: "Number of users created tickets via HelpCenter form: Desktop/MAV/iOs/Android"
 
 support_email_wizard_tickets_created:
-  title: tickets_created
+  title: tickets_created_old
   tags: [support, other]
   numerator:
     observations: [ticket_wizard_created, ticket_email_created]
     groupby: []
   description: "Number of created tickets via HelpCenter and email"
 
+support_email_wizard_call_tickets_created:
+  title: tickets_created
+  tags: [support, other]
+  numerator:
+    observations: [ticket_wizard_created, ticket_email_created, ticket_call_created]
+    groupby: []
+  description: "Number of created tickets via HelpCenter + email + call-center"
+
 support_email_wizard_tickets_creators:
-  title: tickets_creators
+  title: tickets_creators_old
   tags: [support, other]
   numerator:
     observations: [ticket_wizard_created, ticket_email_created]
@@ -8809,126 +9952,6 @@ support_mav_tickets_created:
     groupby: []
   description: "Number of created tickets via HelpCenter from: MAV"
 
-support_web_reject_tickets_created:
-  title: hc_web_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_web_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: WEB"
-
-support_android_reject_tickets_created:
-  title: hc_android_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_android_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: Android"
-
-support_ios_reject_tickets_created:
-  title: hc_ios_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_ios_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: iOs"
-
-support_mav_reject_tickets_created:
-  title: hc_mav_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_mav_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: MAV"
-
-support_web_block_tickets_created:
-  title: hc_web_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_web_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: WEB"
-
-support_android_block_tickets_created:
-  title: hc_android_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_android_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: Android"
-
-support_ios_block_tickets_created:
-  title: hc_ios_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_ios_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: iOs"
-
-support_mav_block_tickets_created:
-  title: hc_mav_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_mav_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: MAV"
-
-support_web_moder_tickets_created:
-  title: hc_web_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_web_created, ticket_item_reject_web_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: WEB"
-
-support_android_moder_tickets_created:
-  title: hc_android_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_android_created, ticket_item_reject_android_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: Android"
-
-support_ios_moder_tickets_created:
-  title: hc_ios_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_ios_created, ticket_item_reject_ios_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: iOs"
-
-support_mav_moder_tickets_created:
-  title: hc_mav_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_mav_created, ticket_item_reject_mav_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: MAV"
-
-support_hc_moder_tickets_created:
-  title: hc_moder_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_web_created, ticket_item_reject_web_created, ticket_item_block_android_created, ticket_item_reject_android_created, ticket_item_block_ios_created, ticket_item_reject_ios_created, ticket_item_block_mav_created, ticket_item_reject_mav_created]
-    groupby: []
-  description: "Number of created tickets moder via HelpCenter from: WEB/MAV/iOs/Android"
-
-support_hc_block_tickets_created:
-  title: hc_block_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_block_web_created, ticket_item_block_android_created, ticket_item_block_ios_created, ticket_item_block_mav_created]
-    groupby: []
-  description: "Number of created tickets moder_block via HelpCenter from: WEB/MAV/iOs/Android"
-
-support_hc_reject_tickets_created:
-  title: hc_reject_tickets_created
-  tags: [support, other]
-  numerator:
-    observations: [ticket_item_reject_web_created, ticket_item_reject_android_created, ticket_item_reject_ios_created, ticket_item_reject_mav_created]
-    groupby: []
-  description: "Number of created tickets moder_reject via HelpCenter from: WEB/MAV/iOs/Android"
-
 support_hc_article_like:
   title: hc_article_like
   tags: [support, other]
@@ -8972,7 +9995,183 @@ support_hc_ticket_platform_created:
     groupby: []
   description: "HC created tickets by platform"
 
+support_ticket_with_changed_problem_rate_platform:
+  title: tickets_changed_problem_platform
+  tags: [support, other]
+  numerator:
+    observations: [tickets_problem_changed_platform]
+  denominator:
+    observations: [ticket_platform_created]
+  description: "Ratio of tickets with changed problem platform"
 
+support_hc_article_like_freq:
+  title: hc_article_like_freq
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_freq]
+    groupby: []
+  description: "Likes on HC articles freq"
+
+support_hc_article_dislike_freq:
+  title: hc_article_dislike_freq
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_dislike_freq]
+    groupby: []
+  description: "Dislikes on HC articles freq"
+
+support_hc_article_marks_freq:
+  title: hc_article_marks_freq
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_freq, helpcenter_article_dislike_freq]
+    groupby: []
+  description: "Total number of likes&dislikes on HC articles freq"
+
+support_hc_article_like_freq_rate:
+  title: hc_article_like_freq_rate
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_freq]
+    groupby: []
+  denominator:
+    observations: [helpcenter_article_like_freq, helpcenter_article_dislike_freq]
+    groupby: []
+  description: "Ratio of likes between all responses in HC articles freq"
+
+support_hc_article_like_popular:
+  title: hc_article_like_popular
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_popular]
+    groupby: []
+  description: "Likes on HC articles popular"
+
+support_hc_article_dislike_popular:
+  title: hc_article_dislike_popular
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_dislike_popular]
+    groupby: []
+  description: "Dislikes on HC articles popular"
+
+support_hc_article_marks_popular:
+  title: hc_article_marks_popular
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_popular, helpcenter_article_dislike_popular]
+    groupby: []
+  description: "Total number of likes&dislikes on HC articles popular"
+
+support_hc_article_like_popular_rate:
+  title: hc_article_like_popular_rate
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_popular]
+    groupby: []
+  denominator:
+    observations: [helpcenter_article_like_popular, helpcenter_article_dislike_popular]
+    groupby: []
+  description: "Ratio of likes between all responses in HC articles popular"
+
+support_hc_article_like_highlighted:
+  title: hc_article_like_highlighted
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_popular, helpcenter_article_like_freq]
+    groupby: []
+  description: "Likes on HC articles highlighted"
+
+support_hc_article_dislike_highlighted:
+  title: hc_article_dislike_highlighted
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_dislike_popular, helpcenter_article_dislike_freq]
+    groupby: []
+  description: "Dislikes on HC articles highlighted"
+
+support_hc_article_marks_highlighted:
+  title: hc_article_marks_highlighted
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_popular, helpcenter_article_dislike_popular, helpcenter_article_like_freq, helpcenter_article_dislike_freq]
+    groupby: []
+  description: "Total number of likes&dislikes on HC articles highlighted"
+
+support_hc_article_like_highlighted_rate:
+  title: hc_article_like_highlighted_rate
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_popular, helpcenter_article_like_freq]
+    groupby: []
+  denominator:
+    observations: [helpcenter_article_like_popular, helpcenter_article_dislike_popular, helpcenter_article_like_freq, helpcenter_article_dislike_freq]
+    groupby: []
+  description: "Ratio of likes between all responses in HC articles highlighted"
+
+support_hc_article_like_regular:
+  title: hc_article_like_regular
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_regular]
+    groupby: []
+  description: "Likes on HC articles regular"
+
+support_hc_article_dislike_regular:
+  title: hc_article_dislike_regular
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_dislike_regular]
+    groupby: []
+  description: "Dislikes on HC articles regular"
+
+support_hc_article_marks_regular:
+  title: hc_article_marks_regular
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_regular, helpcenter_article_dislike_regular]
+    groupby: []
+  description: "Total number of likes&dislikes on HC articles regular"
+
+support_hc_article_like_regular_rate:
+  title: hc_article_like_regular_rate
+  tags: [support, other]
+  numerator:
+    observations: [helpcenter_article_like_regular]
+    groupby: []
+  denominator:
+    observations: [helpcenter_article_like_regular, helpcenter_article_dislike_regular]
+    groupby: []
+  description: "Ratio of likes between all responses in HC articles regular"
+
+support_helpcenter_article_views_freq:
+  title: helpcenter_article_views_freq
+  tags: [support, other]
+  numerator:
+    observations: [article_views_freq]
+  description: "Number of article views in HC & Wizard freq"
+
+
+support_helpcenter_article_views_popular:
+  title: helpcenter_article_views_popular
+  tags: [support, other]
+  numerator:
+    observations: [article_views_popular]
+  description: "Number of article views in HC & Wizard popular"
+
+support_helpcenter_article_views_highlighted:
+  title: helpcenter_article_views_highlighted
+  tags: [support, other]
+  numerator:
+    observations: [article_views_freq, article_views_popular]
+  description: "Number of article views in HC & Wizard highlighted"
+
+support_helpcenter_article_views_regular:
+  title: helpcenter_article_views_regular
+  tags: [support, other]
+  numerator:
+    observations: [article_views_regular]
+  description: "Number of article views in HC & Wizard regular"
 
 ########   #######  ########        ######   #######  ########  ########
 ##     ## ##     ## ##     ##      ##    ## ##     ## ##     ## ##
@@ -9458,6 +10657,13 @@ di_percent_p75:
   denominator:
     observations: [di_events]
     
+di_percent_p95:
+  tags: [performance]
+  numerator:
+    observations: [di_events_p95]
+  denominator:
+    observations: [di_events]
+    
 draw_percent_p25:
   tags: [performance]
   numerator:
@@ -9476,6 +10682,13 @@ draw_percent_p75:
   tags: [performance]
   numerator:
     observations: [draw_events_p75]
+  denominator:
+    observations: [draw_events]
+    
+draw_percent_p95:
+  tags: [performance]
+  numerator:
+    observations: [draw_events_p95]
   denominator:
     observations: [draw_events]
     
@@ -9506,6 +10719,13 @@ init_percent_p75:
     observations: [init_events_p75]
   denominator:
     observations: [init_events]
+     
+init_percent_p95:
+  tags: [performance]
+  numerator:
+    observations: [init_events_p95]
+  denominator:
+    observations: [init_events]
     
 localloading_percent_p50:
   tags: [performance]
@@ -9521,6 +10741,13 @@ localloading_percent_p75:
   denominator:
     observations: [localloading_events]
     
+localloading_percent_p95:
+  tags: [performance]
+  numerator:
+    observations: [localloading_events_p95]
+  denominator:
+    observations: [localloading_events]
+    
 prepare_percent_p50:
   tags: [performance]
   numerator:
@@ -9532,6 +10759,13 @@ prepare_percent_p75:
   tags: [performance]
   numerator:
     observations: [prepare_events_p75]
+  denominator:
+    observations: [prepare_events]
+     
+prepare_percent_p95:
+  tags: [performance]
+  numerator:
+    observations: [prepare_events_p95]
   denominator:
     observations: [prepare_events]
     
@@ -9562,6 +10796,13 @@ serverloading_percent_p75:
     observations: [serverloading_events_p75]
   denominator:
     observations: [serverloading_events]
+     
+serverloading_percent_p95:
+  tags: [performance]
+  numerator:
+    observations: [serverloading_events_p95]
+  denominator:
+    observations: [serverloading_events]
     
 serverloading_percent_exceptions:
   tags: [performance]
@@ -9576,7 +10817,42 @@ draw_session_percent_sla:
     observations: [draw_sessions_sla]
   denominator:
     observations: [draw_sessions]
+
+draw_session_percent_p25:
+  tags: [performance, i1]
+  numerator:
+    observations: [draw_sessions_p25]
+  denominator:
+    observations: [draw_sessions]
+
+draw_session_percent_p50:
+  tags: [performance, i1]
+  numerator:
+    observations: [draw_sessions_p50]
+  denominator:
+    observations: [draw_sessions]
+
+draw_session_percent_p75:
+  tags: [performance, i1]
+  numerator:
+    observations: [draw_sessions_p75]
+  denominator:
+    observations: [draw_sessions]
+
+draw_session_percent_p95:
+  tags: [performance, i1]
+  numerator:
+    observations: [draw_sessions_p95]
+  denominator:
+    observations: [draw_sessions]
     
+init_session_percent_p25:
+  tags: [performance]
+  numerator:
+    observations: [init_sessions_p25]
+  denominator:
+    observations: [init_sessions]
+     
 init_session_percent_p50:
   tags: [performance]
   numerator:
@@ -9591,6 +10867,13 @@ init_session_percent_p75:
   denominator:
     observations: [init_sessions]
     
+init_session_percent_p95:
+  tags: [performance]
+  numerator:
+    observations: [init_sessions_p95]
+  denominator:
+    observations: [init_sessions]
+     
 init_session_percent_sla:
   tags: [performance]
   numerator:
@@ -9613,12 +10896,19 @@ draw_duration:
     observations: [draw_duration_events]
     
 draw_session_duration:
-  tags: [performance]
+  tags: [performance, i1]
   numerator:
     observations: [draw_session_duration]
   denominator:
     observations: [draw_session_duration_events]
-    
+
+init_duration:
+  tags: [performance]
+  numerator:
+    observations: [init_duration]
+  denominator:
+    observations: [init_duration_events]
+
 init_session_duration:
   tags: [performance]
   numerator:
@@ -9667,6 +10957,710 @@ serverloading_session_duration:
     observations: [serverloading_session_duration]
   denominator:
     observations: [serverloading_session_duration_events]  
+
+##############################################################################
+# Performance :: WEB
+##############################################################################
+
+app_cache_duration:
+  tags: [performance]
+  numerator:
+    observations: [app_cache_duration]
+  denominator:
+    observations: [app_cache_duration_events]
+    
+connection_duration:
+  tags: [performance]
+  numerator:
+    observations: [connection_duration]
+  denominator:
+    observations: [connection_duration_events]
+    
+content_paint_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [content_paint_session_duration]
+  denominator:
+    observations: [content_paint_session_duration_events]
+    
+dom_completion_duration:
+  tags: [performance]
+  numerator:
+    observations: [dom_completion_duration]
+  denominator:
+    observations: [dom_completion_duration_events]
+    
+dom_content_load_duration:
+  tags: [performance]
+  numerator:
+    observations: [dom_content_load_duration]
+  denominator:
+    observations: [dom_content_load_duration_events]
+    
+dom_interactive_duration:
+  tags: [performance]
+  numerator:
+    observations: [dom_interactive_duration]
+  denominator:
+    observations: [dom_interactive_duration_events]
+    
+domain_lookup_duration:
+  tags: [performance]
+  numerator:
+    observations: [domain_lookup_duration]
+  denominator:
+    observations: [domain_lookup_duration_events]
+    
+first_paint_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [first_paint_session_duration]
+  denominator:
+    observations: [first_paint_session_duration_events]
+    
+on_load_duration:
+  tags: [performance]
+  numerator:
+    observations: [on_load_duration]
+  denominator:
+    observations: [on_load_duration_events]
+    
+processing_duration:
+  tags: [performance]
+  numerator:
+    observations: [processing_duration]
+  denominator:
+    observations: [processing_duration_events]
+    
+processing_on_load_duration:
+  tags: [performance]
+  numerator:
+    observations: [processing_on_load_duration]
+  denominator:
+    observations: [processing_on_load_duration_events]
+    
+redirect_duration:
+  tags: [performance]
+  numerator:
+    observations: [redirect_duration]
+  denominator:
+    observations: [redirect_duration_events]
+    
+request_duration:
+  tags: [performance]
+  numerator:
+    observations: [request_duration]
+  denominator:
+    observations: [request_duration_events]
+    
+request_response_duration:
+  tags: [performance]
+  numerator:
+    observations: [request_response_duration]
+  denominator:
+    observations: [request_response_duration_events]
+    
+response_duration:
+  tags: [performance]
+  numerator:
+    observations: [response_duration]
+  denominator:
+    observations: [response_duration_events]
+    
+secure_connection_duration:
+  tags: [performance]
+  numerator:
+    observations: [secure_connection_duration]
+  denominator:
+    observations: [secure_connection_duration_events]
+    
+session_duration:
+  tags: [performance, i1]
+  numerator:
+    observations: [session_duration]
+  denominator:
+    observations: [session_duration_events]
+    
+ttfb_duration:
+  tags: [performance]
+  numerator:
+    observations: [ttfb_duration]
+  denominator:
+    observations: [ttfb_duration_events]
+
+app_cache_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [app_cache_events_p25]
+      denominator:
+        observations: [app_cache_events]
+        
+app_cache_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [app_cache_events_p50]
+      denominator:
+        observations: [app_cache_events]
+        
+app_cache_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [app_cache_events_p75]
+      denominator:
+        observations: [app_cache_events]
+        
+app_cache_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [app_cache_events_p95]
+      denominator:
+        observations: [app_cache_events]
+        
+connection_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [connection_events_p25]
+      denominator:
+        observations: [connection_events]
+        
+connection_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [connection_events_p50]
+      denominator:
+        observations: [connection_events]
+        
+connection_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [connection_events_p75]
+      denominator:
+        observations: [connection_events]
+        
+connection_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [connection_events_p95]
+      denominator:
+        observations: [connection_events]
+        
+dom_completion_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [dom_completion_events_p25]
+      denominator:
+        observations: [dom_completion_events]
+        
+dom_completion_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [dom_completion_events_p50]
+      denominator:
+        observations: [dom_completion_events]
+        
+dom_completion_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [dom_completion_events_p75]
+      denominator:
+        observations: [dom_completion_events]
+        
+dom_completion_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [dom_completion_events_p95]
+      denominator:
+        observations: [dom_completion_events]
+        
+dom_content_load_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [dom_content_load_events_p25]
+      denominator:
+        observations: [dom_content_load_events]
+        
+dom_content_load_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [dom_content_load_events_p50]
+      denominator:
+        observations: [dom_content_load_events]
+        
+dom_content_load_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [dom_content_load_events_p75]
+      denominator:
+        observations: [dom_content_load_events]
+        
+dom_content_load_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [dom_content_load_events_p95]
+      denominator:
+        observations: [dom_content_load_events]
+        
+dom_interactive_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [dom_interactive_events_p25]
+      denominator:
+        observations: [dom_interactive_events]
+        
+dom_interactive_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [dom_interactive_events_p50]
+      denominator:
+        observations: [dom_interactive_events]
+        
+dom_interactive_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [dom_interactive_events_p75]
+      denominator:
+        observations: [dom_interactive_events]
+        
+dom_interactive_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [dom_interactive_events_p95]
+      denominator:
+        observations: [dom_interactive_events]
+        
+domain_lookup_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [domain_lookup_events_p25]
+      denominator:
+        observations: [domain_lookup_events]
+        
+domain_lookup_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [domain_lookup_events_p50]
+      denominator:
+        observations: [domain_lookup_events]
+        
+domain_lookup_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [domain_lookup_events_p75]
+      denominator:
+        observations: [domain_lookup_events]
+        
+domain_lookup_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [domain_lookup_events_p95]
+      denominator:
+        observations: [domain_lookup_events]
+        
+on_load_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [on_load_events_p25]
+      denominator:
+        observations: [on_load_events]
+        
+on_load_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [on_load_events_p50]
+      denominator:
+        observations: [on_load_events]
+        
+on_load_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [on_load_events_p75]
+      denominator:
+        observations: [on_load_events]
+        
+on_load_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [on_load_events_p95]
+      denominator:
+        observations: [on_load_events]
+        
+processing_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [processing_events_p25]
+      denominator:
+        observations: [processing_events]
+        
+processing_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [processing_events_p50]
+      denominator:
+        observations: [processing_events]
+        
+processing_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [processing_events_p75]
+      denominator:
+        observations: [processing_events]
+        
+processing_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [processing_events_p95]
+      denominator:
+        observations: [processing_events]
+        
+processing_on_load_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [processing_on_load_events_p25]
+      denominator:
+        observations: [processing_on_load_events]
+        
+processing_on_load_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [processing_on_load_events_p50]
+      denominator:
+        observations: [processing_on_load_events]
+        
+processing_on_load_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [processing_on_load_events_p75]
+      denominator:
+        observations: [processing_on_load_events]
+        
+processing_on_load_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [processing_on_load_events_p95]
+      denominator:
+        observations: [processing_on_load_events]
+        
+redirect_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [redirect_events_p25]
+      denominator:
+        observations: [redirect_events]
+        
+redirect_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [redirect_events_p50]
+      denominator:
+        observations: [redirect_events]
+        
+redirect_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [redirect_events_p75]
+      denominator:
+        observations: [redirect_events]
+        
+redirect_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [redirect_events_p95]
+      denominator:
+        observations: [redirect_events]
+        
+request_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [request_events_p25]
+      denominator:
+        observations: [request_events]
+        
+request_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [request_events_p50]
+      denominator:
+        observations: [request_events]
+        
+request_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [request_events_p75]
+      denominator:
+        observations: [request_events]
+        
+request_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [request_events_p95]
+      denominator:
+        observations: [request_events]
+        
+request_response_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [request_response_events_p25]
+      denominator:
+        observations: [request_response_events]
+        
+request_response_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [request_response_events_p50]
+      denominator:
+        observations: [request_response_events]
+        
+request_response_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [request_response_events_p75]
+      denominator:
+        observations: [request_response_events]
+        
+request_response_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [request_response_events_p95]
+      denominator:
+        observations: [request_response_events]
+        
+response_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [response_events_p25]
+      denominator:
+        observations: [response_events]
+        
+response_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [response_events_p50]
+      denominator:
+        observations: [response_events]
+        
+response_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [response_events_p75]
+      denominator:
+        observations: [response_events]
+        
+response_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [response_events_p95]
+      denominator:
+        observations: [response_events]
+        
+secure_connection_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [secure_connection_events_p25]
+      denominator:
+        observations: [secure_connection_events]
+        
+secure_connection_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [secure_connection_events_p50]
+      denominator:
+        observations: [secure_connection_events]
+        
+secure_connection_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [secure_connection_events_p75]
+      denominator:
+        observations: [secure_connection_events]
+        
+secure_connection_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [secure_connection_events_p95]
+      denominator:
+        observations: [secure_connection_events]
+        
+session_percent_p25:
+      tags: [performance, i1]
+      numerator:
+        observations: [session_events_p25]
+      denominator:
+        observations: [session_events]
+        
+session_percent_p50:
+      tags: [performance, i1]
+      numerator:
+        observations: [session_events_p50]
+      denominator:
+        observations: [session_events]
+        
+session_percent_p75:
+      tags: [performance, i1]
+      numerator:
+        observations: [session_events_p75]
+      denominator:
+        observations: [session_events]
+        
+session_percent_p95:
+      tags: [performance, i1]
+      numerator:
+        observations: [session_events_p95]
+      denominator:
+        observations: [session_events]
+        
+ttfb_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [ttfb_events_p25]
+      denominator:
+        observations: [ttfb_events]
+        
+ttfb_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [ttfb_events_p50]
+      denominator:
+        observations: [ttfb_events]
+        
+ttfb_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [ttfb_events_p75]
+      denominator:
+        observations: [ttfb_events]
+        
+ttfb_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [ttfb_events_p95]
+      denominator:
+        observations: [ttfb_events]
+
+dom_interactive_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [dom_interactive_sessionduration]
+  denominator:
+    observations: [dom_interactive_session_duration_events]
+
+dom_interactive_session_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [dom_interactive_session_events_p25]
+      denominator:
+        observations: [dom_interactive_session_events]
+        
+dom_interactive_session_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [dom_interactive_session_events_p50]
+      denominator:
+        observations: [dom_interactive_session_events]
+        
+dom_interactive_session_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [dom_interactive_session_events_p75]
+      denominator:
+        observations: [dom_interactive_session_events]
+        
+dom_interactive_session_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [dom_interactive_session_events_p95]
+      denominator:
+        observations: [dom_interactive_session_events]
+
+dom_load_session_duration:
+  tags: [performance]
+  numerator:
+    observations: [dom_load_session_duration]
+  denominator:
+    observations: [dom_load_session_duration_events]
+
+dom_load_session_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [dom_load_session_events_p25]
+      denominator:
+        observations: [dom_load_session_events]
+        
+dom_load_session_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [dom_load_session_events_p50]
+      denominator:
+        observations: [dom_load_session_events]
+        
+dom_load_session_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [dom_load_session_events_p75]
+      denominator:
+        observations: [dom_load_session_events]
+        
+dom_load_session_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [dom_load_session_events_p95]
+      denominator:
+        observations: [dom_load_session_events]
+
+content_paint_session_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [content_paint_session_events_p25]
+      denominator:
+        observations: [content_paint_session_events]
+        
+content_paint_session_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [content_paint_session_events_p50]
+      denominator:
+        observations: [content_paint_session_events]
+        
+content_paint_session_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [content_paint_session_events_p75]
+      denominator:
+        observations: [content_paint_session_events]
+        
+content_paint_session_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [content_paint_session_events_p95]
+      denominator:
+        observations: [content_paint_session_events]
+
+first_paint_session_percent_p25:
+      tags: [performance]
+      numerator:
+        observations: [first_paint_session_events_p25]
+      denominator:
+        observations: [first_paint_session_events]
+        
+first_paint_session_percent_p50:
+      tags: [performance]
+      numerator:
+        observations: [first_paint_session_events_p50]
+      denominator:
+        observations: [first_paint_session_events]
+        
+first_paint_session_percent_p75:
+      tags: [performance]
+      numerator:
+        observations: [first_paint_session_events_p75]
+      denominator:
+        observations: [first_paint_session_events]
+        
+first_paint_session_percent_p95:
+      tags: [performance]
+      numerator:
+        observations: [first_paint_session_events_p95]
+      denominator:
+        observations: [first_paint_session_events]
         
 
  ######   #######  ##     ## ##     ## ##     ## ##    ## ####  ######     ###    ######## ####  #######  ##    ##  ######  
@@ -10947,6 +12941,7 @@ users_avitopro:
     groupby: [participant]
 
 
+<<<<<<< HEAD
  ######   ########  #######  
 ##    ##  ##       ##     ## 
 ##        ##       ##     ## 
@@ -10954,11 +12949,29 @@ users_avitopro:
 ##    ##  ##       ##     ## 
 ##    ##  ##       ##     ## 
  ######   ########  #######  
+=======
+
+#   #######   ########  #######  
+#   ##    ##  ##       ##     ## 
+#   ##        ##       ##     ## 
+#   ##   #### ######   ##     ## 
+#   ##    ##  ##       ##     ## 
+#   ##    ##  ##       ##     ## 
+#   #######   ########  #######  
+#                                                                       
+#    #       ####   ####      ####  #    #   ##   #    #  ####  ######  ####  
+#    #      #    # #    #    #    # #    #  #  #  ##   # #    # #      #      
+#    #      #    # #         #      ###### #    # # #  # #      #####   ####  
+#    #      #    # #         #      #    # ###### #  # # #  ### #           # 
+#    #      #    # #    #    #    # #    # #    # #   ## #    # #      #    # 
+#    ######  ####   ####      ####  #    # #    # #    #  ####  ######  ####  
+>>>>>>> origin
 
 ###############################################################################
-# Geo :: Totals
+# Location changings :: Totals Events
 ###############################################################################
 
+####Окно выбора локаций
 loc_window_opens:
   title: loc_window_opens
   tags: [i3, geo, total]
@@ -10977,6 +12990,21 @@ loc_window_opens_radius:
   numerator:
     observations: [location_dialogue_opens]
     
+<<<<<<< HEAD
+=======
+loc_window_opens_search:
+  title: loc_window_opens_search
+  tags: [other, geo, total]
+  numerator:
+    observations: [location_dialogue_opens_search]
+    
+loc_window_opens_radius:
+  title: loc_window_opens_radius
+  tags: [other, geo, total]
+  numerator:
+    observations: [location_dialogue_opens_radius]
+    
+>>>>>>> origin
 loc_window_opens_app_settings:
   title: loc_window_opens_app_settings
   tags: [other, geo, total]
@@ -11001,6 +13029,7 @@ location_text_inputs:
   numerator:
     observations: [location_text_inputs]
 
+<<<<<<< HEAD
 users_loc_window_opens:
   title: users_loc_window_opens
   tags: [i3, bx,  user]
@@ -11029,6 +13058,9 @@ users_loc_suggest_clicks:
     observations: [location_suggest_clicks]
     groupby: [participant]
        
+=======
+####Смены локаций
+>>>>>>> origin
 loc_chng:
   description: "Число смен локаций"
   tags: [i1, geo]
@@ -11057,6 +13089,27 @@ loc_chng_radius:
   numerator:
     observations: [location_changings_radius]
     
+    
+loc_chng_search:
+  description: "Число смен локаций из поисковых фильтров (основной сценарий)"
+  title: loc_chng_search
+  tags: [other, geo]
+  numerator:
+    observations: [location_changings_search]
+    
+loc_chng_app_settings:
+  description: "Число смен локаций из экрана настроек аппов"
+  title: loc_chng_app_settings
+  tags: [other, geo]
+  numerator:
+    observations: [location_changings_app_settings]
+        
+loc_chng_radius:
+  description: "Число смен локаций из экрана радиуса"
+  title: loc_chng_radius
+  tags: [other, geo]
+  numerator:
+    observations: [location_changings_radius]
     
 loc_bad_chng:
   description: "Т.н. плохие смены локаций. Подробнее см. https://cf.avito.ru/pages/viewpage.action?pageId=108636802"
@@ -11103,6 +13156,114 @@ loc_horizontal_chng:
   numerator:
     observations: [location_changings_horizontal]
     
+loc_chng_region_russia:
+  tags: [other, geo]
+  description: "Смена локации с уровня региона на Россию"
+  numerator:
+    observations: [location_changings_region_russia]
+    
+loc_chng_city_region:
+  tags: [other, geo]
+  description: "Смена локации с уровня города на регион"
+  numerator:
+    observations: [location_changings_city_region]
+    
+loc_chng_city_russia:
+  tags: [other, geo]
+  description: "Смена локации с уровня города на Россию"
+  numerator:
+    observations: [location_changings_city_russia]
+ 
+loc_chng_russia_region:
+  tags: [other, geo]
+  description: "Смена локации с уровня России на регион"
+  numerator:
+    observations: [location_changings_russia_region]
+
+loc_chng_russia_city:
+  tags: [other, geo]
+  description: "Смена локации с уровня России на город"
+  numerator:
+    observations: [location_changings_russia_city]
+    
+loc_chng_region_city:
+  tags: [other, geo]
+  description: "Смена локации с уровня региона на город"
+  numerator:
+    observations: [location_changings_region_city]
+
+loc_chng_region_region:
+  tags: [other, geo]
+  description: "Смена локации с уровня региона на регион"
+  numerator:
+    observations: [location_changings_region_region]
+
+loc_chng_city_city:
+  tags: [other, geo]
+  description: "Смена локации с уровня города на город"
+  numerator:
+    observations: [location_changings_city_city]
+    
+loc_chng_bad_russia:
+  tags: [other, geo]
+  description: "Плохие смены локации с уровня Россия"
+  numerator:
+    observations: [location_changings_bad_russia]
+    
+loc_chng_bad_region:
+  tags: [other, geo]
+  description: "Плохие смены локации с уровня региона"
+  numerator:
+    observations: [location_changings_bad_regions]
+    
+loc_chng_bad_city:
+  tags: [other, geo]
+  description: "Плохие смены локации с уровня города"
+  numerator:
+    observations: [location_changings_bad_city]
+    
+loc_chng_suspicious_russia:
+  tags: [other, geo]
+  description: "Подозрительные смены локации с уровня России"
+  numerator:
+    observations: [location_changings_suspicious_russia]
+
+loc_chng_suspicious_region:
+  tags: [other, geo]
+  description: "Подозрительные смены локации с уровня региона"
+  numerator:
+    observations: [location_changings_suspicious_regions]
+
+loc_chng_suspicious_city:
+  tags: [other, geo]
+  description: "Подозрительные смены локации с уровня города"
+  numerator:
+    observations: [location_changings_suspicious_city]
+
+loc_chng_neutral_russia:
+  tags: [other, geo]
+  description: "Нейтральные смены локации с уровня России"
+  numerator:
+    observations: [location_changings_neutral_russia]
+
+loc_chng_neutral_region:
+  tags: [other, geo]
+  description: "Нейтральные смены локации с уровня региона"
+  numerator:
+    observations: [location_changings_neutral_regions]
+
+loc_chng_neutral_city:
+  tags: [other, geo]
+  description: "Нейтральные смены локации с уровня города"
+  numerator:
+    observations: [location_changings_neutral_city]
+    
+
+
+###############################################################################
+# Location changings :: Totals Sessions
+###############################################################################
+
 loc_chng_sessions:
   description: "Число сессий со сменой локации"
   tags: [i1, geo]
@@ -11138,6 +13299,43 @@ loc_bad_and_chng_sessions:
     observations: [location_changings_bad, location_changings_suspicious]
     groupby: [participant, session]
     
+
+
+users_loc_window_opens:
+  title: users_loc_window_opens
+  tags: [i3, bx,  user]
+  numerator:
+    observations: [location_dialogue_opens]
+    groupby: [participant]
+    
+users_loc_window_opens_radius:
+  title: users_loc_window_opens_radius
+  tags: [other, geo,  user]
+  numerator:
+    observations: [location_dialogue_opens_radius]
+    groupby: [participant]
+    
+users_loc_window_opens_search:
+  title: users_loc_window_opens_search
+  tags: [other, geo,  user]
+  numerator:
+    observations: [location_dialogue_opens_search]
+    groupby: [participant]
+
+users_loc_suggest_clicks:
+  title: users_loc_suggest_clicks
+  tags: [i4, bx,  user]
+  numerator:
+    observations: [location_suggest_clicks]
+    groupby: [participant]
+       
+
+
+
+###############################################################################
+# Location changings :: Totals Users
+###############################################################################
+
 users_loc_chng:
   description: "Число юзеров со сменой локации"
   tags: [i1, geo]
@@ -11194,6 +13392,7 @@ users_loc_horizontal_chng:
     observations: [location_changings_horizontal]
     groupby: [participant] 
   
+<<<<<<< HEAD
 loc_chng_region_russia:
   tags: [other, geo]
   description: "Смена локации с уровня региона на Россию"
@@ -11319,9 +13518,48 @@ default_loc_tooltip_declines:
 
 users_default_loc_tooltip_declines:
   tags: [i4, geo]
+=======
+
+
+###############################################################################
+# Location changings :: Ratios Events
+###############################################################################
+
+#### окно смены локаций ratio
+loc_window_saves_per_opens:
+  title: loc_window_saves_per_opens
+  tags: [i3, bx, total]
   numerator:
-    observations: [tooltip_not_accepts]
-    groupby: [participant]
+    observations: [location_dialogue_savings]
+  denominator:
+    observations: [location_dialogue_opens]
+    
+loc_window_saves_per_opens_radius:
+  title: loc_window_saves_per_opens_radius
+  tags: [other, geo, ratio]
+  numerator:
+    observations: [location_dialogue_savings_radius]
+  denominator:
+    observations: [location_dialogue_opens_radius]
+    
+loc_window_saves_per_opens_search:
+  title: loc_window_saves_per_opens_search
+  tags: [other, geo, ratio]
+  numerator:
+    observations: [location_dialogue_savings_search]
+  denominator:
+    observations: [location_dialogue_opens_search]
+
+loc_suggests_per_text_inputs:
+  title: loc_suggests_per_text_inputs
+  tags: [i4, bx, total]
+>>>>>>> origin
+  numerator:
+    observations: [location_suggest_clicks]
+  denominator:
+    observations: [location_text_inputs]
+
+    
 
 default_loc_tooltip_accepts_russia:
   tags: [other, geo]
@@ -11381,8 +13619,13 @@ default_loc_tooltip_shows_city:
     observations: [tooltip_opens_city]
 
 ###############################################################################
-# Geo :: Ratios
+# Location changings :: Ratios Sessions
 ###############################################################################
+<<<<<<< HEAD
+=======
+
+#### сами смены локаций ratio
+>>>>>>> origin
 loc_chng_sessions_per_s_session:
   tags: [i2, geo]
   numerator:
@@ -11409,15 +13652,49 @@ loc_bad__susp_chng_sessions_per_s_sessions:
   denominator:
     observations: [searches]
     groupby: [participant, session]
+
+
+###############################################################################
+# Location changings :: Ratios Users
+###############################################################################
+
+
+#    # #    # #      ##### #    #       ####   ####  
+##  ## #    # #        #   #    #      #    # #    # 
+# ## # #    # #        #   #    #      #    # #      
+#    # #    # #        #   #    #      #    # #      
+#    # #    # #        #   #    #      #    # #    # 
+#    #  ####  ######   #   #    ######  ####   ####  
+
+###############################################################################
+# Multi locations :: Totals Events
+###############################################################################
+locations_in_search:
+  description: "Число различных локаций поисках в рамках одной сессии и одной микрокатегории"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
     
+<<<<<<< HEAD
 loc_window_saves_per_opens:
   title: loc_window_saves_per_opens
   tags: [i3, geo, total]
+=======
+cities_in_search:
+  description: "Число различных локаций уровня город поисках в рамках одной сессии и одной микрокатегории"
+  tags: [other, geo]
+>>>>>>> origin
   numerator:
-    observations: [location_dialogue_savings]
-  denominator:
-    observations: [location_dialogue_opens]
+    observations: [cities_in_searches]
+    
+regions_in_search:
+  description: "Число различных локаций уровня Регион поисках в рамках одной сессии и одной микрокатегории"
+  tags: [other, geo]
+  numerator:
+    observations: [regions_in_searches]
+    
 
+<<<<<<< HEAD
 loc_window_saves_per_opens_radius:
   title: loc_window_saves_per_opens_radius
   tags: [other, geo, total]
@@ -11437,11 +13714,232 @@ loc_window_saves_per_opens_search:
 loc_suggests_per_text_inputs:
   title: loc_suggests_per_text_inputs
   tags: [i4, bx, total]
+=======
+###############################################################################
+# Multi locations :: Totals Sessions
+###############################################################################
+multiloc_sess:
+  description: "Число сессий, в которых были поиски в 2+ локациях (в рамках одной микрокатегории)"
+  tags: [i3, geo]
+>>>>>>> origin
   numerator:
-    observations: [location_suggest_clicks]
-  denominator:
-    observations: [location_text_inputs]
+    observations: [locations_in_searches]
+    groupby: [participant, session]
+    threshold: 2
+    
+multi_city_sess:
+  description: "Число юзеров, у которых были поиски в 2+ ГОРОДАХ (в рамках одной микрокатегории)"
+  tags: [other, geo]
+  numerator:
+    observations: [cities_in_searches]
+    groupby: [participant, session]
+    threshold: 2
+    
+multi_region_sess:
+  description: "Число юзеров, у которых были поиски в 2+ РЕГИОНАХ (в рамках одной микрокатегории)"
+  tags: [other, geo]
+  numerator:
+    observations: [regions_in_searches]
+    groupby: [participant, session]
+    threshold: 2
 
+
+
+
+###############################################################################
+# Multi locations :: Totals Users
+###############################################################################
+multiloc_users:
+  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории)"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant]
+    threshold: 2
+    
+
+
+###############################################################################
+# Multi locations :: Ratios Events
+###############################################################################
+locations_per_search:
+  description: "Число разных локаций (в рамках одной микрокатегории) на число поисков"
+  tags: [i4, geo]
+  numerator:
+    observations: [locations_in_searches]
+  denominator:
+    observations: [searches]
+
+
+###############################################################################
+# Multi locations :: Ratios Sessions
+###############################################################################
+multiloc_sess_per_sess_search:
+  description: "Число сессий, в которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число поисковых сессий"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant, session]
+    threshold: 2
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+    
+
+###############################################################################
+# Multi locations :: Ratios Users
+###############################################################################
+multiloc_user_per_user_search:
+  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число серчеров"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant]
+    threshold: 2
+  denominator:
+<<<<<<< HEAD
+    observations: [tooltip_opens]
+    
+default_loc_tooltip_russia_share:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens_russia]
+  denominator:
+    observations: [tooltip_opens]   
+    
+default_loc_tooltip_region_share:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens_region]
+  denominator:
+    observations: [tooltip_opens]   
+
+default_loc_tooltip_city_share:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens_city]
+  denominator:
+    observations: [tooltip_opens]   
+
+
+
+=======
+    observations: [searches]
+    groupby: [participant]
+>>>>>>> origin
+
+
+########  ####   ####  #     ######## # #####  
+#   #    #    # #    # #        #     # #    # 
+#   #    #    # #    # #        #     # #    # 
+#   #    #    # #    # #        #     # #####  
+#   #    #    # #    # #        #     # #      
+#   #     ####   ####  ######   #     # #     
+#
+###############################################################################
+# Tooltip :: Totals Events
+###############################################################################
+default_loc_tooltip_shows:
+  tags: [i3, geo]
+  numerator: 
+    observations: [tooltip_opens]
+
+default_loc_tooltip_accepts:
+  tags: [i3, geo]
+  numerator:
+    observations: [tooltip_accepts]
+
+default_loc_tooltip_declines:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_not_accepts]
+
+default_loc_tooltip_accepts_russia:
+  tags: [other, geo]
+  description: "Принятие тултипа по всей России"
+  numerator:
+    observations: [tooltip_accepts_russia]
+    groupby: [participant]
+
+default_loc_tooltip_declines_russia:
+  tags: [other, geo]
+  description: "Отклонение тултипа по всей России"
+  numerator:
+    observations: [tooltip_not_accepts_russia]
+    groupby: [participant]
+
+default_loc_tooltip_accepts_region:
+  tags: [other, geo]
+  description: "Принятие тултипа уровня регион"
+  numerator:
+    observations: [tooltip_accepts_region]
+    groupby: [participant]
+
+default_loc_tooltip_declines_region:
+  tags: [other, geo]
+  description: "Отклонение тултипа  уровня регион"
+  numerator:
+    observations: [tooltip_not_accepts_region]
+    groupby: [participant]
+
+default_loc_tooltip_accepts_city:
+  tags: [other, geo]
+  description: "Принятие тултипа уровня город"
+  numerator:
+    observations: [tooltip_accepts_city]
+    groupby: [participant]
+
+default_loc_tooltip_declines_city:
+  tags: [other, geo]
+  description: "Отклонение тултипа  уровня город"
+  numerator:
+    observations: [tooltip_not_accepts_city]
+    groupby: [participant]
+
+default_loc_tooltip_shows_russia:
+  tags: [other, geo]
+  numerator: 
+    observations: [tooltip_opens_russia]
+
+default_loc_tooltip_shows_region:
+  tags: [other, geo]
+  numerator: 
+    observations: [tooltip_opens_region]
+
+default_loc_tooltip_shows_city:
+  tags: [other, geo]
+  numerator: 
+    observations: [tooltip_opens_city]
+       
+
+###############################################################################
+# Tooltip :: Totals Users
+###############################################################################
+users_default_loc_tooltip_declines:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_not_accepts]
+    groupby: [participant]
+
+users_default_loc_tooltip_accepts:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_accepts]
+    groupby: [participant]
+
+users_default_loc_tooltip:
+  tags: [i4, geo]
+  numerator:
+    observations: [tooltip_opens]
+    groupby: [participant]
+
+
+
+
+
+###############################################################################
+# Tooltip :: Ratios Events
+###############################################################################
 default_loc_tooltip_accepts_per_shows:
   tags: [i3, geo]
   numerator:
@@ -11478,20 +13976,1132 @@ default_loc_tooltip_city_share:
     observations: [tooltip_opens]   
 
 
-
-
-##     ##    ###    ########  
-###   ###   ## ##   ##     ## 
-#### ####  ##   ##  ##     ## 
-## ### ## ##     ## ########  
-##     ## ######### ##        
-##     ## ##     ## ##        
-##     ## ##     ## ##        
-
 ###############################################################################
-# Map :: Totals
+# Tooltip :: Ratios Users
 ###############################################################################
 
+
+#####  ######  ####      ####  ######   ##   #####   ####  #    # ######  ####  
+#    # #      #    #    #      #       #  #  #    # #    # #    # #      #      
+#      #####  #    #     ####  #####  #    # #    # #      ###### #####   ####  
+#  ### #      #    #         # #      ###### #####  #      #    # #           # 
+#    # #      #    #    #    # #      #    # #   #  #    # #    # #      #    # 
+#####  ######  ####      ####  ###### #    # #    #  ####  #    # ######  ####  
+# 
+###############################################################################
+# Geo searches :: Totals Events
+###############################################################################
+# 
+#### сами гео поиски 
+searches_metro:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_metro]
+    
+searches_district:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_district]
+
+searches_road:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_road]
+    
+searches_local_geo:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_metro,searches_district,searches_road]
+   
+searches_geo:
+  tags: [i3, geo, bx]
+  title: geo_search
+  description: "Поиски с локальным геофильтром (метро, район, направление) или радиусом>0"
+  numerator: 
+    observations: [searches_metro,searches_district,searches_road, searches_radius]
+    
+searches_radius:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_radius]  
+
+
+#### has метрики геопоисков с целевыми действиями
+searches_metro_with_item_view:
+  tags: [i4, geo, bx]
+  title: searches_metro_iv
+  numerator: 
+    observations: [searches_metro_with_item_view]
+    
+searches_district_with_item_view:
+  tags: [i4, geo, bx]
+  title: searches_district_iv
+  numerator: 
+    observations: [searches_district_with_item_view]
+    
+searches_road_with_item_view:
+  tags: [i4, geo, bx]
+  title: searches_road_iv
+  numerator: 
+    observations: [searches_road_with_item_view]
+
+searches_radius_with_item_view:
+  tags: [i4, geo, bx]
+  title: searches_radius_iv
+  numerator: 
+    observations: [searches_radius_with_item_view]
+
+searches_metro_with_contact:
+  tags: [i4, geo, bx]
+  title: searches_metro_c
+  numerator: 
+    observations: [searches_metro_with_contact]
+    
+searches_district_with_contact:
+  tags: [i4, geo, bx]
+  title: searches_district_c
+  numerator: 
+    observations: [searches_district_with_contact]
+    
+searches_road_with_contact:
+  tags: [i4, geo, bx]
+  title: searches_road_c
+  numerator: 
+    observations: [searches_road_with_contact]
+
+searches_radius_with_contact:
+  tags: [i4, geo, bx]
+  title: searches_radius_c
+  numerator: 
+    observations: [searches_radius_with_contact]
+    
+searches_metro_with_btc:
+  tags: [i4, geo, bx]
+  title: searches_metro_btc
+  numerator: 
+    observations: [searches_metro_with_btc]
+    
+searches_district_with_btc:
+  tags: [i4, geo, bx]
+  title: searches_district_btc
+  numerator: 
+    observations: [searches_district_with_btc]
+    
+searches_road_with_btc:
+  tags: [i4, geo, bx]
+  title: searches_road_btc
+  numerator: 
+    observations: [searches_road_with_btc]
+
+searches_radius_with_btc:
+  tags: [i4, geo, bx]
+  title: searches_radius_btc
+  numerator: 
+    observations: [searches_radius_with_btc]    
+    
+
+#### целевые действия с геопоисков
+item_views_serp_metro:
+  tags: [i4, geo, bx]
+  title: iv_serp_metro
+  numerator: 
+    observations: [item_views_serp_metro]
+    
+item_views_serp_district:
+  tags: [i4, geo, bx]
+  title: iv_serp_district
+  numerator: 
+    observations: [item_views_serp_district]
+
+item_views_serp_road:
+  tags: [i4, geo, bx]
+  title: iv_serp_road
+  numerator: 
+    observations: [item_views_serp_road]
+
+item_views_serp_radius:
+  tags: [i4, geo, bx]
+  title: iv_serp_radius
+  numerator: 
+    observations: [item_views_serp_radius]
+    
+contacts_serp_metro:
+  tags: [i4, geo, bx]
+  title: c_serp_metro
+  numerator: 
+    observations: [contacts_serp_metro]
+    
+contacts_serp_district:
+  tags: [i4, geo, bx]
+  title: c_serp_district
+  numerator: 
+    observations: [contacts_serp_district]
+
+contacts_serp_road:
+  tags: [i4, geo, bx]
+  title: c_serp_road
+  numerator: 
+    observations: [contacts_serp_road]
+    
+contacts_serp_local_geo:
+  tags: [i4, geo, bx]
+  title: c_serp_local_geo
+  numerator: 
+    observations: [contacts_serp_metro, contacts_serp_district, contacts_serp_road]
+
+contacts_serp_radius:
+  tags: [i4, geo, bx]
+  title: c_serp_radius
+  numerator: 
+    observations: [contacts_serp_radius]
+    
+fav_added_serp_metro:
+  tags: [i4, geo, bx]
+  title: fav_added_serp_metro
+  numerator: 
+    observations: [fav_added_serp_metro]
+    
+fav_added_serp_district:
+  tags: [i4, geo, bx]
+  title: fav_added_serp_district
+  numerator: 
+    observations: [fav_added_serp_district]
+
+fav_added_serp_road:
+  tags: [i4, geo, bx]
+  title: fav_added_serp_road
+  numerator: 
+    observations: [fav_added_serp_road]
+
+fav_added_serp_radius:
+  tags: [i4, geo, bx]
+  title: fav_added_serp_radius
+  numerator: 
+    observations: [fav_added_serp_radius]
+    
+buyer_target_clicks_serp_metro:
+  tags: [i4, geo, bx]
+  title: btc_serp_metro
+  numerator: 
+    observations: [buyer_target_clicks_serp_metro]
+    
+buyer_target_clicks_serp_district:
+  tags: [i4, geo, bx]
+  title: btc_serp_district
+  numerator: 
+    observations: [buyer_target_clicks_serp_district]
+
+buyer_target_clicks_serp_road:
+  tags: [i4, geo, bx]
+  title: btc_serp_road
+  numerator: 
+    observations: [buyer_target_clicks_serp_road]
+
+buyer_target_clicks_serp_radius:
+  tags: [i4, geo, bx]
+  title: btc_serp_radius
+  numerator: 
+    observations: [buyer_target_clicks_serp_radius]
+    
+
+#### детализация гео поисков 
+default_radius_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски с дефолтным радиусом"
+  title: radius_default
+  numerator: 
+    observations: [default_radius_searches]
+    
+not_default_radius_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски с НЕ дефолтным радиусом"
+  title: radius_not_default
+  numerator: 
+    observations: [not_default_radius_searches]
+   
+radius_0_searches:
+  tags: [i4, geo, bx]
+  title: radius_0
+  numerator: 
+    observations: [radius_0_searches]
+
+radius_1_searches:
+  tags: [i4, geo, bx]
+  title: radius_1
+  numerator: 
+    observations: [radius_1_searches]
+    
+radius_5_searches:
+  tags: [i4, geo, bx]
+  title: radius_5
+  numerator: 
+    observations: [radius_5_searches]
+    
+radius_10_searches:
+  tags: [i4, geo, bx]
+  title: radius_10
+  numerator: 
+    observations: [radius_10_searches]
+    
+radius_25_searches:
+  tags: [i4, geo, bx]
+  title: radius_25
+  numerator: 
+    observations: [radius_25_searches]
+
+radius_50_searches:
+  tags: [i4, geo, bx]
+  title: radius_50
+  numerator: 
+    observations: [radius_50_searches]
+    
+radius_100_searches:
+  tags: [i4, geo, bx]
+  title: radius_100
+  numerator: 
+    observations: [radius_100_searches]
+    
+radius_short_searches:
+  tags: [i4, geo, bx]
+  title: radius_short
+  numerator: 
+    observations: [radius_100_searches,radius_50_searches,radius_25_searches,radius_10_searches,radius_5_searches,radius_1_searches]    
+
+radius_200_searches:
+  tags: [i4, geo, bx]
+  title: radius_200
+  numerator: 
+    observations: [radius_200_searches]
+    
+radius_300_searches:
+  tags: [i4, geo, bx]
+  title: radius_300
+  numerator: 
+    observations: [radius_300_searches]
+
+radius_400_searches:
+  tags: [i4, geo, bx]
+  title: radius_400
+  numerator: 
+    observations: [radius_400_searches]
+    
+radius_500_searches:
+  tags: [i4, geo, bx]
+  title: radius_500
+  numerator: 
+    observations: [radius_500_searches]
+
+radius_1000_searches:
+  tags: [i4, geo, bx]
+  title: radius_1000
+  numerator: 
+    observations: [radius_1000_searches]
+    
+radius_big_searches:
+  tags: [i4, geo, bx]
+  title: radius_big
+  numerator: 
+    observations: [radius_100_searches, radius_200_searches, radius_300_searches, radius_400_searches, radius_500_searches, radius_1000_searches]
+
+total_metros_in_searches:
+  tags: [i4, geo, bx]
+  description: "Общее число станций метро, выбранных в поисках"
+  title: metro_stations
+  numerator: 
+    observations: [total_metros_in_searches]
+    
+total_districts_in_searches:
+  tags: [i4, geo, bx]
+  description: "Общее число районов, выбранных в поисках"
+  title: districts
+  numerator: 
+    observations: [total_districts_in_searches]
+    
+
+###############################################################################
+# Geo searches :: Totals Users
+###############################################################################
+ 
+
+#### географические уровни поисков
+city_level_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски на уровне города"
+  title: search_city
+  numerator: 
+    observations: [city_level_searches, federal_city_level_searches]
+    
+meta_regions_level_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски на уровне метарегионов (Москва и МО)"
+  title: search_metaregion
+  numerator: 
+    observations: [meta_regions_level_searches]
+    
+regions_level_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски на уровне регионов, областей"
+  title: search_regions
+  numerator: 
+    observations: [regions_level_searches]
+    
+russia_level_searches:
+  tags: [i4, geo, bx]
+  description: "Поиски на уровне России"
+  title: search_russia
+  numerator: 
+    observations: [russia_level_searches]
+
+
+
+###############################################################################
+# Geo searches :: Totals Sessions
+###############################################################################
+sess_metro:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_metro]
+    groupby: [participant, session]
+    
+sess_searches_district:
+  tags: [i3, geo, bx, user]
+  numerator: 
+    observations: [searches_district]
+    groupby: [participant, session]
+    
+sess_searches_road:
+  tags: [i3, geo, bx, user]
+  numerator: 
+    observations: [searches_road]
+    groupby: [participant, session]
+    
+sess_searches_radius:
+  tags: [i3, geo, bx, user]
+  numerator: 
+    observations: [searches_radius]
+    groupby: [participant, session]    
+    
+buyer_target_clicks_geo_sess:
+  tags: [i2, geo, bx, user]
+  title:  btc_geo_sess
+  numerator: 
+    observations: [buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro, buyer_target_clicks_serp_road, buyer_target_clicks_serp_radius]
+    groupby: [participant, session]
+
+
+
+
+###############################################################################
+# Geo searches :: Totals Users
+###############################################################################
+#### сами юзеры гео поисков 
+users_searches_metro:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_metro]
+    groupby: [participant]
+    
+users_searches_district:
+  tags: [i3, geo, bx, user]
+  numerator: 
+    observations: [searches_district]
+    groupby: [participant]
+    
+users_searches_road:
+  tags: [i3, geo, bx, user]
+  numerator: 
+    observations: [searches_road]
+    groupby: [participant]
+    
+users_searches_radius:
+  tags: [i3, geo, bx, user]
+  numerator: 
+    observations: [searches_radius]
+    groupby: [participant]
+    
+users_searches_local_geo:
+  tags: [i3, geo, bx]
+  numerator: 
+    observations: [searches_metro,searches_district,searches_road]
+    groupby: [participant]
+    
+
+#### юзеры с целевыми действиями с гео поисков 
+users_item_views_serp_metro:
+  tags: [i4, geo, bx, user]
+  title: users_iv_serp_metro
+  numerator: 
+    observations: [item_views_serp_metro]
+    groupby: [participant]
+    
+users_item_views_serp_district:
+  tags: [i4, geo, bx, user]
+  title: users_iv_serp_district
+  numerator: 
+    observations: [item_views_serp_district]
+    groupby: [participant]
+    
+users_item_views_serp_road:
+  tags: [i4, geo, bx, user]
+  title: users_iv_serp_road
+  numerator: 
+    observations: [item_views_serp_road]
+    groupby: [participant]
+    
+users_item_views_serp_radius:
+  tags: [i4, geo, bx, user]
+  title: users_iv_serp_radius
+  numerator: 
+    observations: [item_views_serp_radius]
+    groupby: [participant]
+    
+users_contacts_serp_metro:
+  tags: [i2, geo, bx, user]
+  title: buyers_serp_metro
+  numerator: 
+    observations: [contacts_serp_metro]
+    groupby: [participant]
+    
+users_contacts_serp_district:
+  tags: [i2, geo, bx, user]
+  title:  buyers_serp_district
+  numerator: 
+    observations: [contacts_serp_district]
+    groupby: [participant]
+    
+users_contacts_serp_road:
+  tags: [i2, geo, bx, user]
+  title: buyers_serp_road
+  numerator: 
+    observations: [contacts_serp_road]
+    groupby: [participant]
+    
+users_contacts_serp_local_geo:
+  tags: [i2, geo, bx, user]
+  title:  buyers_local_geo
+  numerator: 
+    observations: [contacts_serp_district, contacts_serp_metro, contacts_serp_road]
+    groupby: [participant]
+    
+users_contacts_serp_radius:
+  tags: [i2, geo, bx, user]
+  title: buyers_serp_radius
+  numerator: 
+    observations: [contacts_serp_radius]
+    groupby: [participant]
+    
+users_buyer_target_clicks_serp_metro:
+  tags: [i4, geo, bx, user]
+  title: users_btc_serp_metro
+  numerator: 
+    observations: [buyer_target_clicks_serp_metro]
+    groupby: [participant]
+    
+users_buyer_target_clicks_serp_district:
+  tags: [i4, geo, bx, user]
+  title: users_btc_serp_district
+  numerator: 
+    observations: [buyer_target_clicks_serp_district]
+    groupby: [participant]
+    
+users_buyer_target_clicks_serp_road:
+  tags: [i4, geo, bx, user]
+  title: users_btc_serp_road
+  numerator: 
+    observations: [buyer_target_clicks_serp_road]
+    groupby: [participant]
+    
+users_buyer_target_clicks_serp_radius:
+  tags: [i4, geo, bx, user]
+  title: users_btc_serp_radius
+  numerator: 
+    observations: [buyer_target_clicks_serp_radius]
+    groupby: [participant]
+    
+
+
+
+
+###############################################################################
+# Geo searches :: Ratios Events
+###############################################################################
+#### сами гео поиски ratio
+searches_metro_per_search:
+  tags: [i4, geo, bx]
+  title: s_metro_per_s
+  numerator: 
+    observations: [searches_metro]
+  denominator:
+    observations: [searches]
+    
+searches_district_per_search:
+  tags: [i4, geo, bx]
+  title: s_district_per_s
+  numerator: 
+    observations: [searches_district]
+  denominator:
+    observations: [searches]
+
+searches_road_per_search:
+  tags: [i4, geo, bx]
+  title: s_road_per_s
+  numerator: 
+    observations: [searches_road]
+  denominator:
+    observations: [searches]   
+    
+searches_local_geo_per_search:
+  tags: [i3, geo, bx]
+  title: s_local_geo_per_s
+  numerator: 
+    observations: [searches_metro,searches_district,searches_road]
+  denominator:
+    observations: [searches]   
+    
+searches_geo_per_search:
+  tags: [i3, geo, bx]
+  title: s_geo_per_s
+  description: "Доля поисков с локальным геофильтром (метро, район, направление) или радиусом>0"
+  numerator: 
+    observations: [searches_metro,searches_district,searches_road, searches_radius]
+  denominator:
+    observations: [searches]   
+    
+searches_radius_per_search:
+  tags: [i4, geo, bx]
+  title: s_radius_per_s
+  numerator: 
+    observations: [searches_radius]  
+  denominator:
+    observations: [searches]
+    
+
+#### гео поиски, закончившиеся целевым действием ratio
+searches_metro_with_item_view_per_search_metro:
+  tags: [i4, geo, bx]
+  title: s_metro_iv_per_s_metro
+  numerator: 
+    observations: [searches_metro_with_item_view]
+  denominator:
+    observations: [searches_metro]
+    
+searches_district_with_item_view_per_search_district:
+  tags: [i4, geo, bx]
+  title: s_district_iv_per_s_district
+  numerator: 
+    observations: [searches_district_with_item_view]
+  denominator:
+    observations: [searches_district]
+    
+searches_road_with_item_view_per_search_road:
+  tags: [i4, geo, bx]
+  title: s_road_iv_per_s_road
+  numerator: 
+    observations: [searches_road_with_item_view]
+  denominator:
+    observations: [searches_road]
+    
+searches_local_geo_with_item_view_per_search_local_geo:
+  tags: [i4, geo, bx]
+  title: local_geo_iv_per_local_geo
+  numerator: 
+    observations: [searches_metro_with_item_view, searches_district_with_item_view, searches_road_with_item_view]
+  denominator:
+    observations: [searches_metro,searches_district, searches_road]
+    
+searches_radius_with_item_view_per_search_radius:
+  tags: [i4, geo, bx]
+  title: s_radius_iv_per_s_radius
+  numerator: 
+    observations: [searches_radius_with_item_view]
+  denominator:
+    observations: [searches_radius]
+    
+searches_metro_with_contact_per_search_metro:
+  tags: [i4, geo, bx]
+  title: s_metro_c_per_s_metro
+  numerator: 
+    observations: [searches_metro_with_contact]
+  denominator:
+    observations: [searches_metro]
+    
+searches_district_with_contact_per_search_district:
+  tags: [i4, geo, bx]
+  title: s_district_c_per_s_district
+  numerator: 
+    observations: [searches_district_with_contact]
+  denominator:
+    observations: [searches_district]
+    
+searches_road_with_contact_per_search_road:
+  tags: [i4, geo, bx]
+  title: s_road_c_per_s_road
+  numerator: 
+    observations: [searches_road_with_contact]
+  denominator:
+    observations: [searches_road]
+    
+searches_radius_with_contact_per_search_radius:
+  tags: [i4, geo, bx]
+  title: s_radius_c_per_s_radius
+  numerator: 
+    observations: [searches_radius_with_contact]
+  denominator:
+    observations: [searches_radius]
+    
+searches_metro_with_btc_per_search_metro:
+  tags: [i4, geo, bx]
+  title: s_metro_btc_per_s_metro
+  numerator: 
+    observations: [searches_metro_with_btc]
+  denominator:
+    observations: [searches_metro]
+    
+searches_district_with_btc_per_search_district:
+  tags: [i4, geo, bx]
+  title: s_district_btc_per_s_district
+  numerator: 
+    observations: [searches_district_with_btc]
+  denominator:
+    observations: [searches_district]
+    
+searches_road_with_btc_per_search_road:
+  tags: [i4, geo, bx]
+  title: s_road_btc_per_s_road
+  numerator: 
+    observations: [searches_road_with_btc]
+  denominator:
+    observations: [searches_road]
+    
+searches_radius_with_btc_per_search_radius:
+  tags: [i4, geo, bx]
+  title: s_radius_btc_per_s_radius
+  numerator: 
+    observations: [searches_radius_with_btc]
+  denominator:
+    observations: [searches_radius] 
+    
+
+#### целевые действия с гео поисков ratio
+item_views_serp_metro_per_search_metro:
+  tags: [i4, geo, bx]
+  title: iv_metro_per_s_metro
+  numerator: 
+    observations: [item_views_serp_metro]
+  denominator:
+    observations: [searches_metro] 
+    
+item_views_serp_district_per_search_district:
+  tags: [i4, geo, bx]
+  title: iv_district_per_s_district
+  numerator: 
+    observations: [item_views_serp_district]
+  denominator:
+    observations: [searches_district] 
+
+item_views_serp_road_per_search_road:
+  tags: [i4, geo, bx]
+  title: iv_road_per_s_road
+  numerator: 
+    observations: [item_views_serp_road]
+  denominator:
+    observations: [searches_road] 
+    
+item_views_serp_radius_per_search_radius:
+  tags: [i4, geo, bx]
+  title: iv_radius_per_s_radius
+  numerator: 
+    observations: [item_views_serp_radius]
+  denominator:
+    observations: [searches_radius] 
+    
+contacts_serp_metro_per_search_metro:
+  tags: [i4, geo, bx]
+  title: c_metro_per_s_metro
+  numerator: 
+    observations: [contacts_serp_metro]
+  denominator:
+    observations: [searches_metro] 
+    
+contacts_serp_district_per_search_district:
+  tags: [i4, geo, bx]
+  title: c_district_per_s_district
+  numerator: 
+    observations: [contacts_serp_district]
+  denominator:
+    observations: [searches_district] 
+
+contacts_serp_road_per_search_road:
+  tags: [i4, geo, bx]
+  title: c_road_per_s_road
+  numerator: 
+    observations: [contacts_serp_road]
+  denominator:
+    observations: [searches_road] 
+    
+contacts_serp_local_geo_per_search_local_geo:
+  tags: [i4, geo, bx]
+  title: c_local_geo_per_local_geo
+  numerator: 
+    observations: [contacts_serp_metro, contacts_serp_district, contacts_serp_road]
+  denominator:
+    observations: [searches_metro,searches_district, searches_road] 
+    
+contacts_serp_radius_per_search_radius:
+  tags: [i4, geo, bx]
+  title: c_radius_per_s_radius
+  numerator: 
+    observations: [contacts_serp_radius]
+  denominator:
+    observations: [searches_radius] 
+            
+buyer_target_clicks_serp_metro_per_search_metro:
+  tags: [i4, geo, bx]
+  title: btc_metro_per_s_metro
+  numerator: 
+    observations: [buyer_target_clicks_serp_metro]
+  denominator:
+    observations: [searches_metro] 
+    
+buyer_target_clicks_serp_district_per_search_district:
+  tags: [i4, geo, bx]
+  title: btc_district_per_s_district
+  numerator: 
+    observations: [buyer_target_clicks_serp_district]
+  denominator:
+    observations: [searches_district] 
+
+buyer_target_clicks_serp_road_per_search_road:
+  tags: [i4, geo, bx]
+  title: btc_road_per_s_road
+  numerator: 
+    observations: [buyer_target_clicks_serp_road]
+  denominator:
+    observations: [searches_road] 
+    
+buyer_target_clicks_serp_radius_per_search_radius:
+  tags: [i4, geo, bx]
+  title: btc_radius_per_s_radius
+  numerator: 
+    observations: [buyer_target_clicks_serp_radius]
+  denominator:
+    observations: [searches_radius]  
+    
+buyer_target_clicks_serp_local_geo_per_local_geo:
+  tags: [i4, geo, bx]
+  title: btc_local_geo_per_s_local_geo
+  numerator: 
+    observations: [buyer_target_clicks_serp_road, buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro]
+  denominator:
+    observations: [searches_road, searches_district, searches_metro] 
+    
+buyer_target_clicks_serp_geo_per_search_geo:
+  tags: [i4, geo, bx]
+  title: btc_geo_per_s_geo
+  numerator: 
+    observations: [buyer_target_clicks_serp_radius, buyer_target_clicks_serp_road, buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro]
+  denominator:
+    observations: [searches_radius, searches_road, searches_district, searches_metro] 
+    
+buyer_target_clicks_serp_geo_sess_per_search_geo_sess:
+  tags: [i4, geo, bx]
+  title: btc_geo_sess_per_geo_sess
+  numerator: 
+    observations: [buyer_target_clicks_serp_radius, buyer_target_clicks_serp_road, buyer_target_clicks_serp_district, buyer_target_clicks_serp_metro]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches_radius, searches_road, searches_district, searches_metro] 
+    groupby: [participant, session]
+    
+
+
+
+#### детализация гео поисков ratio
+districts_per_district_search:
+  tags: [i4, geo, bx, ratio]
+  description: "Среднее число районов на поиск с районом"
+  title: districts_per_district_s
+  numerator: 
+    observations: [total_districts_in_searches]  
+  denominator: 
+    observations: [searches_district]
+
+metros_per_metro_search:
+  tags: [i4, geo, bx, ratio]
+  description: "Среднее число станций метро на поиск с районом"
+  title: metros_per_metro_s
+  numerator: 
+    observations: [total_metros_in_searches]  
+  denominator: 
+    observations: [searches_metro]
+    
+default_radius_per_search_radius:
+  tags: [i4, geo, bx, ratio]
+  description: "Доля поисков с дефолтным радиусом относительно всех поисков с радиусом"
+  title: default_radius_per_radius
+  numerator: 
+    observations: [default_radius_searches]    
+  denominator: 
+    observations: [searches_radius]
+    
+not_default_radius_per_search_radius:
+  tags: [i4, geo, bx, ratio]
+  description: "Доля поисков с НЕ дефолтным радиусом относительно всех поисков с радиусом"
+  title: not_default_radius_per_radius
+  numerator: 
+    observations: [not_default_radius_searches]    
+  denominator: 
+    observations: [searches_radius]
+
+
+
+
+#### географические уровни поисков ratio
+city_level_search_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне города"
+  title: search_city_per_search
+  numerator: 
+    observations: [city_level_searches, federal_city_level_searches]
+  denominator:
+    observations: [searches]
+    
+meta_regions_level_searches_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне метарегионов (Москва и МО)"
+  title: search_metaregion_per_search
+  numerator: 
+    observations: [meta_regions_level_searches]
+  denominator:
+    observations: [searches]
+    
+regions_level_searches_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне регионов, областей"
+  title: search_regions_per_search
+  numerator: 
+    observations: [regions_level_searches]
+  denominator:
+    observations: [searches]
+    
+russia_level_searches_per_search:
+  tags: [i4, geo, bx]
+  description: "Доля поисков на уровне России"
+  title: search_russia_per_search
+  numerator: 
+    observations: [russia_level_searches]
+  denominator:
+    observations: [searches]
+
+
+
+
+###############################################################################
+# Geo searches :: Ratios Sessions
+###############################################################################
+
+
+###############################################################################
+# Geo searches :: Ratios Users
+###############################################################################
+#### юзеры гео поисков  ratio
+users_searches_metro_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_metro_per_users_search
+  numerator: 
+    observations: [searches_metro]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+    
+users_searches_district_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_district_per_users_search
+  numerator: 
+    observations: [searches_district]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+users_searches_road_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_road_per_users_search
+  numerator: 
+    observations: [searches_road]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+    
+users_searches_local_geo_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_local_geo_per_users_search
+  numerator: 
+    observations: [searches_metro, searches_district, searches_road]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+    
+users_searches_radius_per_users_search:
+  tags: [i4, geo, bx]
+  title: users_radius_per_users_search
+  numerator: 
+    observations: [searches_radius]
+    groupby: [participant]
+  denominator:
+    observations: [searches]
+    groupby: [participant]
+
+
+#### юзеры, сделавшие целевые действия с гео поисков ratio
+users_item_views_serp_metro_per_users_metro:
+  tags: [i4, geo, bx, user]
+  title: users_iv_metro_per_users_metro
+  numerator: 
+    observations: [item_views_serp_metro]
+    groupby: [participant]
+  denominator:
+    observations: [searches_metro]
+    groupby: [participant]
+  
+users_item_views_serp_district_per_users_district:
+  tags: [i4, geo, bx, user]
+  title: users_iv_district_per_users_district
+  numerator: 
+    observations: [item_views_serp_district]
+    groupby: [participant]
+  denominator:
+    observations: [searches_district]
+    groupby: [participant]
+    
+users_item_views_serp_road_per_users_road:
+  tags: [i4, geo, bx, user]
+  title: users_iv_road_per_users_road
+  numerator: 
+    observations: [item_views_serp_road]
+    groupby: [participant]
+  denominator:
+    observations: [searches_road]
+    groupby: [participant]
+    
+users_item_views_serp_radius_per_users_radius:
+  tags: [i4, geo, bx, user]
+  title: users_iv_radius_per_users_radius
+  numerator: 
+    observations: [item_views_serp_radius]
+    groupby: [participant]
+  denominator:
+    observations: [searches_radius]
+    groupby: [participant]
+    
+users_contacts_serp_metro_per_users_metro:
+  tags: [i3, geo, bx, user]
+  title: buyers_metro_per_users_metro
+  numerator: 
+    observations: [contacts_serp_metro]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_metro]
+    groupby: [participant]
+    
+users_contacts_serp_district_per_users_district:
+  tags: [i3, geo, bx, user]
+  title: buyers_district_per_users_district
+  numerator: 
+    observations: [contacts_serp_district]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_district]
+    groupby: [participant]
+    
+users_contacts_serp_road_per_users_road:
+  tags: [i3, geo, bx, user]
+  title: buyers_road_per_users_road
+  numerator: 
+    observations: [contacts_serp_road]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_road]
+    groupby: [participant]
+    
+users_contacts_serp_local_geo_per_users_local_geo:
+  tags: [i3, geo, bx, user]
+  title: buyers_local_geo_per_users_local_geo
+  numerator: 
+    observations: [contacts_serp_metro,contacts_serp_district,contacts_serp_road]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_metro,searches_district, searches_road]
+    groupby: [participant]
+
+users_contacts_serp_radius_per_users_radius:
+  tags: [i3, geo, bx, user]
+  title: buyers_radius_per_users_radius
+  numerator: 
+    observations: [contacts_serp_radius]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_radius]
+    groupby: [participant]
+ 
+users_btc_serp_metro_per_users_metro:
+  tags: [i3, geo, bx, user]
+  title: users_btc_metro_per_users_metro
+  numerator: 
+    observations: [buyer_target_clicks_serp_metro]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_metro]
+    groupby: [participant]
+    
+users_btc_serp_district_per_users_district:
+  tags: [i3, geo, bx, user]
+  title: users_btc_district_per_users_district
+  numerator: 
+    observations: [buyer_target_clicks_serp_district]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_district]
+    groupby: [participant]
+    
+users_btc_serp_road_per_users_road:
+  tags: [i3, geo, bx, user]
+  title: users_btc_road_per_users_road
+  numerator: 
+    observations: [buyer_target_clicks_serp_road]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_road]
+    groupby: [participant]
+    
+users_btc_serp_radius_per_users_radius:
+  tags: [i3, geo, bx, user]
+  title: users_btc_radius_per_users_radius
+  numerator: 
+    observations: [buyer_target_clicks_serp_radius]
+    groupby: [participant]
+  denominator: 
+    observations: [searches_radius]
+    groupby: [participant]
+    
+
+
+
+
+
+#    #   ##   #####  
+##  ##  #  #  #    # 
+# ## # #    # #    # 
+#    # ###### #####  
+#    # #    # #      
+#    # #    # #      
+###############################################################################
+# Map :: Totals Events 
+###############################################################################
+#### сами поиски
 map_searches:
   title: map_searches
   tags: [i3, bx, total, map]
@@ -11504,6 +15114,162 @@ pin_clicks:
   numerator:
     observations: [pin_clicks]
     
+
+#### поиски по области карты (300е событие) 
+searches_map_area:
+  title: map_area
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [searches_map_area]
+
+#### поиски по карте, закончившиеся целевым действием    
+map_searches_with_contact:
+  title: map_search_c
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches_with_contact]
+   
+map_searches_with_btc:
+  title: map_search_btc
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches_with_btc]
+
+map_searches_with_item_view:
+  title: map_search_iv
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches_with_item_view]
+
+#### целевые действия с поисков по карте 
+buyer_target_clicks_from_map:
+  title: btc_map
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+    
+buyer_target_clicks_from_map_grouped:
+  title: btc_map_grouped
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+    groupby: [participant,item]
+    
+item_views_from_map:
+  title: iv_map
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [item_views_from_map]
+    
+item_views_from_map_grouped:
+  title: iv_map_grouped
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [item_views_from_map]
+    groupby: [participant,item]
+    
+contacts_from_map:
+  title: contacts_map
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [contacts_from_map]
+    
+contacts_from_map_grouped:
+  title: c_map_grouped
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [contacts_from_map]  
+    groupby: [participant,item]
+    
+fav_added_from_map:
+  title: fav_map
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [fav_added_from_map]
+    
+fav_added_from_map_grouped:
+  title: fav_map_grouped
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [fav_added_from_map]
+    groupby: [participant,item]
+
+
+#### поиски по области на карте (300е), закончившиеся целевым действием    
+map_area_searches_with_contact:
+  title: map_serp_c
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [searches_map_area_with_contact]
+   
+map_area_searches_with_btc:
+  title: map_serp_btc
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [searches_map_area_with_btc]
+
+map_area_searches_with_item_view:
+  title: map_serp_iv
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [searches_map_area_with_item_view]
+      
+#### целевые действия с поисков по области карты (300е событие)      
+buyer_target_clicks_from_map_area:
+  title: btc_serp_map
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]
+    
+item_views_from_map_area:
+  title: iv_serp_map
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [item_views_serp_map_area]  
+    
+contacts_serp_map_area:
+  title: contacts_serp_map
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [contacts_serp_map_area]
+    
+fav_added_serp_map_area:
+  title: fav_serp_map
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [fav_added_serp_map_area]
+ 
+     
+#### целевые действия как с карты, так и с поисков по области карты (300е событие)      
+buyer_target_clicks_from_map_total:
+  title: btc_map_total
+  tags: [i4, bx, user, map_serp,map, map]
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area, buyer_target_clicks_from_map]
+    
+item_views_from_map_total:
+  title: iv_map_total
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [item_views_serp_map_area, item_views_from_map]  
+    
+contacts_serp_map_total:
+  title: contacts_map_total
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [contacts_serp_map_area, contacts_from_map]
+    
+fav_added_serp_map_total:
+  title: fav_map_total
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [fav_added_serp_map_area, fav_added_from_map]
+     
+
+###############################################################################
+# Map :: Totals Sessions 
+###############################################################################
+#### сами поиски
 map_searches_sessions:
   title: sess_map
   tags: [i3, bx, total, map]
@@ -11518,6 +15284,73 @@ pin_clicks_sessions:
     observations: [pin_clicks]    
     groupby: [participant, session]
           
+
+map_area_sessions:
+  title: sess_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  tags: [i3, bx, total, map_serp]
+  numerator:
+    observations: [searches_map_area]    
+    groupby: [participant, session]
+          
+
+#### поиски по карте, закончившиеся целевым действием    
+contact_sessions_from_map:
+  title: sess_c_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [contacts_from_map]    
+    groupby: [participant, session]
+    
+btc_sessions_from_map:
+  title: sess_btc_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [buyer_target_clicks_from_map]    
+    groupby: [participant, session]
+
+iv_sessions_from_map:
+  title: sess_iv_map
+  tags: [i3, bx, total, map]
+  numerator:
+    observations: [item_views_from_map]    
+    groupby: [participant, session]    
+ 
+    
+
+
+
+#### поиски по области карты (300е событие), закончившиеся целевым действием    
+contact_sessions_from_map_area:
+  title: sess_c_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, total, map_serp]
+  numerator:
+    observations: [contacts_serp_map_area]    
+    groupby: [participant, session]
+    
+btc_sessions_from_map_area:
+  title: sess_btc_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, total, map_serp]
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]    
+    groupby: [participant, session]
+
+iv_sessions_from_map_area:
+  title: sess_iv_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, total, map_serp]
+  numerator:
+    observations: [item_views_serp_map_area]    
+    groupby: [participant, session]    
+ 
+    
+###############################################################################
+# Map :: Totals Users 
+###############################################################################
+
+#### сами поиски
 map_users:
   tags: [i3, bx, user, map]
   numerator:
@@ -11530,48 +15363,16 @@ pin_clickers:
     observations: [pin_clicks]
     groupby: [participant]
     
-map_searches_with_item_view:
-  title: map_search_iv
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [map_searches_with_item_view]
-    
-map_searches_with_contact:
-  title: map_search_c
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [map_searches_with_contact]
-   
-map_searches_with_btc:
-  title: map_search_btc
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [map_searches_with_btc]
-    
-buyer_target_clicks_from_map:
-  title: btc_map
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [buyer_target_clicks_from_map]
-    
-item_views_from_map:
-  title: iv_map
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [item_views_from_map]
-    
-contacts_from_map:
-  title: contacts_map
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [contacts_from_map]
-    
-fav_added_from_map:
-  title: fav_map
-  tags: [i3, bx, user, map]
-  numerator:
-    observations: [fav_added_from_map]
 
+map_area_users:
+  title: user_map_serp
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i3, bx, total, map_serp]
+  numerator:
+    observations: [searches_map_area]    
+    groupby: [participant]
+          
+#### поиски по карте
 users_buyer_target_click_from_map:
   title: users_btc_map
   tags: [i2, bx, user, map]
@@ -11600,33 +15401,80 @@ users_fav_from_map:
     observations: [fav_added_from_map]  
     groupby: [participant]
     
-contact_sessions_from_map:
-  title: sess_c_map
-  tags: [i3, bx, total, map]
+
+
+
+#### поиски по области карты (300е событие)
+users_buyer_target_click_from_map_area:
+  title: user_btc_serp_map
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, user, map_serp]
   numerator:
-    observations: [contacts_from_map]    
-    groupby: [participant, session]
+    observations: [buyer_target_clicks_serp_map_area]
+    groupby: [participant]
     
-btc_sessions_from_map:
-  title: sess_btc_map
-  tags: [i3, bx, total, map]
+users_item_views_from_map_area:
+  title: user_iv_serp_map
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, user, map_serp]
   numerator:
-    observations: [buyer_target_clicks_from_map]    
-    groupby: [participant, session]
-
-iv_sessions_from_map:
-  title: sess_iv_map
-  tags: [i3, bx, total, map]
-  numerator:
-    observations: [item_views_from_map]    
-    groupby: [participant, session]    
- 
+    observations: [item_views_serp_map_area]  
+    groupby: [participant]
     
+buyers_from_map_area:
+  title: buyer_serp_map
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i3, bx, user, map_serp]
+  numerator:
+    observations: [contacts_serp_map_area]  
+    groupby: [participant]
+    
+users_fav_from_map_area:
+  title: user_fav_serp_map
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  tags: [i4, bx, user, map_serp]
+  numerator:
+    observations: [fav_added_serp_map_area]  
+    groupby: [participant]
+    
+#### целевые действия как с карты, так и с поисков по области карты 
+buyers_from_map_total:
+  title: buyer_map_total
+  description: "Баеры как с карты, так и с поисков по области карты"
+  tags: [i3, bx, user, map_serp, map]
+  numerator:
+    observations: [contacts_serp_map_area, contacts_from_map]  
+    groupby: [participant]
+    
+user_item_view_from_map_total:
+  title: user_iv_map_total
+  description: "Юзеры с iv как с карты, так и с поисков по области карты"
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [item_views_serp_map_area, item_views_from_map]  
+    groupby: [participant]
+    
+user_btc_from_map_total:
+  title: user_btc_map_total
+  description: "Юзеры с btc как с карты, так и с поисков по области карты"
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area, buyer_target_clicks_from_map]  
+    groupby: [participant]
+    
+user_fav_from_map_total:
+  title: user_fav_map_total
+  description: "Юзеры с добавлением в избранное как с карты, так и с поисков по области карты"
+  tags: [i4, bx, user, map_serp, map]
+  numerator:
+    observations: [fav_added_serp_map_area, fav_added_from_map]  
+    groupby: [participant]
+
 ###############################################################################
-# Map :: Ratios
+# Map :: Events Ratios
 ###############################################################################
 
-
+#### сами поиски ratio 
 map_searches_per_search:
   title: map_s_per_s
   tags: [other, bx,  map]
@@ -11644,51 +15492,18 @@ pins_per_map_s:
     observations: [pin_clicks]
   denominator:
     observations: [map_searches]
-    
-pin_clickers_per_map_serchers:
-  title: users_pin_per_users_map
-  tags: [i3, bx,  map]
-  description: "Отношение пиннеров к мапперам"
-  numerator:
-    observations: [pin_clicks]
-    groupby: [participant]
-  denominator:
-    observations: [map_searches]
-    groupby: [participant]
-    
-map_buyers_per_map_serchers:
-  title: buyers_map_per_users_map
-  tags: [i2, bx,  map]
-  description: "Отношение баеров с карты к мапперам"
-  numerator:
-    observations: [contacts_from_map]
-    groupby: [participant]
-  denominator:
-    observations: [map_searches]
-    groupby: [participant]
-    
-map_item_viewers_per_map_serchers:
-  title: users_iv_map_per_users_map
-  tags: [i3, bx,  map]
-  description: "Отношение item viewers с карты к мапперам"
-  numerator:
-    observations: [item_views_from_map]
-    groupby: [participant]
-  denominator:
-    observations: [map_searches]
-    groupby: [participant]
 
-map_btc_users_per_map_serchers:
-  title: users_btc_map_per_users_map
+map_area_per_map_search:
+  title: map_serp_per_map
   tags: [i3, bx,  map]
-  description: "Отношение бтц юзеров с карты к мапперам"
+  description: "Конверсия из поисков на карте в поиск по области карты"
   numerator:
-    observations: [buyer_target_clicks_from_map]
-    groupby: [participant]
+    observations: [searches_map_area]
   denominator:
     observations: [map_searches]
-    groupby: [participant]
 
+
+#### целевые действия с карты ratio 
 contacts_from_map_per_map_search:
   title: contacts_map_per_map_s
   tags: [i3, bx,  map]
@@ -11725,17 +15540,145 @@ fav_added_from_map_per_map_search:
   denominator:
     observations: [map_searches]
     
-sess_c_map_per_sess_map:
-  title: sess_c_map_per_sess_map
+    
+
+
+contacts_from_map_per_pin:
+  title: contacts_map_per_pin
   tags: [i3, bx,  map]
-  description: "Сессии с контактом с карты к сессиям с поисками по карте"
+  description: "Контакты с карты к поискам по карте"
   numerator:
     observations: [contacts_from_map]
+  denominator:
+    observations: [pin_clicks]
+    
+item_views_from_map_per_pin:
+  title: iv_map_per_pin
+  tags: [i3, bx,  map]
+  description: "IV с карты к пинам"
+  numerator:
+    observations: [item_views_from_map]
+  denominator:
+    observations: [pin_clicks]
+    
+btc_from_map_per_pin:
+  title: btc_map_per_pin
+  tags: [i3, bx,  map]
+  description: "BTC с карты к пинам"
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+  denominator:
+    observations: [pin_clicks]
+    
+fav_added_from_map_per_pin:
+  title: fav_map_per_pin
+  tags: [i3, bx,  map]
+  description: "Добавление в избранное с карты к пинам"
+  numerator:
+    observations: [fav_added_from_map]
+  denominator:
+    observations: [pin_clicks]
+    
+    
+#### целевые действия с поиска по области карты ratio 
+contacts_from_map_area_per_map_area:
+  title: c_map_serp_per_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  numerator:
+    observations: [contacts_serp_map_area]
+  denominator:
+    observations: [searches_map_area]
+    
+item_views_from_map_per_map_area:
+  title: iv_map_serp_per_map_serp
+  tags: [i4, bx,  map]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  numerator:
+    observations: [item_views_serp_map_area]
+  denominator:
+    observations: [searches_map_area]
+    
+btc_from_map_per_map_search_area:
+  title: btc_map_serp_per_map_serp
+  tags: [i4, bx,  map]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]
+  denominator:
+    observations: [searches_map_area]
+    
+fav_added_from_map_per_map_area:
+  title: fav_map_serp_per_map_serp
+  tags: [i4, bx,  map]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
+  numerator:
+    observations: [fav_added_serp_map_area]
+  denominator:
+    observations: [searches_map_area]
+ 
+
+#### целевые действия как с самой карты, так и с поиска по области карты ratio 
+contacts_from_map_total_per_map_search:
+  title: c_map_total_per_map
+  tags: [i4, bx,  map_serp, map]
+  description: "Контакты как с самой карты, так и с области карты, деленные на поиски по карте"
+  numerator:
+    observations: [contacts_serp_map_area, contacts_from_map]
+  denominator:
+    observations: [map_searches] 
+    
+iv_from_map_total_per_map_search:
+  title: iv_map_total_per_map
+  tags: [i4, bx,  map_serp, map]
+  description: "IV как с самой карты, так и с области карты, деленные на поиски по карте"
+  numerator:
+    observations: [item_views_serp_map_area, item_views_from_map]
+  denominator:
+    observations: [map_searches] 
+    
+fav_from_map_total_per_map_search:
+  title: fav_map_total_per_map
+  tags: [i4, bx,  map_serp, map]
+  description: "Добавление в избранное как с самой карты, так и с области карты, деленные на поиски по карте"
+  numerator:
+    observations: [fav_added_from_map, fav_added_serp_map_area]
+  denominator:
+    observations: [map_searches] 
+    
+ 
+
+###############################################################################
+# Map :: Sessions Ratios
+###############################################################################
+
+#### сами поиски по карте ratio 
+sess_pin_per_sess_map:
+  title: sess_pin_per_sess_map
+  tags: [i3, bx,  map]
+  description: "Сессии с кликами по пину с карты к сессиям с поисками по карте"
+  numerator:
+    observations: [pin_clicks]
     groupby: [participant, session]
   denominator:
     observations: [map_searches]
     groupby: [participant, session]
-    
+
+
+sess_map_area_per_sess_map:
+  title: sess_map_serp_per_sess_map
+  tags: [i3, bx,  map]
+  description: "Сессии с поисками по области карты, деленные на сессии с поисками по карте"
+  numerator:
+    observations: [searches_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+
+
+
+#### сесссии с целевыми действиями с карты ratio 
 sess_btc_map_per_sess_map:
   title: sess_btc_map_per_sess_map
   tags: [i3, bx,  map]
@@ -11758,13 +15701,713 @@ sess_iv_map_per_sess_map:
     observations: [map_searches]
     groupby: [participant, session]
     
-sess_pin_per_sess_map:
-  title: sess_pin_per_sess_map
+
+sess_c_map_per_sess_map:
+  title: sess_c_map_per_sess_map
   tags: [i3, bx,  map]
-  description: "Сессии с кликами по пину с карты к сессиям с поисками по карте"
+  description: "Сессии с контактом с карты к сессиям с поисками по карте"
   numerator:
-    observations: [pin_clicks]
+    observations: [contacts_from_map]
     groupby: [participant, session]
   denominator:
     observations: [map_searches]
     groupby: [participant, session]
+  
+
+
+sess_c_map_per_sess_pin:
+  title: sess_c_map_per_sess_pin
+  tags: [i4, bx,  map]
+  description: "Сессии с контактом с карты к сессиям с кликом по пину"
+  numerator:
+    observations: [contacts_from_map]
+    groupby: [participant, session]
+  denominator:
+    observations: [pin_clicks]
+    groupby: [participant, session]
+
+sess_iv_map_per_sess_pin:
+  title: sess_iv_map_per_sess_pin
+  tags: [i4, bx,  map, map_serp]
+  description: "Сессии с iv с карты  к сессиям с кликом по пину"
+  numerator:
+    observations: [item_views_from_map]
+    groupby: [participant, session]
+  denominator:
+    observations: [pin_clicks]
+    groupby: [participant, session]
+    
+
+#### сесссии с целевыми действиями с поиска по области карты ratio 
+sess_btc_map_area_per_sess_map_area:
+  title: sess_btc_map_serp_per_sess_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant, session]
+    
+sess_iv_map_area_per_sess_map_area:
+  title: sess_iv_map_serp_per_sess_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [item_views_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant, session]
+    
+
+sess_c_map_area_per_sess_map_area:
+  title: sess_c_map_serp_per_sess_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [contacts_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant, session]
+  
+
+#### целевые действия как с карты, так и с области по карте ratio
+sess_c_map_total_per_sess_map:
+  title: sess_c_map_total_per_sess_map
+  tags: [i3, bx,  map, map_serp]
+  description: "Сессии с контактом с карты или с поиска по области карты к сессиям с поисками по карте"
+  numerator:
+    observations: [contacts_from_map, contacts_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+
+sess_iv_map_total_per_sess_map:
+  title: sess_iv_map_total_per_sess_map
+  tags: [i3, bx,  map, map_serp]
+  description: "Сессии с iv с карты или с поиска по области карты к сессиям с поисками по карте"
+  numerator:
+    observations: [item_views_from_map, item_views_serp_map_area]
+    groupby: [participant, session]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    
+###############################################################################
+# Map :: Users Ratios
+###############################################################################
+pin_clickers_per_map_serchers:
+  title: users_pin_per_users_map
+  tags: [i3, bx,  map]
+  description: "Отношение пиннеров к мапперам"
+  numerator:
+    observations: [pin_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+#### юзеры с целевыми действиями с карты ratio
+map_buyers_per_map_serchers:
+  title: buyers_map_per_users_map
+  tags: [i3, bx,  map]
+  description: "Отношение баеров с карты к мапперам"
+  numerator:
+    observations: [contacts_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+map_item_viewers_per_map_serchers:
+  title: users_iv_map_per_users_map
+  tags: [i3, bx,  map]
+  description: "Отношение item viewers с карты к мапперам"
+  numerator:
+    observations: [item_views_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+
+map_btc_users_per_map_serchers:
+  title: users_btc_map_per_users_map
+  tags: [i3, bx,  map]
+  description: "Отношение бтц юзеров с карты к мапперам"
+  numerator:
+    observations: [buyer_target_clicks_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+  
+buyers_map_per_user_pin:
+  title: buyers_map_per_user_pin
+  tags: [i2, bx,  map]
+  description: "Отношение баеров с карты карты к пиннерам"
+  numerator:
+    observations: [contacts_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [pin_clicks]
+    groupby: [participant]
+    
+user_iv_map_per_user_pin:
+  title: user_iv_map_per_user_pin
+  tags: [i4, bx, map]
+  description:  "Отношение юзеров с iv, добавлявших в избранное с карты, к пиннерам"
+  numerator:
+    observations: [item_views_from_map]
+    groupby: [participant]
+  denominator:
+    observations: [pin_clicks]
+    groupby: [participant]
+
+#### юзеры с целевыми действиями по области карты (300е событие) ratio
+map_area_buyers_per_map_area_serchers:
+  title: buyers_map_serp_per_user_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [contacts_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant]
+    
+map_area_item_viewers_per_map_serchers:
+  title: user_iv_map_serp_per_users_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [item_views_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant]
+
+map_area_btc_users_per_map_serchers:
+  title: users_btc_map_serp_per_users_map_serp
+  tags: [i4, bx,  map_serp]
+  description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
+  numerator:
+    observations: [buyer_target_clicks_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [searches_map_area]
+    groupby: [participant]
+
+#### целевые действия как с карты, так и с области по карте ratio
+map_total_buyers_per_map_serchers:
+  title: buyers_map_total_per_users_map
+  tags: [i2, bx,  map, map_serp]
+  description: "Отношение баеров с карты или с поиска по области карты к мапперам"
+  numerator:
+    observations: [contacts_from_map, contacts_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+user_iv_map_total_per_user_map:
+  title: user_iv_map_total_per_user_map
+  tags: [i4, bx,  map, map_serp]
+  description:  "Отношение юзеров с iv, добавлявших в избранное с карты или с поиска по области карты к мапперам"
+  numerator:
+    observations: [item_views_from_map, item_views_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+user_fav_map_total_per_user_map:
+  title: user_fav_map_total_per_user_map
+  tags: [i4, bx,  map, map_serp]
+  description: "Отношение юзеров, добавлявших в избранное с карты или с поиска по области карты к мапперам"
+  numerator:
+    observations: [fav_added_from_map, fav_added_serp_map_area]
+    groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+ 
+    
+    
+########     ###    ########    ###        #######  ##     ##    ###    ##       #### ######## ##    ##     ######   ########  #######  
+##     ##   ## ##      ##      ## ##      ##     ## ##     ##   ## ##   ##        ##     ##     ##  ##     ##    ##  ##       ##     ## 
+##     ##  ##   ##     ##     ##   ##     ##     ## ##     ##  ##   ##  ##        ##     ##      ####      ##        ##       ##     ## 
+##     ## ##     ##    ##    ##     ##    ##     ## ##     ## ##     ## ##        ##     ##       ##       ##   #### ######   ##     ## 
+##     ## #########    ##    #########    ##  ## ## ##     ## ######### ##        ##     ##       ##       ##    ##  ##       ##     ## 
+##     ## ##     ##    ##    ##     ##    ##    ##  ##     ## ##     ## ##        ##     ##       ##       ##    ##  ##       ##     ## 
+########  ##     ##    ##    ##     ##     ##### ##  #######  ##     ## ######## ####    ##       ##        ######   ########  #######  
+###############################################################################
+# Geo :: Totals Items
+###############################################################################
+
+#### редактирование адреса 
+item_edits_address:
+  title: items_edits_addr
+  tags: [i4, geo, sx, geo_dq]
+  description: "Число редактирований адреса в айтеме"
+  numerator:
+    observations: [item_edits_address]  
+
+items_edited_address:
+  title: items_edited_addr
+  tags: [i4, geo, sx, geo_dq]
+  description: "Число айтемов с редактированным адресом"
+  numerator:
+    observations: [items_edited_address]
+    
+
+#### качество адреса 
+items_20m_from_location:
+  title: items_20m_loc
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов в 0-20м от центра локации"
+  numerator:
+    observations: [item_20m_from_location]
+   
+items_100m_from_location:
+  title: items_100m_loc
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов в 100м от центра локации"
+  numerator:
+    observations: [item_100m_from_location]
+    
+items_200_plus_km_from_location:
+  title: items_200km_loc
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов в 200+км от центра локации"
+  numerator:
+    observations: [item_200_plus_km_from_location]
+    
+items_no_address_string:
+  title: items_no_addr
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов без строкового адреса"
+  numerator:
+    observations: [item_no_address_string]
+    
+items_with_address_string:
+  title: items_addr
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов со строковым адресом"
+  numerator:
+    observations: [item_with_address_string]
+    
+items_no_address_id:
+  title: items_no_addr_id
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов без address_id"
+  numerator:
+    observations: [item_no_address_id]
+    
+items_with_address_id:
+  title: items_addr_id
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов с address_id"
+  numerator:
+    observations: [item_with_address_id]
+    
+items_no_coordinates:
+  title: items_no_coord
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов без координат"
+  numerator:
+    observations: [item_no_coordinates]
+    
+items_with_coordinates:
+  title: items_coord
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов с координатами"
+  numerator:
+    observations: [item_with_coordinates]
+    
+
+#### качество адреса у новых айтемов 
+items_20m_from_location_new:
+  title: items_20m_loc_new
+  tags: [other, geo, geo_dq]
+  description: "Число новых айтемов в 0-20м от центра локации"
+  numerator:
+    observations: [item_20m_from_location_new]
+   
+items_100m_from_location_new:
+  title: items_100m_loc_new
+  tags: [other, geo, geo_dq]
+  description: "Число новых айтемов в 100м от центра локации"
+  numerator:
+    observations: [item_100m_from_location_new]
+    
+items_200_plus_km_from_location_new:
+  title: items_200km_loc_new
+  tags: [other, geo, geo_dq]
+  description: "Число новых айтемов в 200+км от центра локации"
+  numerator:
+    observations: [item_200_plus_km_from_location_new]
+    
+items_no_address_string_new:
+  title: items_no_addr_new
+  tags: [other, geo, geo_dq]
+  description: "Число новых айтемов без строкового адреса"
+  numerator:
+    observations: [item_no_address_string_new]
+    
+items_with_address_string_new:
+  title: items_addr_new
+  tags: [other, geo, geo_dq]
+  description: "Число новых айтемов со строковым адресом"
+  numerator:
+    observations: [item_with_address_string_new]
+    
+items_no_address_id_new:
+  title: items_no_addr_id_new
+  tags: [other, geo, geo_dq]
+  description: "Число новых айтемов без address_id"
+  numerator:
+    observations: [item_no_address_id_new]
+    
+items_with_address_id_new:
+  title: items_addr_id_new
+  tags: [other, geo, geo_dq]
+  description: "Число новых айтемов с address_id_new"
+  numerator:
+    observations: [item_with_address_id_new]
+    
+items_no_coordinates_new:
+  title: items_no_coord_new
+  tags: [other, geo, geo_dq]
+  description: "Число новых айтемов без координат"
+  numerator:
+    observations: [item_no_coordinates_new]
+    
+items_with_coordinates_new:
+  title: items_coord_new
+  tags: [other, geo, geo_dq]
+  description: "Число новых айтемов с координатами"
+  numerator:
+    observations: [item_with_coordinates_new]
+    
+
+#### качество адреса у реактивированных айтемов 
+items_20m_from_location_reactivated:
+  title: items_20m_loc_react
+  tags: [other, geo, geo_dq]
+  description: "Число реактивированных айтемов в 0-20м от центра локации"
+  numerator:
+    observations: [item_20m_from_location_reactivated]
+   
+items_100m_from_location_reactivated:
+  title: items_100m_loc_react
+  tags: [other, geo, geo_dq]
+  description: "Число реактивированных айтемов в 100м от центра локации"
+  numerator:
+    observations: [item_100m_from_location_reactivated]
+    
+items_200_plus_km_from_location_reactivated:
+  title: items_200km_loc_reac
+  tags: [other, geo, geo_dq]
+  description: "Число реактивированных айтемов в 200+км от центра локации"
+  numerator:
+    observations: [item_200_plus_km_from_location_reactivated]
+    
+items_no_address_string_reactivated:
+  title: items_no_addr_react
+  tags: [other, geo, geo_dq]
+  description: "Число реактивированных айтемов без строкового адреса"
+  numerator:
+    observations: [item_no_address_string_reactivated]
+    
+items_with_address_string_reactivated:
+  title: items_addr_react
+  tags: [other, geo, geo_dq]
+  description: "Число реактивированных айтемов со строковым адресом"
+  numerator:
+    observations: [item_with_address_string_reactivated]
+    
+items_no_address_id_reactivated:
+  title: items_no_addr_id_react
+  tags: [other, geo, geo_dq]
+  description: "Число реактивированных айтемов без address_id"
+  numerator:
+    observations: [item_no_address_id_reactivated]
+    
+items_with_address_id_reactivated:
+  title: items_addr_id_react
+  tags: [other, geo, geo_dq]
+  description: "Число реактивированных айтемов с address_id_reactivated"
+  numerator:
+    observations: [item_with_address_id_reactivated]
+    
+items_no_coordinates_reactivated:
+  title: items_no_coord_react
+  tags: [other, geo, geo_dq]
+  description: "Число реактивированных айтемов без координат"
+  numerator:
+    observations: [item_no_coordinates_reactivated]
+    
+items_with_coordinates_reactivated:
+  title: items_coord_react
+  tags: [other, geo, geo_dq]
+  description: "Число реактивированных айтемов с координатами"
+  numerator:
+    observations: [item_with_coordinates_reactivated]
+    
+
+###############################################################################
+# Geo :: Totals Users
+###############################################################################
+sellers_edited_address:
+  title: address_editors
+  tags: [i4, geo, sx, geo_dq]
+  description: "Число юзеров, редактировавших адрес в айтеме"
+  numerator:
+    observations: [items_edited_address]
+    groupby: [participant] 
+    
+
+
+###############################################################################
+# Geo :: Ratios Items
+###############################################################################
+
+####редактирование адреса  ratio
+item_edits_address_per_item:
+  title: items_edits_addr_per_item
+  tags: [i4, geo, sx, geo_dq]
+  description: "Среднее число редактирований адреса на айтем (у которого было хотя бы 1 редактирование адреса)"
+  numerator:
+    observations: [item_edits_address]  
+  denominator:
+    observations: [items_edited_address]
+    
+items_edited_address_per_items_edited:
+  title: items_edited_addr_per_items
+  tags: [i4, geo, sx, geo_dq]
+  description: "Доля айтемов с редактированием адреса относительно всех редактированных айтемов"
+  numerator:
+    observations: [items_edited_address]  
+  denominator:
+    observations: [items_edited]
+
+
+####качество адреса ratio
+avg_item_address_length:
+  title: avg_item_addr_len
+  tags: [i4, geo, sx, geo_dq]
+  description: "Средняя длина адреса айтема"
+  numerator:
+    observations: [item_address_length]
+  denominator:
+    observations: [item_with_address_string]
+        
+
+####качество адреса новых айтемов ratio
+items_20m_from_location_new_per_new:
+  title: items_20m_loc_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов в 0-20м от центра локации"
+  numerator:
+    observations: [item_20m_from_location_new]
+  denominator:
+    observations: [items_started]
+   
+items_100m_from_location_new_per_new:
+  title: items_100m_loc_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов в 100м от центра локации"
+  numerator:
+    observations: [item_100m_from_location_new]
+  denominator:
+    observations: [items_started]  
+    
+items_200_plus_km_from_location_new_per_new:
+  title: items_200km_loc_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов в 200+км от центра локации"
+  numerator:
+    observations: [item_200_plus_km_from_location_new]
+  denominator:
+<<<<<<< HEAD
+    observations: [map_searches]
+    groupby: [participant, session]
+=======
+    observations: [items_started]  
+    
+items_no_address_string_new_per_new:
+  title: items_no_addr_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов без строкового адреса"
+  numerator:
+    observations: [item_no_address_string_new]
+  denominator:
+    observations: [items_started]  
+    
+items_with_address_string_new_per_new:
+  title: items_addr_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов со строковым адресом"
+  numerator:
+    observations: [item_with_address_string_new]
+  denominator:
+    observations: [items_started]  
+    
+items_no_address_id_new_per_new:
+  title: items_no_addr_id_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов без address_id"
+  numerator:
+    observations: [item_no_address_id_new]
+  denominator:
+    observations: [items_started]  
+    
+items_with_address_id_new_per_new:
+  title: items_addr_id_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов с address_id_new"
+  numerator:
+    observations: [item_with_address_id_new]
+  denominator:
+    observations: [items_started]  
+    
+items_no_coordinates_new_per_new:
+  title: items_no_coord_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов без координат"
+  numerator:
+    observations: [item_no_coordinates_new]
+  denominator:
+    observations: [items_started]  
+    
+items_with_coordinates_new_per_new:
+  title: items_coord_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов с координатами"
+  numerator:
+    observations: [item_with_coordinates_new]
+  denominator:
+    observations: [items_started]  
+    
+avg_item_address_length_new:
+  title: avg_item_addr_len_new
+  tags: [i4, geo, sx, geo_dq]
+  description: "Средняя длина адреса нового айтема"
+  numerator:
+    observations: [item_address_length_new]
+  denominator:
+    observations: [item_with_address_string_new]
+    
+
+####качество адреса реактивированных айтемов ratio
+items_20m_from_location_reactivated_per_react:
+  title: items_20m_loc_react_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов в 0-20м от центра локации"
+  numerator:
+    observations: [item_20m_from_location_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+    
+items_100m_from_location_reactivated_per_react:
+  title: items_100m_loc_react_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов в 100м от центра локации"
+  numerator:
+    observations: [item_100m_from_location_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+      
+items_200_plus_km_from_location_reactivated_per_react:
+  title: items_200km_loc_reac_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов в 200+км от центра локации"
+  numerator:
+    observations: [item_200_plus_km_from_location_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+      
+items_no_address_string_reactivated_per_react:
+  title: items_no_addr_react_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов без строкового адреса"
+  numerator:
+    observations: [item_no_address_string_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+      
+items_with_address_string_reactivated_per_react:
+  title: items_addr_react_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов со строковым адресом"
+  numerator:
+    observations: [item_with_address_string_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+      
+items_no_address_id_reactivated_per_react:
+  title: items_no_addr_id_react_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов без address_id"
+  numerator:
+    observations: [item_no_address_id_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+      
+items_with_address_id_reactivated_per_react:
+  title: items_addr_id_react_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов с address_id_reactivated"
+  numerator:
+    observations: [item_with_address_id_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+    
+items_no_coordinates_reactivated_per_react:
+  title: items_no_coord_react_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов без координат"
+  numerator:
+    observations: [item_no_coordinates_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+      
+items_with_coordinates_reactivated_per_react:
+  title: items_coord_react_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов с координатами"
+  numerator:
+    observations: [item_with_coordinates_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+    
+avg_item_address_length_react:
+  title: avg_item_addr_len_react
+  tags: [i4, geo, sx, geo_dq]
+  description: "Средняя длина адреса реактивированного айтема"
+  numerator:
+    observations: [item_address_length_reactivated]
+  denominator:
+    observations: [item_with_address_string_reactivated]
+    
+
+###############################################################################
+# Geo :: Ratios Users
+###############################################################################
+
+sellers_edited_address_per_editor:
+  title: addr_editor_per_editor
+  tags: [i4, geo, sx, geo_dq]
+  description: "Доля юзеров, редактировавших адрес в айтеме, относительно всех редактировавших айтемы"
+  numerator:
+    observations: [items_edited_address]
+    groupby: [participant] 
+  denominator:
+    observations: [items_edited]
+    groupby: [participant]
+       
+>>>>>>> origin
