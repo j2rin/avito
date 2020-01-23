@@ -502,6 +502,13 @@ buyer_target_clicks_serp_saved:
   tags: [i3, bx, tns]
   numerator:
     observations: [buyer_target_clicks_serp_saved]
+    
+domoteka_preview_clicks:
+  title: domoteka_preview_clicks
+  description: "кол-во переходов в отчет домотеки"
+  tags: [bx]
+  numerator:
+    observations: [domoteka_preview_clicks]    
 
 
 ###############################################################################
@@ -658,6 +665,15 @@ buyer_target_clicks_serp_saved_per_search_saved:
     observations: [buyer_target_clicks_serp_saved]
   denominator:
     observations: [saved_searches]
+    
+domoteka_preview_clicks_per_iv:
+  title: domoteka_preview_clicks_per_iv
+  description: "кол-во переходов в отчет домотеки на просмотры"
+  tags: [bx, ratio]
+  numerator:
+    observations: [domoteka_preview_clicks]
+  denominator:
+    observations: [item_views]
 
 ###############################################################################
 # Buyer :: User Totals
@@ -994,6 +1010,14 @@ user_buyer_target_clicks_serp_saved:
   numerator:
     observations: [buyer_target_clicks_serp_saved]
     groupby: [participant]
+    
+user_domoteka_preview_clicks:
+  title: user_domoteka_preview_clicks
+  description: "Юзеры, которые перешли в отчет домотеки"
+  tags: [bx]
+  numerator:
+    observations: [domoteka_preview_clicks]
+    groupby: [participant]    
 
 ###############################################################################
 # Buyer :: User Ratios
@@ -1165,6 +1189,15 @@ user_buyer_target_clicks_serp_saved_per_user_search_saved:
     observations: [searches_saved]
     groupby: [participant]
 
+user_domoteka_preview_clicks_per_users_iv:
+  title: user_domoteka_preview_clicks_per_users_iv
+  tags: [bx, ratio]
+  numerator:
+    observations: [domoteka_preview_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [item_views]
+    groupby: [participant] 
 
 
 ###############################################################################
