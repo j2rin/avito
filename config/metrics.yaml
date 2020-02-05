@@ -508,7 +508,19 @@ domoteka_preview_clicks:
   description: "кол-во переходов в отчет домотеки"
   tags: [bx]
   numerator:
-    observations: [domoteka_preview_clicks]    
+    observations: [domoteka_preview_clicks]
+    
+map_interaction_on_item:
+  title: map_interaction_on_item
+  tags: [bx]
+  numerator:
+    observations: [map_interaction_on_item]
+    
+address_item_page_clicks:
+  title: address_item_page_clicks
+  tags: [bx]
+  numerator:
+    observations: [address_item_page_clicks]     
 
 
 ###############################################################################
@@ -674,6 +686,14 @@ domoteka_preview_clicks_per_iv:
     observations: [domoteka_preview_clicks]
   denominator:
     observations: [item_views]
+    
+address_item_page_clicks_per_iv:
+  title: address_item_page_clicks_per_iv
+  tags: [bx, ratio]
+  numerator:
+    observations: [address_item_page_clicks]
+  denominator:
+    observations: [item_views]    
 
 ###############################################################################
 # Buyer :: User Totals
@@ -1017,8 +1037,24 @@ user_domoteka_preview_clicks:
   tags: [bx]
   numerator:
     observations: [domoteka_preview_clicks]
+    groupby: [participant]
+    
+user_address_item_page_clicks:
+  title: user_address_item_page_clicks
+  description: "Юзеры, которые перешли в карту на карточке айтема"
+  tags: [bx]
+  numerator:
+    observations: [address_item_page_clicks]
+    groupby: [participant]
+    
+user_map_interaction_on_item:
+  title: user_map_interaction_on_item
+  description: "Юзеры, которые взаимодействовали с картой на карточке айтема"
+  tags: [bx]
+  numerator:
+    observations: [map_interaction_on_item]
     groupby: [participant]    
-
+    
 ###############################################################################
 # Buyer :: User Ratios
 ###############################################################################
@@ -1197,7 +1233,27 @@ user_domoteka_preview_clicks_per_users_iv:
     groupby: [participant]
   denominator:
     observations: [item_views]
-    groupby: [participant] 
+    groupby: [participant]
+    
+user_address_item_page_clicks_per_users_iv:
+  title: user_address_item_page_clicks_per_user_iv
+  tags: [bx]
+  numerator:
+    observations: [address_item_page_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [item_views]
+    groupby: [participant]    
+    
+user_map_interaction_on_item_per_users_iv:
+  title: user_map_interaction_on_item_per_users_iv
+  tags: [bx]
+  numerator:
+    observations: [map_interaction_on_item]
+    groupby: [participant]
+  denominator:
+    observations: [item_views]
+    groupby: [participant]    
 
 
 ###############################################################################
