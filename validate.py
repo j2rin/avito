@@ -25,7 +25,8 @@ BREAKDOWNS_PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'presets/breakdowns')
 METRICS_LISTS_PATH = os.path.join(CUR_DIR_PATH, 'presets/metrics')
 METRICS_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics.yaml')
 METRICS_DIMENSION_FILE = os.path.join(CUR_DIR_PATH, 'config/m42.yaml')
-AB_CONFIGURATOR_HOST = 'ab-configurator.k.avito.ru'
+
+AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 PRESETS_CONFIG_VALIDATE_URL = '/api/validateMetricsRepo'
 PRESETS_CONFIG_PUBLISH_URL = '/api/publishMetricsRepo'
 
@@ -42,8 +43,7 @@ def marks_to_str(file_name, data, marks_attribute):
 
 
 def post(url, data):
-    conn = httplib.HTTPConnection(AB_CONFIGURATOR_HOST)
-    #conn = httplib.HTTPConnection('127.0.0.1',5000)
+    conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
 
     conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
 
