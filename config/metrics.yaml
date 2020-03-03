@@ -1692,8 +1692,8 @@ user_from_vertical_page_to_iv_p99_per_user_iv_search:
     groupby: [participant]
   denominator:
     observations: [item_views_search_item_attr]
-    groupby: [participant]         
-
+    groupby: [participant]
+         
 ###############################################################################
 # Buyer :: Other
 ###############################################################################
@@ -1825,7 +1825,67 @@ from_vertical_page_to_iv:
   title: from_vertical_page_to_iv
   tags: [bx]
   numerator:
-    observations: [from_vertical_page_to_iv]     
+    observations: [from_vertical_page_to_iv]
+    
+sess_from_main_page_to_c_per_sess_c_s:
+  title: sess_from_main_page_to_c_per_sess_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c]
+    groupby: [participant, session]
+  denominator:
+    observations: [contacts_serp]
+    groupby: [participant, session]     
+    
+sess_from_main_page_to_iv_per_sess_iv:
+  title: sess_from_main_page_to_iv_per_sess_iv
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv]
+    groupby: [participant, session]
+  denominator:
+    observations: [item_views_serp]
+    groupby: [participant, session]    
+        
+sess_from_session_start_to_c_per_sess_c_s:
+  title: sess_from_session_start_to_c_per_sess_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c]
+    groupby: [participant, session]
+  denominator:
+    observations: [contacts_serp]
+    groupby: [participant, session]   
+        
+sess_from_session_start_to_iv_per_sess_iv_s:
+  title: sess_from_session_start_to_iv_per_sess_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv]
+    groupby: [participant, session]
+  denominator:
+    observations: [item_views_serp]
+    groupby: [participant, session]       
+    
+sess_from_vertical_page_to_c_per_sess_c_s:
+  title: sess_from_vertical_page_to_c_per_sess_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c]
+    groupby: [participant, session]
+  denominator:
+    observations: [contacts_serp]
+    groupby: [participant, session]     
+    
+sess_from_vertical_page_to_iv_per_sess_iv_s:
+  title: sess_from_vertical_page_to_iv_per_sess_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv]
+    groupby: [participant, session]
+  denominator:
+    observations: [item_views_serp]
+    groupby: [participant, session]    
 
  ######  ########    ###    ########   ######  ##     ##
 ##    ## ##         ## ##   ##     ## ##    ## ##     ##
