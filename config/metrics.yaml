@@ -6908,36 +6908,36 @@ user_enter_start_to_registration_cr:
     groupby: [participant]
 
 auth_errors_per_user:
-  description: "average number of authorization (phone/email/social) errors per cookie"
+  description: "average number of authorization errors per authorization attempt"
   tags: [i3, tns, tns_bulb, auth, enter]
   numerator:
     observations: [auth_errors]
   denominator:
-    observations: [auth_start]
+    observations: [sign_in_attempts]
 
 registration_errors_per_user:
-  description: "average number of registration (not social) errors per cookie"
+  description: "average number of registration errors per registration attempt"
   tags: [i3, tns, tns_bulb, reg, enter]
   numerator:
     observations: [registration_errors]
   denominator:
-    observations: [registration_start]
+    observations: [registration_attempts]
 
 password_restore_errors_per_user:
-  description: "average number of password restore errors per cookie"
-  tags: [i4, tns, tns_bulb, restore, enter]
+  description: "average number of password restore errors per password restore attempt"
+  tags: [i3, tns, tns_bulb, restore, enter]
   numerator:
     observations: [restore_errors]
   denominator:
-    observations: [restore_start]
+    observations: [password_restore_request_attempts]
 
 enter_errors_per_user:
   description: "average number of authorization/registration/restore errors per cookie"
-  tags: [i3, tns, tns_bulb, enter]
+  tags: [i2, tns, tns_bulb, enter]
   numerator:
     observations: [enter_errors]
   denominator:
-    observations: [auth_start]
+    observations: [sign_in_attempts, password_restore_attempts, registration_attempts]
     
 reviews_avg_score:
   description: "Reviews added average score"
