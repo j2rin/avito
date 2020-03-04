@@ -1,9 +1,53 @@
+breakdowns:
+    breakdown_total:
+      - {}
+    breakdown_vertical:
+      - {vertical: [Transport]}
+      - {vertical: [Realty]}
+      - {vertical: [General]}
+      - {vertical: [Jobs]}
+      - {vertical: [Services]}
+      - {vertical: [SpareParts]}
+    breakdown_jobs:
+      - {vertical: [Jobs]}
+      - {vertical: [Jobs], initial_user_segment: [Private]}
+      - {vertical: [Jobs], initial_user_segment: [Pro]}
+      - {logical_category: [Jobs.CVs]}
+      - {logical_category: [Jobs.CVs], initial_user_segment: [Private]}
+      - {logical_category: [Jobs.CVs], initial_user_segment: [Pro]}
+      - {logical_category: [Jobs.Vacancies]}
+      - {logical_category: [Jobs.Vacancies], initial_user_segment: [Private]}
+      - {logical_category: [Jobs.Vacancies], initial_user_segment: [Pro]}
+      - {logical_category: [Jobs.Undefined]}
+      - {logical_category: [Jobs.Undefined], initial_user_segment: [Private]}
+      - {logical_category: [Jobs.Undefined], initial_user_segment: [Pro]}
+      - {initial_user_segment: [Private]}
+      - {initial_user_segment: [Pro]}
+      - {}
+
 - owners: [gvfandeev]
   subscribers: [satimofeev]
-  metrics:
-    buyers:
-      breakdowns:
-        - {}
+  metrics_by_breakdowns:
+    breakdown_total:
+      - buyers_canonical
+      - daily_active_users
+      - daily_buyers
+      - fatal_app_errors
+      - sessions_active
+      - users_active_daily
+      - users_bt_click_daily
+      - users_fatal_app_errors
+      - buyers_per_users
+      - user_fatal_error_per_users
+      - users_bt_click_per_users
+      - bt_clicks
+      - bt_clicks_grouped
+      - contacts
+      - contacts_grouped
+      - new_buyers
+      - sessions_btc
+      - sessions_btc_s
+      - sessions_c
 
 - owners: [gvfandeev]
   subscribers: [vleksin, dobelyakov]
@@ -11,8 +55,110 @@
     buyers:
       breakdown:
       - is_human: ['false']
-      
+
+
 - owners: [meperetrukhina]
   subscribers: [eiivkina, mrkhabibrakhmanov]
   metrics_config:
-    sx: [sx_breakdowns_services]
+    sx: []
+
+- owners: [igurov]
+  subscribers: [igurov]
+  metrics:
+    activated_listers:
+      breakdowns:
+        - {}
+
+- owners: [abkrasnikov]
+  subscribers: [abkrasnikov]
+  metrics_by_breakdowns:
+    breakdown_jobs:
+      - bt_clicks_grouped_new
+      - bt_clicks_new
+      - buyers_new
+      - contacts_grouped_new
+      - contacts_new
+      - users_bt_click_daily_new
+  metrics:
+    paid_contact_amount_net_adj:
+      breakdowns:
+        - {}
+
+- owners: [aaeremina]
+  subscribers: [aaeremina]
+  metrics_by_breakdowns:
+    breakdown_total:
+      - classified_amount_net_adj
+      - classified_arpu_net_adj
+      - classified_paying_users_ratio
+      - classified_price_net_adj
+      - classified_transactions
+      - classified_transactions_per_user
+      - classified_users
+      - other_projects_amount_net_adj
+
+- owners: [dasergeev]
+  subscribers: [almirskoy]
+  metrics_config:
+    delivery_all: []
+
+
+- owners: [aaeremina]
+  subscribers: [aaeremina]
+  metrics_by_breakdowns:
+    breakdown_total:
+      - classified_amount_net_adj
+      - classified_arpu_net_adj
+      - classified_paying_users_ratio
+      - classified_price_net_adj
+      - classified_transactions
+      - classified_transactions_per_user
+      - classified_users
+      - other_projects_amount_net_adj
+
+- owners: [easaltykova]
+  subscribers: [easaltykova]
+  metrics_by_breakdowns:
+    breakdown_vertical:
+      - lf_revenue
+      - lf_revenue_net
+      - listings_number
+      - lf_revenue_single
+      - lf_revenue_single_net
+      - lf_revenue_package
+      - lf_revenue_package_net
+      - lf_revenue_package_burned
+      - lf_revenue_package_burned_net
+      - tariff_base_revenue
+      - tariff_base_revenue_net
+      - tariff_pro_revenue
+      - tariff_pro_revenue_net
+
+- owners: [megoncharov]
+  subscribers: [avshoyko]
+  metrics_by_breakdowns:
+    breakdown_total:
+      - daily_active_authorized_users
+      - user_enter_cr
+      - search_items_ratings_coverage
+
+- owners: [pmpuryaev]
+  subscribers: [pmpuryaev]
+  metrics:
+    domofond_amount_net_adj:
+      breakdown:
+      - {}
+
+- owners: [ryabudylin]
+  subscribers: [ryabudylin]
+  metrics:
+    autoteka_amount_net_adj:
+      breakdown:
+      - {}
+
+- owners: [aimalinskiy]
+  subscribers: ['#messenger_green_light']
+  metrics:
+    users_first_messages:
+      breakdown:
+      - {}
