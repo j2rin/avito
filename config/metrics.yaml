@@ -272,7 +272,47 @@ bt_clicks:
   tags: [i1, bx, total]
   numerator:
     observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
-    
+
+btc_funnel_first:
+  title: btc_funnel_first
+  tags: [i1, bx, total]
+  numerator:
+    observations: 
+        - phone_views_total 
+        - write_button_clicks
+        - total_delivery_click
+        - realty_development_phone_views
+        - favorites_added
+
+btc_funnel_second:
+  title: btc_funnel_second
+  tags: [i1, bx, total]
+  numerator:
+    observations: 
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls 
+        - first_messages
+        - delivery_order_created
+        - booking_created_short_rent
+
+btc_funnel_all:
+  title: btc_funnel_all
+  tags: [i1, bx, total]
+  numerator:
+    observations: 
+        - phone_views_total  
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls 
+        - write_button_clicks
+        - first_messages
+        - total_delivery_click
+        - delivery_order_created
+        - realty_development_phone_views
+        - booking_created_short_rent
+        - favorites_added
+
 # JOB-496
 bt_clicks_new:
   title: bt_clicks_new
@@ -879,6 +919,49 @@ users_bt_click_daily:
   tags: [i0, bx, user]
   numerator:
     observations: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added, realty_development_phone_views]
+    groupby: [participant]
+
+users_btc_funnel_first:
+  title: users_btc_funnel_first
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - phone_views_total
+        - write_button_clicks
+        - total_delivery_click
+        - realty_development_phone_views
+        - favorites_added
+    groupby: [participant]
+
+users_btc_funnel_second:
+  title: users_btc_funnel_second
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls
+        - first_messages
+        - delivery_order_created
+        - booking_created_short_rent
+    groupby: [participant]
+
+users_btc_funnel_all:
+  title: users_btc_funnel_all
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - phone_views_total
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls
+        - write_button_clicks
+        - first_messages
+        - total_delivery_click
+        - delivery_order_created
+        - realty_development_phone_views
+        - booking_created_short_rent
+        - favorites_added
     groupby: [participant]
 
 # JOB-496
@@ -3354,6 +3437,49 @@ sessions_btc:
       - realty_development_phone_views
     groupby: [participant, session]
   tags: [i3, bx, session]
+
+sess_btc_funnel_first:
+  title: sess_btc_funnel_first
+  tags: [i2, bx, total]
+  numerator:
+    observations:
+        - phone_views_total
+        - write_button_clicks
+        - total_delivery_click
+        - realty_development_phone_views
+        - favorites_added
+    groupby: [participant, session]
+
+sess_btc_funnel_second:
+  title: sess_btc_funnel_second
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls
+        - first_messages
+        - delivery_order_created
+        - booking_created_short_rent
+    groupby: [participant, session]
+
+sess_btc_funnel_all:
+  title: sess_btc_funnel_all
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - phone_views_total
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls
+        - write_button_clicks
+        - first_messages
+        - total_delivery_click
+        - delivery_order_created
+        - realty_development_phone_views
+        - booking_created_short_rent
+        - favorites_added
+    groupby: [participant, session]
 
 sessions_c:
   numerator:
