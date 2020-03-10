@@ -66,7 +66,37 @@ contacts:
   numerator:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
   tags: [i1, bx, total]
-  
+
+click_back:
+  tags: [i4, bx, total]
+  numerator:
+    observations: [click_back_button]
+
+photo_listing_full_screen:
+  tags: [i4, bx, total]
+  numerator:
+    observations: [photo_listing_full_screen]
+
+photo_listing_no_full_screen:
+  tags: [i4, bx, total]
+  numerator:
+    observations: [photo_listing_no_full_screen]
+
+photo_zoom_on_item_page:
+  tags: [i4, bx, total]
+  numerator:
+    observations: [photo_zoom_on_item_page]
+
+fullscreen_photo_galeree_open:
+  tags: [i4, bx, total]
+  numerator:
+    observations: [fullscreen_photo_galeree_open]
+
+fullscreen_photo_galeree_close:
+  tags: [i4, bx, total]
+  numerator:
+    observations: [fullscreen_photo_galeree_close]
+
 # JOB-496
 contacts_new:
   description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
@@ -242,7 +272,47 @@ bt_clicks:
   tags: [i1, bx, total]
   numerator:
     observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
-    
+
+btc_funnel_first:
+  title: btc_funnel_first
+  tags: [i1, bx, total]
+  numerator:
+    observations: 
+        - phone_views_total 
+        - write_button_clicks
+        - total_delivery_click
+        - realty_development_phone_views
+        - favorites_added
+
+btc_funnel_second:
+  title: btc_funnel_second
+  tags: [i1, bx, total]
+  numerator:
+    observations: 
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls 
+        - first_messages
+        - delivery_order_created
+        - booking_created_short_rent
+
+btc_funnel_all:
+  title: btc_funnel_all
+  tags: [i1, bx, total]
+  numerator:
+    observations: 
+        - phone_views_total  
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls 
+        - write_button_clicks
+        - first_messages
+        - total_delivery_click
+        - delivery_order_created
+        - realty_development_phone_views
+        - booking_created_short_rent
+        - favorites_added
+
 # JOB-496
 bt_clicks_new:
   title: bt_clicks_new
@@ -502,6 +572,25 @@ buyer_target_clicks_serp_saved:
   tags: [i3, bx, tns]
   numerator:
     observations: [buyer_target_clicks_serp_saved]
+    
+domoteka_preview_clicks:
+  title: domoteka_preview_clicks
+  description: "кол-во переходов в отчет домотеки"
+  tags: [bx]
+  numerator:
+    observations: [domoteka_preview_clicks]
+    
+map_interaction_on_item:
+  title: map_interaction_on_item
+  tags: [bx]
+  numerator:
+    observations: [map_interaction_on_item]
+    
+address_item_page_clicks:
+  title: address_item_page_clicks
+  tags: [bx]
+  numerator:
+    observations: [address_item_page_clicks]     
 
 
 ###############################################################################
@@ -658,6 +747,23 @@ buyer_target_clicks_serp_saved_per_search_saved:
     observations: [buyer_target_clicks_serp_saved]
   denominator:
     observations: [saved_searches]
+    
+domoteka_preview_clicks_per_iv:
+  title: domoteka_preview_clicks_per_iv
+  description: "кол-во переходов в отчет домотеки на просмотры"
+  tags: [bx, ratio]
+  numerator:
+    observations: [domoteka_preview_clicks]
+  denominator:
+    observations: [item_views]
+    
+address_item_page_clicks_per_iv:
+  title: address_item_page_clicks_per_iv
+  tags: [bx, ratio]
+  numerator:
+    observations: [address_item_page_clicks]
+  denominator:
+    observations: [item_views]    
 
 ###############################################################################
 # Buyer :: User Totals
@@ -813,6 +919,49 @@ users_bt_click_daily:
   tags: [i0, bx, user]
   numerator:
     observations: [phone_views_total, first_messages, booking_created_short_rent, delivery_order_created, favorites_added, realty_development_phone_views]
+    groupby: [participant]
+
+users_btc_funnel_first:
+  title: users_btc_funnel_first
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - phone_views_total
+        - write_button_clicks
+        - total_delivery_click
+        - realty_development_phone_views
+        - favorites_added
+    groupby: [participant]
+
+users_btc_funnel_second:
+  title: users_btc_funnel_second
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls
+        - first_messages
+        - delivery_order_created
+        - booking_created_short_rent
+    groupby: [participant]
+
+users_btc_funnel_all:
+  title: users_btc_funnel_all
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - phone_views_total
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls
+        - write_button_clicks
+        - first_messages
+        - total_delivery_click
+        - delivery_order_created
+        - realty_development_phone_views
+        - booking_created_short_rent
+        - favorites_added
     groupby: [participant]
 
 # JOB-496
@@ -994,7 +1143,200 @@ user_buyer_target_clicks_serp_saved:
   numerator:
     observations: [buyer_target_clicks_serp_saved]
     groupby: [participant]
+    
+user_domoteka_preview_clicks:
+  title: user_domoteka_preview_clicks
+  description: "Юзеры, которые перешли в отчет домотеки"
+  tags: [bx]
+  numerator:
+    observations: [domoteka_preview_clicks]
+    groupby: [participant]
+    
+user_address_item_page_clicks:
+  title: user_address_item_page_clicks
+  description: "Юзеры, которые перешли в карту на карточке айтема"
+  tags: [bx]
+  numerator:
+    observations: [address_item_page_clicks]
+    groupby: [participant]
+    
+user_map_interaction_on_item:
+  title: user_map_interaction_on_item
+  description: "Юзеры, которые взаимодействовали с картой на карточке айтема"
+  tags: [bx]
+  numerator:
+    observations: [map_interaction_on_item]
+    groupby: [participant]  
+    
+user_from_session_start_to_c_p25:
+  title: user_from_session_start_to_c_p25
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c_p25]
+    groupby: [participant]  
+    
+user_from_session_start_to_c_p50:
+  title: user_from_session_start_to_c_p50
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c_p50]
+    groupby: [participant]
+    
+user_from_session_start_to_c_p75:
+  title: user_from_session_start_to_c_p75
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c_p75]
+    groupby: [participant]
+    
+user_from_session_start_to_c_p99:
+  title: user_from_session_start_to_c_p99
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c_p99]
+    groupby: [participant]    
+    
+user_from_session_start_to_iv_p25:
+  title: user_from_session_start_to_iv_p25
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv_p25]
+    groupby: [participant]  
+    
+user_from_session_start_to_iv_p50:
+  title: user_from_session_start_to_iv_p50
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv_p50]
+    groupby: [participant]
+    
+user_from_session_start_to_iv_p75:
+  title: user_from_session_start_to_iv_p75
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv_p75]
+    groupby: [participant]
+    
+user_from_session_start_to_iv_p99:
+  title: user_from_session_start_to_iv_p99
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv_p99]
+    groupby: [participant]        
+    
+user_from_main_page_to_c_p25:
+  title: user_from_main_page_to_c_p25
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c_p25]
+    groupby: [participant]  
+    
+user_from_main_page_to_c_p50:
+  title: user_from_main_page_to_c_p50
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c_p50]
+    groupby: [participant]
+    
+user_from_main_page_to_c_p75:
+  title: user_from_main_page_to_c_p75
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c_p75]
+    groupby: [participant]
+    
+user_from_main_page_to_c_p99:
+  title: user_from_main_page_to_c_p99
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c_p99]
+    groupby: [participant] 
+            
+user_from_main_page_to_iv_p25:
+  title: user_from_main_page_to_iv_p25
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv_p25]
+    groupby: [participant]  
+    
+user_from_main_page_to_iv_p50:
+  title: user_from_main_page_to_iv_p50
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv_p50]
+    groupby: [participant]
+    
+user_from_main_page_to_iv_p75:
+  title: user_from_main_page_to_iv_p75
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv_p75]
+    groupby: [participant]
+    
+user_from_main_page_to_iv_p99:
+  title: user_from_main_page_to_iv_p99
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv_p99]
+    groupby: [participant]     
+        
+user_from_vertical_page_to_c_p25:
+  title: user_from_vertical_page_to_c_p25
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c_p25]
+    groupby: [participant]  
+    
+user_from_vertical_page_to_c_p50:
+  title: user_from_vertical_page_to_c_p50
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c_p50]
+    groupby: [participant]
+    
+user_from_vertical_page_to_c_p75:
+  title: user_from_vertical_page_to_c_p75
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c_p75]
+    groupby: [participant]
+    
+user_from_vertical_page_to_c_p99:
+  title: user_from_vertical_page_to_c_p99
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c_p99]
+    groupby: [participant]
+    
+user_from_vertical_page_to_iv_p25:
+  title: user_from_vertical_page_to_iv_p25
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv_p25]
+    groupby: [participant]  
+    
+user_from_vertical_page_to_iv_p50:
+  title: user_from_vertical_page_to_iv_p50
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv_p50]
+    groupby: [participant]
+    
+user_from_vertical_page_to_iv_p75:
+  title: user_from_vertical_page_to_iv_p75
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv_p75]
+    groupby: [participant]
+    
+user_from_vertical_page_to_iv_p99:
+  title: user_from_vertical_page_to_iv_p99
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv_p99]
+    groupby: [participant]    
 
+  
 ###############################################################################
 # Buyer :: User Ratios
 ###############################################################################
@@ -1165,8 +1507,276 @@ user_buyer_target_clicks_serp_saved_per_user_search_saved:
     observations: [searches_saved]
     groupby: [participant]
 
-
-
+user_domoteka_preview_clicks_per_users_iv:
+  title: user_domoteka_preview_clicks_per_users_iv
+  tags: [bx, ratio]
+  numerator:
+    observations: [domoteka_preview_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [item_views]
+    groupby: [participant]
+    
+user_address_item_page_clicks_per_users_iv:
+  title: user_address_item_page_clicks_per_user_iv
+  tags: [bx]
+  numerator:
+    observations: [address_item_page_clicks]
+    groupby: [participant]
+  denominator:
+    observations: [item_views]
+    groupby: [participant]    
+    
+user_map_interaction_on_item_per_users_iv:
+  title: user_map_interaction_on_item_per_users_iv
+  tags: [bx]
+  numerator:
+    observations: [map_interaction_on_item]
+    groupby: [participant]
+  denominator:
+    observations: [item_views]
+    groupby: [participant]
+        
+user_from_session_start_to_c_p25_per_user_c_search:
+  title: user_from_session_start_to_c_p25_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c_p25]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]
+    
+user_from_session_start_to_c_p50_per_user_c_search:
+  title: user_from_session_start_to_c_p50_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c_p50]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_session_start_to_c_p75_per_user_c_search:
+  title: user_from_session_start_to_c_p75_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c_p75]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_session_start_to_c_p99_per_user_c_search:
+  title: user_from_session_start_to_c_p99_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c_p99]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_session_start_to_iv_p25_per_user_iv_search:
+  title: user_from_session_start_to_iv_p25_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv_p25]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]    
+    
+user_from_session_start_to_iv_p50_per_user_iv_search:
+  title: user_from_session_start_to_iv_p50_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv_p50]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]     
+    
+user_from_session_start_to_iv_p75_per_user_iv_search:
+  title: user_from_session_start_to_iv_p75_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv_p75]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]     
+    
+user_from_session_start_to_iv_p99_per_user_iv_search:
+  title: user_from_session_start_to_iv_p99_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv_p99]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]    
+    
+user_from_main_page_to_c_p25_per_user_c_search:
+  title: user_from_main_page_to_c_p25_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c_p25]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_main_page_to_c_p50_per_user_c_search:
+  title: user_from_main_page_to_c_p50_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c_p50]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_main_page_to_c_p75_per_user_c_search:
+  title: user_from_main_page_to_c_p75_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c_p75]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_main_page_to_c_p99_per_user_c_search:
+  title: user_from_main_page_to_c_p99_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c_p99]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+            
+user_from_main_page_to_iv_p25_per_user_iv_search:
+  title: user_from_main_page_to_iv_p25_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv_p25]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]     
+    
+user_from_main_page_to_iv_p50_per_user_iv_search:
+  title: user_from_main_page_to_iv_p50_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv_p50]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]     
+    
+user_from_main_page_to_iv_p75_per_user_iv_search:
+  title: user_from_main_page_to_iv_p75_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv_p75]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]     
+    
+user_from_main_page_to_iv_p99_per_user_iv_search:
+  title: user_from_main_page_to_iv_p99_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv_p99]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]     
+        
+user_from_vertical_page_to_c_p25_per_user_c_search:
+  title: user_from_vertical_page_to_c_p25_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c_p25]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_vertical_page_to_c_p50_per_user_c_search:
+  title: user_from_vertical_page_to_c_p50_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c_p50]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_vertical_page_to_c_p75_per_user_c_search:
+  title: user_from_vertical_page_to_c_p75_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c_p75]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_vertical_page_to_c_p99_per_user_c_search:
+  title: user_from_vertical_page_to_c_p99_per_user_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c_p99]
+    groupby: [participant]
+  denominator:
+    observations: [contacts_search_item_attr]
+    groupby: [participant]    
+    
+user_from_vertical_page_to_iv_p25_per_user_iv_search:
+  title: user_from_vertical_page_to_iv_p25_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv_p25]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]    
+    
+user_from_vertical_page_to_iv_p50_per_user_iv_search:
+  title: user_from_vertical_page_to_iv_p50_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv_p50]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]     
+    
+user_from_vertical_page_to_iv_p75_per_user_iv_search:
+  title: user_from_vertical_page_to_iv_p75_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv_p75]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]    
+    
+user_from_vertical_page_to_iv_p99_per_user_iv_search:
+  title: user_from_vertical_page_to_iv_p99_per_user_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv_p99]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_search_item_attr]
+    groupby: [participant]
+         
 ###############################################################################
 # Buyer :: Other
 ###############################################################################
@@ -1263,6 +1873,102 @@ ad_click_sessions_per_show:
   denominator:
     observations: [ad_head_mp, ad_vertical_mp, ad_searches, ad_item_views]
     groupby: [participant, session]
+    
+from_main_page_to_c:
+  title: from_main_page_to_c
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c]  
+    
+from_main_page_to_iv:
+  title: from_main_page_to_iv
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv]  
+    
+from_session_start_to_c:
+  title: from_session_start_to_c
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c]  
+    
+from_session_start_to_iv:
+  title: from_session_start_to_iv
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv] 
+    
+from_vertical_page_to_c:
+  title: from_vertical_page_to_c
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c]  
+    
+from_vertical_page_to_iv:
+  title: from_vertical_page_to_iv
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv]
+    
+sess_from_main_page_to_c_per_sess_c_s:
+  title: sess_from_main_page_to_c_per_sess_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_c]
+    groupby: [participant, session]
+  denominator:
+    observations: [contacts_serp]
+    groupby: [participant, session]     
+    
+sess_from_main_page_to_iv_per_sess_iv:
+  title: sess_from_main_page_to_iv_per_sess_iv
+  tags: [bx]
+  numerator:
+    observations: [from_main_page_to_iv]
+    groupby: [participant, session]
+  denominator:
+    observations: [item_views_serp]
+    groupby: [participant, session]    
+        
+sess_from_session_start_to_c_per_sess_c_s:
+  title: sess_from_session_start_to_c_per_sess_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_c]
+    groupby: [participant, session]
+  denominator:
+    observations: [contacts_serp]
+    groupby: [participant, session]   
+        
+sess_from_session_start_to_iv_per_sess_iv_s:
+  title: sess_from_session_start_to_iv_per_sess_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_session_start_to_iv]
+    groupby: [participant, session]
+  denominator:
+    observations: [item_views_serp]
+    groupby: [participant, session]       
+    
+sess_from_vertical_page_to_c_per_sess_c_s:
+  title: sess_from_vertical_page_to_c_per_sess_c_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_c]
+    groupby: [participant, session]
+  denominator:
+    observations: [contacts_serp]
+    groupby: [participant, session]     
+    
+sess_from_vertical_page_to_iv_per_sess_iv_s:
+  title: sess_from_vertical_page_to_iv_per_sess_iv_s
+  tags: [bx]
+  numerator:
+    observations: [from_vertical_page_to_iv]
+    groupby: [participant, session]
+  denominator:
+    observations: [item_views_serp]
+    groupby: [participant, session]    
 
  ######  ########    ###    ########   ######  ##     ##
 ##    ## ##         ## ##   ##     ## ##    ## ##     ##
@@ -1692,6 +2398,24 @@ searches_contact_serp:
   tags: [i4, bx, serp, has]
   numerator:
     observations: [searches_contact_serp]
+
+searches_group:
+  title: searches_group
+  tags: [i3, bx, total]
+  numerator:
+    observations: [searches_group]
+
+search_btc:
+  title: search_btc
+  tags: [i2, bx, serp, has]
+  numerator:
+    observations: [search_btc]
+
+item_views_serp_similar:
+  title: item_views_serp_similar
+  tags: [i3, bx, total]
+  numerator:
+    observations: [item_views_grouped]
 
 item_views_regions:
   title: item_views_regions
@@ -2489,6 +3213,13 @@ s_btc_per_s_default_sort:
   denominator:
     observations: [searches_default_sort]
 
+s_btc_per_s:
+  tags: [i2, bx, serp, ratio]
+  numerator:
+    observations: [search_btc]
+  denominator:
+    observations: [searches]
+
 s_btc_per_s_query:
   tags: [i2, bx, serp, ratio]
   numerator:
@@ -2706,6 +3437,49 @@ sessions_btc:
       - realty_development_phone_views
     groupby: [participant, session]
   tags: [i3, bx, session]
+
+sess_btc_funnel_first:
+  title: sess_btc_funnel_first
+  tags: [i2, bx, total]
+  numerator:
+    observations:
+        - phone_views_total
+        - write_button_clicks
+        - total_delivery_click
+        - realty_development_phone_views
+        - favorites_added
+    groupby: [participant, session]
+
+sess_btc_funnel_second:
+  title: sess_btc_funnel_second
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls
+        - first_messages
+        - delivery_order_created
+        - booking_created_short_rent
+    groupby: [participant, session]
+
+sess_btc_funnel_all:
+  title: sess_btc_funnel_all
+  tags: [i1, bx, total]
+  numerator:
+    observations:
+        - phone_views_total
+        - call_phone_screen_views_client
+        - missed_proxy_calls
+        - answered_proxy_calls
+        - write_button_clicks
+        - first_messages
+        - total_delivery_click
+        - delivery_order_created
+        - realty_development_phone_views
+        - booking_created_short_rent
+        - favorites_added
+    groupby: [participant, session]
 
 sessions_c:
   numerator:
@@ -5598,6 +6372,10 @@ str_total_widget_contact_ratio:
 # TNS :: Totals
 ###############################################################################
 
+enter_start:
+  numerator:
+    observations: [enter_start]
+    
 forgot_password_count:
   numerator:
     observations: [forgot_password_count]
@@ -5610,6 +6388,10 @@ password_restore_request_errors:
   numerator:
     observations: [password_restore_request_errors]
 
+password_restore_request_attempts:
+  numerator:
+    observations: [password_restore_requests, password_restore_request_errors]
+    
 password_restore_count:
   numerator:
     observations: [password_restore_count]
@@ -5618,6 +6400,10 @@ password_restore_errors:
   numerator:
     observations: [password_restore_errors]
 
+password_restore_attempts:
+  numerator:
+    observations: [password_restore_count, password_restore_errors]
+    
 sign_in_count:
   numerator:
     observations: [sign_in_count]
@@ -5626,6 +6412,22 @@ sign_in_errors:
   numerator:
     observations: [sign_in_errors]
 
+sign_in_attempts:
+  numerator:
+    observations: [sign_in_count, sign_in_errors]
+    
+registration_count:
+  numerator:
+    observations: [registration_count]
+
+registration_errors:
+  numerator:
+    observations: [registration_errors]
+
+registration_attempts:
+  numerator:
+    observations: [registration_count, registration_errors]
+    
 public_profile_views:
   description: "Количество просмотров публичного профиля на юзера (cookie)"
   tags: [i4, public_profile, tns, rar]
@@ -5655,24 +6457,35 @@ user_enter:
   tags: [i2, tns, tns_bulb, enter]
   numerator:
     observations: [enter_success]
+    groupby: [participant]
 
 user_auth:
   description: "number of unique cookies with successful authorization (phone/email/social), which had authorization start screen"
   tags: [i2, tns, tns_bulb, auth, enter]
   numerator:
     observations: [auth_success]
-
+    groupby: [participant]
+    
 user_registration:
-  description: "number of unique cookies with successful registration (not social), which had authorization start screen"
+  description: "number of unique cookies with successful registration, which had authorization start screen"
   tags: [i2, tns, tns_bulb, reg, enter]
   numerator:
     observations: [registration_success]
+    groupby: [participant]
 
 user_password_restore:
   description: "number of unique cookies with successful password restore, which had restore start screen (including those who's changed platform while restoring by email)"
   tags: [i2, tns, tns_bulb, restore, enter]
   numerator:
     observations: [restore_success]
+    groupby: [participant]
+
+user_password_restore_request:
+  description: "number of unique cookies with successful password restore request"
+  tags: [i3, tns, tns_att, restore, enter]
+  numerator:
+    observations: [password_restore_requests]
+    groupby: [participant]
 
 abuses:
   title: abuses
@@ -6176,74 +6989,82 @@ authorized_visitors_share:
     groupby: [participant]
   description: "Доля авторизованных пользователей из активных, совершивших page view"
 
-user_registration_cr:
-  title: user_registration_conv
-  description: "share of unique cookies with successful registration (not social) among those who had registration start screen"
-  tags: [i2, tns, tns_bulb, reg, enter]
-  numerator:
-    observations: [registration_success]
-  denominator:
-    observations: [registration_start]
-
-user_password_restore_cr:
-  title: user_restore_conv
-  description: "share of unique cookies with successful password restore among those who had restore start screen (including those who's changed platform while restoring by email)"
-  tags: [i2, tns, tns_bulb, restore, enter]
-  numerator:
-    observations: [restore_success]
-  denominator:
-    observations: [restore_start]
-
-user_auth_cr:
-  title: user_auth_conv
-  description: "share of unique cookies with successful authorization (phone/email/social) among those who had authorization start screen"
-  tags: [i2, tns, tns_bulb, auth, enter]
-  numerator:
-    observations: [auth_success]
-  denominator:
-    observations: [auth_start]
-
 user_enter_cr:
   title: user_enter_conv
-  description: "share of unique cookies with successful authorization/registration/restore among those who had authorization start screen"
+  description: "share of unique cookies with successful authorization/registration/restore"
   tags: [i0, tns, tns_bulb, auth, enter]
   numerator:
     observations: [enter_success]
+    groupby: [participant]
   denominator:
-    observations: [auth_start]
+    observations: [enter_start]
+    groupby: [participant]
+  
+user_enter_start_to_auth_cr:
+  title: user_enter_start_to_auth_conv
+  description: "Конверсия из открытия сценария входа (любого) в авторизацию"
+  tags: [i2, tns, tns_bulb, auth, enter]
+  numerator:
+    observations: [auth_success]
+    groupby: [participant]
+  denominator:
+    observations: [enter_start]
+    groupby: [participant]
+    
+user_enter_start_to_restore_cr:
+  title: user_enter_start_to_restore_conv
+  description: "Конверсия из открытия сценария входа (любого) в восстановление"
+  tags: [i2, tns, tns_bulb, auth, enter]
+  numerator:
+    observations: [restore_success]
+    groupby: [participant]
+  denominator:
+    observations: [enter_start]
+    groupby: [participant]
+    
+user_enter_start_to_registration_cr:
+  title: user_enter_start_to_registration_conv
+  description: "Конверсия из открытия сценария входа (любого) в регистрацию"
+  tags: [i2, tns, tns_bulb, auth, enter]
+  numerator:
+    observations: [registration_success]
+    groupby: [participant]
+  denominator:
+    observations: [enter_start]
+    groupby: [participant]
 
 auth_errors_per_user:
-  description: "average number of authorization (phone/email/social) errors per cookie"
+  description: "average number of authorization errors per authorization attempt"
   tags: [i3, tns, tns_bulb, auth, enter]
   numerator:
     observations: [auth_errors]
   denominator:
-    observations: [auth_start]
+    observations: [sign_in_attempts]
 
 registration_errors_per_user:
-  description: "average number of registration (not social) errors per cookie"
+  description: "average number of registration errors per registration attempt"
   tags: [i3, tns, tns_bulb, reg, enter]
   numerator:
     observations: [registration_errors]
   denominator:
-    observations: [registration_start]
+    observations: [registration_attempts]
 
 password_restore_errors_per_user:
-  description: "average number of password restore errors per cookie"
-  tags: [i4, tns, tns_bulb, restore, enter]
+  description: "average number of password restore errors per password restore attempt"
+  tags: [i3, tns, tns_bulb, restore, enter]
   numerator:
     observations: [restore_errors]
   denominator:
-    observations: [restore_start]
+    observations: [password_restore_request_attempts]
 
 enter_errors_per_user:
   description: "average number of authorization/registration/restore errors per cookie"
-  tags: [i3, tns, tns_bulb, enter]
+  tags: [i2, tns, tns_bulb, enter]
   numerator:
     observations: [enter_errors]
   denominator:
-    observations: [auth_start]
-
+    observations: [sign_in_attempts, password_restore_attempts, registration_attempts]
+    
 reviews_avg_score:
   description: "Reviews added average score"
   tags: [i4, tns, reviews, ratings, score]
@@ -6356,22 +7177,6 @@ authorized_page_views:
     observations: [page_views_authorized]
   description: "Количество page view в авторизованном состоянии"
 
-password_restore_request_proportion:
-  numerator:
-    observations: [password_restore_requests]
-    groupby: [participant]
-  description: "1 если хотя бы один запрос на восстановление пароля, иначе 0"
-
-password_restore_proportion:
-  numerator:
-    observations: [password_restore_count]
-    groupby: [participant]
-
-sign_in_proportion:
-  numerator:
-    observations: [sign_in_count]
-    groupby: [participant]
-
 public_profile_views_proportion:
   description: "Количество пользователей, заходивших в ПП"
   tags: [i2, public_profile, tns, rar]
@@ -6400,53 +7205,46 @@ public_profile_closed_items_paginations_proportion:
     observations: [public_profile_closed_items_paginations]
     groupby: [participant]
 
-user_auth_proportion:
-  description: "share of unique cookies with successful authorization (phone/email/social) among test participants"
+user_auth_attempt:
+  description: "share of unique cookies with attempt of authorization (phone/email/social) among test participants"
   tags: [i2, tns, tns_bulb, auth, enter]
   numerator:
-    observations: [auth_success]
+    observations: [sign_in_attempts]
     groupby: [participant]
 
-user_registration_proportion:
-  description: "share of unique cookies with successful registration (not social) among test participants"
-  tags: [i2, tns, tns_bulb, reg, enter]
+user_registration_attempt:
+  description: "share of unique cookies with attempt of registration among test participants"
+  tags: [i2, tns, tns_att, reg, enter]
   numerator:
-    observations: [registration_success]
+    observations: [registration_attempts]
     groupby: [participant]
-
-user_password_restore_proportion:
-  description: "share of unique cookies with successful password restore among test participants"
-  tags: [i2, tns, tns_bulb, restore, enter]
+    
+user_password_restore_attempt:
+  description: "share of unique cookies with attempt of password restore among test participants"
+  tags: [i2, tns, tns_att, restore, enter]
   numerator:
-    observations: [restore_success]
+    observations: [password_restore_attempts]
     groupby: [participant]
-
-user_enter_proportion:
-  description: "share of unique cookies with successful authorization/registration/restore among test participants"
-  tags: [i1, tns, tns_bulb, enter]
+    
+user_enter_attempt:
+  description: "share of unique cookies with attempt of authorization/registration/restore among test participants"
+  tags: [i1, tns, tns_att, enter]
   numerator:
-    observations: [enter_success]
+    observations: [sign_in_attempts, password_restore_attempts, registration_attempts]
     groupby: [participant]
 
-registration_start_proportion:
-  description: "share of unique cookies with registration start screen among test participants"
-  tags: [i2, tns, tns_bulb, reg, enter]
+user_password_restore_request_attempt:
+  description: "share of unique cookies with attempt password restore request"
+  tags: [i3, tns, tns_att, enter]
   numerator:
-    observations: [registration_start]
+    observations: [password_restore_request_attempts]
     groupby: [participant]
 
-enter_start_proportion:
+user_enter_start:
   description: "share of unique cookies with authorization start screen among test participants"
   tags: [critical, tns, tns_bulb, enter]
   numerator:
-    observations: [auth_start]
-    groupby: [participant]
-
-restore_start_proportion:
-  description: "share of unique cookies with password restore start screen among test participants"
-  tags: [i2, tns, tns_bulb, restore, enter]
-  numerator:
-    observations: [restore_start]
+    observations: [enter_start]
     groupby: [participant]
     
 users_favouriteseller_add:
@@ -7358,6 +8156,127 @@ items_edited_photo_add_start_date:
   numerator:
     observations: [items_edited_photo_add]
   date_filter: [start]
+
+active_items_0_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_0_photo]
+
+active_items_more_1_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_1_photo]
+
+active_items_more_3_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_3_photo]
+
+active_items_more_5_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_5_photo]
+
+active_items_more_10_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_10_photo]
+
+active_items_0_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_0_photo_total]
+
+active_items_more_1_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_1_photo_total]
+
+active_items_more_3_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_3_photo_total]
+
+active_items_more_5_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_5_photo_total]
+
+active_items_more_10_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_10_photo_total]
+
+active_items_more_5_description_word:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_5_description_word]
+
+active_items_more_10_description_word:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_10_description_word]
+
+active_items_more_40_description_word:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_40_description_word]
+
+active_items_more_5_description_word_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_5_description_word_total]
+
+active_items_more_10_description_word_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_10_description_word_total]
+
+active_items_more_40_description_word_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_40_description_word_total]
+
+new_items_0_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_0_photo]
+
+new_items_more_1_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_1_photo]
+
+new_items_more_3_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_3_photo]
+
+new_items_more_5_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_5_photo]
+
+new_items_more_10_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_10_photo]
+
+new_items_more_5_description_word:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_5_description_word]
+
+new_items_more_10_description_word:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_10_description_word]
+
+new_items_more_40_description_word:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_40_description_word]
+
 
 ###############################################################################
 # Seller :: Ratios
@@ -8399,6 +9318,151 @@ users_item_edit_photo_add_start_date:
     observations: [items_edited_photo_add]
     groupby: [participant]
   date_filter: [start]
+
+users_active_item_0_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_0_photo]
+    groupby: [participant] 
+
+users_active_item_more_1_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_1_photo]
+    groupby: [participant]
+
+users_active_item_more_3_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_3_photo]
+    groupby: [participant]
+
+users_active_item_more_5_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_5_photo]
+    groupby: [participant]
+
+users_active_item_more_10_photo:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_10_photo]
+    groupby: [participant]
+
+users_active_item_0_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_0_photo_total]
+    groupby: [participant]
+
+users_active_item_more_1_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_1_photo_total]
+    groupby: [participant]
+
+users_active_item_more_3_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_3_photo_total]
+    groupby: [participant]
+
+users_active_item_more_5_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_5_photo_total]
+    groupby: [participant]
+
+users_active_item_more_10_photo_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_10_photo_total]
+    groupby: [participant]
+
+users_active_item_more_5_description_word:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_5_description_word]
+    groupby: [participant]
+
+users_active_item_more_10_description_word:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_10_description_word]
+    groupby: [participant]
+
+users_active_item_more_40_description_word:
+  tags: [sx, item_quality, i2]
+  numerator:
+    observations: [active_items_more_40_description_word]
+    groupby: [participant]
+
+users_active_item_more_5_description_word_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_5_description_word_total]
+    groupby: [participant]
+
+users_active_item_more_10_description_word_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_10_description_word_total]
+    groupby: [participant]
+
+users_active_item_more_40_description_word_total:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [active_items_more_40_description_word_total]
+    groupby: [participant]
+
+users_new_item_0_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_0_photo]
+    groupby: [participant]
+
+users_new_item_more_1_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_1_photo]
+    groupby: [participant]
+
+users_new_item_more_3_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_3_photo]
+    groupby: [participant]
+
+users_new_item_more_5_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_5_photo]
+    groupby: [participant]
+
+users_new_item_more_10_photo:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_10_photo]
+    groupby: [participant]
+
+users_new_item_more_5_description_word:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_5_description_word]
+    groupby: [participant]
+
+users_new_item_more_10_description_word:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_10_description_word]
+    groupby: [participant]
+
+users_new_item_more_40_description_word:
+  tags: [sx, item_quality, i3]
+  numerator:
+    observations: [new_items_more_40_description_word]
+    groupby: [participant]
+
 
 ##     ## ##    ## ########
 ###   ### ###   ##      ##
@@ -9688,6 +10752,7 @@ new_listers:
   tags: [i1]
   numerator:
     observations: [new_listers]
+    groupby: [participant]
   description: "Users who started their first item in logical category. Additive across logical categories"
 
 active_listers:
@@ -9716,6 +10781,7 @@ returned_listers:
   tags: [i2, m42, tree]
   numerator:
     observations: [returned_listers]
+    groupby: [participant]
   description: "Activated listers in (logical_category X user_segment) that aren't new listers. Additive across logical categories"
 
 deactivated_listers:
@@ -9751,6 +10817,7 @@ new_buyers:
   tags: [i1, m42, tree]
   numerator:
     observations: [new_buyers]
+    groupby: [participant]
   description: "Cookies that made their first contact in a logical_category. Additive across logical_category"
 
 returned_buyers:
@@ -9758,6 +10825,7 @@ returned_buyers:
   tags: [i1, m42, tree]
   numerator:
     observations: [returned_buyers]
+    groupby: [participant]
   description: "Cookies that made contact in a logical_category that are not new buyers. Additive across logical_category"
 
 contacts_canonical:
@@ -10819,28 +11887,28 @@ draw_session_percent_sla:
     observations: [draw_sessions]
 
 draw_session_percent_p25:
-  tags: [performance]
+  tags: [performance, i1]
   numerator:
     observations: [draw_sessions_p25]
   denominator:
     observations: [draw_sessions]
 
 draw_session_percent_p50:
-  tags: [performance]
+  tags: [performance, i1]
   numerator:
     observations: [draw_sessions_p50]
   denominator:
     observations: [draw_sessions]
 
 draw_session_percent_p75:
-  tags: [performance]
+  tags: [performance, i1]
   numerator:
     observations: [draw_sessions_p75]
   denominator:
     observations: [draw_sessions]
 
 draw_session_percent_p95:
-  tags: [performance]
+  tags: [performance, i1]
   numerator:
     observations: [draw_sessions_p95]
   denominator:
@@ -10896,7 +11964,7 @@ draw_duration:
     observations: [draw_duration_events]
     
 draw_session_duration:
-  tags: [performance]
+  tags: [performance, i1]
   numerator:
     observations: [draw_session_duration]
   denominator:
@@ -10956,7 +12024,49 @@ serverloading_session_duration:
   numerator:
     observations: [serverloading_session_duration]
   denominator:
-    observations: [serverloading_session_duration_events]  
+    observations: [serverloading_session_duration_events]
+
+bounce_rate_perf:
+  tags: [performance]
+  numerator:
+    observations: [draw_events]
+  denominator:
+    observations: [init_events]
+
+init_appstart_duration:
+  tags: [performance]
+  numerator:
+    observations: [init_appstart_duration]
+  denominator:
+    observations: [init_appstart_events]
+
+init_appstart_percent_p25:
+  tags: [performance]
+  numerator:
+    observations: [init_appstart_events_p25]
+  denominator:
+    observations: [init_appstart_events]
+
+init_appstart_percent_p50:
+  tags: [performance]
+  numerator:
+    observations: [init_appstart_events_p50]
+  denominator:
+    observations: [init_appstart_events]
+
+init_appstart_percent_p75:
+  tags: [performance]
+  numerator:
+    observations: [init_appstart_events_p75]
+  denominator:
+    observations: [init_appstart_events]
+
+init_appstart_percent_p95:
+  tags: [performance]
+  numerator:
+    observations: [init_appstart_events_p95]
+  denominator:
+    observations: [init_appstart_events]
 
 ##############################################################################
 # Performance :: WEB
@@ -11075,7 +12185,7 @@ secure_connection_duration:
     observations: [secure_connection_duration_events]
     
 session_duration:
-  tags: [performance]
+  tags: [performance, i1]
   numerator:
     observations: [session_duration]
   denominator:
@@ -11481,28 +12591,28 @@ secure_connection_percent_p95:
         observations: [secure_connection_events]
         
 session_percent_p25:
-      tags: [performance]
+      tags: [performance, i1]
       numerator:
         observations: [session_events_p25]
       denominator:
         observations: [session_events]
         
 session_percent_p50:
-      tags: [performance]
+      tags: [performance, i1]
       numerator:
         observations: [session_events_p50]
       denominator:
         observations: [session_events]
         
 session_percent_p75:
-      tags: [performance]
+      tags: [performance, i1]
       numerator:
         observations: [session_events_p75]
       denominator:
         observations: [session_events]
         
 session_percent_p95:
-      tags: [performance]
+      tags: [performance, i1]
       numerator:
         observations: [session_events_p95]
       denominator:
@@ -12181,6 +13291,46 @@ users_ancall_per_pv_btn_user:
     groupby: [participant]
   denominator:
     observations: [phone_view_button_clicks]
+    groupby: [participant]
+
+notification_open:
+  title: notification_open
+  description: "Число юзеров, открывших нотификацию"
+  tags: [crm]
+  numerator:
+    observations: [notification_open]
+    groupby: [participant]
+
+notification_click:
+  title: notification_click
+  description: "Число юзеров, совершивших действие/клик в нотификации"
+  tags: [crm]
+  numerator:
+    observations: [notification_click]
+    groupby: [participant]
+
+notification_spam:
+  title: notification_spam
+  description: "Число юзеров, которое пометило нотификацию как спам"
+  tags: [crm]
+  numerator:
+    observations: [notification_spam]
+    groupby: [participant]
+
+notification_unsubscribe:
+  title: notification_unsubscribe
+  description: "Число юзеров, которое отписалось от получения email нотификаций"
+  tags: [crm]
+  numerator:
+    observations: [notification_unsubscribe]
+    groupby: [participant]
+
+traffic_sessions:
+  title: traffic_sessions
+  description: "Number of traffic sessions"
+  tags: [seo]
+  numerator:
+    observations: [traffic_sessions]
     groupby: [participant]
 
 ########  ########   #######  
@@ -14798,7 +15948,7 @@ searches_map_area:
   title: map_area
   tags: [i3, bx, total, map]
   numerator:
-    observations: [searches_map_serp]
+    observations: [searches_map_area]
 
 #### поиски по карте, закончившиеся целевым действием    
 map_searches_with_contact:
@@ -14968,7 +16118,7 @@ map_area_sessions:
   description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты)"
   tags: [i3, bx, total, map_serp]
   numerator:
-    observations: [searches_map_serp]    
+    observations: [searches_map_area]    
     groupby: [participant, session]
           
 
@@ -15047,7 +16197,7 @@ map_area_users:
   description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
   tags: [i3, bx, total, map_serp]
   numerator:
-    observations: [searches_map_serp]    
+    observations: [searches_map_area]    
     groupby: [participant]
           
 #### поиски по карте
