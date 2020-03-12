@@ -6392,33 +6392,33 @@ password_restore_request_attempts:
   numerator:
     observations: [password_restore_requests, password_restore_request_errors]
     
-password_restore_count:
+password_restore_success:
   numerator:
-    observations: [password_restore_count]
+    observations: [restore_success]
 
 password_restore_errors:
   numerator:
-    observations: [password_restore_errors]
+    observations: [restore_errors]
 
 password_restore_attempts:
   numerator:
-    observations: [password_restore_count, password_restore_errors]
+    observations: [restore_success, restore_errors]
     
-sign_in_count:
+auth_success:
   numerator:
-    observations: [sign_in_count]
+    observations: [auth_success]
 
-sign_in_errors:
+auth_errors:
   numerator:
-    observations: [sign_in_errors]
+    observations: [auth_errors]
 
-sign_in_attempts:
+auth_attempts:
   numerator:
-    observations: [sign_in_count, sign_in_errors]
+    observations: [auth_success, auth_errors]
     
-registration_count:
+registration_success:
   numerator:
-    observations: [registration_count]
+    observations: [registration_success]
 
 registration_errors:
   numerator:
@@ -6426,7 +6426,7 @@ registration_errors:
 
 registration_attempts:
   numerator:
-    observations: [registration_count, registration_errors]
+    observations: [registration_success, registration_errors]
     
 public_profile_views:
   description: "Количество просмотров публичного профиля на юзера (cookie)"
@@ -6460,14 +6460,14 @@ user_enter:
     groupby: [participant]
 
 user_auth:
-  description: "number of unique cookies with successful authorization (phone/email/social), which had authorization start screen"
+  description: "number of unique cookies with successful authorization"
   tags: [i2, tns, tns_bulb, auth, enter]
   numerator:
     observations: [auth_success]
     groupby: [participant]
     
 user_registration:
-  description: "number of unique cookies with successful registration, which had authorization start screen"
+  description: "number of unique cookies with successful registration"
   tags: [i2, tns, tns_bulb, reg, enter]
   numerator:
     observations: [registration_success]
@@ -7034,28 +7034,31 @@ user_enter_start_to_registration_cr:
     groupby: [participant]
 
 auth_errors_per_user:
-  description: "average number of authorization errors per authorization attempt"
+  description: "average number of authorization errors per auth user"
   tags: [i3, tns, tns_bulb, auth, enter]
   numerator:
     observations: [auth_errors]
   denominator:
-    observations: [sign_in_attempts]
+    observations: [auth_success, auth_errors]
+    groupby: [participant]
 
 registration_errors_per_user:
-  description: "average number of registration errors per registration attempt"
+  description: "average number of registration errors per reg user"
   tags: [i3, tns, tns_bulb, reg, enter]
   numerator:
     observations: [registration_errors]
   denominator:
-    observations: [registration_attempts]
+    observations: [registration_success, registration_errors]
+    groupby: [participant]
 
 password_restore_errors_per_user:
-  description: "average number of password restore errors per password restore attempt"
+  description: "average number of password restore errors per restore user"
   tags: [i3, tns, tns_bulb, restore, enter]
   numerator:
     observations: [restore_errors]
   denominator:
-    observations: [password_restore_request_attempts]
+    observations: [password_restore_requests, password_restore_request_errors]
+    groupby: [participant]
 
 enter_errors_per_user:
   description: "average number of authorization/registration/restore errors per cookie"
@@ -7063,8 +7066,9 @@ enter_errors_per_user:
   numerator:
     observations: [enter_errors]
   denominator:
-    observations: [sign_in_attempts, password_restore_attempts, registration_attempts]
-    
+    observations: [enter_success, enter_errors]
+    groupby: [participant]
+   
 reviews_avg_score:
   description: "Reviews added average score"
   tags: [i4, tns, reviews, ratings, score]
@@ -7206,38 +7210,38 @@ public_profile_closed_items_paginations_proportion:
     groupby: [participant]
 
 user_auth_attempt:
-  description: "share of unique cookies with attempt of authorization (phone/email/social) among test participants"
+  description: "share of unique cookies with attempt of authorization among test participants"
   tags: [i2, tns, tns_bulb, auth, enter]
   numerator:
-    observations: [sign_in_attempts]
+    observations: [auth_success, auth_errors]
     groupby: [participant]
 
 user_registration_attempt:
   description: "share of unique cookies with attempt of registration among test participants"
   tags: [i2, tns, tns_att, reg, enter]
   numerator:
-    observations: [registration_attempts]
+    observations: [registration_success, registration_errors]
     groupby: [participant]
     
 user_password_restore_attempt:
   description: "share of unique cookies with attempt of password restore among test participants"
   tags: [i2, tns, tns_att, restore, enter]
   numerator:
-    observations: [password_restore_attempts]
+    observations: [restore_success, restore_errors]
     groupby: [participant]
     
 user_enter_attempt:
   description: "share of unique cookies with attempt of authorization/registration/restore among test participants"
   tags: [i1, tns, tns_att, enter]
   numerator:
-    observations: [sign_in_attempts, password_restore_attempts, registration_attempts]
+    observations: [enter_success, enter_errors]
     groupby: [participant]
 
 user_password_restore_request_attempt:
   description: "share of unique cookies with attempt password restore request"
   tags: [i3, tns, tns_att, enter]
   numerator:
-    observations: [password_restore_request_attempts]
+    observations: [password_restore_requests, password_restore_request_errors]
     groupby: [participant]
 
 user_enter_start:
