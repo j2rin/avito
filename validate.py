@@ -12,6 +12,7 @@ import io
 import json
 import os
 import sys
+from time import sleep
 
 try:
     from http import client as httplib  # python 3
@@ -43,17 +44,27 @@ def marks_to_str(file_name, data, marks_attribute):
 
 
 def post(url, data):
-    conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
+    def _post():
+        conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
 
-    conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
+        conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
 
-    response = conn.getresponse()
+        response = conn.getresponse()
+        return response.status, response.read().decode()
 
-    text = response.read().decode()
+    status, text = _post()
 
-    if response.status != 200:
+    # retry on gateway timeout
+    for i in range(3):
+        if status != 504:
+            break
+        print('Gateway timeout, retrying...')
+        sleep(i * 30)
+        status, text = _post()
+
+    if status != 200:
         print('FAILED: Cannot connect to AB Configurator')
-        print('status: {}'.format(response.status))
+        print('status: {}'.format(status))
         print(text)
         exit(1)
 
@@ -149,7 +160,6 @@ def validate(url, config, presets, dimensions):
     info_dimensions = result['result'].pop('m42_dimensions')
     
     show_errors({'m42_dimensions': METRICS_DIMENSION_FILE}, 'm42_dimensions', info_dimensions)
-    
 
     if not info['success']:
         print('Metrics dimensions config presets IGNORED')
