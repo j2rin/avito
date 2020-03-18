@@ -842,6 +842,14 @@ users_searches_extra_delivery:
     observations: [searches_extra_delivery]
     groupby: [participant]
 
+users_searches_any_ext_block:
+  title: user_s_any_ext_block
+  description: "Юзеры, поискавшие с любым допблоком (регионы или доставка)"
+  tags: [i3, bx, user]
+  numerator:
+    observations: [searches_extra_delivery, searches_extra_regions]
+    groupby: [participant]
+
 buyers:
   title: buyers
   tags: [i0, bx, user]
@@ -2302,6 +2310,13 @@ searches_item_view_regions:
   tags: [i4, bx, serp, has]
   numerator:
     observations: [searches_item_view_regions]
+    
+searches_item_view_any_ext_block:
+  description: "Поиски, закончившиеся iv с любого допблока (регионы или доставка)"
+  title: s_iv_any_ext_block
+  tags: [i4, bx, serp, has]
+  numerator:
+    observations: [searches_item_view_regions,searches_item_view_delivery]
 
 searches_item_view_vip:
   title: searches_item_view_vip
@@ -2344,6 +2359,13 @@ searches_extra_delivery:
   tags: [i3, bx, serp, has]
   numerator:
     observations: [searches_extra_delivery]
+    
+searches_any_ext_block:
+  title: s_any_ext_block 
+  tags: [i3, bx, serp, has]
+  description: "Поиски с любым допблоком (регионы или доставка)"
+  numerator:
+    observations: [searches_extra_delivery,searches_extra_regions]
 
 searches_serp_extra_regions:
   title: searches_serp_extra_regions
@@ -2368,6 +2390,13 @@ searches_contact_regions:
   tags: [i4, bx, serp, has]
   numerator:
     observations: [searches_contact_regions]
+    
+searches_contact_any_ext_block:
+  title: s_c_any_ext_block
+  tags: [i4, bx, serp, has]
+  description: "Поиски, закончившиеся контактами с любого допблока (доставка или регионы)"
+  numerator:
+    observations: [searches_contact_regions,searches_contact_delivery]
 
 searches_contact_vip:
   title: searches_contact_vip
@@ -2428,6 +2457,13 @@ item_views_delivery:
   tags: [bx, total]
   numerator:
     observations: [item_views_delivery]
+    
+item_views_any_ext_block:
+  title: iv_any_ext_block
+  tags: [bx, total]
+  description: "IV с любого допблока (доставка или регионы)"
+  numerator:
+    observations: [item_views_delivery,item_views_regions]
 
 item_views_vip:
   title: item_views_vip
@@ -2470,6 +2506,13 @@ contacts_delivery:
   tags: [bx, total]
   numerator:
     observations: [contacts_delivery]
+    
+contacts_any_ext_block:
+  title: c_any_ext_block
+  description: "Контакты с любого допблока (регионы или доставка)"
+  tags: [bx, total]
+  numerator:
+    observations: [contacts_regions,contacts_delivery]
 
 contacts_vip:
   title: contacts_vip
@@ -2837,6 +2880,15 @@ item_views_delivery_per_search_delivery:
     observations: [item_views_delivery]
   denominator:
     observations: [searches_serp_extra_delivery]
+    
+item_views_any_ext_block_per_any_ext_block:
+  title: iv_any_ext_block_per_any_ext_block
+  description: "IV с любого допблока (регионы или доставка) относительно поисков с любым допблоком"
+  tags: [bx, ratio]
+  numerator:
+    observations: [item_views_delivery,item_views_regions]
+  denominator:
+    observations: [searches_serp_extra_delivery,searches_serp_extra_regions]
 
 item_views_vip_per_search:
   title: item_views_vip_per_search
@@ -2909,6 +2961,16 @@ contacts_delivery_per_search_delivery:
     observations: [contacts_delivery]
   denominator:
     observations: [searches_serp_extra_delivery]
+
+contacts_any_ext_block_per_any_ext_block:
+  title: c_any_ext_block_per_any_ext_block
+  tags: [bx, ratio]
+  description: "IV с любого допблока (регионы или доставка) относительно поисков с любым допблоком"
+  numerator:
+    observations: [contacts_regions,contacts_delivery]
+  denominator:
+    observations: [searches_serp_extra_regions,searches_serp_extra_delivery]
+
 
 contacts_vip_per_search:
   title: contacts_vip_per_search
