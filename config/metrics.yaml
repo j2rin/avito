@@ -1812,25 +1812,37 @@ searches_and_item_views_to_contact:
   tags: [i3, bx]
   numerator:
     observations: [searches_and_iv_to_contact]
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
 
 ad_pages_to_contact:
   title: ad_pages_to_contact
   tags: [i3, bx]
   numerator:
     observations: [ad_pages_to_contact]
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
 
 item_views_to_contact:
   title: iv_to_contact
   tags: [i3, bx]
   numerator:
     observations: [item_views_to_contact]
-
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
+    
 searches_to_contact:
   title: searches_all_to_contact
   description: All 300 events to first contact (including map searches and scrolls). Ex-'searches_to_contact' metric
   tags: [i3, bx]
   numerator:
     observations: [searches_to_contact]
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
     
 correct_searches_to_contact:
   title: searches_serp_to_contact
@@ -1838,6 +1850,9 @@ correct_searches_to_contact:
   tags: [i3, bx]
   numerator:
     observations: [correct_searches_to_contact]
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
     
 correct_searches_and_iv_to_contact:
   title: ss_and_iv_to_contact
@@ -1845,6 +1860,9 @@ correct_searches_and_iv_to_contact:
   description: Searches serp and item views to first contact
   numerator:
     observations: [correct_searches_and_iv_to_contact]
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
     
 map_searches_to_contact:
   title: maps_to_contact
@@ -1852,6 +1870,9 @@ map_searches_to_contact:
   description: Map searches (based on 2743 event) to first contact
   numerator:
     observations: [map_searches_to_contact]
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
     
 map_searches_and_iv_to_contact:
   title: maps_and_iv_to_contact
@@ -1859,14 +1880,20 @@ map_searches_and_iv_to_contact:
   description: Map searches (based on 2743 event) and all item views (no matter from map or not) to first contact
   numerator:
     observations: [map_searches_and_iv_to_contact]
-  
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
+    
 correct_and_map_searches_and_iv_to_contact:
   title: maps_ss_iv_to_contact
   tags: [i3, bx]
   description: Map searches (based on 2743 event), searches serp and item views to first_contact
   numerator:
     observations: [correct_and_map_searches_and_iv_to_contact]  
-
+  denominator:
+    observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
+    groupby: [participant]
+    
 ad_click_sessions:
   tags: [critical, bx]
   numerator:
@@ -16583,7 +16610,27 @@ pin_clicks:
   tags: [i3, bx, total, map]
   numerator:
     observations: [pin_clicks]
+   
+map_empty_search:
+  title: map_empty
+  description: "Пустые поиски на карте"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [empty_map_serp]   
     
+map_local_geo:
+  title: map_local_geo
+  description: "Поиски на карте с локальным гео"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [district_map_searches, road_map_searches, metro_map_searches]  
+    
+map_price_rubricator_filters:
+  title: map_price_rubr_filters
+  description: "Поиски на карте с фильтром по цене или рубрикаторным фильтром"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [price_filters_map_searches,rubricator_filters_map_searches]  
 
 #### поиски по области карты (300е событие) 
 searches_map_area:
@@ -16591,6 +16638,8 @@ searches_map_area:
   tags: [i3, bx, total, map]
   numerator:
     observations: [searches_map_area]
+    
+    
 
 #### поиски по карте, закончившиеся целевым действием    
 map_searches_with_contact:
@@ -16734,7 +16783,38 @@ fav_added_serp_map_total:
   tags: [i4, bx, user, map_serp, map]
   numerator:
     observations: [fav_added_serp_map_area, fav_added_from_map]
-     
+    
+
+#### навигационные действия на карте  
+map_clusters:
+  title: map_clusters
+  description: "Клики по кластерам на карте"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [clusters]
+    
+map_zooms:
+  title: map_zooms
+  description: "Зумы карты"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [zooms]
+    
+map_scrolls:
+  title: map_scrolls
+  description: "Сдвиги карты"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [scrolls]
+    
+map_my_locs:
+  title: map_my_locs
+  description: "Нажатие на кнопку Мое местоположение на карте"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [my_locs]
+    
+
 
 ###############################################################################
 # Map :: Totals Sessions 
@@ -16763,6 +16843,15 @@ map_area_sessions:
     observations: [searches_map_area]    
     groupby: [participant, session]
           
+        
+map_sessions_3plus_maps:
+  title: sess_map_3plus_maps
+  description: "Число сессий, в которых было три или более поиска по карте"
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    threshold: 3
 
 #### поиски по карте, закончившиеся целевым действием    
 contact_sessions_from_map:
@@ -16841,8 +16930,41 @@ map_area_users:
   numerator:
     observations: [searches_map_area]    
     groupby: [participant]
-          
-#### поиски по карте
+    
+user_map_empty_search:
+  title: user_map_empty
+  description: "Юзеры, получившие пустые поиски на карте"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [empty_map_serp]  
+    groupby: [participant]
+    
+user_map_local_geo:
+  title: user_map_local_geo
+  description: "Юзеры, совершившие поиски на карте с локальным гео"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [district_map_searches, road_map_searches, metro_map_searches]
+    groupby: [participant]    
+    
+user_map_price_rubricator_filters:
+  title: user_map_price_rubr_filters
+  description: "Юзеры, совершившие поиски на карте с фильтром по цене или рубрикаторным фильтром"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [price_filters_map_searches,rubricator_filters_map_searches]
+    groupby: [participant]
+    
+map_users_3plus_maps:
+  title: user_map_3plus_maps
+  description: "Число юзеров, совершивших три или более поиска по карте"
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant]
+    threshold: 3
+    
+#### целевые действия с поисков по карте 
 users_buyer_target_click_from_map:
   title: users_btc_map
   tags: [i2, bx, user, map]
@@ -16972,6 +17094,65 @@ map_area_per_map_search:
   denominator:
     observations: [map_searches]
 
+map_empty_per_map:
+  title: map_empty_per_map
+  description: "Доля пустых поисков на карте"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [empty_map_serp]  
+  denominator:
+    observations: [map_searches]
+    
+map_local_geo_per_map:
+  title: map_local_geo_per_map
+  description: "Доля поисков на карте с локальным гео"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [district_map_searches, road_map_searches, metro_map_searches]
+  denominator:
+    observations: [map_searches]  
+    
+map_price_rubricator_filters_per_map:
+  title: map_price_rubr_filters_per_map
+  description: "Доля поисков на карте с фильтром по цене или рубрикаторным фильтром"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [price_filters_map_searches,rubricator_filters_map_searches]
+  denominator:
+    observations: [map_searches]
+    
+#### трудозатраты
+
+map_search_to_iv_map:
+  title: maps_to_iv_map
+  description: "Число поисков по карте до первого iv с карты в этот день"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [map_searches_to_iv]
+  denominator:
+    observations: [item_views_from_map]
+    groupby: [participant]
+  
+map_search_to_btc_map:
+  title: maps_to_btc_map
+  description: "Число поисков по карте до первого btc с карты в этот день"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [map_searches_to_btc]
+  denominator:
+    observations: [buyer_target_clicks_from_map]
+    groupby: [participant]
+    
+map_search_to_contact_map:
+  title: maps_to_contact_map
+  description: "Число поисков по карте до первого контакта с карты в этот день"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [map_searches_to_contact]
+  denominator:
+    observations: [contacts_from_map]
+    groupby: [participant]
+        
 
 #### целевые действия с карты ratio 
 contacts_from_map_per_map_search:
@@ -17116,8 +17297,61 @@ fav_from_map_total_per_map_search:
   denominator:
     observations: [map_searches] 
     
- 
+ #### навигационные действия на карте  
+map_clusters_per_map:
+  title: map_clusters_per_map
+  description: "Отношение кликов на кластеры на карте к числу поисков по карте "
+  tags: [i4, bx, map]
+  numerator:
+    observations: [clusters]
+  denominator:
+    observations: [map_searches] 
 
+map_zooms_per_map:
+  title: map_zooms_per_map
+  description: "Отношение зумов карты к числу поисков по карте "
+  tags: [i4, bx, map]
+  numerator:
+    observations: [zooms]
+  denominator:
+    observations: [map_searches] 
+    
+map_scrolls_per_map:
+  title: map_scrolls_per_map
+  description: "Отношение сдвигов карты к числу поисков по карте "
+  tags: [i4, bx, map]
+  numerator:
+    observations: [scrolls]
+  denominator:
+    observations: [map_searches] 
+     
+map_my_locs_per_map:
+  title: map_my_locs_per_map
+  description: "Отношение нажатий на кнопку Мое местоположение на карте к числу поисков по карте "
+  tags: [i4, bx, map]
+  numerator:
+    observations: [my_locs]
+  denominator:
+    observations: [map_searches]
+    
+map_pin_avg_zoom_level:
+  title: map_pin_avg_zoom_level
+  description: "Средний уровень зума, с которого кликают на пин"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [pins_zoom_levels]
+  denominator:
+    observations: [pins_with_zoom_levels] 
+    
+map_scroll_avg_zoom_level:
+  title: map_scroll_avg_zoom_level
+  description: "Средний уровень зума, на котором скроллят"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [scrolls_zoom_levels]
+  denominator:
+    observations: [scrolls_with_zoom_levels] 
+    
 ###############################################################################
 # Map :: Sessions Ratios
 ###############################################################################
