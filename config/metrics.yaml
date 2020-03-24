@@ -16843,6 +16843,15 @@ map_area_sessions:
     observations: [searches_map_area]    
     groupby: [participant, session]
           
+        
+map_sessions_3plus_maps:
+  title: sess_map_3plus_maps
+  description: "Число сессий, в которых было три или более поиска по карте"
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    threshold: 3
 
 #### поиски по карте, закончившиеся целевым действием    
 contact_sessions_from_map:
@@ -16945,6 +16954,15 @@ user_map_price_rubricator_filters:
   numerator:
     observations: [price_filters_map_searches,rubricator_filters_map_searches]
     groupby: [participant]
+    
+map_users_3plus_maps:
+  title: user_map_3plus_maps
+  description: "Число юзеров, совершивших три или более поиска по карте"
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant]
+    threshold: 3
     
 #### целевые действия с поисков по карте 
 users_buyer_target_click_from_map:
@@ -17333,7 +17351,6 @@ map_scroll_avg_zoom_level:
     observations: [scrolls_zoom_levels]
   denominator:
     observations: [scrolls_with_zoom_levels] 
-    
     
 ###############################################################################
 # Map :: Sessions Ratios
