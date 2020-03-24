@@ -26,6 +26,7 @@ BREAKDOWNS_PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'presets/breakdowns')
 METRICS_LISTS_PATH = os.path.join(CUR_DIR_PATH, 'presets/metrics')
 METRICS_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics.yaml')
 METRICS_DIMENSION_FILE = os.path.join(CUR_DIR_PATH, 'config/m42.yaml')
+METRICS_SUBSCRIPTION_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics_subscriptions.yaml')
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 PRESETS_CONFIG_VALIDATE_URL = '/api/validateMetricsRepo'
@@ -112,13 +113,15 @@ def show_errors(file_name_map, name, info):
     return result
 
 
-def send_all(url, config, presets, dimensions, api_key=None):
+def send_all(url, config, presets, dimensions, subscriptions, api_key=None):
+
     file_name_map = {x[0]: {} for x in presets}
     data = {
         'config': io.open(config, encoding='utf-8').read()
     }
 
     data['m42_dimensions'] = io.open(dimensions, encoding='utf-8').read()
+    data['m42_subscriptions'] = io.open(subscriptions, encoding='utf-8').read()
 
     if api_key:
         data['api_key'] = api_key
@@ -138,8 +141,9 @@ def send_all(url, config, presets, dimensions, api_key=None):
     return result, file_name_map
 
 
-def validate(url, config, presets, dimensions):
-    result, file_name_map = send_all(url, config, presets, dimensions)
+def validate(url, config, presets, dimensions, subscriptions):
+    result, file_name_map = send_all(url, config, presets, dimensions, subscriptions)
+
 
     if result['success']:
         print('\nAll presets are PASSED')
@@ -163,6 +167,14 @@ def validate(url, config, presets, dimensions):
 
     if not info['success']:
         print('Metrics dimensions config presets IGNORED')
+        return False
+
+    info_subscriptions = result['result'].pop('m42_subscriptions')
+
+    show_errors({'m42_subscriptions': METRICS_SUBSCRIPTION_FILE}, 'm42_subscriptions', info_subscriptions)
+
+    if not info['success']:
+        print('Metrics subscriptions config IGNORED')
         return False
 
     for preset_type, _ in presets:
@@ -197,6 +209,7 @@ def publish_repo():
             ('metrics_lists', METRICS_LISTS_PATH),
         ],
         METRICS_DIMENSION_FILE,
+        METRICS_SUBSCRIPTION_FILE,
         os.getenv('API_KEY')
     )
 
@@ -217,7 +230,8 @@ def validate_repo():
             ('ab_config_presets', PRESETS_PATH),
             ('metrics_lists', METRICS_LISTS_PATH),
         ],
-        METRICS_DIMENSION_FILE
+        METRICS_DIMENSION_FILE,
+        METRICS_SUBSCRIPTION_FILE
     )
 
     if not success:
