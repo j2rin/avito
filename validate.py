@@ -144,7 +144,6 @@ def send_all(url, config, presets, dimensions, subscriptions, api_key=None):
 def validate(url, config, presets, dimensions, subscriptions):
     result, file_name_map = send_all(url, config, presets, dimensions, subscriptions)
 
-
     if result['success']:
         print('\nAll presets are PASSED')
 
@@ -158,23 +157,23 @@ def validate(url, config, presets, dimensions, subscriptions):
     show_errors({'config': METRICS_FILE}, 'config', info)
 
     if not info['success']:
-        print('Metrics config presets IGNORED')
+        print('Metrics config presets FAILED')
         return False
 
-    info_dimensions = result['result'].pop('m42_dimensions')
+    info = result['result'].pop('m42_dimensions')
     
-    show_errors({'m42_dimensions': METRICS_DIMENSION_FILE}, 'm42_dimensions', info_dimensions)
+    show_errors({'m42_dimensions': METRICS_DIMENSION_FILE}, 'm42_dimensions', info)
 
     if not info['success']:
-        print('Metrics dimensions config presets IGNORED')
+        print('Metrics dimensions config presets FAILED')
         return False
 
-    info_subscriptions = result['result'].pop('m42_subscriptions')
+    info = result['result'].pop('m42_subscriptions')
 
-    show_errors({'m42_subscriptions': METRICS_SUBSCRIPTION_FILE}, 'm42_subscriptions', info_subscriptions)
+    show_errors({'m42_subscriptions': METRICS_SUBSCRIPTION_FILE}, 'm42_subscriptions', info)
 
     if not info['success']:
-        print('Metrics subscriptions config IGNORED')
+        print('Metrics subscriptions config FAILED')
         return False
 
     for preset_type, _ in presets:
