@@ -168,14 +168,6 @@ def validate(url, config, presets, dimensions, subscriptions):
         print('Metrics dimensions config presets FAILED')
         return False
 
-    info = result['result'].pop('m42_subscriptions')
-
-    show_errors({'m42_subscriptions': METRICS_SUBSCRIPTION_FILE}, 'm42_subscriptions', info)
-
-    if not info['success']:
-        print('Metrics subscriptions config FAILED')
-        return False
-
     for preset_type, _ in presets:
         for name, info in result['result'].get(preset_type, {}).items():
             failed = show_errors(file_name_map[preset_type], name, info)
@@ -188,6 +180,14 @@ def validate(url, config, presets, dimensions, subscriptions):
 
     for preset_type, names in failed_presets.items():
         print('\nFAILED {} presets: {}'.format(preset_type, ', '.join(sorted(names))))
+
+    info = result['result'].pop('m42_subscriptions')
+
+    show_errors({'m42_subscriptions': METRICS_SUBSCRIPTION_FILE}, 'm42_subscriptions', info)
+
+    if not info['success']:
+        print('Metrics subscriptions config FAILED')
+        return False
 
     return False
 
