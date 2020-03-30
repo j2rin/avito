@@ -15820,21 +15820,21 @@ russia_level_searches:
 noncapital_city_level_searches:
   tags: [i4, geo, bx]
   description: "Поиски на уровне города, который не является столицей области, края и т.д."
-  title: search_city
+  title: search_noncapital_city
   numerator: 
     observations: [noncapital_city_level_searches]
     
 capital_city_level_searches:
   tags: [i4, geo, bx]
   description: "Поиски на уровне города, который является столицей области, края и т.д."
-  title: search_city
+  title: search_capital_city
   numerator: 
     observations: [capital_city_level_searches]
     
 federal_city_level_searches:
   tags: [i4, geo, bx]
   description: "Поиски на уровне города федерального значения"
-  title: search_city
+  title: search_federal_city
   numerator: 
     observations: [federal_city_level_searches]
     
@@ -16383,7 +16383,7 @@ russia_level_searches_per_search:
 noncapital_city_level_search_per_search:
   tags: [i4, geo, bx]
   description: "Доля поисков на уровне города, который не является столицей области, края и т.д."
-  title: search_city_per_search
+  title: search_noncapital_city_per_search
   numerator: 
     observations: [noncapital_city_level_searches]
   denominator:
@@ -16392,7 +16392,7 @@ noncapital_city_level_search_per_search:
 capital_city_level_search_per_search:
   tags: [i4, geo, bx]
   description: "Доля поисков на уровне города, который является столицей области, края и т.д."
-  title: search_city_per_search
+  title: search_capital_city_per_search
   numerator: 
     observations: [capital_city_level_searches]
   denominator:
@@ -16401,7 +16401,7 @@ capital_city_level_search_per_search:
 federal_city_level_search_per_search:
   tags: [i4, geo, bx]
   description: "Доля поисков на уровне города федерального значения"
-  title: search_city_per_search
+  title: search_federal_city_per_search
   numerator: 
     observations: [federal_city_level_searches]
   denominator:
@@ -17767,6 +17767,48 @@ items_with_coordinates:
   numerator:
     observations: [item_with_coordinates]
     
+items_with_building:
+  title: items_with_building
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов с адресом до дома"
+  numerator:
+    observations: [item_has_building]
+    
+items_with_street:
+  title: items_with_street
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов с адресом до улицы"
+  numerator:
+    observations: [item_has_street]
+    
+items_with_district:
+  title: items_with_district
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов с адресом до района города"
+  numerator:
+    observations: [item_has_district]
+    
+items_with_city:
+  title: items_with_city
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов с адресом до города"
+  numerator:
+    observations: [item_has_city]
+    
+items_no_city:
+  title: items_no_city
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов с адресом без города"
+  numerator:
+    observations: [item_no_city]
+    
+items_with_marginal_address:
+  title: items_with_marginal_address
+  tags: [i4, geo, geo_dq]
+  description: "Число айтемов с адресом леса, озера, аэропорта и т.п."
+  numerator:
+    observations: [item_has_marginal_address]
+    
 
 #### качество адреса у новых айтемов 
 items_20m_from_location_new:
@@ -17832,6 +17874,48 @@ items_with_coordinates_new:
   numerator:
     observations: [item_with_coordinates_new]
     
+items_with_building_new:
+  title: items_with_building_new
+  tags: [i4, geo, geo_dq]
+  description: "Число новых айтемов с адресом до дома"
+  numerator:
+    observations: [item_has_building_new]
+    
+items_with_street_new:
+  title: items_with_street_new
+  tags: [i4, geo, geo_dq]
+  description: "Число новых айтемов с адресом до улицы"
+  numerator:
+    observations: [item_has_street_new]
+    
+items_with_district_new:
+  title: items_with_district_new
+  tags: [i4, geo, geo_dq]
+  description: "Число новых айтемов с адресом до района города"
+  numerator:
+    observations: [item_has_district_new]
+    
+items_with_city_new:
+  title: items_with_city_new
+  tags: [i4, geo, geo_dq]
+  description: "Число новых айтемов с адресом до города"
+  numerator:
+    observations: [item_has_city_new]
+    
+items_no_city_new:
+  title: items_no_city_new
+  tags: [i4, geo, geo_dq]
+  description: "Число новых айтемов с адресом без города"
+  numerator:
+    observations: [item_no_city_new]
+    
+items_with_marginal_address_new:
+  title: items_with_marginal_address_new
+  tags: [i4, geo, geo_dq]
+  description: "Число новых айтемов с адресом леса, озера, аэропорта и т.п."
+  numerator:
+    observations: [item_has_marginal_address_new]
+    
 
 #### качество адреса у реактивированных айтемов 
 items_20m_from_location_reactivated:
@@ -17896,6 +17980,48 @@ items_with_coordinates_reactivated:
   description: "Число реактивированных айтемов с координатами"
   numerator:
     observations: [item_with_coordinates_reactivated]
+    
+items_with_building_reactivated:
+  title: items_with_building_reactivated
+  tags: [i4, geo, geo_dq]
+  description: "Число реактивированных айтемов с адресом до дома"
+  numerator:
+    observations: [item_has_building_reactivated]
+    
+items_with_street_reactivated:
+  title: items_with_street_reactivated
+  tags: [i4, geo, geo_dq]
+  description: "Число реактивированных айтемов с адресом до улицы"
+  numerator:
+    observations: [item_has_street_reactivated]
+    
+items_with_district_reactivated:
+  title: items_with_district_reactivated
+  tags: [i4, geo, geo_dq]
+  description: "Число реактивированных айтемов с адресом до района города"
+  numerator:
+    observations: [item_has_district_reactivated]
+    
+items_with_city_reactivated:
+  title: items_with_city_reactivated
+  tags: [i4, geo, geo_dq]
+  description: "Число реактивированных айтемов с адресом до города"
+  numerator:
+    observations: [item_has_city_reactivated]
+    
+items_no_city_reactivated:
+  title: items_no_city_reactivated
+  tags: [i4, geo, geo_dq]
+  description: "Число реактивированных айтемов с адресом без города"
+  numerator:
+    observations: [item_no_city_reactivated]
+    
+items_with_marginal_address_reactivated:
+  title: items_with_marginal_address_reactivated
+  tags: [i4, geo, geo_dq]
+  description: "Число реактивированных айтемов с адресом леса, озера, аэропорта и т.п."
+  numerator:
+    observations: [item_has_marginal_address_reactivated]
     
 
 ###############################################################################
@@ -18037,6 +18163,60 @@ avg_item_address_length_new:
   denominator:
     observations: [item_with_address_string_new]
     
+items_with_building_new_per_new:
+  title: items_with_building_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов с адресом до дома"
+  numerator:
+    observations: [item_has_building_new]
+  denominator:
+    observations: [items_started]  
+    
+items_with_street_new_per_new:
+  title: items_with_street_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов с адресом до улицы"
+  numerator:
+    observations: [item_has_street_new]
+  denominator:
+    observations: [items_started]  
+    
+items_with_district_new_per_new:
+  title: items_with_district_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов с адресом до района города"
+  numerator:
+    observations: [item_has_district_new]
+  denominator:
+    observations: [items_started]  
+    
+items_with_city_new_per_new:
+  title: items_with_city_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов с адресом до города"
+  numerator:
+    observations: [item_has_city_new]
+  denominator:
+    observations: [items_started]  
+    
+items_no_city_new_per_new:
+  title: items_no_city_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов с адресом без города"
+  numerator:
+    observations: [item_no_city_new]
+  denominator:
+    observations: [items_started]  
+    
+items_with_marginal_address_new_per_new:
+  title: items_with_marginal_address_new_per_new
+  tags: [i4, geo, geo_dq]
+  description: "Доля новых айтемов с адресом леса, озера, аэропорта и т.п."
+  numerator:
+    observations: [item_has_marginal_address_new]
+  denominator:
+    observations: [items_started]  
+    
 
 ####качество адреса реактивированных айтемов ratio
 items_20m_from_location_reactivated_per_react:
@@ -18128,6 +18308,60 @@ avg_item_address_length_react:
     observations: [item_address_length_reactivated]
   denominator:
     observations: [item_with_address_string_reactivated]
+    
+items_with_building_reactivated_per_react:
+  title: items_with_building_reactivated_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов с адресом до дома"
+  numerator:
+    observations: [item_has_building_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+    
+items_with_street_reactivated_per_react:
+  title: items_with_street_reactivated_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов с адресом до улицы"
+  numerator:
+    observations: [item_has_street_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+    
+items_with_district_reactivated_per_react:
+  title: items_with_district_reactivated_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов с адресом до района города"
+  numerator:
+    observations: [item_has_district_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+    
+items_with_city_reactivated_per_react:
+  title: items_with_city_reactivated_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов с адресом до города"
+  numerator:
+    observations: [item_has_city_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+    
+items_no_city_reactivated_per_react:
+  title: items_no_city_reactivated_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов с адресом без города"
+  numerator:
+    observations: [item_no_city_reactivated]
+  denominator:
+    observations: [items_reactivated]  
+    
+items_with_marginal_address_reactivated_per_react:
+  title: items_with_marginal_address_reactivated_per_react
+  tags: [i4, geo, geo_dq]
+  description: "Доля реактивированных айтемов с адресом леса, озера, аэропорта и т.п."
+  numerator:
+    observations: [item_has_marginal_address_reactivated]
+  denominator:
+    observations: [items_reactivated]  
     
 
 ###############################################################################
