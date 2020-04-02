@@ -8,22 +8,11 @@ breakdowns:
       - {vertical: [Jobs]}
       - {vertical: [Services]}
       - {vertical: [SpareParts]}
-    breakdown_jobs:
+    breakdown_vertical_jobs:
       - {vertical: [Jobs]}
-      - {vertical: [Jobs], initial_user_segment: [Private]}
-      - {vertical: [Jobs], initial_user_segment: [Pro]}
       - {logical_category: [Jobs.CVs]}
-      - {logical_category: [Jobs.CVs], initial_user_segment: [Private]}
-      - {logical_category: [Jobs.CVs], initial_user_segment: [Pro]}
       - {logical_category: [Jobs.Vacancies]}
-      - {logical_category: [Jobs.Vacancies], initial_user_segment: [Private]}
-      - {logical_category: [Jobs.Vacancies], initial_user_segment: [Pro]}
       - {logical_category: [Jobs.Undefined]}
-      - {logical_category: [Jobs.Undefined], initial_user_segment: [Private]}
-      - {logical_category: [Jobs.Undefined], initial_user_segment: [Pro]}
-      - {initial_user_segment: [Private]}
-      - {initial_user_segment: [Pro]}
-      - {}
 
 subscriptions:
   - owner: gvfandeev
@@ -56,10 +45,37 @@ subscriptions:
 
   - owner: aimalinskiy
     subscribers: ['#messenger_green_light']
-    metrics:
-      users_first_messages:
-        breakdowns:
-          - {}
+    metrics_by_breakdowns:
+      breakdown_total:
+        - first_messages
+        - first_response_messages
+        - items_sold_onavito_from_messenger
+        - messenger_active_chats
+        - messenger_dau
+        - messenger_spam_ratio
+        - messenger_visitors
+        - total_messages
+        - users_first_response_messages
+        - users_item_sold_onavito_from_messenger
+        - write_button_clicks
+        - first_mess_per_write_button_clicks
+        - item_views_from_messenger
+        - items_closed_from_messenger
+        - messenger_geo_messages
+        - messenger_spam_blocks
+        - phone_views_in_chat
+        - users_item_closed_from_messenger
+        - users_phone_views_in_chat
+        - users_write_button_clicks
+        - write_button_clicks_per_item_views
+        - chats_deleted
+        - messenger_auto_messages
+        - messenger_image_messages
+        - messenger_item_messages
+        - messenger_users_blocked
+        - users_chat_open_errors
+        - messages_view_events
+        - user_messages_view_events
 
   - owner: megoncharov
     subscribers: [avshoyko]
@@ -72,37 +88,26 @@ subscriptions:
   - owner: abkrasnikov
     subscribers: []
     metrics_by_breakdowns:
-      breakdown_jobs:
+      breakdown_vertical_jobs:
         - bt_clicks_grouped_new
         - bt_clicks_new
         - buyers_new
         - contacts_grouped_new
         - contacts_new
         - users_bt_click_daily_new
+        - new_first_messages
+        - first_mess_per_write_button_clicks_new
+        - users_first_messages_new
 
   - owner: gvfandeev
     subscribers: [satimofeev]
-    metrics_by_breakdowns:
-      breakdown_total:
-        - buyers_canonical
-        - daily_active_users
-        #- daily_buyers
-        - fatal_app_errors
-        - sessions_active
-        - users_active_daily
-        - users_bt_click_daily
-        - users_fatal_app_errors
-        - buyers_per_users
-        - user_fatal_error_per_users
-        - users_bt_click_per_users
-        - bt_clicks
-        - bt_clicks_grouped
-        - contacts
-        - contacts_grouped
-        - new_buyers
-        - sessions_btc
-        - sessions_btc_s
-        - sessions_c
+    metrics_config:
+      bx: [breakdown_total]
+
+  - owner: gvfandeev
+    subscribers: [asprimak]
+    metrics_config:
+      geo: [breakdown_total]
 
   - owner: aaeremina
     subscribers: []
@@ -151,4 +156,14 @@ subscriptions:
   - owner: meperetrukhina
     subscribers: [eiivkina, mrkhabibrakhmanov]
     metrics_config:
-      sx: [sx_breakdowns_realty]
+      sx: [breakdown_total]
+
+  - owner: dasergeev
+    subscribers: [almirkskoy]
+    metrics_config:
+      delivery: [breakdown_total]
+
+  - owner: apraslov
+    subscribers: [easaltykova]
+    metrics_config:
+      mnz_vas: [breakdown_total]
