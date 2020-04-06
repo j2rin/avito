@@ -18544,28 +18544,6 @@ btc_from_witcher_any:
 ###############################################################################
 # Geo Witcher:: Total HAS Events
 ###############################################################################
-
-s_witcher_regions_with_s_from_witcher:
-  title: s_witcher_reg_s_from_witcher
-  tags: [i3, geo, search]
-  description: "Поиски с колдунщиком регионов, окончившиеся поиском с блока колдунщика"
-  numerator:
-    observations: [searches_witcher_regions_with_item_view]
-
-s_witcher_delivery_with_s_from_witcher:
-  title: s_witcher_del_s_from_witcher
-  tags: [i3, geo, search]
-  description: "Поиски с колдунщиком доставки, окончившиеся поиском с блока колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_item_view]
-    
-s_witcher_any_with_s_from_witcher:
-  title: s_witcher_any_s_from_witcher
-  tags: [i3, geo, search]
-  description: "Поиски с любым колдунщиком, окончившиеся поиском с блока колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher, searches_witcher_regions_with_search_from_witcher]    
-
 s_witcher_regions_with_iv:
   title: s_witcher_reg_iv
   tags: [i3, geo, search]
@@ -18628,51 +18606,29 @@ s_witcher_any_with_btc:
   description: "Поиски с любым колдунщиком, окончившиеся btc с колдунщика"
   numerator:
     observations: [searches_witcher_delivery_with_btc, searches_witcher_regions_with_btc]  
-
-
-s_witcher_regions_with_wtc:
-  title: s_witcher_reg_wtc
-  tags: [i3, geo, search]
-  description: "Поиски с колдунщиком регионов, окончившиеся wtc (поиском или iv) с колдунщика"
-  numerator:
-    observations: [searches_witcher_regions_with_search_from_witcher,searches_witcher_regions_with_item_view]
-
-s_witcher_delivery_with_wtc:
-  title: s_witcher_del_wtc
-  tags: [i3, geo, search]
-  description: "Поиски с колдунщиком доставки, окончившиеся wtc (поиском или iv) с колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher,searches_witcher_delivery_with_item_view]
-    
-s_witcher_any_with_wtc:
-  title: s_witcher_any_wtc
-  tags: [i3, geo, search]
-  description: "Поиски с любым колдунщиком, окончившиеся wtc (поиском или iv) с колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher, searches_witcher_regions_with_search_from_witcher, searches_witcher_delivery_with_item_view,searches_witcher_regions_with_item_view]       
-    
+   
     
 ###############################################################################
 # Geo Witcher:: Totals Users
 ###############################################################################
-user_s_witcher_regions:
-  title: user_s_witcher_reg
+user_witcher_regions:
+  title: user_witcher_reg
   tags: [i3, geo, search, user]
   description: "Юзеры, видевшие колдунщик с регионами"
   numerator:
     observations: [searches_witcher_regions]
     groupby: [participant]
 
-user_s_witcher_delivery:
-  title: user_s_witcher_del
+user_witcher_delivery:
+  title: user_witcher_del
   tags: [i3, geo, search, user]
   description: "Юзеры, видевшие колдунщик с доставкой"
   numerator:
     observations: [searches_witcher_delivery]
     groupby: [participant]
     
-user_s_witcher_any:
-  title: user_s_witcher_any
+user_witcher_any:
+  title: user_witcher_any
   tags: [i3, geo, search, user]
   description: "Юзеры, видевшие любой колдунщик"
   numerator:
@@ -18941,7 +18897,6 @@ btc_from_witcher_any_per_witcher_any:
     observations: [searches_witcher_delivery, searches_witcher_regions]
     
 #общий CTR колдунщика 
-
 wtc_per_witcher_region:
   title: wtc_per_s_witcher_reg
   tags: [i3, geo, search]
@@ -18975,36 +18930,8 @@ wtc_per_witcher_any:
 # Geo Witcher:: Ratio HAS Events
 ###############################################################################
 
-#обойдемся только CTR без btc и проч. 
-searches_witcher_reg_with_s_from_witcher_per_witcher_regions:
-  title: ctr_serp_witcher_reg
-  tags: [i3, geo, search]
-  description: "Доля поисков с колдунщиком регионов, закончившихся поиском с колдунщика"
-  numerator:
-    observations: [searches_witcher_regions_with_search_from_witcher]
-  denominator:
-    observations: [searches_witcher_regions]
-    
-searches_witcher_del_with_s_from_witcher_per_witcher_del:
-  title: ctr_serp_witcher_del
-  tags: [i3, geo, search]
-  description: "Доля поисков с колдунщиком доставки, закончившихся поиском с колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher]
-  denominator:
-    observations: [searches_witcher_delivery]
-    
-searches_witcher_any_with_s_from_witcher_per_witcher_any:
-  title: ctr_serp_witcher_any
-  tags: [i3, geo, search]
-  description: "Доля поисков с любым колдунщиком, закончившихся поиском с колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher,searches_witcher_regions_with_search_from_witcher]
-  denominator:
-    observations: [searches_witcher_delivery,searches_witcher_regions]
-    
 searches_witcher_reg_with_iv_per_witcher_reg:
-  title: ctr_iv_witcher_reg
+  title: s_witcher_iv_per_witcher_reg
   tags: [i3, geo, search]
   description: "Доля поисков с колдунщиком регионов, закончившихся iv с колдунщика"
   numerator:
@@ -19013,7 +18940,7 @@ searches_witcher_reg_with_iv_per_witcher_reg:
     observations: [searches_witcher_regions]
     
 searches_witcher_del_with_iv_per_witcher_del:
-  title: ctr_iv_witcher_del
+  title: s_witcher_iv_per_witcher_del
   tags: [i3, geo, search]
   description: "Доля поисков с колдунщиком доставки, закончившихся iv с колдунщика"
   numerator:
@@ -19022,7 +18949,7 @@ searches_witcher_del_with_iv_per_witcher_del:
     observations: [searches_witcher_delivery]
     
 searches_witcher_any_with_iv_per_witcher_any:
-  title: ctr_iv_witcher_any
+  title: s_witcher_iv_per_witcher_any
   tags: [i3, geo, search]
   description: "Доля поисков с любым колдунщиком, закончившихся iv с колдунщика"
   numerator:
@@ -19030,76 +18957,40 @@ searches_witcher_any_with_iv_per_witcher_any:
   denominator:
     observations: [searches_witcher_delivery,searches_witcher_regions]
     
-#общий ctr
-searches_witcher_reg_with_wtc_per_witcher_reg:
-  title: ctr_witcher_reg
+
+searches_witcher_reg_with_btc_per_witcher_reg:
+  title: s_witcher_btc_per_witcher_reg
   tags: [i3, geo, search]
-  description: "Доля поисков с колдунщиком регионов, закончившихся iv или поиском с колдунщика"
+  description: "Доля поисков с колдунщиком регионов, закончившихся btc с колдунщика"
   numerator:
-    observations: [searches_witcher_regions_with_search_from_witcher,searches_witcher_regions_with_item_view]
+    observations: [searches_witcher_regions_with_btc]
   denominator:
     observations: [searches_witcher_regions]
     
-searches_witcher_del_with_wtc_per_witcher_del:
-  title: ctr_witcher_del
+searches_witcher_del_with_btc_per_witcher_del:
+  title: s_witcher_btc_per_witcher_del
   tags: [i3, geo, search]
-  description: "Доля поисков с колдунщиком доставки, закончившихся iv или поиском с колдунщика"
+  description: "Доля поисков с колдунщиком доставки, закончившихся btc с колдунщика"
   numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher, searches_witcher_delivery_with_item_view]
+    observations: [searches_witcher_delivery_with_btc]
   denominator:
     observations: [searches_witcher_delivery]
     
-searches_witcher_any_with_wtc_per_witcher_any:
-  title: ctr_witcher_any
+searches_witcher_any_with_btc_per_witcher_any:
+  title: s_witcher_btc_per_witcher_any
   tags: [i3, geo, search]
-  description: "Доля поисков с любым колдунщиком, закончившихся iv или поиском с колдунщика"
+  description: "Доля поисков с любым колдунщиком, закончившихся btc с колдунщика"
   numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher,searches_witcher_regions_with_search_from_witcher,searches_witcher_delivery_with_item_view,searches_witcher_regions_with_item_view]
+    observations: [searches_witcher_delivery_with_btc,searches_witcher_regions_with_btc]
   denominator:
     observations: [searches_witcher_delivery,searches_witcher_regions]
     
-
-
 ###############################################################################
 # Geo Witcher:: Ratio Users
 ###############################################################################
-
-#ctr  
-user_s_witcher_reg_with_s_from_witcher_per_user_witcher_reg:
-  title: user_ctr_serp_witcher_reg
-  tags: [i3, geo, search]
-  description: "Доля юзеров, столкнувшихся с колдунщиком регионов, сделавших поиск с колдунщика"
-  numerator:
-    observations: [searches_witcher_regions_with_search_from_witcher]
-    groupby: [participant]
-  denominator:
-    observations: [searches_witcher_regions]
-    groupby: [participant]
     
-user_s_witcher_del_with_s_from_witcher_per_user_witcher_del:
-  title: user_ctr_serp_witcher_del
-  tags: [i3, geo, search]
-  description: "Доля юзеров, столкнувшихся с колдунщиком доставки, сделавших поиск с колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher]
-    groupby: [participant]
-  denominator:
-    observations: [searches_witcher_delivery]
-    groupby: [participant]
-    
-user_s_witcher_any_with_s_from_witcher_per_user_witcher_any:
-  title: user_ctr_serp_witcher_any
-  tags: [i3, geo, search]
-  description: "Доля юзеров, столкнувшихся с любым колдунщиком, сделавших поиск с колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher,searches_witcher_regions_with_search_from_witcher]
-    groupby: [participant]
-  denominator:
-    observations: [searches_witcher_delivery,searches_witcher_regions]
-    groupby: [participant]
-    
-user_s_witcher_reg_with_iv_per_user_witcher_reg:
-  title: user_ctr_iv_witcher_reg
+user_witcher_reg_with_iv_per_user_witcher_reg:
+  title: user_witcher_iv_per_user_witcher_reg
   tags: [i3, geo, search]
   description: "Доля юзеров, столкнувшихся с колдунщиком регионов, сделавших iv с колдунщика"
   numerator:
@@ -19109,8 +19000,8 @@ user_s_witcher_reg_with_iv_per_user_witcher_reg:
     observations: [searches_witcher_regions]
     groupby: [participant]
     
-user_s_witcher_del_with_iv_per_user_witcher_del:
-  title: user_ctr_iv_witcher_del
+user_witcher_del_with_iv_per_user_witcher_del:
+  title: user_witcher_iv_per_user_witcher_del
   tags: [i3, geo, search]
   description: "Доля юзеров, столкнувшихся с колдунщиком доставки, сделавших iv с колдунщика"
   numerator:
@@ -19120,8 +19011,8 @@ user_s_witcher_del_with_iv_per_user_witcher_del:
     observations: [searches_witcher_delivery]
     groupby: [participant]
     
-user_s_witcher_any_with_iv_per_user_witcher_any:
-  title: user_ctr_iv_witcher_any
+user_witcher_any_with_iv_per_user_witcher_any:
+  title: user_witcher_iv_per_user_witcher_any
   tags: [i3, geo, search]
   description: "Доля юзеров, столкнувшихся с любым колдунщиком, сделавших iv с колдунщика"
   numerator:
@@ -19130,44 +19021,10 @@ user_s_witcher_any_with_iv_per_user_witcher_any:
   denominator:
     observations: [searches_witcher_delivery,searches_witcher_regions]
     groupby: [participant]
-    
-#общий ctr
-user_s_witcher_reg_with_wtc_per_user_witcher_reg:
-  title: user_ctr_witcher_reg
-  tags: [i3, geo, search]
-  description: "Доля юзеров, столкнувшихся с колдунщиком регионов, сделавших iv или поиск с колдунщика"
-  numerator:
-    observations: [searches_witcher_regions_with_search_from_witcher,searches_witcher_regions_with_item_view]
-    groupby: [participant]
-  denominator:
-    observations: [searches_witcher_regions]
-    groupby: [participant]
-    
-user_s_witcher_del_with_wtc_per_user_witcher_del:
-  title: user_ctr_witcher_del
-  tags: [i3, geo, search]
-  description:  "Доля юзеров, столкнувшихся с колдунщиком доставки, сделавших iv или поиск с колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher, searches_witcher_delivery_with_item_view]
-    groupby: [participant]
-  denominator:
-    observations: [searches_witcher_delivery]
-    groupby: [participant]
-    
-user_s_witcher_any_with_wtc_per_user_witcher_any:
-  title: user_ctr_witcher_any
-  tags: [i3, geo, search]
-  description: "Доля юзеров, столкнувшихся с любым колдунщиком, сделавших iv или поиск с колдунщика"
-  numerator:
-    observations: [searches_witcher_delivery_with_search_from_witcher,searches_witcher_regions_with_search_from_witcher,searches_witcher_delivery_with_item_view,searches_witcher_regions_with_item_view]
-    groupby: [participant]
-  denominator:
-    observations: [searches_witcher_delivery,searches_witcher_regions]
-    groupby: [participant]
-    
+      
 #btc 
-user_s_witcher_btc_per_user_witcher_regions:
-  title: user_btc_witcher_per_witcher_reg
+user_witcher_btc_per_user_witcher_regions:
+  title: user_witcher_btc_per_witcher_reg
   tags: [i3, geo, search]
   description: "Доля юзеров, столкнувшихся с колдунщиком регионов, сделавших btc с колдунщика"
   numerator:
@@ -19177,8 +19034,8 @@ user_s_witcher_btc_per_user_witcher_regions:
     observations: [searches_witcher_regions]
     groupby: [participant]
     
-user_s_witcher_btc_per_user_witcher_delivery:
-  title: user_btc_witcher_per_witcher_del
+user_witcher_btc_per_user_witcher_delivery:
+  title: user_witcher_btc_per_witcher_del
   tags: [i3, geo, search]
   description:  "Доля юзеров, столкнувшихся с колдунщиком доставки, сделавших btc с колдунщика"
   numerator:
@@ -19188,8 +19045,8 @@ user_s_witcher_btc_per_user_witcher_delivery:
     observations: [searches_witcher_delivery]
     groupby: [participant]
     
-user_s_witcher_btc_per_user_witcher_any:
-  title: user_btc_witcher_per_witcher_any
+user_witcher_btc_per_user_witcher_any:
+  title: user_witcher_btc_per_witcher_any
   tags: [i3, geo, search]
   description: "Доля юзеров, столкнувшихся с любым колдунщиком, сделавших btc с колдунщика"
   numerator:
