@@ -590,8 +590,29 @@ address_item_page_clicks:
   title: address_item_page_clicks
   tags: [bx]
   numerator:
-    observations: [address_item_page_clicks]     
-
+    observations: [address_item_page_clicks]
+    
+#### дубли в RE
+searches_group_doubles:
+  title: searches_group_doubles
+  description: "количество переходов на выдачу с дублями"
+  tags: [bx]
+  numerator:
+    observations: [searches_group_doubles]   
+    
+iv_grouped_doubles:
+  title: iv_grouped_doubles
+  description: "количество просмотров из выдачи с дублями"
+  tags: [bx]
+  numerator:
+    observations: [item_views_grouped_doubles]
+    
+c_serp_grouped_doubles:
+  title: c_serp_grouped_doubles
+  description: "количество контактов из выдачи с дублями"
+  tags: [bx]
+  numerator:
+    observations: [contacts_serp_grouped_doubles]       
 
 ###############################################################################
 # Buyer :: Ratios
@@ -2077,18 +2098,6 @@ typo_suggest:
   numerator:
     observations: [typo_suggest]
 
-keyboard_replace:
-  title: keyboard_replace
-  tags: [misspell]
-  numerator:
-    observations: [keyboard_replace]
-
-keyboard_suggest:
-  title: keyboard_suggest
-  tags: [misspell]
-  numerator:
-    observations: [keyboard_suggest]
-
 sqp_layout_replace:
   title: sqp_layout_replace
   tags: [misspell]
@@ -2101,18 +2110,6 @@ sqp_layout_suggest:
   numerator:
     observations: [sqp_layout_suggest]
 
-wordbreaker_replace:
-  title: wordbreaker_replace
-  tags: [misspell]
-  numerator:
-    observations: [wordbreaker_replace]
-
-wordbreaker_suggest:
-  title: wordbreaker_suggest
-  tags: [misspell]
-  numerator:
-    observations: [wordbreaker_suggest]
-
 sqp_wordbreaker_replace:
   title: sqp_wordbreaker_replace
   tags: [misspell]
@@ -2124,18 +2121,6 @@ sqp_wordbreaker_suggest:
   tags: [misspell]
   numerator:
     observations: [sqp_wordbreaker_suggest]
-
-wordbreaker_digit_replace:
-  title: wordbreaker_digit_replace
-  tags: [misspell]
-  numerator:
-    observations: [wordbreaker_digit_replace]
-
-wordbreaker_digit_suggest:
-  title: wordbreaker_digit_suggest
-  tags: [misspell]
-  numerator:
-    observations: [wordbreaker_digit_suggest]
 
 sqp_wordbreaker_digit_replace:
   title: sqp_wordbreaker_digit_replace
@@ -2209,18 +2194,6 @@ typo_suggest_disabled:
   numerator:
     observations: [typo_suggest_disabled]
 
-keyboard_disabled:
-  title: keyboard_disabled
-  tags: [misspell]
-  numerator:
-    observations: [keyboard_disabled]
-
-keyboard_suggest_disabled:
-  title: keyboard_suggest_disabled
-  tags: [misspell]
-  numerator:
-    observations: [keyboard_suggest_disabled]
-
 sqp_layout_disabled:
   title: sqp_layout_disabled
   tags: [misspell]
@@ -2233,18 +2206,6 @@ sqp_layout_suggest_disabled:
   numerator:
     observations: [sqp_layout_suggest_disabled]
 
-wordbreaker_disabled:
-  title: wordbreaker_disabled
-  tags: [misspell]
-  numerator:
-    observations: [wordbreaker_disabled]
-
-wordbreaker_suggest_disabled:
-  title: wordbreaker_suggest_disabled
-  tags: [misspell]
-  numerator:
-    observations: [wordbreaker_suggest_disabled]
-
 sqp_wordbreaker_disabled:
   title: sqp_wordbreaker_disabled
   tags: [misspell]
@@ -2256,18 +2217,6 @@ sqp_wordbreaker_suggest_disabled:
   tags: [misspell]
   numerator:
     observations: [sqp_wordbreaker_suggest_disabled]
-
-wordbreaker_digit_disabled:
-  title: wordbreaker_digit_disabled
-  tags: [misspell]
-  numerator:
-    observations: [wordbreaker_digit_disabled]
-
-wordbreaker_digit_suggest_disabled:
-  title: wordbreaker_digit_suggest_disabled
-  tags: [misspell]
-  numerator:
-    observations: [wordbreaker_digit_suggest_disabled]
 
 sqp_wordbreaker_digit_disabled:
   title: sqp_wordbreaker_digit_disabled
@@ -2900,22 +2849,6 @@ typo_suggest_ctr_disable:
   denominator:
     observations: [typo_suggest]
 
-keyboard_replace_ctr_disable:
-  title: keyboard_replace_ctr_disable
-  tags: [ratio, misspell]
-  numerator:
-    observations: [keyboard_disabled]
-  denominator:
-    observations: [keyboard_replace]
-
-keyboard_suggest_ctr_disable:
-  title: keyboard_suggest_ctr_disable
-  tags: [ratio, misspell]
-  numerator:
-    observations: [keyboard_suggest_disabled]
-  denominator:
-    observations: [keyboard_suggest]
-
 sqp_layout_replace_ctr_disable:
   title: sqp_layout_replace_ctr_disable
   tags: [ratio, misspell]
@@ -2932,22 +2865,6 @@ sqp_layout_suggest_ctr_disable:
   denominator:
     observations: [sqp_layout_suggest]
 
-wordbreaker_replace_ctr_disable:
-  title: wordbreaker_replace_ctr_disable
-  tags: [ratio, misspell]
-  numerator:
-    observations: [wordbreaker_disabled]
-  denominator:
-    observations: [wordbreaker_replace]
-
-wordbreaker_suggest_ctr_disable:
-  title: wordbreaker_suggest_ctr_disable
-  tags: [ratio, misspell]
-  numerator:
-    observations: [wordbreaker_suggest_disabled]
-  denominator:
-    observations: [wordbreaker_suggest]
-
 sqp_wordbreaker_replace_ctr_disable:
   title: sqp_wordbreaker_replace_ctr_disable
   tags: [ratio, misspell]
@@ -2963,22 +2880,6 @@ sqp_wordbreaker_suggest_ctr_disable:
     observations: [sqp_wordbreaker_suggest_disabled]
   denominator:
     observations: [sqp_wordbreaker_suggest]
-
-wordbreaker_digit_replace_ctr_disable:
-  title: wordbreaker_digit_replace_ctr_disable
-  tags: [ratio, misspell]
-  numerator:
-    observations: [wordbreaker_digit_disabled]
-  denominator:
-    observations: [wordbreaker_digit_replace]
-
-wordbreaker_digit_suggest_ctr_disable:
-  title: wordbreaker_digit_suggest_ctr_disable
-  tags: [ratio, misspell]
-  numerator:
-    observations: [wordbreaker_digit_suggest_disabled]
-  denominator:
-    observations: [wordbreaker_digit_suggest]
 
 sqp_wordbreaker_digit_replace_ctr_disable:
   title: sqp_wordbreaker_digit_replace_ctr_disable
@@ -4445,20 +4346,6 @@ typo_replace_to_searches:
   denominator:
     observations: [searches]
 
-keyboard_suggest_to_searches:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [keyboard_suggest]
-  denominator:
-    observations: [searches]
-
-keyboard_replace_to_searches:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [keyboard_replace]
-  denominator:
-    observations: [searches]
-
 sqp_layout_suggest_to_searches:
   tags: [ss, ratio, misspell]
   numerator:
@@ -4473,20 +4360,6 @@ sqp_layout_replace_to_searches:
   denominator:
     observations: [searches]
 
-wordbreaker_suggest_to_searches:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [wordbreaker_suggest]
-  denominator:
-    observations: [searches]
-
-wordbreaker_replace_to_searches:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [wordbreaker_replace]
-  denominator:
-    observations: [searches]
-
 sqp_wordbreaker_suggest_to_searches:
   tags: [ss, ratio, misspell]
   numerator:
@@ -4498,20 +4371,6 @@ sqp_wordbreaker_replace_to_searches:
   tags: [ss, ratio, misspell]
   numerator:
     observations: [sqp_wordbreaker_replace]
-  denominator:
-    observations: [searches]
-
-wordbreaker_digit_suggest_to_searches:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [wordbreaker_digit_suggest]
-  denominator:
-    observations: [searches]
-
-wordbreaker_digit_replace_to_searches:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [wordbreaker_digit_replace]
   denominator:
     observations: [searches]
 
@@ -4619,24 +4478,6 @@ typo_replace_users_share:
     observations: [searches]
     groupby: [participant]
 
-keyboard_suggest_users_share:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [keyboard_suggest]
-    groupby: [participant]
-  denominator:
-    observations: [searches]
-    groupby: [participant]
-
-keyboard_replace_users_share:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [keyboard_replace]
-    groupby: [participant]
-  denominator:
-    observations: [searches]
-    groupby: [participant]
-
 sqp_layout_suggest_users_share:
   tags: [ss, ratio, misspell]
   numerator:
@@ -4655,24 +4496,6 @@ sqp_layout_replace_users_share:
     observations: [searches]
     groupby: [participant]
 
-wordbreaker_suggest_users_share:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [wordbreaker_suggest]
-    groupby: [participant]
-  denominator:
-    observations: [searches]
-    groupby: [participant]
-
-wordbreaker_replace_users_share:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [wordbreaker_replace]
-    groupby: [participant]
-  denominator:
-    observations: [searches]
-    groupby: [participant]
-
 sqp_wordbreaker_suggest_users_share:
   tags: [ss, ratio, misspell]
   numerator:
@@ -4686,24 +4509,6 @@ sqp_wordbreaker_replace_users_share:
   tags: [ss, ratio, misspell]
   numerator:
     observations: [sqp_wordbreaker_replace]
-    groupby: [participant]
-  denominator:
-    observations: [searches]
-    groupby: [participant]
-
-wordbreaker_digit_suggest_users_share:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [wordbreaker_digit_suggest]
-    groupby: [participant]
-  denominator:
-    observations: [searches]
-    groupby: [participant]
-
-wordbreaker_digit_replace_users_share:
-  tags: [ss, ratio, misspell]
-  numerator:
-    observations: [wordbreaker_digit_replace]
     groupby: [participant]
   denominator:
     observations: [searches]
@@ -16851,6 +16656,13 @@ map_empty_search:
   numerator:
     observations: [empty_map_serp]   
     
+errors_map:
+  title: errors_map
+  description: "Ошибки на карте (total в поиске = -1)"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [errors_on_map]
+
 map_local_geo:
   title: map_local_geo
   description: "Поиски на карте с локальным гео"
@@ -17164,7 +16976,14 @@ pin_clickers:
     observations: [pin_clicks]
     groupby: [participant]
     
-
+user_map_error:
+  title: user_map_error
+  description: "Юзеры, столкнувшиеся с ошибками (total в поиске = -1) на карте"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [errors_on_map]
+    groupby: [participant]
+    
 map_area_users:
   title: user_map_serp
   description: "map_serp - это серп, который получен при выходе с карты (поиск по области карты) "
@@ -17372,6 +17191,15 @@ map_price_rubricator_filters_per_map:
   denominator:
     observations: [map_searches]
     
+errors_map_per_map:
+  title: errors_map_per_map
+  description: "Отношение числа ошибок (total в поиске = -1) к числу поисков по карте "
+  tags: [i3, bx, map]
+  numerator:
+    observations: [errors_on_map]
+  denominator:
+    observations: [map_searches] 
+    
 #### трудозатраты
 
 map_search_to_iv_map:
@@ -17379,7 +17207,7 @@ map_search_to_iv_map:
   description: "Число поисков по карте до первого iv с карты в этот день"
   tags: [i3, bx, map]
   numerator:
-    observations: [map_searches_to_iv]
+    observations: [map_searches_to_iv_map]
   denominator:
     observations: [item_views_from_map]
     groupby: [participant]
@@ -17389,7 +17217,7 @@ map_search_to_btc_map:
   description: "Число поисков по карте до первого btc с карты в этот день"
   tags: [i3, bx, map]
   numerator:
-    observations: [map_searches_to_btc]
+    observations: [map_searches_to_btc_map]
   denominator:
     observations: [buyer_target_clicks_from_map]
     groupby: [participant]

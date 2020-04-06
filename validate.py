@@ -176,10 +176,10 @@ def validate(url, config, presets, dimensions, subscriptions):
 
     if not failed_presets:
         print('\nAll presets are PASSED')
-        return True
-
-    for preset_type, names in failed_presets.items():
-        print('\nFAILED {} presets: {}'.format(preset_type, ', '.join(sorted(names))))
+    else:
+        for preset_type, names in failed_presets.items():
+            print('\nFAILED {} presets: {}'.format(preset_type, ', '.join(sorted(names))))
+        return False
 
     info = result['result'].pop('m42_subscriptions')
 
@@ -189,7 +189,7 @@ def validate(url, config, presets, dimensions, subscriptions):
         print('Metrics subscriptions config FAILED')
         return False
 
-    return False
+    return True
 
 
 def publish_repo():
