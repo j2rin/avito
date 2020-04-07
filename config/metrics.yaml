@@ -1025,6 +1025,7 @@ users_contacts_fav_list:
 
 users_2plus_actions:
   title: users_2plus_actions
+  description: "Юзеры, сделавшие 3 или более активных действия"
   tags: [i3, bx, user]
   numerator:
     observations:
@@ -1040,6 +1041,25 @@ users_2plus_actions:
       - realty_development_phone_views
     groupby: [participant]
     threshold: 2
+    
+users_1plus_actions:
+  title: users_1plus_actions
+  description: "Юзеры, сделавшие 2 или более активных действия"
+  tags: [i3, bx, user]
+  numerator:
+    observations:
+      - item_views
+      - phone_views_total
+      - first_messages
+      - booking_created_short_rent
+      - delivery_flow_beginings
+      - delivery_order_created
+      - searches_without_query
+      - searches_with_query
+      - favorites_added
+      - realty_development_phone_views
+    groupby: [participant]
+    threshold: 1
     
 users_phone_calls:
   title: users_calls_backend
@@ -15233,8 +15253,36 @@ regions_in_search:
 ###############################################################################
 # Multi locations :: Totals Sessions
 ###############################################################################
+
+sess_search_1_plus_locations:
+  title: sess_s_1_plus_locations
+  description: "Число сессий, в которых были поиски в 2 или более локациях (в рамках одной микрокатегории)"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant, session]
+    threshold: 1
+    
+sess_search_1_plus_cities:
+  title: sess_s_1_plus_cities
+  description: "Число юзеров, у которых были поиски в 2 или более ГОРОДАХ (в рамках одной микрокатегории)"
+  tags: [other, geo]
+  numerator:
+    observations: [cities_in_searches]
+    groupby: [participant, session]
+    threshold: 1
+    
+sess_search_1_plus_regions:
+  title: sess_s_1_plus_regions
+  description: "Число юзеров, у которых были поиски в 2 или более РЕГИОНАХ (в рамках одной микрокатегории)"
+  tags: [other, geo]
+  numerator:
+    observations: [regions_in_searches]
+    groupby: [participant, session]
+    threshold: 1
+
 multiloc_sess:
-  description: "Число сессий, в которых были поиски в 2+ локациях (в рамках одной микрокатегории)"
+  description: "Число сессий, в которых были поиски в 3 или более локациях (в рамках одной микрокатегории)"
   tags: [i3, geo]
   numerator:
     observations: [locations_in_searches]
@@ -15242,7 +15290,7 @@ multiloc_sess:
     threshold: 2
     
 multi_city_sess:
-  description: "Число юзеров, у которых были поиски в 2+ ГОРОДАХ (в рамках одной микрокатегории)"
+  description: "Число юзеров, у которых были поиски в 3 или более ГОРОДАХ (в рамках одной микрокатегории)"
   tags: [other, geo]
   numerator:
     observations: [cities_in_searches]
@@ -15250,7 +15298,7 @@ multi_city_sess:
     threshold: 2
     
 multi_region_sess:
-  description: "Число юзеров, у которых были поиски в 2+ РЕГИОНАХ (в рамках одной микрокатегории)"
+  description: "Число юзеров, у которых были поиски в 3 или более РЕГИОНАХ (в рамках одной микрокатегории)"
   tags: [other, geo]
   numerator:
     observations: [regions_in_searches]
@@ -15263,15 +15311,22 @@ multi_region_sess:
 ###############################################################################
 # Multi locations :: Totals Users
 ###############################################################################
+user_search_1_plus_locations:
+  title: user_s_1_plus_locations
+  description: "Число юзеров, у которых были поиски в 2 или более локациях (в рамках одной микрокатегории)"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant]
+    threshold: 1
+    
 multiloc_users:
-  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории)"
+  description: "Число юзеров, у которых были поиски в 3 или более локациях (в рамках одной микрокатегории)"
   tags: [i3, geo]
   numerator:
     observations: [locations_in_searches]
     groupby: [participant]
     threshold: 2
-    
-
 
 ###############################################################################
 # Multi locations :: Ratios Events
@@ -15289,7 +15344,7 @@ locations_per_search:
 # Multi locations :: Ratios Sessions
 ###############################################################################
 multiloc_sess_per_sess_search:
-  description: "Число сессий, в которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число поисковых сессий"
+  description: "Число сессий, в которых были поиски в 3 или более локациях (в рамках одной микрокатегории) на общее число поисковых сессий"
   tags: [i3, geo]
   numerator:
     observations: [locations_in_searches]
@@ -15299,12 +15354,24 @@ multiloc_sess_per_sess_search:
     observations: [searches]
     groupby: [participant, session]
     
+sess_search_1plus_locations_per_sess_search:
+  title: sess_s_1plus_loc_per_sess_s
+  description: "Число сессий, в которых были поиски в 2 или более локациях (в рамках одной микрокатегории) на общее число поисковых сессий"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant, session]
+    threshold: 1
+  denominator:
+    observations: [searches]
+    groupby: [participant, session]
+    
 
 ###############################################################################
 # Multi locations :: Ratios Users
 ###############################################################################
 multiloc_user_per_user_search:
-  description: "Число юзеров, у которых были поиски в 2+ локациях (в рамках одной микрокатегории) на общее число серчеров"
+  description: "Число юзеров, у которых были поиски в 3 или более локациях (в рамках одной микрокатегории) на общее число серчеров"
   tags: [i3, geo]
   numerator:
     observations: [locations_in_searches]
@@ -15314,6 +15381,16 @@ multiloc_user_per_user_search:
     observations: [searches]
     groupby: [participant]
 
+user_search_1plus_loc_per_user_search:
+  description: "Число юзеров, у которых были поиски в 2 или более локациях (в рамках одной микрокатегории) на общее число серчеров"
+  tags: [i3, geo]
+  numerator:
+    observations: [locations_in_searches]
+    groupby: [participant]
+    threshold: 1
+  denominator:
+    observations: [searches]
+    groupby: [participant]
 
 ########  ####   ####  #     ######## # #####  
 #   #    #    # #    # #        #     # #    # 
@@ -16891,7 +16968,7 @@ map_area_sessions:
         
 map_sessions_3plus_maps:
   title: sess_map_3plus_maps
-  description: "Число сессий, в которых было 3 или более поиска по карте"
+  description: "Число сессий, в которых было 4 или более поиска по карте"
   tags: [i3, bx, user, map]
   numerator:
     observations: [map_searches]
@@ -16900,12 +16977,21 @@ map_sessions_3plus_maps:
     
 map_sessions_2plus_maps:
   title: sess_map_2plus_maps
-  description: "Число сессий, в которых было 2 или более поиска по карте"
+  description: "Число сессий, в которых было 3 или более поиска по карте"
   tags: [i3, bx, user, map]
   numerator:
     observations: [map_searches]
     groupby: [participant, session]
     threshold: 2
+    
+map_sessions_1plus_maps:
+  title: sess_map_1plus_maps
+  description: "Число сессий, в которых было 2 или более поиска по карте"
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    threshold: 1
 
 #### поиски по карте, закончившиеся целевым действием    
 contact_sessions_from_map:
@@ -17018,7 +17104,7 @@ user_map_price_rubricator_filters:
     
 map_users_3plus_maps:
   title: user_map_3plus_maps
-  description: "Число юзеров, совершивших 3 или более поиска по карте"
+  description: "Число юзеров, совершивших 4 или более поиска по карте"
   tags: [i3, bx, user, map]
   numerator:
     observations: [map_searches]
@@ -17027,12 +17113,21 @@ map_users_3plus_maps:
     
 map_users_2plus_maps:
   title: user_map_2plus_maps
-  description: "Число юзеров, совершивших 2 или более поиска по карте"
+  description: "Число юзеров, совершивших 3 или более поиска по карте"
   tags: [i3, bx, user, map]
   numerator:
     observations: [map_searches]
     groupby: [participant]
     threshold: 2
+    
+map_users_1plus_maps:
+  title: user_map_1plus_maps
+  description: "Число юзеров, совершивших 2 или более поиска по карте"
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant]
+    threshold: 1
     
 #### целевые действия с поисков по карте 
 users_buyer_target_click_from_map:
@@ -17580,6 +17675,18 @@ sess_iv_map_total_per_sess_map:
     observations: [map_searches]
     groupby: [participant, session]
     
+map_sessions_1plus_maps_per_sess_map:
+  title: sess_1plus_maps_per_sess_map
+  description: "Доля сессий, в которых было 2 или более поиска по карте, от сессий с поисками по карте"
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    threshold: 1
+  denominator:
+    observations: [map_searches]
+    groupby: [participant, session]
+    
 ###############################################################################
 # Map :: Users Ratios
 ###############################################################################
@@ -17714,6 +17821,19 @@ user_fav_map_total_per_user_map:
   numerator:
     observations: [fav_added_from_map, fav_added_serp_map_area]
     groupby: [participant]
+  denominator:
+    observations: [map_searches]
+    groupby: [participant]
+    
+#мультилокации
+map_users_2plus_maps_per_map_user:
+  title: user_2plus_maps_per_user_map
+  description: "Доля юзеров, совершивших 2 или более поиска по карте от всех юзеров карты"
+  tags: [i3, bx, user, map]
+  numerator:
+    observations: [map_searches]
+    groupby: [participant]
+    threshold: 1
   denominator:
     observations: [map_searches]
     groupby: [participant]
