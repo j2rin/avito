@@ -13,6 +13,40 @@ breakdowns:
       - {logical_category: [Jobs.CVs]}
       - {logical_category: [Jobs.Vacancies]}
       - {logical_category: [Jobs.Undefined]}
+    breakdown_vertical_general:
+      - {vertical: [General]}
+      - {logical_category: ['General.Animals']}
+      - {logical_category: ['General.Animals'], initial_user_segment: [ASD]}
+      - {logical_category: ['General.Animals'], initial_user_segment: [Private]}
+      - {logical_category: ['General.Animals'], initial_user_segment: [Pro]}
+      - {logical_category: ['General.ChildrensGoods']}
+	  - {logical_category: ['General.ChildrensGoods'], initial_user_segment: [ASD]}
+      - {logical_category: ['General.ChildrensGoods'], initial_user_segment: [Private]}
+      - {logical_category: ['General.ChildrensGoods'], initial_user_segment: [Pro]}
+      - {logical_category: ['General.ConstructionRenovation']}
+      - {logical_category: ['General.ConstructionRenovation'], initial_user_segment: [ASD]}
+      - {logical_category: ['General.ConstructionRenovation'], initial_user_segment: [Private]}
+      - {logical_category: ['General.ConstructionRenovation'], initial_user_segment: [Pro]}
+      - {logical_category: ['General.Electronics']}
+      - {logical_category: ['General.Electronics'], initial_user_segment: [ASD]}      
+      - {logical_category: ['General.Electronics'], initial_user_segment: [Private]}
+      - {logical_category: ['General.Electronics'], initial_user_segment: [Pro]}
+      - {logical_category: ['General.ForBusiness']}
+      - {logical_category: ['General.ForBusiness'], initial_user_segment: [ASD]}
+      - {logical_category: ['General.ForBusiness'], initial_user_segment: [Private]}
+      - {logical_category: ['General.ForBusiness'], initial_user_segment: [Pro]}
+      - {logical_category: ['General.ForHome']}
+      - {logical_category: ['General.ForHome'], initial_user_segment: [ASD]}
+      - {logical_category: ['General.ForHome'], initial_user_segment: [Private]}
+      - {logical_category: ['General.ForHome'], initial_user_segment: [Pro]}
+      - {logical_category: ['General.Hobby']}
+      - {logical_category: ['General.Hobby'], initial_user_segment: [ASD]}
+      - {logical_category: ['General.Hobby'], initial_user_segment: [Private]}
+      - {logical_category: ['General.Hobby'], initial_user_segment: [Pro]}
+      - {logical_category: ['General.PersonalBelongings']}
+      - {logical_category: ['General.PersonalBelongings'], initial_user_segment: [ASD]}
+      - {logical_category: ['General.PersonalBelongings'], initial_user_segment: [Private]}
+      - {logical_category: ['General.PersonalBelongings'], initial_user_segment: [Pro]}
 
 subscriptions:
   - owner: gvfandeev
@@ -84,7 +118,18 @@ subscriptions:
         - daily_active_authorized_users
         - user_enter_cr
         - search_items_ratings_coverage
-
+        
+  - owner: aimalinskiy
+    subscribers: ['#general-green-light']
+    metrics_by_breakdowns:
+      breakdown_vertical_general:
+      	- buyers_canonical
+        - items_started_net
+        - active_items
+        - items_sold_onavito
+        - classified_amount_net_adj
+        - active_listers
+        
   - owner: abkrasnikov
     subscribers: []
     metrics_by_breakdowns:
