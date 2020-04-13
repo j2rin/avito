@@ -2767,7 +2767,7 @@ filters_pr_rubr_searches:
     
 searches_with_filter:
   description: "Поиски с обычным фильтром без учета пагинации"
-  title: s_filter
+  title: s_filter_rubr
   tags: [i4, bx, total]
   numerator:
     observations: [searches_with_filter]
@@ -2779,12 +2779,12 @@ searches_with_price_filter:
   numerator:
     observations: [searches_with_price_filter]
     
-searches_with_filters_any:
+searches_with_filter_any:
   description: "Поиски с фильтром по цене без учета пагинации"
-  title: s_filter_price
+  title: s_filter_any
   tags: [i4, bx, total]
   numerator:
-    observations: [searches_with_price_filter]
+    observations: [searches_with_filter, searches_with_price_filter]
     
 item_views_from_search_filter_any:
   description: "Item_views с поисков с фильтрами"
@@ -3526,7 +3526,7 @@ btc_search_filter_any_per_search_filter_any:
   title: btc_s_filter_per_s_filter_any
   tags: [i4, bx, ratio]
   numerator:
-    observations: [item_views_serp_filter_search, item_views_serp_price_filter_search]
+    observations: [btc_serp_filter_search, btc_serp_price_filter_search]
   denominator:
     observations: [searches_with_filter, searches_with_price_filter]   
 
