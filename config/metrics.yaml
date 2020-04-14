@@ -2746,45 +2746,60 @@ user_filters_screen_shows:
     
 filters_price_searches:
   title: filters_price_searches
+  description: "Поиски с фильтром цены с учетом пагинации."
   tags: [i4, bx, total]
   numerator:
-    observations: [price_filter_searches]
+    observations: [price_filter_searches, searches_serp_with_price_filter]
     
 filters_rubricator_searches:
-  description: "Without prices, local geo, radius etc"
+  description: "Поиски с обычным фильтром (не цена, не гео) с учетом пагинации."
   title: filters_rubricator_searches
   tags: [i4, bx, total]
   numerator:
-    observations: [filter_searches]
+    observations: [filter_searches, searches_serp_with_filter]
     
-filters_local_geo_searches:
-  description: "Metro, district, road"
-  title: filters_local_geo_searches
-  tags: [i4, bx, total]
-  numerator:
-    observations: [local_geo_filter_searches]
-       
-filters_radius_searches:
-  description: "All radius searches with radius >0"
-  title: filters_radius_searches
-  tags: [i4, bx, total]
-  numerator:
-    observations: [radius_searches]
-
-filters_prc_rubr_searches:
-  description: "price and/or rubricator filters"
+filters_pr_rubr_searches:
+  description: "Поиски с обычным фильтром или фильтром по цене с учетом пагинации."
   title: filters_prc_rubr_searches
   tags: [i4, bx, total]
   numerator:
-    observations: [filter_searches,price_filter_searches]
+    observations: [filter_searches, searches_serp_with_filter,price_filter_searches,searches_serp_with_price_filter]
     
-filters_any_searches:
-  description: "All filters: rubricator, geo, radius, prices"
-  title: filters_any_searches
+searches_with_filter:
+  description: "Поиски с обычным фильтром без учета пагинации"
+  title: s_filter_rubr
   tags: [i4, bx, total]
   numerator:
-    observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
-
+    observations: [searches_with_filter]
+    
+searches_with_price_filter:
+  description: "Поиски с фильтром по цене без учета пагинации"
+  title: s_filter_price
+  tags: [i4, bx, total]
+  numerator:
+    observations: [searches_with_price_filter]
+    
+searches_with_filter_any:
+  description: "Поиски с фильтром по цене без учета пагинации"
+  title: s_filter_any
+  tags: [i4, bx, total]
+  numerator:
+    observations: [searches_with_filter, searches_with_price_filter]
+    
+item_views_from_search_filter_any:
+  description: "Item_views с поисков с фильтрами"
+  title: iv_s_filter_any
+  tags: [i4, bx, total]
+  numerator:
+    observations: [item_views_serp_filter_search, item_views_serp_price_filter_search]
+    
+btc_from_search_filter_any:
+  description: "btc с поисков с фильтрами"
+  title: btc_s_filter_any
+  tags: [i4, bx, total]
+  numerator:
+    observations: [btc_views_serp_filter_search, btc_views_serp_price_filter_search]
+    
 ###############################################################################
 # Search :: Ratios
 ###############################################################################
@@ -3479,41 +3494,42 @@ serp_noq_small_per_s_noq:
   denominator:
     observations: [searches_without_query]
     
-filters_local_geo_per_searches:
-  description: "Metro, district, road usage per search"
-  title: filters_local_geo_per_searches
-  tags: [i4, bx, ratio]
-  numerator:
-    observations: [local_geo_filter_searches]
-  denominator:
-    observations: [searches_serp]
-    
-filters_radius_per_searches:
-  description: "All radius searches with radius >0 per search"
-  title: filters_radius_per_searches
-  tags: [i4, bx, ratio]
-  numerator:
-    observations: [radius_searches]
-  denominator:
-    observations: [searches_serp]
-
 filters_pr_rubr_per_searches:
-  description: "price and/or rubricator filters usage per search"
+  description: "Отношение поисков с фильтрами (обычным или цены) к поискам. С учетом пагинации."
   title: filters_pr_rubr_per_searches
   tags: [i4, bx, ratio]
   numerator:
-    observations: [filter_searches,price_filter_searches]
+    observations: [filter_searches,price_filter_searches, searches_serp_with_filter, searches_serp_with_price_filter]
   denominator:
     observations: [searches_serp]
-
-filters_any_per_searches:
-  description: "Any filters per search"
-  title: filters_any_per_searches
+    
+searches_filter_any_per_search:
+  description: "Отношение поисков с фильтрами (обычным или цены) к поискам. Без пагинации."
+  title: s_filter_any_per_s
   tags: [i4, bx, ratio]
   numerator:
-    observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
+    observations: [searches_with_filter, searches_with_price_filter]
   denominator:
-    observations: [searches_serp]
+    observations: [searches]    
+    
+item_views_search_filter_any_per_search_filter_any:
+  description: "Iv с поисков с фильтрами на число поисков с фильтрами"
+  title: iv_s_filter_per_s_filter_any
+  tags: [i4, bx, ratio]
+  numerator:
+    observations: [item_views_serp_filter_search, item_views_serp_price_filter_search]
+  denominator:
+    observations: [searches_with_filter, searches_with_price_filter]   
+
+btc_search_filter_any_per_search_filter_any:
+  description: "Отношение поисков с фильтрами (обычным или цены) к поискам. Без пагинации."
+  title: btc_s_filter_per_s_filter_any
+  tags: [i4, bx, ratio]
+  numerator:
+    observations: [btc_serp_filter_search, btc_serp_price_filter_search]
+  denominator:
+    observations: [searches_with_filter, searches_with_price_filter]   
+
 
  ######  ########  ######   ######  ######   ######  ##    ##
 ##    ## ##       ##    ## ##    ##   ##    ##    ## ###   ##
@@ -4135,37 +4151,37 @@ search_suggest_clicks:
   numerator:
     observations: [search_suggest_clicks]
     groupby: [participant]
-    
+         
 filters_pr_rubr_users:
-  description: "price and/or rubricator filters users"
-  title: filters_pr_rubr_users
-  tags: [i4, bx, user]
-  numerator:
-    observations: [filter_searches,price_filter_searches]
-    groupby: [participant]
-    
-filters_local_geo_users:
-  description: local geo filters users"
-  title: filters_local_geo_users
-  tags: [i4, bx, user]
-  numerator:
-    observations: [local_geo_filter_searches]
-    groupby: [participant]
-    
-filters_radius_users:
-  description: "radius filters users"
-  title: filters_radius_users
-  tags: [i4, bx, user]
-  numerator:
-    observations: [radius_searches]
-    groupby: [participant]
-    
-filters_any_users:
-  description: "Any filters users"
+  description: "Число юзеров, использовавших обычный или фильтр по цене"
   title: filters_any_users
   tags: [i4, bx, user]
   numerator:
-    observations: [filter_searches,price_filter_searches,local_geo_filter_searches,radius_searches]
+    observations: [filter_searches,price_filter_searches,searches, searches_with_filter, searches_with_price_filter]
+    groupby: [participant]
+    
+users_search_filter_any:
+  description: "Число юзеров, использовавших обычный или фильтр по цене"
+  title: user_s_filter_any
+  tags: [i4, bx, user]
+  numerator:
+    observations: [searches_with_filter, searches_with_price_filter]
+    groupby: [participant]
+    
+users_item_views_search_filter_any:
+  description: "Число юзеров, сделавших iv с поиска с фильтром (по цене или обычным)"
+  title: user_iv_s_filter_any
+  tags: [i4, bx, user]
+  numerator:
+    observations:     [item_views_serp_filter_search, item_views_serp_price_filter_search]
+    groupby: [participant]
+    
+users_btc_search_filter_any:
+  description: "Число юзеров, сделавших btc с поиска с фильтром (по цене или обычным)"
+  title: user_btc_s_filter_any
+  tags: [i4, bx, user]
+  numerator:
+    observations: [btc_serp_filter_search, btc_serp_price_filter_search]
     groupby: [participant]
     
 ###############################################################################
@@ -16937,7 +16953,12 @@ map_my_locs:
   numerator:
     observations: [my_locs]
     
-
+map_nav_actions:
+  title: map_nav_actions
+  description: "Любое навигационное действие на карте (кластер, зум, скролл, мое место-ние)"
+  tags: [i4, bx, map]
+  numerator:
+    observations: [my_locs,scrolls,zooms,clusters]
 
 ###############################################################################
 # Map :: Totals Sessions 
@@ -17327,8 +17348,63 @@ map_search_to_contact_map:
   denominator:
     observations: [contacts_from_map]
     groupby: [participant]
+    
+map_nav_actions_to_contact_map:
+  title: map_nav_actions_to_c_map
+  description: "Среднее число навигационных действий (скроллы, зумы, кластеры, ММП) до первого контакта в поиске"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [nav_actions_to_contact]
+  denominator:
+    observations: [map_with_contact] 
         
-
+map_nav_actions_to_item_view_map:
+  title: map_nav_actions_to_iv_map
+  description: "Среднее число навигационных действий (скроллы, зумы, кластеры, ММП) до первого контакта в поиске"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [nav_actions_to_item_view]
+  denominator:
+    observations: [map_with_item_view] 
+    
+map_nav_actions_per_item_view_map:
+  title: map_nav_actions_to_iv_map
+  description: "Среднее число навигационных действий (скроллы, зумы, кластеры, ММП) на один iv с карты"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [clusters,zooms,my_locs,scrolls]
+  denominator:
+    observations: [item_views_from_map] 
+    
+map_nav_actions_per_btc_map:
+  title: map_nav_actions_per_btc_map
+  description: "Среднее число навигационных действий (скроллы, зумы, кластеры, ММП) на один btc с карты"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [clusters,zooms,my_locs,scrolls]
+  denominator:
+    observations: [buyer_target_clicks_from_map] 
+    
+map_nav_actions_per_map:
+  title: map_nav_actions_per_map
+  description: "Среднее число навигационных действий (скроллы, зумы, кластеры, ММП) на один поиск на карте"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [clusters,zooms,my_locs,scrolls]
+  denominator:
+    observations: [map_searches] 
+    
+map_nav_actions_per_user_map:
+  title: map_nav_actions_per_user_map
+  description: "Среднее число навигационных действий (скроллы, зумы, кластеры, ММП) на одного пользователя карты"
+  tags: [i3, bx, map]
+  numerator:
+    observations: [clusters,zooms,my_locs,scrolls]
+  denominator:
+    observations: [map_searches] 
+    groupby: [participant]
+    
+    
 #### целевые действия с карты ratio 
 contacts_from_map_per_map_search:
   title: contacts_map_per_map_s
@@ -17508,7 +17584,7 @@ map_my_locs_per_map:
     observations: [my_locs]
   denominator:
     observations: [map_searches]
-    
+        
 map_pin_avg_zoom_level:
   title: map_pin_avg_zoom_level
   description: "Средний уровень зума, с которого кликают на пин"
