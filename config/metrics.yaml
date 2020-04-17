@@ -2800,6 +2800,48 @@ btc_from_search_filter_any:
   numerator:
     observations: [btc_views_serp_filter_search, btc_views_serp_price_filter_search]
     
+searches_with_shop_id:
+  description: "Поиски по магазинам"
+  title: s_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [searches_shop]
+    
+item_views_with_shop_id:
+  description: "Просмотры объявлений с идентификатором магазина"
+  title: iv_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [item_views_shop]
+    
+fav_added_with_shop_id:
+  description: "Добавления в избранное объявлений с идентификатором магазина"
+  title: fav_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [fav_added_shop]
+    
+buyer_target_clicks_with_shop_id:
+  description: "Целевые действия на объявлениях с идентификатором магазина"
+  title: btc_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [buyer_target_clicks_shop]
+    
+phone_views_with_shop_id:
+  description: "Просмотры контактов на объявлениях с идентификатором магазина"
+  title: ph_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [phone_views_shop]
+    
+write_button_clicks_with_shop_id:
+  description: "Открытия мессенджеров на объявлениях с идентификатором магазина"
+  title: msg_btn_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [write_button_clicks_shop]
+    
 ###############################################################################
 # Search :: Ratios
 ###############################################################################
@@ -3529,6 +3571,15 @@ btc_search_filter_any_per_search_filter_any:
     observations: [btc_serp_filter_search, btc_serp_price_filter_search]
   denominator:
     observations: [searches_with_filter, searches_with_price_filter]   
+    
+btc_with_shop_id_per_iv_with_shop_id:
+  description: "Отношение целевых действий на объявлениях с идентификатором магазина к просмотрам таких объявлений"
+  title: btc_sid_per_iv_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [buyer_target_clicks_shop]
+  denominator:
+    observations: [item_views_shop]
 
 
  ######  ########  ######   ######  ######   ######  ##    ##
@@ -4184,6 +4235,54 @@ users_btc_search_filter_any:
     observations: [btc_serp_filter_search, btc_serp_price_filter_search]
     groupby: [participant]
     
+user_searches_with_shop_id:
+  description: "Пользователи, совершившие поиски по магазинам"
+  title: user_s_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [searches_shop]
+    groupby: [participant]
+    
+user_item_views_with_shop_id:
+  description: "Пользователи, просмотревшие объявления с идентификатором магазина"
+  title: user_iv_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [item_views_shop]
+    groupby: [participant]
+    
+user_fav_added_with_shop_id:
+  description: "Пользователи, добавившие в избранное объявления с идентификатором магазина"
+  title: user_fav_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [fav_added_shop]
+    groupby: [participant]
+    
+user_buyer_target_clicks_with_shop_id:
+  description: "Пользователи, совершившие целевые действия на объявлениях с идентификатором магазина"
+  title: user_btc_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [buyer_target_clicks_shop]
+    groupby: [participant]
+    
+user_phone_views_with_shop_id:
+  description: "Пользователи, просмотревшие контакты на объявлениях с идентификатором магазина"
+  title: user_ph_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [phone_views_shop]
+    groupby: [participant]
+    
+user_write_button_clicks_with_shop_id:
+  description: "Пользователи, открывшие мессенджер на объявлениях с идентификатором магазина"
+  title: user_msg_btn_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [write_button_clicks_shop]
+    groupby: [participant]
+    
 ###############################################################################
 # Search :: User Ratios
 ###############################################################################
@@ -4566,6 +4665,17 @@ sqp_wordbreaker_digit_replace_users_share:
     groupby: [participant]
   denominator:
     observations: [searches]
+    groupby: [participant]
+    
+user_btc_with_shop_id_per_user_iv_with_shop_id:
+  description: "Доля пользователей, совершивших целевые действия на объявлениях с идентификатором магазина, среди пользователей, просмотревших такие объявления"
+  title: user_btc_sid_per_user_iv_sid
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [buyer_target_clicks_shop]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_shop]
     groupby: [participant]
 
 ########  ########  ######
