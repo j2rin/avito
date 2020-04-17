@@ -2800,91 +2800,91 @@ btc_from_search_filter_any:
   numerator:
     observations: [btc_views_serp_filter_search, btc_views_serp_price_filter_search]
     
-searches_shop:
+searches_with_shop_id:
   description: "Поиски по магазинам"
-  title: searches_shop
+  title: s_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [searches_shop]
     
-item_views_shop:
+item_views_with_shop_id:
   description: "Просмотры объявлений с идентификатором магазина"
-  title: item_views_shop
+  title: iv_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [item_views_shop]
     
-fav_added_shop:
+fav_added_with_shop_id:
   description: "Добавления в избранное объявлений с идентификатором магазина"
-  title: fav_added_shop
+  title: fav_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [fav_added_shop]
     
-buyer_target_clicks_shop:
+buyer_target_clicks_with_shop_id:
   description: "Целевые действия на объявлениях с идентификатором магазина"
-  title: buyer_target_clicks_shop
+  title: btc_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [buyer_target_clicks_shop]
     
-phone_views_shop:
+phone_views_with_shop_id:
   description: "Просмотры контактов на объявлениях с идентификатором магазина"
-  title: phone_views_shop
+  title: ph_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [phone_views_shop]
     
-write_button_clicks_shop:
+write_button_clicks_with_shop_id:
   description: "Открытия мессенджеров на объявлениях с идентификатором магазина"
-  title: write_button_clicks_shop
+  title: msg_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [write_button_clicks_shop]
     
-user_searches_shop:
+user_searches_with_shop_id:
   description: "Пользователи, совершившие поиски по магазинам"
-  title: user_searches_shop
+  title: user_s_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [searches_shop]
     groupby: [participant]
     
-user_item_views_shop:
+user_item_views_with_shop_id:
   description: "Пользователи, просмотревшие объявления с идентификатором магазина"
-  title: user_item_views_shop
+  title: user_iv_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [item_views_shop]
     groupby: [participant]
     
-user_fav_added_shop:
+user_fav_added_with_shop_id:
   description: "Пользователи, добавившие в избранное объявления с идентификатором магазина"
-  title: user_fav_added_shop
+  title: user_fav_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [fav_added_shop]
     groupby: [participant]
     
-user_buyer_target_clicks_shop:
+user_buyer_target_clicks_with_shop_id:
   description: "Пользователи, совершившие целевые действия на объявлениях с идентификатором магазина"
-  title: user_buyer_target_clicks_shop
+  title: user_btc_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [buyer_target_clicks_shop]
     groupby: [participant]
     
-user_phone_views_shop:
+user_phone_views_with_shop_id:
   description: "Пользователи, просмотревшие контакты на объявлениях с идентификатором магазина"
-  title: user_phone_views_shop
+  title: user_ph_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [phone_views_shop]
     groupby: [participant]
     
-user_write_button_clicks_shop:
+user_write_button_clicks_with_shop_id:
   description: "Пользователи, открывшие мессенджер на объявлениях с идентификатором магазина"
-  title: user_write_button_clicks_shop
+  title: user_msg_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [write_button_clicks_shop]
@@ -3620,14 +3620,25 @@ btc_search_filter_any_per_search_filter_any:
   denominator:
     observations: [searches_with_filter, searches_with_price_filter]   
     
-btc_shop_per_iv_shop:
-  description: "Пользователи, совершившие целевые действия на объявлениях с идентификатором магазина"
-  title: btc_shop_per_iv_shop
+buyer_target_clicks_with_shop_id_per_item_views_user_buyer_target_clicks_with_shop_id_per_user_item_views_with_shop_id_shop_id:
+  description: "Отношение целевых действий на объявлениях с идентификатором магазина к просмотрам таких объявлений"
+  title: btc_with_shop_id_per_iv_with_shop_id
   tags: [i4, bx, serp, total]
   numerator:
     observations: [buyer_target_clicks_shop]
   denominator:
     observations: [item_views_shop]
+    
+user_buyer_target_clicks_with_shop_id_per_user_item_views_with_shop_id:
+  description: "Доля пользователей, совершивших целевые действия на объявлениях с идентификатором магазина, среди пользователей, просмотревших такие объявления"
+  title: user_btc_with_shop_id_per_user_iv_with_shop_id
+  tags: [i4, bx, serp, total]
+  numerator:
+    observations: [buyer_target_clicks_shop]
+    groupby: [participant]
+  denominator:
+    observations: [item_views_shop]
+    groupby: [participant]
 
 
  ######  ########  ######   ######  ######   ######  ##    ##
