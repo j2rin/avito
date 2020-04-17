@@ -318,20 +318,23 @@ class MetricOld:
                 if type == 'counter' and self.type in ('ratio', 'uniq'):
                     name = 'cnt_' + name
 
+            if type == 'counter' and name in self.occupied_names:
+                name = 'cnt_' + name
+
             if type == 'uniq':
                 if uniq in (('participant',), ()):
                     uniq = ('user',)
                 else:
                     uniq = [u for u in uniq if u != 'participant']
                 name = '_'.join([u if u != 'participant' else 'user' for u in uniq]) + '_' + name
-        new_name = name
 
-        nn = 0
-        while new_name in self.occupied_names:
-            new_name = name + '_' + str(nn)
-            nn += 1
-        self.occupied_names.add(new_name)
-        return new_name
+            nn = 0
+            _name = name
+            while name in self.occupied_names:
+                name = _name + '_' + str(nn)
+                nn += 1
+        self.occupied_names.add(name)
+        return name
 
     def make_num_counter(self):
         return Metric(type='counter',

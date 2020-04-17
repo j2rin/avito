@@ -107,6 +107,7 @@ metric.counter:
   c_from_witcher_regions:                  {obs: [contacts_witcher_regions]}
   c_serp_grouped_doubles:                  {obs: [contacts_serp_grouped_doubles]}
   cnt_buyer_target_clicks_geo_sess:        {filter: {<<: [*is_btc, *x_is_search], $or: [{<<: *is_s_district}, {<<: *is_s_metro}, {<<: *is_s_radius}, {<<: *is_s_road}]}}
+  cnt_favorites_net:                       {obs: [favorites_net]}
   cnt_filters_pr_rubr_users:               {obs: [filter_searches, price_filter_searches, searches, searches_with_filter, searches_with_price_filter]}
   contacts_total_vas:                      {obs: [booking_created_short_rent_vas, delivery_order_created_vas, first_messages_vas, phone_views_total_vas, realty_development_phone_views_vas]}
   delivery_orders_created:                 {filter: {<<: *is_delivery}}
@@ -115,7 +116,6 @@ metric.counter:
   fav_from_witcher_regions:                {obs: [fav_added_witcher_regions]}
   favorites_added:                         {filter: {<<: *is_fav}}
   favorites_list_views:                    {filter: {<<: *is_fav_lst}}
-  favorites_net:                           {obs: [favorites_net]}
   favorites_removed:                       {filter: {<<: *is_fav_rmv}}
   filters_pr_rubr_searches:                {obs: [filter_searches, price_filter_searches, searches_serp_with_filter, searches_serp_with_price_filter]}
   filters_price_searches:                  {obs: [price_filter_searches, searches_serp_with_price_filter]}
@@ -369,7 +369,7 @@ metric.uniq:
   delivery_orders_created_grouped:         {counter: delivery_orders_created,         key: [item, user]}
   fav_added_from_map_grouped:              {counter: is_fav_x_is_map,                 key: [item, user]}
   favorites_added_grouped:                 {counter: favorites_added,                 key: [item, user]}
-  favorites_net_0:                         {counter: favorites_net,                   key: [item, user]}
+  favorites_net:                           {counter: cnt_favorites_net,               key: [item, user]}
   item_is_ph_btn:                          {counter: phone_view_button_clicks,        key: [item, user]}
   item_views_client_grouped:               {counter: item_views_client,               key: [item, user]}
   item_views_from_map_grouped:             {counter: is_iv_noguess_x_is_map,          key: [item, user]}
@@ -507,7 +507,7 @@ metric.uniq:
   filters_pr_rubr_users:                   {counter: cnt_filters_pr_rubr_users,       key: [user]}
   item_views_s_item_attr_users:            {counter: is_iv_x_is_search,               key: [user]}
   map_area_users:                          {counter: searches_map_area,               key: [user]}
-  search_suggest_clicks_6:                 {counter: suggest_clicks,                  key: [user]}
+  search_suggest_clicks:                   {counter: suggest_clicks,                  key: [user]}
   share_suggest_buyers_to_all_users:       {counter: sessions_with_query_suggest_click_contact, key: [user]}
   suggest_buyers_with_all_queries:         {counter: sessions_with_suggest_click_and_contact, key: [user]}
   user_btc_from_map_total:                 {counter: is_btc_is_s_map_x_is_map_x_is_search, key: [user]}
@@ -909,9 +909,9 @@ metric.ratio:
   sessions_iv_s_noq_per_s_noq:             {num: sessions_iv_s_noq,               den: session_searches_without_query_serp}
   sessions_iv_s_per_s:                     {num: sessions_iv_s,                   den: sessions_s}
   sessions_iv_s_q_per_s_q:                 {num: sessions_iv_s_q,                 den: session_is_search_q}
-  share_suggest_buyers_to_suggest_users:   {num: share_suggest_buyers_to_all_users, den: search_suggest_clicks_6}
+  share_suggest_buyers_to_suggest_users:   {num: share_suggest_buyers_to_all_users, den: search_suggest_clicks}
   share_suggest_searches_to_all:           {num: suggest_clicks,                  den: session_searches_with_uniq_query}
-  share_suggest_users_to_users_with_search: {num: search_suggest_clicks_6,         den: user_session_searches_with_uniq_query}
+  share_suggest_users_to_users_with_search: {num: search_suggest_clicks,           den: user_session_searches_with_uniq_query}
   shows_item_view_recblock_per_recblock_shows: {num: shows_item_view_recblock,        den: recblock_shows}
   sqp_layout_replace_to_searches:          {num: sqp_layout_replace,              den: searches}
   sqp_layout_replace_users_share:          {num: user_sqp_layout_replace,         den: users_search}
@@ -925,9 +925,9 @@ metric.ratio:
   sqp_wordbreaker_replace_users_share:     {num: user_sqp_wordbreaker_replace,    den: users_search}
   sqp_wordbreaker_suggest_to_searches:     {num: sqp_wordbreaker_suggest,         den: searches}
   sqp_wordbreaker_suggest_users_share:     {num: user_sqp_wordbreaker_suggest,    den: users_search}
-  suggest_buyers_to_suggest_users:         {num: suggest_buyers_with_all_queries, den: search_suggest_clicks_6}
+  suggest_buyers_to_suggest_users:         {num: suggest_buyers_with_all_queries, den: search_suggest_clicks}
   suggest_searches_to_all_searches:        {num: suggest_clicks,                  den: session_searches_with_empty_or_uniq_query}
-  suggest_users_to_users_with_search:      {num: search_suggest_clicks_6,         den: user_session_searches_with_empty_or_uniq_query}
+  suggest_users_to_users_with_search:      {num: search_suggest_clicks,           den: user_session_searches_with_empty_or_uniq_query}
   typo_suggest_to_searches:                {num: typo_suggest,                    den: searches}
   typo_suggest_users_share:                {num: user_typo_suggest,               den: users_search}
   user_buyer_target_clicks_serp_saved_per_user_search_saved: {num: user_buyer_target_clicks_serp_saved, den: users_saved_searches}

@@ -18,6 +18,8 @@ metric.counter:
   active_items_more_5_photo_total:         {obs: [active_items_more_5_photo_total]}
   active_items_total:                      {obs: [active_items_total]}
   cnt_item_added_chains_3_6min_share:      {obs: [item_added_chains_15min, item_added_chains_3_6min, item_added_chains_3min, item_added_chains_6_15min]}
+  cnt_items_closed_by_user:                {filter: {<<: *start}, obs: [items_closed_by_user]}
+  cnt_items_started_net_2:                 {filter: {<<: *start}, obs: [items_started_net]}
   helpdesk_seller_tickets:                 {obs: [helpdesk_seller_tickets]}
   item_add_category_first_clicks:          {obs: [item_add_chains_category_first_click]}
   item_add_category_last_clicks:           {obs: [item_add_chains_category_last_click]}
@@ -66,7 +68,6 @@ metric.counter:
   items_closed_by_ttl:                     {obs: [items_closed_by_ttl]}
   items_closed_by_ttl_total:               {obs: [items_closed_by_ttl_total]}
   items_closed_by_user:                    {obs: [items_closed_by_user]}
-  items_closed_by_user_0:                  {filter: {<<: *start}, obs: [items_closed_by_user]}
   items_closed_by_user_total:              {obs: [items_closed_by_user_total]}
   items_closed_no_answer:                  {obs: [items_closed_no_answer]}
   items_closed_no_answer_total:            {obs: [items_closed_no_answer_total]}
@@ -131,7 +132,6 @@ metric.counter:
   items_started:                           {obs: [items_started]}
   items_started_free:                      {obs: [items_started_free]}
   items_started_net:                       {obs: [items_started_net]}
-  items_started_net_4:                     {filter: {<<: *start}, obs: [items_started_net]}
   items_started_paid:                      {obs: [items_started_paid]}
   items_started_wait:                      {obs: [items_started_wait]}
   lf_amount_net:                           {obs: [lf_amount_net]}
@@ -311,19 +311,19 @@ metric.ratio:
   item_edits_address_per_item:             {num: item_edits_address,              den: items_edited_address}
   item_edits_per_item_edit_starts:         {num: item_edits,                      den: item_edit_starts}
   item_edits_per_item_edit_starts_by_src:  {num: item_edits_by_src,               den: item_edit_starts_by_src}
-  item_edits_per_items_started_net_start_date: {num: item_edits_start_date,           den: items_started_net_4}
+  item_edits_per_items_started_net_start_date: {num: item_edits_start_date,           den: cnt_items_started_net_2}
   item_reactivated_net_per_items_reactivated: {num: items_reactivated_net,           den: items_reactivated}
   item_started_net_per_items_started:      {num: items_started_net,               den: items_started}
-  items_closed_by_user_per_items_started_net_start_date: {num: items_closed_by_user_0,          den: items_started_net_4}
+  items_closed_by_user_per_items_started_net_start_date: {num: cnt_items_closed_by_user,        den: cnt_items_started_net_2}
   items_edited_address_per_items_edited:   {num: items_edited_address,            den: items_edited}
   items_edited_per_items_edit_started:     {num: items_edited,                    den: items_edit_started}
   items_edited_per_items_edit_started_by_src: {num: items_edited_by_src,             den: items_edit_started_by_src}
   items_sold_onavito_per_items_reactivated_net: {num: items_sold_onavito,              den: items_reactivated_net}
-  items_sold_onavito_per_items_started_net_start_date: {num: items_sold_onavito_start_date,   den: items_started_net_4}
+  items_sold_onavito_per_items_started_net_start_date: {num: items_sold_onavito_start_date,   den: cnt_items_started_net_2}
   seller_contacts_per_items_reactivated_net: {num: seller_contacts,                 den: items_reactivated_net}
-  seller_contacts_per_items_started_net_start_date: {num: seller_contacts_start_date,      den: items_started_net_4}
+  seller_contacts_per_items_started_net_start_date: {num: seller_contacts_start_date,      den: cnt_items_started_net_2}
   seller_favorites_added_items_reactivated_net: {num: seller_favorites_added,          den: items_reactivated_net}
-  seller_favorites_added_per_items_started_net_start_date: {num: seller_favorites_added_start_date, den: items_started_net_4}
+  seller_favorites_added_per_items_started_net_start_date: {num: seller_favorites_added_start_date, den: cnt_items_started_net_2}
   sellers_edited_address_per_editor:       {num: sellers_edited_address,          den: user_items_edited}
   users_item_add_form_input_per_users_item_chain_started: {num: users_item_add_form_input,       den: users_item_chain_started}
   users_item_add_last_click_per_users_item_add_first_click: {num: users_item_add_category_last_click, den: users_item_add_category_first_click}

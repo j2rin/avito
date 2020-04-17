@@ -1,10 +1,10 @@
 metric.counter:
+  cnt_new_buyers:                          {obs: [new_buyers]}
+  cnt_returned_buyers:                     {obs: [returned_buyers]}
   contacts_canonical:                      {obs: [contacts_csc_cannonical]}
-  new_buyers:                              {obs: [new_buyers]}
-  returned_buyers:                         {obs: [returned_buyers]}
 
 metric.uniq:
   buyers_canonical:                        {counter: contacts_canonical,              key: [user]}
-  new_buyers_0:                            {counter: new_buyers,                      key: [user]}
-  returned_buyers_0:                       {counter: returned_buyers,                 key: [user]}
+  new_buyers:                              {counter: cnt_new_buyers,                  key: [user]}
+  returned_buyers:                         {counter: cnt_returned_buyers,             key: [user]}
 

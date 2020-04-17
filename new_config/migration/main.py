@@ -6,6 +6,7 @@ from pathlib import Path
 
 
 def migrate(old_metrics: List[MetricOld]):
+    old_metrics[0].occupied_names.update({m.name for m in old_metrics})
     all_metrics = MetricIndex(m.make_num_counter() for m in old_metrics if m.type == 'counter')
     all_metrics.update([m.make_num_counter() for m in old_metrics] +
                        [m.make_den_counter() for m in old_metrics if m.type == 'ratio'])
