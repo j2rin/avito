@@ -1,0 +1,11 @@
+metric.counter:
+  bt_clicks_new:                           {obs: [booking_created_short_rent, delivery_order_created, favorites_added, new_first_messages, phone_views_total, realty_development_phone_views, write_button_clicks]}
+  cnt_users_bt_click_daily_new:            {obs: [booking_created_short_rent, delivery_order_created, favorites_added, new_first_messages, phone_views_total, realty_development_phone_views]}
+  contacts_new:                            {obs: [booking_created_short_rent, delivery_order_created, new_first_messages, phone_views_total, realty_development_phone_views]}
+
+metric.uniq:
+  bt_clicks_grouped_new:                   {counter: bt_clicks_new,                   key: [item, user]}
+  contacts_grouped_new:                    {counter: contacts_new,                    key: [item, user]}
+  buyers_new:                              {counter: contacts_new,                    key: [user]}
+  users_bt_click_daily_new:                {counter: cnt_users_bt_click_daily_new,    key: [user]}
+

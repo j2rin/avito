@@ -1,0 +1,35 @@
+metric.counter:
+  active_items_with_msg:                   {obs: [active_items_with_msg]}
+  answered_first_messages:                 {obs: [answered_first_messages]}
+  answered_first_messages_1hour:           {obs: [answered_first_messages_within_1hour]}
+  answered_first_messages_within_1day:     {obs: [answered_first_messages_within_1day]}
+  answered_first_messages_within_1hour_7hour: {obs: [answered_first_messages_within_1hour_7hour]}
+  chat_list_views_chat_views:              {obs: [chat_list_views, chat_views]}
+  chat_open_errors:                        {obs: [chat_open_errors]}
+  first_response_messages:                 {obs: [first_response_messages]}
+  item_views_from_messenger:               {obs: [item_views_from_messenger]}
+  items_closed_from_messenger:             {obs: [closed_items_from_messenger]}
+  items_sold_onavito_from_messenger:       {obs: [items_sold_onavito_from_messenger]}
+  messenger_active_chats:                  {obs: [messenger_active_chats]}
+  messenger_auto_messages:                 {obs: [messenger_auto_messages]}
+  messenger_first_messages:                {obs: [messenger_first_messages]}
+  messenger_geo_messages:                  {obs: [messenger_geo_messages]}
+  messenger_image_messages:                {obs: [messenger_image_messages]}
+  messenger_item_messages:                 {obs: [messenger_item_messages]}
+  messenger_links_messages:                {obs: [messenger_links_messages]}
+  messenger_spam_blocks:                   {obs: [messenger_spam_blocks]}
+  messenger_text_messages:                 {obs: [messenger_text_messages]}
+  messenger_users_blocked:                 {obs: [messenger_users_blocked]}
+  total_messages:                          {obs: [messenger_total_messeges]}
+
+metric.uniq:
+  messenger_dau:                           {counter: total_messages,                  key: [user]}
+  messenger_visitors:                      {counter: chat_list_views_chat_views,      key: [user]}
+  users_chat_open_errors:                  {counter: chat_open_errors,                key: [user]}
+  users_first_response_messages:           {counter: first_response_messages,         key: [user]}
+  users_item_closed_from_messenger:        {counter: items_closed_from_messenger,     key: [user]}
+  users_item_sold_onavito_from_messenger:  {counter: items_sold_onavito_from_messenger, key: [user]}
+
+metric.ratio:
+  messenger_spam_ratio:                    {num: messenger_spam_blocks,           den: messenger_active_chats}
+

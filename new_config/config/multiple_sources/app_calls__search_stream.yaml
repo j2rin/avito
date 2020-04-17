@@ -1,0 +1,18 @@
+metric.counter:
+  appcall_bx_outgoing_item_appcall_bx_outgoing_item_gallery: {obs: [appcall_bx_outgoing_item, appcall_bx_outgoing_item_gallery]}
+  cnt_appcall_show_items_ratio:            {obs: [appcall_item_gallery_show_buttons, appcall_item_show_buttons]}
+  cnt_appcall_success_per_pv_btn:          {obs: [appcall_bx_outgoing_item_gallery_success, appcall_bx_outgoing_item_success]}
+
+metric.uniq:
+  item_appcall_show_items_ratio:           {counter: cnt_appcall_show_items_ratio,    key: [item]}
+  item_is_ph_btn:                          {counter: phone_view_button_clicks,        key: [item]}
+  _appcall_bx_outgoing_item_appcall_bx_outgoing_item_gallery: {counter: appcall_bx_outgoing_item_appcall_bx_outgoing_item_gallery, key: []}
+  _appcall_success_per_pv_btn_user:        {counter: cnt_appcall_success_per_pv_btn,  key: []}
+
+metric.ratio:
+  appcall_per_pv_btn:                      {num: appcall_bx_outgoing_item_appcall_bx_outgoing_item_gallery, den: phone_view_button_clicks}
+  appcall_per_pv_btn_user:                 {num: _appcall_bx_outgoing_item_appcall_bx_outgoing_item_gallery, den: users_pv_button_clicks}
+  appcall_show_items_ratio:                {num: item_appcall_show_items_ratio,   den: item_is_ph_btn}
+  appcall_success_per_pv_btn:              {num: cnt_appcall_success_per_pv_btn,  den: phone_view_button_clicks}
+  appcall_success_per_pv_btn_user:         {num: _appcall_success_per_pv_btn_user, den: users_pv_button_clicks}
+

@@ -1,0 +1,97 @@
+metric.counter:
+  activated_listers:                       {obs: [activated_listers]}
+  activated_listers_changed_segment:       {obs: [activated_listers_changed_segment]}
+  answered_proxy_rec_missed_proxy_rec:     {obs: [answered_proxy_rec, missed_proxy_rec]}
+  bt_clicks_rec_i2i_premium:               {obs: [bt_clicks_rec_i2i_premium]}
+  bt_clicks_rec_i2i_push:                  {obs: [bt_clicks_rec_i2i_push]}
+  bt_clicks_rec_i2i_vas:                   {obs: [bt_clicks_rec_i2i_vas]}
+  bt_clicks_rec_i2i_vip:                   {obs: [bt_clicks_rec_i2i_vip]}
+  bt_clicks_rec_premium:                   {obs: [bt_clicks_rec_premium]}
+  bt_clicks_rec_push:                      {obs: [bt_clicks_rec_push]}
+  bt_clicks_rec_u2i_premium:               {obs: [bt_clicks_rec_u2i_premium]}
+  bt_clicks_rec_u2i_push:                  {obs: [bt_clicks_rec_u2i_push]}
+  bt_clicks_rec_u2i_vas:                   {obs: [bt_clicks_rec_u2i_vas]}
+  bt_clicks_rec_u2i_vip:                   {obs: [bt_clicks_rec_u2i_vip]}
+  bt_clicks_rec_vas:                       {obs: [bt_clicks_rec_vas]}
+  bt_clicks_rec_vip:                       {obs: [bt_clicks_rec_vip]}
+  btc_serp_filter_search_btc_serp_price_filter_search: {obs: [btc_serp_filter_search, btc_serp_price_filter_search]}
+  buyer_delivery_orders_expired:           {obs: [buyer_delivery_orders_expired]}
+  buyer_favouriteseller_add_from_subscribers_list: {obs: [buyer_favouriteseller_add_from_subscribers_list]}
+  buyer_favouriteseller_add_from_subscriptions_list: {obs: [buyer_favouriteseller_add_from_subscriptions_list]}
+  buyer_favouriteseller_delete_from_subscribers_list: {obs: [buyer_favouriteseller_delete_from_subscribers_list]}
+  buyer_favouriteseller_delete_from_subscriptions_list: {obs: [buyer_favouriteseller_delete_from_subscriptions_list]}
+  buyer_str_bookings_comfirmed:            {obs: [buyer_str_bookings_comfirmed]}
+  buyer_str_bookings_expired:              {obs: [buyer_str_bookings_expired]}
+  buyer_str_bookings_voided:               {obs: [buyer_str_bookings_voided]}
+  contacts_1:                              {obs: [contacts]}
+  dom_interactive_sessionduration:         {obs: [dom_interactive_sessionduration]}
+  final_page_events:                       {obs: [final_page_events]}
+  helpdesk_delivery_vas_tickets:           {obs: [helpdesk_delivery_vas_tickets]}
+  helpdesk_delivery_voice_2nd_line_answer_calls: {obs: [helpdesk_delivery_voice_2nd_line_answer_calls]}
+  helpdesk_delivery_voice_2nd_line_calls:  {obs: [helpdesk_delivery_voice_2nd_line_calls]}
+  helpdesk_str_tickets:                    {obs: [helpdesk_str_tickets]}
+  helpdesk_vas_tag_tickets:                {obs: [helpdesk_vas_tag_tickets]}
+  item_views_client_rec_from_msg:          {filter: {<<: [*is_iv_client, *x_is_rec_msg]}}
+  item_views_from_fs:                      {obs: [item_views_from_fs]}
+  lf_block_show_events:                    {obs: [lf_block_show_events]}
+  lf_payment_page_events:                  {obs: [lf_payment_page_events]}
+  pages_listing_type:                      {obs: [pages_listing_type]}
+  public_profile_visit_from_subscriptions_list: {obs: [public_profile_visit_from_subscriptions_list]}
+  queries_no_redirect:                     {obs: [queries_no_redirect]}
+  queries_no_redirect_contact:             {obs: [queries_no_redirect_contact]}
+  queries_with_suggest:                    {obs: [queries_with_suggest]}
+  returned_listers:                        {obs: [returned_listers]}
+  search_redirect_suggest:                 {obs: [search_redirect_suggest]}
+  search_redirect_suggest_disabled:        {obs: [search_redirect_suggest_disabled]}
+  seller_delivery_orders_expired:          {obs: [seller_delivery_orders_expired]}
+  seller_str_bookings_comfirmed:           {obs: [seller_str_bookings_comfirmed]}
+  seller_str_bookings_expired:             {obs: [seller_str_bookings_expired]}
+  seller_str_bookings_voided:              {obs: [seller_str_bookings_voided]}
+  sqp_layout_disabled:                     {obs: [sqp_layout_disabled]}
+  sqp_layout_replace:                      {obs: [sqp_layout_replace]}
+  sqp_layout_suggest:                      {obs: [sqp_layout_suggest]}
+  sqp_layout_suggest_disabled:             {obs: [sqp_layout_suggest_disabled]}
+  sqp_wordbreaker_digit_disabled:          {obs: [sqp_wordbreaker_digit_disabled]}
+  sqp_wordbreaker_digit_replace:           {obs: [sqp_wordbreaker_digit_replace]}
+  sqp_wordbreaker_digit_suggest:           {obs: [sqp_wordbreaker_digit_suggest]}
+  sqp_wordbreaker_digit_suggest_disabled:  {obs: [sqp_wordbreaker_digit_suggest_disabled]}
+  sqp_wordbreaker_disabled:                {obs: [sqp_wordbreaker_disabled]}
+  sqp_wordbreaker_replace:                 {obs: [sqp_wordbreaker_replace]}
+  sqp_wordbreaker_suggest:                 {obs: [sqp_wordbreaker_suggest]}
+  sqp_wordbreaker_suggest_disabled:        {obs: [sqp_wordbreaker_suggest_disabled]}
+  time_for_async_target_content:           {obs: [time_for_async_target_content]}
+  time_to_target_content:                  {obs: [time_to_target_content]}
+  typo_suggest:                            {obs: [typo_suggest]}
+  typo_suggest_disabled:                   {obs: [typo_suggest_disabled]}
+
+metric.uniq:
+  returned_listers_0:                      {counter: returned_listers,                key: [user]}
+  suggest_buyers:                          {counter: queries_no_redirect_contact,     key: [user]}
+  user_queries_no_redirect:                {counter: queries_no_redirect,             key: [user]}
+  user_queries_with_suggest:               {counter: queries_with_suggest,            key: [user]}
+  user_search_redirect_suggest:            {counter: search_redirect_suggest,         key: [user]}
+  user_sqp_layout_replace:                 {counter: sqp_layout_replace,              key: [user]}
+  user_sqp_layout_suggest:                 {counter: sqp_layout_suggest,              key: [user]}
+  user_sqp_wordbreaker_digit_replace:      {counter: sqp_wordbreaker_digit_replace,   key: [user]}
+  user_sqp_wordbreaker_digit_suggest:      {counter: sqp_wordbreaker_digit_suggest,   key: [user]}
+  user_sqp_wordbreaker_replace:            {counter: sqp_wordbreaker_replace,         key: [user]}
+  user_sqp_wordbreaker_suggest:            {counter: sqp_wordbreaker_suggest,         key: [user]}
+  user_typo_suggest:                       {counter: typo_suggest,                    key: [user]}
+  users_btc_search_filter_any:             {counter: btc_serp_filter_search_btc_serp_price_filter_search, key: [user]}
+  users_phone_calls_client_rec:            {counter: answered_proxy_rec_missed_proxy_rec, key: [user]}
+
+metric.ratio:
+  item_add_success_per_lf_show_block:      {num: final_page_events,               den: lf_block_show_events}
+  payment_page_per_lf_show_block:          {num: lf_payment_page_events,          den: lf_block_show_events}
+  search_redirect_suggest_ctr_disable:     {num: search_redirect_suggest_disabled, den: search_redirect_suggest}
+  searches_with_suggest_share:             {num: queries_with_suggest,            den: queries_no_redirect}
+  sqp_layout_replace_ctr_disable:          {num: sqp_layout_disabled,             den: sqp_layout_replace}
+  sqp_layout_suggest_ctr_disable:          {num: sqp_layout_suggest_disabled,     den: sqp_layout_suggest}
+  sqp_wordbreaker_digit_replace_ctr_disable: {num: sqp_wordbreaker_digit_disabled,  den: sqp_wordbreaker_digit_replace}
+  sqp_wordbreaker_digit_suggest_ctr_disable: {num: sqp_wordbreaker_digit_suggest_disabled, den: sqp_wordbreaker_digit_suggest}
+  sqp_wordbreaker_replace_ctr_disable:     {num: sqp_wordbreaker_disabled,        den: sqp_wordbreaker_replace}
+  sqp_wordbreaker_suggest_ctr_disable:     {num: sqp_wordbreaker_suggest_disabled, den: sqp_wordbreaker_suggest}
+  suggest_buyers_share:                    {num: suggest_buyers,                  den: user_queries_with_suggest}
+  suggest_users_share:                     {num: user_queries_with_suggest,       den: user_queries_no_redirect}
+  typo_suggest_ctr_disable:                {num: typo_suggest_disabled,           den: typo_suggest}
+

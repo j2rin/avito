@@ -1,0 +1,87 @@
+metric.counter:
+  default_loc_tooltip_accepts:             {obs: [tooltip_accepts]}
+  default_loc_tooltip_declines:            {obs: [tooltip_not_accepts]}
+  default_loc_tooltip_shows:               {obs: [tooltip_opens]}
+  default_loc_tooltip_shows_city:          {obs: [tooltip_opens_city]}
+  default_loc_tooltip_shows_region:        {obs: [tooltip_opens_region]}
+  default_loc_tooltip_shows_russia:        {obs: [tooltip_opens_russia]}
+  loc_bad_chng:                            {obs: [location_changings_bad]}
+  loc_bad_susp_chng:                       {obs: [location_changings_bad, location_changings_suspicious]}
+  loc_chng:                                {obs: [location_changings]}
+  loc_chng_app_settings:                   {obs: [location_changings_app_settings]}
+  loc_chng_bad_city:                       {obs: [location_changings_bad_city]}
+  loc_chng_bad_region:                     {obs: [location_changings_bad_regions]}
+  loc_chng_bad_russia:                     {obs: [location_changings_bad_russia]}
+  loc_chng_city_city:                      {obs: [location_changings_city_city]}
+  loc_chng_city_region:                    {obs: [location_changings_city_region]}
+  loc_chng_city_russia:                    {obs: [location_changings_city_russia]}
+  loc_chng_neutral_city:                   {obs: [location_changings_neutral_city]}
+  loc_chng_neutral_region:                 {obs: [location_changings_neutral_regions]}
+  loc_chng_neutral_russia:                 {obs: [location_changings_neutral_russia]}
+  loc_chng_radius:                         {obs: [location_changings_radius]}
+  loc_chng_region_city:                    {obs: [location_changings_region_city]}
+  loc_chng_region_region:                  {obs: [location_changings_region_region]}
+  loc_chng_region_russia:                  {obs: [location_changings_region_russia]}
+  loc_chng_russia_city:                    {obs: [location_changings_russia_city]}
+  loc_chng_russia_region:                  {obs: [location_changings_russia_region]}
+  loc_chng_search:                         {obs: [location_changings_search]}
+  loc_chng_suspicious_city:                {obs: [location_changings_suspicious_city]}
+  loc_chng_suspicious_region:              {obs: [location_changings_suspicious_regions]}
+  loc_chng_suspicious_russia:              {obs: [location_changings_suspicious_russia]}
+  loc_detailed_chng:                       {obs: [location_changings_detailed]}
+  loc_expanded_chng:                       {obs: [location_changings_expanded]}
+  loc_horizontal_chng:                     {obs: [location_changings_horizontal]}
+  loc_neutral_chng:                        {obs: [location_changings_neutral]}
+  loc_susp_chng:                           {obs: [location_changings_suspicious]}
+  loc_window_closings:                     {obs: [location_dialogue_closings]}
+  loc_window_opens:                        {obs: [location_dialogue_opens]}
+  loc_window_opens_app_settings:           {obs: [location_dialogue_opens_app_settings]}
+  loc_window_opens_radius:                 {obs: [location_dialogue_opens_radius]}
+  loc_window_opens_search:                 {obs: [location_dialogue_opens_search]}
+  loc_window_savings:                      {obs: [location_dialogue_savings]}
+  location_dialogue_savings_radius:        {obs: [location_dialogue_savings_radius]}
+  location_dialogue_savings_search:        {obs: [location_dialogue_savings_search]}
+  tooltip_accepts_city:                    {obs: [tooltip_accepts_city]}
+  tooltip_accepts_region:                  {obs: [tooltip_accepts_region]}
+  tooltip_accepts_russia:                  {obs: [tooltip_accepts_russia]}
+  tooltip_not_accepts_city:                {obs: [tooltip_not_accepts_city]}
+  tooltip_not_accepts_region:              {obs: [tooltip_not_accepts_region]}
+  tooltip_not_accepts_russia:              {obs: [tooltip_not_accepts_russia]}
+
+metric.uniq:
+  default_loc_tooltip_accepts_city:        {counter: tooltip_accepts_city,            key: [user]}
+  default_loc_tooltip_accepts_region:      {counter: tooltip_accepts_region,          key: [user]}
+  default_loc_tooltip_accepts_russia:      {counter: tooltip_accepts_russia,          key: [user]}
+  default_loc_tooltip_declines_city:       {counter: tooltip_not_accepts_city,        key: [user]}
+  default_loc_tooltip_declines_region:     {counter: tooltip_not_accepts_region,      key: [user]}
+  default_loc_tooltip_declines_russia:     {counter: tooltip_not_accepts_russia,      key: [user]}
+  users_default_loc_tooltip:               {counter: default_loc_tooltip_shows,       key: [user]}
+  users_default_loc_tooltip_accepts:       {counter: default_loc_tooltip_accepts,     key: [user]}
+  users_default_loc_tooltip_declines:      {counter: default_loc_tooltip_declines,    key: [user]}
+  users_loc_bad_and_chng:                  {counter: loc_bad_susp_chng,               key: [user]}
+  users_loc_bad_chng:                      {counter: loc_bad_chng,                    key: [user]}
+  users_loc_chng:                          {counter: loc_chng,                        key: [user]}
+  users_loc_detailed_chng:                 {counter: loc_detailed_chng,               key: [user]}
+  users_loc_expanded_chng:                 {counter: loc_expanded_chng,               key: [user]}
+  users_loc_horizontal_chng:               {counter: loc_horizontal_chng,             key: [user]}
+  users_loc_neutral_chng:                  {counter: loc_neutral_chng,                key: [user]}
+  users_loc_susp_chng:                     {counter: loc_susp_chng,                   key: [user]}
+  users_loc_window_opens:                  {counter: loc_window_opens,                key: [user]}
+  users_loc_window_opens_radius:           {counter: loc_window_opens_radius,         key: [user]}
+  users_loc_window_opens_search:           {counter: loc_window_opens_search,         key: [user]}
+  loc_bad_and_chng_sessions:               {counter: loc_bad_susp_chng,               key: [user, session]}
+  loc_bad_chng_sessions:                   {counter: loc_bad_chng,                    key: [user, session]}
+  loc_chng_sessions:                       {counter: loc_chng,                        key: [user, session]}
+  loc_neutral_chng_sessions:               {counter: loc_neutral_chng,                key: [user, session]}
+  loc_susp_chng_sessions:                  {counter: loc_susp_chng,                   key: [user, session]}
+
+metric.ratio:
+  default_loc_tooltip_accepts_per_shows:   {num: default_loc_tooltip_accepts,     den: default_loc_tooltip_shows}
+  default_loc_tooltip_city_share:          {num: default_loc_tooltip_shows_city,  den: default_loc_tooltip_shows}
+  default_loc_tooltip_declines_per_shows:  {num: default_loc_tooltip_declines,    den: default_loc_tooltip_shows}
+  default_loc_tooltip_region_share:        {num: default_loc_tooltip_shows_region, den: default_loc_tooltip_shows}
+  default_loc_tooltip_russia_share:        {num: default_loc_tooltip_shows_russia, den: default_loc_tooltip_shows}
+  loc_window_saves_per_opens:              {num: loc_window_savings,              den: loc_window_opens}
+  loc_window_saves_per_opens_radius:       {num: location_dialogue_savings_radius, den: loc_window_opens_radius}
+  loc_window_saves_per_opens_search:       {num: location_dialogue_savings_search, den: loc_window_opens_search}
+

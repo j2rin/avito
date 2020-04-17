@@ -1,0 +1,35 @@
+metric.counter:
+  auth_attempts:                           {obs: [auth_errors, auth_success]}
+  auth_errors:                             {obs: [auth_errors]}
+  auth_success:                            {obs: [auth_success]}
+  enter_errors:                            {obs: [enter_errors]}
+  enter_errors_enter_success:              {obs: [enter_errors, enter_success]}
+  enter_start:                             {obs: [enter_start]}
+  enter_success:                           {obs: [enter_success]}
+  password_restore_attempts:               {obs: [restore_errors, restore_success]}
+  password_restore_errors:                 {obs: [restore_errors]}
+  password_restore_success:                {obs: [restore_success]}
+  registration_attempts:                   {obs: [registration_errors, registration_success]}
+  registration_errors:                     {obs: [registration_errors]}
+  registration_success:                    {obs: [registration_success]}
+
+metric.uniq:
+  user_auth:                               {counter: auth_success,                    key: [user]}
+  user_auth_attempt:                       {counter: auth_attempts,                   key: [user]}
+  user_enter:                              {counter: enter_success,                   key: [user]}
+  user_enter_attempt:                      {counter: enter_errors_enter_success,      key: [user]}
+  user_enter_start:                        {counter: enter_start,                     key: [user]}
+  user_password_restore:                   {counter: password_restore_success,        key: [user]}
+  user_password_restore_attempt:           {counter: password_restore_attempts,       key: [user]}
+  user_registration:                       {counter: registration_success,            key: [user]}
+  user_registration_attempt:               {counter: registration_attempts,           key: [user]}
+
+metric.ratio:
+  auth_errors_per_user:                    {num: auth_errors,                     den: user_auth_attempt}
+  enter_errors_per_user:                   {num: enter_errors,                    den: user_enter_attempt}
+  registration_errors_per_user:            {num: registration_errors,             den: user_registration_attempt}
+  user_enter_cr:                           {num: user_enter,                      den: user_enter_start}
+  user_enter_start_to_auth_cr:             {num: user_auth,                       den: user_enter_start}
+  user_enter_start_to_registration_cr:     {num: user_registration,               den: user_enter_start}
+  user_enter_start_to_restore_cr:          {num: user_password_restore,           den: user_enter_start}
+

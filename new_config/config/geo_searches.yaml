@@ -1,0 +1,40 @@
+metric.counter:
+  capital_city_level_searches:             {obs: [capital_city_level_searches]}
+  cities_in_search:                        {obs: [cities_in_searches]}
+  city_level_searches:                     {obs: [city_level_searches, federal_city_level_searches]}
+  default_radius_searches:                 {obs: [default_radius_searches]}
+  federal_city_level_searches:             {obs: [federal_city_level_searches]}
+  locations_in_search:                     {obs: [locations_in_searches]}
+  meta_regions_level_searches:             {obs: [meta_regions_level_searches]}
+  noncapital_city_level_searches:          {obs: [noncapital_city_level_searches]}
+  not_default_radius_searches:             {obs: [not_default_radius_searches]}
+  radius_0_searches:                       {obs: [radius_0_searches]}
+  radius_1000_searches:                    {obs: [radius_1000_searches]}
+  radius_100_searches:                     {obs: [radius_100_searches]}
+  radius_10_searches:                      {obs: [radius_10_searches]}
+  radius_1_searches:                       {obs: [radius_1_searches]}
+  radius_200_searches:                     {obs: [radius_200_searches]}
+  radius_25_searches:                      {obs: [radius_25_searches]}
+  radius_300_searches:                     {obs: [radius_300_searches]}
+  radius_400_searches:                     {obs: [radius_400_searches]}
+  radius_500_searches:                     {obs: [radius_500_searches]}
+  radius_50_searches:                      {obs: [radius_50_searches]}
+  radius_5_searches:                       {obs: [radius_5_searches]}
+  radius_big_searches:                     {obs: [radius_1000_searches, radius_100_searches, radius_200_searches, radius_300_searches, radius_400_searches, radius_500_searches]}
+  radius_short_searches:                   {obs: [radius_100_searches, radius_10_searches, radius_1_searches, radius_25_searches, radius_50_searches, radius_5_searches]}
+  regions_in_search:                       {obs: [regions_in_searches]}
+  regions_level_searches:                  {obs: [regions_level_searches]}
+  russia_level_searches:                   {obs: [russia_level_searches]}
+  total_districts_in_searches:             {obs: [total_districts_in_searches]}
+  total_metros_in_searches:                {obs: [total_metros_in_searches]}
+
+metric.uniq:
+  multiloc_users:                          {counter: locations_in_search,             key: [user]}
+  user_search_1_plus_locations:            {counter: locations_in_search,             key: [user]}
+  multi_city_sess:                         {counter: cities_in_search,                key: [user, session]}
+  multi_region_sess:                       {counter: regions_in_search,               key: [user, session]}
+  multiloc_sess:                           {counter: locations_in_search,             key: [user, session]}
+  sess_search_1_plus_cities:               {counter: cities_in_search,                key: [user, session]}
+  sess_search_1_plus_locations:            {counter: locations_in_search,             key: [user, session]}
+  sess_search_1_plus_regions:              {counter: regions_in_search,               key: [user, session]}
+

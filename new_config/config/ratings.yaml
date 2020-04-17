@@ -1,0 +1,37 @@
+metric.counter:
+  contacts_on_rating:                      {obs: [contacts_on_rating_1, contacts_on_rating_2, contacts_on_rating_3, contacts_on_rating_4, contacts_on_rating_5]}
+  contacts_on_rating_1:                    {obs: [contacts_on_rating_1]}
+  contacts_on_rating_2:                    {obs: [contacts_on_rating_2]}
+  contacts_on_rating_3:                    {obs: [contacts_on_rating_3]}
+  contacts_on_rating_4:                    {obs: [contacts_on_rating_4]}
+  contacts_on_rating_5:                    {obs: [contacts_on_rating_5]}
+  item_views_on_rating:                    {obs: [itemviews_on_rating_1, itemviews_on_rating_2, itemviews_on_rating_3, itemviews_on_rating_4, itemviews_on_rating_5]}
+  item_views_on_rating_1:                  {obs: [itemviews_on_rating_1]}
+  item_views_on_rating_2:                  {obs: [itemviews_on_rating_2]}
+  item_views_on_rating_3:                  {obs: [itemviews_on_rating_3]}
+  item_views_on_rating_4:                  {obs: [itemviews_on_rating_4]}
+  item_views_on_rating_5:                  {obs: [itemviews_on_rating_5]}
+  items_with_rating:                       {obs: [active_items_with_rating]}
+  reviews_added:                           {obs: [reviews_added]}
+  reviews_score_sum:                       {obs: [reviews_score_sum]}
+  search_items:                            {obs: [search_items]}
+  search_items_with_rating:                {obs: [search_items_with_rating]}
+  searches_with_rating:                    {obs: [searches_with_rating]}
+
+metric.uniq:
+  buyers_on_rating_1:                      {counter: contacts_on_rating_1,            key: [user]}
+  buyers_on_rating_2:                      {counter: contacts_on_rating_2,            key: [user]}
+  buyers_on_rating_4:                      {counter: contacts_on_rating_4,            key: [user]}
+  buyers_on_rating_5:                      {counter: contacts_on_rating_5,            key: [user]}
+  users_reviews_added:                     {counter: reviews_added,                   key: [user]}
+
+metric.ratio:
+  contacts_on_rating_share:                {num: contacts_on_rating,              den: contacts_1}
+  contacts_per_item_view_on_rating_1:      {num: contacts_on_rating_1,            den: item_views_on_rating_1}
+  contacts_per_item_view_on_rating_2:      {num: contacts_on_rating_2,            den: item_views_on_rating_2}
+  contacts_per_item_view_on_rating_3:      {num: contacts_on_rating_3,            den: item_views_on_rating_3}
+  contacts_per_item_view_on_rating_4:      {num: contacts_on_rating_4,            den: item_views_on_rating_4}
+  contacts_per_item_view_on_rating_5:      {num: contacts_on_rating_5,            den: item_views_on_rating_5}
+  reviews_avg_score:                       {num: reviews_score_sum,               den: reviews_added}
+  search_items_ratings_coverage:           {num: search_items_with_rating,        den: search_items}
+

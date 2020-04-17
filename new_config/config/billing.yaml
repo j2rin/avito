@@ -1,0 +1,45 @@
+metric.counter:
+  payment_method_choice:                   {obs: [payment_method_choice]}
+  payment_method_choice_cv:                {obs: [payment_method_choice_CV]}
+  payment_method_choice_services:          {obs: [payment_method_choice_services]}
+  payment_method_choice_wallet:            {obs: [payment_method_choice_wallet]}
+  payment_method_page:                     {obs: [payment_method_page]}
+  payment_method_page_cv:                  {obs: [payment_method_page_CV]}
+  payment_method_page_services:            {obs: [payment_method_page_services]}
+  payment_method_page_wallet:              {obs: [payment_method_page_wallet]}
+  successful_payment:                      {obs: [successful_payment]}
+  successful_payment_SBOL_successful_payment_card: {obs: [successful_payment_SBOL, successful_payment_card]}
+  successful_payment_cv:                   {obs: [successful_payment_CV]}
+  successful_payment_services:             {obs: [successful_payment_services]}
+  successful_payment_services_amount:      {obs: [services_amount]}
+  successful_payment_wallet:               {obs: [successful_payment_wallet]}
+
+metric.uniq:
+  user_payment_method_choice:              {counter: payment_method_choice,           key: [user]}
+  user_payment_method_choice_CV:           {counter: payment_method_choice_cv,        key: [user]}
+  user_payment_method_choice_services:     {counter: payment_method_choice_services,  key: [user]}
+  user_payment_method_choice_wallet:       {counter: payment_method_choice_wallet,    key: [user]}
+  user_payment_method_page:                {counter: payment_method_page,             key: [user]}
+  user_payment_method_page_CV:             {counter: payment_method_page_cv,          key: [user]}
+  user_payment_method_page_services:       {counter: payment_method_page_services,    key: [user]}
+  user_payment_method_page_wallet:         {counter: payment_method_page_wallet,      key: [user]}
+  user_successful_payment:                 {counter: successful_payment,              key: [user]}
+  user_successful_payment_CV:              {counter: successful_payment_cv,           key: [user]}
+  user_successful_payment_services:        {counter: successful_payment_services,     key: [user]}
+  user_successful_payment_wallet:          {counter: successful_payment_wallet,       key: [user]}
+
+metric.ratio:
+  main_payment_methods_share:              {num: successful_payment_SBOL_successful_payment_card, den: successful_payment}
+  selected_payment_method_share:           {num: payment_method_choice,           den: payment_method_page}
+  selected_payment_method_share_cv:        {num: payment_method_choice_cv,        den: payment_method_page_cv}
+  selected_payment_method_share_proportion: {num: user_payment_method_choice,      den: user_payment_method_page}
+  selected_payment_method_share_proportion_cv: {num: user_payment_method_choice_CV,   den: user_payment_method_page_CV}
+  selected_payment_method_share_proportion_services: {num: user_payment_method_choice_services, den: user_payment_method_page_services}
+  selected_payment_method_share_services:  {num: payment_method_choice_services,  den: payment_method_page_services}
+  successful_payment_share:                {num: successful_payment,              den: payment_method_page}
+  successful_payment_share_cv:             {num: successful_payment_cv,           den: payment_method_page_cv}
+  successful_payment_share_proportion:     {num: user_successful_payment,         den: user_payment_method_page}
+  successful_payment_share_proportion_cv:  {num: user_successful_payment_CV,      den: user_payment_method_page_CV}
+  successful_payment_share_proportion_services: {num: user_successful_payment_services, den: user_payment_method_page_services}
+  successful_payment_share_services:       {num: successful_payment_services,     den: payment_method_page_services}
+

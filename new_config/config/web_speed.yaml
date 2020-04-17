@@ -1,0 +1,36 @@
+metric.counter:
+  cnt_init_page_interrupts_percent:        {obs: [initial_pages_finished_events, initial_pages_unfinished_events]}
+  init_page_interrupts:                    {obs: [initial_pages_unfinished_events]}
+  init_pages_loads:                        {obs: [initial_pages_finished_events]}
+  initial_pages_finished_events_catalog:   {obs: [initial_pages_finished_events_catalog]}
+  initial_pages_finished_events_item:      {obs: [initial_pages_finished_events_item]}
+  initial_pages_finished_events_main:      {obs: [initial_pages_finished_events_main]}
+  initial_pages_finished_events_messenger: {obs: [initial_pages_finished_events_messenger]}
+  initial_pages_finished_events_other_pages: {obs: [initial_pages_finished_events_other_pages]}
+  initial_pages_finished_events_profile:   {obs: [initial_pages_finished_events_profile]}
+  time_to_dom_ready:                       {obs: [time_to_dom_ready]}
+  time_to_first_interactive:               {obs: [time_to_first_interactive]}
+  time_to_firstbyte:                       {obs: [time_to_firstbyte]}
+  time_to_load_catalog:                    {obs: [time_to_load_catalog]}
+  time_to_load_item:                       {obs: [time_to_load_item]}
+  time_to_load_main:                       {obs: [time_to_load_main]}
+  time_to_load_messenger:                  {obs: [time_to_load_messenger]}
+  time_to_load_other_pages:                {obs: [time_to_load_other_pages]}
+  time_to_load_profile:                    {obs: [time_to_load_profile]}
+  time_to_on_load:                         {obs: [time_to_on_load]}
+
+metric.ratio:
+  async_target_content_dur:                {num: time_for_async_target_content,   den: initial_pages_finished_events_main}
+  dom_ready_dur:                           {num: time_to_dom_ready,               den: init_pages_loads}
+  first_byte_dur:                          {num: time_to_firstbyte,               den: init_pages_loads}
+  first_interactive_dur:                   {num: time_to_first_interactive,       den: init_pages_loads}
+  init_page_interrupts_percent:            {num: init_page_interrupts,            den: cnt_init_page_interrupts_percent}
+  on_load_catalog_dur:                     {num: time_to_load_catalog,            den: initial_pages_finished_events_catalog}
+  on_load_dur:                             {num: time_to_on_load,                 den: init_pages_loads}
+  on_load_item_dur:                        {num: time_to_load_item,               den: initial_pages_finished_events_item}
+  on_load_main_dur:                        {num: time_to_load_main,               den: initial_pages_finished_events_main}
+  on_load_messenger_dur:                   {num: time_to_load_messenger,          den: initial_pages_finished_events_messenger}
+  on_load_other_dur:                       {num: time_to_load_other_pages,        den: initial_pages_finished_events_other_pages}
+  on_load_profile_dur:                     {num: time_to_load_profile,            den: initial_pages_finished_events_profile}
+  target_content_dur:                      {num: time_to_target_content,          den: initial_pages_finished_events_main}
+
