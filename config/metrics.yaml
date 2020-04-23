@@ -2754,99 +2754,99 @@ filters_price_searches:
   description: "Поиски с фильтром цены с учетом пагинации."
   tags: [i4, bx, total]
   numerator:
-    observations: [price_filter_searches, searches_serp_with_price_filter]
-    
+    observations: [searches_serp_with_price_filter]
+
 filters_rubricator_searches:
   description: "Поиски с обычным фильтром (не цена, не гео) с учетом пагинации."
   title: filters_rubricator_searches
   tags: [i4, bx, total]
   numerator:
     observations: [searches_serp_with_filter]
-    
+
 filters_pr_rubr_searches:
   description: "Поиски с обычным фильтром или фильтром по цене с учетом пагинации."
   title: filters_prc_rubr_searches
   tags: [i4, bx, total]
   numerator:
-    observations: [searches_serp_with_filter,price_filter_searches,searches_serp_with_price_filter]
-    
+    observations: [searches_serp_with_filter, searches_serp_with_price_filter]
+
 searches_with_filter:
   description: "Поиски с обычным фильтром без учета пагинации"
   title: s_filter_rubr
   tags: [i4, bx, total]
   numerator:
     observations: [searches_with_filter]
-    
+
 searches_with_price_filter:
   description: "Поиски с фильтром по цене без учета пагинации"
   title: s_filter_price
   tags: [i4, bx, total]
   numerator:
     observations: [searches_with_price_filter]
-    
+
 searches_with_filter_any:
   description: "Поиски с фильтром по цене без учета пагинации"
   title: s_filter_any
   tags: [i4, bx, total]
   numerator:
     observations: [searches_with_filter, searches_with_price_filter]
-    
+
 item_views_from_search_filter_any:
   description: "Item_views с поисков с фильтрами"
   title: iv_s_filter_any
   tags: [i4, bx, total]
   numerator:
     observations: [item_views_serp_filter_search, item_views_serp_price_filter_search]
-    
+
 btc_from_search_filter_any:
   description: "btc с поисков с фильтрами"
   title: btc_s_filter_any
   tags: [i4, bx, total]
   numerator:
     observations: [btc_views_serp_filter_search, btc_views_serp_price_filter_search]
-    
+
 searches_with_shop_id:
   description: "Поиски по магазинам"
   title: s_sid
   tags: [i4, bx, serp, total]
   numerator:
     observations: [searches_shop]
-    
+
 item_views_with_shop_id:
   description: "Просмотры объявлений с идентификатором магазина"
   title: iv_sid
   tags: [i4, bx, serp, total]
   numerator:
     observations: [item_views_shop]
-    
+
 fav_added_with_shop_id:
   description: "Добавления в избранное объявлений с идентификатором магазина"
   title: fav_sid
   tags: [i4, bx, serp, total]
   numerator:
     observations: [fav_added_shop]
-    
+
 buyer_target_clicks_with_shop_id:
   description: "Целевые действия на объявлениях с идентификатором магазина"
   title: btc_sid
   tags: [i4, bx, serp, total]
   numerator:
     observations: [buyer_target_clicks_shop]
-    
+
 phone_views_with_shop_id:
   description: "Просмотры контактов на объявлениях с идентификатором магазина"
   title: ph_sid
   tags: [i4, bx, serp, total]
   numerator:
     observations: [phone_views_shop]
-    
+
 write_button_clicks_with_shop_id:
   description: "Открытия мессенджеров на объявлениях с идентификатором магазина"
   title: msg_btn_sid
   tags: [i4, bx, serp, total]
   numerator:
     observations: [write_button_clicks_shop]
-    
+
 ###############################################################################
 # Search :: Ratios
 ###############################################################################
@@ -3010,7 +3010,7 @@ item_views_delivery_per_search_delivery:
     observations: [item_views_delivery]
   denominator:
     observations: [searches_serp_extra_delivery]
-    
+
 item_views_any_ext_block_per_any_ext_block:
   title: iv_any_ext_block_per_any_ext_block
   description: "IV с любого допблока (регионы или доставка) относительно поисков с любым допблоком"
@@ -3508,7 +3508,7 @@ serp_small_per_s:
     observations: [serp_small]
   denominator:
     observations: [searches]
-  
+
 serp_wq_empty_per_s_wq:
   title: serp_wq_empty_per_s_wq
   tags: [i4, bx, serp, ratio]
@@ -3516,7 +3516,7 @@ serp_wq_empty_per_s_wq:
     observations: [serp_with_query_empty]
   denominator:
     observations: [searches_with_query]
-  
+
 serp_wq_small_per_s_wq:
   title: serp_wq_small_per_s_wq
   tags: [i4, bx, serp, ratio]
@@ -3524,7 +3524,7 @@ serp_wq_small_per_s_wq:
     observations: [serp_with_query_small]
   denominator:
     observations: [searches_with_query]
-  
+
 serp_noq_empty_per_s_noq:
   title: serp_noq_empty_per_s_noq
   tags: [i4, bx, serp, ratio]
@@ -3532,7 +3532,7 @@ serp_noq_empty_per_s_noq:
     observations: [serp_without_query_empty]
   denominator:
     observations: [searches_without_query]
-  
+
 serp_noq_small_per_s_noq:
   title: serp_noq_small_per_s_noq
   tags: [i4, bx, serp, ratio]
@@ -3540,16 +3540,16 @@ serp_noq_small_per_s_noq:
     observations: [serp_without_query_small]
   denominator:
     observations: [searches_without_query]
-    
+
 filters_pr_rubr_per_searches:
   description: "Отношение поисков с фильтрами (обычным или цены) к поискам. С учетом пагинации."
   title: filters_pr_rubr_per_searches
   tags: [i4, bx, ratio]
   numerator:
-    observations: [filter_searches,price_filter_searches, searches_serp_with_filter, searches_serp_with_price_filter]
+    observations: [searches_serp_with_filter, searches_serp_with_price_filter]
   denominator:
     observations: [searches_serp]
-    
+
 searches_filter_any_per_search:
   description: "Отношение поисков с фильтрами (обычным или цены) к поискам. Без пагинации."
   title: s_filter_any_per_s
@@ -3557,8 +3557,8 @@ searches_filter_any_per_search:
   numerator:
     observations: [searches_with_filter, searches_with_price_filter]
   denominator:
-    observations: [searches]    
-    
+    observations: [searches]
+
 item_views_search_filter_any_per_search_filter_any:
   description: "Iv с поисков с фильтрами на число поисков с фильтрами"
   title: iv_s_filter_per_s_filter_any
@@ -3566,7 +3566,7 @@ item_views_search_filter_any_per_search_filter_any:
   numerator:
     observations: [item_views_serp_filter_search, item_views_serp_price_filter_search]
   denominator:
-    observations: [searches_with_filter, searches_with_price_filter]   
+    observations: [searches_with_filter, searches_with_price_filter]
 
 btc_search_filter_any_per_search_filter_any:
   description: "Отношение поисков с фильтрами (обычным или цены) к поискам. Без пагинации."
@@ -3575,8 +3575,8 @@ btc_search_filter_any_per_search_filter_any:
   numerator:
     observations: [btc_serp_filter_search, btc_serp_price_filter_search]
   denominator:
-    observations: [searches_with_filter, searches_with_price_filter]   
-    
+    observations: [searches_with_filter, searches_with_price_filter]
+
 btc_with_shop_id_per_iv_with_shop_id:
   description: "Отношение целевых действий на объявлениях с идентификатором магазина к просмотрам таких объявлений"
   title: btc_sid_per_iv_sid
@@ -3619,7 +3619,7 @@ sessions_iv:
     observations: [item_views]
     groupby: [participant, session]
   tags: [i3, bx, session]
-  
+
 sessions_s:
   numerator:
     observations: [searches]
@@ -4207,13 +4207,13 @@ search_suggest_clicks:
   numerator:
     observations: [search_suggest_clicks]
     groupby: [participant]
-         
+
 filters_pr_rubr_users:
   description: "Число юзеров, использовавших обычный или фильтр по цене"
   title: filters_any_users
   tags: [i4, bx, user]
   numerator:
-    observations: [filter_searches,price_filter_searches,searches, searches_with_filter, searches_with_price_filter]
+    observations: [searches, searches_with_filter, searches_with_price_filter]
     groupby: [participant]
     
 users_search_filter_any:
