@@ -115,6 +115,7 @@ definitions:
   - &is_base_serp_empty {base_item_cnt: 0}
   - &is_base_serp_small {base_item_cnt.>=: 1, base_item_cnt.<=: 9}
 
+  - &is_region_with_double_groups {region_id: [697, 4181]}
 metric.counter:
   base_serp_empty:                         {filter: {<<: [*is_1p, *is_base_serp_empty, *is_search]}}
   base_serp_small:                         {filter: {<<: [*is_1p, *is_base_serp_small, *is_search]}}
@@ -123,17 +124,18 @@ metric.counter:
   base_serp_without_query_empty:           {filter: {<<: [*is_1p, *is_search, *is_serp_empty, *noq]}}
   booking_created_short_rent:              {filter: {<<: *is_booking}}
   buyer_target_clicks_with_shop_id:        {filter: {<<: [*is_btc, *is_shop]}}
-  c_serp_grouped_doubles:                  {obs: [contacts_serp_grouped_doubles]}
   cnt_btc_from_search_filter_any:          {filter: {<<: [*is_btc_wo_guessing, *x_is_search], $or: [{<<: *x_is_filter_search}, {<<: *x_is_price_filter_search}]}}
   cnt_btc_from_witcher_any_per_witcher_any: {filter: {<<: [*is_btc_wo_guessing, *x_is_search], $or: [{<<: *is_serp_witcher_delivery}, {<<: *is_serp_witcher_new_auto}, {<<: *is_serp_witcher_new_flats}, {<<: *is_serp_witcher_regions}]}}
   cnt_buyer_target_clicks_serp_geo_sess_per_search_geo_sess: {filter: {<<: [*is_btc, *x_is_search], $or: [{<<: *is_s_district}, {<<: *is_s_metro}, {<<: *is_s_radius}, {<<: *is_s_road}]}}
   cnt_c_from_witcher_any:                  {filter: {<<: [*is_contact_wo_guessing, *x_is_search], $or: [{<<: *is_serp_witcher_delivery}, {<<: *is_serp_witcher_new_auto}, {<<: *is_serp_witcher_new_flats}, {<<: *is_serp_witcher_regions}]}}
+  cnt_c_serp_grouped_doubles:              {filter: {<<: [*is_contact_wo_guessing, *is_region_with_double_groups, *is_serp_grouping, *x_is_search]}}
   cnt_fav_from_witcher_any:                {filter: {<<: [*is_fav, *x_is_search], $or: [{<<: *is_serp_witcher_delivery}, {<<: *is_serp_witcher_new_auto}, {<<: *is_serp_witcher_new_flats}, {<<: *is_serp_witcher_regions}]}}
   cnt_favorites_net:                       {obs: [favorites_net]}
   cnt_filters_pr_rubr_users:               {obs: [filter_searches, price_filter_searches, searches, searches_with_filter, searches_with_price_filter]}
   cnt_item_views_any_ext_block:            {filter: {<<: [*is_iv_wo_guessing, *x_is_search], $or: [{<<: *is_serp_delivery}, {<<: *is_serp_regions}]}}
   cnt_item_views_from_search_filter_any:   {filter: {<<: [*is_iv_wo_guessing, *x_is_search], $or: [{<<: *x_is_filter_search}, {<<: *x_is_price_filter_search}]}}
   cnt_iv_from_witcher_any:                 {filter: {<<: [*is_iv_wo_guessing, *x_is_search], $or: [{<<: *is_serp_witcher_delivery}, {<<: *is_serp_witcher_new_auto}, {<<: *is_serp_witcher_new_flats}, {<<: *is_serp_witcher_regions}]}}
+  cnt_iv_grouped_doubles:                  {filter: {<<: [*is_iv_wo_guessing, *is_region_with_double_groups, *is_serp_grouping, *x_is_search]}}
   cnt_s_witcher_any_with_btc:              {filter: {<<: [*is_btc, *x_is_search], $or: [{<<: *is_serp_witcher_delivery}, {<<: *is_serp_witcher_new_auto}, {<<: *is_serp_witcher_new_flats}, {<<: *is_serp_witcher_regions}]}}
   cnt_s_witcher_any_with_c:                {filter: {<<: [*is_contact, *x_is_search], $or: [{<<: *is_serp_witcher_delivery}, {<<: *is_serp_witcher_new_auto}, {<<: *is_serp_witcher_new_flats}, {<<: *is_serp_witcher_regions}]}}
   cnt_s_witcher_any_with_iv:               {filter: {<<: [*is_iv, *x_is_search], $or: [{<<: *is_serp_witcher_delivery}, {<<: *is_serp_witcher_new_auto}, {<<: *is_serp_witcher_new_flats}, {<<: *is_serp_witcher_regions}]}}
@@ -330,7 +332,6 @@ metric.counter:
   item_views_total_vas:                    {filter: {<<: [*is_item_vas, *is_iv]}}
   item_views_total_vip:                    {filter: {<<: [*is_item_vip, *is_iv]}}
   item_views_with_shop_id:                 {filter: {<<: [*is_iv, *is_shop]}}
-  iv_grouped_doubles:                      {obs: [item_views_grouped_doubles]}
   phone_view_button_clicks:                {filter: {<<: *is_ph_btn}}
   phone_views:                             {filter: {<<: *is_ph, $or: [{<<: *is_ph_right}, {<<: *is_ph_top}]}}
   phone_views_in_chat:                     {filter: {<<: *is_ph_chat}}
@@ -359,7 +360,7 @@ metric.counter:
   searches_from_witcher_regions:           {filter: {<<: [*is_fp_witcher_regions, *is_search]}}
   searches_geo:                            {filter: {<<: [*is_1p, *is_search], $or: [{<<: *is_s_district}, {<<: *is_s_metro}, {<<: *is_s_radius}, {<<: *is_s_road}]}}
   searches_group:                          {filter: {<<: [*is_search, *is_serp_grouping]}}
-  searches_group_doubles:                  {obs: [searches_group_doubles]}
+  searches_group_doubles:                  {filter: {<<: [*is_region_with_double_groups, *is_search, *is_serp_grouping]}}
   searches_local_geo:                      {filter: {<<: [*is_1p, *is_search], $or: [{<<: *is_s_district}, {<<: *is_s_metro}, {<<: *is_s_road}]}}
   searches_map_area:                       {filter: {<<: [*is_1p, *is_s_map, *is_search]}}
   searches_metro:                          {filter: {<<: [*is_1p, *is_s_metro, *is_search]}}
@@ -379,7 +380,6 @@ metric.counter:
   searches_with_query_date_sort:           {filter: {<<: [*is_1p, *is_s_sort_date, *is_search, *q]}}
   searches_with_shop_id:                   {filter: {<<: [*is_1p, *is_search, *is_shop]}}
   searches_without_query:                  {filter: {<<: [*is_1p, *is_search, *noq]}}
-  searches_without_query_serp:             {obs: [searches_without_query_serp]}
   serp_empty:                              {filter: {<<: [*is_1p, *is_search, *is_serp_empty]}}
   serp_small:                              {filter: {<<: [*is_1p, *is_search, *is_serp_small]}}
   serp_with_query_empty:                   {filter: {<<: [*is_1p, *is_search, *is_serp_empty, *q]}}
@@ -436,6 +436,7 @@ metric.uniq:
   c_from_witcher_any:                      {counter: cnt_c_from_witcher_any,          key: [item, x]}
   c_from_witcher_delivery:                 {counter: cnt_user_c_from_witcher_del,     key: [item, x]}
   c_from_witcher_regions:                  {counter: is_contact_wo_guessing_is_serp_witcher_regions_x_is_search, key: [item, x]}
+  c_serp_grouped_doubles:                  {counter: cnt_c_serp_grouped_doubles,      key: [item, x]}
   contacts_any_ext_block:                  {counter: is_contact_x_is_search_is_serp_delivery_is_serp_regions, key: [item, x]}
   contacts_delivery:                       {counter: is_contact_is_serp_delivery_x_is_search, key: [item, x]}
   contacts_fav_list:                       {counter: is_contact_x_is_fav_lst,         key: [item, x]}
@@ -543,6 +544,7 @@ metric.uniq:
   iv_from_witcher_any:                     {counter: cnt_iv_from_witcher_any,         key: [item, x]}
   iv_from_witcher_delivery:                {counter: is_iv_wo_guessing_is_serp_witcher_delivery_x_is_search, key: [item, x]}
   iv_from_witcher_regions:                 {counter: is_iv_wo_guessing_is_serp_witcher_regions_x_is_search, key: [item, x]}
+  iv_grouped_doubles:                      {counter: cnt_iv_grouped_doubles,          key: [item, x]}
   iv_searches_u2i:                         {counter: is_iv_wo_guessing_x_is_rec_sg_x_is_search, key: [item, x]}
   wtc_from_witcher_any:                    {counter: cnt_user_wtc_from_witcher_any,   key: [item, x]}
   wtc_from_witcher_delivery:               {counter: cnt_wtc_per_witcher_delivery,    key: [item, x]}
@@ -691,7 +693,6 @@ metric.uniq:
   session_is_rec:                          {counter: recblock_shows,                  key: [user, session]}
   session_is_search_q:                     {counter: is_search_q,                     key: [user, session]}
   session_is_u2i:                          {counter: recblock_shows_u2i,              key: [user, session]}
-  session_searches_without_query_serp:     {counter: searches_without_query_serp,     key: [user, session]}
   sessions_btc_r:                          {counter: is_btc_x_is_rec,                 key: [user, session]}
   sessions_btc_r_i2i:                      {counter: is_btc_x_is_i2i,                 key: [user, session]}
   sessions_btc_r_u2i:                      {counter: is_btc_x_is_u2i,                 key: [user, session]}
@@ -789,7 +790,7 @@ metric.ratio:
   btc_from_witcher_delivery_per_witcher_delivery: {num: btc_from_witcher_delivery,       den: searches_witcher_delivery}
   btc_from_witcher_regions_per_witcher_regions: {num: btc_from_witcher_regions,        den: searches_witcher_regions}
   btc_search_filter_any_per_search_filter_any: {num: btc_serp_filter_search_btc_serp_price_filter_search, den: searches_with_filter_any}
-  btc_serp_noq_per_s_noq:                  {num: btc_serp_noquery,                den: searches_without_query_serp}
+  btc_serp_noq_per_s_noq:                  {num: btc_serp_noquery,                den: is_search_q}
   btc_serp_q_per_s_q:                      {num: btc_serp_query,                  den: is_search_q}
   btc_with_shop_id_per_iv_with_shop_id:    {num: buyer_target_clicks_with_shop_id, den: item_views_with_shop_id}
   buyer_target_clicks_delivery_per_search: {num: buyer_target_clicks_delivery,    den: searches_serp}
@@ -890,14 +891,14 @@ metric.ratio:
   s_btc_per_s:                             {num: search_btc,                      den: searches}
   s_btc_per_s_date_sort:                   {num: x_is_btc_is_s_sort_date_x_is_search, den: searches_date_sort}
   s_btc_per_s_default_sort:                {num: x_is_btc_is_s_sort_dft_x_is_search, den: searches_default_sort}
-  s_btc_per_s_noquery:                     {num: x_is_btc_noq_x_is_search,        den: searches_without_query_serp}
+  s_btc_per_s_noquery:                     {num: x_is_btc_noq_x_is_search,        den: is_search_q}
   s_btc_per_s_price_sort:                  {num: x_is_btc_is_s_sort_price_x_is_search, den: searches_price_sort}
   s_btc_per_s_query:                       {num: x_is_btc_q_x_is_search,          den: is_search_q}
   s_date_sort_per_s:                       {num: searches_date_sort,              den: searches}
   s_default_sort_per_s:                    {num: searches_default_sort,           den: searches}
   s_iv_per_s_date_sort:                    {num: x_is_iv_is_s_sort_date_x_is_search, den: searches_date_sort}
   s_iv_per_s_default_sort:                 {num: x_is_iv_is_s_sort_dft_x_is_search, den: searches_default_sort}
-  s_iv_per_s_noquery:                      {num: x_is_iv_noq_x_is_search,         den: searches_without_query_serp}
+  s_iv_per_s_noquery:                      {num: x_is_iv_noq_x_is_search,         den: is_search_q}
   s_iv_per_s_price_sort:                   {num: x_is_iv_is_s_sort_price_x_is_search, den: searches_price_sort}
   s_iv_per_s_query:                        {num: x_is_iv_q_x_is_search,           den: is_search_q}
   s_pages_per_s:                           {num: searches_serp,                   den: searches}
@@ -923,7 +924,7 @@ metric.ratio:
   searches_metro_with_btc_per_search_metro: {num: searches_metro_with_btc,         den: searches_metro}
   searches_metro_with_contact_per_search_metro: {num: searches_metro_with_contact,     den: searches_metro}
   searches_metro_with_item_view_per_search_metro: {num: searches_metro_with_item_view,   den: searches_metro}
-  searches_query_contact_per_noq:          {num: x_is_contact_noq_x_is_search,    den: searches_without_query_serp}
+  searches_query_contact_per_noq:          {num: x_is_contact_noq_x_is_search,    den: is_search_q}
   searches_query_contact_per_sq:           {num: x_is_contact_q_x_is_search,      den: is_search_q}
   searches_radius_per_search:              {num: searches_radius,                 den: searches}
   searches_radius_with_btc_per_search_radius: {num: searches_radius_with_btc,        den: searches_radius}
@@ -956,7 +957,7 @@ metric.ratio:
   sessions_btc_r_i2i_per_r_i2i:            {num: sessions_btc_r_i2i,              den: session_is_i2i}
   sessions_btc_r_per_r:                    {num: sessions_btc_r,                  den: session_is_rec}
   sessions_btc_r_u2i_per_r_u2i:            {num: sessions_btc_r_u2i,              den: session_is_u2i}
-  sessions_btc_s_noq_per_s_noq:            {num: sessions_btc_snoq,               den: session_searches_without_query_serp}
+  sessions_btc_s_noq_per_s_noq:            {num: sessions_btc_snoq,               den: session_is_search_q}
   sessions_btc_s_per_s:                    {num: sessions_btc_s,                  den: sessions_s}
   sessions_btc_s_q_per_s_q:                {num: sessions_btc_sq,                 den: session_is_search_q}
   sessions_c_per_iv:                       {num: session_is_contact_x_is_rec_x_is_search, den: session_is_iv_wo_guessing_x_is_rec_x_is_search}
@@ -967,7 +968,7 @@ metric.ratio:
   sessions_c_rec_per_iv_rec:               {num: sessions_c_r,                    den: sessions_iv_r}
   sessions_c_rec_u2i_per_iv_rec_u2i:       {num: sessions_c_r_u2i,                den: sessions_iv_r_u2i}
   sessions_c_s_noq_per_iv_s_noq:           {num: sessions_c_s_noq,                den: sessions_iv_s_noq}
-  sessions_c_s_noq_per_s_noq:              {num: sessions_c_s_noq,                den: session_searches_without_query_serp}
+  sessions_c_s_noq_per_s_noq:              {num: sessions_c_s_noq,                den: session_is_search_q}
   sessions_c_s_per_iv_s:                   {num: sessions_c_s,                    den: sessions_iv_s}
   sessions_c_s_per_s:                      {num: sessions_c_s,                    den: sessions_s}
   sessions_c_s_q_per_iv_s_q:               {num: sessions_c_s_q,                  den: sessions_iv_s_q}
@@ -975,7 +976,7 @@ metric.ratio:
   sessions_iv_r_i2i_per_r_i2i:             {num: sessions_iv_r_i2i,               den: session_is_i2i}
   sessions_iv_r_per_r:                     {num: sessions_iv_r,                   den: session_is_rec}
   sessions_iv_r_u2i_per_r_u2i:             {num: sessions_iv_r_u2i,               den: session_is_u2i}
-  sessions_iv_s_noq_per_s_noq:             {num: sessions_iv_s_noq,               den: session_searches_without_query_serp}
+  sessions_iv_s_noq_per_s_noq:             {num: sessions_iv_s_noq,               den: session_is_search_q}
   sessions_iv_s_per_s:                     {num: sessions_iv_s,                   den: sessions_s}
   sessions_iv_s_q_per_s_q:                 {num: sessions_iv_s_q,                 den: session_is_search_q}
   share_suggest_buyers_to_suggest_users:   {num: share_suggest_buyers_to_all_users, den: search_suggest_clicks}

@@ -88,7 +88,9 @@ is_search, is_1p, is_shop as searches_shop,
 is_search, is_1p, x_is_witcher_new_auto as searches_witcher_new_auto,
 is_search, is_1p, x_is_witcher_new_flats as searches_witcher_new_flats,
 is_search, is_fp_witcher_new_auto as searches_from_witcher_new_auto,
-is_search, is_fp_witcher_new_flats as searches_from_witcher_new_flats,""",
+is_search, is_fp_witcher_new_flats as searches_from_witcher_new_flats,
+is_search, is_serp_grouping, is_region_with_double_groups as searches_group_doubles,
+is_search, q as searches_without_query_serp,""",
  
 ('x'): """x_is_search, is_iv, is_serp_vas as searches_item_view_vas,
 x_is_search, is_iv, is_serp_vip as searches_item_view_vip,
@@ -321,5 +323,6 @@ x_is_search, is_contact_wo_guessing, is_serp_witcher_new_flats as contacts_witch
 x_is_search, is_fav, is_serp_witcher_new_auto as fav_added_witcher_new_auto,
 x_is_search, is_fav, is_serp_witcher_new_flats as fav_added_witcher_new_flats, 
 x_is_search, is_btc_wo_guessing, is_serp_witcher_new_auto as buyer_target_clicks_witcher_new_auto,
-x_is_search, is_btc_wo_guessing, is_serp_witcher_new_flats as buyer_target_clicks_witcher_new_flats,"""}
-
+x_is_search, is_btc_wo_guessing, is_serp_witcher_new_flats as buyer_target_clicks_witcher_new_flats,
+x_is_search, is_serp_grouping, is_iv_wo_guessing, is_region_with_double_groups as item_views_grouped_doubles,
+x_is_search, is_contact_wo_guessing, is_serp_grouping, is_region_with_double_groups as contacts_serp_grouped_doubles,"""}
