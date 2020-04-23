@@ -29,7 +29,6 @@ definitions:
 
   - &is_sgt           {eid: 2443}
   - &is_iv            {eid: 301}
-  - &is_iv_noguess    {eid: 301, item_x_type: 0}
   - &is_iv_client     {eid: 2649}
   - &is_btc           {eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654]}
   - &is_contact       {eid: [303, 856, 857, 2015, 3005, 2581]}
@@ -48,6 +47,11 @@ definitions:
   - &is_delivery_btn  {eid: 2013}
   - &is_delivery      {eid: 2015}
   - &is_booking       {eid: 2581}
+  - &is_iv_wo_guessing    {<<: *is_iv, item_x_type: 0}
+  - &is_btc_wo_guessing    {<<: *is_btc, item_x_type: 0}
+  - &is_contact_wo_guessing    {<<: *is_contact, item_x_type: 0}
+
+  - &is_shop {flags.bit: 7}
 
   - &is_s_geo       {x_search_flags.bit: [0, 1, 2, 3]}
   - &is_s_local_geo {x_search_flags.bit: [0, 1, 2]}
@@ -59,14 +63,33 @@ definitions:
   - &is_s_delivery  {x_search_flags.bit: 5}
   - &is_s_saved     {x_search_flags.bit: 6}
 
+  - &x_is_filter_search       {x_search_flags.bit: 8}
+  - &x_is_price_filter_search {x_search_flags.bit: 9}
+  - &x_is_sg_rec              {x_search_flags.bit: 10}
+  - &x_is_extra_regions       {x_search_flags.bit: 11}
+  - &x_is_extra_delivery      {x_search_flags.bit: 12}
+  - &x_is_witcher_regions     {x_search_flags.bit: 13}
+  - &x_is_witcher_delivery    {x_search_flags.bit: 14}
+  - &x_is_witcher_new_auto    {x_search_flags.bit: 15}
+  - &x_is_witcher_new_flats   {x_search_flags.bit: 16}
+
   - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
 
   - &is_serp_delivery {serp_block: 10}
   - &is_serp_regions  {serp_block: 9}
   - &is_serp_vip      {serp_block: 3}
   - &is_serp_premium  {serp_block: 2}
+  - &is_serp_witcher_regions {serp_block: 11}
+  - &is_serp_witcher_delivery {serp_block: 12}
+  - &is_serp_witcher_new_auto {serp_block: 13}
+  - &is_serp_witcher_new_flats {serp_block: 14}
   - &is_serp_push     {serp_block: 1, serp_item_flags.bit: 2}
   - &is_serp_grouping {x_from_page: items_ungrouped}
+
+  - &is_fp_witcher_regions   {from_page: witcher-extra-regions}
+  - &is_fp_witcher_delivery  {from_page: witcher-extra-delivery}
+  - &is_fp_witcher_new_auto  {from_page: witcher-new-auto}
+  - &is_fp_witcher_new_flats {from_page: witcher-new-flats}
 
   - &is_serp_ext          {x_engine: [sg-extra-delivery, sg-extra-regions]}
   - &is_serp_ext_delivery {x_engine: sg-extra-delivery}

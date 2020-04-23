@@ -24,6 +24,7 @@ metric.counter:
   cnt_response_duration:                   {obs: [response_duration]}
   cnt_secure_connection_duration:          {obs: [secure_connection_duration]}
   cnt_session_duration:                    {obs: [session_duration]}
+  cnt_total_blocking_time_duration:        {obs: [total_blocking_time_duration]}
   cnt_ttfb_duration:                       {obs: [ttfb_duration]}
   cnt_user_interactive_duration:           {obs: [user_interactive_duration]}
   connection_duration_events:              {obs: [connection_duration_events]}
@@ -70,7 +71,6 @@ metric.counter:
   dom_load_session_events_p95:             {obs: [dom_load_session_events_p95]}
   domain_lookup_duration_events:           {obs: [domain_lookup_duration_events]}
   domain_lookup_events:                    {obs: [domain_lookup_events]}
-  domain_lookup_events_p25:                {obs: [domain_lookup_events_p25]}
   domain_lookup_events_p50:                {obs: [domain_lookup_events_p50]}
   domain_lookup_events_p75:                {obs: [domain_lookup_events_p75]}
   domain_lookup_events_p95:                {obs: [domain_lookup_events_p95]}
@@ -140,6 +140,12 @@ metric.counter:
   session_events_p50:                      {obs: [session_events_p50]}
   session_events_p75:                      {obs: [session_events_p75]}
   session_events_p95:                      {obs: [session_events_p95]}
+  total_blocking_time_duration_events:     {obs: [total_blocking_time_duration_events]}
+  total_blocking_time_events:              {obs: [total_blocking_time_events]}
+  total_blocking_time_events_p25:          {obs: [total_blocking_time_events_p25]}
+  total_blocking_time_events_p50:          {obs: [total_blocking_time_events_p50]}
+  total_blocking_time_events_p75:          {obs: [total_blocking_time_events_p75]}
+  total_blocking_time_events_p95:          {obs: [total_blocking_time_events_p95]}
   ttfb_duration_events:                    {obs: [ttfb_duration_events]}
   ttfb_events:                             {obs: [ttfb_events]}
   ttfb_events_p25:                         {obs: [ttfb_events_p25]}
@@ -254,6 +260,11 @@ metric.ratio:
   session_percent_p50:                     {num: session_events_p50,              den: session_events}
   session_percent_p75:                     {num: session_events_p75,              den: session_events}
   session_percent_p95:                     {num: session_events_p95,              den: session_events}
+  total_blocking_time_duration:            {num: cnt_total_blocking_time_duration, den: total_blocking_time_duration_events}
+  total_blocking_time_percent_p25:         {num: total_blocking_time_events_p25,  den: total_blocking_time_events}
+  total_blocking_time_percent_p50:         {num: total_blocking_time_events_p50,  den: total_blocking_time_events}
+  total_blocking_time_percent_p75:         {num: total_blocking_time_events_p75,  den: total_blocking_time_events}
+  total_blocking_time_percent_p95:         {num: total_blocking_time_events_p95,  den: total_blocking_time_events}
   ttfb_duration:                           {num: cnt_ttfb_duration,               den: ttfb_duration_events}
   ttfb_percent_p25:                        {num: ttfb_events_p25,                 den: ttfb_events}
   ttfb_percent_p50:                        {num: ttfb_events_p50,                 den: ttfb_events}

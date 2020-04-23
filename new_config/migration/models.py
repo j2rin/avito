@@ -9,7 +9,9 @@ def make_observation_index(obs, obs_filter_strings):
     res = ObservationIndex()
     for uk, strings in obs_filter_strings.items():
         for line in strings.split('\n'):
-            f, o = line.strip(',').split(' as ')
+            f, o = line.strip(', ').split(' as ')
+            if 'searches_serp_with_filter' in o:
+                _ = 1
             f = tuple(sorted(set([ff.strip() for ff in f.split(',')])))
             res.add(Observation(o, f, uk))
     _ = [res.add(Observation(o)) for o in obs if o not in res.by_name]
@@ -267,6 +269,8 @@ class MetricOld:
 
     @classmethod
     def from_tup(cls, tup, observation_index: ObservationIndex):
+        if tup.metric_name == 'filters_pr_rubr_searches':
+            _ = 1
         no = observation_index[split_into_tup(tup.numerator_observations)]
         num_uniq = combine_uniq_key(no.merged_uniq_key, split_into_tup(tup.numerator_uniq))
         if no.is_filter_everywhere:

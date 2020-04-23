@@ -5,7 +5,7 @@ from collections import Counter
 from pathlib import Path
 
 
-def migrate(old_metrics: List[MetricOld]):
+def convert_metrics(old_metrics: List[MetricOld]):
     old_metrics[0].occupied_names.update({m.name for m in old_metrics})
     all_metrics = MetricIndex(m.make_num_counter() for m in old_metrics if m.type == 'counter')
     all_metrics.update([m.make_num_counter() for m in old_metrics] +
@@ -19,17 +19,10 @@ def migrate(old_metrics: List[MetricOld]):
     print(len(all_metrics))
     return all_metrics
 
-    # c = Counter(m.source for m in all_metrics)
-    # print(c.most_common())
-    # for m in all_metrics:
-    #     print(m)
-    # all_metrics = set(list(all_counters_and_uniqs.values())).union(all_ratios)
-    # print(len(all_metrics))
 
-
-if __name__ == '__main__':
+def migrate_config():
     from ss_observation_strings import observation_strings
-    conf = load_metrics_config('2020-04-15')
+    conf = load_metrics_config('2020-04-18')
     print(conf.shape)
 
     obs = {o for tup in conf.itertuples()
@@ -40,7 +33,7 @@ if __name__ == '__main__':
 
     print(Counter([m.type for m in old_metrics]))
 
-    new_metrics = migrate(old_metrics)
+    new_metrics = convert_metrics(old_metrics)
 
     for om in old_metrics:
         if om.name not in new_metrics.by_name:
@@ -59,3 +52,7 @@ if __name__ == '__main__':
     write_all_metrics_to_files(metrics_with_multiple_sources, 'multiple_sources')
 
     write_sources(sorted({m.source for m in new_metrics if len(m.sources) == 1}))
+
+
+if __name__ == '__main__':
+    migrate_config()
