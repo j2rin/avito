@@ -28,7 +28,7 @@ def make_counter_yaml(name, obs, ftr):
     if ftr != EMPTY_FILTER:
         ftr_componetns = []
         if ftr[0]:
-            common_ftr = ', '.join(['*' + f for f in ftr[0]])
+            common_ftr = ', '.join([f for f in ftr[0]])
             if len(ftr[0]) > 1:
                 ftr_componetns.append(f'<<: [{common_ftr}]')
             else:
@@ -37,9 +37,9 @@ def make_counter_yaml(name, obs, ftr):
             or_ftr = []
             for of in ftr[1]:
                 if len(of) > 1:
-                    or_ftr.append('{<<: [' + ', '.join(['*' + f for f in of]) + ']}')
+                    or_ftr.append('{<<: [' + ', '.join([f for f in of]) + ']}')
                 else:
-                    or_ftr.append('{<<: ' + ', '.join(['*' + f for f in of]) + '}')
+                    or_ftr.append('{<<: ' + ', '.join([f for f in of]) + '}')
             ftr_componetns.append('$or: [' + ', '.join(or_ftr) + ']')
         ftr_componetns_str = ', '.join(ftr_componetns)
         conf_components.append(f'filter: {{{ftr_componetns_str}}}')
@@ -269,8 +269,6 @@ class MetricOld:
 
     @classmethod
     def from_tup(cls, tup, observation_index: ObservationIndex):
-        if tup.metric_name == 'filters_pr_rubr_searches':
-            _ = 1
         no = observation_index[split_into_tup(tup.numerator_observations)]
         num_uniq = combine_uniq_key(no.merged_uniq_key, split_into_tup(tup.numerator_uniq))
         if no.is_filter_everywhere:
@@ -314,7 +312,7 @@ class MetricOld:
             if len(obs) == 1:
                 name = obs[0]
             elif not len(obs):
-                name = '_'.join(ftr[0] + tuple(sorted(set(ff for f in ftr[1] for ff in f))))
+                name = '_'.join([e.strip('*') for e in ftr[0] + tuple(sorted(set(ff for f in ftr[1] for ff in f)))])
             else:
                 name = '_'.join(obs)
             if len(name) > 58 and len(name) > len(self.name):
