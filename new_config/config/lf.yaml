@@ -1,4 +1,6 @@
 metric.counter:
+  cnt_payment_method_pv:                   {obs: [pages_payment_method]}
+  cnt_success_payments:                    {obs: [pages_success_payment]}
   lf_revenue:                              {obs: [total_amount]}
   lf_revenue_net:                          {obs: [total_amount_net]}
   lf_revenue_package:                      {obs: [lf_amount_listing_from_package]}
@@ -8,8 +10,6 @@ metric.counter:
   lf_revenue_single:                       {obs: [lf_amount_single_listing]}
   lf_revenue_single_net:                   {obs: [lf_amount_net_single_listing]}
   listings_number:                         {obs: [listings]}
-  pages_payment_method:                    {obs: [pages_payment_method]}
-  pages_success_payment:                   {obs: [pages_success_payment]}
   tariff_base_revenue:                     {obs: [tariff_amount_base]}
   tariff_base_revenue_net:                 {obs: [tariff_amount_net_base]}
   tariff_pro_revenue:                      {obs: [tariff_amount_pro]}
@@ -22,6 +22,6 @@ metric.counter:
   tariff_users_single_revenue_net:         {obs: [tariff_amount_net_single_listing]}
 
 metric.ratio:
-  payment_method_pv_per_listing_type_pv:   {num: pages_payment_method,            den: pages_listing_type}
-  success_payments_per_listing_type_pv:    {num: pages_success_payment,           den: pages_listing_type}
+  payment_method_pv_per_listing_type_pv:   {num: cnt_payment_method_pv,           den: cnt_listing_type_pv}
+  success_payments_per_listing_type_pv:    {num: cnt_success_payments,            den: cnt_listing_type_pv}
 

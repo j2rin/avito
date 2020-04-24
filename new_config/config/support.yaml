@@ -1,4 +1,6 @@
 metric.counter:
+  cnt_tickets_problem_changed:             {obs: [tickets_problem_changed]}
+  cnt_tickets_problem_changed_platform:    {obs: [tickets_problem_changed_platform]}
   support_android_tickets_created:         {obs: [ticket_android_created]}
   support_call_tickets_created:            {obs: [ticket_call_created]}
   support_callcenter_calls:                {obs: [callcenter_calls]}
@@ -32,8 +34,6 @@ metric.counter:
   support_web_tickets_created:             {obs: [ticket_web_created]}
   support_wizard_tickets_created:          {obs: [ticket_wizard_created]}
   support_wizard_visits:                   {obs: [wizard_sessions]}
-  tickets_problem_changed:                 {obs: [tickets_problem_changed]}
-  tickets_problem_changed_platform:        {obs: [tickets_problem_changed_platform]}
 
 metric.uniq:
   support_callcenter_callers:              {counter: support_callcenter_calls,        key: [user]}
@@ -50,6 +50,6 @@ metric.ratio:
   support_hc_article_like_popular_rate:    {num: support_hc_article_like_popular, den: support_hc_article_marks_popular}
   support_hc_article_like_rate:            {num: support_hc_article_like,         den: support_hc_article_marks}
   support_hc_article_like_regular_rate:    {num: support_hc_article_like_regular, den: support_hc_article_marks_regular}
-  support_ticket_with_changed_problem_rate: {num: tickets_problem_changed,         den: support_email_wizard_tickets_created}
-  support_ticket_with_changed_problem_rate_platform: {num: tickets_problem_changed_platform, den: support_hc_ticket_platform_created}
+  support_ticket_with_changed_problem_rate: {num: cnt_tickets_problem_changed,     den: support_email_wizard_tickets_created}
+  support_ticket_with_changed_problem_rate_platform: {num: cnt_tickets_problem_changed_platform, den: support_hc_ticket_platform_created}
 

@@ -1,4 +1,14 @@
 metric.counter:
+  cnt_map_searches_to_btc_map:             {obs: [map_searches_to_btc_map]}
+  cnt_map_searches_to_iv_map:              {obs: [map_searches_to_iv_map]}
+  cnt_map_with_contact:                    {obs: [map_with_contact]}
+  cnt_map_with_item_view:                  {obs: [map_with_item_view]}
+  cnt_nav_actions_to_contact:              {obs: [nav_actions_to_contact]}
+  cnt_nav_actions_to_item_view:            {obs: [nav_actions_to_item_view]}
+  cnt_pins_with_zoom_levels:               {obs: [pins_with_zoom_levels]}
+  cnt_pins_zoom_levels:                    {obs: [pins_zoom_levels]}
+  cnt_scrolls_with_zoom_levels:            {obs: [scrolls_with_zoom_levels]}
+  cnt_scrolls_zoom_levels:                 {obs: [scrolls_zoom_levels]}
   errors_map:                              {obs: [errors_on_map]}
   map_clusters:                            {obs: [clusters]}
   map_empty_search:                        {obs: [empty_map_serp]}
@@ -8,18 +18,8 @@ metric.counter:
   map_price_rubricator_filters:            {obs: [price_filters_map_searches, rubricator_filters_map_searches]}
   map_scrolls:                             {obs: [scrolls]}
   map_searches:                            {obs: [map_searches]}
-  map_searches_to_btc_map:                 {obs: [map_searches_to_btc_map]}
-  map_searches_to_iv_map:                  {obs: [map_searches_to_iv_map]}
-  map_with_contact:                        {obs: [map_with_contact]}
-  map_with_item_view:                      {obs: [map_with_item_view]}
   map_zooms:                               {obs: [zooms]}
-  nav_actions_to_contact:                  {obs: [nav_actions_to_contact]}
-  nav_actions_to_item_view:                {obs: [nav_actions_to_item_view]}
   pin_clicks:                              {obs: [pin_clicks]}
-  pins_with_zoom_levels:                   {obs: [pins_with_zoom_levels]}
-  pins_zoom_levels:                        {obs: [pins_zoom_levels]}
-  scrolls_with_zoom_levels:                {obs: [scrolls_with_zoom_levels]}
-  scrolls_zoom_levels:                     {obs: [scrolls_zoom_levels]}
 
 metric.uniq:
   map_users:                               {counter: map_searches,                    key: [user]}
@@ -45,11 +45,11 @@ metric.ratio:
   map_my_locs_per_map:                     {num: map_my_locs,                     den: map_searches}
   map_nav_actions_per_map:                 {num: map_nav_actions,                 den: map_searches}
   map_nav_actions_per_user_map:            {num: map_nav_actions,                 den: map_users}
-  map_nav_actions_to_contact_map:          {num: nav_actions_to_contact,          den: map_with_contact}
-  map_nav_actions_to_item_view_map:        {num: nav_actions_to_item_view,        den: map_with_item_view}
-  map_pin_avg_zoom_level:                  {num: pins_zoom_levels,                den: pins_with_zoom_levels}
+  map_nav_actions_to_contact_map:          {num: cnt_nav_actions_to_contact,      den: cnt_map_with_contact}
+  map_nav_actions_to_item_view_map:        {num: cnt_nav_actions_to_item_view,    den: cnt_map_with_item_view}
+  map_pin_avg_zoom_level:                  {num: cnt_pins_zoom_levels,            den: cnt_pins_with_zoom_levels}
   map_price_rubricator_filters_per_map:    {num: map_price_rubricator_filters,    den: map_searches}
-  map_scroll_avg_zoom_level:               {num: scrolls_zoom_levels,             den: scrolls_with_zoom_levels}
+  map_scroll_avg_zoom_level:               {num: cnt_scrolls_zoom_levels,         den: cnt_scrolls_with_zoom_levels}
   map_scrolls_per_map:                     {num: map_scrolls,                     den: map_searches}
   map_sessions_1plus_maps_per_sess_map:    {num: map_sessions_1plus_maps,         den: map_searches_sessions}
   map_users_1plus_maps_per_map_user:       {num: map_users_1plus_maps,            den: map_users}

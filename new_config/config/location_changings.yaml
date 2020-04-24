@@ -1,4 +1,12 @@
 metric.counter:
+  cnt_loc_window_saves:                    {obs: [location_dialogue_savings_radius]}
+  cnt_loc_window_saves_0:                  {obs: [location_dialogue_savings_search]}
+  cnt_tooltip_accepts_city:                {obs: [tooltip_accepts_city]}
+  cnt_tooltip_accepts_region:              {obs: [tooltip_accepts_region]}
+  cnt_tooltip_accepts_russia:              {obs: [tooltip_accepts_russia]}
+  cnt_tooltip_not_accepts_city:            {obs: [tooltip_not_accepts_city]}
+  cnt_tooltip_not_accepts_region:          {obs: [tooltip_not_accepts_region]}
+  cnt_tooltip_not_accepts_russia:          {obs: [tooltip_not_accepts_russia]}
   default_loc_tooltip_accepts:             {obs: [tooltip_accepts]}
   default_loc_tooltip_declines:            {obs: [tooltip_not_accepts]}
   default_loc_tooltip_shows:               {obs: [tooltip_opens]}
@@ -39,22 +47,14 @@ metric.counter:
   loc_window_opens_radius:                 {obs: [location_dialogue_opens_radius]}
   loc_window_opens_search:                 {obs: [location_dialogue_opens_search]}
   loc_window_savings:                      {obs: [location_dialogue_savings]}
-  location_dialogue_savings_radius:        {obs: [location_dialogue_savings_radius]}
-  location_dialogue_savings_search:        {obs: [location_dialogue_savings_search]}
-  tooltip_accepts_city:                    {obs: [tooltip_accepts_city]}
-  tooltip_accepts_region:                  {obs: [tooltip_accepts_region]}
-  tooltip_accepts_russia:                  {obs: [tooltip_accepts_russia]}
-  tooltip_not_accepts_city:                {obs: [tooltip_not_accepts_city]}
-  tooltip_not_accepts_region:              {obs: [tooltip_not_accepts_region]}
-  tooltip_not_accepts_russia:              {obs: [tooltip_not_accepts_russia]}
 
 metric.uniq:
-  default_loc_tooltip_accepts_city:        {counter: tooltip_accepts_city,            key: [user]}
-  default_loc_tooltip_accepts_region:      {counter: tooltip_accepts_region,          key: [user]}
-  default_loc_tooltip_accepts_russia:      {counter: tooltip_accepts_russia,          key: [user]}
-  default_loc_tooltip_declines_city:       {counter: tooltip_not_accepts_city,        key: [user]}
-  default_loc_tooltip_declines_region:     {counter: tooltip_not_accepts_region,      key: [user]}
-  default_loc_tooltip_declines_russia:     {counter: tooltip_not_accepts_russia,      key: [user]}
+  default_loc_tooltip_accepts_city:        {counter: cnt_tooltip_accepts_city,        key: [user]}
+  default_loc_tooltip_accepts_region:      {counter: cnt_tooltip_accepts_region,      key: [user]}
+  default_loc_tooltip_accepts_russia:      {counter: cnt_tooltip_accepts_russia,      key: [user]}
+  default_loc_tooltip_declines_city:       {counter: cnt_tooltip_not_accepts_city,    key: [user]}
+  default_loc_tooltip_declines_region:     {counter: cnt_tooltip_not_accepts_region,  key: [user]}
+  default_loc_tooltip_declines_russia:     {counter: cnt_tooltip_not_accepts_russia,  key: [user]}
   users_default_loc_tooltip:               {counter: default_loc_tooltip_shows,       key: [user]}
   users_default_loc_tooltip_accepts:       {counter: default_loc_tooltip_accepts,     key: [user]}
   users_default_loc_tooltip_declines:      {counter: default_loc_tooltip_declines,    key: [user]}
@@ -82,6 +82,6 @@ metric.ratio:
   default_loc_tooltip_region_share:        {num: default_loc_tooltip_shows_region, den: default_loc_tooltip_shows}
   default_loc_tooltip_russia_share:        {num: default_loc_tooltip_shows_russia, den: default_loc_tooltip_shows}
   loc_window_saves_per_opens:              {num: loc_window_savings,              den: loc_window_opens}
-  loc_window_saves_per_opens_radius:       {num: location_dialogue_savings_radius, den: loc_window_opens_radius}
-  loc_window_saves_per_opens_search:       {num: location_dialogue_savings_search, den: loc_window_opens_search}
+  loc_window_saves_per_opens_radius:       {num: cnt_loc_window_saves,            den: loc_window_opens_radius}
+  loc_window_saves_per_opens_search:       {num: cnt_loc_window_saves_0,          den: loc_window_opens_search}
 

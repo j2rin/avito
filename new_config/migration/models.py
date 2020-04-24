@@ -10,8 +10,6 @@ def make_observation_index(obs, obs_filter_strings):
     for uk, strings in obs_filter_strings.items():
         for line in strings.split('\n'):
             f, o = line.strip(', ').split(' as ')
-            if 'searches_serp_with_filter' in o:
-                _ = 1
             f = tuple(sorted(set([ff.strip() for ff in f.split(',')])))
             res.add(Observation(o, f, uk))
     _ = [res.add(Observation(o)) for o in obs if o not in res.by_name]
@@ -184,16 +182,17 @@ class ObservationIndex(Set[Observation]):
 
     @property
     def merged_filter(self):
-        common_terms = set.intersection(*[set(o.filter) for o in self])
+        common_terms = set.intersection(*[set(o.filter) for o in self if o.filter])
         filters = set()
         for o in self:
-            filters.add(tuple(sorted(f for f in o.filter if f not in common_terms)))
+            if o.filter:
+                filters.add(tuple(sorted(f for f in o.filter if f not in common_terms)))
         return tuple(sorted(common_terms)), tuple(sorted(filters))
 
     @property
-    def is_filter_everywhere(self):
+    def is_filter_anywhere(self):
         if self:
-            return min(len(o.filter) > 0 for o in self)
+            return max(len(o.filter) > 0 for o in self)
         return False
 
     def __getitem__(self, key):
@@ -223,6 +222,7 @@ class MetricOld:
     den_threshold: int = 0
 
     occupied_names = set()
+    metric_index = MetricIndex()
 
     @property
     def type(self):
@@ -271,7 +271,7 @@ class MetricOld:
     def from_tup(cls, tup, observation_index: ObservationIndex):
         no = observation_index[split_into_tup(tup.numerator_observations)]
         num_uniq = combine_uniq_key(no.merged_uniq_key, split_into_tup(tup.numerator_uniq))
-        if no.is_filter_everywhere:
+        if no.is_filter_anywhere:
             num_obs = ()
             num_filter = no.merged_filter
         else:
@@ -279,7 +279,7 @@ class MetricOld:
 
         do = observation_index[split_into_tup(tup.denominator_observations)]
         den_uniq = combine_uniq_key(do.merged_uniq_key, split_into_tup(tup.denominator_uniq))
-        if do.is_filter_everywhere:
+        if do.is_filter_anywhere:
             den_obs = ()
             den_filter = do.merged_filter
         else:
@@ -306,21 +306,31 @@ class MetricOld:
         )
 
     def make_name(self, type, obs, ftr, uniq):
+        name = None
         if type == self.type:
             name = self.name
         else:
-            if len(obs) == 1:
-                name = obs[0]
-            elif not len(obs):
-                name = '_'.join([e.strip('*') for e in ftr[0] + tuple(sorted(set(ff for f in ftr[1] for ff in f)))])
-            else:
-                name = '_'.join(obs)
-            if len(name) > 58 and len(name) > len(self.name):
-                name = self.name
-                if type == 'counter' and self.type in ('ratio', 'uniq'):
-                    name = 'cnt_' + name
+            if self.type == 'ratio':
+                if '_per_' in self.name:
+                    nn, dn = self.name.split('_per_')
+                    if (obs, ftr, uniq) == (self.num_obs, self.num_filter, self.num_uniq):
+                        name = nn
+                    elif (obs, ftr, uniq) == (self.den_obs, self.den_filter, self.den_uniq):
+                        name = dn
+            if not name:
+                if len(obs) == 1:
+                    name = obs[0]
+                elif not len(obs):
+                    name = '_'.join([e.strip('*') for e in ftr[0] + tuple(sorted(set(ff for f in ftr[1] for ff in f)))])
+                else:
+                    name = '_'.join(obs)
 
-            if type == 'counter' and name in self.occupied_names:
+            if len(name) > 58 and len(self.name) <= 58:
+                name = self.name
+            else:
+                name = name[:58]
+
+            if type == 'counter':
                 name = 'cnt_' + name
 
             if type == 'uniq':
@@ -328,54 +338,65 @@ class MetricOld:
                     uniq = ('user',)
                 else:
                     uniq = [u for u in uniq if u != 'participant']
-                name = '_'.join([u if u != 'participant' else 'user' for u in uniq]) + '_' + name
+                name = 'unq_' + '_'.join([u if u != 'participant' else 'user' for u in uniq]) + '_' + name
 
             nn = 0
             _name = name
-            while name in self.occupied_names:
+            while name in self.occupied_names.union(self.metric_index.by_name):
                 name = _name + '_' + str(nn)
                 nn += 1
-        self.occupied_names.add(name)
+            if name == 'unq_session_buyer_target_clicks_serp_geo_sess_per_search_geo_sess_0':
+                _ = 0
         return name
 
     def make_num_counter(self):
-        return Metric(type='counter',
+        m = Metric(type='counter',
                       name=self.make_name('counter', self.num_obs, self.num_filter, self.num_uniq),
                       sources=self.num_sources, obs=self.num_obs, filter=self.num_filter)
+        self.metric_index.add(m)
+        return m
 
     def make_den_counter(self):
-        return Metric(type='counter', name=self.make_name('counter', self.den_obs, self.den_filter, self.den_uniq),
+        m = Metric(type='counter', name=self.make_name('counter', self.den_obs, self.den_filter, self.den_uniq),
                       sources=self.den_sources, obs=self.den_obs, filter=self.den_filter)
+        self.metric_index.add(m)
+        return m
 
-    def make_num_uniq(self, metric_index: MetricIndex):
-        return Metric(
+    def make_num_uniq(self):
+        m = Metric(
             type='uniq',
             name=self.make_name('uniq', self.num_obs, self.num_filter, self.num_uniq),
             sources=self.num_sources,
-            counter=metric_index.by_self[self.make_num_counter()],
+            counter=self.metric_index.by_self[self.make_num_counter()],
             key=self.num_uniq,
             threshold=self.num_threshold
         )
+        self.metric_index.add(m)
+        return m
 
-    def make_den_uniq(self, metric_index: MetricIndex):
-        return Metric(
+    def make_den_uniq(self):
+        m = Metric(
             type='uniq',
             name=self.make_name('uniq', self.den_obs, self.den_filter, self.den_uniq),
             sources=self.den_sources,
-            counter=metric_index.by_self[self.make_den_counter()],
+            counter=self.metric_index.by_self[self.make_den_counter()],
             key=self.den_uniq,
             threshold=self.den_threshold
         )
+        self.metric_index.add(m)
+        return m
 
-    def make_ratio(self, metric_index: MetricIndex):
+    def make_ratio(self):
         num_ind = self.make_num_counter() if self.num_type == 'counter'\
-            else self.make_num_uniq(metric_index)
+            else self.make_num_uniq()
         den_ind = self.make_den_counter() if self.den_type == 'counter'\
-            else self.make_den_uniq(metric_index)
-        return Metric(
+            else self.make_den_uniq()
+        m = Metric(
             type='ratio',
             name=self.name,
             sources=self.sources,
-            num=metric_index.by_self[num_ind],
-            den=metric_index.by_self[den_ind],
+            num=self.metric_index.by_self[num_ind],
+            den=self.metric_index.by_self[den_ind],
         )
+        self.metric_index.add(m)
+        return m

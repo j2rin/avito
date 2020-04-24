@@ -1,15 +1,15 @@
 metric.counter:
   ad_clicks:                               {obs: [ad_clicks]}
   ad_fails:                                {obs: [ad_fails]}
-  ad_head_mp_ad_item_views_ad_searches_ad_vertical_mp: {obs: [ad_head_mp, ad_item_views, ad_searches, ad_vertical_mp]}
   ad_revenue_predict:                      {obs: [ad_revenue_predict]}
   ad_successes:                            {obs: [ad_successes]}
+  cnt_show:                                {obs: [ad_head_mp, ad_item_views, ad_searches, ad_vertical_mp]}
 
 metric.uniq:
   ad_click_users:                          {counter: ad_clicks,                       key: [user]}
   ad_click_sessions:                       {counter: ad_clicks,                       key: [user, session]}
-  session_ad_head_mp_ad_item_views_ad_searches_ad_vertical_mp: {counter: ad_head_mp_ad_item_views_ad_searches_ad_vertical_mp, key: [user, session]}
+  unq_session_show:                        {counter: cnt_show,                        key: [user, session]}
 
 metric.ratio:
-  ad_click_sessions_per_show:              {num: ad_click_sessions,               den: session_ad_head_mp_ad_item_views_ad_searches_ad_vertical_mp}
+  ad_click_sessions_per_show:              {num: ad_click_sessions,               den: unq_session_show}
 

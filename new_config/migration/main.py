@@ -7,15 +7,16 @@ from pathlib import Path
 
 def convert_metrics(old_metrics: List[MetricOld]):
     old_metrics[0].occupied_names.update({m.name for m in old_metrics})
-    all_metrics = MetricIndex(m.make_num_counter() for m in old_metrics if m.type == 'counter')
-    all_metrics.update([m.make_num_counter() for m in old_metrics] +
-                       [m.make_den_counter() for m in old_metrics if m.type == 'ratio'])
+    all_metrics = old_metrics[0].metric_index
+    _ = [m.make_num_counter() for m in old_metrics if m.type == 'counter']
+    _ = [m.make_num_counter() for m in old_metrics]
+    _ = [m.make_den_counter() for m in old_metrics if m.type == 'ratio']
     print(len(all_metrics))
-    all_metrics.update(m.make_num_uniq(all_metrics) for m in old_metrics if m.type == 'uniq')
-    all_metrics.update([m.make_num_uniq(all_metrics) for m in old_metrics if m.num_type == 'uniq'] +
-                       [m.make_den_uniq(all_metrics) for m in old_metrics if m.den_type == 'uniq'])
+    _ = [m.make_num_uniq() for m in old_metrics if m.type == 'uniq']
+    _ = [m.make_num_uniq() for m in old_metrics if m.num_type == 'uniq']
+    _ = [m.make_den_uniq() for m in old_metrics if m.den_type == 'uniq']
     print(len(all_metrics))
-    all_metrics.update(m.make_ratio(all_metrics) for m in old_metrics if m.type == 'ratio')
+    all_metrics.update(m.make_ratio() for m in old_metrics if m.type == 'ratio')
     print(len(all_metrics))
     return all_metrics
 

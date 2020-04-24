@@ -1,10 +1,3 @@
-metric.counter:
-  cnt_active_buyers_with_fs_subscriptions_share: {obs: [favourite_sellers_subscriptions_active_new, favourite_sellers_subscriptions_active_old]}
-  is_booking_is_delivery_is_msg_is_ph_tot: {filter: {$or: [{*is_booking}, {*is_delivery}, {*is_msg}, {*is_ph_tot}]}}
-
-metric.uniq:
-  _is_booking_is_delivery_is_msg_is_ph_tot: {counter: is_booking_is_delivery_is_msg_is_ph_tot, key: []}
-
 metric.ratio:
-  active_buyers_with_fs_subscriptions_share: {num: active_buyers_with_fs_subscriptions, den: _is_booking_is_delivery_is_msg_is_ph_tot}
+  active_buyers_with_fs_subscriptions_share: {num: active_buyers_with_fs_subscriptions, den: buyers}
 

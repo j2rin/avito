@@ -1,5 +1,5 @@
 metric.counter:
-  btc_funnel_all:                          {obs: [answered_proxy_calls, booking_created_short_rent, call_phone_screen_views_client, delivery_order_created, favorites_added, first_messages, missed_proxy_calls, phone_views_total, realty_development_phone_views, total_delivery_click, write_button_clicks]}
+  btc_funnel_all:                          {filter: {$or: [{<<: *is_booking}, {<<: *is_delivery}, {<<: *is_fav}, {<<: *is_msg}, {<<: *is_msg_btn}, {<<: *is_ph_tot}]}}
 
 metric.uniq:
   users_btc_funnel_all:                    {counter: btc_funnel_all,                  key: [user]}

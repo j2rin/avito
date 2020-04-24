@@ -1,38 +1,36 @@
 metric.counter:
-  bt_clicks:                               {obs: [booking_created_short_rent, delivery_order_created, favorites_added, first_messages, phone_views_total, realty_development_phone_views, write_button_clicks]}
-  cnt_contacts_per_item_view:              {obs: [booking_created_short_rent, delivery_order_created, first_messages, phone_views_item_right, phone_views_item_top, realty_development_phone_views]}
-  cnt_sessions_active:                     {obs: [booking_created_short_rent, delivery_flow_beginings, delivery_order_created, favorites_added, first_messages, item_views, phone_views_total, realty_development_phone_views, searches, write_button_clicks]}
-  cnt_sessions_btc:                        {obs: [booking_created_short_rent, delivery_flow_beginings, delivery_order_created, favorites_added, first_messages, phone_views_total, realty_development_phone_views, write_button_clicks]}
-  cnt_sessions_c_per_active:               {obs: [booking_created_short_rent, delivery_flow_beginings, delivery_order_created, first_messages, phone_views_total, realty_development_phone_views]}
-  cnt_user_fatal_error_per_users:          {obs: [booking_created_short_rent, delivery_flow_beginings, delivery_order_creasted, favorites_added, first_messages, item_views, phone_views_total, realty_development_phone_views, searches_with_query, searches_without_query]}
-  cnt_users_1plus_actions:                 {obs: [booking_created_short_rent, delivery_flow_beginings, delivery_order_created, favorites_added, first_messages, item_views, phone_views_total, realty_development_phone_views, searches_with_query, searches_without_query]}
-  cnt_users_bt_click_per_users:            {obs: [booking_created_short_rent, delivery_order_created, favorites_added, first_messages, phone_views_total, realty_development_phone_views]}
-  contacts:                                {obs: [booking_created_short_rent, delivery_order_created, first_messages, phone_views_total, realty_development_phone_views]}
-  phone_views_total_realty_development_phone_views: {obs: [phone_views_total, realty_development_phone_views]}
+  cnt_contacts:                            {filter: {$or: [{<<: *is_booking}, {<<: *is_delivery}, {<<: *is_msg}, {<<: [*is_ph, *is_ph_right]}, {<<: [*is_ph, *is_ph_top]}]}}
+  cnt_sessions_active:                     {filter: {$or: [{<<: [*is_1p, is_search]}, {<<: *is_booking}, {<<: *is_delivery}, {<<: *is_delivery_btn}, {<<: *is_fav}, {<<: *is_iv}, {<<: *is_msg}, {<<: *is_msg_btn}, {<<: *is_ph_tot}]}}
+  cnt_sessions_btc:                        {filter: {$or: [{<<: *is_booking}, {<<: *is_delivery}, {<<: *is_delivery_btn}, {<<: *is_fav}, {<<: *is_msg}, {<<: *is_msg_btn}, {<<: *is_ph_tot}]}}
+  cnt_sessions_c_0:                        {filter: {$or: [{<<: *is_booking}, {<<: *is_delivery}, {<<: *is_delivery_btn}, {<<: *is_msg}, {<<: *is_ph_tot}]}}
+  cnt_users:                               {filter: {$or: [{<<: [*is_1p, *is_search, *noq]}, {<<: [*is_1p, *is_search, *q]}, {<<: *is_booking}, {<<: *is_delivery_btn}, {<<: *is_fav}, {<<: *is_iv}, {<<: *is_msg}, {<<: *is_ph_tot}]}}
+  cnt_users_1plus_actions:                 {filter: {$or: [{<<: [*is_1p, *is_search, *noq]}, {<<: [*is_1p, *is_search, *q]}, {<<: *is_booking}, {<<: *is_delivery}, {<<: *is_delivery_btn}, {<<: *is_fav}, {<<: *is_iv}, {<<: *is_msg}, {<<: *is_ph_tot}]}}
+  cnt_users_bt_click:                      {filter: {$or: [{<<: *is_booking}, {<<: *is_delivery}, {<<: *is_fav}, {<<: *is_msg}, {<<: *is_ph_tot}]}}
+  contacts:                                {filter: {$or: [{<<: *is_booking}, {<<: *is_delivery}, {<<: *is_msg}, {<<: *is_ph_tot}]}}
 
 metric.uniq:
-  bt_clicks_grouped:                       {counter: bt_clicks,                       key: [item, user]}
+  bt_clicks_grouped:                       {counter: btc_funnel_all,                  key: [item, user]}
   contacts_grouped:                        {counter: contacts,                        key: [item, user]}
   buyers:                                  {counter: contacts,                        key: [user]}
-  user_pv:                                 {counter: phone_views_total_realty_development_phone_views, key: [user]}
-  user_user_fatal_error_per_users:         {counter: cnt_user_fatal_error_per_users,  key: [user]}
+  unq_user_users:                          {counter: cnt_users,                       key: [user]}
+  user_pv:                                 {counter: phone_views_total,               key: [user]}
   users_1plus_actions:                     {counter: cnt_users_1plus_actions,         key: [user]}
   users_2plus_actions:                     {counter: cnt_users_1plus_actions,         key: [user]}
   users_active_daily:                      {counter: cnt_users_1plus_actions,         key: [user]}
-  users_bt_click_daily:                    {counter: cnt_users_bt_click_per_users,    key: [user]}
+  users_bt_click_daily:                    {counter: cnt_users_bt_click,              key: [user]}
   sessions_active:                         {counter: cnt_sessions_active,             key: [user, session]}
   sessions_btc:                            {counter: cnt_sessions_btc,                key: [user, session]}
-  sessions_c:                              {counter: cnt_sessions_c_per_active,       key: [user, session]}
+  sessions_c:                              {counter: cnt_sessions_c_0,                key: [user, session]}
 
 metric.ratio:
   buyers_per_users:                        {num: buyers,                          den: users_active_daily}
   buyers_per_users_favorites:              {num: buyers,                          den: users_favorites}
-  contacts_per_item_view:                  {num: cnt_contacts_per_item_view,      den: item_views}
+  contacts_per_item_view:                  {num: cnt_contacts,                    den: item_views}
   contacts_total_vas_per_contacts:         {num: contacts_total_vas,              den: contacts}
   sessions_btc_per_active:                 {num: sessions_btc,                    den: sessions_active}
   sessions_c_per_active:                   {num: sessions_c,                      den: sessions_active}
   sessions_iv_per_active:                  {num: sessions_iv,                     den: sessions_active}
-  user_fatal_error_per_users:              {num: users_fatal_app_errors,          den: user_user_fatal_error_per_users}
+  user_fatal_error_per_users:              {num: users_fatal_app_errors,          den: unq_user_users}
   user_non_fatal_error_per_users:          {num: users_non_fatal_app_errors,      den: users_active_daily}
   users_bt_click_per_users:                {num: users_bt_click_daily,            den: users_active_daily}
   users_item_view_per_users:               {num: users_item_view_daily,           den: users_active_daily}
