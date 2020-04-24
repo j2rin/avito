@@ -1,5 +1,5 @@
 observation_strings = {
-(): """is_search, *is_1p as searches,
+(): """*is_search, *is_1p as searches,
 *is_search, *is_1p, *q as searches_with_query,
 *is_search, *is_1p, *noq as searches_without_query,
 *is_search, *is_1p, *is_s_sort_date as searches_date_sort,
