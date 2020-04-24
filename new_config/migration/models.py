@@ -322,6 +322,7 @@ class MetricOld:
                     name = obs[0]
                 elif not len(obs):
                     name = '_'.join([e.strip('*') for e in ftr[0] + tuple(sorted(set(ff for f in ftr[1] for ff in f)))])
+                    name = name.replace('is_', '')
                 else:
                     name = '_'.join(obs)
 

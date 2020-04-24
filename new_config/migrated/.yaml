@@ -23,18 +23,20 @@ metric.counter:
   cnt_answered_proxy_rec_missed_proxy_rec: {obs: [answered_proxy_rec, missed_proxy_rec]}
   cnt_btc_from_witcher_new_flats:          {filter: {<<: [*is_btc_wo_guessing, *is_serp_witcher_new_flats, *x_is_search]}}
   cnt_btc_serp_filter_search_btc_serp_price_filter_search: {obs: [btc_serp_filter_search, btc_serp_price_filter_search]}
+  cnt_btc_wo_guessing_serp_witcher_new_auto_x_search: {filter: {<<: [*is_btc_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}}
+  cnt_contact_serp_witcher_new_auto_x_search: {filter: {<<: [*is_contact, *is_serp_witcher_new_auto, *x_is_search]}}
+  cnt_contact_serp_witcher_new_flats_x_search: {filter: {<<: [*is_contact, *is_serp_witcher_new_flats, *x_is_search]}}
+  cnt_contact_wo_guessing_serp_witcher_new_auto_x_search: {filter: {<<: [*is_contact_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}}
+  cnt_contact_wo_guessing_serp_witcher_new_flats_x_search: {filter: {<<: [*is_contact_wo_guessing, *is_serp_witcher_new_flats, *x_is_search]}}
   cnt_contacts_0:                          {obs: [contacts]}
   cnt_dom_interactive_sessionduration:     {obs: [dom_interactive_sessionduration]}
   cnt_domain_lookup_events_p25:            {obs: [domain_lookup_events_p25]}
-  cnt_is_btc_wo_guessing_is_serp_witcher_new_auto_x_is_search: {filter: {<<: [*is_btc_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_is_contact_is_serp_witcher_new_auto_x_is_search: {filter: {<<: [*is_contact, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_is_contact_is_serp_witcher_new_flats_x_is_search: {filter: {<<: [*is_contact, *is_serp_witcher_new_flats, *x_is_search]}}
-  cnt_is_fav_is_serp_witcher_new_auto_x_is_search: {filter: {<<: [*is_fav, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_is_fav_is_serp_witcher_new_flats_x_is_search: {filter: {<<: [*is_fav, *is_serp_witcher_new_flats, *x_is_search]}}
-  cnt_is_iv_is_serp_witcher_new_auto_x_is_search: {filter: {<<: [*is_iv, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_is_iv_wo_guessing_is_serp_witcher_new_auto_x_is_search: {filter: {<<: [*is_iv_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}}
+  cnt_fav_serp_witcher_new_auto_x_search:  {filter: {<<: [*is_fav, *is_serp_witcher_new_auto, *x_is_search]}}
+  cnt_fav_serp_witcher_new_flats_x_search: {filter: {<<: [*is_fav, *is_serp_witcher_new_flats, *x_is_search]}}
   cnt_item_add_success:                    {obs: [final_page_events]}
   cnt_iv_from_witcher_new_flats:           {filter: {<<: [*is_iv_wo_guessing, *is_serp_witcher_new_flats, *x_is_search]}}
+  cnt_iv_serp_witcher_new_auto_x_search:   {filter: {<<: [*is_iv, *is_serp_witcher_new_auto, *x_is_search]}}
+  cnt_iv_wo_guessing_serp_witcher_new_auto_x_search: {filter: {<<: [*is_iv_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}}
   cnt_lf_show_block:                       {obs: [lf_block_show_events]}
   cnt_listing_type_pv:                     {obs: [pages_listing_type]}
   cnt_payment_page:                        {obs: [lf_payment_page_events]}
@@ -46,8 +48,6 @@ metric.counter:
   cnt_searches_witcher_flats_with_iv:      {filter: {<<: [*is_iv, *is_serp_witcher_new_flats, *x_is_search]}}
   cnt_time_for_async_target_content:       {obs: [time_for_async_target_content]}
   cnt_time_to_target_content:              {obs: [time_to_target_content]}
-  cnt_user_c_from_witcher_auto:            {filter: {<<: [*is_contact_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_user_c_from_witcher_flats:           {filter: {<<: [*is_contact_wo_guessing, *is_serp_witcher_new_flats, *x_is_search]}}
   cnt_user_witcher_btc:                    {filter: {<<: [*is_btc, *is_serp_witcher_new_auto, *x_is_search]}}
   cnt_wtc_0:                               {filter: {$or: [{<<: [*is_fp_witcher_new_auto, *is_search]}, {<<: [*is_iv_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}]}}
   helpdesk_delivery_claim_tickets:         {obs: [helpdesk_delivery_claim_tickets]}
@@ -89,13 +89,13 @@ metric.counter:
   typo_suggest_disabled:                   {obs: [typo_suggest_disabled]}
 
 metric.uniq:
-  btc_from_witcher_new_auto:               {counter: cnt_is_btc_wo_guessing_is_serp_witcher_new_auto_x_is_search, key: [item, x]}
+  btc_from_witcher_new_auto:               {counter: cnt_btc_wo_guessing_serp_witcher_new_auto_x_search, key: [item, x]}
   btc_from_witcher_new_flats:              {counter: cnt_btc_from_witcher_new_flats,  key: [item, x]}
-  c_from_witcher_new_auto:                 {counter: cnt_user_c_from_witcher_auto,    key: [item, x]}
-  c_from_witcher_new_flats:                {counter: cnt_user_c_from_witcher_flats,   key: [item, x]}
-  fav_from_witcher_new_auto:               {counter: cnt_is_fav_is_serp_witcher_new_auto_x_is_search, key: [item, x]}
-  fav_from_witcher_new_flats:              {counter: cnt_is_fav_is_serp_witcher_new_flats_x_is_search, key: [item, x]}
-  iv_from_witcher_new_auto:                {counter: cnt_is_iv_wo_guessing_is_serp_witcher_new_auto_x_is_search, key: [item, x]}
+  c_from_witcher_new_auto:                 {counter: cnt_contact_wo_guessing_serp_witcher_new_auto_x_search, key: [item, x]}
+  c_from_witcher_new_flats:                {counter: cnt_contact_wo_guessing_serp_witcher_new_flats_x_search, key: [item, x]}
+  fav_from_witcher_new_auto:               {counter: cnt_fav_serp_witcher_new_auto_x_search, key: [item, x]}
+  fav_from_witcher_new_flats:              {counter: cnt_fav_serp_witcher_new_flats_x_search, key: [item, x]}
+  iv_from_witcher_new_auto:                {counter: cnt_iv_wo_guessing_serp_witcher_new_auto_x_search, key: [item, x]}
   iv_from_witcher_new_flats:               {counter: cnt_iv_from_witcher_new_flats,   key: [item, x]}
   wtc_from_witcher_new_auto:               {counter: cnt_wtc_0,                       key: [item, x]}
   returned_listers:                        {counter: cnt_returned_listers,            key: [user]}
@@ -110,15 +110,15 @@ metric.uniq:
   unq_user_sqp_wordbreaker_replace:        {counter: sqp_wordbreaker_replace,         key: [user]}
   unq_user_sqp_wordbreaker_suggest:        {counter: sqp_wordbreaker_suggest,         key: [user]}
   unq_user_typo_suggest:                   {counter: typo_suggest,                    key: [user]}
-  unq_user_user_witcher_auto_with_iv:      {counter: cnt_is_iv_is_serp_witcher_new_auto_x_is_search, key: [user]}
+  unq_user_user_witcher_auto_with_iv:      {counter: cnt_iv_serp_witcher_new_auto_x_search, key: [user]}
   unq_user_user_witcher_btc:               {counter: cnt_user_witcher_btc,            key: [user]}
   unq_user_user_witcher_btc_1:             {counter: cnt_searches_witcher_flats_with_btc, key: [user]}
   unq_user_user_witcher_flats_with_iv:     {counter: cnt_searches_witcher_flats_with_iv, key: [user]}
-  user_btc_from_witcher_auto:              {counter: cnt_is_btc_wo_guessing_is_serp_witcher_new_auto_x_is_search, key: [user]}
+  user_btc_from_witcher_auto:              {counter: cnt_btc_wo_guessing_serp_witcher_new_auto_x_search, key: [user]}
   user_btc_from_witcher_flats:             {counter: cnt_btc_from_witcher_new_flats,  key: [user]}
-  user_c_from_witcher_auto:                {counter: cnt_user_c_from_witcher_auto,    key: [user]}
-  user_c_from_witcher_flats:               {counter: cnt_user_c_from_witcher_flats,   key: [user]}
-  user_iv_from_witcher_auto:               {counter: cnt_is_iv_wo_guessing_is_serp_witcher_new_auto_x_is_search, key: [user]}
+  user_c_from_witcher_auto:                {counter: cnt_contact_wo_guessing_serp_witcher_new_auto_x_search, key: [user]}
+  user_c_from_witcher_flats:               {counter: cnt_contact_wo_guessing_serp_witcher_new_flats_x_search, key: [user]}
+  user_iv_from_witcher_auto:               {counter: cnt_iv_wo_guessing_serp_witcher_new_auto_x_search, key: [user]}
   user_iv_from_witcher_flats:              {counter: cnt_iv_from_witcher_new_flats,   key: [user]}
   user_s_from_witcher_flats:               {counter: searches_from_witcher_new_auto,  key: [user]}
   user_witcher_auto:                       {counter: searches_witcher_new_auto,       key: [user]}
@@ -128,10 +128,10 @@ metric.uniq:
   users_item_reactivated_wait:             {counter: items_reactivated_wait,          key: [user]}
   users_phone_calls_client_rec:            {counter: cnt_answered_proxy_rec_missed_proxy_rec, key: [user]}
   s_witcher_auto_with_btc:                 {counter: cnt_user_witcher_btc,            key: [x]}
-  s_witcher_auto_with_c:                   {counter: cnt_is_contact_is_serp_witcher_new_auto_x_is_search, key: [x]}
-  s_witcher_auto_with_iv:                  {counter: cnt_is_iv_is_serp_witcher_new_auto_x_is_search, key: [x]}
+  s_witcher_auto_with_c:                   {counter: cnt_contact_serp_witcher_new_auto_x_search, key: [x]}
+  s_witcher_auto_with_iv:                  {counter: cnt_iv_serp_witcher_new_auto_x_search, key: [x]}
   s_witcher_flats_with_btc:                {counter: cnt_searches_witcher_flats_with_btc, key: [x]}
-  s_witcher_flats_with_c:                  {counter: cnt_is_contact_is_serp_witcher_new_flats_x_is_search, key: [x]}
+  s_witcher_flats_with_c:                  {counter: cnt_contact_serp_witcher_new_flats_x_search, key: [x]}
   s_witcher_flats_with_iv:                 {counter: cnt_searches_witcher_flats_with_iv, key: [x]}
 
 metric.ratio:

@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import TextIO
 
 
-CONFIG_PATH = Path.cwd().parent / 'config'
+CONFIG_PATH = Path.cwd().parent / 'migrated'
 
 
 def write_metrics_type_batch(metrics: Set[Metric], typ: str, fil: TextIO):
