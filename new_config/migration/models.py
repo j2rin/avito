@@ -1,5 +1,8 @@
 from dataclasses import dataclass, asdict, fields, astuple, field
 from typing import List, Dict, Optional, Tuple, Union, Set
+import json
+from ruamel.yaml import safe_dump
+
 
 EMPTY_FILTER_OR = ((),)
 EMPTY_FILTER = ((), EMPTY_FILTER_OR)
@@ -16,6 +19,14 @@ def make_observation_index(obs, obs_filter_strings):
     return ObservationIndex(res)
 
 
+def make_obs_index(obs, obs_dict):
+    res = ObservationIndex()
+    for name, conf in obs_dict.items():
+        res.add(Observation.from_conf(name, conf))
+    _ = [res.add(Observation(o, obs=(o,))) for o in obs if o not in res.by_name]
+    return ObservationIndex(res)
+
+
 def split_into_tup(s: str) -> Tuple[str]:
     return tuple(sorted(set(e for e in s.split(',') if e)))
 
@@ -26,7 +37,7 @@ def make_counter_yaml(name, obs, ftr):
     if ftr != EMPTY_FILTER:
         ftr_componetns = []
         if ftr[0]:
-            common_ftr = ', '.join([f for f in ftr[0]])
+            common_ftr = ', '.join(['*' + f for f in ftr[0]])
             if len(ftr[0]) > 1:
                 ftr_componetns.append(f'<<: [{common_ftr}]')
             else:
@@ -35,9 +46,9 @@ def make_counter_yaml(name, obs, ftr):
             or_ftr = []
             for of in ftr[1]:
                 if len(of) > 1:
-                    or_ftr.append('{<<: [' + ', '.join([f for f in of]) + ']}')
+                    or_ftr.append('{<<: [' + ', '.join(['*' + f for f in of]) + ']}')
                 else:
-                    or_ftr.append('{<<: ' + ', '.join([f for f in of]) + '}')
+                    or_ftr.append('{<<: ' + ', '.join(['*' + f for f in of]) + '}')
             ftr_componetns.append('$or: [' + ', '.join(or_ftr) + ']')
         ftr_componetns_str = ', '.join(ftr_componetns)
         conf_components.append(f'filter: {{{ftr_componetns_str}}}')
@@ -133,7 +144,7 @@ class MetricIndex(Set):
     @property
     def by_filter(self):
         res = {}
-        _ = [res.setdefault(m.filter, set()).add(m) for m in self]
+        _ = [res.setdefault(m.defilter, set()).add(m) for m in self]
         return res
 
     @property
@@ -142,14 +153,32 @@ class MetricIndex(Set):
         _ = [res.setdefault(m.obs, set()).add(m) for m in self]
         return res
 
+
 @dataclass
 class Observation:
     name: str
-    filter: Tuple[str, ...] = ()
+    defilter: Tuple[str, ...] = ()
     uniq_key: Tuple[str, ...] = ()
+    filter: Dict[str, Union[List[Union[int, str]], Union[int, str]]] = field(default_factory=dict)
+    obs: Tuple[str, ...] = ()
+
+    @classmethod
+    def from_conf(cls, name, conf):
+        defilter = ()
+        filter = {}
+        if 'filter' in conf:
+            if '<' in conf['filter']:
+                defilter = tuple(conf['filter']['<'])
+                conf['filter'].pop('<')
+            else:
+                defilter = ()
+            filter = conf['filter']
+        obs = tuple(conf.get('obs', []))
+        key = tuple(conf.get('key', []))
+        return cls(name, defilter, key, filter, obs)
 
     def __key(self):
-        return self.name, self.filter, self.uniq_key
+        return self.name, self.defilter, self.uniq_key, json.dumps(self.filter)
 
     def __hash__(self):
         return hash(self.__key())
@@ -159,8 +188,43 @@ class Observation:
             return self.__key() == other.__key()
         return NotImplemented
 
+    def asdict(self):
+        d = {}
+        if self.filter or self.defilter:
+            f = self.filter.copy()
+            if self.defilter:
+                f['<'] = list(self.defilter)
+            d['filter'] = f
+        if self.obs:
+            d['obs'] = list(self.obs)
+        if self.uniq_key:
+            d['key'] = list(self.uniq_key)
+        return d
+
+    def dump(self):
+        s = safe_dump(self.asdict(), default_flow_style=True, width=1024)
+        return f'{self.name}: {s}'
+        # all_strs = []
+        #
+        # filter_strs = []
+        # if self.defilter:
+        #     base = ', '.join(self.defilter)
+        #     filter_strs.append(f'<: [{base}]')
+        # if self.filter:
+        #     base = safe_dump(self.filter, indent=False)
+        #     filter_strs.append(base.strip('{}'))
+        # filter_strs = ', '.join(filter_strs)
+        # all_strs.append(f'filter: {{{filter_strs}}}')
+        #
+        # if self.obs:
+        #     base = ', '.join(self.obs)
+        #     all_strs.append(f'obs: [{base}]')
+        # all_strs = ', '.join(all_strs)
+        # return f'{self.name}: {{{all_strs}}}'
+
 
 class ObservationIndex(Set[Observation]):
+
     @property
     def by_name(self):
         return {o.name: o for o in self}
@@ -168,7 +232,7 @@ class ObservationIndex(Set[Observation]):
     @property
     def by_filter(self):
         res = {}
-        _ = [res.setdefault(o.filter, set()).add(o) for o in self]
+        _ = [res.setdefault(o.defilter, set()).add(o) for o in self]
         return res
 
     @property
@@ -181,21 +245,24 @@ class ObservationIndex(Set[Observation]):
 
     @property
     def merged_filter(self):
-        common_terms = set.intersection(*[set(o.filter) for o in self if o.filter])
+        common_terms = set.intersection(*[set(o.defilter) for o in self if o.defilter])
         filters = set()
         for o in self:
-            if o.filter:
-                filters.add(tuple(sorted(f for f in o.filter if f not in common_terms)))
+            if o.defilter:
+                filters.add(tuple(sorted(f for f in o.defilter if f not in common_terms)))
         return tuple(sorted(common_terms)), tuple(sorted(filters))
 
     @property
     def is_filter_anywhere(self):
         if self:
-            return max(len(o.filter) > 0 for o in self)
+            return max(len(o.defilter) > 0 for o in self)
         return False
 
     def __getitem__(self, key):
         return ObservationIndex(self.by_name[k] for k in key)
+
+    def dump(self):
+        return ''.join(sorted(o.dump() for o in self))
 
 
 def combine_uniq_key(uniq_key, old_uniq_key):
