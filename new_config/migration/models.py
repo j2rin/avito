@@ -335,10 +335,10 @@ class MetricOld:
 
             if type == 'uniq':
                 if uniq in (('participant',), ()):
-                    uniq = ('participant',)
+                    name = 'unq_' + name
                 else:
                     uniq = [u for u in uniq if u != 'participant']
-                name = 'unq_' + '_'.join([u for u in uniq]) + '_' + name
+                    name = 'unq_' + '_'.join([u for u in uniq]) + '_' + name
 
             nn = 0
             _name = name
