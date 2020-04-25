@@ -1,7 +1,4 @@
-metric.counter:
-  btc_funnel_all:                          {filter: {$or: [{<<: *is_booking}, {<<: *is_delivery}, {<<: *is_fav}, {<<: *is_msg}, {<<: *is_msg_btn}, {<<: *is_ph_tot}]}}
-
 metric.uniq:
-  users_btc_funnel_all:                    {counter: btc_funnel_all,                  key: [user]}
-  sess_btc_funnel_all:                     {counter: btc_funnel_all,                  key: [user, session]}
+  users_btc_funnel_all:                    {counter: bt_clicks,                       key: [participant]}
+  sess_btc_funnel_all:                     {counter: bt_clicks,                       key: [participant, session]}
 

@@ -1,6 +1,15 @@
 metric.counter:
   activated_listers:                       {obs: [activated_listers]}
   activated_listers_changed_segment:       {obs: [activated_listers_changed_segment]}
+  active_items_0_photo_total:              {obs: [active_items_0_photo_total]}
+  active_items_more_10_description_word_total: {obs: [active_items_more_10_description_word_total]}
+  active_items_more_10_photo_total:        {obs: [active_items_more_10_photo_total]}
+  active_items_more_1_photo_total:         {obs: [active_items_more_1_photo_total]}
+  active_items_more_3_photo_total:         {obs: [active_items_more_3_photo_total]}
+  active_items_more_40_description_word_total: {obs: [active_items_more_40_description_word_total]}
+  active_items_more_5_description_word_total: {obs: [active_items_more_5_description_word_total]}
+  active_items_more_5_photo_total:         {obs: [active_items_more_5_photo_total]}
+  active_items_total:                      {obs: [active_items_total]}
   bt_clicks_rec_i2i_premium:               {obs: [bt_clicks_rec_i2i_premium]}
   bt_clicks_rec_i2i_push:                  {obs: [bt_clicks_rec_i2i_push]}
   bt_clicks_rec_i2i_vas:                   {obs: [bt_clicks_rec_i2i_vas]}
@@ -21,22 +30,18 @@ metric.counter:
   buyer_str_bookings_expired:              {obs: [buyer_str_bookings_expired]}
   buyer_str_bookings_voided:               {obs: [buyer_str_bookings_voided]}
   cnt_answered_proxy_rec_missed_proxy_rec: {obs: [answered_proxy_rec, missed_proxy_rec]}
-  cnt_btc_from_witcher_new_flats:          {filter: {<<: [*is_btc_wo_guessing, *is_serp_witcher_new_flats, *x_is_search]}}
-  cnt_btc_serp_filter_search_btc_serp_price_filter_search: {obs: [btc_serp_filter_search, btc_serp_price_filter_search]}
-  cnt_btc_wo_guessing_serp_witcher_new_auto_x_search: {filter: {<<: [*is_btc_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_contact_serp_witcher_new_auto_x_search: {filter: {<<: [*is_contact, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_contact_serp_witcher_new_flats_x_search: {filter: {<<: [*is_contact, *is_serp_witcher_new_flats, *x_is_search]}}
-  cnt_contact_wo_guessing_serp_witcher_new_auto_x_search: {filter: {<<: [*is_contact_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_contact_wo_guessing_serp_witcher_new_flats_x_search: {filter: {<<: [*is_contact_wo_guessing, *is_serp_witcher_new_flats, *x_is_search]}}
+  cnt_btc_search_filter_any:               {obs: [btc_serp_filter_search, btc_serp_price_filter_search]}
   cnt_contacts_0:                          {obs: [contacts]}
   cnt_dom_interactive_sessionduration:     {obs: [dom_interactive_sessionduration]}
   cnt_domain_lookup_events_p25:            {obs: [domain_lookup_events_p25]}
-  cnt_fav_serp_witcher_new_auto_x_search:  {filter: {<<: [*is_fav, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_fav_serp_witcher_new_flats_x_search: {filter: {<<: [*is_fav, *is_serp_witcher_new_flats, *x_is_search]}}
+  cnt_from_main_page_to_c_p99:             {obs: [from_main_page_to_c_p99]}
+  cnt_from_main_page_to_iv_p25:            {obs: [from_main_page_to_iv_p25]}
+  cnt_from_main_page_to_iv_p99:            {obs: [from_main_page_to_iv_p99]}
+  cnt_from_vertical_page_to_c_p50:         {obs: [from_vertical_page_to_c_p50]}
+  cnt_from_vertical_page_to_c_p75:         {obs: [from_vertical_page_to_c_p75]}
+  cnt_from_vertical_page_to_c_p99:         {obs: [from_vertical_page_to_c_p99]}
+  cnt_from_vertical_page_to_iv_p50:        {obs: [from_vertical_page_to_iv_p50]}
   cnt_item_add_success:                    {obs: [final_page_events]}
-  cnt_iv_from_witcher_new_flats:           {filter: {<<: [*is_iv_wo_guessing, *is_serp_witcher_new_flats, *x_is_search]}}
-  cnt_iv_serp_witcher_new_auto_x_search:   {filter: {<<: [*is_iv, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_iv_wo_guessing_serp_witcher_new_auto_x_search: {filter: {<<: [*is_iv_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}}
   cnt_lf_show_block:                       {obs: [lf_block_show_events]}
   cnt_listing_type_pv:                     {obs: [pages_listing_type]}
   cnt_payment_page:                        {obs: [lf_payment_page_events]}
@@ -44,124 +49,143 @@ metric.counter:
   cnt_queries_no_redirect_contact:         {obs: [queries_no_redirect_contact]}
   cnt_queries_with_suggest:                {obs: [queries_with_suggest]}
   cnt_returned_listers:                    {obs: [returned_listers]}
-  cnt_searches_witcher_flats_with_btc:     {filter: {<<: [*is_btc, *is_serp_witcher_new_flats, *x_is_search]}}
-  cnt_searches_witcher_flats_with_iv:      {filter: {<<: [*is_iv, *is_serp_witcher_new_flats, *x_is_search]}}
   cnt_time_for_async_target_content:       {obs: [time_for_async_target_content]}
   cnt_time_to_target_content:              {obs: [time_to_target_content]}
-  cnt_user_witcher_btc:                    {filter: {<<: [*is_btc, *is_serp_witcher_new_auto, *x_is_search]}}
-  cnt_wtc_0:                               {filter: {$or: [{<<: [*is_fp_witcher_new_auto, *is_search]}, {<<: [*is_iv_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]}]}}
-  helpdesk_delivery_claim_tickets:         {obs: [helpdesk_delivery_claim_tickets]}
-  helpdesk_delivery_text_claim_tickets:    {obs: [helpdesk_delivery_text_claim_tickets]}
+  cnt_user_from_main_page_to_c_p25:        {obs: [from_main_page_to_c_p25]}
+  cnt_user_from_main_page_to_c_p50:        {obs: [from_main_page_to_c_p50]}
+  cnt_user_from_main_page_to_c_p75:        {obs: [from_main_page_to_c_p75]}
+  cnt_user_from_main_page_to_iv_p50:       {obs: [from_main_page_to_iv_p50]}
+  cnt_user_from_main_page_to_iv_p75:       {obs: [from_main_page_to_iv_p75]}
+  cnt_user_from_vertical_page_to_c_p25:    {obs: [from_vertical_page_to_c_p25]}
+  cnt_user_from_vertical_page_to_iv_p25:   {obs: [from_vertical_page_to_iv_p25]}
+  cnt_user_from_vertical_page_to_iv_p75:   {obs: [from_vertical_page_to_iv_p75]}
+  cnt_user_from_vertical_page_to_iv_p99:   {obs: [from_vertical_page_to_iv_p99]}
+  from_main_page_to_c:                     {obs: [from_main_page_to_c]}
+  from_main_page_to_iv:                    {obs: [from_main_page_to_iv]}
+  from_vertical_page_to_c:                 {obs: [from_vertical_page_to_c]}
+  from_vertical_page_to_iv:                {obs: [from_vertical_page_to_iv]}
   helpdesk_delivery_vas_tickets:           {obs: [helpdesk_delivery_vas_tickets]}
   helpdesk_delivery_voice_2nd_line_answer_calls: {obs: [helpdesk_delivery_voice_2nd_line_answer_calls]}
   helpdesk_delivery_voice_2nd_line_calls:  {obs: [helpdesk_delivery_voice_2nd_line_calls]}
-  helpdesk_delivery_voice_answer_calls:    {obs: [helpdesk_delivery_voice_answer_calls]}
-  helpdesk_delivery_voice_calls:           {obs: [helpdesk_delivery_voice_calls]}
-  helpdesk_delivery_voice_claim_tickets:   {obs: [helpdesk_delivery_voice_claim_tickets]}
   helpdesk_str_tickets:                    {obs: [helpdesk_str_tickets]}
   helpdesk_vas_tag_tickets:                {obs: [helpdesk_vas_tag_tickets]}
   item_views_client_rec_from_msg:          {filter: {<<: [*is_iv_client, *x_is_rec_msg]}}
   item_views_from_fs:                      {obs: [item_views_from_fs]}
-  items_reactivated_wait:                  {obs: [items_reactivated_wait]}
-  open_app:                                {obs: [open_app]}
+  items_allowed_total:                     {obs: [items_allowed_total]}
+  items_allowed_total_start_date:          {filter: {<<: start}, obs: [items_allowed_total]}
+  items_blocked_rejected_total:            {obs: [items_blocked_rejected_total]}
+  items_blocked_rejected_total_start_date: {filter: {<<: start}, obs: [items_blocked_rejected_total]}
+  items_blocked_total:                     {obs: [items_blocked_total]}
+  items_blocked_total_start_date:          {filter: {<<: start}, obs: [items_blocked_total]}
+  items_category_changed_by_moderator_total: {obs: [items_category_changed_by_moderator_total]}
+  items_category_changed_by_moderator_total_start_date: {filter: {<<: start}, obs: [items_category_changed_by_moderator_total]}
+  items_closed_by_ttl_total:               {obs: [items_closed_by_ttl_total]}
+  items_closed_by_user_total:              {obs: [items_closed_by_user_total]}
+  items_closed_no_answer_total:            {obs: [items_closed_no_answer_total]}
+  items_closed_with_answer_total:          {obs: [items_closed_with_answer_total]}
+  items_rejected_total:                    {obs: [items_rejected_total]}
+  items_rejected_total_start_date:         {filter: {<<: start}, obs: [items_rejected_total]}
+  items_sold_another_reason_total:         {obs: [items_sold_another_reason_total]}
+  items_sold_another_reason_total_start_date: {filter: {<<: start}, obs: [items_sold_another_reason_total]}
+  items_sold_notonavito_total:             {obs: [items_sold_notonavito_total]}
+  items_sold_notonavito_total_start_date:  {filter: {<<: start}, obs: [items_sold_notonavito_total]}
+  items_sold_onavito_total:                {obs: [items_sold_onavito_total]}
+  items_sold_onavito_total_start_date:     {filter: {<<: start}, obs: [items_sold_onavito_total]}
   public_profile_visit_from_subscriptions_list: {obs: [public_profile_visit_from_subscriptions_list]}
   search_redirect_suggest:                 {obs: [search_redirect_suggest]}
   search_redirect_suggest_disabled:        {obs: [search_redirect_suggest_disabled]}
-  searches_from_witcher_new_auto:          {filter: {<<: [*is_fp_witcher_new_auto, *is_search]}}
-  searches_witcher_new_auto:               {filter: {<<: [*is_1p, *is_search, *x_is_witcher_new_auto]}}
-  searches_witcher_new_flats:              {filter: {<<: [*is_1p, *is_search, *x_is_witcher_new_flats]}}
+  seller_contacts_total:                   {obs: [seller_contacts_total]}
+  seller_contacts_total_start_date:        {filter: {<<: start}, obs: [seller_contacts_total]}
   seller_delivery_orders_expired:          {obs: [seller_delivery_orders_expired]}
+  seller_favorites_added_start_date_total: {filter: {<<: start}, obs: [seller_favorites_added_total]}
+  seller_favorites_added_total:            {obs: [seller_favorites_added_total]}
+  seller_favorites_removed_total:          {obs: [seller_favorites_removed_total]}
   seller_str_bookings_expired:             {obs: [seller_str_bookings_expired]}
   seller_str_bookings_voided:              {obs: [seller_str_bookings_voided]}
-  sqp_layout_disabled:                     {obs: [sqp_layout_disabled]}
-  sqp_layout_replace:                      {obs: [sqp_layout_replace]}
+  sellers_items_with_contacts_total:       {obs: [sellers_items_with_contacts_total]}
   sqp_layout_suggest:                      {obs: [sqp_layout_suggest]}
   sqp_layout_suggest_disabled:             {obs: [sqp_layout_suggest_disabled]}
-  sqp_wordbreaker_digit_disabled:          {obs: [sqp_wordbreaker_digit_disabled]}
-  sqp_wordbreaker_digit_replace:           {obs: [sqp_wordbreaker_digit_replace]}
   sqp_wordbreaker_digit_suggest:           {obs: [sqp_wordbreaker_digit_suggest]}
   sqp_wordbreaker_digit_suggest_disabled:  {obs: [sqp_wordbreaker_digit_suggest_disabled]}
-  sqp_wordbreaker_disabled:                {obs: [sqp_wordbreaker_disabled]}
-  sqp_wordbreaker_replace:                 {obs: [sqp_wordbreaker_replace]}
   sqp_wordbreaker_suggest:                 {obs: [sqp_wordbreaker_suggest]}
   sqp_wordbreaker_suggest_disabled:        {obs: [sqp_wordbreaker_suggest_disabled]}
   typo_suggest:                            {obs: [typo_suggest]}
   typo_suggest_disabled:                   {obs: [typo_suggest_disabled]}
 
 metric.uniq:
-  btc_from_witcher_new_auto:               {counter: cnt_btc_wo_guessing_serp_witcher_new_auto_x_search, key: [item, x]}
-  btc_from_witcher_new_flats:              {counter: cnt_btc_from_witcher_new_flats,  key: [item, x]}
-  c_from_witcher_new_auto:                 {counter: cnt_contact_wo_guessing_serp_witcher_new_auto_x_search, key: [item, x]}
-  c_from_witcher_new_flats:                {counter: cnt_contact_wo_guessing_serp_witcher_new_flats_x_search, key: [item, x]}
-  fav_from_witcher_new_auto:               {counter: cnt_fav_serp_witcher_new_auto_x_search, key: [item, x]}
-  fav_from_witcher_new_flats:              {counter: cnt_fav_serp_witcher_new_flats_x_search, key: [item, x]}
-  iv_from_witcher_new_auto:                {counter: cnt_iv_wo_guessing_serp_witcher_new_auto_x_search, key: [item, x]}
-  iv_from_witcher_new_flats:               {counter: cnt_iv_from_witcher_new_flats,   key: [item, x]}
-  wtc_from_witcher_new_auto:               {counter: cnt_wtc_0,                       key: [item, x]}
-  returned_listers:                        {counter: cnt_returned_listers,            key: [user]}
-  suggest_buyers:                          {counter: cnt_queries_no_redirect_contact, key: [user]}
-  unq_user_queries_no_redirect:            {counter: cnt_queries_no_redirect,         key: [user]}
-  unq_user_queries_with_suggest:           {counter: cnt_queries_with_suggest,        key: [user]}
-  unq_user_search_redirect_suggest:        {counter: search_redirect_suggest,         key: [user]}
-  unq_user_sqp_layout_replace:             {counter: sqp_layout_replace,              key: [user]}
-  unq_user_sqp_layout_suggest:             {counter: sqp_layout_suggest,              key: [user]}
-  unq_user_sqp_wordbreaker_digit_replace:  {counter: sqp_wordbreaker_digit_replace,   key: [user]}
-  unq_user_sqp_wordbreaker_digit_suggest:  {counter: sqp_wordbreaker_digit_suggest,   key: [user]}
-  unq_user_sqp_wordbreaker_replace:        {counter: sqp_wordbreaker_replace,         key: [user]}
-  unq_user_sqp_wordbreaker_suggest:        {counter: sqp_wordbreaker_suggest,         key: [user]}
-  unq_user_typo_suggest:                   {counter: typo_suggest,                    key: [user]}
-  unq_user_user_witcher_auto_with_iv:      {counter: cnt_iv_serp_witcher_new_auto_x_search, key: [user]}
-  unq_user_user_witcher_btc:               {counter: cnt_user_witcher_btc,            key: [user]}
-  unq_user_user_witcher_btc_1:             {counter: cnt_searches_witcher_flats_with_btc, key: [user]}
-  unq_user_user_witcher_flats_with_iv:     {counter: cnt_searches_witcher_flats_with_iv, key: [user]}
-  user_btc_from_witcher_auto:              {counter: cnt_btc_wo_guessing_serp_witcher_new_auto_x_search, key: [user]}
-  user_btc_from_witcher_flats:             {counter: cnt_btc_from_witcher_new_flats,  key: [user]}
-  user_c_from_witcher_auto:                {counter: cnt_contact_wo_guessing_serp_witcher_new_auto_x_search, key: [user]}
-  user_c_from_witcher_flats:               {counter: cnt_contact_wo_guessing_serp_witcher_new_flats_x_search, key: [user]}
-  user_iv_from_witcher_auto:               {counter: cnt_iv_wo_guessing_serp_witcher_new_auto_x_search, key: [user]}
-  user_iv_from_witcher_flats:              {counter: cnt_iv_from_witcher_new_flats,   key: [user]}
-  user_s_from_witcher_flats:               {counter: searches_from_witcher_new_auto,  key: [user]}
-  user_witcher_auto:                       {counter: searches_witcher_new_auto,       key: [user]}
-  user_witcher_flats:                      {counter: searches_witcher_new_flats,      key: [user]}
-  user_wtc_from_witcher_auto:              {counter: cnt_wtc_0,                       key: [user]}
-  users_btc_search_filter_any:             {counter: cnt_btc_serp_filter_search_btc_serp_price_filter_search, key: [user]}
-  users_item_reactivated_wait:             {counter: items_reactivated_wait,          key: [user]}
-  users_phone_calls_client_rec:            {counter: cnt_answered_proxy_rec_missed_proxy_rec, key: [user]}
-  s_witcher_auto_with_btc:                 {counter: cnt_user_witcher_btc,            key: [x]}
-  s_witcher_auto_with_c:                   {counter: cnt_contact_serp_witcher_new_auto_x_search, key: [x]}
-  s_witcher_auto_with_iv:                  {counter: cnt_iv_serp_witcher_new_auto_x_search, key: [x]}
-  s_witcher_flats_with_btc:                {counter: cnt_searches_witcher_flats_with_btc, key: [x]}
-  s_witcher_flats_with_c:                  {counter: cnt_contact_serp_witcher_new_flats_x_search, key: [x]}
-  s_witcher_flats_with_iv:                 {counter: cnt_searches_witcher_flats_with_iv, key: [x]}
+  returned_listers:                        {counter: cnt_returned_listers,            key: [participant]}
+  sellers_favorite_added_total:            {counter: seller_favorites_added_total,    key: [participant]}
+  sellers_favorite_added_total_start_date: {counter: seller_favorites_added_start_date_total, key: [participant]}
+  sellers_favorite_removed_total:          {counter: seller_favorites_removed_total,  key: [participant]}
+  sellers_with_contacts_total:             {counter: seller_contacts_total,           key: [participant]}
+  sellers_with_contacts_total_start_date:  {counter: seller_contacts_total_start_date, key: [participant]}
+  suggest_buyers:                          {counter: cnt_queries_no_redirect_contact, key: [participant]}
+  unq_participant_queries_no_redirect:     {counter: cnt_queries_no_redirect,         key: [participant]}
+  unq_participant_queries_with_suggest:    {counter: cnt_queries_with_suggest,        key: [participant]}
+  unq_participant_search_redirect_suggest: {counter: search_redirect_suggest,         key: [participant]}
+  unq_participant_sqp_layout_suggest:      {counter: sqp_layout_suggest,              key: [participant]}
+  unq_participant_sqp_wordbreaker_digit_suggest: {counter: sqp_wordbreaker_digit_suggest,   key: [participant]}
+  unq_participant_sqp_wordbreaker_suggest: {counter: sqp_wordbreaker_suggest,         key: [participant]}
+  unq_participant_typo_suggest:            {counter: typo_suggest,                    key: [participant]}
+  user_from_main_page_to_c_p25:            {counter: cnt_user_from_main_page_to_c_p25, key: [participant]}
+  user_from_main_page_to_c_p50:            {counter: cnt_user_from_main_page_to_c_p50, key: [participant]}
+  user_from_main_page_to_c_p75:            {counter: cnt_user_from_main_page_to_c_p75, key: [participant]}
+  user_from_main_page_to_c_p99:            {counter: cnt_from_main_page_to_c_p99,     key: [participant]}
+  user_from_main_page_to_iv_p25:           {counter: cnt_from_main_page_to_iv_p25,    key: [participant]}
+  user_from_main_page_to_iv_p50:           {counter: cnt_user_from_main_page_to_iv_p50, key: [participant]}
+  user_from_main_page_to_iv_p75:           {counter: cnt_user_from_main_page_to_iv_p75, key: [participant]}
+  user_from_main_page_to_iv_p99:           {counter: cnt_from_main_page_to_iv_p99,    key: [participant]}
+  user_from_vertical_page_to_c_p25:        {counter: cnt_user_from_vertical_page_to_c_p25, key: [participant]}
+  user_from_vertical_page_to_c_p50:        {counter: cnt_from_vertical_page_to_c_p50, key: [participant]}
+  user_from_vertical_page_to_c_p75:        {counter: cnt_from_vertical_page_to_c_p75, key: [participant]}
+  user_from_vertical_page_to_c_p99:        {counter: cnt_from_vertical_page_to_c_p99, key: [participant]}
+  user_from_vertical_page_to_iv_p25:       {counter: cnt_user_from_vertical_page_to_iv_p25, key: [participant]}
+  user_from_vertical_page_to_iv_p50:       {counter: cnt_from_vertical_page_to_iv_p50, key: [participant]}
+  user_from_vertical_page_to_iv_p75:       {counter: cnt_user_from_vertical_page_to_iv_p75, key: [participant]}
+  user_from_vertical_page_to_iv_p99:       {counter: cnt_user_from_vertical_page_to_iv_p99, key: [participant]}
+  users_active_item_0_photo_total:         {counter: active_items_0_photo_total,      key: [participant]}
+  users_active_item_more_10_description_word_total: {counter: active_items_more_10_description_word_total, key: [participant]}
+  users_active_item_more_10_photo_total:   {counter: active_items_more_10_photo_total, key: [participant]}
+  users_active_item_more_1_photo_total:    {counter: active_items_more_1_photo_total, key: [participant]}
+  users_active_item_more_3_photo_total:    {counter: active_items_more_3_photo_total, key: [participant]}
+  users_active_item_more_40_description_word_total: {counter: active_items_more_40_description_word_total, key: [participant]}
+  users_active_item_more_5_description_word_total: {counter: active_items_more_5_description_word_total, key: [participant]}
+  users_active_item_more_5_photo_total:    {counter: active_items_more_5_photo_total, key: [participant]}
+  users_active_items_total:                {counter: active_items_total,              key: [participant]}
+  users_btc_search_filter_any:             {counter: cnt_btc_search_filter_any,       key: [participant]}
+  users_item_allowed_total:                {counter: items_allowed_total,             key: [participant]}
+  users_item_allowed_total_start_date:     {counter: items_allowed_total_start_date,  key: [participant]}
+  users_item_blocked_rejected_total:       {counter: items_blocked_rejected_total,    key: [participant]}
+  users_item_blocked_rejected_total_start_date: {counter: items_blocked_rejected_total_start_date, key: [participant]}
+  users_item_blocked_total:                {counter: items_blocked_total,             key: [participant]}
+  users_item_blocked_total_start_date:     {counter: items_blocked_total_start_date,  key: [participant]}
+  users_item_category_changed_by_moderator_total: {counter: items_category_changed_by_moderator_total, key: [participant]}
+  users_item_category_changed_by_moderator_total_start_date: {counter: items_category_changed_by_moderator_total_start_date, key: [participant]}
+  users_item_closed_by_ttl_total:          {counter: items_closed_by_ttl_total,       key: [participant]}
+  users_item_closed_by_user_total:         {counter: items_closed_by_user_total,      key: [participant]}
+  users_item_closed_no_answer_total:       {counter: items_closed_no_answer_total,    key: [participant]}
+  users_item_closed_with_answer_total:     {counter: items_closed_with_answer_total,  key: [participant]}
+  users_item_rejected_total:               {counter: items_rejected_total,            key: [participant]}
+  users_item_rejected_total_start_date:    {counter: items_rejected_total_start_date, key: [participant]}
+  users_item_sold_another_reason_total:    {counter: items_sold_another_reason_total, key: [participant]}
+  users_item_sold_another_reason_total_start_date: {counter: items_sold_another_reason_total_start_date, key: [participant]}
+  users_item_sold_notonavito_total:        {counter: items_sold_notonavito_total,     key: [participant]}
+  users_item_sold_onavito_total:           {counter: items_sold_onavito_total,        key: [participant]}
+  users_phone_calls_client_rec:            {counter: cnt_answered_proxy_rec_missed_proxy_rec, key: [participant]}
+  unq_session_sess_from_main_page_to_c:    {counter: from_main_page_to_c,             key: [participant, session]}
+  unq_session_sess_from_main_page_to_iv:   {counter: from_main_page_to_iv,            key: [participant, session]}
+  unq_session_sess_from_vertical_page_to_c: {counter: from_vertical_page_to_c,         key: [participant, session]}
+  unq_session_sess_from_vertical_page_to_iv: {counter: from_vertical_page_to_iv,        key: [participant, session]}
 
 metric.ratio:
-  btc_from_witcher_new_auto_per_witcher_new_auto: {num: btc_from_witcher_new_auto,       den: searches_witcher_new_auto}
-  btc_from_witcher_new_flats_per_witcher_new_flats: {num: btc_from_witcher_new_flats,      den: searches_witcher_new_flats}
-  c_from_witcher_new_auto_per_witcher_new_auto: {num: c_from_witcher_new_auto,         den: searches_witcher_new_auto}
-  c_from_witcher_new_flats_per_witcher_new_flats: {num: c_from_witcher_new_flats,        den: searches_witcher_new_flats}
   item_add_success_per_lf_show_block:      {num: cnt_item_add_success,            den: cnt_lf_show_block}
-  iv_from_witcher_new_auto_per_witcher_new_auto: {num: iv_from_witcher_new_auto,        den: searches_witcher_new_auto}
-  iv_from_witcher_new_flats_per_witcher_new_flats: {num: iv_from_witcher_new_flats,       den: searches_witcher_new_flats}
   payment_page_per_lf_show_block:          {num: cnt_payment_page,                den: cnt_lf_show_block}
   search_redirect_suggest_ctr_disable:     {num: search_redirect_suggest_disabled, den: search_redirect_suggest}
-  searches_from_witcher_new_auto_per_witcher_new_auto: {num: searches_from_witcher_new_auto,  den: searches_witcher_new_auto}
-  searches_witcher_auto_with_btc_per_witcher_auto: {num: s_witcher_auto_with_btc,         den: searches_witcher_new_auto}
-  searches_witcher_auto_with_iv_per_witcher_auto: {num: s_witcher_auto_with_iv,          den: searches_witcher_new_auto}
-  searches_witcher_flats_with_btc_per_witcher_flats: {num: s_witcher_flats_with_btc,        den: searches_witcher_new_flats}
-  searches_witcher_flats_with_iv_per_witcher_flats: {num: s_witcher_flats_with_iv,         den: searches_witcher_new_flats}
   searches_with_suggest_share:             {num: cnt_queries_with_suggest,        den: cnt_queries_no_redirect}
-  sqp_layout_replace_ctr_disable:          {num: sqp_layout_disabled,             den: sqp_layout_replace}
   sqp_layout_suggest_ctr_disable:          {num: sqp_layout_suggest_disabled,     den: sqp_layout_suggest}
-  sqp_wordbreaker_digit_replace_ctr_disable: {num: sqp_wordbreaker_digit_disabled,  den: sqp_wordbreaker_digit_replace}
   sqp_wordbreaker_digit_suggest_ctr_disable: {num: sqp_wordbreaker_digit_suggest_disabled, den: sqp_wordbreaker_digit_suggest}
-  sqp_wordbreaker_replace_ctr_disable:     {num: sqp_wordbreaker_disabled,        den: sqp_wordbreaker_replace}
   sqp_wordbreaker_suggest_ctr_disable:     {num: sqp_wordbreaker_suggest_disabled, den: sqp_wordbreaker_suggest}
-  suggest_buyers_share:                    {num: suggest_buyers,                  den: unq_user_queries_with_suggest}
-  suggest_users_share:                     {num: unq_user_queries_with_suggest,   den: unq_user_queries_no_redirect}
+  suggest_buyers_share:                    {num: suggest_buyers,                  den: unq_participant_queries_with_suggest}
+  suggest_users_share:                     {num: unq_participant_queries_with_suggest, den: unq_participant_queries_no_redirect}
   typo_suggest_ctr_disable:                {num: typo_suggest_disabled,           den: typo_suggest}
-  user_witcher_auto_with_iv_per_user_witcher_auto: {num: unq_user_user_witcher_auto_with_iv, den: user_witcher_auto}
-  user_witcher_btc_per_user_witcher_new_auto: {num: unq_user_user_witcher_btc,       den: user_witcher_auto}
-  user_witcher_btc_per_user_witcher_new_flats: {num: unq_user_user_witcher_btc_1,     den: user_witcher_flats}
-  user_witcher_flats_with_iv_per_user_witcher_flats: {num: unq_user_user_witcher_flats_with_iv, den: user_witcher_flats}
-  wtc_per_witcher_new_auto:                {num: wtc_from_witcher_new_auto,       den: searches_witcher_new_auto}
 

@@ -23,7 +23,7 @@ def convert_metrics(old_metrics: List[MetricOld]):
 
 def migrate_config():
     from ss_observation_strings import observation_strings
-    conf = load_metrics_config('2020-04-18')
+    conf = load_metrics_config('2020-04-24')
     print(conf.shape)
 
     obs = {o for tup in conf.itertuples()

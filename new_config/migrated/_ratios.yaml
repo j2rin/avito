@@ -8,10 +8,10 @@ metric.ratio:
   answered_first_messages_ratio:           {num: answered_first_messages,         den: first_messages}
   answered_first_messages_within_1hour_7hour_ratio: {num: answered_first_messages_within_1hour_7hour, den: first_messages}
   appcall_per_pv_btn:                      {num: cnt_appcall,                     den: phone_view_button_clicks}
-  appcall_per_pv_btn_user:                 {num: unq_user_appcall,                den: users_pv_button_clicks}
+  appcall_per_pv_btn_user:                 {num: unq_participant_appcall,         den: users_pv_button_clicks}
   appcall_show_items_ratio:                {num: unq_item_appcall_show_items_ratio, den: unq_item_ph_btn}
   appcall_success_per_pv_btn:              {num: cnt_appcall_success,             den: phone_view_button_clicks}
-  appcall_success_per_pv_btn_user:         {num: unq_user_appcall_success,        den: users_pv_button_clicks}
+  appcall_success_per_pv_btn_user:         {num: unq_participant_appcall_success, den: users_pv_button_clicks}
   btc_from_map_per_map_search:             {num: buyer_target_clicks_from_map,    den: map_searches}
   btc_from_map_per_pin:                    {num: buyer_target_clicks_from_map,    den: pin_clicks}
   buyers_map_per_user_pin:                 {num: buyers_from_map,                 den: pin_clickers}
@@ -34,9 +34,9 @@ metric.ratio:
   first_mess_per_active_items_with_msg:    {num: first_messages,                  den: active_items_with_msg}
   first_mess_per_write_button_clicks_new:  {num: new_first_messages,              den: write_button_clicks}
   geo_redirect_replace_to_searches:        {num: geo_redirect_replace,            den: searches}
-  geo_redirect_replace_users_share:        {num: unq_user_geo_redirect_replace,   den: users_search}
+  geo_redirect_replace_users_share:        {num: unq_participant_geo_redirect_replace, den: users_search}
   geo_redirect_suggest_to_searches:        {num: geo_redirect_suggest,            den: searches}
-  geo_redirect_suggest_users_share:        {num: unq_user_geo_redirect_suggest,   den: users_search}
+  geo_redirect_suggest_users_share:        {num: unq_participant_geo_redirect_suggest, den: users_search}
   item_started_net_per_items_add_started:  {num: items_started_net,               den: items_add_started}
   item_views_from_map_per_map_search:      {num: item_views_from_map,             den: map_searches}
   item_views_from_map_per_pin:             {num: item_views_from_map,             den: pin_clicks}
@@ -92,9 +92,9 @@ metric.ratio:
   meta_regions_level_searches_per_search:  {num: meta_regions_level_searches,     den: searches}
   metros_per_metro_search:                 {num: total_metros_in_searches,        den: searches_metro}
   misspell_replace_to_searches:            {num: misspell_replace,                den: searches}
-  misspell_replace_users_share:            {num: unq_user_misspell_replace,       den: users_search}
+  misspell_replace_users_share:            {num: unq_participant_misspell_replace, den: users_search}
   misspell_suggest_to_searches:            {num: misspell_suggest,                den: searches}
-  misspell_suggest_users_share:            {num: unq_user_misspell_suggest,       den: users_search}
+  misspell_suggest_users_share:            {num: unq_participant_misspell_suggest, den: users_search}
   multiloc_sess_per_sess_search:           {num: multiloc_sess,                   den: sessions_s}
   multiloc_user_per_user_search:           {num: multiloc_users,                  den: users_search}
   noncapital_city_level_search_per_search: {num: noncapital_city_level_searches,  den: searches}
@@ -104,18 +104,14 @@ metric.ratio:
   regions_level_searches_per_search:       {num: regions_level_searches,          den: searches}
   russia_level_searches_per_search:        {num: russia_level_searches,           den: searches}
   search_redirect_replace_to_searches:     {num: search_redirect_replace,         den: searches}
-  search_redirect_replace_users_share:     {num: unq_user_search_redirect_replace, den: users_search}
+  search_redirect_replace_users_share:     {num: unq_participant_search_redirect_replace, den: users_search}
   searches_with_ratings_per_searches:      {num: cnt_searches_with_ratings,       den: searches_serp}
   sess_btc_map_per_sess_map:               {num: btc_sessions_from_map,           den: map_searches_sessions}
   sess_c_map_per_sess_map:                 {num: contact_sessions_from_map,       den: map_searches_sessions}
   sess_c_map_per_sess_pin:                 {num: contact_sessions_from_map,       den: pin_clicks_sessions}
   sess_c_map_total_per_sess_map:           {num: unq_session_sess_c_map_total,    den: map_searches_sessions}
-  sess_from_main_page_to_c_per_sess_c_s:   {num: unq_session_sess_from_main_page_to_c, den: sessions_c_s}
-  sess_from_main_page_to_iv_per_sess_iv:   {num: unq_session_sess_from_main_page_to_iv, den: sessions_iv_s}
   sess_from_session_start_to_c_per_sess_c_s: {num: unq_session_sess_from_session_start_to_c, den: sessions_c_s}
   sess_from_session_start_to_iv_per_sess_iv_s: {num: unq_session_sess_from_session_start_to_iv, den: sessions_iv_s}
-  sess_from_vertical_page_to_c_per_sess_c_s: {num: unq_session_sess_from_vertical_page_to_c, den: sessions_c_s}
-  sess_from_vertical_page_to_iv_per_sess_iv_s: {num: unq_session_sess_from_vertical_page_to_iv, den: sessions_iv_s}
   sess_iv_map_per_sess_map:                {num: iv_sessions_from_map,            den: map_searches_sessions}
   sess_iv_map_per_sess_pin:                {num: iv_sessions_from_map,            den: pin_clicks_sessions}
   sess_iv_map_total_per_sess_map:          {num: unq_session_sess_iv_map_total,   den: map_searches_sessions}
@@ -123,25 +119,23 @@ metric.ratio:
   sess_search_1_plus_locations_per_sess_search: {num: sess_search_1_plus_locations,    den: sessions_s}
   shortcut_clicks_per_search:              {num: shortcut_clicks,                 den: searches}
   shortcut_users_per_search_user:          {num: shortcut_users,                  den: users_search}
+  sqp_layout_replace_to_searches:          {num: sqp_layout_replace,              den: searches}
+  sqp_layout_replace_users_share:          {num: unq_participant_sqp_layout_replace, den: users_search}
+  sqp_wordbreaker_digit_replace_to_searches: {num: sqp_wordbreaker_digit_replace,   den: searches}
+  sqp_wordbreaker_digit_replace_users_share: {num: unq_participant_sqp_wordbreaker_digit_replace, den: users_search}
+  sqp_wordbreaker_replace_to_searches:     {num: sqp_wordbreaker_replace,         den: searches}
+  sqp_wordbreaker_replace_users_share:     {num: unq_participant_sqp_wordbreaker_replace, den: users_search}
   subs_paying_users_ratio:                 {num: subs_users,                      den: active_listers}
   subs_w_extensions_arpu_net_adj:          {num: subs_w_extensions_amount_net_adj, den: active_listers}
   teleport_replace_to_searches:            {num: teleport_replace,                den: searches}
-  teleport_replace_users_share:            {num: unq_user_teleport_replace,       den: users_search}
+  teleport_replace_users_share:            {num: unq_participant_teleport_replace, den: users_search}
   teleport_suggest_to_searches:            {num: teleport_suggest,                den: searches}
-  teleport_suggest_users_share:            {num: unq_user_teleport_suggest,       den: users_search}
+  teleport_suggest_users_share:            {num: unq_participant_teleport_suggest, den: users_search}
   typo_replace_to_searches:                {num: typo_replace,                    den: searches}
-  typo_replace_users_share:                {num: unq_user_typo_replace,           den: users_search}
+  typo_replace_users_share:                {num: unq_participant_typo_replace,    den: users_search}
   user_address_item_page_clicks_per_users_iv: {num: user_address_item_page_clicks,   den: users_item_view_daily}
   user_domoteka_preview_clicks_per_users_iv: {num: user_domoteka_preview_clicks,    den: users_item_view_daily}
   user_fav_map_total_per_user_map:         {num: user_fav_from_map_total,         den: map_users}
-  user_from_main_page_to_c_p25_per_user_c_search: {num: user_from_main_page_to_c_p25,    den: contact_s_item_attr_users}
-  user_from_main_page_to_c_p50_per_user_c_search: {num: user_from_main_page_to_c_p50,    den: contact_s_item_attr_users}
-  user_from_main_page_to_c_p75_per_user_c_search: {num: user_from_main_page_to_c_p75,    den: contact_s_item_attr_users}
-  user_from_main_page_to_c_p99_per_user_c_search: {num: user_from_main_page_to_c_p99,    den: contact_s_item_attr_users}
-  user_from_main_page_to_iv_p25_per_user_iv_search: {num: user_from_main_page_to_iv_p25,   den: item_views_s_item_attr_users}
-  user_from_main_page_to_iv_p50_per_user_iv_search: {num: user_from_main_page_to_iv_p50,   den: item_views_s_item_attr_users}
-  user_from_main_page_to_iv_p75_per_user_iv_search: {num: user_from_main_page_to_iv_p75,   den: item_views_s_item_attr_users}
-  user_from_main_page_to_iv_p99_per_user_iv_search: {num: user_from_main_page_to_iv_p99,   den: item_views_s_item_attr_users}
   user_from_session_start_to_c_p25_per_user_c_search: {num: user_from_session_start_to_c_p25, den: contact_s_item_attr_users}
   user_from_session_start_to_c_p50_per_user_c_search: {num: user_from_session_start_to_c_p50, den: contact_s_item_attr_users}
   user_from_session_start_to_c_p75_per_user_c_search: {num: user_from_session_start_to_c_p75, den: contact_s_item_attr_users}
@@ -150,14 +144,6 @@ metric.ratio:
   user_from_session_start_to_iv_p50_per_user_iv_search: {num: user_from_session_start_to_iv_p50, den: item_views_s_item_attr_users}
   user_from_session_start_to_iv_p75_per_user_iv_search: {num: user_from_session_start_to_iv_p75, den: item_views_s_item_attr_users}
   user_from_session_start_to_iv_p99_per_user_iv_search: {num: user_from_session_start_to_iv_p99, den: item_views_s_item_attr_users}
-  user_from_vertical_page_to_c_p25_per_user_c_search: {num: user_from_vertical_page_to_c_p25, den: contact_s_item_attr_users}
-  user_from_vertical_page_to_c_p50_per_user_c_search: {num: user_from_vertical_page_to_c_p50, den: contact_s_item_attr_users}
-  user_from_vertical_page_to_c_p75_per_user_c_search: {num: user_from_vertical_page_to_c_p75, den: contact_s_item_attr_users}
-  user_from_vertical_page_to_c_p99_per_user_c_search: {num: user_from_vertical_page_to_c_p99, den: contact_s_item_attr_users}
-  user_from_vertical_page_to_iv_p25_per_user_iv_search: {num: user_from_vertical_page_to_iv_p25, den: item_views_s_item_attr_users}
-  user_from_vertical_page_to_iv_p50_per_user_iv_search: {num: user_from_vertical_page_to_iv_p50, den: item_views_s_item_attr_users}
-  user_from_vertical_page_to_iv_p75_per_user_iv_search: {num: user_from_vertical_page_to_iv_p75, den: item_views_s_item_attr_users}
-  user_from_vertical_page_to_iv_p99_per_user_iv_search: {num: user_from_vertical_page_to_iv_p99, den: item_views_s_item_attr_users}
   user_iv_map_per_user_pin:                {num: users_item_views_from_map,       den: pin_clickers}
   user_iv_map_total_per_user_map:          {num: user_item_view_from_map_total,   den: map_users}
   user_map_interaction_on_item_per_users_iv: {num: user_map_interaction_on_item,    den: users_item_view_daily}

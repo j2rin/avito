@@ -4,8 +4,8 @@ metric.counter:
   contacts_new:                            {filter: {$or: [{<<: *is_booking}, {<<: *is_delivery}, {<<: *is_ph_tot}]}}
 
 metric.uniq:
-  bt_clicks_grouped_new:                   {counter: bt_clicks_new,                   key: [item, user]}
-  contacts_grouped_new:                    {counter: contacts_new,                    key: [item, user]}
-  buyers_new:                              {counter: contacts_new,                    key: [user]}
-  users_bt_click_daily_new:                {counter: cnt_booking_delivery_fav_ph_tot, key: [user]}
+  bt_clicks_grouped_new:                   {counter: bt_clicks_new,                   key: [item, participant]}
+  contacts_grouped_new:                    {counter: contacts_new,                    key: [item, participant]}
+  buyers_new:                              {counter: contacts_new,                    key: [participant]}
+  users_bt_click_daily_new:                {counter: cnt_booking_delivery_fav_ph_tot, key: [participant]}
 

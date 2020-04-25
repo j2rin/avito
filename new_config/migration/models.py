@@ -87,8 +87,7 @@ class Metric:
         if self.type == 'counter':
             return make_counter_yaml(self.name, self.obs, self.filter)
         elif self.type == 'uniq':
-            key = [k if k != 'participant' else 'user' for k in self.key]
-            return make_uniq_yaml(self.name, self.counter.name, key)
+            return make_uniq_yaml(self.name, self.counter.name, self.key)
         elif self.type == 'ratio':
             return make_ratio_yaml(self.name, self.num.name, self.den.name)
 
@@ -336,10 +335,10 @@ class MetricOld:
 
             if type == 'uniq':
                 if uniq in (('participant',), ()):
-                    uniq = ('user',)
+                    uniq = ('participant',)
                 else:
                     uniq = [u for u in uniq if u != 'participant']
-                name = 'unq_' + '_'.join([u if u != 'participant' else 'user' for u in uniq]) + '_' + name
+                name = 'unq_' + '_'.join([u for u in uniq]) + '_' + name
 
             nn = 0
             _name = name

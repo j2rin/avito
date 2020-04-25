@@ -43,6 +43,7 @@ metric.counter:
   misspell_suggest:                        {obs: [misspell_suggest]}
   misspell_suggest_disabled:               {obs: [misspell_suggest_disabled]}
   non_fatal_app_errors:                    {obs: [non_fatal_app_error]}
+  open_app:                                {obs: [open_app]}
   page_views:                              {obs: [page_views_all]}
   password_restore_request_attempts:       {obs: [password_restore_request_errors, password_restore_requests]}
   password_restore_request_errors:         {obs: [password_restore_request_errors]}
@@ -50,8 +51,8 @@ metric.counter:
   photo_listing_full_screen:               {obs: [photo_listing_full_screen]}
   photo_listing_no_full_screen:            {obs: [photo_listing_no_full_screen]}
   photo_zoom_on_item_page:                 {obs: [photo_zoom_on_item_page]}
-  public_profile_visit_from_fs:            {obs: [public_profile_visit_from_fs]}
   public_profile_visit_from_item:          {obs: [public_profile_visit_from_item]}
+  public_profile_visit_from_subscribers_list: {obs: [public_profile_visit_from_fs]}
   public_profile_visit_from_subscribers_messenger: {obs: [public_profile_visit_from_subscribers_messenger]}
   public_profile_visit_from_subscriptions_ratings: {obs: [public_profile_visit_from_subscriptions_ratings]}
   public_profile_visit_from_subscriptions_sharing: {obs: [public_profile_visit_from_subscriptions_sharing]}
@@ -75,6 +76,12 @@ metric.counter:
   seller_profile_views:                    {obs: [seller_profile_views]}
   services_main_pages:                     {obs: [services_main_pages]}
   shortcut_clicks:                         {obs: [shortcut_clicks]}
+  sqp_layout_disabled:                     {obs: [sqp_layout_disabled]}
+  sqp_layout_replace:                      {obs: [sqp_layout_replace]}
+  sqp_wordbreaker_digit_disabled:          {obs: [sqp_wordbreaker_digit_disabled]}
+  sqp_wordbreaker_digit_replace:           {obs: [sqp_wordbreaker_digit_replace]}
+  sqp_wordbreaker_disabled:                {obs: [sqp_wordbreaker_disabled]}
+  sqp_wordbreaker_replace:                 {obs: [sqp_wordbreaker_replace]}
   teleport_disabled:                       {obs: [teleport_disabled]}
   teleport_replace:                        {obs: [teleport_replace]}
   teleport_suggest:                        {obs: [teleport_suggest]}
@@ -85,57 +92,60 @@ metric.counter:
   vertical_main_pages:                     {obs: [re_main_pages, services_main_pages, transport_main_pages]}
 
 metric.uniq:
-  daily_active_authorized_users:           {counter: authorized_page_views,           key: [user]}
-  daily_active_users:                      {counter: page_views,                      key: [user]}
-  sellers_daily:                           {counter: items_added,                     key: [user]}
-  sellers_own_item_viewed:                 {counter: seller_own_item_views,           key: [user]}
-  sellers_profile_viewed:                  {counter: seller_profile_views,            key: [user]}
-  shortcut_users:                          {counter: shortcut_clicks,                 key: [user]}
-  unq_user_geo_redirect_replace:           {counter: geo_redirect_replace,            key: [user]}
-  unq_user_geo_redirect_suggest:           {counter: geo_redirect_suggest,            key: [user]}
-  unq_user_misspell_replace:               {counter: misspell_replace,                key: [user]}
-  unq_user_misspell_suggest:               {counter: misspell_suggest,                key: [user]}
-  unq_user_search_redirect_replace:        {counter: search_redirect_replace,         key: [user]}
-  unq_user_teleport_replace:               {counter: teleport_replace,                key: [user]}
-  unq_user_teleport_suggest:               {counter: teleport_suggest,                key: [user]}
-  unq_user_typo_replace:                   {counter: typo_replace,                    key: [user]}
-  user_address_item_page_clicks:           {counter: address_item_page_clicks,        key: [user]}
-  user_created_reviews_list_open:          {counter: created_reviews_list_open,       key: [user]}
-  user_domoteka_preview_clicks:            {counter: domoteka_preview_clicks,         key: [user]}
-  user_filters_screen_shows:               {counter: filters_screen_shows,            key: [user]}
-  user_map_interaction_on_item:            {counter: map_interaction_on_item,         key: [user]}
-  user_password_restore_request:           {counter: password_restore_requests,       key: [user]}
-  user_password_restore_request_attempt:   {counter: password_restore_request_attempts, key: [user]}
-  user_received_reviews_list_open:         {counter: received_reviews_list_open,      key: [user]}
-  user_review_add_open_page:               {counter: review_add_open_page,            key: [user]}
-  user_review_delete:                      {counter: review_delete,                   key: [user]}
-  user_reviews_list_open:                  {counter: reviews_list_open,               key: [user]}
-  users_all_main_page_daily:               {counter: all_main_pages,                  key: [user]}
-  users_fatal_app_errors:                  {counter: fatal_app_errors,                key: [user]}
-  users_favouriteseller_activity:          {counter: favouriteseller_activities,      key: [user]}
-  users_favouriteseller_add:               {counter: favouriteseller_adds,            key: [user]}
-  users_favouriteseller_delete:            {counter: favouriteseller_deletes,         key: [user]}
-  users_favouriteseller_notifications_off: {counter: favouriteseller_notifications_offs, key: [user]}
-  users_favouriteseller_notifications_on:  {counter: favouriteseller_notifications_ons, key: [user]}
-  users_favouriteseller_page_open:         {counter: favouriteseller_page_opens,      key: [user]}
-  users_head_main_page_daily:              {counter: head_main_pages,                 key: [user]}
-  users_item_add_started:                  {counter: items_add_started,               key: [user]}
-  users_loc_suggest_clicks:                {counter: cnt_loc_suggests,                key: [user]}
-  users_non_fatal_app_errors:              {counter: non_fatal_app_errors,            key: [user]}
-  users_phone_calls:                       {counter: call_phones,                     key: [user]}
-  users_re_main_page_daily:                {counter: re_main_pages,                   key: [user]}
-  users_realty_dev_phone_view:             {counter: realty_dev_phone_views,          key: [user]}
-  users_realty_dev_view:                   {counter: realty_dev_views,                key: [user]}
-  users_saved_searches_added:              {counter: saved_searches_added,            key: [user]}
-  users_saved_searches_email_item_click:   {counter: saved_searches_email_item_clicks, key: [user]}
-  users_saved_searches_list_view:          {counter: saved_searches_list_views,       key: [user]}
-  users_saved_searches_notifications_off:  {counter: saved_searches_notifications_offs, key: [user]}
-  users_saved_searches_notifications_on:   {counter: saved_searches_notifications_ons, key: [user]}
-  users_saved_searches_removed:            {counter: saved_searches_removals,         key: [user]}
-  users_saved_searches_view:               {counter: saved_searches_views,            key: [user]}
-  users_services_main_page_daily:          {counter: services_main_pages,             key: [user]}
-  users_transport_main_page_daily:         {counter: transport_main_pages,            key: [user]}
-  users_vertical_main_page_daily:          {counter: vertical_main_pages,             key: [user]}
+  daily_active_authorized_users:           {counter: authorized_page_views,           key: [participant]}
+  daily_active_users:                      {counter: page_views,                      key: [participant]}
+  sellers_daily:                           {counter: items_added,                     key: [participant]}
+  sellers_own_item_viewed:                 {counter: seller_own_item_views,           key: [participant]}
+  sellers_profile_viewed:                  {counter: seller_profile_views,            key: [participant]}
+  shortcut_users:                          {counter: shortcut_clicks,                 key: [participant]}
+  unq_participant_geo_redirect_replace:    {counter: geo_redirect_replace,            key: [participant]}
+  unq_participant_geo_redirect_suggest:    {counter: geo_redirect_suggest,            key: [participant]}
+  unq_participant_misspell_replace:        {counter: misspell_replace,                key: [participant]}
+  unq_participant_misspell_suggest:        {counter: misspell_suggest,                key: [participant]}
+  unq_participant_search_redirect_replace: {counter: search_redirect_replace,         key: [participant]}
+  unq_participant_sqp_layout_replace:      {counter: sqp_layout_replace,              key: [participant]}
+  unq_participant_sqp_wordbreaker_digit_replace: {counter: sqp_wordbreaker_digit_replace,   key: [participant]}
+  unq_participant_sqp_wordbreaker_replace: {counter: sqp_wordbreaker_replace,         key: [participant]}
+  unq_participant_teleport_replace:        {counter: teleport_replace,                key: [participant]}
+  unq_participant_teleport_suggest:        {counter: teleport_suggest,                key: [participant]}
+  unq_participant_typo_replace:            {counter: typo_replace,                    key: [participant]}
+  user_address_item_page_clicks:           {counter: address_item_page_clicks,        key: [participant]}
+  user_created_reviews_list_open:          {counter: created_reviews_list_open,       key: [participant]}
+  user_domoteka_preview_clicks:            {counter: domoteka_preview_clicks,         key: [participant]}
+  user_filters_screen_shows:               {counter: filters_screen_shows,            key: [participant]}
+  user_map_interaction_on_item:            {counter: map_interaction_on_item,         key: [participant]}
+  user_password_restore_request:           {counter: password_restore_requests,       key: [participant]}
+  user_password_restore_request_attempt:   {counter: password_restore_request_attempts, key: [participant]}
+  user_received_reviews_list_open:         {counter: received_reviews_list_open,      key: [participant]}
+  user_review_add_open_page:               {counter: review_add_open_page,            key: [participant]}
+  user_review_delete:                      {counter: review_delete,                   key: [participant]}
+  user_reviews_list_open:                  {counter: reviews_list_open,               key: [participant]}
+  users_all_main_page_daily:               {counter: all_main_pages,                  key: [participant]}
+  users_fatal_app_errors:                  {counter: fatal_app_errors,                key: [participant]}
+  users_favouriteseller_activity:          {counter: favouriteseller_activities,      key: [participant]}
+  users_favouriteseller_add:               {counter: favouriteseller_adds,            key: [participant]}
+  users_favouriteseller_delete:            {counter: favouriteseller_deletes,         key: [participant]}
+  users_favouriteseller_notifications_off: {counter: favouriteseller_notifications_offs, key: [participant]}
+  users_favouriteseller_notifications_on:  {counter: favouriteseller_notifications_ons, key: [participant]}
+  users_favouriteseller_page_open:         {counter: favouriteseller_page_opens,      key: [participant]}
+  users_head_main_page_daily:              {counter: head_main_pages,                 key: [participant]}
+  users_item_add_started:                  {counter: items_add_started,               key: [participant]}
+  users_loc_suggest_clicks:                {counter: cnt_loc_suggests,                key: [participant]}
+  users_non_fatal_app_errors:              {counter: non_fatal_app_errors,            key: [participant]}
+  users_phone_calls:                       {counter: call_phones,                     key: [participant]}
+  users_re_main_page_daily:                {counter: re_main_pages,                   key: [participant]}
+  users_realty_dev_phone_view:             {counter: realty_dev_phone_views,          key: [participant]}
+  users_realty_dev_view:                   {counter: realty_dev_views,                key: [participant]}
+  users_saved_searches_added:              {counter: saved_searches_added,            key: [participant]}
+  users_saved_searches_email_item_click:   {counter: saved_searches_email_item_clicks, key: [participant]}
+  users_saved_searches_list_view:          {counter: saved_searches_list_views,       key: [participant]}
+  users_saved_searches_notifications_off:  {counter: saved_searches_notifications_offs, key: [participant]}
+  users_saved_searches_notifications_on:   {counter: saved_searches_notifications_ons, key: [participant]}
+  users_saved_searches_removed:            {counter: saved_searches_removals,         key: [participant]}
+  users_saved_searches_view:               {counter: saved_searches_views,            key: [participant]}
+  users_services_main_page_daily:          {counter: services_main_pages,             key: [participant]}
+  users_transport_main_page_daily:         {counter: transport_main_pages,            key: [participant]}
+  users_vertical_main_page_daily:          {counter: vertical_main_pages,             key: [participant]}
 
 metric.ratio:
   authorized_visitors_share:               {num: daily_active_authorized_users,   den: daily_active_users}
@@ -147,6 +157,9 @@ metric.ratio:
   misspell_suggest_ctr_disable:            {num: misspell_suggest_disabled,       den: misspell_suggest}
   realty_dev_phone_per_views:              {num: realty_dev_phone_views,          den: realty_dev_views}
   search_redirect_replace_ctr_disable:     {num: search_redirect_disabled,        den: search_redirect_replace}
+  sqp_layout_replace_ctr_disable:          {num: sqp_layout_disabled,             den: sqp_layout_replace}
+  sqp_wordbreaker_digit_replace_ctr_disable: {num: sqp_wordbreaker_digit_disabled,  den: sqp_wordbreaker_digit_replace}
+  sqp_wordbreaker_replace_ctr_disable:     {num: sqp_wordbreaker_disabled,        den: sqp_wordbreaker_replace}
   teleport_replace_ctr_disable:            {num: teleport_disabled,               den: teleport_replace}
   teleport_suggest_ctr_disable:            {num: teleport_suggest_disabled,       den: teleport_suggest}
   typo_replace_ctr_disable:                {num: typo_disabled,                   den: typo_replace}
