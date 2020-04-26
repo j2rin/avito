@@ -23,7 +23,7 @@ def convert_metrics(old_metrics: List[MetricOld]):
 
 
 def migrate_config():
-    conf = load_metrics_config('2020-04-24')
+    conf = load_metrics_config('2020-04-25')
     print(conf.shape)
 
     obs = {o for tup in conf.itertuples()
@@ -33,8 +33,8 @@ def migrate_config():
         obs_dict = safe_load(f)
 
     obs_index = make_obs_index(obs, obs_dict)
-
-    old_metrics = [MetricOld.from_tup(tup, obs_index) for tup in conf.itertuples()]
+    MetricOld.observation_index.update(obs_index)
+    old_metrics = [MetricOld.from_tup(tup) for tup in conf.itertuples()]
 
     print(Counter([m.type for m in old_metrics]))
 
@@ -62,14 +62,12 @@ def migrate_config():
 if __name__ == '__main__':
     migrate_config()
 
-    from ss_observation_strings import observation_strings
-
     # conf = load_metrics_config('2020-04-24')
     # obs = {o for tup in conf.itertuples()
     #        for o in split_into_tup(tup.numerator_observations) + split_into_tup(tup.denominator_observations)}
 
-    # obs_index = make_observation_index([], observation_strings)
     # with open('observations.yaml', 'r') as f:
     #     obs_dict = safe_load(f)
-    # obs_index = make_obs_index(obs, obs_dict)
+    # obs_index = make_obs_index([], obs_dict)
     # print(obs_index.dump())
+

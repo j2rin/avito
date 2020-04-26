@@ -3,8 +3,8 @@ metric.counter:
   auth_errors:                             {obs: [auth_errors]}
   auth_success:                            {obs: [auth_success]}
   cnt_enter_errors:                        {obs: [enter_errors]}
-  cnt_enter_errors_enter_success:          {obs: [enter_errors, enter_success]}
   cnt_enter_success:                       {obs: [enter_success]}
+  cnt_enter_success_errors:                {obs: [enter_errors, enter_success]}
   enter_start:                             {obs: [enter_start]}
   password_restore_attempts:               {obs: [restore_errors, restore_success]}
   password_restore_errors:                 {obs: [restore_errors]}
@@ -17,7 +17,7 @@ metric.uniq:
   user_auth:                               {counter: auth_success,                    key: [participant]}
   user_auth_attempt:                       {counter: auth_attempts,                   key: [participant]}
   user_enter:                              {counter: cnt_enter_success,               key: [participant]}
-  user_enter_attempt:                      {counter: cnt_enter_errors_enter_success,  key: [participant]}
+  user_enter_attempt:                      {counter: cnt_enter_success_errors,        key: [participant]}
   user_enter_start:                        {counter: enter_start,                     key: [participant]}
   user_password_restore:                   {counter: password_restore_success,        key: [participant]}
   user_password_restore_attempt:           {counter: password_restore_attempts,       key: [participant]}

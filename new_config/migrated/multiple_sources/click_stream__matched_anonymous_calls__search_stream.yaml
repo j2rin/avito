@@ -1,5 +1,5 @@
 metric.counter:
-  btc_funnel_second:                       {filter: {$or: [{<<: *is_booking}, {<<: *is_delivery}, {<<: *is_msg}]}}
+  btc_funnel_second:                       {filter: [{$or: [*is_booking], [*is_msg], [*is_delivery]}], obs: [answered_proxy_calls, call_phone_screen_views_client, missed_proxy_calls]}
 
 metric.uniq:
   users_btc_funnel_second:                 {counter: btc_funnel_second,               key: [participant]}

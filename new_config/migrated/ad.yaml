@@ -3,13 +3,13 @@ metric.counter:
   ad_fails:                                {obs: [ad_fails]}
   ad_revenue_predict:                      {obs: [ad_revenue_predict]}
   ad_successes:                            {obs: [ad_successes]}
-  cnt_show:                                {obs: [ad_head_mp, ad_item_views, ad_searches, ad_vertical_mp]}
+  cnt_ad_vertical_mp_s_head_iv:            {obs: [ad_head_mp, ad_item_views, ad_searches, ad_vertical_mp]}
 
 metric.uniq:
   ad_click_users:                          {counter: ad_clicks,                       key: [participant]}
   ad_click_sessions:                       {counter: ad_clicks,                       key: [participant, session]}
-  unq_session_show:                        {counter: cnt_show,                        key: [participant, session]}
+  unq_session_ad_vertical_mp_s_head_iv:    {counter: cnt_ad_vertical_mp_s_head_iv,    key: [participant, session]}
 
 metric.ratio:
-  ad_click_sessions_per_show:              {num: ad_click_sessions,               den: unq_session_show}
+  ad_click_sessions_per_show:              {num: ad_click_sessions,               den: unq_session_ad_vertical_mp_s_head_iv}
 
