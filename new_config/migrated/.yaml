@@ -29,7 +29,8 @@ metric.counter:
   buyer_favouriteseller_delete_from_subscriptions_list: {obs: [buyer_favouriteseller_delete_from_subscriptions_list]}
   buyer_str_bookings_expired:              {obs: [buyer_str_bookings_expired]}
   buyer_str_bookings_voided:               {obs: [buyer_str_bookings_voided]}
-  cnt_btc_s_price_filter:                  {obs: [btc_serp_filter_search, btc_serp_price_filter_search]}
+  cnt_answered_proxy_rec_missed:           {obs: [answered_proxy_rec, missed_proxy_rec]}
+  cnt_btc_s_filter_price:                  {obs: [btc_serp_filter_search, btc_serp_price_filter_search]}
   cnt_dom_interactive_sessionduration:     {obs: [dom_interactive_sessionduration]}
   cnt_domain_lookup_events_p25:            {obs: [domain_lookup_events_p25]}
   cnt_final_page_events:                   {obs: [final_page_events]}
@@ -51,7 +52,6 @@ metric.counter:
   cnt_from_vertical_page_to_iv_p99:        {obs: [from_vertical_page_to_iv_p99]}
   cnt_lf_block_show_events:                {obs: [lf_block_show_events]}
   cnt_lf_payment_page_events:              {obs: [lf_payment_page_events]}
-  cnt_missed_proxy_rec_answered:           {obs: [answered_proxy_rec, missed_proxy_rec]}
   cnt_pages_listing_type:                  {obs: [pages_listing_type]}
   cnt_queries_no_redirect:                 {obs: [queries_no_redirect]}
   cnt_queries_no_redirect_c:               {obs: [queries_no_redirect_contact]}
@@ -158,7 +158,7 @@ metric.uniq:
   users_active_item_more_5_description_word_total: {counter: active_items_more_5_description_word_total, key: [participant]}
   users_active_item_more_5_photo_total:    {counter: active_items_more_5_photo_total, key: [participant]}
   users_active_items_total:                {counter: active_items_total,              key: [participant]}
-  users_btc_search_filter_any:             {counter: cnt_btc_s_price_filter,          key: [participant]}
+  users_btc_search_filter_any:             {counter: cnt_btc_s_filter_price,          key: [participant]}
   users_item_allowed_total:                {counter: items_allowed_total,             key: [participant]}
   users_item_allowed_total_start_date:     {counter: items_allowed_total_start_date,  key: [participant]}
   users_item_blocked_rejected_total:       {counter: items_blocked_rejected_total,    key: [participant]}
@@ -177,7 +177,7 @@ metric.uniq:
   users_item_sold_another_reason_total_start_date: {counter: items_sold_another_reason_total_start_date, key: [participant]}
   users_item_sold_notonavito_total:        {counter: items_sold_notonavito_total,     key: [participant]}
   users_item_sold_onavito_total:           {counter: items_sold_onavito_total,        key: [participant]}
-  users_phone_calls_client_rec:            {counter: cnt_missed_proxy_rec_answered,   key: [participant]}
+  users_phone_calls_client_rec:            {counter: cnt_answered_proxy_rec_missed,   key: [participant]}
   unq_session_from_main_page_to_c:         {counter: from_main_page_to_c,             key: [participant, session]}
   unq_session_from_main_page_to_iv:        {counter: from_main_page_to_iv,            key: [participant, session]}
   unq_session_from_vertical_page_to_c:     {counter: from_vertical_page_to_c,         key: [participant, session]}

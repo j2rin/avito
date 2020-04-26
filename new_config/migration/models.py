@@ -28,7 +28,7 @@ def dump_filter(filter):
                         or_tup.append(dump_filter(d))
                     v = ', '.join(or_tup)
                 if isinstance(v, list):
-                    v = safe_dump(v).strip('\n')
+                    v = safe_dump(v, default_flow_style=True, width=1024).strip('\n')
                 elem_tup.append(f'{k}: {v}')
             elem_str = '{' + ', '.join(elem_tup) + '}'
             tup.append(elem_str)
@@ -66,7 +66,7 @@ def make_counter_yaml(name, obs, ftr):
     if ftr:
         d.append('filter: ' + dump_filter(ftr))
     if obs:
-        d.append('obs: ' + safe_dump(obs).strip('\n'))
+        d.append('obs: ' + safe_dump(obs, default_flow_style=True, width=1024).strip('\n'))
     s = '{' + ', '.join(d) + '}'
     name += ':'
     return f'  {name:40} {s}\n'
@@ -306,7 +306,7 @@ class ObservationIndex(Set[Observation]):
 
     @property
     def merged_aliases(self):
-        return [o.alias for o in self]
+        return sorted([o.alias for o in self])
 
     @property
     def merged_key(self):

@@ -16,12 +16,12 @@ metric.counter:
   cnt_draw_duration:                       {obs: [draw_duration]}
   cnt_draw_duration_events:                {obs: [draw_duration_events]}
   cnt_draw_events:                         {obs: [draw_events]}
+  cnt_draw_events_exceptions:              {obs: [draw_events, draw_exceptions]}
   cnt_draw_events_p25:                     {obs: [draw_events_p25]}
   cnt_draw_events_p50:                     {obs: [draw_events_p50]}
   cnt_draw_events_p75:                     {obs: [draw_events_p75]}
   cnt_draw_events_p95:                     {obs: [draw_events_p95]}
   cnt_draw_exceptions:                     {obs: [draw_exceptions]}
-  cnt_draw_exceptions_events:              {obs: [draw_events, draw_exceptions]}
   cnt_draw_session_duration:               {obs: [draw_session_duration]}
   cnt_draw_session_duration_events:        {obs: [draw_session_duration_events]}
   cnt_draw_sessions:                       {obs: [draw_sessions]}
@@ -63,22 +63,22 @@ metric.counter:
   cnt_prepare_duration:                    {obs: [prepare_duration]}
   cnt_prepare_duration_events:             {obs: [prepare_duration_events]}
   cnt_prepare_events:                      {obs: [prepare_events]}
+  cnt_prepare_events_exceptions:           {obs: [prepare_events, prepare_exceptions]}
   cnt_prepare_events_p50:                  {obs: [prepare_events_p50]}
   cnt_prepare_events_p75:                  {obs: [prepare_events_p75]}
   cnt_prepare_events_p95:                  {obs: [prepare_events_p95]}
   cnt_prepare_exceptions:                  {obs: [prepare_exceptions]}
-  cnt_prepare_exceptions_events:           {obs: [prepare_events, prepare_exceptions]}
   cnt_prepare_session_duration:            {obs: [prepare_session_duration]}
   cnt_prepare_session_duration_events:     {obs: [prepare_session_duration_events]}
   cnt_serverloading_duration:              {obs: [serverloading_duration]}
   cnt_serverloading_duration_events:       {obs: [serverloading_duration_events]}
   cnt_serverloading_events:                {obs: [serverloading_events]}
+  cnt_serverloading_events_exceptions:     {obs: [serverloading_events, serverloading_exceptions]}
   cnt_serverloading_events_p25:            {obs: [serverloading_events_p25]}
   cnt_serverloading_events_p50:            {obs: [serverloading_events_p50]}
   cnt_serverloading_events_p75:            {obs: [serverloading_events_p75]}
   cnt_serverloading_events_p95:            {obs: [serverloading_events_p95]}
   cnt_serverloading_exceptions:            {obs: [serverloading_exceptions]}
-  cnt_serverloading_exceptions_events:     {obs: [serverloading_events, serverloading_exceptions]}
   cnt_serverloading_session_duration:      {obs: [serverloading_session_duration]}
   cnt_serverloading_session_duration_events: {obs: [serverloading_session_duration_events]}
 
@@ -95,7 +95,7 @@ metric.ratio:
   draw_appstart_session_percent_p75:       {num: cnt_draw_appstart_sessions_p75,  den: cnt_draw_appstart_sessions}
   draw_appstart_session_percent_p95:       {num: cnt_draw_appstart_sessions_p95,  den: cnt_draw_appstart_sessions}
   draw_duration:                           {num: cnt_draw_duration,               den: cnt_draw_duration_events}
-  draw_percent_exceptions:                 {num: cnt_draw_exceptions,             den: cnt_draw_exceptions_events}
+  draw_percent_exceptions:                 {num: cnt_draw_exceptions,             den: cnt_draw_events_exceptions}
   draw_percent_p25:                        {num: cnt_draw_events_p25,             den: cnt_draw_events}
   draw_percent_p50:                        {num: cnt_draw_events_p50,             den: cnt_draw_events}
   draw_percent_p75:                        {num: cnt_draw_events_p75,             den: cnt_draw_events}
@@ -128,13 +128,13 @@ metric.ratio:
   localloading_percent_p95:                {num: cnt_localloading_events_p95,     den: cnt_localloading_events}
   localloading_session_duration:           {num: cnt_localloading_session_duration, den: cnt_localloading_session_duration_events}
   prepare_duration:                        {num: cnt_prepare_duration,            den: cnt_prepare_duration_events}
-  prepare_percent_exceptions:              {num: cnt_prepare_exceptions,          den: cnt_prepare_exceptions_events}
+  prepare_percent_exceptions:              {num: cnt_prepare_exceptions,          den: cnt_prepare_events_exceptions}
   prepare_percent_p50:                     {num: cnt_prepare_events_p50,          den: cnt_prepare_events}
   prepare_percent_p75:                     {num: cnt_prepare_events_p75,          den: cnt_prepare_events}
   prepare_percent_p95:                     {num: cnt_prepare_events_p95,          den: cnt_prepare_events}
   prepare_session_duration:                {num: cnt_prepare_session_duration,    den: cnt_prepare_session_duration_events}
   serverloading_duration:                  {num: cnt_serverloading_duration,      den: cnt_serverloading_duration_events}
-  serverloading_percent_exceptions:        {num: cnt_serverloading_exceptions,    den: cnt_serverloading_exceptions_events}
+  serverloading_percent_exceptions:        {num: cnt_serverloading_exceptions,    den: cnt_serverloading_events_exceptions}
   serverloading_percent_p25:               {num: cnt_serverloading_events_p25,    den: cnt_serverloading_events}
   serverloading_percent_p50:               {num: cnt_serverloading_events_p50,    den: cnt_serverloading_events}
   serverloading_percent_p75:               {num: cnt_serverloading_events_p75,    den: cnt_serverloading_events}

@@ -8,7 +8,7 @@ metric.counter:
   cnt_active_items_more_40_description_word: {filter: [{description_word_count.>=: 40}]}
   cnt_active_items_more_5_description_word: {filter: [{description_word_count.>=: 5}]}
   cnt_active_items_more_5_photo:           {filter: [{photo_count.>=: 5}]}
-  cnt_item_added_chains_15min_3_6min_6_3min: {obs: [item_added_chains_15min, item_added_chains_3_6min, item_added_chains_3min, item_added_chains_6_15min]}
+  cnt_item_added_chains_15min_3_6min_3min_6: {obs: [item_added_chains_15min, item_added_chains_3_6min, item_added_chains_3min, item_added_chains_6_15min]}
   cnt_items_closed_by_user:                {filter: [{close_status_id: 7}, {start_date.>=: ab_start_date}]}
   cnt_items_started_net:                   {filter: [{activation_type!: Wait, is_dead: False, is_item_star: Truet}, {start_date.>=: ab_start_date}]}
   cnt_new_items_0_photo:                   {filter: [{is_item_start: True, photo_count = 0: None}]}
@@ -245,10 +245,10 @@ metric.uniq:
 metric.ratio:
   item_add_category_last_click_per_item_add_category_first_click: {num: item_add_category_last_clicks,   den: item_add_category_first_clicks}
   item_add_form_input_per_item_chains_started: {num: item_add_chains_form_input,      den: item_chains_started}
-  item_added_chains_15min_share:           {num: item_added_chains_15min,         den: cnt_item_added_chains_15min_3_6min_6_3min}
-  item_added_chains_3_6min_share:          {num: item_added_chains_3_6min,        den: cnt_item_added_chains_15min_3_6min_6_3min}
-  item_added_chains_3min_share:            {num: item_added_chains_3min,          den: cnt_item_added_chains_15min_3_6min_6_3min}
-  item_added_chains_6_15min_share:         {num: item_added_chains_6_15min,       den: cnt_item_added_chains_15min_3_6min_6_3min}
+  item_added_chains_15min_share:           {num: item_added_chains_15min,         den: cnt_item_added_chains_15min_3_6min_3min_6}
+  item_added_chains_3_6min_share:          {num: item_added_chains_3_6min,        den: cnt_item_added_chains_15min_3_6min_3min_6}
+  item_added_chains_3min_share:            {num: item_added_chains_3min,          den: cnt_item_added_chains_15min_3_6min_3min_6}
+  item_added_chains_6_15min_share:         {num: item_added_chains_6_15min,       den: cnt_item_added_chains_15min_3_6min_3min_6}
   item_create_per_item_add_first_click:    {num: items_created,                   den: item_add_category_first_clicks}
   item_create_per_item_add_last_click:     {num: items_created,                   den: item_add_category_last_clicks}
   item_create_per_item_chains_started:     {num: items_created,                   den: item_chains_started}

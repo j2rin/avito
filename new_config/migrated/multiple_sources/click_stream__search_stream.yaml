@@ -1,33 +1,33 @@
 metric.counter:
-  bt_clicks:                               {filter: [{$or: [*is_msg], [*is_ph_tot], [*is_msg_btn], [*is_booking], [*is_fav], [*is_delivery]}], obs: [realty_development_phone_views]}
-  cnt_ph_item_right_realty_development_book_top_dlv_fmsg: {filter: [{$or: [*is_msg], [*is_ph, *is_ph_right], [*is_booking], [*is_ph, *is_ph_top], [*is_delivery]}], obs: [realty_development_phone_views]}
-  cnt_realty_development_ph:               {filter: [*is_ph_tot], obs: [realty_development_phone_views]}
-  cnt_realty_development_ph_book_dlv_fmsg_favorites_added: {filter: [{$or: [*is_ph_tot], [*is_msg], [*is_booking], [*is_fav], [*is_delivery]}], obs: [realty_development_phone_views]}
-  cnt_realty_development_ph_dlv_flow_beginings_book_fmsg: {filter: [{$or: [*is_ph_tot], [*is_msg], [*is_booking], [*is_delivery_btn], [*is_delivery]}], obs: [realty_development_phone_views]}
-  cnt_sessions_active:                     {filter: [{$or: [*is_ph_tot], [*is_msg_btn], [*is_1p, *is_search], [*is_msg], [*is_booking], [*is_delivery_btn], [*is_iv], [*is_fav], [*is_delivery]}], obs: [realty_development_phone_views]}
-  cnt_sessions_btc:                        {filter: [{$or: [*is_ph_tot], [*is_msg_btn], [*is_msg], [*is_booking], [*is_delivery_btn], [*is_fav], [*is_delivery]}], obs: [realty_development_phone_views]}
-  cnt_users:                               {filter: [{$or: [*is_ph_tot], [*is_msg], [*is_booking], [*is_delivery_btn], [*is_1p, *is_search, *noq], [*is_iv], [*is_fav], [*is_1p, *is_search, *q]}], obs: [delivery_order_creasted, realty_development_phone_views]}
-  cnt_users_2plus_actions:                 {filter: [{$or: [*is_ph_tot], [*is_msg], [*is_booking], [*is_delivery_btn], [*is_1p, *is_search, *noq], [*is_iv], [*is_fav], [*is_1p, *is_search, *q], [*is_delivery]}], obs: [realty_development_phone_views]}
-  contacts:                                {filter: [{$or: [*is_booking], [*is_ph_tot], [*is_msg], [*is_delivery]}], obs: [realty_development_phone_views]}
+  bt_clicks:                               {filter: [{$or: [*is_msg], [*is_delivery], [*is_msg_btn], [*is_booking], [*is_fav], [*is_ph_tot]}], obs: [realty_development_phone_views]}
+  cnt_book_dlv_favorites_added_fmsg_ph_realty_development: {filter: [{$or: [*is_msg], [*is_delivery], [*is_booking], [*is_fav], [*is_ph_tot]}], obs: [realty_development_phone_views]}
+  cnt_book_dlv_flow_beginings_fmsg_ph_realty_development: {filter: [{$or: [*is_msg], [*is_delivery], [*is_booking], [*is_delivery_btn], [*is_ph_tot]}], obs: [realty_development_phone_views]}
+  cnt_book_dlv_fmsg_ph_item_right_top_realty_development: {filter: [{$or: [*is_msg], [*is_ph, *is_ph_right], [*is_delivery], [*is_booking], [*is_ph, *is_ph_top]}], obs: [realty_development_phone_views]}
+  cnt_ph_realty_development:               {filter: [*is_ph_tot], obs: [realty_development_phone_views]}
+  cnt_sessions_active:                     {filter: [{$or: [*is_msg], [*is_iv], [*is_1p, *is_search], [*is_delivery], [*is_msg_btn], [*is_booking], [*is_fav], [*is_delivery_btn], [*is_ph_tot]}], obs: [realty_development_phone_views]}
+  cnt_sessions_btc:                        {filter: [{$or: [*is_msg], [*is_delivery], [*is_msg_btn], [*is_booking], [*is_fav], [*is_delivery_btn], [*is_ph_tot]}], obs: [realty_development_phone_views]}
+  cnt_users:                               {filter: [{$or: [*is_msg], [*is_iv], [*is_1p, *is_search, *q], [*is_booking], [*is_1p, *is_search, *noq], [*is_fav], [*is_delivery_btn], [*is_ph_tot]}], obs: [delivery_order_creasted, realty_development_phone_views]}
+  cnt_users_2plus_actions:                 {filter: [{$or: [*is_msg], [*is_iv], [*is_delivery], [*is_1p, *is_search, *q], [*is_booking], [*is_1p, *is_search, *noq], [*is_fav], [*is_delivery_btn], [*is_ph_tot]}], obs: [realty_development_phone_views]}
+  contacts:                                {filter: [{$or: [*is_booking], [*is_msg], [*is_delivery], [*is_ph_tot]}], obs: [realty_development_phone_views]}
 
 metric.uniq:
   bt_clicks_grouped:                       {counter: bt_clicks,                       key: [item, participant]}
   contacts_grouped:                        {counter: contacts,                        key: [item, participant]}
   buyers:                                  {counter: contacts,                        key: [participant]}
   unq_users:                               {counter: cnt_users,                       key: [participant]}
-  user_pv:                                 {counter: cnt_realty_development_ph,       key: [participant]}
+  user_pv:                                 {counter: cnt_ph_realty_development,       key: [participant]}
   users_1plus_actions:                     {counter: cnt_users_2plus_actions,         key: [participant]}
   users_2plus_actions:                     {counter: cnt_users_2plus_actions,         key: [participant]}
   users_active_daily:                      {counter: cnt_users_2plus_actions,         key: [participant]}
-  users_bt_click_daily:                    {counter: cnt_realty_development_ph_book_dlv_fmsg_favorites_added, key: [participant]}
+  users_bt_click_daily:                    {counter: cnt_book_dlv_favorites_added_fmsg_ph_realty_development, key: [participant]}
   sessions_active:                         {counter: cnt_sessions_active,             key: [participant, session]}
   sessions_btc:                            {counter: cnt_sessions_btc,                key: [participant, session]}
-  sessions_c:                              {counter: cnt_realty_development_ph_dlv_flow_beginings_book_fmsg, key: [participant, session]}
+  sessions_c:                              {counter: cnt_book_dlv_flow_beginings_fmsg_ph_realty_development, key: [participant, session]}
 
 metric.ratio:
   buyers_per_users:                        {num: buyers,                          den: users_active_daily}
   buyers_per_users_favorites:              {num: buyers,                          den: users_favorites}
-  contacts_per_item_view:                  {num: cnt_ph_item_right_realty_development_book_top_dlv_fmsg, den: item_views}
+  contacts_per_item_view:                  {num: cnt_book_dlv_fmsg_ph_item_right_top_realty_development, den: item_views}
   contacts_total_vas_per_contacts:         {num: contacts_total_vas,              den: contacts}
   sessions_btc_per_active:                 {num: sessions_btc,                    den: sessions_active}
   sessions_c_per_active:                   {num: sessions_c,                      den: sessions_active}
