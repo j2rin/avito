@@ -18,7 +18,7 @@ def write_metrics_to_file(metrics: Set[Metric], source: str, extra_path):
     filepath = CONFIG_PATH / extra_path / f'{source}.yaml'
     index_by_type = MetricIndex(metrics).by_type
     with open(filepath, 'w') as f:
-        if source == 'search_stream':
+        if source == 'buyer_stream':
             with open('ss_header.yaml', 'r') as h:
                 f.write(h.read())
         types = ['counter', 'uniq', 'ratio']

@@ -1,26 +1,25 @@
 metric.counter:
-  cnt_initial_pages_finished_events_catalog: {obs: [initial_pages_finished_events_catalog]}
-  cnt_initial_pages_finished_events_item:  {obs: [initial_pages_finished_events_item]}
-  cnt_initial_pages_finished_events_main:  {obs: [initial_pages_finished_events_main]}
-  cnt_initial_pages_finished_events_messenger: {obs: [initial_pages_finished_events_messenger]}
-  cnt_initial_pages_finished_events_other: {obs: [initial_pages_finished_events_other_pages]}
-  cnt_initial_pages_finished_events_profile: {obs: [initial_pages_finished_events_profile]}
-  cnt_initial_pages_finished_events_unfinished: {obs: [initial_pages_finished_events, initial_pages_unfinished_events]}
-  cnt_time_to_dom_ready:                   {obs: [time_to_dom_ready]}
-  cnt_time_to_first_interactive:           {obs: [time_to_first_interactive]}
-  cnt_time_to_firstbyte:                   {obs: [time_to_firstbyte]}
-  cnt_time_to_load_catalog:                {obs: [time_to_load_catalog]}
-  cnt_time_to_load_item:                   {obs: [time_to_load_item]}
-  cnt_time_to_load_main:                   {obs: [time_to_load_main]}
-  cnt_time_to_load_messenger:              {obs: [time_to_load_messenger]}
-  cnt_time_to_load_other_pages:            {obs: [time_to_load_other_pages]}
-  cnt_time_to_load_profile:                {obs: [time_to_load_profile]}
-  cnt_time_to_on_load:                     {obs: [time_to_on_load]}
+  cnt_initial_pages_finished_events_catalog: {obs: [initial_pages_finished_events_catalog], m42: False}
+  cnt_initial_pages_finished_events_item:  {obs: [initial_pages_finished_events_item], m42: False}
+  cnt_initial_pages_finished_events_main:  {obs: [initial_pages_finished_events_main], m42: False}
+  cnt_initial_pages_finished_events_messenger: {obs: [initial_pages_finished_events_messenger], m42: False}
+  cnt_initial_pages_finished_events_other: {obs: [initial_pages_finished_events_other_pages], m42: False}
+  cnt_initial_pages_finished_events_profile: {obs: [initial_pages_finished_events_profile], m42: False}
+  cnt_initial_pages_finished_events_unfinished: {obs: [initial_pages_finished_events, initial_pages_unfinished_events], m42: False}
+  cnt_time_to_dom_ready:                   {obs: [time_to_dom_ready], m42: False}
+  cnt_time_to_first_interactive:           {obs: [time_to_first_interactive], m42: False}
+  cnt_time_to_firstbyte:                   {obs: [time_to_firstbyte], m42: False}
+  cnt_time_to_load_catalog:                {obs: [time_to_load_catalog], m42: False}
+  cnt_time_to_load_item:                   {obs: [time_to_load_item], m42: False}
+  cnt_time_to_load_main:                   {obs: [time_to_load_main], m42: False}
+  cnt_time_to_load_messenger:              {obs: [time_to_load_messenger], m42: False}
+  cnt_time_to_load_other_pages:            {obs: [time_to_load_other_pages], m42: False}
+  cnt_time_to_load_profile:                {obs: [time_to_load_profile], m42: False}
+  cnt_time_to_on_load:                     {obs: [time_to_on_load], m42: False}
   init_page_interrupts:                    {obs: [initial_pages_unfinished_events]}
   init_pages_loads:                        {obs: [initial_pages_finished_events]}
 
 metric.ratio:
-  async_target_content_dur:                {num: cnt_time_for_async_target_content, den: cnt_initial_pages_finished_events_main}
   dom_ready_dur:                           {num: cnt_time_to_dom_ready,           den: init_pages_loads}
   first_byte_dur:                          {num: cnt_time_to_firstbyte,           den: init_pages_loads}
   first_interactive_dur:                   {num: cnt_time_to_first_interactive,   den: init_pages_loads}
@@ -32,5 +31,4 @@ metric.ratio:
   on_load_messenger_dur:                   {num: cnt_time_to_load_messenger,      den: cnt_initial_pages_finished_events_messenger}
   on_load_other_dur:                       {num: cnt_time_to_load_other_pages,    den: cnt_initial_pages_finished_events_other}
   on_load_profile_dur:                     {num: cnt_time_to_load_profile,        den: cnt_initial_pages_finished_events_profile}
-  target_content_dur:                      {num: cnt_time_to_target_content,      den: cnt_initial_pages_finished_events_main}
 

@@ -4,11 +4,15 @@ from cached_property import cached_property
 from ruamel.yaml import safe_dump
 
 
-def make_obs_index(obs, obs_dict):
+def make_obs_index(obs_directory, obs_dict, obs_from_metrics_conf):
     res = ObservationIndex()
-    for name, conf in obs_dict.items():
-        res.add(Observation.from_conf(name, conf))
-    _ = [res.add(Observation(o, obs=(o,))) for o in obs if o not in res.by_name]
+    for source, obs in obs_dict.items():
+        for name, conf in obs.items():
+            res.add(Observation.from_conf(source, name, conf))
+    _ = [res.add(Observation(t.source, t.obs, obs=[t.obs]))
+         for t in obs_directory.itertuples() if t.obs not in res.by_name]
+    _ = [res.add(Observation('_', o, obs=[o]))
+         for o in obs_from_metrics_conf if o not in res.by_name]
     return ObservationIndex(res)
 
 
@@ -37,52 +41,40 @@ def dump_filter(filter):
     return '[' + ', '.join(tup) + ']'
 
 
-def make_counter_yaml(name, obs, ftr):
-    # name = name + ':'
-    # conf_components = []
-    # if ftr != EMPTY_FILTER:
-    #     ftr_componetns = []
-    #     if ftr[0]:
-    #         common_ftr = ', '.join(['*' + f for f in ftr[0]])
-    #         if len(ftr[0]) > 1:
-    #             ftr_componetns.append(f'<<: [{common_ftr}]')
-    #         else:
-    #             ftr_componetns.append(f'<<: {common_ftr}')
-    #     if ftr[1] != EMPTY_FILTER_OR:
-    #         or_ftr = []
-    #         for of in ftr[1]:
-    #             if len(of) > 1:
-    #                 or_ftr.append('{<<: [' + ', '.join(['*' + f for f in of]) + ']}')
-    #             else:
-    #                 or_ftr.append('{<<: ' + ', '.join(['*' + f for f in of]) + '}')
-    #         ftr_componetns.append('$or: [' + ', '.join(or_ftr) + ']')
-    #     ftr_componetns_str = ', '.join(ftr_componetns)
-    #     conf_components.append(f'filter: {{{ftr_componetns_str}}}')
-    # if obs:
-    #    conf_components.append('obs: [' + ', '.join(obs) + ']' if obs else '')
-    # conf_str = ', '.join(conf_components)
-    # return f'  {name:40} {{{conf_str}}}\n'
+def make_counter_yaml(name, obs, ftr, m42=True):
     d = []
     if ftr:
         d.append('filter: ' + dump_filter(ftr))
     if obs:
         d.append('obs: ' + safe_dump(obs, default_flow_style=True, width=1024).strip('\n'))
+    if not m42:
+        d.append('m42: False')
     s = '{' + ', '.join(d) + '}'
     name += ':'
     return f'  {name:40} {s}\n'
 
 
-def make_uniq_yaml(name, counter, key):
-    name = name + ':'
-    counter = counter + ','
+def make_uniq_yaml(name, counter, key, m42=True):
+    d = []
+    counter += ','
     key = ', '.join(key)
-    return f'  {name:40} {{counter: {counter:32} key: [{key}]}}\n'
+    d.append(f'counter: {counter:32} key: [{key}]')
+    if not m42:
+        d.append('m42: False')
+    s = '{' + ', '.join(d) + '}'
+    name += ':'
+    return f'  {name:40} {s}\n'
 
 
-def make_ratio_yaml(name, num, den):
-    name = name + ':'
+def make_ratio_yaml(name, num, den, m42=True):
+    d = []
     num = num + ','
-    return f'  {name:40} {{num: {num:32} den: {den}}}\n'
+    d.append(f'num: {num:32} den: {den}')
+    if not m42:
+        d.append('m42: False')
+    s = '{' + ', '.join(d) + '}'
+    name = name + ':'
+    return f'  {name:40} {s}\n'
 
 
 def filter2tup(filter):
@@ -139,7 +131,7 @@ def obs_astuple(filter, obs, key):
 class Metric:
     type: str
     name: str
-    sources: Tuple[str, ...]
+    sources: List[str]
     filter: List[Union[str, Dict[str, Union[int, str, bool, List[int], List[str]]]]] = field(default_factory=list)
     obs: List[str] = field(default_factory=list)
     counter: 'Metric' = None
@@ -147,6 +139,10 @@ class Metric:
     threshold: int = None
     num: 'Metric' = None
     den: 'Metric' = None
+
+    @property
+    def m42(self):
+        return self.name in MetricOld.occupied_metric_names
 
     def __post_init__(self):
         self.astuple = obs_astuple(self.filter, self.obs, self.key)
@@ -170,11 +166,11 @@ class Metric:
     @property
     def yaml_repr(self):
         if self.type == 'counter':
-            return make_counter_yaml(self.name, self.obs, self.filter)
+            return make_counter_yaml(self.name, self.obs, self.filter, self.m42)
         elif self.type == 'uniq':
-            return make_uniq_yaml(self.name, self.counter.name, self.key)
+            return make_uniq_yaml(self.name, self.counter.name, self.key, self.m42)
         elif self.type == 'ratio':
-            return make_ratio_yaml(self.name, self.num.name, self.den.name)
+            return make_ratio_yaml(self.name, self.num.name, self.den.name, self.m42)
 
     def __hash__(self):
         return hash(self.__key)
@@ -222,6 +218,7 @@ class MetricIndex(Set):
 
 @dataclass
 class Observation:
+    source: str
     name: str
     filter: List[Union[str, Dict[str, Union[int, str, bool, List[int], List[str]]]]] = field(default_factory=list)
     obs: List[str] = field(default_factory=list)
@@ -231,11 +228,11 @@ class Observation:
         self.astuple = obs_astuple(self.filter, self.obs, self.key)
 
     @classmethod
-    def from_conf(cls, name, conf):
+    def from_conf(cls, source, name, conf):
         filter = conf.get('filter', [])
         obs = conf.get('obs', [])
         key = conf.get('key', [])
-        return cls(name, filter, obs, key)
+        return cls(source, name, filter, obs, key)
 
     def __key(self):
         return self.name, self.astuple
@@ -305,8 +302,12 @@ class ObservationIndex(Set[Observation]):
         return res
 
     @property
+    def merged_sources(self):
+        return sorted({o.source for o in self})
+
+    @property
     def merged_aliases(self):
-        return sorted([o.alias for o in self])
+        return sorted({o.alias for o in self})
 
     @property
     def merged_key(self):
@@ -351,23 +352,52 @@ def combine_uniq_key(uniq_key, old_uniq_key):
 @dataclass
 class MetricOld:
     name: str
-    sources: Tuple[str, ...]
-    source_num_obs: ObservationIndex
-    source_den_obs: ObservationIndex
-    num_obs: List[str] = field(default_factory=list)
-    num_filter: List[Union[str, Dict[str, Union[int, str, bool, List[int], List[str]]]]] = field(default_factory=list)
-    num_sources: Tuple[str, ...] = ()
-    den_obs: List[str] = field(default_factory=list)
-    den_filter: List[Union[str, Dict[str, Union[int, str, bool, List[int], List[str]]]]] = field(default_factory=list)
-    den_sources: Tuple[str, ...] = ()
+    num_obs_index: ObservationIndex
+    den_obs_index: ObservationIndex
+    obs_index: ObservationIndex
     num_uniq: List[str] = field(default_factory=list)
     den_uniq: List[str] = field(default_factory=list)
     num_threshold: int = 0
     den_threshold: int = 0
+    date_filter: str = None
 
-    occupied_names = set()
-    metric_index = MetricIndex()
-    observation_index = ObservationIndex()
+    occupied_metric_names = set()
+    all_metric_index = MetricIndex()
+    all_observation_index = ObservationIndex()
+
+    @property
+    def sources(self):
+        return self.obs_index.merged_sources
+
+    @property
+    def num_obs(self):
+        return self.num_obs_index.merged_obs
+
+    @property
+    def den_obs(self):
+        return self.den_obs_index.merged_obs
+
+    @cached_property
+    def num_filter(self):
+        f = self.num_obs_index.merged_filter
+        if self.date_filter:
+            f.append({'start_date.>=': 'ab_start_date'})
+        return f
+
+    @cached_property
+    def den_filter(self):
+        f = self.den_obs_index.merged_filter
+        if self.date_filter and f:
+            f.append({'start_date.>=': 'ab_start_date'})
+        return f
+
+    @property
+    def num_sources(self):
+        return self.num_obs_index.merged_sources
+
+    @property
+    def den_sources(self):
+        return self.den_obs_index.merged_sources
 
     @property
     def type(self):
@@ -414,42 +444,23 @@ class MetricOld:
 
     @classmethod
     def from_tup(cls, tup):
-        if tup.metric_name == 'searches_from_witcher_any':
-            _ = 1
-        no = cls.observation_index[split_into_tup(tup.numerator_observations)]
-        num_obs = no.merged_obs
+        no = cls.all_observation_index[split_into_tup(tup.numerator_observations)]
         num_uniq = combine_uniq_key(no.merged_key, split_into_tup(tup.numerator_uniq))
-        num_filter = no.merged_filter
-
-        do = cls.observation_index[split_into_tup(tup.denominator_observations)]
-        den_obs = do.merged_obs
+        do = cls.all_observation_index[split_into_tup(tup.denominator_observations)]
         den_uniq = combine_uniq_key(do.merged_key, split_into_tup(tup.denominator_uniq))
-        den_filter = do.merged_filter
-
-        if tup.date_filter:
-            num_filter.append({'start_date.>=': 'ab_start_date'})
-            if do:
-                den_filter.append({'start_date.>=': 'ab_start_date'})
-
         return cls(
             name=tup.metric_name,
-            num_obs=num_obs,
-            num_filter=num_filter,
-            den_obs=den_obs,
-            den_filter=den_filter,
             num_uniq=num_uniq,
             den_uniq=den_uniq,
             num_threshold=tup.numerator_threshold,
             den_threshold=tup.denominator_threshold,
-            sources=split_into_tup(tup.sources),
-            num_sources=split_into_tup(tup.num_sources),
-            den_sources=split_into_tup(tup.den_sources),
-            source_num_obs=no,
-            source_den_obs=do,
+            num_obs_index=no,
+            den_obs_index=do,
+            obs_index=ObservationIndex(no.union(do)),
+            date_filter=tup.date_filter,
         )
 
     def make_name(self, type, obs, ftr, uniq):
-        name = None
         if type == self.type:
             name = self.name
         else:
@@ -483,48 +494,54 @@ class MetricOld:
 
             nn = 0
             _name = name
-            while name in self.occupied_names.union(self.metric_index.by_name):
+            while name in self.occupied_metric_names.union(self.all_metric_index.by_name):
                 name = _name + '_' + str(nn)
                 nn += 1
         return name
 
     def make_num_counter(self):
-        if self.name == 'base_serp_without_query_empty':
-            _ = 0
-        m = Metric(type='counter',
-                      name=self.make_name('counter', self.source_num_obs, self.num_filter, self.num_uniq),
-                      sources=self.num_sources, obs=self.num_obs, filter=self.num_filter)
-        self.metric_index.add(m)
+        type = 'counter'
+        name = self.make_name(type, self.num_obs_index, self.num_filter, self.num_uniq)
+        m = Metric(type=type,
+                   name=name,
+                   sources=self.num_sources, obs=self.num_obs, filter=self.num_filter)
+        self.all_metric_index.add(m)
         return m
 
     def make_den_counter(self):
-        m = Metric(type='counter', name=self.make_name('counter', self.source_den_obs, self.den_filter, self.den_uniq),
-                      sources=self.den_sources, obs=self.den_obs, filter=self.den_filter)
-        self.metric_index.add(m)
+        type = 'counter'
+        name = self.make_name(type, self.den_obs_index, self.den_filter, self.den_uniq)
+        m = Metric(type=type, name=name,
+                   sources=self.den_sources, obs=self.den_obs, filter=self.den_filter)
+        self.all_metric_index.add(m)
         return m
 
     def make_num_uniq(self):
+        type = 'uniq'
+        name = self.make_name(type, self.num_obs_index, self.num_filter, self.num_uniq)
         m = Metric(
-            type='uniq',
-            name=self.make_name('uniq', self.source_num_obs, self.num_filter, self.num_uniq),
+            type=type,
+            name=name,
             sources=self.num_sources,
-            counter=self.metric_index.by_self[self.make_num_counter()],
+            counter=self.all_metric_index.by_self[self.make_num_counter()],
             key=self.num_uniq,
-            threshold=self.num_threshold
+            threshold=self.num_threshold,
         )
-        self.metric_index.add(m)
+        self.all_metric_index.add(m)
         return m
 
     def make_den_uniq(self):
+        type = 'uniq'
+        name = self.make_name(type, self.den_obs_index, self.den_filter, self.den_uniq)
         m = Metric(
-            type='uniq',
-            name=self.make_name('uniq', self.source_den_obs, self.den_filter, self.den_uniq),
+            type=type,
+            name=name,
             sources=self.den_sources,
-            counter=self.metric_index.by_self[self.make_den_counter()],
+            counter=self.all_metric_index.by_self[self.make_den_counter()],
             key=self.den_uniq,
-            threshold=self.den_threshold
+            threshold=self.den_threshold,
         )
-        self.metric_index.add(m)
+        self.all_metric_index.add(m)
         return m
 
     def make_ratio(self):
@@ -536,8 +553,8 @@ class MetricOld:
             type='ratio',
             name=self.name,
             sources=self.sources,
-            num=self.metric_index.by_self[num_ind],
-            den=self.metric_index.by_self[den_ind],
+            num=self.all_metric_index.by_self[num_ind],
+            den=self.all_metric_index.by_self[den_ind],
         )
-        self.metric_index.add(m)
+        self.all_metric_index.add(m)
         return m

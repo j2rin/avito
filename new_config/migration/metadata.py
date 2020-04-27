@@ -27,17 +27,31 @@ left join metric_sources using (metric_name)
 ;
 """
 
+OBSERVATION_DIR_SQL = """
+SELECT od.observation_name as obs, od.observation_source as source
+FROM   DMA.observations_directory od
+WHERE event_date::date = '{calc_date}'
+group by 1, 2
+;
+"""
 
-def load_metrics_config(calc_date):
-    csv_name = 'metric_config.csv'
+def load_metadata(calc_date, csv_name, sql):
     try:
         return pd.read_csv(csv_name).fillna('')
     except Exception:
         with get_vertica_con('C3', 'dlenkov') as con:
-            frame = pd.read_sql(METRICS_CONFIG_SQL.format(calc_date=calc_date), con).fillna('')
-            frame.to_csv(csv_name)
+            frame = pd.read_sql(sql.format(calc_date=calc_date), con).fillna('')
+            frame.to_csv(csv_name, index=False)
             return pd.read_csv(csv_name).fillna('')
 
 
+def load_metrics_config(calc_date):
+    return load_metadata(calc_date, 'metric_config.csv', METRICS_CONFIG_SQL)
+
+
+def load_observations_directory(calc_date):
+    return load_metadata(calc_date, 'observations_directory.csv', OBSERVATION_DIR_SQL)
+
+
 if __name__ == '__main__':
-    print(load_metrics_config('2020-04-13'))
+    print(load_observations_directory('2020-04-26'))

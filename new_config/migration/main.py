@@ -1,4 +1,4 @@
-from metadata import load_metrics_config
+from metadata import load_metrics_config, load_observations_directory
 from migration import write_all_metrics_to_files, write_metrics_to_file, write_sources
 from models import *
 from collections import Counter
@@ -7,8 +7,8 @@ from ruamel.yaml import safe_load
 
 
 def convert_metrics(old_metrics: List[MetricOld]):
-    old_metrics[0].occupied_names.update({m.name for m in old_metrics})
-    all_metrics = old_metrics[0].metric_index
+    old_metrics[0].occupied_metric_names.update({m.name for m in old_metrics})
+    all_metrics = old_metrics[0].all_metric_index
     _ = [m.make_num_counter() for m in old_metrics if m.type == 'counter']
     _ = [m.make_num_counter() for m in old_metrics]
     _ = [m.make_den_counter() for m in old_metrics if m.type == 'ratio']
@@ -26,14 +26,14 @@ def migrate_config():
     conf = load_metrics_config('2020-04-25')
     print(conf.shape)
 
-    obs = {o for tup in conf.itertuples()
-           for o in split_into_tup(tup.numerator_observations) + split_into_tup(tup.denominator_observations)}
-
     with open('observations.yaml', 'r') as f:
         obs_dict = safe_load(f)
+    obs_dir = load_observations_directory('2020-04-25')
+    obs_from_metrics = {o for tup in conf.itertuples()
+           for o in split_into_tup(tup.numerator_observations) + split_into_tup(tup.denominator_observations)}
 
-    obs_index = make_obs_index(obs, obs_dict)
-    MetricOld.observation_index.update(obs_index)
+    obs_index = make_obs_index(obs_dir, obs_dict, obs_from_metrics)
+    MetricOld.all_observation_index.update(obs_index)
     old_metrics = [MetricOld.from_tup(tup) for tup in conf.itertuples()]
 
     print(Counter([m.type for m in old_metrics]))
