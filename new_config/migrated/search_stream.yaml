@@ -1,0 +1,26 @@
+metric.counter:
+  cnt_favorites_net:                       {obs: [favorites_net], m42: False}
+  cnt_session_s_with_empty_or_uniq_query:  {obs: [session_searches_with_empty_or_uniq_query], m42: False}
+  cnt_session_s_with_uniq_query:           {obs: [session_searches_with_uniq_query], m42: False}
+  cnt_sessions_with_query_suggest_click_c: {obs: [sessions_with_query_suggest_click_contact], m42: False}
+  cnt_sessions_with_suggest_click_and_c:   {obs: [sessions_with_suggest_click_and_contact], m42: False}
+  searches_witcher_delivery:               {obs: [searches_witcher_delivery]}
+  suggest_clicks:                          {obs: [search_suggest_clicks]}
+
+metric.uniq:
+  favorites_net:                           {counter: cnt_favorites_net,               key: [item, participant]}
+  search_suggest_clicks:                   {counter: suggest_clicks,                  key: [participant]}
+  share_suggest_buyers_to_all_users:       {counter: cnt_sessions_with_query_suggest_click_c, key: [participant]}
+  suggest_buyers_with_all_queries:         {counter: cnt_sessions_with_suggest_click_and_c, key: [participant]}
+  unq_session_s_with_empty_or_uniq_query:  {counter: cnt_session_s_with_empty_or_uniq_query, key: [participant], m42: False}
+  unq_session_s_with_uniq_query:           {counter: cnt_session_s_with_uniq_query,   key: [participant], m42: False}
+  user_witcher_del:                        {counter: searches_witcher_delivery,       key: [participant]}
+
+metric.ratio:
+  share_suggest_buyers_to_suggest_users:   {num: share_suggest_buyers_to_all_users, den: search_suggest_clicks}
+  share_suggest_searches_to_all:           {num: suggest_clicks,                  den: cnt_session_s_with_uniq_query}
+  share_suggest_users_to_users_with_search: {num: search_suggest_clicks,           den: unq_session_s_with_uniq_query}
+  suggest_buyers_to_suggest_users:         {num: suggest_buyers_with_all_queries, den: search_suggest_clicks}
+  suggest_searches_to_all_searches:        {num: suggest_clicks,                  den: cnt_session_s_with_empty_or_uniq_query}
+  suggest_users_to_users_with_search:      {num: search_suggest_clicks,           den: unq_session_s_with_empty_or_uniq_query}
+

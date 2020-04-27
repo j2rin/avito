@@ -1,0 +1,36 @@
+metric.counter:
+  cnt_reviews_score_sum:                   {obs: [reviews_score_sum], m42: False}
+  cnt_s_items:                             {obs: [search_items], m42: False}
+  cnt_s_items_with_rating:                 {obs: [search_items_with_rating], m42: False}
+  cnt_s_with_rating:                       {obs: [searches_with_rating], m42: False}
+  contacts_on_rating:                      {obs: [contacts_on_rating_1, contacts_on_rating_2, contacts_on_rating_3, contacts_on_rating_4, contacts_on_rating_5]}
+  contacts_on_rating_1:                    {obs: [contacts_on_rating_1]}
+  contacts_on_rating_2:                    {obs: [contacts_on_rating_2]}
+  contacts_on_rating_3:                    {obs: [contacts_on_rating_3]}
+  contacts_on_rating_4:                    {obs: [contacts_on_rating_4]}
+  contacts_on_rating_5:                    {obs: [contacts_on_rating_5]}
+  item_views_on_rating:                    {obs: [itemviews_on_rating_1, itemviews_on_rating_2, itemviews_on_rating_3, itemviews_on_rating_4, itemviews_on_rating_5]}
+  item_views_on_rating_1:                  {obs: [itemviews_on_rating_1]}
+  item_views_on_rating_2:                  {obs: [itemviews_on_rating_2]}
+  item_views_on_rating_3:                  {obs: [itemviews_on_rating_3]}
+  item_views_on_rating_4:                  {obs: [itemviews_on_rating_4]}
+  item_views_on_rating_5:                  {obs: [itemviews_on_rating_5]}
+  items_with_rating:                       {obs: [active_items_with_rating]}
+  reviews_added:                           {obs: [reviews_added]}
+
+metric.uniq:
+  buyers_on_rating_1:                      {counter: contacts_on_rating_1,            key: [participant]}
+  buyers_on_rating_2:                      {counter: contacts_on_rating_2,            key: [participant]}
+  buyers_on_rating_4:                      {counter: contacts_on_rating_4,            key: [participant]}
+  buyers_on_rating_5:                      {counter: contacts_on_rating_5,            key: [participant]}
+  users_reviews_added:                     {counter: reviews_added,                   key: [participant]}
+
+metric.ratio:
+  contacts_per_item_view_on_rating_1:      {num: contacts_on_rating_1,            den: item_views_on_rating_1}
+  contacts_per_item_view_on_rating_2:      {num: contacts_on_rating_2,            den: item_views_on_rating_2}
+  contacts_per_item_view_on_rating_3:      {num: contacts_on_rating_3,            den: item_views_on_rating_3}
+  contacts_per_item_view_on_rating_4:      {num: contacts_on_rating_4,            den: item_views_on_rating_4}
+  contacts_per_item_view_on_rating_5:      {num: contacts_on_rating_5,            den: item_views_on_rating_5}
+  reviews_avg_score:                       {num: cnt_reviews_score_sum,           den: reviews_added}
+  search_items_ratings_coverage:           {num: cnt_s_items_with_rating,         den: cnt_s_items}
+

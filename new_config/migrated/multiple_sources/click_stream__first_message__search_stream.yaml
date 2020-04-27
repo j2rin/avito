@@ -1,0 +1,11 @@
+metric.counter:
+  bt_clicks_new:                           {filter: [{$or: [*is_delivery], [*is_msg_btn], [*is_booking], [*is_fav], [*is_ph_tot]}], obs: [new_first_messages, realty_development_phone_views]}
+  cnt_book_dlv_favorites_added_new_fmsg_ph_realty_development: {filter: [{$or: [*is_booking], [*is_fav], [*is_delivery], [*is_ph_tot]}], obs: [new_first_messages, realty_development_phone_views]}
+  contacts_new:                            {filter: [{$or: [*is_booking], [*is_delivery], [*is_ph_tot]}], obs: [new_first_messages, realty_development_phone_views]}
+
+metric.uniq:
+  bt_clicks_grouped_new:                   {counter: bt_clicks_new,                   key: [item, participant]}
+  contacts_grouped_new:                    {counter: contacts_new,                    key: [item, participant]}
+  buyers_new:                              {counter: contacts_new,                    key: [participant]}
+  users_bt_click_daily_new:                {counter: cnt_book_dlv_favorites_added_new_fmsg_ph_realty_development, key: [participant]}
+

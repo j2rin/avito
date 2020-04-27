@@ -1,0 +1,171 @@
+metric.counter:
+  cnt_items_closed_by_user:                {filter: [{close_status_id: 7}, {start_date.>=: ab_start_date}], m42: False}
+  cnt_items_started_net:                   {filter: [{activation_type!: Wait, is_dead: False, is_item_star: Truet}, {start_date.>=: ab_start_date}], m42: False}
+  item_edit_starts:                        {obs: [edits_started]}
+  item_edit_starts_by_src:                 {obs: [edits_started_by_src]}
+  item_edits:                              {obs: [edits]}
+  item_edits_address:                      {obs: [edits_address]}
+  item_edits_by_src:                       {obs: [edits_by_src]}
+  item_edits_description:                  {obs: [edits_description]}
+  item_edits_description_start_date:       {filter: [{start_date.>=: ab_start_date}], obs: [edits_description]}
+  item_edits_photo_add:                    {obs: [edits_photo]}
+  item_edits_photo_add_start_date:         {filter: [{start_date.>=: ab_start_date}], obs: [edits_photo]}
+  item_edits_price:                        {obs: [edits_price]}
+  item_edits_price_start_date:             {filter: [{start_date.>=: ab_start_date}], obs: [edits_price]}
+  item_edits_start_date:                   {filter: [{start_date.>=: ab_start_date}], obs: [edits]}
+  item_edits_title:                        {obs: [edits_title]}
+  item_edits_title_start_date:             {filter: [{start_date.>=: ab_start_date}], obs: [edits_title]}
+  items_allowed:                           {filter: [{moder_flags.bit: 7}]}
+  items_allowed_start_date:                {filter: [{moder_flags.bit: 7}, {start_date.>=: ab_start_date}]}
+  items_archived:                          {filter: [{close_status_id: 10536750001}]}
+  items_blocked:                           {filter: [{moder_flags.bit: 3}]}
+  items_blocked_duplicate:                 {filter: [{moder_flags.bit: 5}]}
+  items_blocked_duplicate_start_date:      {filter: [{moder_flags.bit: 5}, {start_date.>=: ab_start_date}]}
+  items_blocked_rejected:                  {filter: [{moder_flags.bit: [3, 6]}]}
+  items_blocked_rejected_start_date:       {filter: [{moder_flags.bit: [3, 6]}, {start_date.>=: ab_start_date}]}
+  items_blocked_start_date:                {filter: [{moder_flags.bit: 3}, {start_date.>=: ab_start_date}]}
+  items_blocked_user_blocked:              {filter: [{moder_flags.bit: 4}]}
+  items_blocked_user_blocked_start_date:   {filter: [{moder_flags.bit: 4}, {start_date.>=: ab_start_date}]}
+  items_category_changed_by_moderator:     {filter: [{moder_flags.bit: 17}]}
+  items_category_changed_by_moderator_start_date: {filter: [{moder_flags.bit: 17}, {start_date.>=: ab_start_date}]}
+  items_closed_by_ttl:                     {filter: [{close_status_id: 9}]}
+  items_closed_by_user:                    {filter: [{close_status_id: 7}]}
+  items_closed_no_answer:                  {filter: [{$or: [{close_reason_id: 500006}], [{close_reason_id.isnull: True}]}, {close_status_id: 7}]}
+  items_closed_with_answer:                {filter: [{close_reason_id.!=: 500006, close_status_id: 7}]}
+  items_reactivated:                       {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_item_start: False}]}
+  items_reactivated_free:                  {filter: [{activation_type: [NoLF, Free, Free.Reopen], is_after_ttl: True, is_item_start: False}]}
+  items_reactivated_net:                   {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_dead: False, is_item_start: False}]}
+  items_reactivated_paid:                  {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_after_ttl: True, is_item_start: False}]}
+  items_reactivated_wait:                  {filter: [{activation_type: Wait, is_after_ttl: True, is_item_start: False}]}
+  items_rejected:                          {filter: [{moder_flags.bit: 6}]}
+  items_rejected_contacts_in_description:  {filter: [{moder_flags.bit: 11}]}
+  items_rejected_contacts_in_description_start_date: {filter: [{moder_flags.bit: 11}, {start_date.>=: ab_start_date}]}
+  items_rejected_contacts_on_photo:        {filter: [{moder_flags.bit: 14}]}
+  items_rejected_contacts_on_photo_start_date: {filter: [{moder_flags.bit: 14}, {start_date.>=: ab_start_date}]}
+  items_rejected_mileage:                  {filter: [{moder_flags.bit: 16}]}
+  items_rejected_mileage_start_date:       {filter: [{moder_flags.bit: 16}, {start_date.>=: ab_start_date}]}
+  items_rejected_pricelist:                {filter: [{moder_flags.bit: 9}]}
+  items_rejected_pricelist_start_date:     {filter: [{moder_flags.bit: 9}, {start_date.>=: ab_start_date}]}
+  items_rejected_start_date:               {filter: [{moder_flags.bit: 6}, {start_date.>=: ab_start_date}]}
+  items_rejected_wrong_cat:                {filter: [{moder_flags.bit: 8}]}
+  items_rejected_wrong_cat_start_date:     {filter: [{moder_flags.bit: 8}, {start_date.>=: ab_start_date}]}
+  items_rejected_wrong_item_type:          {filter: [{moder_flags.bit: 10}]}
+  items_rejected_wrong_item_type_start_date: {filter: [{moder_flags.bit: 10}, {start_date.>=: ab_start_date}]}
+  items_rejected_wrong_price:              {filter: [{moder_flags.bit: 13}]}
+  items_rejected_wrong_price_start_date:   {filter: [{moder_flags.bit: 13}, {start_date.>=: ab_start_date}]}
+  items_rejected_wrong_vin:                {filter: [{moder_flags.bit: 12}]}
+  items_rejected_wrong_vin_start_date:     {filter: [{moder_flags.bit: 12}, {start_date.>=: ab_start_date}]}
+  items_rejected_year_of_issue:            {filter: [{moder_flags.bit: 15}]}
+  items_rejected_year_of_issue_start_date: {filter: [{moder_flags.bit: 15}, {start_date.>=: ab_start_date}]}
+  items_sold_another_reason:               {filter: [{close_reason_id: 500012}]}
+  items_sold_another_reason_start_date:    {filter: [{close_reason_id: 500012}, {start_date.>=: ab_start_date}]}
+  items_sold_notonavito:                   {filter: [{close_reason_id: 500011}]}
+  items_sold_notonavito_start_date:        {filter: [{close_reason_id: 500011}, {start_date.>=: ab_start_date}]}
+  items_sold_onavito:                      {filter: [{close_reason_id: 500004}]}
+  items_sold_onavito_start_date:           {filter: [{close_reason_id: 500004}, {start_date.>=: ab_start_date}]}
+  items_started:                           {filter: [{activation_type!: Wait, is_item_start: True}]}
+  items_started_free:                      {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: None}]}
+  items_started_net:                       {filter: [{activation_type!: Wait, is_dead: False, is_item_star: Truet}]}
+  items_started_paid:                      {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_item_start: True}]}
+  items_started_wait:                      {filter: [{activation_type: Wait, is_item_start: True}]}
+  lf_amount_net:                           {obs: [lf_amount_net]}
+  lf_amount_net_start_date:                {filter: [{start_date.>=: ab_start_date}], obs: [lf_amount_net]}
+
+metric.uniq:
+  items_edit_started:                      {counter: item_edit_starts,                key: [item]}
+  items_edit_started_by_src:               {counter: item_edit_starts_by_src,         key: [item]}
+  items_edited:                            {counter: item_edits,                      key: [item]}
+  items_edited_address:                    {counter: item_edits_address,              key: [item]}
+  items_edited_by_src:                     {counter: item_edits_by_src,               key: [item]}
+  items_edited_description:                {counter: item_edits_description,          key: [item]}
+  items_edited_description_start_date:     {counter: item_edits_description_start_date, key: [item]}
+  items_edited_photo_add:                  {counter: item_edits_photo_add,            key: [item]}
+  items_edited_photo_add_start_date:       {counter: item_edits_photo_add_start_date, key: [item]}
+  items_edited_price:                      {counter: item_edits_price,                key: [item]}
+  items_edited_price_start_date:           {counter: item_edits_price_start_date,     key: [item]}
+  items_edited_start_date:                 {counter: item_edits_start_date,           key: [item]}
+  items_edited_title:                      {counter: item_edits_title,                key: [item]}
+  items_edited_title_start_date:           {counter: item_edits_title_start_date,     key: [item]}
+  items_reactivated_net_conversion:        {counter: items_reactivated_net,           key: [participant]}
+  items_sold_onavito_conversion:           {counter: items_sold_onavito,              key: [participant]}
+  items_started_net_conversion:            {counter: items_started_net,               key: [participant]}
+  sellers_edited_address:                  {counter: item_edits_address,              key: [participant]}
+  users_item_allowed:                      {counter: items_allowed,                   key: [participant]}
+  users_item_allowed_start_date:           {counter: items_allowed_start_date,        key: [participant]}
+  users_item_archived:                     {counter: items_archived,                  key: [participant]}
+  users_item_blocked:                      {counter: items_blocked,                   key: [participant]}
+  users_item_blocked_duplicate:            {counter: items_blocked_duplicate,         key: [participant]}
+  users_item_blocked_duplicate_start_date: {counter: items_blocked_duplicate_start_date, key: [participant]}
+  users_item_blocked_rejected:             {counter: items_blocked_rejected,          key: [participant]}
+  users_item_blocked_rejected_start_date:  {counter: items_blocked_rejected_start_date, key: [participant]}
+  users_item_blocked_start_date:           {counter: items_blocked_start_date,        key: [participant]}
+  users_item_blocked_user_blocked:         {counter: items_blocked_user_blocked,      key: [participant]}
+  users_item_blocked_user_blocked_start_date: {counter: items_blocked_user_blocked_start_date, key: [participant]}
+  users_item_category_changed_by_moderator: {counter: items_category_changed_by_moderator, key: [participant]}
+  users_item_category_changed_by_moderator_start_date: {counter: items_category_changed_by_moderator_start_date, key: [participant]}
+  users_item_closed_by_ttl:                {counter: items_closed_by_ttl,             key: [participant]}
+  users_item_closed_by_user:               {counter: items_closed_by_user,            key: [participant]}
+  users_item_closed_no_answer:             {counter: items_closed_no_answer,          key: [participant]}
+  users_item_closed_with_answer:           {counter: items_closed_with_answer,        key: [participant]}
+  users_item_edit:                         {counter: item_edits,                      key: [participant]}
+  users_item_edit_description:             {counter: item_edits_description,          key: [participant]}
+  users_item_edit_description_start_date:  {counter: item_edits_description_start_date, key: [participant]}
+  users_item_edit_photo_add:               {counter: item_edits_photo_add,            key: [participant]}
+  users_item_edit_photo_add_start_date:    {counter: item_edits_photo_add_start_date, key: [participant]}
+  users_item_edit_price:                   {counter: item_edits_price,                key: [participant]}
+  users_item_edit_price_start_date:        {counter: item_edits_price_start_date,     key: [participant]}
+  users_item_edit_start:                   {counter: item_edit_starts,                key: [participant]}
+  users_item_edit_start_by_src:            {counter: item_edit_starts_by_src,         key: [participant]}
+  users_item_edit_start_date:              {counter: item_edits_start_date,           key: [participant]}
+  users_item_edit_title:                   {counter: item_edits_title,                key: [participant]}
+  users_item_edit_title_start_date:        {counter: item_edits_title_start_date,     key: [participant]}
+  users_item_edited_by_src:                {counter: item_edits_by_src,               key: [participant]}
+  users_item_reactivated:                  {counter: items_reactivated,               key: [participant]}
+  users_item_reactivated_free:             {counter: items_reactivated_free,          key: [participant]}
+  users_item_reactivated_paid:             {counter: items_reactivated_paid,          key: [participant]}
+  users_item_reactivated_wait:             {counter: items_reactivated_wait,          key: [participant]}
+  users_item_rejected:                     {counter: items_rejected,                  key: [participant]}
+  users_item_rejected_contacts_in_description: {counter: items_rejected_contacts_in_description, key: [participant]}
+  users_item_rejected_contacts_in_description_start_date: {counter: items_rejected_contacts_in_description_start_date, key: [participant]}
+  users_item_rejected_contacts_on_photo:   {counter: items_rejected_contacts_on_photo, key: [participant]}
+  users_item_rejected_contacts_on_photo_start_date: {counter: items_rejected_contacts_on_photo_start_date, key: [participant]}
+  users_item_rejected_mileage:             {counter: items_rejected_mileage,          key: [participant]}
+  users_item_rejected_mileage_start_date:  {counter: items_rejected_mileage_start_date, key: [participant]}
+  users_item_rejected_pricelist:           {counter: items_rejected_pricelist,        key: [participant]}
+  users_item_rejected_pricelist_start_date: {counter: items_rejected_pricelist_start_date, key: [participant]}
+  users_item_rejected_start_date:          {counter: items_rejected_start_date,       key: [participant]}
+  users_item_rejected_wrong_cat:           {counter: items_rejected_wrong_cat,        key: [participant]}
+  users_item_rejected_wrong_cat_start_date: {counter: items_rejected_wrong_cat_start_date, key: [participant]}
+  users_item_rejected_wrong_item_type:     {counter: items_rejected_wrong_item_type,  key: [participant]}
+  users_item_rejected_wrong_item_type_start_date: {counter: items_rejected_wrong_item_type_start_date, key: [participant]}
+  users_item_rejected_wrong_price:         {counter: items_rejected_wrong_price,      key: [participant]}
+  users_item_rejected_wrong_price_start_date: {counter: items_rejected_wrong_price_start_date, key: [participant]}
+  users_item_rejected_wrong_vin:           {counter: items_rejected_wrong_vin,        key: [participant]}
+  users_item_rejected_wrong_vin_start_date: {counter: items_rejected_wrong_vin_start_date, key: [participant]}
+  users_item_rejected_year_of_issue:       {counter: items_rejected_year_of_issue,    key: [participant]}
+  users_item_rejected_year_of_issue_start_date: {counter: items_rejected_year_of_issue_start_date, key: [participant]}
+  users_item_sold_another_reason:          {counter: items_sold_another_reason,       key: [participant]}
+  users_item_sold_another_reason_start_date: {counter: items_sold_another_reason_start_date, key: [participant]}
+  users_item_sold_notonavito:              {counter: items_sold_notonavito,           key: [participant]}
+  users_item_started:                      {counter: items_started,                   key: [participant]}
+  users_item_started_free:                 {counter: items_started_free,              key: [participant]}
+  users_item_started_paid:                 {counter: items_started_paid,              key: [participant]}
+  users_item_started_wait:                 {counter: items_started_wait,              key: [participant]}
+  users_lf:                                {counter: lf_amount_net,                   key: [participant]}
+  users_lf_start_date:                     {counter: lf_amount_net_start_date,        key: [participant]}
+
+metric.ratio:
+  item_edits_address_per_item:             {num: item_edits_address,              den: items_edited_address}
+  item_edits_per_item_edit_starts:         {num: item_edits,                      den: item_edit_starts}
+  item_edits_per_item_edit_starts_by_src:  {num: item_edits_by_src,               den: item_edit_starts_by_src}
+  item_edits_per_items_started_net_start_date: {num: item_edits_start_date,           den: cnt_items_started_net}
+  item_reactivated_net_per_items_reactivated: {num: items_reactivated_net,           den: items_reactivated}
+  item_started_net_per_items_started:      {num: items_started_net,               den: items_started}
+  items_closed_by_user_per_items_started_net_start_date: {num: cnt_items_closed_by_user,        den: cnt_items_started_net}
+  items_edited_address_per_items_edited:   {num: items_edited_address,            den: items_edited}
+  items_edited_per_items_edit_started:     {num: items_edited,                    den: items_edit_started}
+  items_edited_per_items_edit_started_by_src: {num: items_edited_by_src,             den: items_edit_started_by_src}
+  items_sold_onavito_per_items_reactivated_net: {num: items_sold_onavito,              den: items_reactivated_net}
+  items_sold_onavito_per_items_started_net_start_date: {num: items_sold_onavito_start_date,   den: cnt_items_started_net}
+  sellers_edited_address_per_editor:       {num: sellers_edited_address,          den: users_item_edit}
+

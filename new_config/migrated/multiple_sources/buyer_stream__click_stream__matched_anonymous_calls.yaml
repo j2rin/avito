@@ -1,0 +1,10 @@
+metric.counter:
+  btc_funnel_second:                       {filter: [{$or: [*is_msg], [*is_delivery], [*is_booking]}], obs: [answered_proxy_calls, call_phone_screen_views_client, missed_proxy_calls]}
+
+metric.uniq:
+  users_btc_funnel_second:                 {counter: btc_funnel_second,               key: [participant]}
+  sess_btc_funnel_second:                  {counter: btc_funnel_second,               key: [participant, session]}
+
+metric.ratio:
+  calls_per_phone_views:                   {num: calls,                           den: phone_views_total}
+
