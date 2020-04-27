@@ -397,3 +397,58 @@ seller_item_active:
   seller_items_favorites_added: {key: [item], obs: [favs_added]}
   seller_items_favorites_removed: {key: [item], obs: [favs_removed]}
   sellers_items_with_contacts: {key: [item], obs: [contacts]}
+
+#
+#item_geo:
+#  item_20m_from_location: SUM(CASE WHEN location_distance <= 0.02 THEN 1 ELSE 0 END) item_20m_from_location,
+#  item_100m_from_location: SUM(CASE WHEN location_distance <= 0.1 THEN 1 ELSE 0 END) item_100m_from_location,
+#  item_200_plus_km_from_location: SUM(CASE WHEN location_distance > 200 THEN 1 ELSE 0 END) item_200_plus_km_from_location,
+#  item_no_address_string: SUM(CASE WHEN NOT has_address  THEN 1 ELSE 0 END) item_no_address_string,
+#  item_with_address_string: SUM(CASE WHEN has_address  THEN 1 ELSE 0 END)  item_with_address_string,
+#  item_no_address_id: SUM(CASE WHEN NOT has_address_id THEN 1 ELSE 0 END) item_no_address_id,
+#  item_with_address_id: SUM(CASE WHEN has_address_id THEN 1 ELSE 0 END) item_with_address_id,
+#  item_no_coordinates: SUM(CASE WHEN ifnull(location_distance,-1) = -1 THEN 1 ELSE 0 END) item_no_coordinates,
+#  item_with_coordinates: SUM(CASE WHEN ifnull(location_distance,-1) > -1 THEN 1 ELSE 0 END) item_with_coordinates,
+#  item_address_length: SUM(address_length) as item_address_length,
+#  item_has_building: SUM(CASE WHEN min_kind_level = 40 then 1 ELSE 0 END) item_has_building,
+#  item_has_street: SUM(CASE WHEN min_kind_level = 50 then 1 ELSE 0 END) item_has_street,
+#  item_has_district: SUM(CASE WHEN min_kind_level in (60,70) then 1 ELSE 0 END) item_has_district,
+#  item_has_city: SUM(CASE WHEN min_kind_level in (100,110) then 1 ELSE 0 END) item_has_city,
+#  item_no_city: SUM(CASE WHEN min_kind_level in (120,130,140) then 1 ELSE 0 END) item_no_city,
+#  item_has_marginal_address: SUM(CASE WHEN min_kind_level in (10,20,30,80,90) then 1 ELSE 0 END) item_has_marginal_address,
+#
+#  --новые
+#  item_20m_from_location_new: SUM(CASE WHEN item_status = 'New' AND location_distance <= 0.02 THEN 1 ELSE 0 END) item_20m_from_location_new,
+#  SUM(CASE WHEN item_status = 'New' AND  location_distance <= 0.1 THEN 1 ELSE 0 END) item_100m_from_location_new,
+#  SUM(CASE WHEN item_status = 'New' AND  location_distance > 200 THEN 1 ELSE 0 END) item_200_plus_km_from_location_new,
+#  SUM(CASE WHEN item_status = 'New' AND  NOT has_address  THEN 1 ELSE 0 END) item_no_address_string_new,
+#  SUM(CASE WHEN item_status = 'New' AND  has_address  THEN 1 ELSE 0 END)  item_with_address_string_new,
+#  SUM(CASE WHEN item_status = 'New' AND  NOT has_address_id THEN 1 ELSE 0 END) item_no_address_id_new,
+#  SUM(CASE WHEN item_status = 'New' AND  has_address_id THEN 1 ELSE 0 END) item_with_address_id_new,
+#  SUM(CASE WHEN item_status = 'New' AND  ifnull(location_distance,-1) = -1 THEN 1 ELSE 0 END) item_no_coordinates_new,
+#  SUM(CASE WHEN item_status = 'New' AND  ifnull(location_distance,-1) > -1 THEN 1 ELSE 0 END) item_with_coordinates_new,
+#  SUM(CASE WHEN item_status = 'New' THEN address_length ELSE 0 END) as item_address_length_new,
+#  SUM(CASE WHEN item_status = 'New' AND min_kind_level = 40 then 1 ELSE 0 END) item_has_building_new,
+#  SUM(CASE WHEN item_status = 'New' AND min_kind_level = 50 then 1 ELSE 0 END) item_has_street_new,
+#  SUM(CASE WHEN item_status = 'New' AND min_kind_level in (60,70) then 1 ELSE 0 END) item_has_district_new,
+#  SUM(CASE WHEN item_status = 'New' AND min_kind_level in (100,110) then 1 ELSE 0 END) item_has_city_new,
+#  SUM(CASE WHEN item_status = 'New' AND min_kind_level in (120,130,140) then 1 ELSE 0 END) item_no_city_new,
+#  SUM(CASE WHEN item_status = 'New' AND min_kind_level in (10,20,30,80,90) then 1 ELSE 0 END) item_has_marginal_address_new,
+#
+#  --реактивация
+#  SUM(CASE WHEN item_status = 'Reactivation' AND location_distance <= 0.02 THEN 1 ELSE 0 END) item_20m_from_location_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND  location_distance <= 0.1 THEN 1 ELSE 0 END) item_100m_from_location_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND  location_distance > 200 THEN 1 ELSE 0 END) item_200_plus_km_from_location_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND  NOT has_address  THEN 1 ELSE 0 END) item_no_address_string_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND  has_address  THEN 1 ELSE 0 END)  item_with_address_string_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND  NOT has_address_id THEN 1 ELSE 0 END) item_no_address_id_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND  has_address_id THEN 1 ELSE 0 END) item_with_address_id_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND  ifnull(location_distance,-1) = -1 THEN 1 ELSE 0 END) item_no_coordinates_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND  ifnull(location_distance,-1) > -1 THEN 1 ELSE 0 END) item_with_coordinates_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' THEN address_length ELSE 0 END) as item_address_length_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level = 40 then 1 ELSE 0 END) item_has_building_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level = 50 then 1 ELSE 0 END) item_has_street_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level in (60,70) then 1 ELSE 0 END) item_has_district_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level in (100,110) then 1 ELSE 0 END) item_has_city_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level in (120,130,140) then 1 ELSE 0 END) item_no_city_reactivated,
+#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level in (10,20,30,80,90) then 1 ELSE 0 END) item_has_marginal_address_reactivated

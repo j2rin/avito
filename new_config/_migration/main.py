@@ -23,12 +23,12 @@ def convert_metrics(old_metrics: List[MetricOld]):
 
 
 def migrate_config():
-    conf = load_metrics_config('2020-04-25')
+    conf = load_metrics_config('2020-04-26')
     print(conf.shape)
 
     with open('observations.yaml', 'r') as f:
         obs_dict = safe_load(f)
-    obs_dir = load_observations_directory('2020-04-25')
+    obs_dir = load_observations_directory('2020-04-26')
     obs_from_metrics = {o for tup in conf.itertuples()
            for o in split_into_tup(tup.numerator_observations) + split_into_tup(tup.denominator_observations)}
 
