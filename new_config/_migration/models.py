@@ -30,7 +30,7 @@ def dump_filter(filter):
                     or_tup = []
                     for d in v:
                         or_tup.append(dump_filter(d))
-                    v = ', '.join(or_tup)
+                    v = '[' + ', '.join(or_tup) + ']'
                 if isinstance(v, list):
                     v = safe_dump(v, default_flow_style=True, width=1024).strip('\n')
                 elem_tup.append(f'{k}: {v}')
