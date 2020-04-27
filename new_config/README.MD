@@ -21,9 +21,7 @@
 |`item_vas_flags & 4 > 0`|`item_vas_flags.bit: 2`|
 
 ### Definitions
-Для упрощения конфига, часто повторяющиеся конструкции можно объявить в блоке `definitions`.
-1. Объявление через &. ссылка через *
-2. Dict'ы можно вмердживать через   `<<: [*dict1, dict2]`. Если dict один, то можно без `[]`
+Для упрощения конфига, часто повторяющиеся конструкции можно объявить в блоке `definitions`. Объявление через &. ссылка через *
 
 Пример:
 ```yaml
@@ -31,7 +29,7 @@ definitions:
   - &eid_search   [300]
   - &eid_rec      [2437, 2012, 2309]
   - &x_is_search  {x_eid: *eid_search}
-  - &x_is_rec     {$or: [{x_eid: *eid_rec}, {x_engine: sg-rec}]}
+  - &x_is_rec     {$or: [[x_eid: *eid_rec], [x_engine: sg-rec]]}
 
 metric.counter:
   rec_events: {filter: *x_is_rec}
