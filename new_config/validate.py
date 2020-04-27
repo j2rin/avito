@@ -141,7 +141,9 @@ def validate():
 
 def process():
     result, _ = send_all(PROCESS_URL)
-    print(result)
+    print(
+        json.dumps(result, indent=4)
+    )
 
 
 if __name__ == '__main__':
