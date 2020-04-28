@@ -1,7 +1,7 @@
 metric.counter:
-  bt_clicks_new:                           {filter: [{$or: [[*is_msg_btn], [*is_delivery], [*is_fav], [*is_ph_tot], [*is_booking]]}], obs: [new_first_messages, realty_development_phone_views]}
-  cnt_book_dlv_favorites_added_new_fmsg_ph_realty_development: {filter: [{$or: [[*is_ph_tot], [*is_booking], [*is_delivery], [*is_fav]]}], obs: [new_first_messages, realty_development_phone_views], m42: False}
-  contacts_new:                            {filter: [{$or: [[*is_ph_tot], [*is_booking], [*is_delivery]]}], obs: [new_first_messages, realty_development_phone_views]}
+  bt_clicks_new:                           {filter: [{$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg_btn], [*is_ph_tot]]}], obs: [new_first_messages, realty_development_phone_views]}
+  cnt_book_dlv_favorites_added_new_fmsg_ph_realty_development: {filter: [{$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_ph_tot]]}], obs: [new_first_messages, realty_development_phone_views], m42: False}
+  contacts_new:                            {filter: [{$or: [[*is_booking], [*is_delivery], [*is_ph_tot]]}], obs: [new_first_messages, realty_development_phone_views]}
 
 metric.uniq:
   bt_clicks_grouped_new:                   {counter: bt_clicks_new,                   key: [item, participant]}

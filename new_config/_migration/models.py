@@ -30,7 +30,7 @@ def dump_filter(filter):
                     or_tup = []
                     for d in v:
                         or_tup.append(dump_filter(d))
-                    v = '[' + ', '.join(or_tup) + ']'
+                    v = '[' + ', '.join(sorted(or_tup)) + ']'
                 if isinstance(v, list):
                     v = safe_dump(v, default_flow_style=True, width=1024).strip('\n')
                 elem_tup.append(f'{k}: {v}')
@@ -331,7 +331,7 @@ class ObservationIndex(Set[Observation]):
             if t:
                 or_terms.add(t)
         if or_terms:
-            res += ((('$or', tuple(or_terms)),),)
+            res += ((('$or', tuple(sorted(or_terms))),),)
 
         return tup2filter(res)
 
