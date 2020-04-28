@@ -34,7 +34,7 @@ def migrate_config():
 
     obs_index = make_obs_index(obs_dir, obs_dict, obs_from_metrics)
     MetricOld.all_observation_index.update(obs_index)
-    old_metrics = [MetricOld.from_tup(tup) for tup in conf.itertuples()]
+    old_metrics = [MetricOld.from_tup(tup) for tup in conf.sort_values('metric_name').itertuples()]
 
     print(Counter([m.type for m in old_metrics]))
 
