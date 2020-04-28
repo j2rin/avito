@@ -1,6 +1,6 @@
 metric.counter:
   cnt_items_closed_by_user:                {filter: [{close_status_id: 7}, {start_date.>=: ab_start_date}], m42: False}
-  cnt_items_started_net:                   {filter: [{activation_type!: Wait, is_dead: False, is_item_star: Truet}, {start_date.>=: ab_start_date}], m42: False}
+  cnt_items_started_net:                   {filter: [{activation_type!: Wait, is_dead: False, is_item_start: True}, {start_date.>=: ab_start_date}], m42: False}
   item_edit_starts:                        {obs: [edits_started]}
   item_edit_starts_by_src:                 {obs: [edits_started_by_src]}
   item_edits:                              {obs: [edits]}
@@ -65,7 +65,7 @@ metric.counter:
   items_sold_onavito_start_date:           {filter: [{close_reason_id: 500004}, {start_date.>=: ab_start_date}]}
   items_started:                           {filter: [{activation_type!: Wait, is_item_start: True}]}
   items_started_free:                      {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: None}]}
-  items_started_net:                       {filter: [{activation_type!: Wait, is_dead: False, is_item_star: Truet}]}
+  items_started_net:                       {filter: [{activation_type!: Wait, is_dead: False, is_item_start: True}]}
   items_started_paid:                      {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_item_start: True}]}
   items_started_wait:                      {filter: [{activation_type: Wait, is_item_start: True}]}
   lf_amount_net:                           {obs: [lf_amount_net]}
@@ -90,6 +90,8 @@ metric.uniq:
   items_sold_onavito_conversion:           {counter: items_sold_onavito,              key: [participant]}
   items_started_net_conversion:            {counter: items_started_net,               key: [participant]}
   sellers_edited_address:                  {counter: item_edits_address,              key: [participant]}
+  users_item_allowed:                      {counter: items_allowed,                   key: [participant]}
+  users_item_allowed_start_date:           {counter: items_allowed_start_date,        key: [participant]}
   users_item_archived:                     {counter: items_archived,                  key: [participant]}
   users_item_blocked:                      {counter: items_blocked,                   key: [participant]}
   users_item_blocked_duplicate:            {counter: items_blocked_duplicate,         key: [participant]}
@@ -129,8 +131,6 @@ metric.uniq:
   users_item_rejected_contacts_on_photo_start_date: {counter: items_rejected_contacts_on_photo_start_date, key: [participant]}
   users_item_rejected_mileage:             {counter: items_rejected_mileage,          key: [participant]}
   users_item_rejected_mileage_start_date:  {counter: items_rejected_mileage_start_date, key: [participant]}
-  users_item_rejected_phone_in_other_profile: {counter: items_allowed,                   key: [participant]}
-  users_item_rejected_phone_in_other_profile_start_date: {counter: items_allowed_start_date,        key: [participant]}
   users_item_rejected_pricelist:           {counter: items_rejected_pricelist,        key: [participant]}
   users_item_rejected_pricelist_start_date: {counter: items_rejected_pricelist_start_date, key: [participant]}
   users_item_rejected_start_date:          {counter: items_rejected_start_date,       key: [participant]}
