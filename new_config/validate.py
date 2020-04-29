@@ -23,6 +23,7 @@ AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 
 VALIDATE_URL = '/api/validateMetricsConfigs'
 PROCESS_URL = '/api/processMetricsConfigs'
+PUBLISH_URL = '/api/publishMetricsConfigs'
 
 
 def marks_to_str(file_name, data, marks_attribute):
@@ -146,10 +147,17 @@ def process():
     )
 
 
+def publish():
+    send_all(PUBLISH_URL)
+
+
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         if sys.argv[1] == '--process':
             process()
+            exit(0)
+        elif sys.argv[1] == '--publish':
+            publish()
             exit(0)
         else:
             print('Unknown argument')
