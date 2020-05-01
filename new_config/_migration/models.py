@@ -331,7 +331,7 @@ class ObservationIndex(Set[Observation]):
             if t:
                 or_terms.add(t)
         if or_terms:
-            res += ((('$or', tuple(sorted(or_terms))),),)
+            res += ((('$or', tuple(sorted(or_terms, key=str))),),)
 
         return tup2filter(res)
 

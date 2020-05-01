@@ -316,6 +316,33 @@ buyer_stream:
   shows_item_view_recblock: {filter: [is_iv, x_is_rec], key: [x]}
   write_button_clicks: {filter: [is_msg_btn]}
   write_button_clicks_shop: {filter: [is_msg_btn, is_shop]}
+  default_radius_searches: {filter: [is_default_radius, is_search]}
+  not_default_radius_searches: {filter: [is_not_default_radius, is_search]}
+  radius_0_searches: {filter: [searchradius: '0', is_search]}
+  radius_1_searches: {filter: [searchradius: '1', is_search]}
+  radius_5_searches: {filter: [searchradius: '5', is_search]}
+  radius_10_searches: {filter: [searchradius: '10', is_search]}
+  radius_25_searches: {filter: [searchradius: '25', is_search]}
+  radius_50_searches: {filter: [searchradius: '50', is_search]}
+  radius_100_searches: {filter: [searchradius: '100', is_search]}
+  radius_200_searches: {filter: [searchradius: '200', is_search]}
+  radius_300_searches: {filter: [searchradius: '300', is_search]}
+  radius_400_searches: {filter: [searchradius: '400', is_search]}
+  radius_500_searches: {filter: [searchradius: '500', is_search]}
+  radius_1000_searches: {filter: [searchradius: '1000', is_search]}
+  noncapital_city_level_searches: {filter: [location_level_id: 6, is_search]}
+  capital_city_level_searches: {filter: [location_level_id: 5, is_search]}
+  city_level_searches: {filter: [location_level_id: [5, 6], is_search]}
+  federal_city_level_searches: {filter: [location_level_id: 4, is_search]}
+  meta_regions_level_searches: {filter: [location_level_id: 2, is_search]}
+  regions_level_searches: {filter: [location_level_id: 3, is_search]}
+  russia_level_searches: {filter: [location_level_id: 1, is_search]}
+  locations_in_searches: {filter: [is_search], key: [location_id]}
+  cities_in_searches: {filter: [is_search, location_level_id: [4, 5, 6]], key: [location_id]}
+  regions_in_searches: {filter: [is_search, location_level_id: [2, 3]], key: [location_id]}
+  total_metros_in_searches: {filter: [is_search], obs: [metro_count]}
+  total_districts_in_searches: {filter: [is_search], obs: [district_count]}
+
 ##########################################################################
 seller_item_event:
   item_edit_starts: {obs: [edits_started]}
@@ -367,12 +394,13 @@ seller_item_event:
   items_sold_notonavito: {filter: [close_reason_id: 500011]}
   items_sold_onavito: {filter: [close_reason_id: 500004]}
   items_started: {filter: [{activation_type!: Wait, is_item_start: true}]}
-  items_started_free: {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: null}]}
+  items_started_free: {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: true}]}
   items_started_net: {filter: [{activation_type!: Wait, is_dead: false, is_item_start: True}]}
   items_started_paid: {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_item_start: true}]}
   items_started_wait: {filter: [{activation_type: Wait, is_item_start: true}]}
   lf_amount_net: {obs: [lf_amount_net]}
 ######################################################################################
+
 seller_item_active:
   active_items: {filter: [is_active: true]}
   active_items_0_photo: {filter: [photo_count: 0], key: [item]}
@@ -398,57 +426,53 @@ seller_item_active:
   seller_items_favorites_removed: {key: [item], obs: [favs_removed]}
   sellers_items_with_contacts: {key: [item], obs: [contacts]}
 
-#
-#item_geo:
-#  item_20m_from_location: SUM(CASE WHEN location_distance <= 0.02 THEN 1 ELSE 0 END) item_20m_from_location,
-#  item_100m_from_location: SUM(CASE WHEN location_distance <= 0.1 THEN 1 ELSE 0 END) item_100m_from_location,
-#  item_200_plus_km_from_location: SUM(CASE WHEN location_distance > 200 THEN 1 ELSE 0 END) item_200_plus_km_from_location,
-#  item_no_address_string: SUM(CASE WHEN NOT has_address  THEN 1 ELSE 0 END) item_no_address_string,
-#  item_with_address_string: SUM(CASE WHEN has_address  THEN 1 ELSE 0 END)  item_with_address_string,
-#  item_no_address_id: SUM(CASE WHEN NOT has_address_id THEN 1 ELSE 0 END) item_no_address_id,
-#  item_with_address_id: SUM(CASE WHEN has_address_id THEN 1 ELSE 0 END) item_with_address_id,
-#  item_no_coordinates: SUM(CASE WHEN ifnull(location_distance,-1) = -1 THEN 1 ELSE 0 END) item_no_coordinates,
-#  item_with_coordinates: SUM(CASE WHEN ifnull(location_distance,-1) > -1 THEN 1 ELSE 0 END) item_with_coordinates,
-#  item_address_length: SUM(address_length) as item_address_length,
-#  item_has_building: SUM(CASE WHEN min_kind_level = 40 then 1 ELSE 0 END) item_has_building,
-#  item_has_street: SUM(CASE WHEN min_kind_level = 50 then 1 ELSE 0 END) item_has_street,
-#  item_has_district: SUM(CASE WHEN min_kind_level in (60,70) then 1 ELSE 0 END) item_has_district,
-#  item_has_city: SUM(CASE WHEN min_kind_level in (100,110) then 1 ELSE 0 END) item_has_city,
-#  item_no_city: SUM(CASE WHEN min_kind_level in (120,130,140) then 1 ELSE 0 END) item_no_city,
-#  item_has_marginal_address: SUM(CASE WHEN min_kind_level in (10,20,30,80,90) then 1 ELSE 0 END) item_has_marginal_address,
-#
-#  --новые
-#  item_20m_from_location_new: SUM(CASE WHEN item_status = 'New' AND location_distance <= 0.02 THEN 1 ELSE 0 END) item_20m_from_location_new,
-#  SUM(CASE WHEN item_status = 'New' AND  location_distance <= 0.1 THEN 1 ELSE 0 END) item_100m_from_location_new,
-#  SUM(CASE WHEN item_status = 'New' AND  location_distance > 200 THEN 1 ELSE 0 END) item_200_plus_km_from_location_new,
-#  SUM(CASE WHEN item_status = 'New' AND  NOT has_address  THEN 1 ELSE 0 END) item_no_address_string_new,
-#  SUM(CASE WHEN item_status = 'New' AND  has_address  THEN 1 ELSE 0 END)  item_with_address_string_new,
-#  SUM(CASE WHEN item_status = 'New' AND  NOT has_address_id THEN 1 ELSE 0 END) item_no_address_id_new,
-#  SUM(CASE WHEN item_status = 'New' AND  has_address_id THEN 1 ELSE 0 END) item_with_address_id_new,
-#  SUM(CASE WHEN item_status = 'New' AND  ifnull(location_distance,-1) = -1 THEN 1 ELSE 0 END) item_no_coordinates_new,
-#  SUM(CASE WHEN item_status = 'New' AND  ifnull(location_distance,-1) > -1 THEN 1 ELSE 0 END) item_with_coordinates_new,
-#  SUM(CASE WHEN item_status = 'New' THEN address_length ELSE 0 END) as item_address_length_new,
-#  SUM(CASE WHEN item_status = 'New' AND min_kind_level = 40 then 1 ELSE 0 END) item_has_building_new,
-#  SUM(CASE WHEN item_status = 'New' AND min_kind_level = 50 then 1 ELSE 0 END) item_has_street_new,
-#  SUM(CASE WHEN item_status = 'New' AND min_kind_level in (60,70) then 1 ELSE 0 END) item_has_district_new,
-#  SUM(CASE WHEN item_status = 'New' AND min_kind_level in (100,110) then 1 ELSE 0 END) item_has_city_new,
-#  SUM(CASE WHEN item_status = 'New' AND min_kind_level in (120,130,140) then 1 ELSE 0 END) item_no_city_new,
-#  SUM(CASE WHEN item_status = 'New' AND min_kind_level in (10,20,30,80,90) then 1 ELSE 0 END) item_has_marginal_address_new,
-#
-#  --реактивация
-#  SUM(CASE WHEN item_status = 'Reactivation' AND location_distance <= 0.02 THEN 1 ELSE 0 END) item_20m_from_location_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND  location_distance <= 0.1 THEN 1 ELSE 0 END) item_100m_from_location_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND  location_distance > 200 THEN 1 ELSE 0 END) item_200_plus_km_from_location_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND  NOT has_address  THEN 1 ELSE 0 END) item_no_address_string_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND  has_address  THEN 1 ELSE 0 END)  item_with_address_string_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND  NOT has_address_id THEN 1 ELSE 0 END) item_no_address_id_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND  has_address_id THEN 1 ELSE 0 END) item_with_address_id_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND  ifnull(location_distance,-1) = -1 THEN 1 ELSE 0 END) item_no_coordinates_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND  ifnull(location_distance,-1) > -1 THEN 1 ELSE 0 END) item_with_coordinates_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' THEN address_length ELSE 0 END) as item_address_length_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level = 40 then 1 ELSE 0 END) item_has_building_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level = 50 then 1 ELSE 0 END) item_has_street_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level in (60,70) then 1 ELSE 0 END) item_has_district_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level in (100,110) then 1 ELSE 0 END) item_has_city_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level in (120,130,140) then 1 ELSE 0 END) item_no_city_reactivated,
-#  SUM(CASE WHEN item_status = 'Reactivation' AND min_kind_level in (10,20,30,80,90) then 1 ELSE 0 END) item_has_marginal_address_reactivated
+  item_20m_from_location: {filter: [is_active: true, location_distance.<=: 0.02]}
+  item_100m_from_location: {filter: [is_active: true, location_distance.<=: 0.1]}
+  item_200_plus_km_from_location: {filter: [is_active: true, location_distance.>: 200]}
+  item_no_address_string: {filter: [is_active: true, has_address: false]}
+  item_with_address_string: {filter: [is_active: true, has_address: true]}
+  item_no_address_id: {filter: [is_active: true, has_address_id: false]}
+  item_with_address_id: {filter: [is_active: true, has_address_id: true]}
+  item_no_coordinates: {filter: [is_active: true, {$or: [[location_distance.isnull: true], [location_distance: -1]]}]}
+  item_with_coordinates: {filter: [is_active: true, location_distance.>=: -1]}
+  item_address_length: {filter: [is_active: true], obs: [address_length]}
+  item_has_building: {filter: [is_active: true, min_kind_level: 40]}
+  item_has_street: {filter: [is_active: true, min_kind_level: 50]}
+  item_has_district: {filter: [is_active: true, min_kind_level: [60, 70]]}
+  item_has_city: {filter: [is_active: true, min_kind_level: [100, 110]]}
+  item_no_city: {filter: [is_active: true, min_kind_level: [120, 130, 140]]}
+  item_has_marginal_address: {filter: [is_active: true, min_kind_level: [10, 20, 30, 80, 90]]}
+
+  item_20m_from_location_new: {filter: [start_date: $event_date, is_active: true, location_distance.<=: 0.02]}
+  item_100m_from_location_new: {filter: [start_date: $event_date, is_active: true, location_distance.<=: 0.1]}
+  item_200_plus_km_from_location_new: {filter: [start_date: $event_date, is_active: true, location_distance.>: 200]}
+  item_no_address_string_new: {filter: [start_date: $event_date, is_active: true, has_address: false]}
+  item_with_address_string_new: {filter: [start_date: $event_date, is_active: true, has_address: true]}
+  item_no_address_id_new: {filter: [start_date: $event_date, is_active: true, has_address_id: false]}
+  item_with_address_id_new: {filter: [start_date: $event_date, is_active: true, has_address_id: true]}
+  item_no_coordinates_new: {filter: [start_date: $event_date, is_active: true, {$or: [[location_distance.isnull: true], [location_distance: -1]]}]}
+  item_with_coordinates_new: {filter: [start_date: $event_date, is_active: true, location_distance.>=: -1]}
+  item_address_length_new: {filter: [start_date: $event_date, is_active: true], obs: [address_length]}
+  item_has_building_new: {filter: [start_date: $event_date, is_active: true, min_kind_level: 40]}
+  item_has_street_new: {filter: [start_date: $event_date, is_active: true, min_kind_level: 50]}
+  item_has_district_new: {filter: [start_date: $event_date, is_active: true, min_kind_level: [60, 70]]}
+  item_has_city_new: {filter: [start_date: $event_date, is_active: true, min_kind_level: [100, 110]]}
+  item_no_city_new: {filter: [start_date: $event_date, is_active: true, min_kind_level: [120, 130, 140]]}
+  item_has_marginal_address_new: {filter: [start_date: $event_date, is_active: true, min_kind_level: [10, 20, 30, 80, 90]]}
+
+  item_20m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.<=: 0.02]}
+  item_100m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.<=: 0.1]}
+  item_200_plus_km_from_location_reactivated: {last_activation_date: [start_date: $event_date, is_active: true, location_distance.>: 200]}
+  item_no_address_string_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address: false]}
+  item_with_address_string_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address: true]}
+  item_no_address_id_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address_id: false]}
+  item_with_address_id_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address_id: true]}
+  item_no_coordinates_reactivated: {filter: [last_activation_date: $event_date, is_active: true, {$or: [[location_distance.isnull: true], [location_distance: -1]]}]}
+  item_with_coordinates_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.>=: -1]}
+  item_address_length_reactivated: {filter: [last_activation_date: $event_date, is_active: true], obs: [address_length]}
+  item_has_building_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: 40]}
+  item_has_street_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: 50]}
+  item_has_district_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [60, 70]]}
+  item_has_city_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [100, 110]]}
+  item_no_city_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [120, 130, 140]]}
+  item_has_marginal_address_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [10, 20, 30, 80, 90]]}
