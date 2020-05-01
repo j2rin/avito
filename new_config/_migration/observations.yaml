@@ -476,3 +476,82 @@ seller_item_active:
   item_has_city_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [100, 110]]}
   item_no_city_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [120, 130, 140]]}
   item_has_marginal_address_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [10, 20, 30, 80, 90]]}
+
+geo_loc_change:
+  location_changings_wo_savings: {filter: [changed, is_close], obs: [events_count]}
+  location_changings: {filter: [changed, saved, is_close], obs: [events_count]}
+  location_changings_search: {filter: [changed, saved, open_from: 'search', is_close], obs: [events_count]}
+  location_changings_app_settings: {filter: [changed, saved, open_from: 'app settings', is_close], obs: [events_count]}
+  location_changings_radius: {filter: [changed, saved, open_from: 'radius', is_close], obs: [events_count]}
+  location_changings_expanded: {filter: [changed, saved, changing_geo_type: 'expanded', is_close], obs: [events_count]}
+  location_changings_detailed: {filter: [changed, saved, changing_geo_type: 'detailed', is_close], obs: [events_count]}
+  location_changings_horizontal: {filter: [changed, saved, changing_geo_type: 'horizontal', is_close], obs: [events_count]}
+  location_changings_region_russia: {filter: [changed, saved, changing_geo_type: 'expanded', prev_location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_city_region: {filter: [changed, saved, changing_geo_type: 'expanded', prev_location_level_id: [4, 5, 6], new_location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_city_russia: {filter: [changed, saved, changing_geo_type: 'expanded', prev_location_level_id: [4, 5, 6], new_location_level_id: 1, is_close], obs: [events_count]}
+  location_changings_russia_region: {filter: [changed, saved, changing_geo_type: 'detailed', prev_location_level_id: 1, new_location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_russia_city: {filter: [changed, saved, changing_geo_type: 'detailed', prev_location_level_id: 1, new_location_level_id: [4, 5, 6], is_close], obs: [events_count]}
+  location_changings_region_city: {filter: [changed, saved, changing_geo_type: 'detailed', prev_location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_region_region: {filter: [changed, saved, changing_geo_type: 'horizontal', prev_location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_city_city: {filter: [changed, saved, changing_geo_type: 'horizontal', prev_location_level_id: [4, 5, 6], is_close], obs: [events_count]}
+  location_changings_bad: {filter: [changed, saved, changing_quality_type: 'bad', is_close], obs: [events_count]}
+  location_changings_suspicious: {filter: [changed, saved, changing_quality_type: 'suspicious', is_close], obs: [events_count]}
+  location_changings_neutral: {filter: [changed, saved, changing_quality_type: 'neutral', is_close], obs: [events_count]}
+  location_changings_bad_russia: {filter: [changed, saved, changing_quality_type: 'bad', prev_location_level_id: 1, is_close], obs: [events_count]}
+  location_changings_bad_regions: {filter: [changed, saved, changing_quality_type: 'bad', prev_location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_bad_city: {filter: [changed, saved, changing_quality_type: 'bad', prev_location_level_id: [4, 5, 6], is_close], obs: [events_count]}
+  location_changings_suspicious_russia: {filter: [changed, saved, changing_quality_type: 'suspicious', prev_location_level_id: 1, is_close], obs: [events_count]}
+  location_changings_suspicious_regions: {filter: [changed, saved, changing_quality_type: 'suspicious', prev_location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_suspicious_city: {filter: [changed, saved, changing_quality_type: 'suspicious', prev_location_level_id: [4, 5, 6], is_close], obs: [events_count]}
+  location_changings_neutral_russia: {filter: [changed, saved, changing_quality_type: 'neutral', prev_location_level_id: 1, is_close], obs: [events_count]}
+  location_changings_neutral_regions: {filter: [changed, saved, changing_quality_type: 'neutral', prev_location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_neutral_city: {filter: [changed, saved, changing_quality_type: 'neutral', prev_location_level_id: [4, 5, 6], is_close], obs: [events_count]}
+  location_dialogue_opens: {filter: [is_open], obs: [events_count]}
+  location_dialogue_opens_search: {filter: [open_from: 'search', is_open], obs: [events_count]}
+  location_dialogue_opens_radius: {filter: [open_from: 'radius', is_open], obs: [events_count]}
+  location_dialogue_opens_app_settings: {filter: [open_from: 'app settings', is_open], obs: [events_count]}
+  location_dialogue_closings: {filter: [is_close], obs: [events_count]}
+  location_dialogue_savings: {filter: [saved, is_close], obs: [events_count]}
+  location_dialogue_savings_search: {filter: [open_from: 'search', saved, is_close], obs: [events_count]}
+  location_dialogue_savings_radius: {filter: [open_from: 'radius', saved, is_close], obs: [events_count]}
+  location_dialogue_savings_app_setting: {filter: [open_from: 'app settings', saved, is_close], obs: [events_count]}
+  tooltip_closings_by_cross: {filter: [tooltip_close_type: 'close', is_tooltip_close], obs: [events_count]}
+  tooltip_accepts: {filter: [tooltip_close_type: 'accept', is_tooltip_close], obs: [events_count]}
+  tooltip_not_accepts: {filter: [tooltip_close_type: 'not accept', is_tooltip_close], obs: [events_count]}
+  tooltip_closings_by_cross_russia: {filter: [tooltip_close_type: 'close', location_level_id: 1, is_tooltip_close], obs: [events_count]}
+  tooltip_accepts_russia: {filter: [tooltip_close_type: 'accept', location_level_id: 1, is_tooltip_close], obs: [events_count]}
+  tooltip_not_accepts_russia: {filter: [tooltip_close_type: 'not accept', location_level_id: 1, is_tooltip_close], obs: [events_count]}
+  tooltip_closings_by_cross_region: {filter: [tooltip_close_type: 'close', location_level_id: [2, 3], is_tooltip_close], obs: [events_count]}
+  tooltip_accepts_region: {filter: [tooltip_close_type: 'accept', location_level_id: [2, 3], is_tooltip_close], obs: [events_count]}
+  tooltip_not_accepts_region: {filter: [tooltip_close_type: 'not accept', location_level_id: [2, 3], is_tooltip_close], obs: [events_count]}
+  tooltip_closings_by_cross_city: {filter: [tooltip_close_type: 'close', location_level_id: [4, 5, 6], is_tooltip_close], obs: [events_count]}
+  tooltip_accepts_city: {filter: [tooltip_close_type: 'accept', location_level_id: [4, 5, 6], is_tooltip_close], obs: [events_count]}
+  tooltip_not_accepts_city: {filter: [tooltip_close_type: 'not accept', location_level_id: [4, 5, 6], is_tooltip_close], obs: [events_count]}
+  tooltip_opens: {filter: [is_tooltip_open], obs: [events_count]}
+  tooltip_closings: {filter: [is_tooltip_close], obs: [events_count]}
+  tooltip_opens_russia: {filter: [location_level_id: 1, is_tooltip_open], obs: [events_count]}
+  tooltip_opens_region: {filter: [location_level_id: [2, 3], is_tooltip_open], obs: [events_count]}
+  tooltip_opens_city: {filter: [location_level_id: [4, 5, 6], is_tooltip_open], obs: [events_count]}
+
+geo_map_stream:
+  map_searches: {}
+  pin_clicks: {obs: [pins]}
+  scrolls_zoom_levels: {obs: [scrolls_zoom_levels]}
+  pins_zoom_levels: {obs: [pins_zoom_levels]}
+  clusters: {obs: [clusters]}
+  zooms: {obs: [zooms]}
+  my_locs: {obs: [my_locs]}
+  scrolls: {obs: [scrolls]}
+  pins_with_zoom_levels: {filter: [pins_zoom_levels.>: 0], obs: [pins]}
+  scrolls_with_zoom_levels: {filter: [scrolls_zoom_levels.>: 0], obs: [scrolls]}
+  empty_map_serp: {filter: [item_cnt: 0]}
+  district_map_searches: {filter: [has_district_filter: true]}
+  road_map_searches: {filter: [has_road_filter: true]}
+  metro_map_searches: {filter: [has_metro_filter: true]}
+  price_filters_map_searches: {filter: [has_price_filter: true]}
+  rubricator_filters_map_searches: {filter: [has_usual_filter: true]}
+  errors_on_map: {filter: [item_cnt: -1]}
+  nav_actions_to_contact: {obs: [nav_actions_to_contact]}
+  nav_actions_to_item_view: {obs: [nav_actions_to_item_view]}
+  map_with_item_view: {filter: [item_views.>: 0]}
+  map_with_contact: {filter: [contacts.>: 0]}
