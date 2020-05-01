@@ -29,6 +29,7 @@ metric.counter:
   buyer_favouriteseller_delete_from_subscriptions_list: {obs: [buyer_favouriteseller_delete_from_subscriptions_list]}
   buyer_str_bookings_expired:              {obs: [buyer_str_bookings_expired]}
   buyer_str_bookings_voided:               {obs: [buyer_str_bookings_voided]}
+  buyer_target_clicks_shop:                {obs: [buyer_target_clicks_shopx]}
   cnt_answered_proxy_rec_missed:           {obs: [answered_proxy_rec, missed_proxy_rec], m42: False}
   cnt_btc_s_filter_price:                  {obs: [btc_serp_filter_search, btc_serp_price_filter_search], m42: False}
   cnt_dom_interactive_sessionduration:     {obs: [dom_interactive_sessionduration], m42: False}
@@ -58,6 +59,8 @@ metric.counter:
   cnt_returned_listers:                    {obs: [returned_listers], m42: False}
   cnt_time_for_async_target_content:       {obs: [time_for_async_target_content], m42: False}
   cnt_time_to_target_content:              {obs: [time_to_target_content], m42: False}
+  contacts_shop:                           {obs: [contacts_shopx]}
+  fav_added_shop:                          {obs: [fav_added_shopx]}
   from_main_page_to_c:                     {obs: [from_main_page_to_c]}
   from_main_page_to_iv:                    {obs: [from_main_page_to_iv]}
   from_vertical_page_to_c:                 {obs: [from_vertical_page_to_c]}
@@ -73,6 +76,7 @@ metric.counter:
   helpdesk_str_tickets:                    {obs: [helpdesk_str_tickets]}
   helpdesk_vas_tag_tickets:                {obs: [helpdesk_vas_tag_tickets]}
   item_views_from_fs:                      {obs: [item_views_from_fs]}
+  item_views_shop:                         {obs: [item_views_shopx]}
   items_allowed_total:                     {obs: [items_allowed_total]}
   items_allowed_total_start_date:          {filter: [{start_date.>=: ab_start_date}], obs: [items_allowed_total]}
   items_blocked_rejected_total:            {obs: [items_blocked_rejected_total]}
@@ -96,6 +100,12 @@ metric.counter:
   public_profile_visit_from_subscriptions_list: {obs: [public_profile_visit_from_subscriptions_list]}
   search_redirect_suggest:                 {obs: [search_redirect_suggest]}
   search_redirect_suggest_disabled:        {obs: [search_redirect_suggest_disabled]}
+  searches_shop:                           {obs: [searches_shopx]}
+  searches_shop_empty:                     {obs: [searches_shopx_empty]}
+  searches_shop_small:                     {obs: [searches_shopx_small]}
+  searches_shop_with_btc:                  {obs: [searches_shopx_with_btc]}
+  searches_shop_with_contact:              {obs: [searches_shopx_with_contact]}
+  searches_shop_with_item_view:            {obs: [searches_shopx_with_item_view]}
   seller_contacts_total:                   {obs: [seller_contacts_total]}
   seller_contacts_total_start_date:        {filter: [{start_date.>=: ab_start_date}], obs: [seller_contacts_total]}
   seller_delivery_orders_expired:          {obs: [seller_delivery_orders_expired]}
@@ -129,6 +139,9 @@ metric.uniq:
   unq_sqp_wordbreaker_digit_suggest:       {counter: sqp_wordbreaker_digit_suggest,   key: [participant], m42: False}
   unq_sqp_wordbreaker_suggest:             {counter: sqp_wordbreaker_suggest,         key: [participant], m42: False}
   unq_typo_suggest:                        {counter: typo_suggest,                    key: [participant], m42: False}
+  user_buyer_target_clicks_shop:           {counter: buyer_target_clicks_shop,        key: [participant]}
+  user_contacts_shop:                      {counter: contacts_shop,                   key: [participant]}
+  user_fav_added_shop:                     {counter: fav_added_shop,                  key: [participant]}
   user_from_main_page_to_c_p25:            {counter: cnt_from_main_page_to_c_p25,     key: [participant]}
   user_from_main_page_to_c_p50:            {counter: cnt_from_main_page_to_c_p50,     key: [participant]}
   user_from_main_page_to_c_p75:            {counter: cnt_from_main_page_to_c_p75,     key: [participant]}
@@ -145,6 +158,13 @@ metric.uniq:
   user_from_vertical_page_to_iv_p50:       {counter: cnt_from_vertical_page_to_iv_p50, key: [participant]}
   user_from_vertical_page_to_iv_p75:       {counter: cnt_from_vertical_page_to_iv_p75, key: [participant]}
   user_from_vertical_page_to_iv_p99:       {counter: cnt_from_vertical_page_to_iv_p99, key: [participant]}
+  user_item_views_shop:                    {counter: item_views_shop,                 key: [participant]}
+  user_searches_shop:                      {counter: searches_shop,                   key: [participant]}
+  user_searches_shop_empty:                {counter: searches_shop_empty,             key: [participant]}
+  user_searches_shop_small:                {counter: searches_shop_small,             key: [participant]}
+  user_searches_shop_with_btc:             {counter: searches_shop_with_btc,          key: [participant]}
+  user_searches_shop_with_contact:         {counter: searches_shop_with_contact,      key: [participant]}
+  user_searches_shop_with_item_view:       {counter: searches_shop_with_item_view,    key: [participant]}
   users_active_item_0_photo_total:         {counter: active_items_0_photo_total,      key: [participant]}
   users_active_item_more_10_description_word_total: {counter: active_items_more_10_description_word_total, key: [participant]}
   users_active_item_more_10_photo_total:   {counter: active_items_more_10_photo_total, key: [participant]}
@@ -180,9 +200,18 @@ metric.uniq:
   unq_session_from_vertical_page_to_iv:    {counter: from_vertical_page_to_iv,        key: [participant, session], m42: False}
 
 metric.ratio:
+  buyer_target_clicks_per_searches_shop:   {num: buyer_target_clicks_shop,        den: searches_shop}
+  contacts_per_searches_shop:              {num: contacts_shop,                   den: searches_shop}
+  fav_added_shop_per_searches_shop:        {num: fav_added_shop,                  den: searches_shop}
   item_add_success_per_lf_show_block:      {num: cnt_final_page_events,           den: cnt_lf_block_show_events}
+  item_views_shop_per_searches_shop:       {num: item_views_shop,                 den: searches_shop}
   payment_page_per_lf_show_block:          {num: cnt_lf_payment_page_events,      den: cnt_lf_block_show_events}
   search_redirect_suggest_ctr_disable:     {num: search_redirect_suggest_disabled, den: search_redirect_suggest}
+  searches_shop_empty_per_searches_shop:   {num: searches_shop_empty,             den: searches_shop}
+  searches_shop_small_per_searches_shop:   {num: searches_shop_small,             den: searches_shop}
+  searches_shop_with_btc_per_searches_shop: {num: searches_shop_with_btc,          den: searches_shop}
+  searches_shop_with_contact_per_searches_shop: {num: searches_shop_with_contact,      den: searches_shop}
+  searches_shop_with_item_view_per_searches_shop: {num: searches_shop_with_item_view,    den: searches_shop}
   searches_with_suggest_share:             {num: cnt_queries_with_suggest,        den: cnt_queries_no_redirect}
   sqp_layout_suggest_ctr_disable:          {num: sqp_layout_suggest_disabled,     den: sqp_layout_suggest}
   sqp_wordbreaker_digit_suggest_ctr_disable: {num: sqp_wordbreaker_digit_suggest_disabled, den: sqp_wordbreaker_digit_suggest}
@@ -190,4 +219,13 @@ metric.ratio:
   suggest_buyers_share:                    {num: suggest_buyers,                  den: unq_queries_with_suggest}
   suggest_users_share:                     {num: unq_queries_with_suggest,        den: unq_queries_no_redirect}
   typo_suggest_ctr_disable:                {num: typo_suggest_disabled,           den: typo_suggest}
+  user_buyer_target_clicks_per_user_searches_shop: {num: user_buyer_target_clicks_shop,   den: user_searches_shop}
+  user_contacts_per_user_searches_shop:    {num: user_contacts_shop,              den: user_searches_shop}
+  user_fav_added_shop_per_user_searches_shop: {num: user_fav_added_shop,             den: user_searches_shop}
+  user_item_views_shop_per_user_searches_shop: {num: user_item_views_shop,            den: user_searches_shop}
+  user_searches_shop_empty_per_user_searches_shop: {num: user_searches_shop_empty,        den: user_searches_shop}
+  user_searches_shop_small_per_user_searches_shop: {num: user_searches_shop_small,        den: user_searches_shop}
+  user_searches_shop_with_btc_per_user_searches_shop: {num: user_searches_shop_with_btc,     den: user_searches_shop}
+  user_searches_shop_with_contact_per_user_searches_shop: {num: user_searches_shop_with_contact, den: user_searches_shop}
+  user_searches_shop_with_item_view_per_user_searches_shop: {num: user_searches_shop_with_item_view, den: user_searches_shop}
 
