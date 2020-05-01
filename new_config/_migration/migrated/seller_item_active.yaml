@@ -24,7 +24,7 @@ metric.counter:
   items_100m_from_location_reactivated:    {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.1}]}
   items_200_plus_km_from_location:         {filter: [{is_active: True}, {location_distance.>: 200}]}
   items_200_plus_km_from_location_new:     {filter: [{is_active: True}, {location_distance.>: 200}, {start_date: $event_date}]}
-  items_200_plus_km_from_location_reactivated: {}
+  items_200_plus_km_from_location_reactivated: {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.>: 200}]}
   items_20m_from_location:                 {filter: [{is_active: True}, {location_distance.<=: 0.02}]}
   items_20m_from_location_new:             {filter: [{is_active: True}, {location_distance.<=: 0.02}, {start_date: $event_date}]}
   items_20m_from_location_reactivated:     {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.02}]}

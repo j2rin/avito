@@ -462,7 +462,7 @@ seller_item_active:
 
   item_20m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.<=: 0.02]}
   item_100m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.<=: 0.1]}
-  item_200_plus_km_from_location_reactivated: {last_activation_date: [start_date: $event_date, is_active: true, location_distance.>: 200]}
+  item_200_plus_km_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.>: 200]}
   item_no_address_string_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address: false]}
   item_with_address_string_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address: true]}
   item_no_address_id_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address_id: false]}
