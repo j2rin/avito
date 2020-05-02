@@ -108,7 +108,7 @@ def show_errors(file_name_map, name, info):
 
 def send_all(url):
     data = {
-        'sources': io.open(os.path.join(CONFIGS_PATH, '_sources.yaml'), encoding='utf-8').read(),
+        'sources': io.open(os.path.join(CONFIGS_PATH, 'sources.yaml'), encoding='utf-8').read(),
         'configs': {}
     }
     file_name_map = {}
@@ -128,7 +128,7 @@ def send_all(url):
 def validate():
     result, file_name_map = send_all(VALIDATE_URL)
     if not result['sources']['success']:
-        show_errors({'sources': os.path.join(CONFIGS_PATH, '_sources.yaml')}, 'sources', result['sources'])
+        show_errors({'sources': os.path.join(CONFIGS_PATH, 'sources.yaml')}, 'sources', result['sources'])
         return False
 
     ok = True
