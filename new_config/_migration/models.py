@@ -331,7 +331,7 @@ class ObservationIndex(Set[Observation]):
             if t:
                 or_terms.add(t)
         if or_terms:
-            res += ((('$or', tuple(sorted(or_terms))),),)
+            res += ((('$or', tuple(sorted(or_terms, key=str))),),)
 
         return tup2filter(res)
 
@@ -401,7 +401,7 @@ class MetricOld:
 
     @property
     def type(self):
-        if len(self.den_obs) > 0 or len(self.den_filter) > 0:
+        if len(self.den_obs_index) > 0:
             return 'ratio'
         elif len(self.num_uniq) > 0:
             return 'uniq'
