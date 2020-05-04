@@ -7,53 +7,53 @@ definitions:
   - &is_tooltip_close {eid: 2914}
 
 metric.counter:
-  cnt_location_dialogue_savings_radius:    {filter: [{open_from: radius}, *is_close, *saved], obs: [events_count], m42: False}
-  cnt_location_dialogue_savings_s:         {filter: [{open_from: search}, *is_close, *saved], obs: [events_count], m42: False}
-  cnt_tooltip_accepts_city:                {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_accepts_region:              {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_accepts_russia:              {filter: [{location_level_id: 1}, {tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_not_accepts_city:            {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_not_accepts_region:          {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_not_accepts_russia:          {filter: [{location_level_id: 1}, {tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  default_loc_tooltip_accepts:             {filter: [{tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count]}
-  default_loc_tooltip_declines:            {filter: [{tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count]}
+  cnt_location_dialogue_savings_radius:    {filter: [{open_from: 'radius'}, *is_close, *saved], obs: [events_count], m42: False}
+  cnt_location_dialogue_savings_s:         {filter: [{open_from: 'search'}, *is_close, *saved], obs: [events_count], m42: False}
+  cnt_tooltip_accepts_city:                {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: 'accept'}, *is_tooltip_close], obs: [events_count], m42: False}
+  cnt_tooltip_accepts_region:              {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: 'accept'}, *is_tooltip_close], obs: [events_count], m42: False}
+  cnt_tooltip_accepts_russia:              {filter: [{location_level_id: 1}, {tooltip_close_type: 'accept'}, *is_tooltip_close], obs: [events_count], m42: False}
+  cnt_tooltip_not_accepts_city:            {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: 'not accept'}, *is_tooltip_close], obs: [events_count], m42: False}
+  cnt_tooltip_not_accepts_region:          {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: 'not accept'}, *is_tooltip_close], obs: [events_count], m42: False}
+  cnt_tooltip_not_accepts_russia:          {filter: [{location_level_id: 1}, {tooltip_close_type: 'not accept'}, *is_tooltip_close], obs: [events_count], m42: False}
+  default_loc_tooltip_accepts:             {filter: [{tooltip_close_type: 'accept'}, *is_tooltip_close], obs: [events_count]}
+  default_loc_tooltip_declines:            {filter: [{tooltip_close_type: 'not accept'}, *is_tooltip_close], obs: [events_count]}
   default_loc_tooltip_shows:               {filter: [*is_tooltip_open], obs: [events_count]}
   default_loc_tooltip_shows_city:          {filter: [{location_level_id: [4, 5, 6]}, *is_tooltip_open], obs: [events_count]}
   default_loc_tooltip_shows_region:        {filter: [{location_level_id: [2, 3]}, *is_tooltip_open], obs: [events_count]}
   default_loc_tooltip_shows_russia:        {filter: [{location_level_id: 1}, *is_tooltip_open], obs: [events_count]}
-  loc_bad_chng:                            {filter: [{changing_quality_type: bad}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_bad_susp_chng:                       {filter: [*changed, *is_close, *saved, {$or: [[{changing_quality_type: bad}], [{changing_quality_type: suspicious}]]}], obs: [events_count]}
+  loc_bad_chng:                            {filter: [{changing_quality_type: 'bad'}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_bad_susp_chng:                       {filter: [*changed, *is_close, *saved, {$or: [[{changing_quality_type: 'bad'}], [{changing_quality_type: 'suspicious'}]]}], obs: [events_count]}
   loc_chng:                                {filter: [*changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_app_settings:                   {filter: [{open_from: app settings}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_bad_city:                       {filter: [{changing_quality_type: bad}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_bad_region:                     {filter: [{changing_quality_type: bad}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_bad_russia:                     {filter: [{changing_quality_type: bad}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_city_city:                      {filter: [{changing_geo_type: horizontal}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_city_region:                    {filter: [{changing_geo_type: expanded}, {location_level_id: [2, 3]}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_city_russia:                    {filter: [{changing_geo_type: expanded}, {location_level_id: 1}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_neutral_city:                   {filter: [{changing_quality_type: neutral}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_neutral_region:                 {filter: [{changing_quality_type: neutral}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_neutral_russia:                 {filter: [{changing_quality_type: neutral}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_radius:                         {filter: [{open_from: radius}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_region_city:                    {filter: [{changing_geo_type: detailed}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_region_region:                  {filter: [{changing_geo_type: horizontal}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_region_russia:                  {filter: [{changing_geo_type: expanded}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_russia_city:                    {filter: [{changing_geo_type: detailed}, {location_level_id: [4, 5, 6]}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_russia_region:                  {filter: [{changing_geo_type: detailed}, {location_level_id: [2, 3]}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_search:                         {filter: [{open_from: search}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_suspicious_city:                {filter: [{changing_quality_type: suspicious}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_suspicious_region:              {filter: [{changing_quality_type: suspicious}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_suspicious_russia:              {filter: [{changing_quality_type: suspicious}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_detailed_chng:                       {filter: [{changing_geo_type: detailed}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_expanded_chng:                       {filter: [{changing_geo_type: expanded}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_horizontal_chng:                     {filter: [{changing_geo_type: horizontal}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_neutral_chng:                        {filter: [{changing_quality_type: neutral}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_susp_chng:                           {filter: [{changing_quality_type: suspicious}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_app_settings:                   {filter: [{open_from: 'app settings'}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_bad_city:                       {filter: [{changing_quality_type: 'bad'}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_bad_region:                     {filter: [{changing_quality_type: 'bad'}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_bad_russia:                     {filter: [{changing_quality_type: 'bad'}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_city_city:                      {filter: [{changing_geo_type: 'horizontal'}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_city_region:                    {filter: [{changing_geo_type: 'expanded'}, {location_level_id: [2, 3]}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_city_russia:                    {filter: [{changing_geo_type: 'expanded'}, {location_level_id: 1}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_neutral_city:                   {filter: [{changing_quality_type: 'neutral'}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_neutral_region:                 {filter: [{changing_quality_type: 'neutral'}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_neutral_russia:                 {filter: [{changing_quality_type: 'neutral'}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_radius:                         {filter: [{open_from: 'radius'}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_region_city:                    {filter: [{changing_geo_type: 'detailed'}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_region_region:                  {filter: [{changing_geo_type: 'horizontal'}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_region_russia:                  {filter: [{changing_geo_type: 'expanded'}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_russia_city:                    {filter: [{changing_geo_type: 'detailed'}, {location_level_id: [4, 5, 6]}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_russia_region:                  {filter: [{changing_geo_type: 'detailed'}, {location_level_id: [2, 3]}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_search:                         {filter: [{open_from: 'search'}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_suspicious_city:                {filter: [{changing_quality_type: 'suspicious'}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_suspicious_region:              {filter: [{changing_quality_type: 'suspicious'}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_chng_suspicious_russia:              {filter: [{changing_quality_type: 'suspicious'}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_detailed_chng:                       {filter: [{changing_geo_type: 'detailed'}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_expanded_chng:                       {filter: [{changing_geo_type: 'expanded'}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_horizontal_chng:                     {filter: [{changing_geo_type: 'horizontal'}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_neutral_chng:                        {filter: [{changing_quality_type: 'neutral'}, *changed, *is_close, *saved], obs: [events_count]}
+  loc_susp_chng:                           {filter: [{changing_quality_type: 'suspicious'}, *changed, *is_close, *saved], obs: [events_count]}
   loc_window_closings:                     {filter: [*is_close], obs: [events_count]}
   loc_window_opens:                        {filter: [*is_open], obs: [events_count]}
-  loc_window_opens_app_settings:           {filter: [{open_from: app settings}, *is_open], obs: [events_count]}
-  loc_window_opens_radius:                 {filter: [{open_from: radius}, *is_open], obs: [events_count]}
-  loc_window_opens_search:                 {filter: [{open_from: search}, *is_open], obs: [events_count]}
+  loc_window_opens_app_settings:           {filter: [{open_from: 'app settings'}, *is_open], obs: [events_count]}
+  loc_window_opens_radius:                 {filter: [{open_from: 'radius'}, *is_open], obs: [events_count]}
+  loc_window_opens_search:                 {filter: [{open_from: 'search'}, *is_open], obs: [events_count]}
   loc_window_savings:                      {filter: [*is_close, *saved], obs: [events_count]}
 
 metric.uniq:

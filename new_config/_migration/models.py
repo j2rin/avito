@@ -26,6 +26,8 @@ def dump_filter(filter):
         if isinstance(elem, dict):
             elem_tup = []
             for k, v in elem.items():
+                if isinstance(v, str):
+                    v = "'{}'".format(v)
                 if k == '$or':
                     or_tup = []
                     for d in v:
@@ -166,6 +168,8 @@ class Metric:
     @property
     def yaml_repr(self):
         if self.type == 'counter':
+            if self.name == 'radius_short_searches':
+                _ = 0
             return make_counter_yaml(self.name, self.obs, self.filter, self.m42)
         elif self.type == 'uniq':
             return make_uniq_yaml(self.name, self.counter.name, self.key, self.m42)
@@ -505,6 +509,8 @@ class MetricOld:
         m = Metric(type=type,
                    name=name,
                    sources=self.num_sources, obs=self.num_obs, filter=self.num_filter)
+        # if name == 'radius_short_searches':
+        #     print(m.filter)
         self.all_metric_index.add(m)
         return m
 

@@ -13,20 +13,19 @@ def convert_metrics(old_metrics: List[MetricOld]):
     _ = [m.make_num_counter() for m in old_metrics if m.type == 'counter']
     _ = [m.make_num_counter() for m in old_metrics]
     _ = [m.make_den_counter() for m in old_metrics if m.type == 'ratio']
-    print(len(all_metrics))
+    # print(len(all_metrics))
     _ = [m.make_num_uniq() for m in old_metrics if m.type == 'uniq']
     _ = [m.make_num_uniq() for m in old_metrics if m.num_type == 'uniq']
     _ = [m.make_den_uniq() for m in old_metrics if m.den_type == 'uniq']
-    print(len(all_metrics))
+    # print(len(all_metrics))
     all_metrics.update(m.make_ratio() for m in old_metrics if m.type == 'ratio')
-    print(len(all_metrics))
+    # print(len(all_metrics))
     return all_metrics
 
 
 def migrate_config():
     current_date = date.today() - timedelta(days=1)
     conf = load_metrics_config(current_date)
-    print(conf.shape)
 
     with open('observations.yaml', 'r') as f:
         obs_dict = safe_load(f)
