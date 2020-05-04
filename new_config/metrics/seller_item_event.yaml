@@ -1,33 +1,33 @@
 metric.counter:
-  cnt_items_closed_by_user:                {filter: [{close_status_id: 7}, {start_date.>=: ab_start_date}], m42: False}
-  cnt_items_started_net:                   {filter: [{activation_type!: Wait, is_dead: False, is_item_start: True}, {start_date.>=: ab_start_date}], m42: False}
+  cnt_items_closed_by_user:                {filter: [{close_status_id: 7}, {start_date.>=: $ab_start_date}], m42: False}
+  cnt_items_started_net:                   {filter: [{activation_type!: Wait, is_dead: False, is_item_start: True}, {start_date.>=: $ab_start_date}], m42: False}
   item_edit_starts:                        {obs: [edits_started]}
   item_edit_starts_by_src:                 {obs: [edits_started_by_src]}
   item_edits:                              {obs: [edits]}
   item_edits_address:                      {obs: [edits_address]}
   item_edits_by_src:                       {obs: [edits_by_src]}
   item_edits_description:                  {obs: [edits_description]}
-  item_edits_description_start_date:       {filter: [{start_date.>=: ab_start_date}], obs: [edits_description]}
+  item_edits_description_start_date:       {filter: [{start_date.>=: $ab_start_date}], obs: [edits_description]}
   item_edits_photo_add:                    {obs: [edits_photo]}
-  item_edits_photo_add_start_date:         {filter: [{start_date.>=: ab_start_date}], obs: [edits_photo]}
+  item_edits_photo_add_start_date:         {filter: [{start_date.>=: $ab_start_date}], obs: [edits_photo]}
   item_edits_price:                        {obs: [edits_price]}
-  item_edits_price_start_date:             {filter: [{start_date.>=: ab_start_date}], obs: [edits_price]}
-  item_edits_start_date:                   {filter: [{start_date.>=: ab_start_date}], obs: [edits]}
+  item_edits_price_start_date:             {filter: [{start_date.>=: $ab_start_date}], obs: [edits_price]}
+  item_edits_start_date:                   {filter: [{start_date.>=: $ab_start_date}], obs: [edits]}
   item_edits_title:                        {obs: [edits_title]}
-  item_edits_title_start_date:             {filter: [{start_date.>=: ab_start_date}], obs: [edits_title]}
+  item_edits_title_start_date:             {filter: [{start_date.>=: $ab_start_date}], obs: [edits_title]}
   items_allowed:                           {filter: [{moder_flags.bit: 7}]}
-  items_allowed_start_date:                {filter: [{moder_flags.bit: 7}, {start_date.>=: ab_start_date}]}
+  items_allowed_start_date:                {filter: [{moder_flags.bit: 7}, {start_date.>=: $ab_start_date}]}
   items_archived:                          {filter: [{close_status_id: 10536750001}]}
   items_blocked:                           {filter: [{moder_flags.bit: 3}]}
   items_blocked_duplicate:                 {filter: [{moder_flags.bit: 5}]}
-  items_blocked_duplicate_start_date:      {filter: [{moder_flags.bit: 5}, {start_date.>=: ab_start_date}]}
+  items_blocked_duplicate_start_date:      {filter: [{moder_flags.bit: 5}, {start_date.>=: $ab_start_date}]}
   items_blocked_rejected:                  {filter: [{moder_flags.bit: [3, 6]}]}
-  items_blocked_rejected_start_date:       {filter: [{moder_flags.bit: [3, 6]}, {start_date.>=: ab_start_date}]}
-  items_blocked_start_date:                {filter: [{moder_flags.bit: 3}, {start_date.>=: ab_start_date}]}
+  items_blocked_rejected_start_date:       {filter: [{moder_flags.bit: [3, 6]}, {start_date.>=: $ab_start_date}]}
+  items_blocked_start_date:                {filter: [{moder_flags.bit: 3}, {start_date.>=: $ab_start_date}]}
   items_blocked_user_blocked:              {filter: [{moder_flags.bit: 4}]}
-  items_blocked_user_blocked_start_date:   {filter: [{moder_flags.bit: 4}, {start_date.>=: ab_start_date}]}
+  items_blocked_user_blocked_start_date:   {filter: [{moder_flags.bit: 4}, {start_date.>=: $ab_start_date}]}
   items_category_changed_by_moderator:     {filter: [{moder_flags.bit: 17}]}
-  items_category_changed_by_moderator_start_date: {filter: [{moder_flags.bit: 17}, {start_date.>=: ab_start_date}]}
+  items_category_changed_by_moderator_start_date: {filter: [{moder_flags.bit: 17}, {start_date.>=: $ab_start_date}]}
   items_closed_by_ttl:                     {filter: [{close_status_id: 9}]}
   items_closed_by_user:                    {filter: [{close_status_id: 7}]}
   items_closed_no_answer:                  {filter: [{$or: [[{close_reason_id.isnull: True}], [{close_reason_id: 500006}]]}, {close_status_id: 7}]}
@@ -39,37 +39,37 @@ metric.counter:
   items_reactivated_wait:                  {filter: [{activation_type: Wait, is_after_ttl: True, is_item_start: False}]}
   items_rejected:                          {filter: [{moder_flags.bit: 6}]}
   items_rejected_contacts_in_description:  {filter: [{moder_flags.bit: 11}]}
-  items_rejected_contacts_in_description_start_date: {filter: [{moder_flags.bit: 11}, {start_date.>=: ab_start_date}]}
+  items_rejected_contacts_in_description_start_date: {filter: [{moder_flags.bit: 11}, {start_date.>=: $ab_start_date}]}
   items_rejected_contacts_on_photo:        {filter: [{moder_flags.bit: 14}]}
-  items_rejected_contacts_on_photo_start_date: {filter: [{moder_flags.bit: 14}, {start_date.>=: ab_start_date}]}
+  items_rejected_contacts_on_photo_start_date: {filter: [{moder_flags.bit: 14}, {start_date.>=: $ab_start_date}]}
   items_rejected_mileage:                  {filter: [{moder_flags.bit: 16}]}
-  items_rejected_mileage_start_date:       {filter: [{moder_flags.bit: 16}, {start_date.>=: ab_start_date}]}
+  items_rejected_mileage_start_date:       {filter: [{moder_flags.bit: 16}, {start_date.>=: $ab_start_date}]}
   items_rejected_pricelist:                {filter: [{moder_flags.bit: 9}]}
-  items_rejected_pricelist_start_date:     {filter: [{moder_flags.bit: 9}, {start_date.>=: ab_start_date}]}
-  items_rejected_start_date:               {filter: [{moder_flags.bit: 6}, {start_date.>=: ab_start_date}]}
+  items_rejected_pricelist_start_date:     {filter: [{moder_flags.bit: 9}, {start_date.>=: $ab_start_date}]}
+  items_rejected_start_date:               {filter: [{moder_flags.bit: 6}, {start_date.>=: $ab_start_date}]}
   items_rejected_wrong_cat:                {filter: [{moder_flags.bit: 8}]}
-  items_rejected_wrong_cat_start_date:     {filter: [{moder_flags.bit: 8}, {start_date.>=: ab_start_date}]}
+  items_rejected_wrong_cat_start_date:     {filter: [{moder_flags.bit: 8}, {start_date.>=: $ab_start_date}]}
   items_rejected_wrong_item_type:          {filter: [{moder_flags.bit: 10}]}
-  items_rejected_wrong_item_type_start_date: {filter: [{moder_flags.bit: 10}, {start_date.>=: ab_start_date}]}
+  items_rejected_wrong_item_type_start_date: {filter: [{moder_flags.bit: 10}, {start_date.>=: $ab_start_date}]}
   items_rejected_wrong_price:              {filter: [{moder_flags.bit: 13}]}
-  items_rejected_wrong_price_start_date:   {filter: [{moder_flags.bit: 13}, {start_date.>=: ab_start_date}]}
+  items_rejected_wrong_price_start_date:   {filter: [{moder_flags.bit: 13}, {start_date.>=: $ab_start_date}]}
   items_rejected_wrong_vin:                {filter: [{moder_flags.bit: 12}]}
-  items_rejected_wrong_vin_start_date:     {filter: [{moder_flags.bit: 12}, {start_date.>=: ab_start_date}]}
+  items_rejected_wrong_vin_start_date:     {filter: [{moder_flags.bit: 12}, {start_date.>=: $ab_start_date}]}
   items_rejected_year_of_issue:            {filter: [{moder_flags.bit: 15}]}
-  items_rejected_year_of_issue_start_date: {filter: [{moder_flags.bit: 15}, {start_date.>=: ab_start_date}]}
+  items_rejected_year_of_issue_start_date: {filter: [{moder_flags.bit: 15}, {start_date.>=: $ab_start_date}]}
   items_sold_another_reason:               {filter: [{close_reason_id: 500012}]}
-  items_sold_another_reason_start_date:    {filter: [{close_reason_id: 500012}, {start_date.>=: ab_start_date}]}
+  items_sold_another_reason_start_date:    {filter: [{close_reason_id: 500012}, {start_date.>=: $ab_start_date}]}
   items_sold_notonavito:                   {filter: [{close_reason_id: 500011}]}
-  items_sold_notonavito_start_date:        {filter: [{close_reason_id: 500011}, {start_date.>=: ab_start_date}]}
+  items_sold_notonavito_start_date:        {filter: [{close_reason_id: 500011}, {start_date.>=: $ab_start_date}]}
   items_sold_onavito:                      {filter: [{close_reason_id: 500004}]}
-  items_sold_onavito_start_date:           {filter: [{close_reason_id: 500004}, {start_date.>=: ab_start_date}]}
+  items_sold_onavito_start_date:           {filter: [{close_reason_id: 500004}, {start_date.>=: $ab_start_date}]}
   items_started:                           {filter: [{activation_type!: Wait, is_item_start: True}]}
   items_started_free:                      {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: True}]}
   items_started_net:                       {filter: [{activation_type!: Wait, is_dead: False, is_item_start: True}]}
   items_started_paid:                      {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_item_start: True}]}
   items_started_wait:                      {filter: [{activation_type: Wait, is_item_start: True}]}
   lf_amount_net:                           {obs: [lf_amount_net]}
-  lf_amount_net_start_date:                {filter: [{start_date.>=: ab_start_date}], obs: [lf_amount_net]}
+  lf_amount_net_start_date:                {filter: [{start_date.>=: $ab_start_date}], obs: [lf_amount_net]}
 
 metric.uniq:
   items_edit_started:                      {counter: item_edit_starts,                key: [item]}
