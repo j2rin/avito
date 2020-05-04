@@ -1,9 +1,17 @@
 metric.counter:
+  buyer_target_clicks_shop:                {obs: [buyer_target_clicks_shopx]}
   cnt_favorites_net:                       {obs: [favorites_net], m42: False}
   cnt_session_s_with_empty_or_uniq_query:  {obs: [session_searches_with_empty_or_uniq_query], m42: False}
   cnt_session_s_with_uniq_query:           {obs: [session_searches_with_uniq_query], m42: False}
   cnt_sessions_with_query_suggest_click_c: {obs: [sessions_with_query_suggest_click_contact], m42: False}
   cnt_sessions_with_suggest_click_and_c:   {obs: [sessions_with_suggest_click_and_contact], m42: False}
+  contacts_shop:                           {obs: [contacts_shopx]}
+  fav_added_shop:                          {obs: [fav_added_shopx]}
+  item_views_shop:                         {obs: [item_views_shopx]}
+  searches_shop:                           {obs: [searches_shopx]}
+  searches_shop_with_btc:                  {obs: [searches_shopx_with_btc]}
+  searches_shop_with_contact:              {obs: [searches_shopx_with_contact]}
+  searches_shop_with_item_view:            {obs: [searches_shopx_with_item_view]}
   searches_witcher_delivery:               {obs: [searches_witcher_delivery]}
   suggest_clicks:                          {obs: [search_suggest_clicks]}
 
@@ -14,13 +22,35 @@ metric.uniq:
   suggest_buyers_with_all_queries:         {counter: cnt_sessions_with_suggest_click_and_c, key: [participant]}
   unq_session_s_with_empty_or_uniq_query:  {counter: cnt_session_s_with_empty_or_uniq_query, key: [participant], m42: False}
   unq_session_s_with_uniq_query:           {counter: cnt_session_s_with_uniq_query,   key: [participant], m42: False}
+  user_buyer_target_clicks_shop:           {counter: buyer_target_clicks_shop,        key: [participant]}
+  user_contacts_shop:                      {counter: contacts_shop,                   key: [participant]}
+  user_fav_added_shop:                     {counter: fav_added_shop,                  key: [participant]}
+  user_item_views_shop:                    {counter: item_views_shop,                 key: [participant]}
+  user_searches_shop:                      {counter: searches_shop,                   key: [participant]}
+  user_searches_shop_with_btc:             {counter: searches_shop_with_btc,          key: [participant]}
+  user_searches_shop_with_contact:         {counter: searches_shop_with_contact,      key: [participant]}
+  user_searches_shop_with_item_view:       {counter: searches_shop_with_item_view,    key: [participant]}
   user_witcher_del:                        {counter: searches_witcher_delivery,       key: [participant]}
 
 metric.ratio:
+  buyer_target_clicks_per_searches_shop:   {num: buyer_target_clicks_shop,        den: searches_shop}
+  contacts_per_searches_shop:              {num: contacts_shop,                   den: searches_shop}
+  fav_added_shop_per_searches_shop:        {num: fav_added_shop,                  den: searches_shop}
+  item_views_shop_per_searches_shop:       {num: item_views_shop,                 den: searches_shop}
+  searches_shop_with_btc_per_searches_shop: {num: searches_shop_with_btc,          den: searches_shop}
+  searches_shop_with_contact_per_searches_shop: {num: searches_shop_with_contact,      den: searches_shop}
+  searches_shop_with_item_view_per_searches_shop: {num: searches_shop_with_item_view,    den: searches_shop}
   share_suggest_buyers_to_suggest_users:   {num: share_suggest_buyers_to_all_users, den: search_suggest_clicks}
   share_suggest_searches_to_all:           {num: suggest_clicks,                  den: cnt_session_s_with_uniq_query}
   share_suggest_users_to_users_with_search: {num: search_suggest_clicks,           den: unq_session_s_with_uniq_query}
   suggest_buyers_to_suggest_users:         {num: suggest_buyers_with_all_queries, den: search_suggest_clicks}
   suggest_searches_to_all_searches:        {num: suggest_clicks,                  den: cnt_session_s_with_empty_or_uniq_query}
   suggest_users_to_users_with_search:      {num: search_suggest_clicks,           den: unq_session_s_with_empty_or_uniq_query}
+  user_buyer_target_clicks_per_user_searches_shop: {num: user_buyer_target_clicks_shop,   den: user_searches_shop}
+  user_contacts_per_user_searches_shop:    {num: user_contacts_shop,              den: user_searches_shop}
+  user_fav_added_shop_per_user_searches_shop: {num: user_fav_added_shop,             den: user_searches_shop}
+  user_item_views_shop_per_user_searches_shop: {num: user_item_views_shop,            den: user_searches_shop}
+  user_searches_shop_with_btc_per_user_searches_shop: {num: user_searches_shop_with_btc,     den: user_searches_shop}
+  user_searches_shop_with_contact_per_user_searches_shop: {num: user_searches_shop_with_contact, den: user_searches_shop}
+  user_searches_shop_with_item_view_per_user_searches_shop: {num: user_searches_shop_with_item_view, den: user_searches_shop}
 

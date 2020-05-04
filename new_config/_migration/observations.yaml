@@ -318,18 +318,18 @@ buyer_stream:
   write_button_clicks_shop: {filter: [is_msg_btn, is_shop]}
   default_radius_searches: {filter: [is_default_radius, is_search]}
   not_default_radius_searches: {filter: [is_not_default_radius, is_search]}
-  radius_0_searches: {filter: [searchradius: '0', is_search]}
-  radius_1_searches: {filter: [searchradius: '1', is_search]}
-  radius_5_searches: {filter: [searchradius: '5', is_search]}
-  radius_10_searches: {filter: [searchradius: '10', is_search]}
-  radius_25_searches: {filter: [searchradius: '25', is_search]}
-  radius_50_searches: {filter: [searchradius: '50', is_search]}
-  radius_100_searches: {filter: [searchradius: '100', is_search]}
-  radius_200_searches: {filter: [searchradius: '200', is_search]}
-  radius_300_searches: {filter: [searchradius: '300', is_search]}
-  radius_400_searches: {filter: [searchradius: '400', is_search]}
-  radius_500_searches: {filter: [searchradius: '500', is_search]}
-  radius_1000_searches: {filter: [searchradius: '1000', is_search]}
+  radius_0_searches: {filter: [search_radius: '0', is_search]}
+  radius_1_searches: {filter: [search_radius: '1', is_search]}
+  radius_5_searches: {filter: [search_radius: '5', is_search]}
+  radius_10_searches: {filter: [search_radius: '10', is_search]}
+  radius_25_searches: {filter: [search_radius: '25', is_search]}
+  radius_50_searches: {filter: [search_radius: '50', is_search]}
+  radius_100_searches: {filter: [search_radius: '100', is_search]}
+  radius_200_searches: {filter: [search_radius: '200', is_search]}
+  radius_300_searches: {filter: [search_radius: '300', is_search]}
+  radius_400_searches: {filter: [search_radius: '400', is_search]}
+  radius_500_searches: {filter: [search_radius: '500', is_search]}
+  radius_1000_searches: {filter: [search_radius: '1000', is_search]}
   noncapital_city_level_searches: {filter: [location_level_id: 6, is_search]}
   capital_city_level_searches: {filter: [location_level_id: 5, is_search]}
   city_level_searches: {filter: [location_level_id: [5, 6], is_search]}
@@ -393,11 +393,11 @@ seller_item_event:
   items_sold_another_reason: {filter: [close_reason_id: 500012]}
   items_sold_notonavito: {filter: [close_reason_id: 500011]}
   items_sold_onavito: {filter: [close_reason_id: 500004]}
-  items_started: {filter: [{activation_type!: Wait, is_item_start: true}]}
-  items_started_free: {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: true}]}
-  items_started_net: {filter: [{activation_type!: Wait, is_dead: false, is_item_start: True}]}
-  items_started_paid: {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_item_start: true}]}
-  items_started_wait: {filter: [{activation_type: Wait, is_item_start: true}]}
+  items_started: {filter: [{activation_type.!=: Wait, start_date: $event_date}]}
+  items_started_free: {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], start_date: $event_date}]}
+  items_started_net: {filter: [{activation_type.!=: Wait, is_dead: false, is_item_start: True}]}
+  items_started_paid: {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], start_date: $event_date}]}
+  items_started_wait: {filter: [{activation_type: Wait, start_date: $event_date}]}
   lf_amount_net: {obs: [lf_amount_net]}
 ######################################################################################
 
@@ -411,14 +411,14 @@ seller_item_active:
   active_items_more_40_description_word: {filter: [description_word_count.>=: 40], key: [item]}
   active_items_more_5_description_word: {filter: [description_word_count.>=: 5], key: [item]}
   active_items_more_5_photo: {filter: [photo_count.>=: 5], key: [item]}
-  new_items_0_photo: {filter: [{is_item_start: true, photo_count: 0}], key: [item]}
-  new_items_more_10_description_word: {filter: [{description_word_count.>=: 10, is_item_start: true}], key: [item]}
-  new_items_more_10_photo: {filter: [{is_item_start: true, photo_count.>=: 10}], key: [item]}
-  new_items_more_1_photo: {filter: [{is_item_start: true, photo_count.>=: 1}], key: [item]}
-  new_items_more_3_photo: {filter: [{is_item_start: true, photo_count.>=: 3}], key: [item]}
-  new_items_more_40_description_word: {filter: [{description_word_count.>=: 40, is_item_start: true}], key: [item]}
-  new_items_more_5_description_word: {filter: [{description_word_count.>=: 5, is_item_start: true}], key: [item]}
-  new_items_more_5_photo: {filter: [{is_item_start: true, photo_count.>=: 5}], key: [item]}
+  new_items_0_photo: {filter: [{start_date: $event_date, photo_count: 0}], key: [item]}
+  new_items_more_10_description_word: {filter: [{description_word_count.>=: 10, start_date: $event_date}], key: [item]}
+  new_items_more_10_photo: {filter: [{start_date: $event_date, photo_count.>=: 10}], key: [item]}
+  new_items_more_1_photo: {filter: [{start_date: $event_date, photo_count.>=: 1}], key: [item]}
+  new_items_more_3_photo: {filter: [{start_date: $event_date, photo_count.>=: 3}], key: [item]}
+  new_items_more_40_description_word: {filter: [{description_word_count.>=: 40, start_date: $event_date}], key: [item]}
+  new_items_more_5_description_word: {filter: [{description_word_count.>=: 5, start_date: $event_date}], key: [item]}
+  new_items_more_5_photo: {filter: [{start_date: $event_date, photo_count.>=: 5}], key: [item]}
   seller_contacts: {obs: [contacts]}
   seller_favorites_added: {obs: [favs_added]}
   seller_favorites_removed: {obs: [favs_removed]}
@@ -487,10 +487,10 @@ geo_loc_change:
   location_changings_detailed: {filter: [changed, saved, changing_geo_type: 'detailed', is_close], obs: [events_count]}
   location_changings_horizontal: {filter: [changed, saved, changing_geo_type: 'horizontal', is_close], obs: [events_count]}
   location_changings_region_russia: {filter: [changed, saved, changing_geo_type: 'expanded', prev_location_level_id: [2, 3], is_close], obs: [events_count]}
-  location_changings_city_region: {filter: [changed, saved, changing_geo_type: 'expanded', prev_location_level_id: [4, 5, 6], new_location_level_id: [2, 3], is_close], obs: [events_count]}
-  location_changings_city_russia: {filter: [changed, saved, changing_geo_type: 'expanded', prev_location_level_id: [4, 5, 6], new_location_level_id: 1, is_close], obs: [events_count]}
-  location_changings_russia_region: {filter: [changed, saved, changing_geo_type: 'detailed', prev_location_level_id: 1, new_location_level_id: [2, 3], is_close], obs: [events_count]}
-  location_changings_russia_city: {filter: [changed, saved, changing_geo_type: 'detailed', prev_location_level_id: 1, new_location_level_id: [4, 5, 6], is_close], obs: [events_count]}
+  location_changings_city_region: {filter: [changed, saved, changing_geo_type: 'expanded', prev_location_level_id: [4, 5, 6], location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_city_russia: {filter: [changed, saved, changing_geo_type: 'expanded', prev_location_level_id: [4, 5, 6], location_level_id: 1, is_close], obs: [events_count]}
+  location_changings_russia_region: {filter: [changed, saved, changing_geo_type: 'detailed', prev_location_level_id: 1, location_level_id: [2, 3], is_close], obs: [events_count]}
+  location_changings_russia_city: {filter: [changed, saved, changing_geo_type: 'detailed', prev_location_level_id: 1, location_level_id: [4, 5, 6], is_close], obs: [events_count]}
   location_changings_region_city: {filter: [changed, saved, changing_geo_type: 'detailed', prev_location_level_id: [2, 3], is_close], obs: [events_count]}
   location_changings_region_region: {filter: [changed, saved, changing_geo_type: 'horizontal', prev_location_level_id: [2, 3], is_close], obs: [events_count]}
   location_changings_city_city: {filter: [changed, saved, changing_geo_type: 'horizontal', prev_location_level_id: [4, 5, 6], is_close], obs: [events_count]}

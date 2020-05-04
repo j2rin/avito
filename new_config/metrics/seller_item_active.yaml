@@ -11,14 +11,14 @@ metric.counter:
   cnt_item_address_length:                 {filter: [{is_active: True}], obs: [address_length], m42: False}
   cnt_item_address_length_new:             {filter: [{is_active: True}, {start_date: $event_date}], obs: [address_length], m42: False}
   cnt_item_address_length_reactivated:     {filter: [{is_active: True}, {last_activation_date: $event_date}], obs: [address_length], m42: False}
-  cnt_new_items_0_photo:                   {filter: [{is_item_start: True, photo_count: 0}], m42: False}
-  cnt_new_items_more_10_description_word:  {filter: [{description_word_count.>=: 10, is_item_start: True}], m42: False}
-  cnt_new_items_more_10_photo:             {filter: [{is_item_start: True, photo_count.>=: 10}], m42: False}
-  cnt_new_items_more_1_photo:              {filter: [{is_item_start: True, photo_count.>=: 1}], m42: False}
-  cnt_new_items_more_3_photo:              {filter: [{is_item_start: True, photo_count.>=: 3}], m42: False}
-  cnt_new_items_more_40_description_word:  {filter: [{description_word_count.>=: 40, is_item_start: True}], m42: False}
-  cnt_new_items_more_5_description_word:   {filter: [{description_word_count.>=: 5, is_item_start: True}], m42: False}
-  cnt_new_items_more_5_photo:              {filter: [{is_item_start: True, photo_count.>=: 5}], m42: False}
+  cnt_new_items_0_photo:                   {filter: [{start_date: $event_date, photo_count: 0}], m42: False}
+  cnt_new_items_more_10_description_word:  {filter: [{description_word_count.>=: 10, start_date: $event_date}], m42: False}
+  cnt_new_items_more_10_photo:             {filter: [{start_date: $event_date, photo_count.>=: 10}], m42: False}
+  cnt_new_items_more_1_photo:              {filter: [{start_date: $event_date, photo_count.>=: 1}], m42: False}
+  cnt_new_items_more_3_photo:              {filter: [{start_date: $event_date, photo_count.>=: 3}], m42: False}
+  cnt_new_items_more_40_description_word:  {filter: [{description_word_count.>=: 40, start_date: $event_date}], m42: False}
+  cnt_new_items_more_5_description_word:   {filter: [{description_word_count.>=: 5, start_date: $event_date}], m42: False}
+  cnt_new_items_more_5_photo:              {filter: [{start_date: $event_date, photo_count.>=: 5}], m42: False}
   items_100m_from_location:                {filter: [{is_active: True}, {location_distance.<=: 0.1}]}
   items_100m_from_location_new:            {filter: [{is_active: True}, {location_distance.<=: 0.1}, {start_date: $event_date}]}
   items_100m_from_location_reactivated:    {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.1}]}
