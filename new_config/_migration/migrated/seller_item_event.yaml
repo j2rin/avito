@@ -1,6 +1,6 @@
 metric.counter:
   cnt_items_closed_by_user:                {filter: [{close_status_id: 7}, {start_date.>=: $ab_start_date}], m42: False}
-  cnt_items_started_net:                   {filter: [{activation_type!: Wait, is_dead: False, is_item_start: True}, {start_date.>=: $ab_start_date}], m42: False}
+  cnt_items_started_net:                   {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True}, {start_date.>=: $ab_start_date}], m42: False}
   item_edit_starts:                        {obs: [edits_started]}
   item_edit_starts_by_src:                 {obs: [edits_started_by_src]}
   item_edits:                              {obs: [edits]}
@@ -63,9 +63,9 @@ metric.counter:
   items_sold_notonavito_start_date:        {filter: [{close_reason_id: 500011}, {start_date.>=: $ab_start_date}]}
   items_sold_onavito:                      {filter: [{close_reason_id: 500004}]}
   items_sold_onavito_start_date:           {filter: [{close_reason_id: 500004}, {start_date.>=: $ab_start_date}]}
-  items_started:                           {filter: [{activation_type!: Wait, start_date: $event_date}]}
+  items_started:                           {filter: [{activation_type.!=: Wait, start_date: $event_date}]}
   items_started_free:                      {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], start_date: $event_date}]}
-  items_started_net:                       {filter: [{activation_type!: Wait, is_dead: False, is_item_start: True}]}
+  items_started_net:                       {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True}]}
   items_started_paid:                      {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], start_date: $event_date}]}
   items_started_wait:                      {filter: [{activation_type: Wait, start_date: $event_date}]}
   lf_amount_net:                           {obs: [lf_amount_net]}
