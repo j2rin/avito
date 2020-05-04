@@ -393,11 +393,11 @@ seller_item_event:
   items_sold_another_reason: {filter: [close_reason_id: 500012]}
   items_sold_notonavito: {filter: [close_reason_id: 500011]}
   items_sold_onavito: {filter: [close_reason_id: 500004]}
-  items_started: {filter: [{activation_type!: Wait, is_item_start: true}]}
-  items_started_free: {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: true}]}
+  items_started: {filter: [{activation_type!: Wait, start_date: $event_date}]}
+  items_started_free: {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], start_date: $event_date}]}
   items_started_net: {filter: [{activation_type!: Wait, is_dead: false, is_item_start: True}]}
-  items_started_paid: {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_item_start: true}]}
-  items_started_wait: {filter: [{activation_type: Wait, is_item_start: true}]}
+  items_started_paid: {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], start_date: $event_date}]}
+  items_started_wait: {filter: [{activation_type: Wait, start_date: $event_date}]}
   lf_amount_net: {obs: [lf_amount_net]}
 ######################################################################################
 
@@ -411,14 +411,14 @@ seller_item_active:
   active_items_more_40_description_word: {filter: [description_word_count.>=: 40], key: [item]}
   active_items_more_5_description_word: {filter: [description_word_count.>=: 5], key: [item]}
   active_items_more_5_photo: {filter: [photo_count.>=: 5], key: [item]}
-  new_items_0_photo: {filter: [{is_item_start: true, photo_count: 0}], key: [item]}
-  new_items_more_10_description_word: {filter: [{description_word_count.>=: 10, is_item_start: true}], key: [item]}
-  new_items_more_10_photo: {filter: [{is_item_start: true, photo_count.>=: 10}], key: [item]}
-  new_items_more_1_photo: {filter: [{is_item_start: true, photo_count.>=: 1}], key: [item]}
-  new_items_more_3_photo: {filter: [{is_item_start: true, photo_count.>=: 3}], key: [item]}
-  new_items_more_40_description_word: {filter: [{description_word_count.>=: 40, is_item_start: true}], key: [item]}
-  new_items_more_5_description_word: {filter: [{description_word_count.>=: 5, is_item_start: true}], key: [item]}
-  new_items_more_5_photo: {filter: [{is_item_start: true, photo_count.>=: 5}], key: [item]}
+  new_items_0_photo: {filter: [{start_date: $event_date, photo_count: 0}], key: [item]}
+  new_items_more_10_description_word: {filter: [{description_word_count.>=: 10, start_date: $event_date}], key: [item]}
+  new_items_more_10_photo: {filter: [{start_date: $event_date, photo_count.>=: 10}], key: [item]}
+  new_items_more_1_photo: {filter: [{start_date: $event_date, photo_count.>=: 1}], key: [item]}
+  new_items_more_3_photo: {filter: [{start_date: $event_date, photo_count.>=: 3}], key: [item]}
+  new_items_more_40_description_word: {filter: [{description_word_count.>=: 40, start_date: $event_date}], key: [item]}
+  new_items_more_5_description_word: {filter: [{description_word_count.>=: 5, start_date: $event_date}], key: [item]}
+  new_items_more_5_photo: {filter: [{start_date: $event_date, photo_count.>=: 5}], key: [item]}
   seller_contacts: {obs: [contacts]}
   seller_favorites_added: {obs: [favs_added]}
   seller_favorites_removed: {obs: [favs_removed]}
