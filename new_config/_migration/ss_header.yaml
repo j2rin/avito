@@ -11,16 +11,16 @@ definitions:
   - &sort_dft     5
 
   - &is_search  {eid: *eid_search}
-  - &is_rec     {$or: [{eid: *eid_rec}, {engine: sg-rec}]}
-  - &is_rec_sg  {engine: sg-rec}
+  - &is_rec     {$or: [{eid: *eid_rec}, {flags.bit: 10}]}
+  - &is_rec_sg  {flags.bit: 10}
   - &is_u2i     {eid: *eid_u2i}
   - &is_i2i     {eid: *eid_i2i}
   - &is_fav_lst {eid: *eid_fav_lst}
   - &is_map     {eid: *eid_map}
 
   - &x_is_search  {x_eid: *eid_search}
-  - &x_is_rec     {$or: [{x_eid: *eid_rec}, {x_engine: sg-rec}]}
-  - &x_is_rec_sg  {x_engine: sg-rec}
+  - &x_is_rec     {$or: [{x_eid: *eid_rec}, {x_flags.bit: 10}]}
+  - &x_is_rec_sg  {x_flags.bit: 10}
   - &x_is_u2i     {x_eid: *eid_u2i}
   - &x_is_i2i     {x_eid: *eid_i2i}
   - &x_is_rec_msg {x_from_page: msg_recommendations}
@@ -53,27 +53,27 @@ definitions:
 
   - &is_shop {flags.bit: 7}
 
-  - &is_s_geo       {x_search_flags.bit: [0, 1, 2, 3]}
-  - &is_s_local_geo {x_search_flags.bit: [0, 1, 2]}
-  - &is_s_metro     {x_search_flags.bit: 0}
-  - &is_s_district  {x_search_flags.bit: 1}
-  - &is_s_road      {x_search_flags.bit: 2}
-  - &is_s_radius    {x_search_flags.bit: 3}
-  - &is_default_radius {x_search_flags.bit: 30}
-  - &is_not_default_radius {x_search_flags.!bit: 30}
-  - &is_s_map       {x_search_flags.bit: 4}
-  - &is_s_delivery  {x_search_flags.bit: 5}
-  - &is_s_saved     {x_search_flags.bit: 6}
+  - &is_s_geo       {x_flags.bit: [0, 1, 2, 3]}
+  - &is_s_local_geo {x_flags.bit: [0, 1, 2]}
+  - &is_s_metro     {x_flags.bit: 0}
+  - &is_s_district  {x_flags.bit: 1}
+  - &is_s_road      {x_flags.bit: 2}
+  - &is_s_radius    {x_flags.bit: 3}
+  - &is_default_radius {x_flags.bit: 30}
+  - &is_not_default_radius {x_flags.!bit: 30}
+  - &is_s_map       {x_flags.bit: 4}
+  - &is_s_delivery  {x_flags.bit: 5}
+  - &is_s_saved     {x_flags.bit: 6}
 
-  - &x_is_filter_search       {x_search_flags.bit: 8}
-  - &x_is_price_filter_search {x_search_flags.bit: 9}
-  - &x_is_sg_rec              {x_search_flags.bit: 10}
-  - &x_is_extra_regions       {x_search_flags.bit: 11}
-  - &x_is_extra_delivery      {x_search_flags.bit: 12}
-  - &x_is_witcher_regions     {x_search_flags.bit: 13}
-  - &x_is_witcher_delivery    {x_search_flags.bit: 14}
-  - &x_is_witcher_new_auto    {x_search_flags.bit: 15}
-  - &x_is_witcher_new_flats   {x_search_flags.bit: 16}
+  - &x_is_filter_search       {x_flags.bit: 8}
+  - &x_is_price_filter_search {x_flags.bit: 9}
+  - &x_is_sg_rec              {x_flags.bit: 10}
+  - &x_is_extra_regions       {x_flags.bit: 11}
+  - &x_is_extra_delivery      {x_flags.bit: 12}
+  - &x_is_witcher_regions     {x_flags.bit: 13}
+  - &x_is_witcher_delivery    {x_flags.bit: 14}
+  - &x_is_witcher_new_auto    {x_flags.bit: 15}
+  - &x_is_witcher_new_flats   {x_flags.bit: 16}
 
   - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
 
@@ -93,9 +93,9 @@ definitions:
   - &is_fp_witcher_new_auto  {from_page: witcher-new-auto}
   - &is_fp_witcher_new_flats {from_page: witcher-new-flats}
 
-  - &is_serp_ext          {x_engine: [sg-extra-delivery, sg-extra-regions]}
-  - &is_serp_ext_delivery {x_engine: sg-extra-delivery}
-  - &is_serp_ext_regions  {x_engine: sg-extra-regions}
+  - &is_serp_ext          {x_flags.bit: [11, 12]}
+  - &is_serp_ext_delivery {x_flags.bit: 12}
+  - &is_serp_ext_regions  {x_flags.bit: 11}
 
   - &is_serp_vas        {serp_item_flags.bit: [0, 1, 2, 3]}
   - &is_item_vas        {item_vas_flags.bit: [0, 1, 2, 3]}
