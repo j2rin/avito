@@ -381,14 +381,14 @@ class MetricOld:
     def num_filter(self):
         f = self.num_obs_index.merged_filter
         if self.date_filter:
-            f.append({'start_date.>=': 'ab_start_date'})
+            f.append({'start_date.>=': '$ab_start_date'})
         return f
 
     @cached_property
     def den_filter(self):
         f = self.den_obs_index.merged_filter
         if self.date_filter and f:
-            f.append({'start_date.>=': 'ab_start_date'})
+            f.append({'start_date.>=': '$ab_start_date'})
         return f
 
     @property
