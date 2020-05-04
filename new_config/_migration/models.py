@@ -26,7 +26,7 @@ def dump_filter(filter):
         if isinstance(elem, dict):
             elem_tup = []
             for k, v in elem.items():
-                if isinstance(v, str):
+                if isinstance(v, str) and v.isnumeric():
                     v = "'{}'".format(v)
                 if k == '$or':
                     or_tup = []
