@@ -10,17 +10,17 @@ metric.counter:
   contacts:                                {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}], obs: [realty_development_phone_views]}
 
 metric.uniq:
-  bt_clicks_grouped:                       {counter: bt_clicks,                       key: [item, participant]}
-  contacts_grouped:                        {counter: contacts,                        key: [item, participant]}
+  bt_clicks_grouped:                       {counter: bt_clicks,                       key: [item]}
+  contacts_grouped:                        {counter: contacts,                        key: [item]}
   buyers:                                  {counter: contacts,                        key: [participant]}
   user_pv:                                 {counter: cnt_ph_realty_development,       key: [participant]}
-  users_1plus_actions:                     {counter: cnt_users_1plus_actions,         key: [participant]}
-  users_2plus_actions:                     {counter: cnt_users_1plus_actions,         key: [participant]}
   users_active_daily:                      {counter: cnt_users_1plus_actions,         key: [participant]}
   users_bt_click_daily:                    {counter: cnt_book_dlv_favorites_added_fmsg_ph_realty_development, key: [participant]}
-  sessions_active:                         {counter: cnt_sessions_active,             key: [participant, session]}
-  sessions_btc:                            {counter: cnt_sessions_btc,                key: [participant, session]}
-  sessions_c:                              {counter: cnt_book_dlv_flow_beginings_fmsg_ph_realty_development, key: [participant, session]}
+  sessions_active:                         {counter: cnt_sessions_active,             key: [session]}
+  sessions_btc:                            {counter: cnt_sessions_btc,                key: [session]}
+  sessions_c:                              {counter: cnt_book_dlv_flow_beginings_fmsg_ph_realty_development, key: [session]}
+  users_1plus_actions:                     {counter: cnt_users_1plus_actions,         key: [{participant: 1}]}
+  users_2plus_actions:                     {counter: cnt_users_1plus_actions,         key: [{participant: 2}]}
 
 metric.ratio:
   buyers_per_users:                        {num: buyers,                          den: users_active_daily}
