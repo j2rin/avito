@@ -20,7 +20,7 @@ def split_into_tup(s: str) -> Tuple[str]:
     return tuple(sorted(set(e for e in s.split(',') if e)))
 
 
-def dump_filter(filter):
+def dump_filter(filter, append_star=True):
     tup = []
     for elem in filter:
         if isinstance(elem, dict):
@@ -39,7 +39,8 @@ def dump_filter(filter):
             elem_str = '{' + ', '.join(elem_tup) + '}'
             tup.append(elem_str)
         else:
-            tup.append('*' + elem)
+            elem_str = '*' + elem if append_star else elem
+            tup.append(elem_str)
     return '[' + ', '.join(tup) + ']'
 
 
@@ -59,8 +60,8 @@ def make_counter_yaml(name, obs, ftr, m42=True):
 def make_uniq_yaml(name, counter, key, m42=True):
     d = []
     counter += ','
-    key = ', '.join(key)
-    d.append(f'counter: {counter:32} key: [{key}]')
+    key = dump_filter(key, False)
+    d.append(f'counter: {counter:32} key: {key}')
     if not m42:
         d.append('m42: False')
     s = '{' + ', '.join(d) + '}'
@@ -126,7 +127,7 @@ class ObsTup(NamedTuple):
 
 
 def obs_astuple(filter, obs, key):
-    return ObsTup(filter2tup(filter), tuple(obs), tuple(key))
+    return ObsTup(filter2tup(filter), tuple(obs), filter2tup(key))
 
 
 @dataclass
@@ -137,8 +138,7 @@ class Metric:
     filter: List[Union[str, Dict[str, Union[int, str, bool, List[int], List[str]]]]] = field(default_factory=list)
     obs: List[str] = field(default_factory=list)
     counter: 'Metric' = None
-    key: List[str] = field(default_factory=list)
-    threshold: int = None
+    key: List[Dict[str, int]] = field(default_factory=list)
     num: 'Metric' = None
     den: 'Metric' = None
 
@@ -152,7 +152,7 @@ class Metric:
         if self.type == 'counter':
             self.__key = self.astuple.filter, self.astuple.obs
         elif self.type == 'uniq':
-            self.__key = self.counter, self.astuple.key, self.threshold
+            self.__key = self.counter, self.astuple.key
         elif self.type == 'ratio':
             self.__key = self.num, self.den
 
@@ -346,11 +346,18 @@ class ObservationIndex(Set[Observation]):
         return ''.join(sorted(o.dump() for o in self))
 
 
-def combine_uniq_key(uniq_key, old_uniq_key):
-    if len(old_uniq_key) > 0:
-        return list(old_uniq_key)
+def combine_uniq_key(uniq_key, old_uniq_key, threshold: int):
+    if len(old_uniq_key) > 1:
+        key = [k for k in old_uniq_key if k != 'participant']
+    elif len(old_uniq_key) == 1:
+        key = old_uniq_key
     else:
-        return list(uniq_key)
+        key = uniq_key
+    if len(key) > 0:
+        key_name = '_'.join(key)
+        return [{key_name: threshold}] if threshold > 0 else [key_name]
+    else:
+        return []
 
 
 @dataclass
@@ -359,10 +366,8 @@ class MetricOld:
     num_obs_index: ObservationIndex
     den_obs_index: ObservationIndex
     obs_index: ObservationIndex
-    num_uniq: List[str] = field(default_factory=list)
-    den_uniq: List[str] = field(default_factory=list)
-    num_threshold: int = 0
-    den_threshold: int = 0
+    num_uniq: List[Dict[str, int]] = field(default_factory=list)
+    den_uniq: List[Dict[str, int]] = field(default_factory=list)
     date_filter: str = None
 
     occupied_metric_names = set()
@@ -426,38 +431,16 @@ class MetricOld:
         else:
             return 'counter'
 
-    @property
-    def is_one_source(self):
-        return len(self.sources) == 1
-
-    @property
-    def num_counter_key(self):
-        return self.num_obs, self.num_filter, (), 0
-
-    @property
-    def den_counter_key(self):
-        return self.den_obs, self.den_filter, (), 0
-
-    @property
-    def num_uniq_key(self):
-        return self.num_obs, self.num_filter, self.num_uniq, self.num_threshold
-
-    @property
-    def den_uniq_key(self):
-        return self.den_obs, self.den_filter, self.den_uniq, self.den_threshold
-
     @classmethod
     def from_tup(cls, tup):
         no = cls.all_observation_index[split_into_tup(tup.numerator_observations)]
-        num_uniq = combine_uniq_key(no.merged_key, split_into_tup(tup.numerator_uniq))
+        num_uniq = combine_uniq_key(no.merged_key, split_into_tup(tup.numerator_uniq), tup.numerator_threshold)
         do = cls.all_observation_index[split_into_tup(tup.denominator_observations)]
-        den_uniq = combine_uniq_key(do.merged_key, split_into_tup(tup.denominator_uniq))
+        den_uniq = combine_uniq_key(do.merged_key, split_into_tup(tup.denominator_uniq), tup.denominator_threshold)
         return cls(
             name=tup.metric_name,
             num_uniq=num_uniq,
             den_uniq=den_uniq,
-            num_threshold=tup.numerator_threshold,
-            den_threshold=tup.denominator_threshold,
             num_obs_index=no,
             den_obs_index=do,
             obs_index=ObservationIndex(no.union(do)),
@@ -490,11 +473,11 @@ class MetricOld:
                 name = 'cnt_' + name
 
             if type == 'uniq':
-                if uniq in (['participant'], []):
+                uniq_key_name = list(uniq[0])[0] if isinstance(uniq[0], dict) else uniq[0]
+                if uniq_key_name == 'participant':
                     name = 'unq_' + name
                 else:
-                    uniq = [u for u in uniq if u != 'participant']
-                    name = 'unq_' + '_'.join([u for u in uniq]) + '_' + name
+                    name = 'unq_' + uniq_key_name + '_' + name
 
             nn = 0
             _name = name
@@ -531,7 +514,6 @@ class MetricOld:
             sources=self.num_sources,
             counter=self.all_metric_index.by_self[self.make_num_counter()],
             key=self.num_uniq,
-            threshold=self.num_threshold,
         )
         self.all_metric_index.add(m)
         return m
@@ -545,7 +527,6 @@ class MetricOld:
             sources=self.den_sources,
             counter=self.all_metric_index.by_self[self.make_den_counter()],
             key=self.den_uniq,
-            threshold=self.den_threshold,
         )
         self.all_metric_index.add(m)
         return m

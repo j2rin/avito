@@ -8,7 +8,7 @@ CONFIG_PATH = Path.cwd() / 'migrated'
 
 def write_metrics_type_batch(metrics: Set[Metric], typ: str, fil: TextIO):
     fil.write(f'metric.{typ}:\n')
-    metrics = sorted(metrics, key=lambda x: (x.key, x.name))
+    metrics = sorted(metrics, key=lambda x: (str(x.key), x.name))
     lines = [m.yaml_repr for m in metrics]
     fil.writelines(lines)
     fil.write('\n')
