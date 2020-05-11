@@ -12,6 +12,7 @@ import io
 import json
 import os
 import sys
+from time import sleep
 
 try:
     from http import client as httplib  # python 3
@@ -24,8 +25,10 @@ PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'presets')
 BREAKDOWNS_PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'presets/breakdowns')
 METRICS_LISTS_PATH = os.path.join(CUR_DIR_PATH, 'presets/metrics')
 METRICS_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics.yaml')
+METRICS_DIMENSION_FILE = os.path.join(CUR_DIR_PATH, 'config/m42.yaml')
+METRICS_SUBSCRIPTION_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics_subscriptions.yaml')
 
-AB_CONFIGURATOR_HOST = 'ab-configurator.k.avito.ru'
+AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 PRESETS_CONFIG_VALIDATE_URL = '/api/validateMetricsRepo'
 PRESETS_CONFIG_PUBLISH_URL = '/api/publishMetricsRepo'
 
@@ -42,17 +45,27 @@ def marks_to_str(file_name, data, marks_attribute):
 
 
 def post(url, data):
-    conn = httplib.HTTPConnection(AB_CONFIGURATOR_HOST)
+    def _post():
+        conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
 
-    conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
+        conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
 
-    response = conn.getresponse()
+        response = conn.getresponse()
+        return response.status, response.read().decode()
 
-    text = response.read().decode()
+    status, text = _post()
 
-    if response.status != 200:
+    # retry on gateway timeout
+    for i in range(3):
+        if status != 504:
+            break
+        print('Gateway timeout, retrying...')
+        sleep(i * 30)
+        status, text = _post()
+
+    if status != 200:
         print('FAILED: Cannot connect to AB Configurator')
-        print('status: {}'.format(response.status))
+        print('status: {}'.format(status))
         print(text)
         exit(1)
 
@@ -100,11 +113,15 @@ def show_errors(file_name_map, name, info):
     return result
 
 
-def send_all(url, config, presets, api_key=None):
+def send_all(url, config, presets, dimensions, subscriptions, api_key=None):
+
     file_name_map = {x[0]: {} for x in presets}
     data = {
         'config': io.open(config, encoding='utf-8').read()
     }
+
+    data['m42_dimensions'] = io.open(dimensions, encoding='utf-8').read()
+    data['m42_subscriptions'] = io.open(subscriptions, encoding='utf-8').read()
 
     if api_key:
         data['api_key'] = api_key
@@ -124,8 +141,8 @@ def send_all(url, config, presets, api_key=None):
     return result, file_name_map
 
 
-def validate(url, config, presets):
-    result, file_name_map = send_all(url, config, presets)
+def validate(url, config, presets, dimensions, subscriptions):
+    result, file_name_map = send_all(url, config, presets, dimensions, subscriptions)
 
     if result['success']:
         print('\nAll presets are PASSED')
@@ -140,7 +157,7 @@ def validate(url, config, presets):
     show_errors({'config': METRICS_FILE}, 'config', info)
 
     if not info['success']:
-        print('Metrics config presets IGNORED')
+        print('Metrics config presets FAILED')
         return False
 
     for preset_type, _ in presets:
@@ -151,12 +168,28 @@ def validate(url, config, presets):
 
     if not failed_presets:
         print('\nAll presets are PASSED')
-        return True
+    else:
+        for preset_type, names in failed_presets.items():
+            print('\nFAILED {} presets: {}'.format(preset_type, ', '.join(sorted(names))))
+        return False
 
-    for preset_type, names in failed_presets.items():
-        print('\nFAILED {} presets: {}'.format(preset_type, ', '.join(sorted(names))))
+    info = result['result'].pop('m42_dimensions')
 
-    return False
+    show_errors({'m42_dimensions': METRICS_DIMENSION_FILE}, 'm42_dimensions', info)
+
+    if not info['success']:
+        print('Metrics dimensions config presets FAILED')
+        return False
+
+    info = result['result'].pop('m42_subscriptions')
+
+    show_errors({'m42_subscriptions': METRICS_SUBSCRIPTION_FILE}, 'm42_subscriptions', info)
+
+    if not info['success']:
+        print('Metrics subscriptions config FAILED')
+        return False
+
+    return True
 
 
 def publish_repo():
@@ -174,6 +207,8 @@ def publish_repo():
             ('ab_config_presets', PRESETS_PATH),
             ('metrics_lists', METRICS_LISTS_PATH),
         ],
+        METRICS_DIMENSION_FILE,
+        METRICS_SUBSCRIPTION_FILE,
         os.getenv('API_KEY')
     )
 
@@ -193,7 +228,9 @@ def validate_repo():
             ('breakdown_presets', BREAKDOWNS_PRESETS_PATH),
             ('ab_config_presets', PRESETS_PATH),
             ('metrics_lists', METRICS_LISTS_PATH),
-        ]
+        ],
+        METRICS_DIMENSION_FILE,
+        METRICS_SUBSCRIPTION_FILE
     )
 
     if not success:

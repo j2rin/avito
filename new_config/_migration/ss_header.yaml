@@ -1,0 +1,121 @@
+definitions:
+  - &eid_x        [300, 2437, 2012, 2309, 400, 2743]
+  - &eid_search   [300]
+  - &eid_rec      [2437, 2012, 2309]
+  - &eid_u2i      [2012, 2309]
+  - &eid_i2i      [2437]
+  - &eid_fav_lst  [400]
+  - &eid_map      [2743]
+  - &sort_date    [1, 2]
+  - &sort_price   [3, 4]
+  - &sort_dft     5
+
+  - &is_search  {eid: *eid_search}
+  - &is_rec     {$or: [{eid: *eid_rec}, {flags.bit: 10}]}
+  - &is_rec_sg  {flags.bit: 10}
+  - &is_u2i     {eid: *eid_u2i}
+  - &is_i2i     {eid: *eid_i2i}
+  - &is_fav_lst {eid: *eid_fav_lst}
+  - &is_map     {eid: *eid_map}
+
+  - &x_is_search  {x_eid: *eid_search}
+  - &x_is_rec     {$or: [{x_eid: *eid_rec}, {x_flags.bit: 10}]}
+  - &x_is_rec_sg  {x_flags.bit: 10}
+  - &x_is_u2i     {x_eid: *eid_u2i}
+  - &x_is_i2i     {x_eid: *eid_i2i}
+  - &x_is_rec_msg {x_from_page: msg_recommendations}
+  - &x_is_fav_lst {x_eid: *eid_fav_lst}
+  - &x_is_map     {x_eid: *eid_map}
+
+  - &is_sgt           {eid: 2443}
+  - &is_iv            {eid: 301}
+  - &is_iv_client     {eid: 2649}
+  - &is_btc           {eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654]}
+  - &is_contact       {eid: [303, 856, 857, 2015, 3005, 2581]}
+  - &is_ph_btn        {eid: 2650}
+  - &is_ph            {eid: 303}
+  - &is_ph_snip       {ph_src: s}
+  - &is_ph_right      {$or: [{ph_src: r}, {ph_src.isnull: true}]}
+  - &is_ph_xlvas      {ph_src: xs}
+  - &is_ph_top        {ph_src: t}
+  - &is_ph_chat       {eid: 3005}
+  - &is_ph_tot        {eid: [303, 3005]}
+  - &is_msg_btn       {eid: 2654}
+  - &is_msg           {eid: [856, 857]}
+  - &is_fav           {eid: [401, 2574, 2732]}
+  - &is_fav_rmv       {eid: 402}
+  - &is_delivery_btn  {eid: 2013}
+  - &is_delivery      {eid: 2015}
+  - &is_booking       {eid: 2581}
+  - &is_iv_wo_guessing    {<<: *is_iv, item_x_type: 0}
+  - &is_btc_wo_guessing    {<<: *is_btc, item_x_type: 0}
+  - &is_contact_wo_guessing    {<<: *is_contact, item_x_type: 0}
+
+  - &is_shop {flags.bit: 7}
+
+  - &is_s_geo       {x_flags.bit: [0, 1, 2, 3]}
+  - &is_s_local_geo {x_flags.bit: [0, 1, 2]}
+  - &is_s_metro     {x_flags.bit: 0}
+  - &is_s_district  {x_flags.bit: 1}
+  - &is_s_road      {x_flags.bit: 2}
+  - &is_s_radius    {x_flags.bit: 3}
+  - &is_default_radius {x_flags.bit: 30}
+  - &is_not_default_radius {x_flags.!bit: 30}
+  - &is_s_map       {x_flags.bit: 4}
+  - &is_s_delivery  {x_flags.bit: 5}
+  - &is_s_saved     {x_flags.bit: 6}
+
+  - &x_is_filter_search       {x_flags.bit: 8}
+  - &x_is_price_filter_search {x_flags.bit: 9}
+  - &x_is_sg_rec              {x_flags.bit: 10}
+  - &x_is_extra_regions       {x_flags.bit: 11}
+  - &x_is_extra_delivery      {x_flags.bit: 12}
+  - &x_is_witcher_regions     {x_flags.bit: 13}
+  - &x_is_witcher_delivery    {x_flags.bit: 14}
+  - &x_is_witcher_new_auto    {x_flags.bit: 15}
+  - &x_is_witcher_new_flats   {x_flags.bit: 16}
+
+  - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
+
+  - &is_serp_delivery {serp_block: 10}
+  - &is_serp_regions  {serp_block: 9}
+  - &is_serp_vip      {serp_block: 3}
+  - &is_serp_premium  {serp_block: 2}
+  - &is_serp_witcher_regions {serp_block: 11}
+  - &is_serp_witcher_delivery {serp_block: 12}
+  - &is_serp_witcher_new_auto {serp_block: 13}
+  - &is_serp_witcher_new_flats {serp_block: 14}
+  - &is_serp_push     {serp_block: 1, serp_item_flags.bit: 2}
+  - &is_serp_grouping {x_from_page: items_ungrouped}
+
+  - &is_fp_witcher_regions   {from_page: witcher-extra-regions}
+  - &is_fp_witcher_delivery  {from_page: witcher-extra-delivery}
+  - &is_fp_witcher_new_auto  {from_page: witcher-new-auto}
+  - &is_fp_witcher_new_flats {from_page: witcher-new-flats}
+
+  - &is_serp_ext          {x_flags.bit: [11, 12]}
+  - &is_serp_ext_delivery {x_flags.bit: 12}
+  - &is_serp_ext_regions  {x_flags.bit: 11}
+
+  - &is_serp_vas        {serp_item_flags.bit: [0, 1, 2, 3]}
+  - &is_item_vas        {item_vas_flags.bit: [0, 1, 2, 3]}
+  - &is_item_vip        {item_vas_flags.bit: 0}
+  - &is_item_highlight  {item_vas_flags.bit: 1}
+  - &is_item_push       {item_vas_flags.bit: 2}
+  - &is_item_premium    {item_vas_flags.bit: 3}
+
+  - &is_s_sort_date     {x_search_sort: *sort_date}
+  - &is_s_sort_price    {x_search_sort: *sort_price}
+  - &is_s_sort_dft      {x_search_sort: *sort_dft}
+
+  - &q                  {x_query.isnull: false}
+  - &noq                {x_query.isnull: true}
+  - &is_1p              {page_no: 0}
+
+  - &is_serp_empty      {item_cnt: 0}
+  - &is_serp_small      {item_cnt.>=: 1, item_cnt.<=: 9}
+  - &is_base_serp_empty {base_item_cnt: 0}
+  - &is_base_serp_small {base_item_cnt.>=: 1, base_item_cnt.<=: 9}
+
+  - &is_region_with_double_groups {region_id: [697, 4181]}
+

@@ -1,0 +1,9 @@
+metric.counter:
+  cnt_users:                               {filter: [{$or: [[*is_1p, *is_search, *noq], [*is_1p, *is_search, *q], [*is_booking], [*is_delivery_btn], [*is_fav], [*is_iv], [*is_msg], [*is_ph_tot]]}], obs: [delivery_order_creasted, realty_development_phone_views], m42: False}
+
+metric.uniq:
+  unq_users:                               {counter: cnt_users,                       key: [participant], m42: False}
+
+metric.ratio:
+  user_fatal_error_per_users:              {num: users_fatal_app_errors,          den: unq_users}
+

@@ -1,0 +1,73 @@
+metric.counter:
+  buyer_commission:                        {obs: [buyer_commission]}
+  buyer_commission_net_adj:                {obs: [buyer_commission_net_adj]}
+  buyer_delivery_deals:                    {obs: [buyer_delivery_deals]}
+  buyer_delivery_orders:                   {obs: [buyer_delivery_orders]}
+  buyer_delivery_orders_canceled:          {obs: [buyer_delivery_orders_canceled]}
+  buyer_delivery_orders_in_transit:        {obs: [buyer_delivery_orders_in_transit]}
+  buyer_delivery_orders_returned:          {obs: [buyer_delivery_orders_returned]}
+  buyer_delivery_orders_with_pay:          {obs: [buyer_delivery_orders_with_pay]}
+  delivery_category_deals:                 {obs: [delivery_category_deals]}
+  delivery_click:                          {obs: [delivery_click]}
+  delivery_confirm:                        {obs: [delivery_confirm]}
+  delivery_contact:                        {obs: [delivery_contact]}
+  delivery_deals:                          {obs: [delivery_deals]}
+  delivery_item_view:                      {obs: [delivery_item_view]}
+  delivery_revenue:                        {obs: [delivery_revenue]}
+  delivery_seller_vas_spend_amount:        {obs: [delivery_seller_vas_spend_amount]}
+  delivery_total_item_view:                {obs: [delivery_total_item_view]}
+  delivery_widget:                         {obs: [delivery_widget]}
+  helpdesk_delivery_2nd_line_tickets:      {obs: [helpdesk_delivery_2nd_line_tickets]}
+  helpdesk_delivery_claim_tickets:         {obs: [helpdesk_delivery_claim_tickets]}
+  helpdesk_delivery_text_2nd_line_tickets: {obs: [helpdesk_delivery_text_2nd_line_tickets]}
+  helpdesk_delivery_text_claim_tickets:    {obs: [helpdesk_delivery_text_claim_tickets]}
+  helpdesk_delivery_text_tickets:          {obs: [helpdesk_delivery_text_tickets]}
+  helpdesk_delivery_tickets:               {obs: [helpdesk_delivery_tickets]}
+  helpdesk_delivery_voice_answer_calls:    {obs: [helpdesk_delivery_voice_answer_calls]}
+  helpdesk_delivery_voice_calls:           {obs: [helpdesk_delivery_voice_calls]}
+  helpdesk_delivery_voice_claim_tickets:   {obs: [helpdesk_delivery_voice_claim_tickets]}
+  item_off_delivery:                       {obs: [item_off_delivery]}
+  item_on_delivery:                        {obs: [item_on_delivery]}
+  items_delivery_available:                {obs: [items_delivery_available]}
+  items_delivery_category_soa:             {obs: [items_delivery_category_soa]}
+  items_delivery_wrong_available:          {obs: [items_delivery_wrong_available]}
+  items_reactivated_with_delivery:         {obs: [items_reactivated_with_delivery]}
+  items_started_with_delivery:             {obs: [items_started_with_delivery]}
+  items_with_delivery:                     {obs: [items_with_delivery]}
+  items_with_delivery_soa:                 {obs: [items_with_delivery_soa]}
+  seller_delivery_deals:                   {obs: [seller_delivery_deals]}
+  seller_delivery_orders_canceled:         {obs: [seller_delivery_orders_canceled]}
+  seller_delivery_orders_in_transit:       {obs: [seller_delivery_orders_in_transit]}
+  seller_delivery_orders_returned:         {obs: [seller_delivery_orders_returned]}
+  seller_delivery_orders_with_pay:         {obs: [seller_delivery_orders_with_pay]}
+  total_delivery_click:                    {obs: [total_delivery_click]}
+  total_delivery_confirm:                  {obs: [total_delivery_confirm]}
+  total_delivery_contact:                  {obs: [total_delivery_contact]}
+  total_delivery_widget:                   {obs: [total_delivery_widget]}
+  users_off_delivery:                      {obs: [users_off_delivery]}
+  users_on_delivery:                       {obs: [users_on_delivery]}
+
+metric.ratio:
+  buyer_delivery_canceled_ratio:           {num: buyer_delivery_orders_canceled,  den: buyer_delivery_orders_with_pay}
+  buyer_delivery_in_transit_ratio:         {num: buyer_delivery_orders_in_transit, den: buyer_delivery_orders_with_pay}
+  buyer_delivery_paid_order_ratio:         {num: buyer_delivery_orders_with_pay,  den: buyer_delivery_orders}
+  delivery_click_widget_ratio:             {num: delivery_widget,                 den: delivery_click}
+  delivery_contact_delivery_button_ratio:  {num: delivery_contact,                den: delivery_click}
+  delivery_deals_soa_share:                {num: delivery_deals,                  den: delivery_category_deals}
+  delivery_revenue_per_deal:               {num: delivery_revenue,                den: buyer_delivery_deals}
+  delivery_total_click_widget_ratio:       {num: total_delivery_widget,           den: total_delivery_click}
+  delivery_total_view_delivery_click_ratio: {num: total_delivery_click,            den: delivery_total_item_view}
+  delivery_total_widget_confirm_ratio:     {num: total_delivery_confirm,          den: total_delivery_widget}
+  delivery_total_widget_contact_ratio:     {num: total_delivery_contact,          den: total_delivery_widget}
+  delivery_view_delivery_click_ratio:      {num: delivery_click,                  den: delivery_item_view}
+  delivery_widget_confirm_ratio:           {num: delivery_confirm,                den: delivery_widget}
+  delivery_widget_contact_ratio:           {num: delivery_contact,                den: delivery_widget}
+  helpdesk_delivery_2nd_line_tickets_per_order: {num: helpdesk_delivery_2nd_line_tickets, den: buyer_delivery_orders_with_pay}
+  helpdesk_delivery_text_tickets_per_order: {num: helpdesk_delivery_text_tickets,  den: buyer_delivery_orders_with_pay}
+  helpdesk_delivery_tickets_per_order:     {num: helpdesk_delivery_tickets,       den: buyer_delivery_orders_with_pay}
+  helpdesk_delivery_voice_calls_per_order: {num: helpdesk_delivery_voice_calls,   den: buyer_delivery_orders_with_pay}
+  items_delivery_ratio:                    {num: items_with_delivery,             den: items_delivery_available}
+  items_delivery_wrong_available_ratio:    {num: items_delivery_wrong_available,  den: items_with_delivery}
+  seler_delivery_canceled_ratio:           {num: seller_delivery_orders_canceled, den: seller_delivery_orders_with_pay}
+  seller_delivery_in_transit_ratio:        {num: seller_delivery_orders_in_transit, den: seller_delivery_orders_with_pay}
+
