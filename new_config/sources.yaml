@@ -143,3 +143,17 @@ geo_map_stream:
       - location_level_id
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
+
+perf_mobile:
+  vertica:
+    table: dma.o_perf_mobile
+    dimensions: [network_type, is_core_content, screen_name, content_type]
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: observation_date
+
+perf_web:
+  vertica:
+    table: dma.o_perf_web
+    dimensions: [network_type, screen_name, stage_name]
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: observation_date
