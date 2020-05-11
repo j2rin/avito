@@ -15,6 +15,11 @@ def write_metrics_type_batch(metrics: Set[Metric], typ: str, fil: TextIO):
 
 
 def write_metrics_to_file(metrics: Set[Metric], source: str, extra_path):
+    source_map = {
+        'new_performance': 'perf_mobile',
+        'web_performance': 'perf_web',
+    }
+    source = source_map.get(source, source)
     filepath = CONFIG_PATH / extra_path / f'{source}.yaml'
     index_by_type = MetricIndex(metrics).by_type
     with open(filepath, 'w') as f:
