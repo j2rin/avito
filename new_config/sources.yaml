@@ -39,6 +39,7 @@ buyer_stream:
       - x_rec_engine_id
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
+    segm: cookie_id
 
 click_stream:
   vertica:
@@ -63,6 +64,7 @@ click_stream:
       - location_level_id
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
+    segm: cookie_id
 
 seller_item_active:
   vertica:
@@ -83,6 +85,7 @@ seller_item_active:
       - location_level_id
     participant: {user: user_id}
     dtm: event_date
+    segm: user_id
 
 seller_item_event:
   vertica:
@@ -103,6 +106,7 @@ seller_item_event:
       - location_level_id
     participant: {user: user_id}
     dtm: event_date
+    segm: user_id
 
 geo_loc_change:
   vertica:
@@ -123,6 +127,7 @@ geo_loc_change:
       - location_level_id
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
+    segm: cookie_id
 
 geo_map_stream:
   vertica:
@@ -143,6 +148,7 @@ geo_map_stream:
       - location_level_id
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
+    segm: cookie_id
 
 perf_mobile:
   vertica:
@@ -150,6 +156,7 @@ perf_mobile:
     dimensions: [network_type, is_core_content, screen_name, content_type]
     participant: {visitor: cookie_id, user: user_id}
     dtm: observation_date
+    segm: cookie_id
 
 perf_web:
   vertica:
@@ -157,3 +164,4 @@ perf_web:
     dimensions: [network_type, screen_name, stage_name]
     participant: {visitor: cookie_id, user: user_id}
     dtm: observation_date
+    segm: cookie_id
