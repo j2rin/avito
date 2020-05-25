@@ -27,7 +27,7 @@ metric.ratio:
   contacts_from_map_per_map_search:        {num: contacts_from_map,               den: map_searches}
   contacts_from_map_per_pin:               {num: contacts_from_map,               den: pin_clicks}
   contacts_from_map_total_per_map_search:  {num: contacts_serp_map_total,         den: map_searches}
-  contacts_on_rating_share:                {num: contacts_on_rating,              den: seller_contacts}
+  contacts_on_rating_share:                {num: contacts_on_rating,              den: contacts_canonical}
   dom_interactive_session_duration:        {num: cnt_dom_interactive_sessionduration, den: cnt_dom_interactive_session_duration_events}
   domoteka_preview_clicks_per_iv:          {num: domoteka_preview_clicks,         den: item_views}
   extensions_paying_users_ratio:           {num: extensions_users,                den: active_listers}
@@ -40,8 +40,6 @@ metric.ratio:
   geo_redirect_replace_users_share:        {num: unq_geo_redirect_replace,        den: users_search}
   geo_redirect_suggest_to_searches:        {num: geo_redirect_suggest,            den: searches}
   geo_redirect_suggest_users_share:        {num: unq_geo_redirect_suggest,        den: users_search}
-  helpdesk_delivery_2nd_line_tickets_per_order: {num: helpdesk_delivery_2nd_line_tickets, den: buyer_delivery_orders_with_pay}
-  helpdesk_delivery_voice_calls_per_order: {num: helpdesk_delivery_voice_calls,   den: buyer_delivery_orders_with_pay}
   item_started_net_per_items_add_started:  {num: items_started_net,               den: items_add_started}
   item_views_from_map_per_map_search:      {num: item_views_from_map,             den: map_searches}
   item_views_from_map_per_pin:             {num: item_views_from_map,             den: pin_clicks}
@@ -52,6 +50,8 @@ metric.ratio:
   items_200_plus_km_from_location_reactivated_per_react: {num: items_200_plus_km_from_location_reactivated, den: items_reactivated}
   items_20m_from_location_new_per_new:     {num: items_20m_from_location_new,     den: items_started}
   items_20m_from_location_reactivated_per_react: {num: items_20m_from_location_reactivated, den: items_reactivated}
+  items_500m_from_location_new_per_new:    {num: items_500m_from_location_new,    den: items_started}
+  items_500m_from_location_reactivated_per_react: {num: items_500m_from_location_reactivated, den: items_reactivated}
   items_no_address_id_new_per_new:         {num: items_no_address_id_new,         den: items_started}
   items_no_address_id_reactivated_per_react: {num: items_no_address_id_reactivated, den: items_reactivated}
   items_no_address_string_new_per_new:     {num: items_no_address_string_new,     den: items_started}
@@ -70,10 +70,24 @@ metric.ratio:
   items_with_city_reactivated_per_react:   {num: items_with_city_reactivated,     den: items_reactivated}
   items_with_coordinates_new_per_new:      {num: items_with_coordinates_new,      den: items_started}
   items_with_coordinates_reactivated_per_react: {num: items_with_coordinates_reactivated, den: items_reactivated}
+  items_with_district_100m_from_location_new_per_new: {num: items_with_district_100m_from_location_new, den: items_started}
+  items_with_district_100m_from_location_reactivated_per_react: {num: items_with_district_100m_from_location_reactivated, den: items_reactivated}
+  items_with_district_500m_from_location_new_per_new: {num: items_with_district_500m_from_location_new, den: items_started}
+  items_with_district_500m_from_location_reactivated_per_react: {num: items_with_district_500m_from_location_reactivated, den: items_reactivated}
   items_with_district_new_per_new:         {num: items_with_district_new,         den: items_started}
   items_with_district_reactivated_per_react: {num: items_with_district_reactivated, den: items_reactivated}
   items_with_marginal_address_new_per_new: {num: items_with_marginal_address_new, den: items_started}
   items_with_marginal_address_reactivated_per_react: {num: items_with_marginal_address_reactivated, den: items_reactivated}
+  items_with_metro_100m_from_location_new_per_new: {num: items_with_metro_100m_from_location_new, den: items_started}
+  items_with_metro_100m_from_location_reactivated_per_react: {num: items_with_metro_100m_from_location_reactivated, den: items_reactivated}
+  items_with_metro_500m_from_location_new_per_new: {num: items_with_metro_500m_from_location_new, den: items_started}
+  items_with_metro_500m_from_location_reactivated_per_react: {num: items_with_metro_500m_from_location_reactivated, den: items_reactivated}
+  items_with_metro_new_per_new:            {num: items_with_metro_new,            den: items_started}
+  items_with_metro_reactivated_per_react:  {num: items_with_metro_reactivated,    den: items_reactivated}
+  items_with_street_100m_from_location_new_per_new: {num: items_with_street_100m_from_location_new, den: items_started}
+  items_with_street_100m_from_location_reactivated_per_react: {num: items_with_street_100m_from_location_reactivated, den: items_reactivated}
+  items_with_street_500m_from_location_new_per_new: {num: items_with_street_500m_from_location_new, den: items_started}
+  items_with_street_500m_from_location_reactivated_per_react: {num: items_with_street_500m_from_location_reactivated, den: items_reactivated}
   items_with_street_new_per_new:           {num: items_with_street_new,           den: items_started}
   items_with_street_reactivated_per_react: {num: items_with_street_reactivated,   den: items_reactivated}
   iv_from_map_total_per_map_search:        {num: item_views_from_map_total,       den: map_searches}
@@ -113,7 +127,7 @@ metric.ratio:
   searches_witcher_delivery_per_search:    {num: searches_witcher_delivery,       den: searches}
   searches_with_ratings_per_searches:      {num: cnt_s_with_rating,               den: searches_serp}
   seler_delivery_expired_ratio:            {num: seller_delivery_orders_expired,  den: seller_delivery_orders_with_pay}
-  seller_contacts_per_items_reactivated_net: {num: seller_contacts,                 den: items_reactivated_net}
+  seller_contacts_per_items_reactivated_net: {num: contacts_canonical,              den: items_reactivated_net}
   seller_contacts_per_items_started_net_start_date: {num: seller_contacts_start_date,      den: cnt_items_started_net}
   seller_favorites_added_items_reactivated_net: {num: seller_favorites_added,          den: items_reactivated_net}
   seller_favorites_added_per_items_started_net_start_date: {num: seller_favorites_added_start_date, den: cnt_items_started_net}

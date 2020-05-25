@@ -49,6 +49,27 @@ metric.counter:
   cnt_from_vertical_page_to_iv_p50:        {obs: [from_vertical_page_to_iv_p50], m42: False}
   cnt_from_vertical_page_to_iv_p75:        {obs: [from_vertical_page_to_iv_p75], m42: False}
   cnt_from_vertical_page_to_iv_p99:        {obs: [from_vertical_page_to_iv_p99], m42: False}
+  cnt_image_draw_appstart_duration:        {obs: [image_draw_appstart_duration], m42: False}
+  cnt_image_draw_appstart_duration_events: {obs: [image_draw_appstart_duration_events], m42: False}
+  cnt_image_draw_appstart_events:          {obs: [image_draw_appstart_events], m42: False}
+  cnt_image_draw_appstart_events_p25:      {obs: [image_draw_appstart_events_p25], m42: False}
+  cnt_image_draw_appstart_events_p50:      {obs: [image_draw_appstart_events_p50], m42: False}
+  cnt_image_draw_appstart_events_p75:      {obs: [image_draw_appstart_events_p75], m42: False}
+  cnt_image_draw_appstart_events_p95:      {obs: [image_draw_appstart_events_p95], m42: False}
+  cnt_image_draw_duration:                 {obs: [image_draw_duration], m42: False}
+  cnt_image_draw_duration_events:          {obs: [image_draw_duration_events], m42: False}
+  cnt_image_draw_events:                   {obs: [image_draw_events], m42: False}
+  cnt_image_draw_events_p25:               {obs: [image_draw_events_p25], m42: False}
+  cnt_image_draw_events_p50:               {obs: [image_draw_events_p50], m42: False}
+  cnt_image_draw_events_p75:               {obs: [image_draw_events_p75], m42: False}
+  cnt_image_draw_events_p95:               {obs: [image_draw_events_p95], m42: False}
+  cnt_image_load_duration:                 {obs: [image_load_duration], m42: False}
+  cnt_image_load_duration_events:          {obs: [image_load_duration_events], m42: False}
+  cnt_image_load_events:                   {obs: [image_load_events], m42: False}
+  cnt_image_load_events_p25:               {obs: [image_load_events_p25], m42: False}
+  cnt_image_load_events_p50:               {obs: [image_load_events_p50], m42: False}
+  cnt_image_load_events_p75:               {obs: [image_load_events_p75], m42: False}
+  cnt_image_load_events_p95:               {obs: [image_load_events_p95], m42: False}
   cnt_lf_block_show_events:                {obs: [lf_block_show_events], m42: False}
   cnt_lf_payment_page_events:              {obs: [lf_payment_page_events], m42: False}
   cnt_pages_listing_type:                  {obs: [pages_listing_type], m42: False}
@@ -62,16 +83,14 @@ metric.counter:
   from_main_page_to_iv:                    {obs: [from_main_page_to_iv]}
   from_vertical_page_to_c:                 {obs: [from_vertical_page_to_c]}
   from_vertical_page_to_iv:                {obs: [from_vertical_page_to_iv]}
-  helpdesk_delivery_2nd_line_tickets:      {obs: [helpdesk_delivery_2nd_line_tickets]}
-  helpdesk_delivery_text_2nd_line_tickets: {obs: [helpdesk_delivery_text_2nd_line_tickets]}
   helpdesk_delivery_vas_tickets:           {obs: [helpdesk_delivery_vas_tickets]}
   helpdesk_delivery_voice_2nd_line_answer_calls: {obs: [helpdesk_delivery_voice_2nd_line_answer_calls]}
   helpdesk_delivery_voice_2nd_line_calls:  {obs: [helpdesk_delivery_voice_2nd_line_calls]}
-  helpdesk_delivery_voice_answer_calls:    {obs: [helpdesk_delivery_voice_answer_calls]}
-  helpdesk_delivery_voice_calls:           {obs: [helpdesk_delivery_voice_calls]}
-  helpdesk_delivery_voice_claim_tickets:   {obs: [helpdesk_delivery_voice_claim_tickets]}
   helpdesk_str_tickets:                    {obs: [helpdesk_str_tickets]}
   helpdesk_vas_tag_tickets:                {obs: [helpdesk_vas_tag_tickets]}
+  image_draw_appstart_exceptions:          {obs: [image_draw_appstart_exceptions]}
+  image_draw_exceptions:                   {obs: [image_draw_exceptions]}
+  image_load_exceptions:                   {obs: [image_load_exceptions]}
   item_views_from_fs:                      {obs: [item_views_from_fs]}
   items_allowed_total:                     {obs: [items_allowed_total]}
   items_allowed_total_start_date:          {filter: [{start_date.>=: $ab_start_date}], obs: [items_allowed_total]}
@@ -93,6 +112,7 @@ metric.counter:
   items_sold_notonavito_total_start_date:  {filter: [{start_date.>=: $ab_start_date}], obs: [items_sold_notonavito_total]}
   items_sold_onavito_total:                {obs: [items_sold_onavito_total]}
   items_sold_onavito_total_start_date:     {filter: [{start_date.>=: $ab_start_date}], obs: [items_sold_onavito_total]}
+  public_profile_visit_from_subscriptions_list: {obs: [public_profile_visit_from_subscriptions_list]}
   search_redirect_suggest:                 {obs: [search_redirect_suggest]}
   search_redirect_suggest_disabled:        {obs: [search_redirect_suggest_disabled]}
   searches_shop_empty:                     {obs: [searches_shopx_empty]}
@@ -112,6 +132,8 @@ metric.counter:
   sqp_wordbreaker_digit_suggest_disabled:  {obs: [sqp_wordbreaker_digit_suggest_disabled]}
   sqp_wordbreaker_suggest:                 {obs: [sqp_wordbreaker_suggest]}
   sqp_wordbreaker_suggest_disabled:        {obs: [sqp_wordbreaker_suggest_disabled]}
+  tariff_users_package_burned_revenue:     {obs: [tariff_amount_burned_from_package]}
+  tariff_users_package_burned_revenue_net: {obs: [tariff_amount_net_burned_from_package]}
   typo_suggest:                            {obs: [typo_suggest]}
   typo_suggest_disabled:                   {obs: [typo_suggest_disabled]}
 
@@ -183,6 +205,24 @@ metric.uniq:
   unq_session_from_vertical_page_to_iv:    {counter: from_vertical_page_to_iv,        key: [session], m42: False}
 
 metric.ratio:
+  image_draw_appstart_duration:            {num: cnt_image_draw_appstart_duration, den: cnt_image_draw_appstart_duration_events}
+  image_draw_appstart_exceptions_percent:  {num: image_draw_appstart_exceptions,  den: cnt_image_draw_appstart_events}
+  image_draw_appstart_p25:                 {num: cnt_image_draw_appstart_events_p25, den: cnt_image_draw_appstart_events}
+  image_draw_appstart_p50:                 {num: cnt_image_draw_appstart_events_p50, den: cnt_image_draw_appstart_events}
+  image_draw_appstart_p75:                 {num: cnt_image_draw_appstart_events_p75, den: cnt_image_draw_appstart_events}
+  image_draw_appstart_p95:                 {num: cnt_image_draw_appstart_events_p95, den: cnt_image_draw_appstart_events}
+  image_draw_duration:                     {num: cnt_image_draw_duration,         den: cnt_image_draw_duration_events}
+  image_draw_exceptions_percent:           {num: image_draw_exceptions,           den: cnt_image_draw_events}
+  image_draw_p25:                          {num: cnt_image_draw_events_p25,       den: cnt_image_draw_events}
+  image_draw_p50:                          {num: cnt_image_draw_events_p50,       den: cnt_image_draw_events}
+  image_draw_p75:                          {num: cnt_image_draw_events_p75,       den: cnt_image_draw_events}
+  image_draw_p95:                          {num: cnt_image_draw_events_p95,       den: cnt_image_draw_events}
+  image_load_duration:                     {num: cnt_image_load_duration,         den: cnt_image_load_duration_events}
+  image_load_exceptions_percent:           {num: image_load_exceptions,           den: cnt_image_load_events}
+  image_load_p25:                          {num: cnt_image_load_events_p25,       den: cnt_image_load_events}
+  image_load_p50:                          {num: cnt_image_load_events_p50,       den: cnt_image_load_events}
+  image_load_p75:                          {num: cnt_image_load_events_p75,       den: cnt_image_load_events}
+  image_load_p95:                          {num: cnt_image_load_events_p95,       den: cnt_image_load_events}
   item_add_success_per_lf_show_block:      {num: cnt_final_page_events,           den: cnt_lf_block_show_events}
   payment_page_per_lf_show_block:          {num: cnt_lf_payment_page_events,      den: cnt_lf_block_show_events}
   search_redirect_suggest_ctr_disable:     {num: search_redirect_suggest_disabled, den: search_redirect_suggest}

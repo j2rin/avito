@@ -14,6 +14,7 @@ metric.counter:
   calls_dialogues:                         {obs: [call_phone_dialogues]}
   chats_deleted:                           {obs: [messenger_chat_deleted]}
   click_back:                              {obs: [click_back_button]}
+  click_banner_download_app:               {obs: [click_banner_download_app]}
   cnt_location_suggest_clicks:             {obs: [location_suggest_clicks], m42: False}
   contacts_history_open_in_ratings:        {obs: [contacts_history_open_in_ratings]}
   created_reviews_list_open:               {obs: [created_reviews_list_open]}
@@ -55,13 +56,13 @@ metric.counter:
   public_profile_visit_from_fs:            {obs: [public_profile_visit_from_fs]}
   public_profile_visit_from_item:          {obs: [public_profile_visit_from_item]}
   public_profile_visit_from_subscribers_messenger: {obs: [public_profile_visit_from_subscribers_messenger]}
-  public_profile_visit_from_subscriptions_list: {obs: [public_profile_visit_from_subscriptions_list]}
   public_profile_visit_from_subscriptions_ratings: {obs: [public_profile_visit_from_subscriptions_ratings]}
   public_profile_visit_from_subscriptions_sharing: {obs: [public_profile_visit_from_subscriptions_sharing]}
   re_main_pages:                           {obs: [re_main_pages]}
   realty_dev_phone_views:                  {obs: [realty_development_phone_views]}
   realty_dev_views:                        {obs: [realty_development_views]}
   received_reviews_list_open:              {obs: [received_reviews_list_open]}
+  reject_banner_download_app:              {obs: [reject_banner_download_app]}
   review_add_open_page:                    {obs: [review_add_open_page]}
   review_delete:                           {obs: [review_delete]}
   reviews_list_open:                       {obs: [reviews_list_open]}
@@ -78,6 +79,7 @@ metric.counter:
   seller_profile_views:                    {obs: [seller_profile_views]}
   services_main_pages:                     {obs: [services_main_pages]}
   shortcut_clicks:                         {obs: [shortcut_clicks]}
+  show_banner_download_app:                {obs: [show_banner_download_app]}
   sqp_layout_disabled:                     {obs: [sqp_layout_disabled]}
   sqp_layout_replace:                      {obs: [sqp_layout_replace]}
   sqp_wordbreaker_digit_disabled:          {obs: [sqp_wordbreaker_digit_disabled]}
@@ -112,6 +114,7 @@ metric.uniq:
   unq_teleport_suggest:                    {counter: teleport_suggest,                key: [participant], m42: False}
   unq_typo_replace:                        {counter: typo_replace,                    key: [participant], m42: False}
   user_address_item_page_clicks:           {counter: address_item_page_clicks,        key: [participant]}
+  user_click_banner_download_app:          {counter: click_banner_download_app,       key: [participant]}
   user_created_reviews_list_open:          {counter: created_reviews_list_open,       key: [participant]}
   user_domoteka_preview_clicks:            {counter: domoteka_preview_clicks,         key: [participant]}
   user_filters_screen_shows:               {counter: filters_screen_shows,            key: [participant]}
@@ -119,9 +122,11 @@ metric.uniq:
   user_password_restore_request:           {counter: password_restore_requests,       key: [participant]}
   user_password_restore_request_attempt:   {counter: password_restore_request_attempts, key: [participant]}
   user_received_reviews_list_open:         {counter: received_reviews_list_open,      key: [participant]}
+  user_reject_banner_download_app:         {counter: reject_banner_download_app,      key: [participant]}
   user_review_add_open_page:               {counter: review_add_open_page,            key: [participant]}
   user_review_delete:                      {counter: review_delete,                   key: [participant]}
   user_reviews_list_open:                  {counter: reviews_list_open,               key: [participant]}
+  user_show_banner_download_app:           {counter: show_banner_download_app,        key: [participant]}
   users_all_main_page_daily:               {counter: all_main_pages,                  key: [participant]}
   users_fatal_app_errors:                  {counter: fatal_app_errors,                key: [participant]}
   users_favouriteseller_activity:          {counter: favouriteseller_activities,      key: [participant]}
@@ -152,6 +157,8 @@ metric.uniq:
 
 metric.ratio:
   authorized_visitors_share:               {num: daily_active_authorized_users,   den: daily_active_users}
+  ctr_click_banner_download_app:           {num: click_banner_download_app,       den: show_banner_download_app}
+  ctr_reject_banner_download_app:          {num: reject_banner_download_app,      den: show_banner_download_app}
   geo_redirect_replace_ctr_disable:        {num: geo_redirect_disabled,           den: geo_redirect_replace}
   geo_redirect_suggest_ctr_disable:        {num: geo_redirect_suggest_disabled,   den: geo_redirect_suggest}
   items_added_per_items_add_started:       {num: items_added,                     den: items_add_started}
