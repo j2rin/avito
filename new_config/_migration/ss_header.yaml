@@ -10,7 +10,7 @@ definitions:
   - &sort_price   [3, 4]
   - &sort_dft     5
 
-  - &is_search  {eid: *eid_search}
+  - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, x_flags.bit: 4]}
   - &is_rec     {$or: [{eid: *eid_rec}, {flags.bit: 10}]}
   - &is_rec_sg  {flags.bit: 10}
   - &is_u2i     {eid: *eid_u2i}
@@ -48,7 +48,7 @@ definitions:
   - &is_delivery      {eid: 2015}
   - &is_booking       {eid: 2581}
   - &is_iv_wo_guessing    {<<: *is_iv, item_x_type: 0}
-  - &is_btc_wo_guessing    {<<: *is_btc, item_x_type: 0}
+  - &is_btc_wo_guessing     {$or: [{<<: *is_btc, eid.!=: 303},  {<<: *is_ph, item_x_type: 0}]}
   - &is_contact_wo_guessing    {<<: *is_contact, item_x_type: 0}
 
   - &is_shop {flags.bit: 7}
@@ -118,4 +118,4 @@ definitions:
   - &is_base_serp_small {base_item_cnt.>=: 1, base_item_cnt.<=: 9}
 
   - &is_region_with_double_groups {region_id: [697, 4181]}
-
+  - &is_item_pro_image {item: 0}  # временная заглушка
