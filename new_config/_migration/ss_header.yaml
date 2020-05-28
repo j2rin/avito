@@ -3,6 +3,7 @@ definitions:
   - &eid_search   [300]
   - &eid_rec      [2437, 2012, 2309]
   - &eid_ph       [303]
+  - &eid_ph_realdev [3461]
   - &eid_u2i      [2012, 2309]
   - &eid_i2i      [2437]
   - &eid_fav_lst  [400]
@@ -34,7 +35,8 @@ definitions:
   - &is_btc           {eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654]}
   - &is_contact       {eid: [303, 856, 857, 2015, 3005, 2581]}
   - &is_ph_btn        {eid: 2650}
-  - &is_ph            {eid: 303}
+  - &is_ph            {eid: *eid_ph}
+  - &is_ph_realdev    {eid: *eid_ph_realdev}
   - &is_ph_snip       {ph_src: s}
   - &is_ph_right      {$or: [{ph_src: r}, {ph_src.isnull: true}]}
   - &is_ph_xlvas      {ph_src: xs}
@@ -53,6 +55,7 @@ definitions:
   - &is_contact_wo_guessing    {$or: [{<<: *is_contact, eid.!=: *eid_ph},  {eid: *eid_ph, item_x_type: 0}]}
 
   - &is_shop {flags.bit: 7}
+  - &x_is_shop {x_flags.bit: 7}
 
   - &is_s_geo       {x_flags.bit: [0, 1, 2, 3]}
   - &is_s_local_geo {x_flags.bit: [0, 1, 2]}
@@ -120,3 +123,5 @@ definitions:
 
   - &is_region_with_double_groups {region_id: [697, 4181]}
   - &is_item_pro_image {item: 0}  # временная заглушка
+  - &is_developer_acc {SFAccount_Type: 'Девелопер'}
+
