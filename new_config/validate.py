@@ -59,7 +59,12 @@ def post(url, data):
     if status != 200:
         print('FAILED: Cannot connect to AB Configurator')
         print('status: {}'.format(status))
-        print(text)
+
+        try:
+            print(json.loads(text)['errors'])
+        except Exception:
+            print(text)
+
         exit(1)
 
     return json.loads(text)
