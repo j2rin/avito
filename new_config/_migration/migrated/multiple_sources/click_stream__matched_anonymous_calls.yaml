@@ -1,0 +1,9 @@
+metric.counter:
+  calls:                                   {filter: [{$or: [[{observation_name: answered_proxy_calls}], [{observation_name: missed_proxy_calls}]]}], obs: [answered_proxy_calls, call_phone_screen_views_client, missed_proxy_calls]}
+
+metric.uniq:
+  users_phone_calls_client:                {counter: calls,                           key: [participant]}
+
+metric.ratio:
+  calls_per_dialogue:                      {num: calls,                           den: calls_dialogues}
+

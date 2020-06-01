@@ -1,0 +1,55 @@
+metric.counter:
+  cnt_tickets_problem_changed:             {obs: [tickets_problem_changed], m42: False}
+  cnt_tickets_problem_changed_platform:    {obs: [tickets_problem_changed_platform], m42: False}
+  support_android_tickets_created:         {obs: [ticket_android_created]}
+  support_call_tickets_created:            {obs: [ticket_call_created]}
+  support_callcenter_calls:                {obs: [callcenter_calls]}
+  support_email_tickets_created:           {obs: [ticket_email_created]}
+  support_email_wizard_call_tickets_created: {obs: [ticket_call_created, ticket_email_created, ticket_wizard_created]}
+  support_email_wizard_tickets_created:    {obs: [ticket_email_created, ticket_wizard_created]}
+  support_hc_article_dislike:              {obs: [helpcenter_article_dislike]}
+  support_hc_article_dislike_freq:         {obs: [helpcenter_article_dislike_freq]}
+  support_hc_article_dislike_highlighted:  {obs: [helpcenter_article_dislike_freq, helpcenter_article_dislike_popular]}
+  support_hc_article_dislike_popular:      {obs: [helpcenter_article_dislike_popular]}
+  support_hc_article_dislike_regular:      {obs: [helpcenter_article_dislike_regular]}
+  support_hc_article_like:                 {obs: [helpcenter_article_like]}
+  support_hc_article_like_freq:            {obs: [helpcenter_article_like_freq]}
+  support_hc_article_like_highlighted:     {obs: [helpcenter_article_like_freq, helpcenter_article_like_popular]}
+  support_hc_article_like_popular:         {obs: [helpcenter_article_like_popular]}
+  support_hc_article_like_regular:         {obs: [helpcenter_article_like_regular]}
+  support_hc_article_marks:                {obs: [helpcenter_article_dislike, helpcenter_article_like]}
+  support_hc_article_marks_freq:           {obs: [helpcenter_article_dislike_freq, helpcenter_article_like_freq]}
+  support_hc_article_marks_highlighted:    {obs: [helpcenter_article_dislike_freq, helpcenter_article_dislike_popular, helpcenter_article_like_freq, helpcenter_article_like_popular]}
+  support_hc_article_marks_popular:        {obs: [helpcenter_article_dislike_popular, helpcenter_article_like_popular]}
+  support_hc_article_marks_regular:        {obs: [helpcenter_article_dislike_regular, helpcenter_article_like_regular]}
+  support_hc_ticket_platform_created:      {obs: [ticket_platform_created]}
+  support_helpcenter_article_views:        {obs: [article_views]}
+  support_helpcenter_article_views_freq:   {obs: [article_views_freq]}
+  support_helpcenter_article_views_highlighted: {obs: [article_views_freq, article_views_popular]}
+  support_helpcenter_article_views_popular: {obs: [article_views_popular]}
+  support_helpcenter_article_views_regular: {obs: [article_views_regular]}
+  support_helpcenter_wizard_visits:        {obs: [helpcenter_wizard_sessions]}
+  support_ios_tickets_created:             {obs: [ticket_ios_created]}
+  support_mav_tickets_created:             {obs: [ticket_mav_created]}
+  support_web_tickets_created:             {obs: [ticket_web_created]}
+  support_wizard_tickets_created:          {obs: [ticket_wizard_created]}
+  support_wizard_visits:                   {obs: [wizard_sessions]}
+
+metric.uniq:
+  support_callcenter_callers:              {counter: support_callcenter_calls,        key: [participant]}
+  support_email_tickets_creators:          {counter: support_email_tickets_created,   key: [participant]}
+  support_email_wizard_tickets_creators:   {counter: support_email_wizard_tickets_created, key: [participant]}
+  support_helpcenter_article_viewers:      {counter: support_helpcenter_article_views, key: [participant]}
+  support_helpcenter_wizard_visitors:      {counter: support_helpcenter_wizard_visits, key: [participant]}
+  support_wizard_tickets_creators:         {counter: support_wizard_tickets_created,  key: [participant]}
+  support_wizard_visitors:                 {counter: support_wizard_visits,           key: [participant]}
+
+metric.ratio:
+  support_hc_article_like_freq_rate:       {num: support_hc_article_like_freq,    den: support_hc_article_marks_freq}
+  support_hc_article_like_highlighted_rate: {num: support_hc_article_like_highlighted, den: support_hc_article_marks_highlighted}
+  support_hc_article_like_popular_rate:    {num: support_hc_article_like_popular, den: support_hc_article_marks_popular}
+  support_hc_article_like_rate:            {num: support_hc_article_like,         den: support_hc_article_marks}
+  support_hc_article_like_regular_rate:    {num: support_hc_article_like_regular, den: support_hc_article_marks_regular}
+  support_ticket_with_changed_problem_rate: {num: cnt_tickets_problem_changed,     den: support_email_wizard_tickets_created}
+  support_ticket_with_changed_problem_rate_platform: {num: cnt_tickets_problem_changed_platform, den: support_hc_ticket_platform_created}
+

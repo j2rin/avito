@@ -1,0 +1,29 @@
+metric.counter:
+  appcall_bx_incoming:                     {obs: [appcall_bx_incoming_call_log_callback, appcall_bx_incoming_deeplink_call_back, appcall_bx_incoming_messenger_call_back, appcall_bx_incoming_notification_call_back]}
+  appcall_bx_incoming_answered:            {obs: [appcall_bx_incoming_call_log_callback_answered, appcall_bx_incoming_deeplink_call_back_answered, appcall_bx_incoming_messenger_call_back_answered, appcall_bx_incoming_notification_call_back_answered]}
+  appcall_bx_incoming_success:             {obs: [appcall_bx_incoming_call_log_callback_success, appcall_bx_incoming_deeplink_call_back_success, appcall_bx_incoming_messenger_call_back_success, appcall_bx_incoming_notification_call_back_success]}
+  appcall_bx_outgoing:                     {obs: [appcall_bx_outgoing_call_log_callback, appcall_bx_outgoing_deeplink_call_back, appcall_bx_outgoing_item, appcall_bx_outgoing_item_gallery, appcall_bx_outgoing_messenger_call_back, appcall_bx_outgoing_messenger_chat_long_answer, appcall_bx_outgoing_messenger_chat_menu, appcall_bx_outgoing_notification_call_back]}
+  appcall_bx_outgoing_callback:            {obs: [appcall_bx_outgoing_call_log_callback, appcall_bx_outgoing_deeplink_call_back, appcall_bx_outgoing_messenger_call_back, appcall_bx_outgoing_notification_call_back]}
+  appcall_bx_outgoing_callback_answered:   {obs: [appcall_bx_outgoing_call_log_callback_answered, appcall_bx_outgoing_deeplink_call_back_answered, appcall_bx_outgoing_messenger_call_back_answered, appcall_bx_outgoing_notification_call_back_answered]}
+  appcall_bx_outgoing_callback_success:    {obs: [appcall_bx_outgoing_call_log_callback_success, appcall_bx_outgoing_deeplink_call_back_success, appcall_bx_outgoing_messenger_call_back_success, appcall_bx_outgoing_notification_call_back_success]}
+  appcall_bx_outgoing_direct:              {obs: [appcall_bx_outgoing_item, appcall_bx_outgoing_item_gallery, appcall_bx_outgoing_messenger_chat_long_answer, appcall_bx_outgoing_messenger_chat_menu]}
+  appcall_click_inapp:                     {obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp, appcall_messenger_chat_long_answer_click_inapp, appcall_messenger_chat_menu_click_inapp]}
+  appcall_click_phone:                     {obs: [appcall_item_click_phone, appcall_item_gallery_click_phone, appcall_messenger_chat_long_answer_click_phone, appcall_messenger_chat_menu_click_phone]}
+  appcall_show_buttons:                    {obs: [appcall_item_gallery_show_buttons, appcall_item_show_buttons, appcall_messenger_chat_long_answer_show_buttons, appcall_messenger_chat_menu_show_buttons]}
+  cnt_appcall_bx_incoming_call_log_callback_deeplink_back_messen: {obs: [appcall_bx_incoming_call_log_callback, appcall_bx_incoming_deeplink_call_back, appcall_bx_incoming_messenger_call_back, appcall_bx_incoming_notification_call_back, appcall_bx_outgoing_call_log_callback, appcall_bx_outgoing_deeplink_call_back, appcall_bx_outgoing_item, appcall_bx_outgoing_item_gallery, appcall_bx_outgoing_messenger_call_back, appcall_bx_outgoing_messenger_chat_long_answer, appcall_bx_outgoing_messenger_chat_menu, appcall_bx_outgoing_notification_call_back], m42: False}
+  cnt_appcall_bx_outgoing_item_gallery:    {obs: [appcall_bx_outgoing_item, appcall_bx_outgoing_item_gallery], m42: False}
+  cnt_appcall_bx_outgoing_item_gallery_success: {obs: [appcall_bx_outgoing_item_gallery_success, appcall_bx_outgoing_item_success], m42: False}
+  cnt_appcall_item_gallery_show_buttons:   {obs: [appcall_item_gallery_show_buttons, appcall_item_show_buttons], m42: False}
+
+metric.uniq:
+  unq_item_appcall_item_gallery_show_buttons: {counter: cnt_appcall_item_gallery_show_buttons, key: [item], m42: False}
+  appcall_click_inapp_users:               {counter: appcall_click_inapp,             key: [participant]}
+  appcall_show_buttons_users:              {counter: appcall_show_buttons,            key: [participant]}
+  unq_appcall_bx_outgoing_item_gallery:    {counter: cnt_appcall_bx_outgoing_item_gallery, key: [participant], m42: False}
+  unq_appcall_bx_outgoing_item_gallery_success: {counter: cnt_appcall_bx_outgoing_item_gallery_success, key: [participant], m42: False}
+
+metric.ratio:
+  appcall_click_inapp_ratio:               {num: appcall_click_inapp,             den: appcall_show_buttons}
+  appcall_click_inapp_users_share:         {num: appcall_click_inapp_users,       den: appcall_show_buttons_users}
+  appcall_click_phone_ratio:               {num: appcall_click_phone,             den: appcall_show_buttons}
+
