@@ -40,7 +40,7 @@ def load_metadata(calc_date, csv_name, sql):
     # try:
     #     return pd.read_csv(csv_name).fillna('')
     # except Exception:
-    with get_vertica_con('C3', 'dlenkov') as con:
+    with get_vertica_con('C3', 'avkarpova') as con:
         frame = pd.read_sql(sql.format(calc_date=calc_date), con).fillna('')
         frame.to_csv(csv_name, index=False)
         return pd.read_csv(csv_name).fillna('')
@@ -55,4 +55,4 @@ def load_observations_directory(calc_date):
 
 
 if __name__ == '__main__':
-    print(load_observations_directory('2020-04-26'))
+    print(load_observations_directory('2020-05-26'))
