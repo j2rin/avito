@@ -12,7 +12,7 @@ definitions:
   - &sort_price   [3, 4]
   - &sort_dft     5
 
-  - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, {platform_id: 1, flags.!bit: 4}]}
+  - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, flags.!bit: 4]}
   - &is_rec     {$or: [{eid: *eid_rec}, {flags.bit: 10}]}
   - &is_rec_sg  {flags.bit: 10}
   - &is_u2i     {eid: *eid_u2i}
@@ -271,6 +271,7 @@ metric.counter:
   cnt_iv_developer_from_map:               {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_map], m42: False}
   cnt_iv_developer_rec:                    {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_rec], m42: False}
   cnt_iv_developer_rec_i2i:                {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_i2i], m42: False}
+  cnt_iv_developer_rec_u2i:                {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_u2i], m42: False}
   cnt_iv_dlv:                              {filter: [*is_iv_wo_guessing, *is_serp_delivery, *x_is_search], m42: False}
   cnt_iv_dlv_reg:                          {filter: [*is_iv_wo_guessing, *x_is_search, {$or: [[*is_serp_delivery], [*is_serp_regions]]}], m42: False}
   cnt_iv_fav_list:                         {filter: [*is_iv_wo_guessing, *x_is_fav_lst], m42: False}
@@ -643,6 +644,7 @@ metric.uniq:
   iv_developer_map:                        {counter: cnt_iv_developer_from_map,       key: [item_x]}
   iv_developer_rec:                        {counter: cnt_iv_developer_rec,            key: [item_x]}
   iv_developer_rec_i2i:                    {counter: cnt_iv_developer_rec_i2i,        key: [item_x]}
+  iv_developer_rec_u2i:                    {counter: cnt_iv_developer_rec_u2i,        key: [item_x]}
   iv_from_witcher_any:                     {counter: cnt_iv_wtc_dlv_new_auto_flats_reg, key: [item_x]}
   iv_from_witcher_delivery:                {counter: cnt_iv_wtc_dlv,                  key: [item_x]}
   iv_from_witcher_new_auto:                {counter: cnt_iv_wtc_new_auto,             key: [item_x]}
