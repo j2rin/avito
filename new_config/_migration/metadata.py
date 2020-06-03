@@ -40,7 +40,7 @@ def load_metadata(calc_date, csv_name, sql):
     # try:
     #     return pd.read_csv(csv_name).fillna('')
     # except Exception:
-    with get_vertica_con('C3', 'avkarpova') as con:
+    with get_vertica_con('C3', 'dlenkov') as con:
         frame = pd.read_sql(sql.format(calc_date=calc_date), con).fillna('')
         frame.to_csv(csv_name, index=False)
         return pd.read_csv(csv_name).fillna('')

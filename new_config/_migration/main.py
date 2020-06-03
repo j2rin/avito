@@ -1,5 +1,5 @@
 from metadata import load_metrics_config, load_observations_directory
-from migration import write_all_metrics_to_files, write_metrics_to_file, write_sources
+from migration import write_all_metrics_to_files, write_metrics_to_file, write_sources, get_prepared_sources
 from models import *
 from collections import Counter
 from pathlib import Path
@@ -53,8 +53,11 @@ def migrate_config():
 
     metrics_with_multiple_sources = {m for m in new_metrics if len(m.sources) > 1
                                      if m not in ratio_metrics_from_multiple_sources}
-    metrics_with_single_source = {m for m in new_metrics if len(m.sources) <= 1}
-    write_all_metrics_to_files(metrics_with_single_source)
+    prepared_sources = get_prepared_sources()
+    metrics_with_prepared_source = {m for m in new_metrics if len(m.sources) <= 1 and m.source in prepared_sources}
+    write_all_metrics_to_files(metrics_with_prepared_source)
+    metrics_with_single_source = {m for m in new_metrics if len(m.sources) <= 1 and m.source not in prepared_sources}
+    write_all_metrics_to_files(metrics_with_single_source, 'unprepared')
     write_all_metrics_to_files(metrics_with_multiple_sources, 'multiple_sources')
 
     write_sources(sorted({m.source for m in new_metrics if len(m.sources) == 1}))

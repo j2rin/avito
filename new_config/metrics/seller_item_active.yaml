@@ -64,7 +64,6 @@ metric.counter:
   items_with_street:                       {filter: [{is_active: True}, {min_kind_level: 50}]}
   items_with_street_new:                   {filter: [{is_active: True}, {min_kind_level: 50}, {start_date: $event_date}]}
   items_with_street_reactivated:           {filter: [{is_active: True}, {last_activation_date: $event_date}, {min_kind_level: 50}]}
-  seller_contacts:                         {obs: [contacts]}
   seller_contacts_start_date:              {filter: [{start_date.>=: $ab_start_date}], obs: [contacts]}
   seller_favorites_added:                  {obs: [favs_added]}
   seller_favorites_added_start_date:       {filter: [{start_date.>=: $ab_start_date}], obs: [favs_added]}
@@ -90,12 +89,11 @@ metric.uniq:
   new_items_more_5_photo:                  {counter: cnt_new_items_more_5_photo,      key: [item]}
   seller_items_favorites_added:            {counter: seller_favorites_added,          key: [item]}
   seller_items_favorites_removed:          {counter: seller_favorites_removed,        key: [item]}
-  sellers_items_with_contacts:             {counter: seller_contacts,                 key: [item]}
+  sellers_items_with_contacts:             {counter: contacts_canonical,              key: [item]}
   sellers_favorite_added:                  {counter: seller_favorites_added,          key: [participant]}
   sellers_favorite_added_start_date:       {counter: seller_favorites_added_start_date, key: [participant]}
   sellers_favorite_removed:                {counter: seller_favorites_removed,        key: [participant]}
   sellers_favorite_removed_start_date:     {counter: seller_favorites_removed_start_date, key: [participant]}
-  sellers_with_contacts:                   {counter: seller_contacts,                 key: [participant]}
   sellers_with_contacts_start_date:        {counter: seller_contacts_start_date,      key: [participant]}
   users_active_item_0_photo:               {counter: cnt_active_items_0_photo,        key: [participant]}
   users_active_item_more_10_description_word: {counter: cnt_active_items_more_10_description_word, key: [participant]}
