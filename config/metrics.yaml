@@ -2663,6 +2663,21 @@ item_views_any_ext_block:
   description: "IV с любого допблока (доставка или регионы)"
   numerator:
     observations: [item_views_delivery,item_views_regions]
+    
+user_item_views_regions:
+  numerator:
+    observations: [item_views_regions]
+    groupby: [participant]
+
+user_item_views_delivery:
+  numerator:
+    observations: [item_views_delivery]
+    groupby: [participant]
+    
+user_item_views_any_ext_block:
+  numerator:
+    observations: [item_views_delivery,item_views_regions]
+    groupby: [participant]
 
 item_views_vip:
   title: item_views_vip
@@ -2811,6 +2826,25 @@ buyer_target_clicks_delivery:
   tags: [i4, bx, serp, total]
   numerator:
     observations: [buyer_target_clicks_delivery]
+    
+buyer_target_clicks_any_ext_block:
+  numerator:
+    observations: [buyer_target_clicks_delivery, buyer_target_clicks_regions]
+    
+user_buyer_target_clicks_regions:
+  numerator:
+    observations: [buyer_target_clicks_regions]
+    groupby: [participant]
+
+user_buyer_target_clicks_delivery:
+  numerator:
+    observations: [buyer_target_clicks_delivery]
+    groupby: [participant]
+    
+user_buyer_target_clicks_any_ext_block:
+  numerator:
+    observations: [buyer_target_clicks_delivery, buyer_target_clicks_regions]
+    groupby: [participant]
 
 buyer_target_clicks_vip:
   title: bt_clicks_vip
