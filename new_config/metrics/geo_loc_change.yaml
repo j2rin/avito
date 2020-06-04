@@ -5,7 +5,7 @@ definitions:
   - &is_close {eid: 2918}
   - &is_tooltip_open {eid: 2912}
   - &is_tooltip_close {eid: 2914}
-
+  - &is_tooltip_laas {eid: 4183}
 metric.counter:
   cnt_location_dialogue_savings_radius:    {filter: [{open_from: radius}, *is_close, *saved], obs: [events_count], m42: False}
   cnt_location_dialogue_savings_s:         {filter: [{open_from: search}, *is_close, *saved], obs: [events_count], m42: False}
@@ -21,6 +21,7 @@ metric.counter:
   default_loc_tooltip_shows_city:          {filter: [{location_level_id: [4, 5, 6]}, *is_tooltip_open], obs: [events_count]}
   default_loc_tooltip_shows_region:        {filter: [{location_level_id: [2, 3]}, *is_tooltip_open], obs: [events_count]}
   default_loc_tooltip_shows_russia:        {filter: [{location_level_id: 1}, *is_tooltip_open], obs: [events_count]}
+  laas_accepts:                            {filter: [*is_tooltip_laas], obs: [events_count]}
   loc_bad_chng:                            {filter: [{changing_quality_type: bad}, *changed, *is_close, *saved], obs: [events_count]}
   loc_bad_susp_chng:                       {filter: [*changed, *is_close, *saved, {$or: [[{changing_quality_type: bad}], [{changing_quality_type: suspicious}]]}], obs: [events_count]}
   loc_chng:                                {filter: [*changed, *is_close, *saved], obs: [events_count]}
@@ -63,6 +64,7 @@ metric.uniq:
   default_loc_tooltip_declines_city:       {counter: cnt_tooltip_not_accepts_city,    key: [participant]}
   default_loc_tooltip_declines_region:     {counter: cnt_tooltip_not_accepts_region,  key: [participant]}
   default_loc_tooltip_declines_russia:     {counter: cnt_tooltip_not_accepts_russia,  key: [participant]}
+  unq_laas_tooltip_accepts:                {counter: laas_accepts,                    key: [participant], m42: False}
   users_default_loc_tooltip:               {counter: default_loc_tooltip_shows,       key: [participant]}
   users_default_loc_tooltip_accepts:       {counter: default_loc_tooltip_accepts,     key: [participant]}
   users_default_loc_tooltip_declines:      {counter: default_loc_tooltip_declines,    key: [participant]}
@@ -89,7 +91,9 @@ metric.ratio:
   default_loc_tooltip_declines_per_shows:  {num: default_loc_tooltip_declines,    den: default_loc_tooltip_shows}
   default_loc_tooltip_region_share:        {num: default_loc_tooltip_shows_region, den: default_loc_tooltip_shows}
   default_loc_tooltip_russia_share:        {num: default_loc_tooltip_shows_russia, den: default_loc_tooltip_shows}
+  laas_accepts_per_answer:                 {num: laas_accepts,                    den: laas_accepts}
   loc_window_saves_per_opens:              {num: loc_window_savings,              den: loc_window_opens}
   loc_window_saves_per_opens_radius:       {num: cnt_location_dialogue_savings_radius, den: loc_window_opens_radius}
   loc_window_saves_per_opens_search:       {num: cnt_location_dialogue_savings_s, den: loc_window_opens_search}
+  user_laas_accepts_per_user_answer:       {num: unq_laas_tooltip_accepts,        den: unq_laas_tooltip_accepts}
 
