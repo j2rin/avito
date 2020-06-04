@@ -55,4 +55,4 @@ def load_observations_directory(calc_date):
 
 
 if __name__ == '__main__':
-    print(load_observations_directory('2020-04-26'))
+    print(load_observations_directory('2020-05-26'))

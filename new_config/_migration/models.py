@@ -124,10 +124,11 @@ class ObsTup(NamedTuple):
     filter: Tuple[Union[str, Tuple[Union[int, str, Tuple[Union[str, int]]], ...]], ...] = ()
     obs: Tuple[str, ...] = ()
     key: Tuple[str, ...] = ()
+    source: str = None
 
 
-def obs_astuple(filter, obs, key):
-    return ObsTup(filter2tup(filter), tuple(obs), filter2tup(key))
+def obs_astuple(filter, obs, key, source):
+    return ObsTup(filter2tup(filter), tuple(obs), filter2tup(key), source)
 
 
 @dataclass
@@ -147,14 +148,14 @@ class Metric:
         return self.name in MetricOld.occupied_metric_names
 
     def __post_init__(self):
-        self.astuple = obs_astuple(self.filter, self.obs, self.key)
+        self.astuple = obs_astuple(self.filter, self.obs, self.key, self.source)
         self.__key = None
         if self.type == 'counter':
-            self.__key = self.astuple.filter, self.astuple.obs
+            self.__key = self.astuple.filter, self.astuple.obs, self.source
         elif self.type == 'uniq':
-            self.__key = self.counter, self.astuple.key
+            self.__key = self.counter, self.astuple.key, self.source
         elif self.type == 'ratio':
-            self.__key = self.num, self.den
+            self.__key = self.num, self.den, self.source
 
     @property
     def source(self):
@@ -168,8 +169,6 @@ class Metric:
     @property
     def yaml_repr(self):
         if self.type == 'counter':
-            if self.name == 'radius_short_searches':
-                _ = 0
             return make_counter_yaml(self.name, self.obs, self.filter, self.m42)
         elif self.type == 'uniq':
             return make_uniq_yaml(self.name, self.counter.name, self.key, self.m42)
@@ -229,7 +228,7 @@ class Observation:
     key: List[str] = field(default_factory=list)
 
     def __post_init__(self):
-        self.astuple = obs_astuple(self.filter, self.obs, self.key)
+        self.astuple = obs_astuple(self.filter, self.obs, self.key, self.source)
 
     @classmethod
     def from_conf(cls, source, name, conf):
@@ -239,7 +238,7 @@ class Observation:
         return cls(source, name, filter, obs, key)
 
     def __key(self):
-        return self.name, self.astuple
+        return self.name, self.astuple, self.source
 
     def __hash__(self):
         return hash(self.__key())
@@ -484,16 +483,16 @@ class MetricOld:
             while name in self.occupied_metric_names.union(self.all_metric_index.by_name):
                 name = _name + '_' + str(nn)
                 nn += 1
-        return name
+        return name.lower()
 
     def make_num_counter(self):
         type = 'counter'
         name = self.make_name(type, self.num_obs_index, self.num_filter, self.num_uniq)
+        if name == 'vas_transactions_start_date':
+            _ = 0
         m = Metric(type=type,
                    name=name,
                    sources=self.num_sources, obs=self.num_obs, filter=self.num_filter)
-        # if name == 'radius_short_searches':
-        #     print(m.filter)
         self.all_metric_index.add(m)
         return m
 
