@@ -2663,6 +2663,21 @@ item_views_any_ext_block:
   description: "IV с любого допблока (доставка или регионы)"
   numerator:
     observations: [item_views_delivery,item_views_regions]
+    
+user_item_views_regions:
+  numerator:
+    observations: [item_views_regions]
+    groupby: [participant]
+
+user_item_views_delivery:
+  numerator:
+    observations: [item_views_delivery]
+    groupby: [participant]
+    
+user_item_views_any_ext_block:
+  numerator:
+    observations: [item_views_delivery,item_views_regions]
+    groupby: [participant]
 
 item_views_vip:
   title: item_views_vip
@@ -2699,12 +2714,22 @@ contacts_regions:
   tags: [bx, total]
   numerator:
     observations: [contacts_regions]
-
+    
+user_contacts_regions:
+  numerator:
+    observations: [contacts_regions]
+    groupby: [participant]
+    
 contacts_delivery:
   title: contacts_block_delivery
   tags: [bx, total]
   numerator:
     observations: [contacts_delivery]
+    
+user_contacts_delivery:
+  numerator:
+    observations: [contacts_delivery]
+    groupby: [participant]
     
 contacts_any_ext_block:
   title: c_any_ext_block
@@ -2712,6 +2737,11 @@ contacts_any_ext_block:
   tags: [bx, total]
   numerator:
     observations: [contacts_regions,contacts_delivery]
+    
+user_contacts_any_ext_block:
+  numerator:
+    observations: [contacts_regions,contacts_delivery]
+    groupby: [participant]
 
 contacts_vip:
   title: contacts_vip
@@ -2796,6 +2826,25 @@ buyer_target_clicks_delivery:
   tags: [i4, bx, serp, total]
   numerator:
     observations: [buyer_target_clicks_delivery]
+    
+buyer_target_clicks_any_ext_block:
+  numerator:
+    observations: [buyer_target_clicks_delivery, buyer_target_clicks_regions]
+    
+user_buyer_target_clicks_regions:
+  numerator:
+    observations: [buyer_target_clicks_regions]
+    groupby: [participant]
+
+user_buyer_target_clicks_delivery:
+  numerator:
+    observations: [buyer_target_clicks_delivery]
+    groupby: [participant]
+    
+user_buyer_target_clicks_any_ext_block:
+  numerator:
+    observations: [buyer_target_clicks_delivery, buyer_target_clicks_regions]
+    groupby: [participant]
 
 buyer_target_clicks_vip:
   title: bt_clicks_vip
@@ -3402,6 +3451,24 @@ buyer_target_clicks_regions_per_search:
     observations: [buyer_target_clicks_regions]
   denominator:
     observations: [searches_serp]
+    
+buyer_target_clicks_regions_per_search_regions:
+  numerator:
+    observations: [buyer_target_clicks_regions]
+  denominator:
+    observations: [search_regions]
+    
+buyer_target_clicks_delivery_per_search_delivery:
+  numerator:
+    observations: [buyer_target_clicks_delivery]
+  denominator:
+    observations: [search_delivery]
+    
+buyer_target_clicks_ext_block_any_per_search_ext_block_any:
+  numerator:
+    observations: [buyer_target_clicks_regions,buyer_target_clicks_delivery]
+  denominator:
+    observations: [search_regions,search_delivery]
 
 buyer_target_clicks_delivery_per_search:
   title: bt_clicks_delivery_per_search
