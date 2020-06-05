@@ -12,7 +12,7 @@ definitions:
   - &sort_price   [3, 4]
   - &sort_dft     5
 
-  - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, x_flags.bit: 4]}
+  - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, flags.!bit: 4]}
   - &is_rec     {$or: [{eid: *eid_rec}, {flags.bit: 10}]}
   - &is_rec_sg  {flags.bit: 10}
   - &is_u2i     {eid: *eid_u2i}
@@ -51,8 +51,8 @@ definitions:
   - &is_delivery      {eid: 2015}
   - &is_booking       {eid: 2581}
   - &is_iv_wo_guessing    {<<: *is_iv, item_x_type: 0}
-  - &is_btc_wo_guessing     {$or: [{<<: *is_btc, eid.!=: *eid_ph},  {eid: *eid_ph, item_x_type: 0}]}
-  - &is_contact_wo_guessing    {$or: [{<<: *is_contact, eid.!=: *eid_ph},  {eid: *eid_ph, item_x_type: 0}]}
+  - &is_btc_wo_guessing     {$or: [{<<: *is_btc, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
+  - &is_contact_wo_guessing    {$or: [{<<: *is_contact, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
 
   - &is_shop {flags.bit: 7}
   - &x_is_shop {x_flags.bit: 7}
