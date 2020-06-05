@@ -130,8 +130,8 @@ metric.counter:
   base_serp_small:                         {filter: [*is_1p, *is_base_serp_small, *is_search]}
   base_serp_with_query_empty:              {filter: [*is_1p, *is_base_serp_empty, *is_search, *q]}
   base_serp_with_query_small:              {filter: [*is_1p, *is_base_serp_small, *is_search, *q]}
-  base_serp_without_query_empty:           {filter: [*is_1p, *is_search, *is_serp_empty, *noq]}
-  base_serp_without_query_small:           {filter: [*is_1p, *is_search, *is_serp_small, *noq]}
+  base_serp_without_query_empty:           {filter: [*is_1p, *is_base_serp_empty, *is_search, *noq]}
+  base_serp_without_query_small:           {filter: [*is_1p, *is_base_serp_small, *is_search, *noq]}
   booking_created_short_rent:              {filter: [*is_booking]}
   bt_clicks:                               {filter: [{$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
   btc_developer:                           {filter: [*is_btc, *is_developer_acc]}
@@ -269,6 +269,7 @@ metric.counter:
   cnt_fav_wtc_new_auto:                    {filter: [*is_fav, *is_serp_witcher_new_auto, *x_is_search], m42: False}
   cnt_fav_wtc_new_flats:                   {filter: [*is_fav, *is_serp_witcher_new_flats, *x_is_search], m42: False}
   cnt_fav_wtc_reg:                         {filter: [*is_fav, *is_serp_witcher_regions, *x_is_search], m42: False}
+  cnt_favorites_net:                       {obs: [favorites_net], m42: False}
   cnt_iv_developer_from_map:               {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_map], m42: False}
   cnt_iv_developer_rec:                    {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_rec], m42: False}
   cnt_iv_developer_rec_i2i:                {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_i2i], m42: False}
@@ -472,6 +473,8 @@ metric.counter:
   serp_small:                              {filter: [*is_1p, *is_search, *is_serp_small]}
   serp_with_query_empty:                   {filter: [*is_1p, *is_search, *is_serp_empty, *q]}
   serp_with_query_small:                   {filter: [*is_1p, *is_search, *is_serp_small, *q]}
+  serp_without_query_empty:                {filter: [*is_1p, *is_search, *is_serp_empty, *noq]}
+  serp_without_query_small:                {filter: [*is_1p, *is_search, *is_serp_small, *noq]}
   total_districts_in_searches:             {filter: [*is_search], obs: [district_count]}
   total_metros_in_searches:                {filter: [*is_search], obs: [metro_count]}
   write_button_clicks:                     {filter: [*is_msg_btn]}
@@ -486,6 +489,7 @@ metric.uniq:
   delivery_orders_created_grouped:         {counter: delivery_orders_created,         key: [item]}
   fav_added_from_map_grouped:              {counter: cnt_fav_from_map,                key: [item]}
   favorites_added_grouped:                 {counter: favorites_added,                 key: [item]}
+  favorites_net:                           {counter: cnt_favorites_net,               key: [item]}
   item_views_client_grouped:               {counter: item_views_client,               key: [item]}
   item_views_from_map_grouped:             {counter: cnt_iv_from_map,                 key: [item]}
   item_views_grouped:                      {counter: item_views,                      key: [item]}
@@ -1165,8 +1169,8 @@ metric.ratio:
   searches_witcher_reg_with_iv_per_witcher_reg: {num: s_witcher_reg_with_iv,           den: searches_witcher_regions}
   searches_witcher_regions_per_search:     {num: searches_witcher_regions,        den: searches}
   serp_empty_per_s:                        {num: serp_empty,                      den: searches}
-  serp_noq_empty_per_s_noq:                {num: base_serp_without_query_empty,   den: searches_without_query}
-  serp_noq_small_per_s_noq:                {num: base_serp_without_query_small,   den: searches_without_query}
+  serp_noq_empty_per_s_noq:                {num: serp_without_query_empty,        den: searches_without_query}
+  serp_noq_small_per_s_noq:                {num: serp_without_query_small,        den: searches_without_query}
   serp_small_per_s:                        {num: serp_small,                      den: searches}
   serp_wq_empty_per_s_wq:                  {num: serp_with_query_empty,           den: searches_with_query}
   serp_wq_small_per_s_wq:                  {num: serp_with_query_small,           den: searches_with_query}

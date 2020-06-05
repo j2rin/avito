@@ -1,0 +1,46 @@
+metric.counter:
+  cnt_item_address_length_new:             {filter: [{item_status: New}, {obs: [address_length]}], m42: False}
+  items_100m_from_location_new:            {filter: [{item_status: New}, {location_distance.<=: 0.01}]}
+  items_100m_from_location_reactivated:    {filter: [{item_status: Reactivation}, {location_distance.<=: 0.01}]}
+  items_20m_from_location:                 {filter: [{location_distance.<=: 0.02}]}
+  items_20m_from_location_new:             {filter: [{item_status: New}, {location_distance.<=: 0.02}]}
+  items_500m_from_location:                {filter: [{location_distance.<=: 0.5}]}
+  items_500m_from_location_new:            {filter: [{item_status: New}, {location_distance.<=: 0.5}]}
+  items_500m_from_location_reactivated:    {filter: [{item_status: Reactivation}, {location_distance.<=: 0.5}]}
+  items_no_address_id:                     {filter: [{has_address_id: False}]}
+  items_no_address_id_reactivated:         {filter: [{has_address_id: False}, {item_status: Reactivation}]}
+  items_no_city_reactivated:               {filter: [{item_status: Reactivation}, {min_kind_level: [120, 130, 140]}]}
+  items_no_coordinates:                    {filter: [{location_distance.isnull: True}]}
+  items_no_coordinates_new:                {filter: [{item_status: New}, {location_distance.isnull: True}]}
+  items_with_address_id_reactivated:       {filter: [{has_address_id: True}, {item_status: Reactivation}]}
+  items_with_building_new:                 {filter: [{item_status: New}, {min_kind_level: 40}]}
+  items_with_building_reactivated:         {filter: [{item_status: Reactivation}, {min_kind_level: 40}]}
+  items_with_city_new:                     {filter: [{item_status: New}, {min_kind_level: [100, 110]}]}
+  items_with_city_reactivated:             {filter: [{item_status: Reactivation}, {min_kind_level: [100, 110]}]}
+  items_with_coordinates_new:              {filter: [{item_status: New}, {location_distance.>: -1}]}
+  items_with_district:                     {filter: [{min_kind_level: [60, 70]}]}
+  items_with_district_100m_from_location:  {filter: [{location_distance.<=: 0.1}, {min_kind_level: [60, 70]}]}
+  items_with_district_100m_from_location_new: {filter: [{item_status: New}, {location_distance.<=: 0.1}, {min_kind_level: [60, 70]}]}
+  items_with_district_100m_from_location_reactivated: {filter: [{item_status: Reactivation}, {location_distance.<=: 0.1}, {min_kind_level: [60, 70]}]}
+  items_with_district_500m_from_location:  {filter: [{location_distance.<=: 0.5}, {min_kind_level: [60, 70]}]}
+  items_with_district_500m_from_location_new: {filter: [{item_status: New}, {location_distance.<=: 0.5}, {min_kind_level: [60, 70]}]}
+  items_with_district_500m_from_location_reactivated: {filter: [{item_status: Reactivation}, {location_distance.<=: 0.5}, {min_kind_level: [60, 70]}]}
+  items_with_district_new:                 {filter: [{item_status: New}, {min_kind_level: [60, 70]}]}
+  items_with_marginal_address_reactivated: {filter: [{item_status: Reactivation}, {min_kind_level: [10, 20, 30, 80, 90]}]}
+  items_with_metro:                        {filter: [{min_kind_level: 55}]}
+  items_with_metro_100m_from_location:     {filter: [{location_distance.<=: 0.1}, {min_kind_level: 55}]}
+  items_with_metro_100m_from_location_new: {filter: [{item_status: New}, {location_distance.<=: 0.1}, {min_kind_level: 55}]}
+  items_with_metro_100m_from_location_reactivated: {filter: [{item_status: Reactivation}, {location_distance.<=: 0.1}, {min_kind_level: 55}]}
+  items_with_metro_500m_from_location:     {filter: [{location_distance.<=: 0.5}, {min_kind_level: [55]}]}
+  items_with_metro_500m_from_location_new: {filter: [{item_status: New}, {location_distance.<=: 0.5}, {min_kind_level: [55]}]}
+  items_with_metro_500m_from_location_reactivated: {filter: [{item_status: Reactivation}, {location_distance.<=: 0.5}, {min_kind_level: [55]}]}
+  items_with_metro_new:                    {filter: [{item_status: New}, {min_kind_level: 55}]}
+  items_with_metro_reactivated:            {filter: [{item_status: Reactivation}, {min_kind_level: 55}]}
+  items_with_street_100m_from_location:    {filter: [{location_distance.<=: 0.1}, {min_kind_level: 50}]}
+  items_with_street_100m_from_location_new: {filter: [{item_status: New}, {location_distance.<=: 0.1}, {min_kind_level: 50}]}
+  items_with_street_100m_from_location_reactivated: {filter: [{item_status: Reactivation}, {location_distance.<=: 0.1}, {min_kind_level: 50}]}
+  items_with_street_500m_from_location:    {filter: [{location_distance.<=: 0.5}, {min_kind_level: [50]}]}
+  items_with_street_500m_from_location_new: {filter: [{item_status: New}, {location_distance.<=: 0.5}, {min_kind_level: [50]}]}
+  items_with_street_500m_from_location_reactivated: {filter: [{item_status: Reactivation}, {location_distance.<=: 0.5}, {min_kind_level: [50]}]}
+  items_with_street_reactivated:           {filter: [{item_status: Reactivation}, {min_kind_level: 50}]}
+
