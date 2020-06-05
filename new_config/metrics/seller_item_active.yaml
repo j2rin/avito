@@ -28,6 +28,9 @@ metric.counter:
   items_20m_from_location:                 {filter: [{is_active: True}, {location_distance.<=: 0.02}]}
   items_20m_from_location_new:             {filter: [{is_active: True}, {location_distance.<=: 0.02}, {start_date: $event_date}]}
   items_20m_from_location_reactivated:     {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.02}]}
+  items_500m_from_location:                {filter: [{is_active: True}, {location_distance.<=: 0.5}]}
+  items_500m_from_location_new:            {filter: [{is_active: True}, {location_distance.<=: 0.5}, {start_date: $event_date}]}
+  items_500m_from_location_reactivated:    {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.5}]}
   items_no_address_id:                     {filter: [{has_address_id: False}, {is_active: True}]}
   items_no_address_id_new:                 {filter: [{has_address_id: False}, {is_active: True}, {start_date: $event_date}]}
   items_no_address_id_reactivated:         {filter: [{has_address_id: False}, {is_active: True}, {last_activation_date: $event_date}]}
@@ -56,12 +59,33 @@ metric.counter:
   items_with_coordinates_new:              {filter: [{is_active: True}, {location_distance.>=: -1}, {start_date: $event_date}]}
   items_with_coordinates_reactivated:      {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.>=: -1}]}
   items_with_district:                     {filter: [{is_active: True}, {min_kind_level: [60, 70]}]}
+  items_with_district_100m_from_location:  {filter: [{is_active: True}, {location_distance.<=: 0.1}, {min_kind_level: [60, 70]}]}
+  items_with_district_100m_from_location_new: {filter: [{is_active: True}, {location_distance.<=: 0.1}, {min_kind_level: [60, 70]}, {start_date: $event_date}]}
+  items_with_district_100m_from_location_reactivated: {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.1}, {min_kind_level: [60, 70]}]}
+  items_with_district_500m_from_location:  {filter: [{is_active: True}, {location_distance.<=: 0.5}, {min_kind_level: [60, 70]}]}
+  items_with_district_500m_from_location_new: {filter: [{is_active: True}, {location_distance.<=: 0.5}, {min_kind_level: [60, 70]}, {start_date: $event_date}]}
+  items_with_district_500m_from_location_reactivated: {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.5}, {min_kind_level: [60, 70]}]}
   items_with_district_new:                 {filter: [{is_active: True}, {min_kind_level: [60, 70]}, {start_date: $event_date}]}
   items_with_district_reactivated:         {filter: [{is_active: True}, {last_activation_date: $event_date}, {min_kind_level: [60, 70]}]}
   items_with_marginal_address:             {filter: [{is_active: True}, {min_kind_level: [10, 20, 30, 80, 90]}]}
   items_with_marginal_address_new:         {filter: [{is_active: True}, {min_kind_level: [10, 20, 30, 80, 90]}, {start_date: $event_date}]}
   items_with_marginal_address_reactivated: {filter: [{is_active: True}, {last_activation_date: $event_date}, {min_kind_level: [10, 20, 30, 80, 90]}]}
+  items_with_metro:                        {filter: [{is_active: True}, {min_kind_level: 55}]}
+  items_with_metro_100m_from_location:     {filter: [{is_active: True}, {location_distance.<=: 0.1}, {min_kind_level: 55}]}
+  items_with_metro_100m_from_location_new: {filter: [{is_active: True}, {location_distance.<=: 0.1}, {min_kind_level: 55}, {start_date: $event_date}]}
+  items_with_metro_100m_from_location_reactivated: {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.1}, {min_kind_level: 55}]}
+  items_with_metro_500m_from_location:     {filter: [{is_active: True}, {location_distance.<=: 0.5}, {min_kind_level: [55]}]}
+  items_with_metro_500m_from_location_new: {filter: [{is_active: True}, {location_distance.<=: 0.5}, {min_kind_level: [55]}, {start_date: $event_date}]}
+  items_with_metro_500m_from_location_reactivated: {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.5}, {min_kind_level: [55]}]}
+  items_with_metro_new:                    {filter: [{is_active: True}, {min_kind_level: 55}, {start_date: $event_date}]}
+  items_with_metro_reactivated:            {filter: [{is_active: True}, {last_activation_date: $event_date}, {min_kind_level: 55}]}
   items_with_street:                       {filter: [{is_active: True}, {min_kind_level: 50}]}
+  items_with_street_100m_from_location:    {filter: [{is_active: True}, {location_distance.<=: 0.1}, {min_kind_level: 50}]}
+  items_with_street_100m_from_location_new: {filter: [{is_active: True}, {location_distance.<=: 0.1}, {min_kind_level: 50}, {start_date: $event_date}]}
+  items_with_street_100m_from_location_reactivated: {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.1}, {min_kind_level: 50}]}
+  items_with_street_500m_from_location:    {filter: [{is_active: True}, {location_distance.<=: 0.5}, {min_kind_level: [50]}]}
+  items_with_street_500m_from_location_new: {filter: [{is_active: True}, {location_distance.<=: 0.5}, {min_kind_level: [50]}, {start_date: $event_date}]}
+  items_with_street_500m_from_location_reactivated: {filter: [{is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.5}, {min_kind_level: [50]}]}
   items_with_street_new:                   {filter: [{is_active: True}, {min_kind_level: 50}, {start_date: $event_date}]}
   items_with_street_reactivated:           {filter: [{is_active: True}, {last_activation_date: $event_date}, {min_kind_level: 50}]}
   seller_contacts:                         {obs: [contacts]}
