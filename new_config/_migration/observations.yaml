@@ -385,7 +385,7 @@ seller_item_event:
   item_edits_photo_add: {obs: [edits_photo]}
   item_edits_price: {obs: [edits_price]}
   item_edits_title: {obs: [edits_title]}
-  items_allowed: {filter: [moder_flags.bit: 7]}
+  items_allowed: {filter: [moder_flags.bit: [0, 1, 2]]}
   items_archived: {filter: [close_status_id: 10536750001]}
   items_blocked: {filter: [moder_flags.bit: 3]}
   items_blocked_duplicate: {filter: [moder_flags.bit: 5]}
@@ -1702,5 +1702,5 @@ favourite_sellers_totals:
   favourite_sellers_subscriptions_inactive_old: {filter: [user_type: 'buyer', is_active: false, is_new: false]}
   favourite_sellers_subscribers_active_new: {filter: [user_type: 'seller', is_active: true, is_new: true]}
   favourite_sellers_subscribers_active_old: {filter: [user_type: 'seller', is_active: true, is_new: false]}
-  favourite_sellers_subscribers_inactive_new: {filter: [user_type: 'seller', is_active: true, is_new: true]}
-  favourite_sellers_subscribers_inactive_old: {filter: [user_type: 'seller', is_active: true, is_new: false]}
+  favourite_sellers_subscribers_inactive_new: {filter: [user_type: 'seller', is_active: false, is_new: true]}
+  favourite_sellers_subscribers_inactive_old: {filter: [user_type: 'seller', is_active: false, is_new: false]}

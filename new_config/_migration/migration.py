@@ -9,10 +9,14 @@ import os
 CONFIG_PATH = Path.cwd() / 'migrated'
 
 
-def write_metrics_type_batch(metrics: Set[Metric], typ: str, fil: TextIO):
-    fil.write(f'metric.{typ}:\n')
-    metrics = sorted(metrics, key=lambda x: (str(x.key), x.name))
-    lines = [m.yaml_repr for m in metrics]
+def write_metrics_type_batch(metrics: Set[Metric], typ: str, fil: TextIO, ratio=False):
+    if ratio:
+        metrics = sorted(metrics, key=lambda x: (str(x.key), x.name))
+        lines = [m.yaml_repr.strip() + '\n' for m in metrics]
+    else:
+        fil.write(f'metric.{typ}:\n')
+        metrics = sorted(metrics, key=lambda x: (str(x.key), x.name))
+        lines = [m.yaml_repr for m in metrics]
     fil.writelines(lines)
     fil.write('\n')
 
@@ -37,8 +41,9 @@ def write_metrics_to_file(metrics: Set[Metric], source: str, extra_path):
         types = ['counter', 'uniq', 'ratio']
         for t in types:
             m = index_by_type.get(t)
+            ratio = extra_path == 'ratio'
             if m:
-                write_metrics_type_batch(m, t, f)
+                write_metrics_type_batch(m, t, f, ratio)
 
 
 def write_all_metrics_to_files(metrics: Set[Metric], extra_path=''):
