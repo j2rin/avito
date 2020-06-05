@@ -49,7 +49,7 @@ def migrate_config():
         m for m in new_metrics
         if m.type == 'ratio' and len(m.sources) > 1 and len(m.num.sources) <= 1 and len(m.den.sources) <= 1}
 
-    write_metrics_to_file(ratio_metrics_from_multiple_sources, '_ratios', '')
+    write_metrics_to_file(ratio_metrics_from_multiple_sources, 'ratio', 'ratio')
 
     metrics_with_multiple_sources = {m for m in new_metrics if len(m.sources) > 1
                                      if m not in ratio_metrics_from_multiple_sources}
