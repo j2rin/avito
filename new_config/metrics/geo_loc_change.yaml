@@ -22,7 +22,24 @@ metric.counter:
   default_loc_tooltip_shows_city:          {filter: [{location_level_id: [4, 5, 6]}, *is_tooltip_open], obs: [events_count]}
   default_loc_tooltip_shows_region:        {filter: [{location_level_id: [2, 3]}, *is_tooltip_open], obs: [events_count]}
   default_loc_tooltip_shows_russia:        {filter: [{location_level_id: 1}, *is_tooltip_open], obs: [events_count]}
-  laas_accepts:                            {filter: [*is_tooltip_laas], obs: [events_count]}
+  laas_accepts:                            {filter: [{tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
+  laas_accepts_change:                     {filter: [{open_from_id: change}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
+  laas_accepts_city:                       {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
+  laas_accepts_region:                     {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
+  laas_accepts_regular:                    {filter: [{open_from_id: regular}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
+  laas_accepts_russia:                     {filter: [{location_level_id: 1}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
+  laas_answers:                            {filter: [*is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
+  laas_answers_change:                     {filter: [{open_from_id: change}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
+  laas_answers_city:                       {filter: [{location_level_id: [4, 5, 6]}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
+  laas_answers_region:                     {filter: [{location_level_id: [2, 3]}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
+  laas_answers_regular:                    {filter: [{open_from_id: regular}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
+  laas_answers_russia:                     {filter: [{location_level_id: 1}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
+  laas_shows:                              {filter: [*is_tooltip_laas], obs: [events_count]}
+  laas_shows_change:                       {filter: [{open_from_id: change}, *is_tooltip_laas], obs: [events_count]}
+  laas_shows_city:                         {filter: [{location_level_id: [4, 5, 6]}, *is_tooltip_laas], obs: [events_count]}
+  laas_shows_region:                       {filter: [{location_level_id: [2, 3]}, *is_tooltip_laas], obs: [events_count]}
+  laas_shows_regular:                      {filter: [{open_from_id: regular}, *is_tooltip_laas], obs: [events_count]}
+  laas_shows_russia:                       {filter: [{location_level_id: 1}, *is_tooltip_laas], obs: [events_count]}
   loc_bad_chng:                            {filter: [{changing_quality_type: bad}, *changed, *is_close, *saved], obs: [events_count]}
   loc_bad_susp_chng:                       {filter: [*changed, *is_close, *saved, {$or: [[{changing_quality_type: bad}], [{changing_quality_type: suspicious}]]}], obs: [events_count]}
   loc_chng:                                {filter: [*changed, *is_close, *saved], obs: [events_count]}
@@ -66,6 +83,14 @@ metric.uniq:
   default_loc_tooltip_declines_region:     {counter: cnt_tooltip_not_accepts_region,  key: [participant]}
   default_loc_tooltip_declines_russia:     {counter: cnt_tooltip_not_accepts_russia,  key: [participant]}
   unq_laas_tooltip_accepts:                {counter: laas_accepts,                    key: [participant], m42: False}
+  unq_laas_tooltip_accepts_change:         {counter: laas_accepts_change,             key: [participant], m42: False}
+  unq_laas_tooltip_accepts_change_declines: {counter: laas_answers_change,             key: [participant], m42: False}
+  unq_laas_tooltip_accepts_declines:       {counter: laas_answers,                    key: [participant], m42: False}
+  unq_laas_tooltip_accepts_regular:        {counter: laas_accepts_regular,            key: [participant], m42: False}
+  unq_laas_tooltip_accepts_regular_declines: {counter: laas_answers_regular,            key: [participant], m42: False}
+  unq_laas_tooltip_shows:                  {counter: laas_shows,                      key: [participant], m42: False}
+  unq_laas_tooltip_shows_change:           {counter: laas_shows_change,               key: [participant], m42: False}
+  unq_laas_tooltip_shows_regular:          {counter: laas_shows_regular,              key: [participant], m42: False}
   users_default_loc_tooltip:               {counter: default_loc_tooltip_shows,       key: [participant]}
   users_default_loc_tooltip_accepts:       {counter: default_loc_tooltip_accepts,     key: [participant]}
   users_default_loc_tooltip_declines:      {counter: default_loc_tooltip_declines,    key: [participant]}
@@ -92,9 +117,25 @@ metric.ratio:
   default_loc_tooltip_declines_per_shows:  {num: default_loc_tooltip_declines,    den: default_loc_tooltip_shows}
   default_loc_tooltip_region_share:        {num: default_loc_tooltip_shows_region, den: default_loc_tooltip_shows}
   default_loc_tooltip_russia_share:        {num: default_loc_tooltip_shows_russia, den: default_loc_tooltip_shows}
-  laas_accepts_per_answer:                 {num: laas_accepts,                    den: laas_accepts}
+  laas_accepts_per_answer:                 {num: laas_accepts,                    den: laas_answers}
+  laas_accepts_per_answer_change:          {num: laas_accepts_change,             den: laas_answers_change}
+  laas_accepts_per_answer_city:            {num: laas_accepts_city,               den: laas_answers_city}
+  laas_accepts_per_answer_region:          {num: laas_accepts_region,             den: laas_answers_region}
+  laas_accepts_per_answer_regular:         {num: laas_accepts_regular,            den: laas_answers_regular}
+  laas_accepts_per_answer_russia:          {num: laas_accepts_russia,             den: laas_answers_russia}
+  laas_answers_per_shows:                  {num: laas_answers,                    den: laas_shows}
+  laas_answers_per_shows_change:           {num: laas_answers_change,             den: laas_shows_change}
+  laas_answers_per_shows_city:             {num: laas_answers_city,               den: laas_shows_city}
+  laas_answers_per_shows_region:           {num: laas_answers_region,             den: laas_shows_region}
+  laas_answers_per_shows_regular:          {num: laas_answers_regular,            den: laas_shows_regular}
+  laas_answers_per_shows_russia:           {num: laas_answers_russia,             den: laas_shows_russia}
   loc_window_saves_per_opens:              {num: loc_window_savings,              den: loc_window_opens}
   loc_window_saves_per_opens_radius:       {num: cnt_location_dialogue_savings_radius, den: loc_window_opens_radius}
   loc_window_saves_per_opens_search:       {num: cnt_location_dialogue_savings_s, den: loc_window_opens_search}
-  user_laas_accepts_per_user_answer:       {num: unq_laas_tooltip_accepts,        den: unq_laas_tooltip_accepts}
+  user_laas_accepts_per_user_answer:       {num: unq_laas_tooltip_accepts,        den: unq_laas_tooltip_accepts_declines}
+  user_laas_accepts_per_user_answer_change: {num: unq_laas_tooltip_accepts_change, den: unq_laas_tooltip_accepts_change_declines}
+  user_laas_accepts_per_user_answer_regular: {num: unq_laas_tooltip_accepts_regular, den: unq_laas_tooltip_accepts_regular_declines}
+  user_laas_answers_per_user_shows:        {num: unq_laas_tooltip_accepts_declines, den: unq_laas_tooltip_shows}
+  user_laas_answers_per_user_shows_change: {num: unq_laas_tooltip_accepts_change_declines, den: unq_laas_tooltip_shows_change}
+  user_laas_answers_per_user_shows_regular: {num: unq_laas_tooltip_accepts_regular_declines, den: unq_laas_tooltip_shows_regular}
 
