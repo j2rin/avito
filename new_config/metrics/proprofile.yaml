@@ -15,8 +15,8 @@ metric.counter:
   proprofile_ppv_to_c:                     {filter: [{observation_name: proprofile_first_searches_to_contact}], obs: [observation_value]}
   proprofile_ppv_to_ppc:                   {filter: [{observation_name: proprofile_first_searches_to_proprofilecontact}], obs: [observation_value]}
   proprofile_s:                            {filter: [{observation_name: proprofile_searches}], obs: [observation_value]}
-  proprofile_s_ctg:                        {filter: [{observation_name: proprofilelist_searches_w_category}], obs: [observation_value]}
-  proprofile_s_q:                          {filter: [{observation_name: proprofilelist_searches_w_query}], obs: [observation_value]}
+  proprofile_s_ctg:                        {filter: [{observation_name: proprofile_searches_w_category}], obs: [observation_value]}
+  proprofile_s_q:                          {filter: [{observation_name: proprofile_searches_w_query}], obs: [observation_value]}
   proprofile_s_to_c:                       {filter: [{observation_name: proprofile_searches_to_contact}], obs: [observation_value]}
   proprofile_s_to_iv:                      {filter: [{observation_name: proprofile_searches_to_iv}], obs: [observation_value]}
   proprofile_s_to_ppc:                     {filter: [{observation_name: proprofile_searches_to_proprofilecontact}], obs: [observation_value]}
@@ -24,6 +24,8 @@ metric.counter:
   proprofile_w1v_to_c:                     {filter: [{observation_name: proprofile_window1views_to_contact}], obs: [observation_value]}
   proprofile_w1v_to_iv:                    {filter: [{observation_name: proprofile_window1views_to_iv}], obs: [observation_value]}
   proprofilelist_s:                        {filter: [{observation_name: proprofilelist_searches}], obs: [observation_value]}
+  proprofilelist_s_ctg:                    {filter: [{observation_name: proprofilelist_searches_w_category}], obs: [observation_value]}
+  proprofilelist_s_q:                      {filter: [{observation_name: proprofilelist_searches_w_query}], obs: [observation_value]}
 
 metric.uniq:
   proprofile_user_c:                       {counter: proprofile_c,                    key: [participant]}
@@ -39,6 +41,8 @@ metric.uniq:
   proprofile_user_s_q:                     {counter: proprofile_s_q,                  key: [participant]}
   proprofile_user_w1v:                     {counter: proprofile_w1v,                  key: [participant]}
   proprofilelist_user_s:                   {counter: proprofilelist_s,                key: [participant]}
+  proprofilelist_user_s_ctg:               {counter: proprofilelist_s_ctg,            key: [participant]}
+  proprofilelist_user_s_q:                 {counter: proprofilelist_s_q,              key: [participant]}
   unq_proprofile_s_to_c:                   {counter: proprofile_s_to_c,               key: [participant], m42: False}
   unq_proprofile_s_to_iv:                  {counter: proprofile_s_to_iv,              key: [participant], m42: False}
   unq_proprofile_s_to_proprofilec:         {counter: proprofile_s_to_ppc,             key: [participant], m42: False}
@@ -63,8 +67,8 @@ metric.ratio:
   proprofile_user_ppc_per_s:               {num: unq_proprofile_s_to_proprofilec, den: proprofile_user_s}
   proprofile_user_s_ctg_per_s:             {num: proprofile_user_s_ctg,           den: proprofile_user_s}
   proprofile_user_s_q_per_s:               {num: proprofile_user_s_q,             den: proprofile_user_s}
-  proprofilelist_s_ctg_per_s:              {num: proprofile_s_ctg,                den: proprofilelist_s}
-  proprofilelist_s_q_per_s:                {num: proprofile_s_q,                  den: proprofilelist_s}
-  proprofilelist_user_s_ctg_per_s:         {num: proprofile_user_s_ctg,           den: proprofilelist_user_s}
-  proprofilelist_user_s_q_per_s:           {num: proprofile_user_s_q,             den: proprofilelist_user_s}
+  proprofilelist_s_ctg_per_s:              {num: proprofilelist_s_ctg,            den: proprofilelist_s}
+  proprofilelist_s_q_per_s:                {num: proprofilelist_s_q,              den: proprofilelist_s}
+  proprofilelist_user_s_ctg_per_s:         {num: proprofilelist_user_s_ctg,       den: proprofilelist_user_s}
+  proprofilelist_user_s_q_per_s:           {num: proprofilelist_user_s_q,         den: proprofilelist_user_s}
 
