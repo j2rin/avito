@@ -15,8 +15,8 @@ metric.counter:
   item_edits_start_date:                   {filter: [{start_date.>=: $ab_start_date}], obs: [edits]}
   item_edits_title:                        {obs: [edits_title]}
   item_edits_title_start_date:             {filter: [{start_date.>=: $ab_start_date}], obs: [edits_title]}
-  items_allowed:                           {filter: [{moder_flags.bit: 7}]}
-  items_allowed_start_date:                {filter: [{moder_flags.bit: 7}, {start_date.>=: $ab_start_date}]}
+  items_allowed:                           {filter: [{moder_flags.bit: [0, 1, 2]}]}
+  items_allowed_start_date:                {filter: [{moder_flags.bit: [0, 1, 2]}, {start_date.>=: $ab_start_date}]}
   items_archived:                          {filter: [{close_status_id: 10536750001}]}
   items_blocked:                           {filter: [{moder_flags.bit: 3}]}
   items_blocked_duplicate:                 {filter: [{moder_flags.bit: 5}]}
@@ -44,6 +44,8 @@ metric.counter:
   items_rejected_contacts_on_photo_start_date: {filter: [{moder_flags.bit: 14}, {start_date.>=: $ab_start_date}]}
   items_rejected_mileage:                  {filter: [{moder_flags.bit: 16}]}
   items_rejected_mileage_start_date:       {filter: [{moder_flags.bit: 16}, {start_date.>=: $ab_start_date}]}
+  items_rejected_phone_in_other_profile:   {filter: [{moder_flags.bit: 7}]}
+  items_rejected_phone_in_other_profile_start_date: {filter: [{moder_flags.bit: 7}, {start_date.>=: $ab_start_date}]}
   items_rejected_pricelist:                {filter: [{moder_flags.bit: 9}]}
   items_rejected_pricelist_start_date:     {filter: [{moder_flags.bit: 9}, {start_date.>=: $ab_start_date}]}
   items_rejected_start_date:               {filter: [{moder_flags.bit: 6}, {start_date.>=: $ab_start_date}]}
@@ -131,6 +133,8 @@ metric.uniq:
   users_item_rejected_contacts_on_photo_start_date: {counter: items_rejected_contacts_on_photo_start_date, key: [participant]}
   users_item_rejected_mileage:             {counter: items_rejected_mileage,          key: [participant]}
   users_item_rejected_mileage_start_date:  {counter: items_rejected_mileage_start_date, key: [participant]}
+  users_item_rejected_phone_in_other_profile: {counter: items_rejected_phone_in_other_profile, key: [participant]}
+  users_item_rejected_phone_in_other_profile_start_date: {counter: items_rejected_phone_in_other_profile_start_date, key: [participant]}
   users_item_rejected_pricelist:           {counter: items_rejected_pricelist,        key: [participant]}
   users_item_rejected_pricelist_start_date: {counter: items_rejected_pricelist_start_date, key: [participant]}
   users_item_rejected_start_date:          {counter: items_rejected_start_date,       key: [participant]}

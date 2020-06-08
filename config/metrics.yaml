@@ -97,13 +97,6 @@ fullscreen_photo_galeree_close:
   numerator:
     observations: [fullscreen_photo_galeree_close]
 
-# JOB-496
-contacts_new:
-  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
-  numerator:
-    observations: [phone_views_total, booking_created_short_rent, new_first_messages, delivery_order_created, realty_development_phone_views]
-  tags: [i1, bx, total]  
-
 contacts_total_vas:
   title: contacts_total_vas
   tags: [i1, bx, vas, total]
@@ -116,15 +109,6 @@ contacts_grouped:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant, item]
   tags: [i1, bx, total, grouped]
-
-# JOB-496  
-contacts_grouped_new:
-  title:   contacts_groupped_new
-  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
-  numerator:
-    observations: [phone_views_total, booking_created_short_rent, new_first_messages, delivery_order_created, realty_development_phone_views]
-    groupby: [participant, item]
-  tags: [i1, bx, total, grouped]  
 
 advertisement_page_views:
   title: advertisement_page_views
@@ -217,14 +201,6 @@ first_messages:
   numerator:
     observations: [first_messages]
 
-# JOB-496
-new_first_messages:
-  title: new_first_messages
-  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
-  tags: [i2, bx, mes, total]
-  numerator:
-    observations: [new_first_messages]
-
 first_messages_vas:
   title: first_messages_vas
   tags: [i3, bx, mes, vas, total]
@@ -313,14 +289,6 @@ btc_funnel_all:
         - booking_created_short_rent
         - favorites_added
 
-# JOB-496
-bt_clicks_new:
-  title: bt_clicks_new
-  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
-  tags: [i1, bx, total]
-  numerator:
-    observations: [phone_views_total, new_first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
-    
 favorites_net:
   title: favorites_net
   description: "Чистое число добавленных в избранное. Прежде всего полезно для чистки мискликов. Если пользователь добавил айтем в избранное, затем его удалил, значение будет 0. Если потом снова добавил, то 1"
@@ -342,15 +310,6 @@ bt_clicks_grouped:
   numerator:
     observations: [phone_views_total, first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
     groupby: [participant, item]
-
-# JOB-496
-bt_clicks_grouped_new:
-  title: bt_clicks_grouped_new
-  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
-  tags: [i1, bx, total, group]
-  numerator:
-    observations: [phone_views_total, new_first_messages, delivery_order_created, booking_created_short_rent, favorites_added, write_button_clicks, realty_development_phone_views]
-    groupby: [participant, item]    
 
 ad_clicks:
   tags: [critical, bx]
@@ -805,6 +764,27 @@ iv_developer_rec_u2i:
   numerator:
     observations: [item_views_developer_rec_u2i]
 
+iv_actual_calendar:
+  description: "iv для айтемов с актуальным календарем в STR"
+  title: iv_actual_calendar
+  tags: [bx, total]
+  numerator:
+    observations: [item_views_actual_calendar]
+
+btc_actual_calendar:
+  description: "btc для айтемов с актуальным календарем в STR"
+  title: btc_actual_calendar
+  tags: [bx, total]
+  numerator:
+    observations: [btc_actual_calendar]
+
+c_actual_calendar:
+  description: "contacts для айтемов с актуальным календарем в STR"
+  title: c_actual_calendar
+  tags: [bx, total]
+  numerator:
+    observations: [contacts_actual_calendar]
+
 ###############################################################################
 # Buyer :: Ratios
 ###############################################################################
@@ -1081,15 +1061,6 @@ buyers:
     observations: [phone_views_total, booking_created_short_rent, first_messages, delivery_order_created, realty_development_phone_views]
     groupby: [participant]
 
-# JOB-496
-buyers_new:
-  title: buyers_new
-  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
-  tags: [i0, bx, user]
-  numerator:
-    observations: [phone_views_total, booking_created_short_rent, new_first_messages, delivery_order_created, realty_development_phone_views]
-    groupby: [participant]    
-    
 user_pv:
   description: "Юзеры, сделавшие просмотр телефона"
   numerator:
@@ -1195,15 +1166,6 @@ users_btc_funnel_all:
         - booking_created_short_rent
         - favorites_added
     groupby: [participant]
-
-# JOB-496
-users_bt_click_daily_new:
-  title: users_bt_click_new
-  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
-  tags: [i0, bx, user]
-  numerator:
-    observations: [phone_views_total, new_first_messages, booking_created_short_rent, delivery_order_created, favorites_added, realty_development_phone_views]
-    groupby: [participant]    
 
 users_favorites:
   title: users_favorites_added
@@ -1679,6 +1641,27 @@ user_from_session_start_to_iv_any_source_p99:
   numerator:
     observations: [from_session_start_to_iv_any_source_p99]
     groupby: [participant]  
+
+user_iv_actual_calendar:
+  title: iv_actual_calendar
+  tags: [bx, total]
+  numerator:
+    observations: [item_views_actual_calendar]
+    groupby: [participant]
+
+user_btc_actual_calendar:
+  title: btc_actual_calendar
+  tags: [bx, total]
+  numerator:
+    observations: [btc_actual_calendar]
+    groupby: [participant]
+
+user_c_actual_calendar:
+  title: c_actual_calendar
+  tags: [bx, total]
+  numerator:
+    observations: [contacts_actual_calendar]
+    groupby: [participant]
   
 ###############################################################################
 # Buyer :: User Ratios
@@ -2165,6 +2148,27 @@ sess_c_pro_image:
   tags: [bx, total]
   numerator:
     observations: [contact_pro_image]
+    groupby: [participant, session]
+
+sess_iv_actual_calendar:
+  title: sess_iv_actual_calendar
+  tags: [bx, total]
+  numerator:
+    observations: [item_views_actual_calendar]
+    groupby: [participant, session]
+
+sess_btc_actual_calendar:
+  title: sess_btc_actual_calendar
+  tags: [bx, total]
+  numerator:
+    observations: [btc_actual_calendar]
+    groupby: [participant, session]  
+
+sess_c_actual_calendar:
+  title: sess_c_actual_calendar
+  tags: [bx, total]
+  numerator:
+    observations: [contacts_actual_calendar]
     groupby: [participant, session]
 
  ######  ########    ###    ########   ######  ##     ##
@@ -4044,18 +4048,6 @@ sessions_btc_s:
     groupby: [participant, session]
   tags: [i3, bx, session]
 
-sessions_btc_sq:
-  numerator:
-    observations: [btc_serp_query]
-    groupby: [participant, session]
-  tags: [i4, bx, session]
-
-sessions_btc_snoq:
-  numerator:
-    observations: [btc_serp_noquery]
-    groupby: [participant, session]
-  tags: [i4, bx, session]
-
 sessions_c_s:
   numerator:
     observations: [contacts_serp]
@@ -4511,23 +4503,11 @@ users_contact_serp_daily:
     observations: [contacts_serp]
     groupby: [participant]
 
-contact_s_item_attr_users:
-  tags: [i1, bx, serp, user]
-  numerator:
-    observations: [contacts_search_item_attr]
-    groupby: [participant]
-
 users_buyer_target_click_serp_daily:
   title: users_search_bt_click
   tags: [i1, bx, serp, user]
   numerator:
     observations: [buyer_target_clicks_serp]
-    groupby: [participant]
-
-btc_s_item_attr_users:
-  tags: [i1, bx, serp, user]
-  numerator:
-    observations: [btc_search_item_attr]
     groupby: [participant]
 
 users_contact_search_query:
@@ -4541,14 +4521,6 @@ search_suggest_clicks:
   tags: [ss, sgt]
   numerator:
     observations: [search_suggest_clicks]
-    groupby: [participant]
-
-filters_pr_rubr_users:
-  description: "Число юзеров, использовавших обычный или фильтр по цене"
-  title: filters_any_users
-  tags: [i4, bx, user]
-  numerator:
-    observations: [searches, searches_with_filter, searches_with_price_filter]
     groupby: [participant]
     
 users_search_filter_any:
@@ -6073,16 +6045,6 @@ first_mess_per_write_button_clicks:
   denominator:
     observations: [write_button_clicks]
 
-# JOB-496
-first_mess_per_write_button_clicks_new:
-  title: first_mess_per_write_button_clicks_new
-  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
-  tags: [i3, messenger, ratio]
-  numerator:
-    observations: [new_first_messages]
-  denominator:
-    observations: [write_button_clicks]    
-    
 first_mess_per_active_items_with_msg:
   title: first_mess_per_active_items_with_msg
   tags: [i3, messenger, ratio]
@@ -6133,15 +6095,6 @@ users_first_messages:
   numerator:
     observations: [first_messages]
     groupby: [participant]
-
-# JOB-496
-users_first_messages_new:
-  title: users_first_messages_new
-  description: "JOB-496 Изменен расчет first_messages - автоматическое сообщение работодателю при нажатии на кнопку Откликнуться считаем за контакт"
-  tags: [i2, messenger, user]
-  numerator:
-    observations: [new_first_messages]
-    groupby: [participant]    
 
 users_first_response_messages:
   title: users_first_response_messages
@@ -7422,7 +7375,7 @@ buyers_on_rating_3:
   description: "Number of buyers on 3-stars rating"
   tags: [i4, tns, reviews, ratings, buyers]
   numerator:
-    observations: [contacts_on_rating_4]
+    observations: [contacts_on_rating_3]
     groupby: [participant]
 
 buyers_on_rating_4:
@@ -7749,7 +7702,7 @@ public_profile_visit_from_subscribers_list:
   description: "public profile visits from subscribers list"
   tags: [i4, tns, tns_pppp, public_profile]
   numerator:
-    observations: [public_profile_visit_from_fs]
+    observations: [public_profile_visit_from_subscribers_list]
 
 public_profile_visit_from_subscriptions_list:
   title: public_profile_visit_from_subscriptions_list
@@ -20476,7 +20429,7 @@ user_s_from_witcher_flats:
   tags: [i3, geo, search, user]
   description: "Юзеры, совершившие поиск C колдунщика новых квартир"
   numerator:
-    observations: [searches_from_witcher_new_auto]
+    observations: [searches_from_witcher_new_flats]
     groupby: [participant]
 
 user_s_from_witcher_any:
@@ -21358,14 +21311,14 @@ proprofile_s_ctg:
   title: proprofile_s_ctg
   tags: [other, bx, serp, total, proprofile]
   numerator:
-    observations: [proprofilelist_searches_w_category]
+    observations: [proprofile_searches_w_category]
 
 proprofile_s_q:
   description: "Поиски внутри профессионального профиля с текстовым запросом"
   title: proprofile_s_q
   tags: [other, bx, serp, total, proprofile]
   numerator:
-    observations: [proprofilelist_searches_w_query]
+    observations: [proprofile_searches_w_query]
     
 proprofile_s_f:
   description: "Поиски внутри профессионального профиля с использованием фильтров"
@@ -21516,7 +21469,7 @@ proprofile_s_ctg_per_s:
   title: proprofile_s_ctg_per_s
   tags: [other, bx, serp, total, proprofile]
   numerator:
-    observations: [proprofilelist_searches_w_category]
+    observations: [proprofile_searches_w_category]
   denominator:
     observations: [proprofile_searches]
 
@@ -21525,7 +21478,7 @@ proprofile_s_q_per_s:
   title: proprofile_s_q_per_s
   tags: [other, bx, serp, total, proprofile]
   numerator:
-    observations: [proprofilelist_searches_w_query]
+    observations: [proprofile_searches_w_query]
   denominator:
     observations: [proprofile_searches]
     
@@ -21699,7 +21652,7 @@ proprofile_user_s_ctg:
   title: proprofile_user_s_ctg
   tags: [other, bx, serp, total, proprofile]
   numerator:
-    observations: [proprofilelist_searches_w_category]
+    observations: [proprofile_searches_w_category]
     groupby: [participant]
 
 proprofile_user_s_q:
@@ -21707,7 +21660,7 @@ proprofile_user_s_q:
   title: proprofile_user_s_q
   tags: [other, bx, serp, total, proprofile]
   numerator:
-    observations: [proprofilelist_searches_w_query]
+    observations: [proprofile_searches_w_query]
     groupby: [participant]
     
 proprofile_user_s_f:
@@ -21834,7 +21787,7 @@ proprofile_user_s_ctg_per_s:
   title: proprofile_user_s_ctg_per_s
   tags: [other, bx, serp, total, proprofile]
   numerator:
-    observations: [proprofilelist_searches_w_category]
+    observations: [proprofile_searches_w_category]
     groupby: [participant]
   denominator:
     observations: [proprofile_searches]
@@ -21845,7 +21798,7 @@ proprofile_user_s_q_per_s:
   title: proprofile_user_s_q_per_s
   tags: [other, bx, serp, total, proprofile]
   numerator:
-    observations: [proprofilelist_searches_w_query]
+    observations: [proprofile_searches_w_query]
     groupby: [participant]
   denominator:
     observations: [proprofile_searches]

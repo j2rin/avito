@@ -329,10 +329,14 @@ class ObservationIndex(Set[Observation]):
         res += tuple(sorted(common_terms, key=str))
 
         or_terms = set()
+
         for o in self:
             t = tuple(f for f in o.astuple.filter if f not in common_terms)
-            if t:
-                or_terms.add(t)
+            if not t:
+                or_terms = set()
+                break
+            or_terms.add(t)
+
         if or_terms:
             res += ((('$or', tuple(sorted(or_terms, key=str))),),)
 
