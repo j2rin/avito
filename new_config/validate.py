@@ -18,6 +18,7 @@ except ImportError:
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 CONFIGS_PATH = CUR_DIR_PATH
 METRICS_PATH = os.path.join(CONFIGS_PATH, 'metrics')
+RATIO_PATH = os.path.join(METRICS_PATH, 'ratio')
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 
@@ -114,24 +115,34 @@ def show_errors(file_name_map, name, info):
 def send_all(url):
     data = {
         'sources': io.open(os.path.join(CONFIGS_PATH, 'sources.yaml'), encoding='utf-8').read(),
-        'configs': {}
+        'configs': {},
+        'ratio_configs': {},
     }
     file_name_map = {}
 
     for fn in os.listdir(METRICS_PATH):
-        full_path = os.path.join(METRICS_PATH, fn)
         if fn.endswith('.yaml') and not fn.startswith('_'):
+            full_path = os.path.join(METRICS_PATH, fn)
             short_name = get_short_name(fn)
             data['configs'][short_name] = io.open(full_path, encoding='utf-8').read()
 
             file_name_map[short_name] = full_path
 
+    ratio_file_name_map = {}
+    for fn in os.listdir(RATIO_PATH):
+        if fn.endswith('.yaml') and not fn.startswith('_'):
+            full_path = os.path.join(RATIO_PATH, fn)
+            short_name = get_short_name(fn)
+            data['ratio_configs'][short_name] = io.open(full_path, encoding='utf-8').read()
+
+            ratio_file_name_map[short_name] = full_path
+
     result = post(url, data)
-    return result, file_name_map
+    return result, file_name_map, ratio_file_name_map
 
 
 def validate():
-    result, file_name_map = send_all(VALIDATE_URL)
+    result, file_name_map, ratio_file_name_map = send_all(VALIDATE_URL)
     if not result['sources']['success']:
         show_errors({'sources': os.path.join(CONFIGS_PATH, 'sources.yaml')}, 'sources', result['sources'])
         return False
@@ -142,11 +153,16 @@ def validate():
             show_errors(file_name_map, name, result['configs'][name])
             ok = False
 
+    for name in result['ratio_configs']:
+        if not result['ratio_configs'][name]['success']:
+            show_errors(ratio_file_name_map, name, result['ratio_configs'][name])
+            ok = False
+
     return ok
 
 
 def process():
-    result, _ = send_all(PROCESS_URL)
+    result, _, _ = send_all(PROCESS_URL)
     print(
         json.dumps(result, indent=4)
     )
