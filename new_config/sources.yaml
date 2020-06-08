@@ -441,3 +441,46 @@ proprofile:
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
+
+buyer_suggest:
+  vertica:
+    table: dma.vo_buyer_suggest
+    dimensions:
+      - platform_id
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+    segm: cookie_id
+
+seller_item_add:
+  vertica:
+      table: dma.vo_seller_item_add
+      dimensions:
+        - platform_id
+      participant: {visitor: cookie_id, user: user_id}
+      dtm: event_date
+      segm: cookie_id
+
+support_ticket:
+  vertica:
+    table: dma.vo_support_ticket
+    participant: {user: user_id}
+    dtm: event_date
+    segm: user_id
+
+geo_map_labor:
+  vertica:
+    table: dma.vo_geo_map_labor
+    dimensions:
+      - platform_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant:  {visitor: cookie_id, user: user_id}
+    dtm: event_Date
+    segm: cookie_id

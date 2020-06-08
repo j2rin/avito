@@ -373,6 +373,7 @@ buyer_stream:
   searches_shopx_with_item_view: {filter: [x_is_search, is_iv_wo_guessing, x_is_shop], key: [x]}
   searches_witcher_delivery: {filter: [is_search, is_1p, x_is_witcher_delivery], key: [x]}
   realty_development_phone_views: {filter: [is_ph_realdev]}
+  favorites_net: {obs: [favorites_net]}
 
 ##########################################################################
 seller_item_event:
@@ -1702,5 +1703,38 @@ favourite_sellers_totals:
   favourite_sellers_subscriptions_inactive_old: {filter: [user_type: 'buyer', is_active: false, is_new: false]}
   favourite_sellers_subscribers_active_new: {filter: [user_type: 'seller', is_active: true, is_new: true]}
   favourite_sellers_subscribers_active_old: {filter: [user_type: 'seller', is_active: true, is_new: false]}
+  favourite_sellers_subscribers_inactive_new: {filter: [user_type: 'seller', is_active: true, is_new: true]}
+  favourite_sellers_subscribers_inactive_old: {filter: [user_type: 'seller', is_active: true, is_new: false]}
+
+buyer_suggest:
+  queries_with_suggest: {obs: [queries_with_suggest]}
+  queries_no_redirect:  {obs: [queries_no_redirect]}
+  queries_no_redirect_contact: {obs: [queries_no_redirect_contact]}
+  search_suggest_clicks: {obs: [search_suggest_clicks]}
+  session_searches_with_uniq_query: {obs: [session_searches_with_uniq_query]}
+  session_searches_with_empty_or_uniq_query: {obs: [session_searches_with_empty_or_uniq_query]}
+  sessions_with_query_suggest_click_contact: {obs: [sessions_with_query_suggest_click_contact]}
+  sessions_with_suggest_click_and_contact: {obs: [sessions_with_suggest_click_and_contact]}
+
+seller_item_add:
+  item_chains_started:        {obs: [observation_value]}
+  item_added_chains_3min:     {filter: [duration_sec.<=: 180]}
+  item_added_chains_3_6min:   {filter: [duration_sec.>: 180, duration_sec.<=: 360]}
+  item_added_chains_6_15min:  {filter: [duration_sec.>: 360, duration_sec.<=: 900]}
+  item_added_chains_15min:    {filter: [duration_sec.>: 900]}
+  item_add_chains_category_first_click:  {filter: [chain_wizard_click_time.isnull: False]}
+  item_add_chains_category_last_click:   {filter: [chain_wizard_last_click_time.isnull: False]}
+  item_add_chains_form_input:            {filter: [chain_last_form_input_time.isnull: False]}
+  item_add_chains_confirm:               {filter: [chain_item_confirm_time.isnull: False]}
+  item_add_chains_item_create:           {filter: [chain_item_create_time.isnull: False]}
+
+
+
+support_ticket:
+  helpdesk_seller_tickets: {filter: [observation_name: helpdesk_seller_tickets], obs: [observation_value]}
+
+geo_map_labor:
+  map_searches_to_btc_map:  {filter: [observation_name: map_searches_to_btc_map], obs: [observation_value]}
+  map_searches_to_iv_map:   {filter: [observation_name: map_searches_to_iv_map],  obs: [observation_value]}
   favourite_sellers_subscribers_inactive_new: {filter: [user_type: 'seller', is_active: false, is_new: true]}
   favourite_sellers_subscribers_inactive_old: {filter: [user_type: 'seller', is_active: false, is_new: false]}
