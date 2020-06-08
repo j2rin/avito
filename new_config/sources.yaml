@@ -451,9 +451,9 @@ buyer_suggest:
     dtm: event_date
     segm: cookie_id
 
-item_add_chain:
+seller_item_add:
   vertica:
-      table: dma.vo_item_add_chain
+      table: dma.vo_seller_item_add
       dimensions:
         - platform_id
       participant: {visitor: cookie_id, user: user_id}
@@ -462,20 +462,16 @@ item_add_chain:
 
 helpdesk_ticket:
   vertica:
-    table: dma.vo_helpdesk_ticket
-    participant: {visitor: cookie_id, user: user_id}
+    table: dma.vo_support_ticket
+    participant: {user: user_id}
     dtm: event_date
-    segm: cookie_id
+    segm: user_id
 
 map_stream:
   vertica:
-    table: dma.vo_map_stream
+    table: dma.vo_geo_map_labors
     dimensions:
       - platform_id
-      - vertical_id
-      - logical_category_id
-      - category_id
-      - subcategory_id
       - param1_id
       - param2_id
       - param3_id
@@ -486,5 +482,5 @@ map_stream:
       - population_group
       - location_level_id
     participant:  {visitor: cookie_id, user: user_id}
-    dtm: event_date
+    dtm: event_Date
     segm: cookie_id
