@@ -1754,7 +1754,7 @@ user_fatal_error_per_users:
     observations: [fatal_app_error]
     groupby: [participant]
   denominator:
-    observations: [page_views]
+    observations: [page_views_all]
     groupby: [participant]    
 
 user_non_fatal_error_per_users:
@@ -3450,19 +3450,19 @@ buyer_target_clicks_regions_per_search_regions:
   numerator:
     observations: [buyer_target_clicks_regions]
   denominator:
-    observations: [search_regions]
+    observations: [searches_extra_regions]
     
 buyer_target_clicks_delivery_per_search_delivery:
   numerator:
     observations: [buyer_target_clicks_delivery]
   denominator:
-    observations: [search_delivery]
+    observations: [searches_witcher_delivery]
     
 buyer_target_clicks_ext_block_any_per_search_ext_block_any:
   numerator:
     observations: [buyer_target_clicks_regions,buyer_target_clicks_delivery]
   denominator:
-    observations: [search_regions,search_delivery]
+    observations: [searches_extra_regions, searches_extra_delivery]
 
 buyer_target_clicks_delivery_per_search:
   title: bt_clicks_delivery_per_search
@@ -13556,7 +13556,7 @@ ttfb_percent_p95:
 dom_interactive_session_duration:
   tags: [performance]
   numerator:
-    observations: [dom_interactive_sessionduration]
+    observations: [dom_interactive_session_duration]
   denominator:
     observations: [dom_interactive_session_duration_events]
 
@@ -21417,7 +21417,7 @@ proprofile_iv_per_w1v:
   numerator:
     observations: [proprofile_window1views_to_iv]
   denominator:
-    observations: [proprofile_w1v]
+    observations: [proprofile_window1views]
 
 proprofile_c_per_w1v:
   description: "Доля просмотров первого блока спецпредложений внутри профессионального профиля, завершившиеся контактом, ко всем просмотрам первого блока спецпредложений"
@@ -21426,7 +21426,7 @@ proprofile_c_per_w1v:
   numerator:
     observations: [proprofile_window1views_to_contact]
   denominator:
-    observations: [proprofile_w1v]
+    observations: [proprofile_window1views]
 
 proprofile_iv_per_w2v:
   description: "Доля просмотров второго блока спецпредложений внутри профессионального профиля, завершившиеся просмотром объявления, ко всем просмотрам второго блока спецпредложений"
@@ -21724,7 +21724,7 @@ proprofile_user_iv_per_w1v:
     observations: [proprofile_window1views_to_iv]
     groupby: [participant]
   denominator:
-    observations: [proprofile_w1v]
+    observations: [proprofile_window1views]
     groupby: [participant]
 
 proprofile_user_c_per_w1v:
@@ -21735,7 +21735,7 @@ proprofile_user_c_per_w1v:
     observations: [proprofile_window1views_to_contact]
     groupby: [participant]
   denominator:
-    observations: [proprofile_w1v]
+    observations: [proprofile_window1views]
     groupby: [participant]
 
 proprofile_user_iv_per_w2v:

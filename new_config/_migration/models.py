@@ -299,9 +299,19 @@ class ObservationIndex(Set[Observation]):
         return {o.name: o for o in self}
 
     @property
+    def by_name_and_source(self):
+        return {(o.name, o.source): o for o in self}
+
+    @property
     def by_filter(self):
         res = {}
         _ = [res.setdefault(o.astuple.filter, set()).add(o) for o in self]
+        return res
+
+    @property
+    def by_source(self):
+        res = {}
+        _ = [res.setdefault(o.source, ObservationIndex()).add(o) for o in self]
         return res
 
     @property
@@ -436,9 +446,17 @@ class MetricOld:
 
     @classmethod
     def from_tup(cls, tup):
-        no = cls.all_observation_index[split_into_tup(tup.numerator_observations)]
+        metric_source_map = {
+            'vas_transactions_start_date': 'mnz_vas',
+            'classified_transactions': 'core_b2b'
+        }
+        if tup.metric_name in metric_source_map:
+            obs_index = cls.all_observation_index.by_source[metric_source_map[tup.metric_name]]
+        else:
+            obs_index = cls.all_observation_index
+        no = obs_index[split_into_tup(tup.numerator_observations)]
         num_uniq = combine_uniq_key(no.merged_key, split_into_tup(tup.numerator_uniq), tup.numerator_threshold)
-        do = cls.all_observation_index[split_into_tup(tup.denominator_observations)]
+        do = obs_index[split_into_tup(tup.denominator_observations)]
         den_uniq = combine_uniq_key(do.merged_key, split_into_tup(tup.denominator_uniq), tup.denominator_threshold)
         return cls(
             name=tup.metric_name,

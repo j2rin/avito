@@ -187,6 +187,7 @@ metric.counter:
   cnt_btc_wtc_new_flats:                   {filter: [*is_btc_wo_guessing, *is_serp_witcher_new_flats, *x_is_search], m42: False}
   cnt_btc_wtc_reg:                         {filter: [*is_btc_wo_guessing, *is_serp_witcher_regions, *x_is_search], m42: False}
   cnt_cities_in_s:                         {filter: [{location_level_id: [4, 5, 6]}, *is_1p, *is_search], m42: False}
+  cnt_cs:                                  {filter: [*is_contact], m42: False}
   cnt_cs_developer_from_map:               {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_map], m42: False}
   cnt_cs_developer_rec:                    {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_rec], m42: False}
   cnt_cs_developer_rec_i2i:                {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_i2i], m42: False}
@@ -741,6 +742,7 @@ metric.uniq:
   user_wtc_from_witcher_reg:               {counter: cnt_iv_wtc_reg_s_from,           key: [participant]}
   users_active_daily:                      {counter: cnt_users_1plus_actions,         key: [participant]}
   users_bt_click_daily:                    {counter: cnt_book_dlv_favorites_added_fmsg_ph_realty_development, key: [participant]}
+  users_btc_search_filter_any:             {counter: cnt_btc_views_s_filter_price,    key: [participant]}
   users_buyer_target_click_from_map:       {counter: cnt_btc_from_map,                key: [participant]}
   users_buyer_target_click_from_map_area:  {counter: cnt_btc_s_map_area,              key: [participant]}
   users_buyer_target_click_rec_daily:      {counter: cnt_btc_rec,                     key: [participant]}
@@ -953,6 +955,7 @@ metric.ratio:
   btc_from_witcher_new_auto_per_witcher_new_auto: {num: btc_from_witcher_new_auto,       den: searches_witcher_new_auto}
   btc_from_witcher_new_flats_per_witcher_new_flats: {num: btc_from_witcher_new_flats,      den: searches_witcher_new_flats}
   btc_from_witcher_regions_per_witcher_regions: {num: btc_from_witcher_regions,        den: searches_witcher_regions}
+  btc_search_filter_any_per_search_filter_any: {num: btc_from_search_filter_any,      den: searches_with_filter_any}
   btc_serp_noq_per_s_noq:                  {num: btc_serp_noquery,                den: cnt_s_without_query}
   btc_serp_q_per_s_q:                      {num: btc_serp_query,                  den: cnt_s_query}
   btc_with_shop_id_per_iv_with_shop_id:    {num: buyer_target_clicks_with_shop_id, den: item_views_with_shop_id}
