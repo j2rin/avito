@@ -5,8 +5,8 @@ from ruamel.yaml import safe_load
 import os
 
 
-
-CONFIG_PATH = Path.cwd() / 'migrated'
+CONFIG_PATH = Path.cwd()
+MIGRATED_PATH = CONFIG_PATH / 'migrated'
 
 
 def write_metrics_type_batch(metrics: Set[Metric], typ: str, fil: TextIO, ratio=False):
@@ -27,8 +27,8 @@ def write_metrics_to_file(metrics: Set[Metric], source: str, extra_path):
         'web_performance': 'perf_web',
     }
     source = source_map.get(source, source)
-    os.makedirs(CONFIG_PATH / extra_path, exist_ok=True)
-    filepath = CONFIG_PATH / extra_path / f'{source}.yaml'
+    os.makedirs(MIGRATED_PATH / extra_path, exist_ok=True)
+    filepath = MIGRATED_PATH / extra_path / f'{source}.yaml'
     index_by_type = MetricIndex(metrics).by_type
     with open(filepath, 'w') as f:
         headers_dict = {
@@ -53,12 +53,12 @@ def write_all_metrics_to_files(metrics: Set[Metric], extra_path=''):
 
 
 def write_sources(sources: List[str]):
-    with open(CONFIG_PATH / '_sources.yaml', 'w') as f:
+    with open(MIGRATED_PATH / '_sources.yaml', 'w') as f:
         for source in sources:
             f.write(f'{source}:\n\tvertica:\n\t\ttable: dma.o_{source}\n\n')
 
 
 def get_prepared_sources():
-    with open(CONFIG_PATH / '../../sources.yaml', 'r') as f:
+    with open(CONFIG_PATH / '../sources.yaml', 'r') as f:
         sources_conf = safe_load(f)
     return set(sources_conf.keys())
