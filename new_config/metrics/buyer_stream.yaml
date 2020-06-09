@@ -123,6 +123,7 @@ definitions:
 
   - &is_region_with_double_groups {region_id: [697, 4181]}
   - &is_item_pro_image {item: 0}  # временная заглушка
+  - &is_item_actual_calendar {item: 0}  # временная заглушка
   - &is_developer_acc {SFAccount_Type: 'Девелопер'}
 
 metric.counter:
@@ -134,6 +135,7 @@ metric.counter:
   base_serp_without_query_small:           {filter: [*is_1p, *is_base_serp_small, *is_search, *noq]}
   booking_created_short_rent:              {filter: [*is_booking]}
   bt_clicks:                               {filter: [{$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
+  btc_actual_calendar:                     {filter: [*is_btc_wo_guessing, *is_item_actual_calendar]}
   btc_developer:                           {filter: [*is_btc, *is_developer_acc]}
   btc_developer_search:                    {filter: [*is_btc_wo_guessing, *is_developer_acc, *x_is_search]}
   btc_pro_image:                           {filter: [*is_btc_wo_guessing, *is_item_pro_image]}
@@ -234,7 +236,7 @@ metric.counter:
   cnt_fav_dlv:                             {filter: [*is_fav, *is_serp_delivery, *x_is_search], m42: False}
   cnt_fav_from_map:                        {filter: [*is_fav, *x_is_map], m42: False}
   cnt_fav_from_map_s_area:                 {filter: [*is_fav, {$or: [[*is_s_map, *x_is_search], [*x_is_map]]}], m42: False}
-  cnt_fav_list_iv:                         {filter: [*is_iv, *x_is_fav_lst], m42: False}
+  cnt_fav_list_iv:                         {filter: [*is_iv_wo_guessing, *x_is_fav_lst], m42: False}
   cnt_fav_premium:                         {filter: [*is_fav, *is_serp_premium, *x_is_search], m42: False}
   cnt_fav_push:                            {filter: [*is_fav, *is_serp_push, *x_is_search], m42: False}
   cnt_fav_rec:                             {filter: [*is_fav, *x_is_rec], m42: False}
@@ -276,7 +278,6 @@ metric.counter:
   cnt_iv_developer_rec_u2i:                {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_u2i], m42: False}
   cnt_iv_dlv:                              {filter: [*is_iv_wo_guessing, *is_serp_delivery, *x_is_search], m42: False}
   cnt_iv_dlv_reg:                          {filter: [*is_iv_wo_guessing, *x_is_search, {$or: [[*is_serp_delivery], [*is_serp_regions]]}], m42: False}
-  cnt_iv_fav_list:                         {filter: [*is_iv_wo_guessing, *x_is_fav_lst], m42: False}
   cnt_iv_from_map:                         {filter: [*is_iv_wo_guessing, *x_is_map], m42: False}
   cnt_iv_from_map_s_area:                  {filter: [*is_iv_wo_guessing, {$or: [[*is_s_map, *x_is_search], [*x_is_map]]}], m42: False}
   cnt_iv_grouped:                          {filter: [*is_iv_wo_guessing, *is_serp_grouping, *x_is_search], m42: False}
@@ -391,6 +392,7 @@ metric.counter:
   item_views_total_vas:                    {filter: [*is_item_vas, *is_iv]}
   item_views_total_vip:                    {filter: [*is_item_vip, *is_iv]}
   item_views_with_shop_id:                 {filter: [*is_iv, *is_shop]}
+  iv_actual_calendar:                      {filter: [*is_item_actual_calendar, *is_iv]}
   iv_developer:                            {filter: [*is_developer_acc, *is_iv]}
   iv_developer_search:                     {filter: [*is_developer_acc, *is_iv, *x_is_search]}
   iv_pro_image:                            {filter: [*is_item_pro_image, *is_iv]}
@@ -611,7 +613,7 @@ metric.uniq:
   fav_from_witcher_regions:                {counter: cnt_fav_wtc_reg,                 key: [item_x]}
   item_views_any_ext_block:                {counter: cnt_iv_dlv_reg,                  key: [item_x]}
   item_views_delivery:                     {counter: cnt_iv_dlv,                      key: [item_x]}
-  item_views_fav_list:                     {counter: cnt_iv_fav_list,                 key: [item_x]}
+  item_views_fav_list:                     {counter: cnt_fav_list_iv,                 key: [item_x]}
   item_views_from_map:                     {counter: cnt_iv_from_map,                 key: [item_x]}
   item_views_from_map_area:                {counter: cnt_iv_s_map_area,               key: [item_x]}
   item_views_from_map_total:               {counter: cnt_iv_from_map_s_area,          key: [item_x]}
@@ -681,6 +683,7 @@ metric.uniq:
   unq_s_wtc_new_auto_with_iv:              {counter: cnt_s_wtc_new_auto_with_iv,      key: [participant], m42: False}
   unq_s_wtc_new_flats_with_iv:             {counter: cnt_s_wtc_new_flats_with_iv,     key: [participant], m42: False}
   unq_s_wtc_reg_with_iv:                   {counter: cnt_s_wtc_reg_with_iv,           key: [participant], m42: False}
+  user_btc_actual_calendar:                {counter: btc_actual_calendar,             key: [participant]}
   user_btc_developer:                      {counter: btc_developer,                   key: [participant]}
   user_btc_from_map_total:                 {counter: cnt_btc_from_map_s_area,         key: [participant]}
   user_btc_from_witcher_any:               {counter: cnt_btc_wtc_dlv_new_auto_flats_reg, key: [participant]}
@@ -727,6 +730,7 @@ metric.uniq:
   user_item_views_total_vas:               {counter: item_views_total_vas,            key: [participant]}
   user_item_views_total_vip:               {counter: item_views_total_vip,            key: [participant]}
   user_item_views_with_shop_id:            {counter: item_views_with_shop_id,         key: [participant]}
+  user_iv_actual_calendar:                 {counter: iv_actual_calendar,              key: [participant]}
   user_iv_developer:                       {counter: iv_developer,                    key: [participant]}
   user_iv_developer_map:                   {counter: cnt_iv_developer_from_map,       key: [participant]}
   user_iv_developer_rec:                   {counter: cnt_iv_developer_rec,            key: [participant]}
@@ -800,7 +804,7 @@ metric.uniq:
   users_item_view_search_query:            {counter: cnt_s_query_iv,                  key: [participant]}
   users_item_view_search_u2i:              {counter: cnt_iv_s_u2i,                    key: [participant]}
   users_item_view_serp_daily:              {counter: cnt_iv_s,                        key: [participant]}
-  users_item_views_fav_list:               {counter: cnt_iv_fav_list,                 key: [participant]}
+  users_item_views_fav_list:               {counter: cnt_fav_list_iv,                 key: [participant]}
   users_item_views_from_map:               {counter: cnt_iv_from_map,                 key: [participant]}
   users_item_views_from_map_area:          {counter: cnt_iv_s_map_area,               key: [participant]}
   users_item_views_search_filter_any:      {counter: cnt_iv_s_filter_price,           key: [participant]}
@@ -832,8 +836,10 @@ metric.uniq:
   iv_sessions_from_map:                    {counter: cnt_iv_from_map,                 key: [session]}
   iv_sessions_from_map_area:               {counter: cnt_iv_s_map_area,               key: [session]}
   map_area_sessions:                       {counter: searches_map_area,               key: [session]}
+  sess_btc_actual_calendar:                {counter: btc_actual_calendar,             key: [session]}
   sess_btc_pro_image:                      {counter: btc_pro_image,                   key: [session]}
   sess_c_pro_image:                        {counter: c_pro_image,                     key: [session]}
+  sess_iv_actual_calendar:                 {counter: iv_actual_calendar,              key: [session]}
   sess_iv_pro_image:                       {counter: iv_pro_image,                    key: [session]}
   sess_metro:                              {counter: searches_metro,                  key: [session]}
   sess_searches_district:                  {counter: searches_district,               key: [session]}
