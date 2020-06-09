@@ -2,6 +2,7 @@ metric.counter:
   advertisement_amount_net_adj:            {obs: [advertisement_amount_net_adj]}
   autoteka_amount_net_adj:                 {obs: [autoteka_amount_net_adj]}
   classified_amount_net_adj:               {obs: [ext_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj, vas_amount_net_adj]}
+  classified_transactions:                 {obs: [ext_transactions, lf_transactions, subs_transactions, vas_transactions]}
   classified_users:                        {obs: [ext_users, lf_users, subs_users, vas_users]}
   cnt_advertisement_amount_net_adj_increased_for_rpm: {obs: [advertisement_amount_net_adj_increased_for_RPM], m42: False}
   delivery_amount_net_adj:                 {obs: [delivery_amount_net_adj]}
@@ -20,13 +21,18 @@ metric.counter:
   subs_w_extensions_amount_net_adj:        {obs: [ext_amount_net_adj, subs_amount_net_adj]}
   subs_w_extensions_transactions:          {obs: [ext_transactions, subs_transactions]}
   vas_amount_net_adj:                      {obs: [vas_amount_net_adj]}
+  vas_transactions:                        {obs: [vas_transactions]}
   vas_users:                               {obs: [vas_users]}
 
 metric.ratio:
+  classified_price_net_adj:                {num: classified_amount_net_adj,       den: classified_transactions}
+  classified_transactions_per_user:        {num: classified_transactions,         den: classified_users}
   extensions_price_net_adj:                {num: extensions_amount_net_adj,       den: extensions_transactions}
   extensions_transactions_per_user:        {num: extensions_transactions,         den: extensions_users}
   lf_price_net_adj:                        {num: lf_amount_net_adj,               den: lf_transactions}
   lf_transactions_per_user:                {num: lf_transactions,                 den: lf_users}
   subs_price_net_adj:                      {num: subs_amount_net_adj,             den: subs_transactions}
   subs_transactions_per_user:              {num: subs_transactions,               den: subs_users}
+  vas_price_net_adj:                       {num: vas_amount_net_adj,              den: vas_transactions}
+  vas_transactions_per_user:               {num: vas_transactions,                den: vas_users}
 

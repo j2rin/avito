@@ -1,4 +1,5 @@
 metric.counter:
+  cnt_successful_payment_sbol_card:        {obs: [successful_payment_card, successful_payment_sbol], m42: False}
   payment_method_choice:                   {obs: [payment_method_choice]}
   payment_method_choice_cv:                {obs: [payment_method_choice_cv]}
   payment_method_choice_services:          {obs: [payment_method_choice_services]}
@@ -28,6 +29,7 @@ metric.uniq:
   user_successful_payment_wallet:          {counter: successful_payment_wallet,       key: [participant]}
 
 metric.ratio:
+  main_payment_methods_share:              {num: cnt_successful_payment_sbol_card, den: successful_payment}
   selected_payment_method_share:           {num: payment_method_choice,           den: payment_method_page}
   selected_payment_method_share_cv:        {num: payment_method_choice_cv,        den: payment_method_page_cv}
   selected_payment_method_share_proportion: {num: user_payment_method_choice,      den: user_payment_method_page}

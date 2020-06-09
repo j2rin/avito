@@ -16,6 +16,7 @@ metric.counter:
   proprofile_ppv_to_ppc:                   {filter: [{observation_name: proprofile_first_searches_to_proprofilecontact}], obs: [observation_value]}
   proprofile_s:                            {filter: [{observation_name: proprofile_searches}], obs: [observation_value]}
   proprofile_s_ctg:                        {filter: [{observation_name: proprofile_searches_w_category}], obs: [observation_value]}
+  proprofile_s_f:                          {filter: [{$or: [[{observation_name: proprofile_searches_w_datefrom}], [{observation_name: proprofile_searches_w_dateto}], [{observation_name: proprofile_searches_w_district}], [{observation_name: proprofile_searches_w_image}], [{observation_name: proprofile_searches_w_intitle}], [{observation_name: proprofile_searches_w_maxprice}], [{observation_name: proprofile_searches_w_metro}], [{observation_name: proprofile_searches_w_minprice}], [{observation_name: proprofile_searches_w_sellertype}]]}], obs: [observation_value]}
   proprofile_s_q:                          {filter: [{observation_name: proprofile_searches_w_query}], obs: [observation_value]}
   proprofile_s_to_c:                       {filter: [{observation_name: proprofile_searches_to_contact}], obs: [observation_value]}
   proprofile_s_to_iv:                      {filter: [{observation_name: proprofile_searches_to_iv}], obs: [observation_value]}
@@ -39,6 +40,7 @@ metric.uniq:
   proprofile_user_ppc:                     {counter: proprofile_ppc,                  key: [participant]}
   proprofile_user_s:                       {counter: proprofile_s,                    key: [participant]}
   proprofile_user_s_ctg:                   {counter: proprofile_s_ctg,                key: [participant]}
+  proprofile_user_s_f:                     {counter: proprofile_s_f,                  key: [participant]}
   proprofile_user_s_q:                     {counter: proprofile_s_q,                  key: [participant]}
   proprofile_user_w1v:                     {counter: proprofile_w1v,                  key: [participant]}
   proprofilelist_user_filters:             {counter: proprofilelist_filters,          key: [participant]}
@@ -61,6 +63,7 @@ metric.ratio:
   proprofile_ppc_per_ppv:                  {num: proprofile_ppv_to_ppc,           den: proprofile_ppv}
   proprofile_ppc_per_s:                    {num: proprofile_s_to_ppc,             den: proprofile_s}
   proprofile_s_ctg_per_s:                  {num: proprofile_s_ctg,                den: proprofile_s}
+  proprofile_s_f_per_s:                    {num: proprofile_s_f,                  den: proprofile_s}
   proprofile_s_q_per_s:                    {num: proprofile_s_q,                  den: proprofile_s}
   proprofile_user_c_per_o:                 {num: proprofile_user_c_inpp,          den: proprofile_user_opens}
   proprofile_user_c_per_s:                 {num: unq_proprofile_s_to_c,           den: proprofile_user_s}
@@ -68,6 +71,7 @@ metric.ratio:
   proprofile_user_iv_per_s:                {num: unq_proprofile_s_to_iv,          den: proprofile_user_s}
   proprofile_user_ppc_per_s:               {num: unq_proprofile_s_to_proprofilec, den: proprofile_user_s}
   proprofile_user_s_ctg_per_s:             {num: proprofile_user_s_ctg,           den: proprofile_user_s}
+  proprofile_user_s_f_per_s:               {num: proprofile_user_s_f,             den: proprofile_user_s}
   proprofile_user_s_q_per_s:               {num: proprofile_user_s_q,             den: proprofile_user_s}
   proprofilelist_s_ctg_per_s:              {num: proprofilelist_s_ctg,            den: proprofilelist_s}
   proprofilelist_s_q_per_s:                {num: proprofilelist_s_q,              den: proprofilelist_s}

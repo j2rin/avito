@@ -51,6 +51,7 @@ buyer_stream:
   buyer_target_clicks_witcher_new_auto: {filter: [is_btc_wo_guessing, is_serp_witcher_new_auto, x_is_search], key: [x, item]}
   buyer_target_clicks_witcher_new_flats: {filter: [is_btc_wo_guessing, is_serp_witcher_new_flats, x_is_search], key: [x, item]}
   buyer_target_clicks_witcher_regions: {filter: [is_btc_wo_guessing, is_serp_witcher_regions, x_is_search], key: [x, item]}
+  contacts: {filter: [is_contact]}
   contact_pro_image: {filter: [is_contact_wo_guessing, is_item_pro_image]}
   contacts_delivery: {filter: [is_contact_wo_guessing, is_serp_delivery, x_is_search], key: [x, item]}
   contacts_fav_list: {filter: [is_contact_wo_guessing, x_is_fav_lst], key: [x, item]}
@@ -377,6 +378,8 @@ buyer_stream:
   item_views_actual_calendar: {filter: [is_iv, is_item_actual_calendar]}
   btc_actual_calendar: {filter: [is_btc_wo_guessing, is_item_actual_calendar]}
   contacts_actual_calendar: {filter: [is_contact_wo_guessing, is_item_actual_calendar]}
+  btc_serp_filter_search: {filter: [is_btc_wo_guessing, x_is_filter_search, x_is_search], key: [x, item]}
+  btc_serp_price_filter_search: {filter: [is_btc_wo_guessing, x_is_price_filter_search, x_is_search], key: [x, item]}
 
 ##########################################################################
 seller_item_event:
@@ -510,8 +513,8 @@ seller_item_active:
   item_has_metro_500m_from_location_new:    {filter: [start_date: $event_date, is_active: true, min_kind_level: [55], location_distance.<=: 0.5]}
   item_has_district_500m_from_location_new: {filter: [start_date: $event_date, is_active: true, min_kind_level: [60, 70], location_distance.<=: 0.5]}
   item_500m_from_location_new:              {filter: [start_date: $event_date, is_active: true, location_distance.<=: 0.5]}
- 
-  
+
+
   item_20m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.<=: 0.02]}
   item_100m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.<=: 0.1]}
   item_200_plus_km_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.>: 200]}
@@ -594,8 +597,8 @@ geo_loc_change:
   tooltip_opens_city: {filter: [location_level_id: [4, 5, 6], is_tooltip_open], obs: [events_count]}
 
   laas_tooltip_shows:                {filter: [is_tooltip_laas],                               obs: [events_count]}
-  laas_tooltip_accepts:              {filter: [is_tooltip_laas, tooltip_close_type: accepts],  obs: [events_count]}
-  laas_tooltip_declines:             {filter: [is_tooltip_laas, tooltip_close_type: close],    obs: [events_count]}
+  laas_tooltip_accepts:              {filter: [is_tooltip_laas, tooltip_close_type: 'accept'],  obs: [events_count]}
+  laas_tooltip_declines:             {filter: [is_tooltip_laas, tooltip_close_type: 'close'],    obs: [events_count]}
   laas_tooltip_shows_russia:         {filter: [is_tooltip_laas, location_level_id: 1],         obs: [events_count]}
   laas_tooltip_shows_region:         {filter: [is_tooltip_laas, location_level_id: [2, 3]],    obs: [events_count]}
   laas_tooltip_shows_city:           {filter: [is_tooltip_laas, location_level_id: [4, 5, 6]], obs: [events_count]}
@@ -606,14 +609,14 @@ geo_loc_change:
   laas_tooltip_declines_region:      {filter: [is_tooltip_laas, location_level_id: [2, 3],      tooltip_close_type:  'close'],  obs: [events_count]}
   laas_tooltip_declines_city:        {filter: [is_tooltip_laas, location_level_id: [4, 5, 6],   tooltip_close_type: 'close'],   obs: [events_count]}
   laas_tooltip_shows_regular:        {filter: [is_tooltip_laas, open_from_id: regular],                               obs: [events_count]}
-  laas_tooltip_accepts_regular:      {filter: [is_tooltip_laas, open_from_id: regular, tooltip_close_type: accepts],  obs: [events_count]}
-  laas_tooltip_declines_regular:     {filter: [is_tooltip_laas, open_from_id: regular, tooltip_close_type: close],    obs: [events_count]}
+  laas_tooltip_accepts_regular:      {filter: [is_tooltip_laas, open_from_id: regular, tooltip_close_type: 'accept'],  obs: [events_count]}
+  laas_tooltip_declines_regular:     {filter: [is_tooltip_laas, open_from_id: regular, tooltip_close_type: 'close'],    obs: [events_count]}
   laas_tooltip_shows_russia_regular: {filter: [is_tooltip_laas, open_from_id: regular, location_level_id: 1],         obs: [events_count]}
   laas_tooltip_shows_region_regular: {filter: [is_tooltip_laas, open_from_id: regular, location_level_id: [2, 3]],    obs: [events_count]}
   laas_tooltip_shows_city_regular:   {filter: [is_tooltip_laas, open_from_id: regular, location_level_id: [4, 5, 6]], obs: [events_count]}
   laas_tooltip_shows_change:         {filter: [is_tooltip_laas, open_from_id: change],                                obs: [events_count]}
-  laas_tooltip_accepts_change:       {filter: [is_tooltip_laas, open_from_id: change, tooltip_close_type: accepts],   obs: [events_count]}
-  laas_tooltip_declines_change:      {filter: [is_tooltip_laas, open_from_id: change, tooltip_close_type: close],     obs: [events_count]}
+  laas_tooltip_accepts_change:       {filter: [is_tooltip_laas, open_from_id: change, tooltip_close_type: 'accept'],   obs: [events_count]}
+  laas_tooltip_declines_change:      {filter: [is_tooltip_laas, open_from_id: change, tooltip_close_type: 'close'],     obs: [events_count]}
   laas_tooltip_shows_russia_change:  {filter: [is_tooltip_laas, open_from_id: change, location_level_id: 1],          obs: [events_count]}
   laas_tooltip_shows_region_change:  {filter: [is_tooltip_laas, open_from_id: change, location_level_id: [2, 3]],     obs: [events_count]}
   laas_tooltip_shows_city_change:    {filter: [is_tooltip_laas, open_from_id: change, location_level_id: [4, 5, 6]],  obs: [events_count]}
@@ -1029,6 +1032,7 @@ core_b2b:
   ext_users: {obs: [ext_users]}
   vas_users: {obs: [vas_users]}
   lf_transactions: {obs: [lf_transactions]}
+  vas_transactions: {obs: [vas_transactions]}
   subs_transactions: {obs: [subs_transactions]}
   ext_transactions: {obs: [ext_transactions]}
   advertisement_amount_net_adj: {obs: [advertisement_amount_net_adj]}
@@ -1041,6 +1045,7 @@ billing:
   successful_payment: {obs: [successful_payment]}
   successful_payment_card: {obs: [successful_payment_card]}
   successful_payment_sbol: {obs: [successful_payment_sbol]}
+  successful_payment_SBOL: {obs: [successful_payment_sbol]}
   successful_payment_sms: {obs: [successful_payment_sms]}
   payment_method_page_CV: {obs: [payment_method_page_cv]}
   payment_method_choice_CV: {obs: [payment_method_choice_cv]}
@@ -1439,7 +1444,7 @@ messenger:
   total_item_send_button_clicks: {filter: [observation_name: total_item_send_button_clicks], obs: [observation_value]}
   total_send_button_clicks: {filter: [observation_name: total_send_button_clicks], obs: [observation_value]}
   total_text_send_button_clicks: {filter: [observation_name: total_text_send_button_clicks], obs: [observation_value]}
- 
+
 mnz_lf:
   lf_amount_burned_from_package: {filter: [observation_name: lf_amount_burned_from_package], obs: [observation_value]}
   lf_amount_extra_fees: {filter: [observation_name: lf_amount_extra_fees], obs: [observation_value]}
@@ -1452,6 +1457,7 @@ mnz_lf:
   listings: {filter: [observation_name: listings], obs: [observation_value]}
   pages_payment_method: {filter: [observation_name: pages_payment_method], obs: [observation_value]}
   pages_success_payment: {filter: [observation_name: pages_success_payment], obs: [observation_value]}
+  pages_listing_type: {filter: [observation_name: pages_listing_type], obs: [observation_value]}
   tariff_amount_base: {filter: [observation_name: tariff_amount_base], obs: [observation_value]}
   tariff_amount_burned_from_package: {filter: [observation_name: tariff_amount_burned_from_package], obs: [observation_value]}
   tariff_amount_extra_fees: {filter: [observation_name: tariff_amount_extra_fees], obs: [observation_value]}
@@ -1685,6 +1691,12 @@ proprofile:
   proprofilelist_searches_w_location: {filter: [observation_name: proprofilelist_searches_w_location], obs: [observation_value]}
   proprofilelist_searches_w_query:    {filter: [observation_name: proprofilelist_searches_w_query],    obs: [observation_value]}
   proprofilelist_filters:             {filter: [observation_name: proprofilelist_filters],             obs: [observation_value]}
+  proprofile_searches_w_intitle:      {filter: [observation_name: proprofile_searches_w_intitle],      obs: [observation_value]}
+  proprofile_searches_w_metro:        {filter: [observation_name: proprofile_searches_w_metro],        obs: [observation_value]}
+  proprofile_searches_w_suggest: {filter: [observation_name: proprofile_searches_w_suggest],        obs: [observation_value]}
+  proprofile_searches_w_datefrom: {filter: [observation_name: proprofile_searches_w_datefrom],        obs: [observation_value]}
+  proprofile_searches_w_dateto: {filter: [observation_name: proprofile_searches_w_dateto],        obs: [observation_value]}
+  proprofile_searches_w_district: {filter: [observation_name: proprofile_searches_w_district],        obs: [observation_value]}
   shop_contacts:                      {filter: [observation_name: shop_contacts],                      obs: [observation_value]}
   shop_contacts_inshop:               {filter: [observation_name: shop_contacts_inshop],               obs: [observation_value]}
   shop_first_searches:                {filter: [observation_name: shop_first_searches],                obs: [observation_value]}
@@ -1699,7 +1711,7 @@ proprofile:
   shop_searches_to_shopcontact:       {filter: [observation_name: shop_searches_to_shopcontact],       obs: [observation_value]}
   shop_shopcontacts:                  {filter: [observation_name: shop_shopcontacts],                  obs: [observation_value]}
   shoplist_searches:                  {filter: [observation_name: shoplist_searches],                  obs: [observation_value]}
- 
+
 favourite_sellers_totals:
   favourite_sellers_subscriptions_active_new: {filter: [user_type: 'buyer', is_active: true, is_new: true]}
   favourite_sellers_subscriptions_active_old: {filter: [user_type: 'buyer', is_active: true, is_new: false]}
@@ -1707,8 +1719,8 @@ favourite_sellers_totals:
   favourite_sellers_subscriptions_inactive_old: {filter: [user_type: 'buyer', is_active: false, is_new: false]}
   favourite_sellers_subscribers_active_new: {filter: [user_type: 'seller', is_active: true, is_new: true]}
   favourite_sellers_subscribers_active_old: {filter: [user_type: 'seller', is_active: true, is_new: false]}
-  favourite_sellers_subscribers_inactive_new: {filter: [user_type: 'seller', is_active: true, is_new: true]}
-  favourite_sellers_subscribers_inactive_old: {filter: [user_type: 'seller', is_active: true, is_new: false]}
+  favourite_sellers_subscribers_inactive_new: {filter: [user_type: 'seller', is_active: false, is_new: true]}
+  favourite_sellers_subscribers_inactive_old: {filter: [user_type: 'seller', is_active: false, is_new: false]}
 
 buyer_suggest:
   queries_with_suggest: {obs: [queries_with_suggest]}
@@ -1732,13 +1744,153 @@ seller_item_add:
   item_add_chains_confirm:               {filter: [chain_item_confirm_time.isnull: False]}
   item_add_chains_item_create:           {filter: [chain_item_create_time.isnull: False]}
 
-
-
 support_ticket:
   helpdesk_seller_tickets: {filter: [observation_name: helpdesk_seller_tickets], obs: [observation_value]}
 
 geo_map_labor:
   map_searches_to_btc_map:  {filter: [observation_name: map_searches_to_btc_map], obs: [observation_value]}
   map_searches_to_iv_map:   {filter: [observation_name: map_searches_to_iv_map],  obs: [observation_value]}
-  favourite_sellers_subscribers_inactive_new: {filter: [user_type: 'seller', is_active: false, is_new: true]}
-  favourite_sellers_subscribers_inactive_old: {filter: [user_type: 'seller', is_active: false, is_new: false]}
+
+click_stream:
+  forgot_password_count: {obs: [forgot_password_count]}
+  items_add_started: {obs: [items_add_started]}
+  items_added: {obs: [items_added]}
+  registration_count: {obs: [registration_count]}
+  registration_errors: {obs: [registration_errors]}
+  password_restore_count: {obs: [password_restore_count]}
+  password_restore_errors: {obs: [password_restore_errors]}
+  password_restore_request_errors: {obs: [password_restore_request_errors]}
+  password_restore_requests: {obs: [password_restore_requests]}
+  sign_in_count: {obs: [sign_in_count]}
+  sign_in_errors: {obs: [sign_in_errors]}
+  messenger_chat_deleted: {obs: [messenger_chat_deleted]}
+  item_views_from_fs: {obs: [item_views_from_fs]}
+  location_window_displays: {obs: [location_window_displays]}
+  big_radius_window_displays: {obs: [big_radius_window_displays]}
+  loc_settings_window_displays: {obs: [loc_settings_window_displays]}
+  location_window_save_clicks: {obs: [location_window_save_clicks]}
+  location_text_inputs: {obs: [location_text_inputs]}
+  location_suggest_clicks: {obs: [location_suggest_clicks]}
+  search_query_corrections: {obs: [search_query_corrections]}
+  search_corrections_disabled: {obs: [search_corrections_disabled]}
+  misspell_replace: {obs: [misspell_replace]}
+  misspell_suggest: {obs: [misspell_suggest]}
+  teleport_replace: {obs: [teleport_replace]}
+  teleport_suggest: {obs: [teleport_suggest]}
+  search_redirect_replace: {obs: [search_redirect_replace]}
+  search_redirect_suggest: {obs: [search_redirect_suggest]}
+  geo_redirect_replace: {obs: [geo_redirect_replace]}
+  geo_redirect_suggest: {obs: [geo_redirect_suggest]}
+  typo_replace: {obs: [typo_replace]}
+  typo_suggest: {obs: [typo_suggest]}
+  keyboard_replace: {obs: [keyboard_replace]}
+  keyboard_suggest: {obs: [keyboard_suggest]}
+  wordbreaker_replace: {obs: [wordbreaker_replace]}
+  wordbreaker_suggest: {obs: [wordbreaker_suggest]}
+  wordbreaker_digit_replace: {obs: [wordbreaker_digit_replace]}
+  wordbreaker_digit_suggest: {obs: [wordbreaker_digit_suggest]}
+  misspell_disabled: {obs: [misspell_disabled]}
+  misspell_suggest_disabled: {obs: [misspell_suggest_disabled]}
+  teleport_disabled: {obs: [teleport_disabled]}
+  teleport_suggest_disabled: {obs: [teleport_suggest_disabled]}
+  search_redirect_disabled: {obs: [search_redirect_disabled]}
+  search_redirect_suggest_disabled: {obs: [search_redirect_suggest_disabled]}
+  geo_redirect_disabled: {obs: [geo_redirect_disabled]}
+  geo_redirect_suggest_disabled: {obs: [geo_redirect_suggest_disabled]}
+  typo_disabled: {obs: [typo_disabled]}
+  typo_suggest_disabled: {obs: [typo_suggest_disabled]}
+  keyboard_disabled: {obs: [keyboard_disabled]}
+  keyboard_suggest_disabled: {obs: [keyboard_suggest_disabled]}
+  wordbreaker_disabled: {obs: [wordbreaker_disabled]}
+  wordbreaker_suggest_disabled: {obs: [wordbreaker_suggest_disabled]}
+  wordbreaker_digit_disabled: {obs: [wordbreaker_digit_disabled]}
+  wordbreaker_digit_suggest_disabled: {obs: [wordbreaker_digit_suggest_disabled]}
+  abuses: {obs: [abuses]}
+  page_views_authorized: {obs: [page_views_authorized]}
+  page_views_all: {obs: [page_views_all]}
+  item_add_category_first_clicks: {obs: [item_add_category_first_clicks]}
+  item_add_category_last_clicks: {obs: [item_add_category_last_clicks]}
+  own_item_views: {obs: [own_item_views]}
+  seller_profile_views: {obs: [seller_profile_views]}
+  filters_screen_shows: {obs: [filters_screen_shows]}
+  call_phone_screen_views: {obs: [call_phone_screen_views]}
+  call_phone_screen_views_client: {obs: [call_phone_screen_views_client]}
+  call_phone_dialogues: {obs: [call_phone_dialogues]}
+  search_subscription_list_views: {obs: [search_subscription_list_views]}
+  search_subscription_views: {obs: [search_subscription_views]}
+  search_subscription_removals: {obs: [search_subscription_removals]}
+  search_subscription_notifications_add: {obs: [search_subscription_notifications_add]}
+  search_subscription_notifications_delete: {obs: [search_subscription_notifications_delete]}
+  search_subscription_email_item_clicks: {obs: [search_subscription_email_item_clicks]}
+  buyer_favouriteseller_add: {obs: [buyer_favouriteseller_add]}
+  buyer_favouriteseller_add_from_pp: {obs: [buyer_favouriteseller_add_from_pp]}
+  buyer_favouriteseller_add_from_fs: {obs: [buyer_favouriteseller_add_from_fs]}
+  buyer_favouriteseller_add_from_shop: {obs: [buyer_favouriteseller_add_from_shop]}
+  buyer_favouriteseller_add_from_subscribers_list: {obs: [buyer_favouriteseller_add_from_subscribers_list]}
+  buyer_favouriteseller_add_from_subscriptions_list: {obs: [buyer_favouriteseller_add_from_subscriptions_list]}
+  buyer_favouriteseller_delete: {obs: [buyer_favouriteseller_delete]}
+  buyer_favouriteseller_delete_from_pp: {obs: [buyer_favouriteseller_delete_from_pp]}
+  buyer_favouriteseller_delete_from_fs: {obs: [buyer_favouriteseller_delete_from_fs]}
+  buyer_favouriteseller_delete_from_shop: {obs: [buyer_favouriteseller_delete_from_shop]}
+  buyer_favouriteseller_delete_from_subscribers_list: {obs: [buyer_favouriteseller_delete_from_subscribers_list]}
+  buyer_favouriteseller_delete_from_subscriptions_list: {obs: [buyer_favouriteseller_delete_from_subscriptions_list]}
+  user_favouritesellers_open: {obs: [user_favouritesellers_open]}
+  buyer_favouriteseller_notifications_on: {obs: [buyer_favouriteseller_notifications_on]}
+  buyer_favouriteseller_notifications_off: {obs: [buyer_favouriteseller_notifications_off]}
+  received_reviews_list_open: {obs: [received_reviews_list_open]}
+  created_reviews_list_open: {obs: [created_reviews_list_open]}
+  contacts_history_open_in_ratings: {obs: [contacts_history_open_in_ratings]}
+  review_delete: {obs: [review_delete]}
+  reviews_list_open: {obs: [reviews_list_open]}
+  review_add_open_page: {obs: [review_add_open_page]}
+  fatal_app_error: {obs: [fatal_app_error]}
+  non_fatal_app_error: {obs: [non_fatal_app_error]}
+  public_profile_visit_from_fs: {obs: [public_profile_visit_from_fs]}
+  public_profile_visit_from_subscribers_list: {obs: [public_profile_visit_from_subscribers_list]}
+  public_profile_visit_from_subscriptions_list: {obs: [public_profile_visit_from_subscriptions_list]}
+  public_profile_visit_from_item: {obs: [public_profile_visit_from_item]}
+  public_profile_visit_from_subscribers_messenger: {obs: [public_profile_visit_from_subscribers_messenger]}
+  public_profile_visit_from_subscriptions_ratings: {obs: [public_profile_visit_from_subscriptions_ratings]}
+  public_profile_visit_from_subscriptions_sharing: {obs: [public_profile_visit_from_subscriptions_sharing]}
+  domoteka_preview_clicks: {obs: [domoteka_preview_clicks]}
+  address_item_page_clicks: {obs: [address_item_page_clicks]}
+  map_interaction_on_item: {obs: [map_interaction_on_item]}
+  click_back_button: {obs: [click_back_button]}
+  photo_listing_full_screen: {obs: [photo_listing_full_screen]}
+  photo_listing_no_full_screen: {obs: [photo_listing_no_full_screen]}
+  photo_zoom_on_item_page: {obs: [photo_zoom_on_item_page]}
+  fullscreen_photo_galeree_open: {obs: [fullscreen_photo_galeree_open]}
+  fullscreen_photo_galeree_close: {obs: [fullscreen_photo_galeree_close]}
+  saved_searches_added: {obs: [saved_searches_added]}
+  head_main_pages: {obs: [head_main_pages]}
+  services_main_pages: {obs: [services_main_pages]}
+  re_main_pages: {obs: [re_main_pages]}
+  transport_main_pages: {obs: [transport_main_pages]}
+  shortcut_clicks: {obs: [shortcut_clicks]}
+  realty_development_views: {obs: [realty_development_views]}
+#  realty_development_phone_views: {obs: [realty_development_phone_views]}
+  advertisement_page_views: {obs: [advertisement_page_views]}
+  open_app: {obs: [open_app]}
+  sqp_layout_replace: {obs: [sqp_layout_replace]}
+  sqp_layout_suggest: {obs: [sqp_layout_suggest]}
+  sqp_wordbreaker_replace: {obs: [sqp_wordbreaker_replace]}
+  sqp_wordbreaker_suggest: {obs: [sqp_wordbreaker_suggest]}
+  sqp_wordbreaker_digit_replace: {obs: [sqp_wordbreaker_digit_replace]}
+  sqp_wordbreaker_digit_suggest: {obs: [sqp_wordbreaker_digit_suggest]}
+  sqp_layout_disabled: {obs: [sqp_layout_disabled]}
+  sqp_layout_suggest_disabled: {obs: [sqp_layout_suggest_disabled]}
+  sqp_wordbreaker_disabled: {obs: [sqp_wordbreaker_disabled]}
+  sqp_wordbreaker_suggest_disabled: {obs: [sqp_wordbreaker_suggest_disabled]}
+  sqp_wordbreaker_digit_disabled: {obs: [sqp_wordbreaker_digit_disabled]}
+  sqp_wordbreaker_digit_suggest_disabled: {obs: [sqp_wordbreaker_digit_suggest_disabled]}
+  item_hide: {obs: [item_hide]}
+  item_views_bad_teaser: {obs: [item_views_bad_teaser]}
+  item_views_good_teaser: {obs: [item_views_good_teaser]}
+  item_views_teaser: {obs: [item_views_teaser]}
+  contacts_bad_teaser: {obs: [contacts_bad_teaser]}
+  contacts_good_teaser: {obs: [contacts_good_teaser]}
+  domoteka_report_requests: {obs: [domoteka_report_requests]}
+  domoteka_report_payment: {obs: [domoteka_report_payment]}
+  show_banner_download_app: {obs: [show_banner_download_app]}
+  click_banner_download_app: {obs: [click_banner_download_app]}
+  reject_banner_download_app: {obs: [reject_banner_download_app]}
