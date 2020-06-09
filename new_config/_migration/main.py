@@ -45,15 +45,19 @@ def migrate_config():
         if om.name not in new_metrics.by_name:
             print(om)
 
+    prepared_sources = get_prepared_sources()
+
     ratio_metrics_from_multiple_sources = {
         m for m in new_metrics
-        if m.type == 'ratio' and len(m.sources) > 1 and len(m.num.sources) <= 1 and len(m.den.sources) <= 1}
+        if m.type == 'ratio' and len(m.sources) > 1 and len(m.num.sources) == 1 and len(m.den.sources) == 1
+        and m.num.source in prepared_sources and m.den.source in prepared_sources
+    }
 
     write_metrics_to_file(ratio_metrics_from_multiple_sources, 'ratio', 'ratio')
 
     metrics_with_multiple_sources = {m for m in new_metrics if len(m.sources) > 1
                                      if m not in ratio_metrics_from_multiple_sources}
-    prepared_sources = get_prepared_sources()
+
     metrics_with_prepared_source = {m for m in new_metrics if len(m.sources) <= 1 and m.source in prepared_sources}
     write_all_metrics_to_files(metrics_with_prepared_source)
     metrics_with_single_source = {m for m in new_metrics if len(m.sources) <= 1 and m.source not in prepared_sources}
