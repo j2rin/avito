@@ -24,16 +24,16 @@ metric.counter:
   default_loc_tooltip_shows_russia:        {filter: [{location_level_id: 1}, *is_tooltip_open], obs: [events_count]}
   laas_accepts:                            {filter: [{tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
   laas_accepts_change:                     {filter: [{open_from_id: change}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
-  laas_accepts_city:                       {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
-  laas_accepts_region:                     {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
+  laas_accepts_city:                       {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: accept}, *is_tooltip_laas], obs: [events_count]}
+  laas_accepts_region:                     {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: accept}, *is_tooltip_laas], obs: [events_count]}
   laas_accepts_regular:                    {filter: [{open_from_id: regular}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
-  laas_accepts_russia:                     {filter: [{location_level_id: 1}, {tooltip_close_type: accepts}, *is_tooltip_laas], obs: [events_count]}
+  laas_accepts_russia:                     {filter: [{location_level_id: 1}, {tooltip_close_type: accept}, *is_tooltip_laas], obs: [events_count]}
   laas_answers:                            {filter: [*is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
   laas_answers_change:                     {filter: [{open_from_id: change}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
-  laas_answers_city:                       {filter: [{location_level_id: [4, 5, 6]}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
-  laas_answers_region:                     {filter: [{location_level_id: [2, 3]}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
+  laas_answers_city:                       {filter: [{location_level_id: [4, 5, 6]}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accept}], [{tooltip_close_type: close}]]}], obs: [events_count]}
+  laas_answers_region:                     {filter: [{location_level_id: [2, 3]}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accept}], [{tooltip_close_type: close}]]}], obs: [events_count]}
   laas_answers_regular:                    {filter: [{open_from_id: regular}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
-  laas_answers_russia:                     {filter: [{location_level_id: 1}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accepts}], [{tooltip_close_type: close}]]}], obs: [events_count]}
+  laas_answers_russia:                     {filter: [{location_level_id: 1}, *is_tooltip_laas, {$or: [[{tooltip_close_type: accept}], [{tooltip_close_type: close}]]}], obs: [events_count]}
   laas_shows:                              {filter: [*is_tooltip_laas], obs: [events_count]}
   laas_shows_change:                       {filter: [{open_from_id: change}, *is_tooltip_laas], obs: [events_count]}
   laas_shows_city:                         {filter: [{location_level_id: [4, 5, 6]}, *is_tooltip_laas], obs: [events_count]}

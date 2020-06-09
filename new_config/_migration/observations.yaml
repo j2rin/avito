@@ -128,7 +128,7 @@ buyer_stream:
   fav_added_witcher_new_flats: {filter: [is_fav, is_serp_witcher_new_flats, x_is_search], key: [x, item]}
   fav_added_witcher_regions: {filter: [is_fav, is_serp_witcher_regions, x_is_search], key: [x, item]}
   fav_list_contact: {filter: [is_contact_wo_guessing, x_is_fav_lst], key: [x]}
-  fav_list_item_view: {filter: [is_iv, x_is_fav_lst], key: [x]}
+  fav_list_item_view: {filter: [is_iv_wo_guessing, x_is_fav_lst], key: [x]}
   favorites_added: {filter: [is_fav]}
   favorites_list_views: {filter: [is_fav_lst]}
   favorites_removed: {filter: [is_fav_rmv]}
@@ -374,6 +374,9 @@ buyer_stream:
   searches_witcher_delivery: {filter: [is_search, is_1p, x_is_witcher_delivery], key: [x]}
   realty_development_phone_views: {filter: [is_ph_realdev]}
   favorites_net: {obs: [favorites_net]}
+  item_views_actual_calendar: {filter: [is_iv, is_item_actual_calendar]}
+  btc_actual_calendar: {filter: [is_btc_wo_guessing, is_item_actual_calendar]}
+  contacts_actual_calenda: {filter: [is_contact_wo_guessing, is_item_actual_calendar]}
 
 ##########################################################################
 seller_item_event:
@@ -596,12 +599,12 @@ geo_loc_change:
   laas_tooltip_shows_russia:         {filter: [is_tooltip_laas, location_level_id: 1],         obs: [events_count]}
   laas_tooltip_shows_region:         {filter: [is_tooltip_laas, location_level_id: [2, 3]],    obs: [events_count]}
   laas_tooltip_shows_city:           {filter: [is_tooltip_laas, location_level_id: [4, 5, 6]], obs: [events_count]}
-  laas_tooltip_accepts_russia:       {filter: [is_tooltip_laas, location_level_id: 1,         tooltip_close_type: accepts],  obs: [events_count]}
-  laas_tooltip_accepts_region:       {filter: [is_tooltip_laas, location_level_id: [2, 3],    tooltip_close_type: accepts],  obs: [events_count]}
-  laas_tooltip_accepts_city:         {filter: [is_tooltip_laas, location_level_id: [4, 5, 6], tooltip_close_type: accepts],  obs: [events_count]}
-  laas_tooltip_declines_russia:      {filter: [is_tooltip_laas, location_level_id: 1,         tooltip_close_type:  close],    obs: [events_count]}
-  laas_tooltip_declines_region:      {filter: [is_tooltip_laas, location_level_id: [2, 3],    tooltip_close_type:  close],    obs: [events_count]}
-  laas_tooltip_declines_city:        {filter: [is_tooltip_laas, location_level_id: [4, 5, 6], tooltip_close_type: close],    obs: [events_count]}
+  laas_tooltip_accepts_russia:       {filter: [is_tooltip_laas, location_level_id: 1,           tooltip_close_type: 'accept'],  obs: [events_count]}
+  laas_tooltip_accepts_region:       {filter: [is_tooltip_laas, location_level_id: [2, 3],      tooltip_close_type: 'accept'],  obs: [events_count]}
+  laas_tooltip_accepts_city:         {filter: [is_tooltip_laas, location_level_id: [4, 5, 6],   tooltip_close_type: 'accept'],  obs: [events_count]}
+  laas_tooltip_declines_russia:      {filter: [is_tooltip_laas, location_level_id: 1,           tooltip_close_type:  'close'],  obs: [events_count]}
+  laas_tooltip_declines_region:      {filter: [is_tooltip_laas, location_level_id: [2, 3],      tooltip_close_type:  'close'],  obs: [events_count]}
+  laas_tooltip_declines_city:        {filter: [is_tooltip_laas, location_level_id: [4, 5, 6],   tooltip_close_type: 'close'],   obs: [events_count]}
   laas_tooltip_shows_regular:        {filter: [is_tooltip_laas, open_from_id: regular],                               obs: [events_count]}
   laas_tooltip_accepts_regular:      {filter: [is_tooltip_laas, open_from_id: regular, tooltip_close_type: accepts],  obs: [events_count]}
   laas_tooltip_declines_regular:     {filter: [is_tooltip_laas, open_from_id: regular, tooltip_close_type: close],    obs: [events_count]}
@@ -1681,6 +1684,7 @@ proprofile:
   proprofilelist_searches_w_category: {filter: [observation_name: proprofilelist_searches_w_category], obs: [observation_value]}
   proprofilelist_searches_w_location: {filter: [observation_name: proprofilelist_searches_w_location], obs: [observation_value]}
   proprofilelist_searches_w_query:    {filter: [observation_name: proprofilelist_searches_w_query],    obs: [observation_value]}
+  proprofilelist_filters:             {filter: [observation_name: proprofilelist_filters],             obs: [observation_value]}
   shop_contacts:                      {filter: [observation_name: shop_contacts],                      obs: [observation_value]}
   shop_contacts_inshop:               {filter: [observation_name: shop_contacts_inshop],               obs: [observation_value]}
   shop_first_searches:                {filter: [observation_name: shop_first_searches],                obs: [observation_value]}
