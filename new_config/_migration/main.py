@@ -34,6 +34,7 @@ def migrate_config():
            for o in split_into_tup(tup.numerator_observations) + split_into_tup(tup.denominator_observations)}
 
     obs_index = make_obs_index(obs_dir, obs_dict, obs_from_metrics)
+    # print('\n'.join(sorted(['{0}: {{filter: [observation_name: {0}], obs: [observation_value]}}'.format(o.name) for o in obs_index if o.source == '_'])))
     MetricOld.all_observation_index.update(obs_index)
     old_metrics = [MetricOld.from_tup(tup) for tup in conf.sort_values('metric_name').itertuples()]
 

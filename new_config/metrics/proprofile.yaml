@@ -6,11 +6,16 @@ metric.counter:
   proprofile_c:                            {filter: [{observation_name: proprofile_contacts}], obs: [observation_value]}
   proprofile_c_inpp:                       {filter: [{observation_name: proprofile_contacts_inproprofile}], obs: [observation_value]}
   proprofile_c_inw1:                       {filter: [{observation_name: proprofile_contacts_inwindow1}], obs: [observation_value]}
+  proprofile_c_inw2:                       {filter: [{observation_name: proprofile_contacts_inwindow2}], obs: [observation_value]}
+  proprofile_filters:                      {filter: [{observation_name: proprofile_filters}], obs: [observation_value]}
   proprofile_iv:                           {filter: [{observation_name: proprofile_ivs}], obs: [observation_value]}
   proprofile_iv_inpp:                      {filter: [{observation_name: proprofile_ivs_inproprofile}], obs: [observation_value]}
   proprofile_iv_inw1:                      {filter: [{observation_name: proprofile_ivs_inwindow1}], obs: [observation_value]}
+  proprofile_iv_inw2:                      {filter: [{observation_name: proprofile_ivs_inwindow2}], obs: [observation_value]}
   proprofile_opens:                        {filter: [{observation_name: proprofile_opens}], obs: [observation_value]}
   proprofile_ppc:                          {filter: [{observation_name: proprofile_proprofilecontacts}], obs: [observation_value]}
+  proprofile_ppc_c:                        {filter: [{observation_name: proprofile_proprofilecontacts_fromcontacts}], obs: [observation_value]}
+  proprofile_ppc_ph:                       {filter: [{observation_name: proprofile_proprofilecontacts_fromphone}], obs: [observation_value]}
   proprofile_ppv:                          {filter: [{observation_name: proprofile_first_searches}], obs: [observation_value]}
   proprofile_ppv_to_c:                     {filter: [{observation_name: proprofile_first_searches_to_contact}], obs: [observation_value]}
   proprofile_ppv_to_ppc:                   {filter: [{observation_name: proprofile_first_searches_to_proprofilecontact}], obs: [observation_value]}
@@ -24,6 +29,9 @@ metric.counter:
   proprofile_w1v:                          {filter: [{observation_name: proprofile_window1views}], obs: [observation_value]}
   proprofile_w1v_to_c:                     {filter: [{observation_name: proprofile_window1views_to_contact}], obs: [observation_value]}
   proprofile_w1v_to_iv:                    {filter: [{observation_name: proprofile_window1views_to_iv}], obs: [observation_value]}
+  proprofile_w2v:                          {filter: [{observation_name: proprofile_window2views}], obs: [observation_value]}
+  proprofile_w2v_to_c:                     {filter: [{observation_name: proprofile_window2views_to_contact}], obs: [observation_value]}
+  proprofile_w2v_to_iv:                    {filter: [{observation_name: proprofile_window2views_to_iv}], obs: [observation_value]}
   proprofilelist_filters:                  {filter: [{observation_name: proprofilelist_filters}], obs: [observation_value]}
   proprofilelist_s:                        {filter: [{observation_name: proprofilelist_searches}], obs: [observation_value]}
   proprofilelist_s_ctg:                    {filter: [{observation_name: proprofilelist_searches_w_category}], obs: [observation_value]}
@@ -33,16 +41,22 @@ metric.uniq:
   proprofile_user_c:                       {counter: proprofile_c,                    key: [participant]}
   proprofile_user_c_inpp:                  {counter: proprofile_c_inpp,               key: [participant]}
   proprofile_user_c_inw1:                  {counter: proprofile_c_inw1,               key: [participant]}
+  proprofile_user_c_inw2:                  {counter: proprofile_c_inw2,               key: [participant]}
+  proprofile_user_filters:                 {counter: proprofile_filters,              key: [participant]}
   proprofile_user_iv:                      {counter: proprofile_iv,                   key: [participant]}
   proprofile_user_iv_inpp:                 {counter: proprofile_iv_inpp,              key: [participant]}
   proprofile_user_iv_inw1:                 {counter: proprofile_iv_inw1,              key: [participant]}
+  proprofile_user_iv_inw2:                 {counter: proprofile_iv_inw2,              key: [participant]}
   proprofile_user_opens:                   {counter: proprofile_opens,                key: [participant]}
   proprofile_user_ppc:                     {counter: proprofile_ppc,                  key: [participant]}
+  proprofile_user_ppc_c:                   {counter: proprofile_ppc_c,                key: [participant]}
+  proprofile_user_ppc_ph:                  {counter: proprofile_ppc_ph,               key: [participant]}
   proprofile_user_s:                       {counter: proprofile_s,                    key: [participant]}
   proprofile_user_s_ctg:                   {counter: proprofile_s_ctg,                key: [participant]}
   proprofile_user_s_f:                     {counter: proprofile_s_f,                  key: [participant]}
   proprofile_user_s_q:                     {counter: proprofile_s_q,                  key: [participant]}
   proprofile_user_w1v:                     {counter: proprofile_w1v,                  key: [participant]}
+  proprofile_user_w2v:                     {counter: proprofile_w2v,                  key: [participant]}
   proprofilelist_user_filters:             {counter: proprofilelist_filters,          key: [participant]}
   proprofilelist_user_s:                   {counter: proprofilelist_s,                key: [participant]}
   proprofilelist_user_s_ctg:               {counter: proprofilelist_s_ctg,            key: [participant]}
@@ -52,6 +66,8 @@ metric.uniq:
   unq_proprofile_s_to_proprofilec:         {counter: proprofile_s_to_ppc,             key: [participant], m42: False}
   unq_proprofile_window1views_to_c:        {counter: proprofile_w1v_to_c,             key: [participant], m42: False}
   unq_proprofile_window1views_to_iv:       {counter: proprofile_w1v_to_iv,            key: [participant], m42: False}
+  unq_proprofile_window2views_to_c:        {counter: proprofile_w2v_to_c,             key: [participant], m42: False}
+  unq_proprofile_window2views_to_iv:       {counter: proprofile_w2v_to_iv,            key: [participant], m42: False}
 
 metric.ratio:
   proprofile_avg_iv_before_c:              {num: cnt_proprofile_iv_before_firstc, den: cnt_proprofile_firstcs}
@@ -59,7 +75,11 @@ metric.ratio:
   proprofile_avg_siv_before_c:             {num: cnt_proprofile_iv_before_firstc_s, den: cnt_proprofile_firstcs}
   proprofile_c_per_ppv:                    {num: proprofile_ppv_to_c,             den: proprofile_ppv}
   proprofile_c_per_s:                      {num: proprofile_s_to_c,               den: proprofile_s}
+  proprofile_c_per_w1v:                    {num: proprofile_w1v_to_c,             den: proprofile_w1v}
+  proprofile_c_per_w2v:                    {num: proprofile_w2v_to_c,             den: proprofile_w2v}
   proprofile_iv_per_s:                     {num: proprofile_s_to_iv,              den: proprofile_s}
+  proprofile_iv_per_w1v:                   {num: proprofile_w1v_to_iv,            den: proprofile_w1v}
+  proprofile_iv_per_w2v:                   {num: proprofile_w2v_to_iv,            den: proprofile_w2v}
   proprofile_ppc_per_ppv:                  {num: proprofile_ppv_to_ppc,           den: proprofile_ppv}
   proprofile_ppc_per_s:                    {num: proprofile_s_to_ppc,             den: proprofile_s}
   proprofile_s_ctg_per_s:                  {num: proprofile_s_ctg,                den: proprofile_s}
@@ -67,8 +87,12 @@ metric.ratio:
   proprofile_s_q_per_s:                    {num: proprofile_s_q,                  den: proprofile_s}
   proprofile_user_c_per_o:                 {num: proprofile_user_c_inpp,          den: proprofile_user_opens}
   proprofile_user_c_per_s:                 {num: unq_proprofile_s_to_c,           den: proprofile_user_s}
+  proprofile_user_c_per_w1v:               {num: unq_proprofile_window1views_to_c, den: proprofile_user_w1v}
+  proprofile_user_c_per_w2v:               {num: unq_proprofile_window2views_to_c, den: proprofile_user_w2v}
   proprofile_user_iv_per_o:                {num: proprofile_user_iv_inpp,         den: proprofile_user_opens}
   proprofile_user_iv_per_s:                {num: unq_proprofile_s_to_iv,          den: proprofile_user_s}
+  proprofile_user_iv_per_w1v:              {num: unq_proprofile_window1views_to_iv, den: proprofile_user_w1v}
+  proprofile_user_iv_per_w2v:              {num: unq_proprofile_window2views_to_iv, den: proprofile_user_w2v}
   proprofile_user_ppc_per_s:               {num: unq_proprofile_s_to_proprofilec, den: proprofile_user_s}
   proprofile_user_s_ctg_per_s:             {num: proprofile_user_s_ctg,           den: proprofile_user_s}
   proprofile_user_s_f_per_s:               {num: proprofile_user_s_f,             den: proprofile_user_s}
