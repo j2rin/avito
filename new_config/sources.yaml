@@ -298,24 +298,6 @@ core_b2b:
     dtm: event_date
     segm: user_id
 
-call_app:
-  vertica:
-    table: dma.vo_call_app
-    column_map:
-      item: item_id
-    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, population_group]
-    participant: {visitor: cookie_id, user: user_id}
-    dtm: event_date
-    segm: cookie_id
-
-call_anon_matched:
-  vertica:
-    table: dma.vo_call_anon_matched
-    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, location_level_id, population_group]
-    participant: {visitor: cookie_id, user: user_id}
-    dtm: event_date
-    segm: cookie_id
-
 avitopro_key_actions:
   vertica:
     table: dma.vo_avitopro_key_actions
@@ -483,4 +465,25 @@ geo_map_labor:
       - location_level_id
     participant:  {visitor: cookie_id, user: user_id}
     dtm: event_Date
+    segm: cookie_id
+
+buyer_call:
+  vertica:
+    table: dma.vo_buyer_call
+    column_map:
+      item: item_id
+    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, population_group]
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+    segm: cookie_id
+
+buyer_funnel:
+  vertica:
+    table: dma.vo_buyer_funnel
+    column_map:
+      item: item_id
+      session: session_no
+    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, population_group]
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
     segm: cookie_id

@@ -314,6 +314,9 @@ class ObservationIndex(Set[Observation]):
         _ = [res.setdefault(o.source, ObservationIndex()).add(o) for o in self]
         return res
 
+    def exclude_source(self, source):
+        return ObservationIndex(o for o in self if o.source != source)
+
     @property
     def merged_sources(self):
         return sorted({o.source for o in self})
@@ -444,19 +447,31 @@ class MetricOld:
         else:
             return 'counter'
 
-    @classmethod
-    def from_tup(cls, tup):
+    @staticmethod
+    def make_obs_index(metric_name, obs_str):
         metric_source_map = {
             'vas_transactions_start_date': 'mnz_vas',
-            'classified_transactions': 'core_b2b'
+            'classified_transactions': 'core_b2b',
+            'classified_amount_net_adj': 'core_b2b',
+            'registration_attempts': 'cookie_account_enter',
         }
-        if tup.metric_name in metric_source_map:
-            obs_index = cls.all_observation_index.by_source[metric_source_map[tup.metric_name]]
-        else:
-            obs_index = cls.all_observation_index
-        no = obs_index[split_into_tup(tup.numerator_observations)]
+        obs_set = set(split_into_tup(obs_str))
+        if metric_name in metric_source_map:
+            return MetricOld.all_observation_index.by_source[metric_source_map[metric_name]][obs_set]
+        if {'lf_transactions', 'vas_transactions'}.issubset(obs_set):
+            return MetricOld.all_observation_index.by_source['core_b2b'][obs_set]
+        if 'funnel' in metric_name:
+            return MetricOld.all_observation_index.by_source['buyer_funnel'][obs_set]
+        if 'funnel' not in metric_name:
+            return MetricOld.all_observation_index.exclude_source('buyer_funnel')[obs_set]
+
+        return MetricOld.all_observation_index[obs_set]
+
+    @classmethod
+    def from_tup(cls, tup):
+        no = cls.make_obs_index(tup.metric_name, tup.numerator_observations)
+        do = cls.make_obs_index(tup.metric_name, tup.denominator_observations)
         num_uniq = combine_uniq_key(no.merged_key, split_into_tup(tup.numerator_uniq), tup.numerator_threshold)
-        do = obs_index[split_into_tup(tup.denominator_observations)]
         den_uniq = combine_uniq_key(do.merged_key, split_into_tup(tup.denominator_uniq), tup.denominator_threshold)
         return cls(
             name=tup.metric_name,
