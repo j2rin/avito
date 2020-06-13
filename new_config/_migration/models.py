@@ -388,6 +388,7 @@ class MetricOld:
 
     occupied_metric_names = set()
     all_metric_index = MetricIndex()
+    duplicated_metric_index = MetricIndex()
     all_observation_index = ObservationIndex()
 
     @property
@@ -522,6 +523,12 @@ class MetricOld:
                 nn += 1
         return name.lower()
 
+    def store_metric(self, metric):
+        if metric in self.all_metric_index and metric.name not in self.all_metric_index.by_name:
+            self.duplicated_metric_index.add(metric)
+        else:
+            self.all_metric_index.add(metric)
+
     def make_num_counter(self):
         type = 'counter'
         name = self.make_name(type, self.num_obs_index, self.num_filter, self.num_uniq)
@@ -530,7 +537,7 @@ class MetricOld:
         m = Metric(type=type,
                    name=name,
                    sources=self.num_sources, obs=self.num_obs, filter=self.num_filter)
-        self.all_metric_index.add(m)
+        self.store_metric(m)
         return m
 
     def make_den_counter(self):
@@ -538,7 +545,7 @@ class MetricOld:
         name = self.make_name(type, self.den_obs_index, self.den_filter, self.den_uniq)
         m = Metric(type=type, name=name,
                    sources=self.den_sources, obs=self.den_obs, filter=self.den_filter)
-        self.all_metric_index.add(m)
+        self.store_metric(m)
         return m
 
     def make_num_uniq(self):
@@ -551,7 +558,7 @@ class MetricOld:
             counter=self.all_metric_index.by_self[self.make_num_counter()],
             key=self.num_uniq,
         )
-        self.all_metric_index.add(m)
+        self.store_metric(m)
         return m
 
     def make_den_uniq(self):
@@ -564,7 +571,7 @@ class MetricOld:
             counter=self.all_metric_index.by_self[self.make_den_counter()],
             key=self.den_uniq,
         )
-        self.all_metric_index.add(m)
+        self.store_metric(m)
         return m
 
     def make_ratio(self):
@@ -579,5 +586,5 @@ class MetricOld:
             num=self.all_metric_index.by_self[num_ind],
             den=self.all_metric_index.by_self[den_ind],
         )
-        self.all_metric_index.add(m)
+        self.store_metric(m)
         return m
