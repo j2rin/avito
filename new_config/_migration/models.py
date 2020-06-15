@@ -452,6 +452,7 @@ class MetricOld:
     def make_obs_index(metric_name, obs_str):
         metric_source_map = {
             'vas_transactions_start_date': 'mnz_vas',
+            'vas_transactions': 'mnz_vas',
             'classified_transactions': 'core_b2b',
             'classified_amount_net_adj': 'core_b2b',
             'registration_attempts': 'cookie_account_enter',

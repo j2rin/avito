@@ -13,7 +13,7 @@ with metric_sources as (
             SELECT distinct mf.metric_name, mf.component, od.observation_source
             FROM DMA.v_metric_constructor   mf
             left JOIN DMA.observations_directory od ON od.observation_name = mf.observation_name
-            WHERE event_date::date = '{calc_date}'
+            WHERE event_date::date >= '{calc_date}'::date - interval'6 day'
             order by 1, 2
             limit 1000000
         ) o
@@ -30,7 +30,7 @@ left join metric_sources using (metric_name)
 OBSERVATION_DIR_SQL = """
 SELECT od.observation_name as obs, od.observation_source as source
 FROM   DMA.observations_directory od
-WHERE event_date::date = '{calc_date}'
+WHERE event_date::date >= '{calc_date}'::date - interval'6 day'
 group by 1, 2
 ;
 """

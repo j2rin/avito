@@ -64,7 +64,7 @@ definitions:
   - &is_s_road      {x_flags.bit: 2}
   - &is_s_radius    {x_flags.bit: 3}
   - &is_default_radius {x_flags.bit: 30}
-  - &is_not_default_radius {x_flags.!bit: 30}
+  - &is_not_default_radius {$or: [x_flags.!bit: 30, search_radius: '0']}
   - &is_s_map       {x_flags.bit: 4}
   - &is_s_delivery  {x_flags.bit: 5}
   - &is_s_saved     {x_flags.bit: 6}
