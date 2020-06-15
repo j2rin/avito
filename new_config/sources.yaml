@@ -370,7 +370,7 @@ perf_web_speed:
 
 cookie_account_enter:
   vertica:
-    table: dma.cookie_account_enter
+    table: dma.vo_cookie_account_enter
     dimensions: [platform_id]
     participant: {visitor: cookie_id}
     dtm: event_date
@@ -412,7 +412,7 @@ communications:
 image:
   vertica:
     table: dma.vo_image
-    dimensions: [app_version,network_type, screen_name]
+    dimensions: [platform_id, app_version, network_type, screen_name]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -420,7 +420,7 @@ image:
 proprofile:
   vertica:
     table: dma.vo_proprofile
-    dimensions: [traffic_source,proprofile_vertical_id, proprofile_type, proprofile_version]
+    dimensions: [platform_id, traffic_source, proprofile_vertical_id, proprofile_type, proprofile_version]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -447,7 +447,7 @@ support_ticket:
   vertica:
     table: dma.vo_support_ticket
     participant: {user: user_id}
-    dtm: event_date
+    dtm: create_date
     segm: user_id
 
 geo_map_labor:

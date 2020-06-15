@@ -514,31 +514,30 @@ seller_item_active:
   item_has_district_500m_from_location_new: {filter: [start_date: $event_date, is_active: true, min_kind_level: [60, 70], location_distance.<=: 0.5]}
   item_500m_from_location_new:              {filter: [start_date: $event_date, is_active: true, location_distance.<=: 0.5]}
 
-
-  item_20m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.<=: 0.02]}
-  item_100m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.<=: 0.1]}
-  item_200_plus_km_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.>: 200]}
-  item_no_address_string_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address: false]}
-  item_with_address_string_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address: true]}
-  item_no_address_id_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address_id: false]}
-  item_with_address_id_reactivated: {filter: [last_activation_date: $event_date, is_active: true, has_address_id: true]}
-  item_no_coordinates_reactivated: {filter: [last_activation_date: $event_date, is_active: true, {$or: [[location_distance.isnull: true], [location_distance: -1]]}]}
-  item_with_coordinates_reactivated: {filter: [last_activation_date: $event_date, is_active: true, location_distance.>=: -1]}
-  item_address_length_reactivated: {filter: [last_activation_date: $event_date, is_active: true], obs: [address_length]}
-  item_has_building_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: 40]}
-  item_has_street_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: 50]}
-  item_has_district_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [60, 70]]}
-  item_has_city_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [100, 110]]}
-  item_no_city_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [120, 130, 140]]}
-  item_has_marginal_address_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [10, 20, 30, 80, 90]]}
-  item_has_metro_reactivated:                       {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: 55]}
-  item_has_street_100m_from_location_reactivated:   {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: 50, location_distance.<=: 0.1]}
-  item_has_metro_100m_from_location_reactivated:    {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: 55, location_distance.<=: 0.1]}
-  item_has_district_100m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [60, 70], location_distance.<=: 0.1]}
-  item_has_street_500m_from_location_reactivated:   {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [50], location_distance.<=: 0.5]}
-  item_has_metro_500m_from_location_reactivated:    {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [55], location_distance.<=: 0.5]}
-  item_has_district_500m_from_location_reactivated: {filter: [last_activation_date: $event_date, is_active: true, min_kind_level: [60, 70], location_distance.<=: 0.5]}
-  item_500m_from_location_reactivated:              {filter: [last_activation_date: $event_date, is_active: true, location_distance.<=: 0.5]}
+  item_20m_from_location_reactivated:               {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, location_distance.<=: 0.02]}
+  item_100m_from_location_reactivated:              {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, location_distance.<=: 0.1]}
+  item_200_plus_km_from_location_reactivated:       {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, location_distance.>: 200]}
+  item_no_address_string_reactivated:               {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, has_address: false]}
+  item_with_address_string_reactivated:             {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, has_address: true]}
+  item_no_address_id_reactivated:                   {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, has_address_id: false]}
+  item_with_address_id_reactivated:                 {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, has_address_id: true]}
+  item_no_coordinates_reactivated:                  {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, {$or: [[location_distance.isnull: true], [location_distance: -1]]}]}
+  item_with_coordinates_reactivated:                {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, location_distance.>=: -1]}
+  item_address_length_reactivated:                  {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true], obs: [address_length]}
+  item_has_building_reactivated:                    {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: 40]}
+  item_has_street_reactivated:                      {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: 50]}
+  item_has_district_reactivated:                    {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: [60, 70]]}
+  item_has_city_reactivated:                        {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: [100, 110]]}
+  item_no_city_reactivated:                         {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: [120, 130, 140]]}
+  item_has_marginal_address_reactivated:            {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: [10, 20, 30, 80, 90]]}
+  item_has_metro_reactivated:                       {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: 55]}
+  item_has_street_100m_from_location_reactivated:   {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: 50, location_distance.<=: 0.1]}
+  item_has_metro_100m_from_location_reactivated:    {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: 55, location_distance.<=: 0.1]}
+  item_has_district_100m_from_location_reactivated: {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: [60, 70], location_distance.<=: 0.1]}
+  item_has_street_500m_from_location_reactivated:   {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: [50], location_distance.<=: 0.5]}
+  item_has_metro_500m_from_location_reactivated:    {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: [55], location_distance.<=: 0.5]}
+  item_has_district_500m_from_location_reactivated: {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, min_kind_level: [60, 70], location_distance.<=: 0.5]}
+  item_500m_from_location_reactivated:              {filter: [last_activation_date: $event_date, activations_count.>: 1, is_active: true, location_distance.<=: 0.5]}
 
 geo_loc_change:
   location_changings_wo_savings: {filter: [changed, is_close], obs: [events_count]}
@@ -1627,7 +1626,7 @@ seller_item_add:
   item_add_chains_item_create:           {filter: [chain_item_create_time.isnull: False]}
 
 support_ticket:
-  helpdesk_seller_tickets: {filter: [observation_name: helpdesk_seller_tickets], obs: [observation_value]}
+  helpdesk_seller_tickets: {obs: [helpdesk_seller_tickets]}
 
 geo_map_labor:
   map_searches_to_btc_map:  {filter: [observation_name: map_searches_to_btc_map], obs: [observation_value]}
