@@ -64,7 +64,7 @@ definitions:
   - &is_s_road      {x_flags.bit: 2}
   - &is_s_radius    {x_flags.bit: 3}
   - &is_default_radius {x_flags.bit: 30}
-  - &is_not_default_radius {$or: [x_flags.!bit: 30, search_radius: '0']}
+  - &is_not_default_radius {$or: [x_flags.!bit: 30, search_radius.isnull: false]}
   - &is_s_map       {x_flags.bit: 4}
   - &is_s_delivery  {x_flags.bit: 5}
   - &is_s_saved     {x_flags.bit: 6}
@@ -379,7 +379,7 @@ metric.counter:
   iv_pro_image:                            {filter: [*is_item_pro_image, *is_iv]}
   meta_regions_level_searches:             {filter: [{location_level_id: 2}, *is_1p, *is_search]}
   noncapital_city_level_searches:          {filter: [{location_level_id: 6}, *is_1p, *is_search]}
-  not_default_radius_searches:             {filter: [*is_1p, *is_not_default_radius, *is_s_radius, *is_search]}
+  not_default_radius_searches:             {filter: [*is_1p, *is_not_default_radius, *is_search]}
   phone_view_button_clicks:                {filter: [*is_ph_btn]}
   phone_views:                             {filter: [*is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
   phone_views_in_chat:                     {filter: [*is_ph_chat]}
