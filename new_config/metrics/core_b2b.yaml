@@ -5,6 +5,7 @@ metric.counter:
   classified_transactions:                 {obs: [ext_transactions, lf_transactions, subs_transactions, vas_transactions]}
   classified_users:                        {obs: [ext_users, lf_users, subs_users, vas_users]}
   cnt_advertisement_amount_net_adj_increased_for_rpm: {obs: [advertisement_amount_net_adj_increased_for_RPM], m42: False}
+  cnt_vas_transactions:                    {obs: [vas_transactions], m42: False}
   delivery_amount_net_adj:                 {obs: [delivery_amount_net_adj]}
   domofond_amount_net_adj:                 {obs: [domofond_amount_net_adj]}
   extensions_amount_net_adj:               {obs: [ext_amount_net_adj]}
@@ -21,7 +22,6 @@ metric.counter:
   subs_w_extensions_amount_net_adj:        {obs: [ext_amount_net_adj, subs_amount_net_adj]}
   subs_w_extensions_transactions:          {obs: [ext_transactions, subs_transactions]}
   vas_amount_net_adj:                      {obs: [vas_amount_net_adj]}
-  vas_transactions:                        {obs: [vas_transactions]}
   vas_users:                               {obs: [vas_users]}
 
 metric.ratio:
@@ -33,6 +33,6 @@ metric.ratio:
   lf_transactions_per_user:                {num: lf_transactions,                 den: lf_users}
   subs_price_net_adj:                      {num: subs_amount_net_adj,             den: subs_transactions}
   subs_transactions_per_user:              {num: subs_transactions,               den: subs_users}
-  vas_price_net_adj:                       {num: vas_amount_net_adj,              den: vas_transactions}
-  vas_transactions_per_user:               {num: vas_transactions,                den: vas_users}
+  vas_price_net_adj:                       {num: vas_amount_net_adj,              den: cnt_vas_transactions}
+  vas_transactions_per_user:               {num: cnt_vas_transactions,            den: vas_users}
 
