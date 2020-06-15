@@ -8,7 +8,7 @@ import operator
 
 
 CONFIG_PATH = Path.cwd()
-MIGRATED_PATH = CONFIG_PATH / 'migrated'
+MIGRATED_PATH = CONFIG_PATH / '../metrics'
 
 
 def write_metrics_type_batch(metrics: List[Metric], typ: str, fil: TextIO, ratio=False):
