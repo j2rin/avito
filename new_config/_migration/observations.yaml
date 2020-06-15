@@ -1614,16 +1614,18 @@ buyer_suggest:
   sessions_with_suggest_click_and_contact: {obs: [sessions_with_suggest_click_and_contact]}
 
 seller_item_add:
-  item_chains_started:        {obs: [observation_value]}
-  item_added_chains_3min:     {filter: [duration_sec.<=: 180]}
-  item_added_chains_3_6min:   {filter: [duration_sec.>: 180, duration_sec.<=: 360]}
-  item_added_chains_6_15min:  {filter: [duration_sec.>: 360, duration_sec.<=: 900]}
-  item_added_chains_15min:    {filter: [duration_sec.>: 900]}
+  item_chains_started:                   {}
   item_add_chains_category_first_click:  {filter: [chain_wizard_click_time.isnull: False]}
   item_add_chains_category_last_click:   {filter: [chain_wizard_last_click_time.isnull: False]}
   item_add_chains_form_input:            {filter: [chain_last_form_input_time.isnull: False]}
   item_add_chains_confirm:               {filter: [chain_item_confirm_time.isnull: False]}
   item_add_chains_item_create:           {filter: [chain_item_create_time.isnull: False]}
+
+seller_item_add_finish:
+  item_added_chains_3min:     {filter: [duration_sec.<=: 180]}
+  item_added_chains_3_6min:   {filter: [duration_sec.>: 180, duration_sec.<=: 360]}
+  item_added_chains_6_15min:  {filter: [duration_sec.>: 360, duration_sec.<=: 900]}
+  item_added_chains_15min:    {filter: [duration_sec.>: 900]}
 
 support_ticket:
   helpdesk_seller_tickets: {obs: [helpdesk_seller_tickets]}

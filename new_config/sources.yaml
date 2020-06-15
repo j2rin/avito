@@ -441,7 +441,16 @@ seller_item_add:
         - platform_id
       participant: {visitor: cookie_id, user: user_id}
       dtm: event_date
-      segm: cookie_id
+      segm: eventchain_id
+
+seller_item_add_finish:
+  vertica:
+      table: dma.vo_seller_item_add_finish
+      dimensions:
+        - platform_id
+      participant: {visitor: cookie_id, user: user_id}
+      dtm: item_create_date
+      segm: eventchain_id
 
 support_ticket:
   vertica:
