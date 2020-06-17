@@ -13548,8 +13548,77 @@ image_load_exceptions_percent:
 ##       ##     ## ##     ## ##     ## ##     ## ##  ####  ##  ##       #########    ##     ##  ##     ## ##  ####       ## 
 ##    ## ##     ## ##     ## ##     ## ##     ## ##   ###  ##  ##    ## ##     ##    ##     ##  ##     ## ##   ### ##    ## 
  ######   #######  ##     ## ##     ##  #######  ##    ## ####  ######  ##     ##    ##    ####  #######  ##    ##  ######  
+ 
 ###############################################################################
-# Communications :: Totals
+# Communications :: Totals Events
+###############################################################################
+
+push_prepared:
+  numerator:
+    observations: [app_pushes_prepared]
+
+push_no_data:
+  numerator:
+    observations: [app_pushes_no_data]  
+    
+push_to_provider:
+  numerator:
+    observations: [app_pushes_to_provider]  
+    
+push_to_receiver:
+  numerator:
+    observations: [app_pushes_to_receiver]
+    
+push_open:
+  numerator:
+    observations: [app_pushes_open] 
+    
+push_sav_search_prepared:
+  numerator:
+    observations: [app_pushes_sav_search_prepared] 
+    
+push_sav_search_no_data:
+  numerator:
+    observations: [app_pushes_sav_search_no_data] 
+    
+push_sav_search_to_provider:
+  numerator:
+    observations: [app_pushes_sav_search_to_provider] 
+    
+push_sav_search_to_receiver:
+  numerator:
+    observations: [app_pushes_sav_search_to_receiver] 
+    
+push_sav_search_open:
+  numerator:
+    observations: [app_pushes_sav_search_open] 
+    
+notifications_on_system:
+  numerator:
+    observations: [system_notifications_on] 
+    
+notifications_off_system:
+  numerator:
+    observations: [system_notifications_off] 
+   
+notifications_on_profile:
+  numerator:
+    observations: [profile_notifications_on] 
+    
+notifications_off_profile:
+  numerator:
+    observations: [profile_notifications_off] 
+    
+notifications_off_any:
+  numerator:
+    observations: [profile_notifications_off, system_notifications_off] 
+    
+notifications_on_any:
+  numerator:
+    observations: [profile_notifications_on, system_notifications_on] 
+
+###############################################################################
+# Communications :: Totals Sessions
 ###############################################################################
 
 traffic_sessions:
@@ -13558,6 +13627,185 @@ traffic_sessions:
   tags: [seo]
   numerator:
     observations: [traffic_sessions]
+    groupby: [participant]
+    
+    
+###############################################################################
+# Communications :: Totals Users 
+###############################################################################
+
+user_push_prepared:
+  numerator:
+    observations: [app_pushes_prepared]
+    groupby: [participant]
+
+user_push_no_data:
+  numerator:
+    observations: [app_pushes_no_data] 
+    groupby: [participant]    
+    
+user_push_to_provider:
+  numerator:
+    observations: [app_pushes_to_provider] 
+    groupby: [participant]  
+    
+user_push_to_receiver:
+  numerator:
+    observations: [app_pushes_to_receiver]
+    groupby: [participant]  
+    
+user_push_open:
+  numerator:
+    observations: [app_pushes_open] 
+    groupby: [participant]  
+    
+user_push_prepared_sav:
+  numerator:
+    observations: [app_pushes_sav_search_prepared] 
+    groupby: [participant]  
+    
+user_push_no_data_sav:
+  numerator:
+    observations: [app_pushes_sav_search_no_data] 
+    groupby: [participant]  
+    
+user_push_to_provider_sav:
+  numerator:
+    observations: [app_pushes_sav_search_to_provider] 
+    groupby: [participant]  
+    
+user_push_to_receiver_sav:
+  numerator:
+    observations: [app_pushes_sav_search_to_receiver] 
+    groupby: [participant]  
+    
+user_push_open_sav:
+  numerator:
+    observations: [app_pushes_sav_search_open] 
+    groupby: [participant]  
+    
+user_notifications_on_system:
+  numerator:
+    observations: [system_notifications_on] 
+    groupby: [participant]  
+    
+user_notifications_off_system:
+  numerator:
+    observations: [system_notifications_off] 
+    groupby: [participant]  
+   
+user_notifications_on_profile:
+  numerator:
+    observations: [profile_notifications_on] 
+    groupby: [participant]  
+    
+user_notifications_off_profile:
+  numerator:
+    observations: [profile_notifications_off] 
+    groupby: [participant]  
+
+user_notifications_on_any:
+  numerator:
+    observations: [profile_notifications_on, system_notifications_on] 
+    groupby: [participant]  
+
+user_notifications_off_any:
+  numerator:
+    observations: [profile_notifications_off, system_notifications_off] 
+    groupby: [participant]  
+               
+   
+###############################################################################
+# Communications :: Ratios Events 
+###############################################################################
+
+app_pushes_to_receiver_per_push_prepared:
+  numerator:
+    observations: [app_pushes_to_receiver]
+  denominator:
+    observations: [app_pushes_prepared]
+
+app_pushes_open_per_push_to_receiver:
+  numerator:
+    observations: [app_pushes_open]
+  denominator:
+    observations: [app_pushes_to_receiver]
+    
+push_open_sav_per_push_to_receiver_sav:
+  numerator:
+    observations: [app_pushes_sav_search_open]
+  denominator:
+    observations: [app_pushes_sav_search_to_receiver]
+    
+notifications_off_system_per_push_to_receiver:
+  numerator:
+    observations: [system_notifications_off] 
+  denominator:
+    observations: [app_pushes_to_receiver]
+    
+notifications_off_profile_per_push_to_receiver:
+  numerator:
+    observations: [profile_notifications_off] 
+  denominator:
+    observations: [app_pushes_to_receiver]
+   
+notifications_off_any_per_push_to_receiver:
+  numerator:
+    observations: [profile_notifications_off, system_notifications_off]
+  denominator:
+    observations: [app_pushes_to_receiver]
+    
+    
+###############################################################################
+# Communications :: Ratios Users 
+###############################################################################
+
+user_app_pushes_to_receiver_per_user_push_prepared:
+  numerator:
+    observations: [app_pushes_to_receiver]
+    groupby: [participant]
+  denominator:
+    observations: [app_pushes_prepared]
+    groupby: [participant]
+
+user_push_open_per_user_push_to_receiver:
+  numerator:
+    observations: [app_pushes_open]
+    groupby: [participant]
+  denominator:
+    observations: [app_pushes_to_receiver]
+    groupby: [participant]
+    
+user_push_open_sav_per_user_push_to_receiver_sav:
+  numerator:
+    observations: [app_pushes_sav_search_open]
+    groupby: [participant]
+  denominator:
+    observations: [app_pushes_sav_search_to_receiver]
+    groupby: [participant]
+    
+user_notifications_off_system_per_user_push_to_receiver:
+  numerator:
+    observations: [system_notifications_off] 
+    groupby: [participant]
+  denominator:
+    observations: [app_pushes_to_receiver]
+    groupby: [participant]
+    
+user_notifications_off_profile_per_user_push_to_receiver:
+  numerator:
+    observations: [profile_notifications_off] 
+    groupby: [participant]
+  denominator:
+    observations: [app_pushes_to_receiver]
+    groupby: [participant]
+   
+user_notifications_off_any_per_user_push_to_receiver:
+  numerator:
+    observations: [profile_notifications_off, system_notifications_off]
+    groupby: [participant]
+  denominator:
+    observations: [app_pushes_to_receiver]
     groupby: [participant]
     
    ###    ##    ##  #######  ##    ## ##    ## ##     ##  #######  ##     ##  ######     ##    ## ##     ## ##     ## ########  ######## ########  
