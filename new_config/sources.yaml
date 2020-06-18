@@ -499,3 +499,87 @@ buyer_funnel:
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
+
+buyer_courier_orders_by_create_date:
+ vertica:
+   table: dma.vo_courier_orders
+   dimensions:
+     - vertical_id
+     - logical_category_id
+     - category_id
+     - subcategory_id
+     - param1_id
+     - param2_id
+     - param3_id
+     - param4_id
+     - region_id
+     - city_id
+     - location_group_id
+     - population_group
+     - location_level_id
+   participant: {user: buyer_id}
+   dtm: create_date
+   segm: courierorder_id
+
+buyer_courier_orders_by_status_date:
+ vertica:
+   table: dma.vo_courier_orders
+   dimensions:
+     - vertical_id
+     - logical_category_id
+     - category_id
+     - subcategory_id
+     - param1_id
+     - param2_id
+     - param3_id
+     - param4_id
+     - region_id
+     - city_id
+     - location_group_id
+     - population_group
+     - location_level_id
+   participant: {user: buyer_id}
+   dtm: status_date
+   segm: courierorder_id
+
+seller_courier_orders_by_create_date:
+ vertica:
+   table: dma.vo_courier_orders
+   dimensions:
+     - vertical_id
+     - logical_category_id
+     - category_id
+     - subcategory_id
+     - param1_id
+     - param2_id
+     - param3_id
+     - param4_id
+     - region_id
+     - city_id
+     - location_group_id
+     - population_group
+     - location_level_id
+   participant: {user: seller_id}
+   dtm: create_date
+   segm: courierorder_id
+
+seller_courier_orders_by_status_date:
+ vertica:
+   table: dma.vo_courier_orders
+   dimensions:
+     - vertical_id
+     - logical_category_id
+     - category_id
+     - subcategory_id
+     - param1_id
+     - param2_id
+     - param3_id
+     - param4_id
+     - region_id
+     - city_id
+     - location_group_id
+     - population_group
+     - location_level_id
+   participant: {user: seller_id}
+   dtm: status_date
+   segm: courierorder_id
