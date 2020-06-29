@@ -1,0 +1,32 @@
+metric.counter:
+  push_no_data:                            {obs: [app_pushes_no_data]}
+  push_open:                               {obs: [app_pushes_open]}
+  push_prepared:                           {obs: [app_pushes_prepared]}
+  push_sav_search_no_data:                 {obs: [app_pushes_sav_search_no_data]}
+  push_sav_search_open:                    {obs: [app_pushes_sav_search_open]}
+  push_sav_search_prepared:                {obs: [app_pushes_sav_search_prepared]}
+  push_sav_search_to_provider:             {obs: [app_pushes_sav_search_to_provider]}
+  push_sav_search_to_receiver:             {obs: [app_pushes_sav_search_to_receiver]}
+  push_to_provider:                        {obs: [app_pushes_to_provider]}
+  push_to_receiver:                        {obs: [app_pushes_to_receiver]}
+
+metric.uniq:
+  user_push_no_data:                       {counter: push_no_data,                    key: [participant]}
+  user_push_no_data_sav:                   {counter: push_sav_search_no_data,         key: [participant]}
+  user_push_open:                          {counter: push_open,                       key: [participant]}
+  user_push_open_sav:                      {counter: push_sav_search_open,            key: [participant]}
+  user_push_prepared:                      {counter: push_prepared,                   key: [participant]}
+  user_push_prepared_sav:                  {counter: push_sav_search_prepared,        key: [participant]}
+  user_push_to_provider:                   {counter: push_to_provider,                key: [participant]}
+  user_push_to_provider_sav:               {counter: push_sav_search_to_provider,     key: [participant]}
+  user_push_to_receiver:                   {counter: push_to_receiver,                key: [participant]}
+  user_push_to_receiver_sav:               {counter: push_sav_search_to_receiver,     key: [participant]}
+
+metric.ratio:
+  app_pushes_open_per_push_to_receiver:    {num: push_open,                       den: push_to_receiver}
+  app_pushes_to_receiver_per_push_prepared: {num: push_to_receiver,                den: push_prepared}
+  push_open_sav_per_push_to_receiver_sav:  {num: push_sav_search_open,            den: push_sav_search_to_receiver}
+  user_app_pushes_to_receiver_per_user_push_prepared: {num: user_push_to_receiver,           den: user_push_prepared}
+  user_push_open_per_user_push_to_receiver: {num: user_push_open,                  den: user_push_to_receiver}
+  user_push_open_sav_per_user_push_to_receiver_sav: {num: user_push_open_sav,              den: user_push_to_receiver_sav}
+
