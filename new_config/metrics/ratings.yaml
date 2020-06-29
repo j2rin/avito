@@ -9,6 +9,7 @@ metric.counter:
   contacts_on_rating_3:                    {filter: [{observation_name: contacts_on_rating_3}], obs: [observation_value]}
   contacts_on_rating_4:                    {filter: [{observation_name: contacts_on_rating_4}], obs: [observation_value]}
   contacts_on_rating_5:                    {filter: [{observation_name: contacts_on_rating_5}], obs: [observation_value]}
+  contacts_with_review_list_view:          {filter: [{observation_name: contacts_with_review_list_view}], obs: [observation_value]}
   item_views_on_rating:                    {filter: [{$or: [[{observation_name: itemviews_on_rating_1}], [{observation_name: itemviews_on_rating_2}], [{observation_name: itemviews_on_rating_3}], [{observation_name: itemviews_on_rating_4}], [{observation_name: itemviews_on_rating_5}]]}], obs: [observation_value]}
   item_views_on_rating_1:                  {filter: [{observation_name: itemviews_on_rating_1}], obs: [observation_value]}
   item_views_on_rating_2:                  {filter: [{observation_name: itemviews_on_rating_2}], obs: [observation_value]}
@@ -27,11 +28,13 @@ metric.uniq:
   users_reviews_added:                     {counter: reviews_added,                   key: [participant]}
 
 metric.ratio:
+  contacts_per_item_view_on_rating:        {num: contacts_on_rating,              den: item_views_on_rating}
   contacts_per_item_view_on_rating_1:      {num: contacts_on_rating_1,            den: item_views_on_rating_1}
   contacts_per_item_view_on_rating_2:      {num: contacts_on_rating_2,            den: item_views_on_rating_2}
   contacts_per_item_view_on_rating_3:      {num: contacts_on_rating_3,            den: item_views_on_rating_3}
   contacts_per_item_view_on_rating_4:      {num: contacts_on_rating_4,            den: item_views_on_rating_4}
   contacts_per_item_view_on_rating_5:      {num: contacts_on_rating_5,            den: item_views_on_rating_5}
+  contacts_with_review_list_view_per_contacts_on_rating: {num: contacts_with_review_list_view,  den: contacts_on_rating}
   reviews_avg_score:                       {num: cnt_reviews_score_sum,           den: reviews_added}
   search_items_ratings_coverage:           {num: cnt_s_items_with_rating,         den: cnt_s_items}
 
