@@ -43,6 +43,8 @@ buyer_stream:
     segm: cookie_id
   clickhouse:
     table: clickstream
+    participant: {visitor: u, user: uid}
+    dtm: event_date
 
 click_stream:
   vertica:
@@ -414,7 +416,7 @@ communications:
 image:
   vertica:
     table: dma.vo_image
-    dimensions: [platform_id, app_version, network_type, screen_name]
+    dimensions: [platform_id, network_type, screen_name]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -438,21 +440,21 @@ buyer_suggest:
 
 seller_item_add:
   vertica:
-      table: dma.vo_seller_item_add
-      dimensions:
-        - platform_id
-      participant: {visitor: cookie_id, user: user_id}
-      dtm: event_date
-      segm: eventchain_id
+    table: dma.vo_seller_item_add
+    dimensions:
+      - platform_id
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+    segm: eventchain_id
 
 seller_item_add_finish:
   vertica:
-      table: dma.vo_seller_item_add_finish
-      dimensions:
-        - platform_id
-      participant: {visitor: cookie_id, user: user_id}
-      dtm: item_create_date
-      segm: eventchain_id
+    table: dma.vo_seller_item_add_finish
+    dimensions:
+      - platform_id
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: item_create_date
+    segm: eventchain_id
 
 support_ticket:
   vertica:
@@ -588,5 +590,6 @@ notification:
   vertica:
     table: dma.vo_notification
     dimensions: [platform_id]
+    participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
