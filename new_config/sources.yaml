@@ -416,7 +416,7 @@ communications:
 image:
   vertica:
     table: dma.vo_image
-    dimensions: [platform_id, app_version, network_type, screen_name]
+    dimensions: [platform_id, network_type, screen_name]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -590,5 +590,6 @@ notification:
   vertica:
     table: dma.vo_notification
     dimensions: [platform_id]
+    participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
