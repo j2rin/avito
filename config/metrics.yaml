@@ -11845,6 +11845,13 @@ subs_w_extensions_amount_net_adj:
     observations: [subs_amount_net_adj, ext_amount_net_adj]
   description: "Net revenue from Subscription and extension products without VAT"
 
+cpa_amount_net_adj:
+  title: cpa_amount_net_adj
+  tags: [i0, m42, tree]
+  numerator:
+    observations: [cpa_amount_net_adj]
+  description: "Net revenue from CPA product without VAT"
+
 classified_amount_net_adj:
   title: classified_amount_net_adj
   tags: [i0, m42, tree]
@@ -11887,6 +11894,13 @@ subs_w_extensions_transactions:
     observations: [subs_transactions, ext_transactions]
   description: "Subscription and extension products transactions without VAT"
 
+cpa_transactions:
+  title: cpa_transactions
+  tags: [i0, m42, tree]
+  numerator:
+    observations: [cpa_transaction]
+  description: "CPA product transactions without VAT"
+
 classified_transactions:
   title: classified_transactions
   tags: [i0, m42, tree]
@@ -11898,36 +11912,49 @@ vas_users:
   title: vas_users
   tags: [i0, m42, tree]
   numerator:
-    observations: [vas_users]
+    observations: [vas_amount_net_adj]
+    groupby: [participant]
   description: "VAS users"
 
 lf_users:
   title: lf_users
   tags: [i0, m42, tree]
   numerator:
-    observations: [lf_users]
+    observations: [lf_amount_net_adj]
+    groupby: [participant]
   description: "LF products users"
 
 subs_users:
   title: subs_users
   tags: [i0, m42, tree]
   numerator:
-    observations: [subs_users]
+    observations: [subs_amount_net_adj]
+    groupby: [participant]
   description: "Subscription products users"
 
 extensions_users:
   title: extensions_users
   tags: [i0, m42, tree]
-  numerator:
-    observations: [ext_users]
+    observations: [ext_amount_net_adj]
+    groupby: [participant]
   description: "Extension products users"
 
 classified_users:
   title: classified_users
   tags: [i0, m42, tree]
   numerator:
-    observations: [vas_users, lf_users, subs_users, ext_users]
-  description: "classified products users"
+    observations: [vas_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj, ext_amount_net_adj]
+    groupby: [participant]
+  description: "Classified products users"
+
+paying_users:
+  title: paying_users
+  tags: [i0, m42, tree]
+  numerator:
+    observations: [vas_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj, ext_amount_net_adj,
+                   paid_contact_amount_net_adj]
+    groupby: [participant]
+  description: "Paying users"
 
 ###############################################################################
 # B2B Core :: Ratios
