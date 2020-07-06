@@ -70,7 +70,7 @@ filter: [x_eid: 300, $or: [platform_id.!=: 1, flags.!bit: 4]]
 ```
 Аналог в SQL:
 ```sql
-where x_eid = 300 and (platform_id != 1 or flags & (1 << 4) > 0)
+where x_eid = 300 and (platform_id != 1 or flags & (1 << 4) = 0)
 ```
 
 Допускается использовать вложенные `$or`.
