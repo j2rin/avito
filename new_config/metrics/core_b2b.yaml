@@ -3,25 +3,32 @@ metric.counter:
   autoteka_amount_net_adj:                 {obs: [autoteka_amount_net_adj]}
   classified_amount_net_adj:               {obs: [ext_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj, vas_amount_net_adj]}
   classified_transactions:                 {obs: [ext_transactions, lf_transactions, subs_transactions, vas_transactions]}
-  classified_users:                        {obs: [ext_users, lf_users, subs_users, vas_users]}
   cnt_advertisement_amount_net_adj_increased_for_rpm: {obs: [advertisement_amount_net_adj_increased_for_RPM], m42: False}
+  cpa_amount_net_adj:                      {obs: [cpa_amount_net_adj]}
+  cpa_transactions:                        {obs: [cpa_transactions]}
   delivery_amount_net_adj:                 {obs: [delivery_amount_net_adj]}
   domofond_amount_net_adj:                 {obs: [domofond_amount_net_adj]}
   extensions_amount_net_adj:               {obs: [ext_amount_net_adj]}
-  extensions_transactions:                 {obs: [ext_transactions]}
-  extensions_users:                        {obs: [ext_users]}
+  extensions_transactions:                 {obs: [ext_transactions]
   lf_amount_net_adj:                       {obs: [lf_amount_net_adj]}
   lf_transactions:                         {obs: [lf_transactions]}
-  lf_users:                                {obs: [lf_users]}
   other_projects_amount_net_adj:           {obs: [autoteka_amount_net_adj, delivery_amount_net_adj, domofond_amount_net_adj]}
   paid_contact_amount_net_adj:             {obs: [paid_contact_amount_net_adj]}
   subs_amount_net_adj:                     {obs: [subs_amount_net_adj]}
   subs_transactions:                       {obs: [subs_transactions]}
-  subs_users:                              {obs: [subs_users]}
   subs_w_extensions_amount_net_adj:        {obs: [ext_amount_net_adj, subs_amount_net_adj]}
   subs_w_extensions_transactions:          {obs: [ext_transactions, subs_transactions]}
   vas_amount_net_adj:                      {obs: [vas_amount_net_adj]}
-  vas_users:                               {obs: [vas_users]}
+
+metric.uniq:
+  classified_users:                        {counter: vas_amount_net_adj, lf_amount_net_adj,
+                                             subs_amount_net_adj, ext_amount_net_adj,        key: [participant]}
+  extensions_users:                        {counter: ext_amount_net_adj,                     key: [participant]}
+  lf_users:                                {counter: lf_amount_net_adj,                      key: [participant]}
+  paying_users:                            {counter: vas_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj,
+                                             ext_amount_net_adj, paid_contact_amount_net_adj,key: [participant]}
+  subs_users:                              {counter: subs_amount_net_adj,                    key: [participant]}
+  vas_users:                               {counter: vas_amount_net_adj,                     key: [participant]}
 
 metric.ratio:
   classified_price_net_adj:                {num: classified_amount_net_adj,       den: classified_transactions}
