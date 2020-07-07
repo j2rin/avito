@@ -20,32 +20,108 @@ except ImportError:
     import httplib  # python 2
 
 
-CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
-PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'presets')
-BREAKDOWNS_PRESETS_PATH = os.path.join(CUR_DIR_PATH, 'presets/breakdowns')
-METRICS_LISTS_PATH = os.path.join(CUR_DIR_PATH, 'presets/metrics')
-METRICS_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics.yaml')
-METRICS_DIMENSION_FILE = os.path.join(CUR_DIR_PATH, 'config/m42.yaml')
-METRICS_SUBSCRIPTION_FILE = os.path.join(CUR_DIR_PATH, 'config/metrics_subscriptions.yaml')
-
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
-PRESETS_CONFIG_VALIDATE_URL = '/api/validateMetricsRepo'
-PRESETS_CONFIG_PUBLISH_URL = '/api/publishMetricsRepo'
+VALIDATE_URL = '/api/validateMetricsRepo'
+PUBLISH_URL = '/api/publishMetricsRepo'
 
 
-def marks_to_str(file_name, data, marks_attribute):
-    return u'\n'.join(
-        u'{}:{} {}'.format(
-            file_name,
-            m['line'],
-            m['message']
+CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+
+
+# Конфиги, которые необходимо отправить в конфигуратор.
+# Формат: (<имя поля в json>, <путь к файлу/директории>, <является ли путь директорией>)
+CONFIGS = [
+    ('sources', os.path.join(CUR_DIR_PATH, 'new_config/sources.yaml'), False),
+    ('configs', os.path.join(CUR_DIR_PATH, 'new_config/metrics'), True),
+    ('ratio_configs', os.path.join(CUR_DIR_PATH, 'new_config/metrics/ratio'), True),
+    ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
+    ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
+    ('metrics_lists', os.path.join(CUR_DIR_PATH, 'presets/metrics'), True),
+    ('m42_dimensions', os.path.join(CUR_DIR_PATH, 'config/m42.yaml'), False),
+    ('m42_subscriptions', os.path.join(CUR_DIR_PATH, 'config/metrics_subscriptions.yaml'), False),
+]
+
+
+def validate():
+    result, file_name_maps = send_all(VALIDATE_URL)
+
+    if result['success']:
+        print('\nAll PASSED')
+
+    if 'errors' in result:
+        print(result['errors'])
+        return False
+
+    failed_configs = {}
+
+    for config_name, _, is_multi in CONFIGS:
+        fn_map = file_name_maps[config_name]
+
+        validation_results = (
+            result['result'].get(config_name, {}).items()
+            if is_multi
+            else [(config_name, result['result'].get(config_name, {}))]
         )
-        for m in data[marks_attribute]
+        for file_name, info in validation_results:
+            failed = show_errors(fn_map, file_name, info)
+            if failed:
+                failed_configs.setdefault(config_name, []).append(file_name)
+
+        if not failed_configs:
+            print('\nAll PASSED')
+        else:
+            for preset_type, names in failed_configs.items():
+                print('\nFAILED {}: {}'.format(preset_type, ', '.join(sorted(names))))
+            return False
+
+    return True
+
+
+def process():
+    result, _, _ = send_all(PROCESS_URL)
+    print(
+        json.dumps(result, indent=4)
     )
+
+
+def publish():
+    key = os.getenv('API_KEY')
+
+    if not key:
+        print('No API_KEY in the env')
+        exit(2)
+
+    result, _ = send_all(PUBLISH_URL, os.getenv('API_KEY'))
+
+    if not result.get('success'):
+        print('Cannot publish metrics config')
+        print(result)
+        exit(1)
+
+    print('Metrics repo has been successfully updated')
+
+
+def send_all(url, api_key=None):
+    data = {}
+    file_name_maps = {}
+
+    if api_key:
+        data['api_key'] = api_key
+
+    for name, path, is_multi in CONFIGS:
+        if is_multi:
+            data[name], file_name_maps[name] = read_yamls(path)
+        else:
+            data[name] = read_file(path)
+            file_name_maps[name] = {name: path}
+
+    result = post(url, data)
+    return result, file_name_maps
 
 
 def post(url, data):
     def _post():
+        #conn = httplib.HTTPConnection('127.0.0.1', 5000)
         conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
 
         conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
@@ -66,28 +142,15 @@ def post(url, data):
     if status != 200:
         print('FAILED: Cannot connect to AB Configurator')
         print('status: {}'.format(status))
-        print(text)
+
+        try:
+            print(json.loads(text)['errors'])
+        except Exception:
+            print(text)
+
         exit(1)
 
     return json.loads(text)
-
-
-def get_short_name(file_name):
-    return file_name.rsplit('/')[-1].rsplit('\\')[-1].rsplit('.')[0]
-
-
-def get_errors(result, file_name):
-    if not result['success']:
-        return False, (
-            marks_to_str(file_name, result, 'error_marks')
-            if 'error_marks' in result
-            else result.get('errors')
-        )
-
-    if 'warnings' in result:
-        return True, marks_to_str(file_name, result, 'warning_marks')
-
-    return True, None
 
 
 def show_errors(file_name_map, name, info):
@@ -113,132 +176,64 @@ def show_errors(file_name_map, name, info):
     return result
 
 
-def send_all(url, config, presets, dimensions, subscriptions, api_key=None):
+def read_file(file_path: str):
+    return io.open(file_path, encoding='utf-8').read()
 
-    file_name_map = {x[0]: {} for x in presets}
-    data = {
-        'config': io.open(config, encoding='utf-8').read()
-    }
 
-    data['m42_dimensions'] = io.open(dimensions, encoding='utf-8').read()
-    data['m42_subscriptions'] = io.open(subscriptions, encoding='utf-8').read()
+def read_yamls(dir_path):
+    file_name_map = {}
+    result = {}
 
-    if api_key:
-        data['api_key'] = api_key
+    for fn in os.listdir(dir_path):
+        if fn.endswith('.yaml') and not fn.startswith('_'):
+            full_path = os.path.join(dir_path, fn)
+            short_name = get_short_name(fn)
+            result[short_name] = read_file(full_path)
 
-    for preset_type, path in presets:
-        data[preset_type] = {}
-
-        for fn in os.listdir(path):
-            full_path = os.path.join(path, fn)
-            if fn.endswith('.yaml'):
-                short_name = get_short_name(fn)
-                data[preset_type][short_name] = io.open(full_path, encoding='utf-8').read()
-
-                file_name_map[preset_type][short_name] = full_path
-
-    result = post(url, data)
+            file_name_map[short_name] = full_path
     return result, file_name_map
 
 
-def validate(url, config, presets, dimensions, subscriptions):
-    result, file_name_map = send_all(url, config, presets, dimensions, subscriptions)
+def get_errors(result, file_name):
+    def marks_to_str(file_name, data, marks_attribute):
+        return u'\n'.join(
+            u'{}:{} {}'.format(
+                file_name,
+                m['line'],
+                m['message']
+            )
+            for m in data[marks_attribute]
+        )
+    if not result['success']:
+        return False, (
+            marks_to_str(file_name, result, 'error_marks')
+            if 'error_marks' in result
+            else result.get('errors')
+        )
 
-    if result['success']:
-        print('\nAll presets are PASSED')
+    if 'warnings' in result:
+        return True, marks_to_str(file_name, result, 'warning_marks')
 
-    if 'errors' in result:
-        print(result['errors'])
-        return False
-
-    failed_presets = {}
-
-    info = result['result'].pop('config')
-    show_errors({'config': METRICS_FILE}, 'config', info)
-
-    if not info['success']:
-        print('Metrics config presets FAILED')
-        return False
-
-    for preset_type, _ in presets:
-        for name, info in result['result'].get(preset_type, {}).items():
-            failed = show_errors(file_name_map[preset_type], name, info)
-            if failed:
-                failed_presets.setdefault(preset_type, []).append(name)
-
-    if not failed_presets:
-        print('\nAll presets are PASSED')
-    else:
-        for preset_type, names in failed_presets.items():
-            print('\nFAILED {} presets: {}'.format(preset_type, ', '.join(sorted(names))))
-        return False
-
-    info = result['result'].pop('m42_dimensions')
-
-    show_errors({'m42_dimensions': METRICS_DIMENSION_FILE}, 'm42_dimensions', info)
-
-    if not info['success']:
-        print('Metrics dimensions config presets FAILED')
-        return False
-
-    info = result['result'].pop('m42_subscriptions')
-
-    show_errors({'m42_subscriptions': METRICS_SUBSCRIPTION_FILE}, 'm42_subscriptions', info)
-
-    if not info['success']:
-        print('Metrics subscriptions config FAILED')
-        return False
-
-    return True
+    return True, None
 
 
-def publish_repo():
-    key = os.getenv('API_KEY')
-
-    if not key:
-        print('No API_KEY in the env')
-        exit(2)
-
-    result, _ = send_all(
-        PRESETS_CONFIG_PUBLISH_URL,
-        METRICS_FILE,
-        [
-            ('breakdown_presets', BREAKDOWNS_PRESETS_PATH),
-            ('ab_config_presets', PRESETS_PATH),
-            ('metrics_lists', METRICS_LISTS_PATH),
-        ],
-        METRICS_DIMENSION_FILE,
-        METRICS_SUBSCRIPTION_FILE,
-        os.getenv('API_KEY')
-    )
-
-    if not result.get('success'):
-        print('Cannot publish metrics config')
-        print(result)
-        exit(1)
-
-    print('Metrics repo has been successfully updated')
-
-
-def validate_repo():
-    success = validate(
-        PRESETS_CONFIG_VALIDATE_URL,
-        METRICS_FILE,
-        [
-            ('breakdown_presets', BREAKDOWNS_PRESETS_PATH),
-            ('ab_config_presets', PRESETS_PATH),
-            ('metrics_lists', METRICS_LISTS_PATH),
-        ],
-        METRICS_DIMENSION_FILE,
-        METRICS_SUBSCRIPTION_FILE
-    )
-
-    if not success:
-        exit(1)
+def get_short_name(file_name):
+    return file_name.rsplit('/')[-1].rsplit('\\')[-1].rsplit('.')[0]
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2 and sys.argv[1] == '--publish':
-        publish_repo()
-    else:
-        validate_repo()
+    if len(sys.argv) == 2:
+        if sys.argv[1] == '--process':
+            process()
+            exit(0)
+        elif sys.argv[1] == '--publish':
+            publish()
+            exit(0)
+        else:
+            print('Unknown argument')
+            exit(1)
+
+    success = validate()
+
+    if not success:
+        exit(1)
