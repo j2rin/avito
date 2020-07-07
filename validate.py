@@ -31,9 +31,9 @@ CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 # Конфиги, которые необходимо отправить в конфигуратор.
 # Формат: (<имя поля в json>, <путь к файлу/директории>, <является ли путь директорией>)
 CONFIGS = [
-    ('sources', os.path.join(CUR_DIR_PATH, 'new_config/sources.yaml'), False),
-    ('configs', os.path.join(CUR_DIR_PATH, 'new_config/metrics'), True),
-    ('ratio_configs', os.path.join(CUR_DIR_PATH, 'new_config/metrics/ratio'), True),
+    ('sources', os.path.join(CUR_DIR_PATH, 'sources.yaml'), False),
+    ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
+    ('ratio_configs', os.path.join(CUR_DIR_PATH, 'metrics/ratio'), True),
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
     ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
     ('metrics_lists', os.path.join(CUR_DIR_PATH, 'presets/metrics'), True),
