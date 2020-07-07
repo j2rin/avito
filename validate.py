@@ -23,6 +23,7 @@ except ImportError:
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
 PUBLISH_URL = '/api/publishMetricsRepo'
+PROCESS_URL = '/api/processMetricsConfigs'
 
 
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -78,7 +79,8 @@ def validate():
 
 
 def process():
-    result, _, _ = send_all(PROCESS_URL)
+    result, _ = send_all(PROCESS_URL)
+    del result['success']
     print(
         json.dumps(result, indent=4)
     )
