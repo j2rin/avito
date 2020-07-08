@@ -94,7 +94,7 @@ metric.counter:
   seller_favorites_added_start_date:       {filter: [{start_date.>=: $ab_start_date}], obs: [favs_added]}
   seller_favorites_removed:                {obs: [favs_removed]}
   seller_favorites_removed_start_date:     {filter: [{start_date.>=: $ab_start_date}], obs: [favs_removed]}
-
+  
 metric.uniq:
   active_items_0_photo:                    {counter: cnt_active_items_0_photo,        key: [item]}
   active_items_more_10_description_word:   {counter: cnt_active_items_more_10_description_word, key: [item]}
@@ -138,6 +138,15 @@ metric.uniq:
   users_new_item_more_40_description_word: {counter: cnt_new_items_more_40_description_word, key: [participant]}
   users_new_item_more_5_description_word:  {counter: cnt_new_items_more_5_description_word, key: [participant]}
   users_new_item_more_5_photo:             {counter: cnt_new_items_more_5_photo,      key: [participant]}
+  user_active_items_1plus_locations:       {counter: active_items,   key: [participant: 1, city_id: 0]}
+  user_active_items_2plus_locations:       {counter: active_items,   key: [participant: 2, city_id: 0]}
+  user_active_items_5plus_locations:       {counter: active_items,   key: [participant: 5, city_id: 0]}
+  user_active_items_10plus_locations:      {counter: active_items,   key: [participant: 10, city_id: 0]}
+  user_active_items_1plus_locations_microcat:       {counter: active_items,   key: [participant: 0, microcat_id: 1, location_id: 0]}
+  user_active_items_2plus_locations_microcat:       {counter: active_items,   key: [participant: 0, microcat_id: 2, location_id: 0]}
+  user_active_items_5plus_locations_microcat:       {counter: active_items,   key: [participant: 0, microcat_id: 5, location_id: 0]}
+  user_active_items_10plus_locations_microcat:      {counter: active_items,   key: [participant: 0, microcat_id: 10, location_id: 0]}
+  user_active_items_locations:                      {counter: active_items,   key: [location_id]}
 
 metric.ratio:
   avg_item_address_length:                 {num: cnt_item_address_length,         den: items_with_address_string}
