@@ -178,7 +178,7 @@ def show_errors(file_name_map, name, info):
     return result
 
 
-def read_file(file_path: str):
+def read_file(file_path):
     return io.open(file_path, encoding='utf-8').read()
 
 
