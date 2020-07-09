@@ -46,9 +46,6 @@ CONFIGS = [
 def validate():
     result, file_name_maps = send_all(VALIDATE_URL)
 
-    if result['success']:
-        print('\nAll PASSED')
-
     if 'errors' in result:
         print(result['errors'])
         return False
@@ -68,14 +65,17 @@ def validate():
             if failed:
                 failed_configs.setdefault(config_name, []).append(file_name)
 
-        if not failed_configs:
+    if not failed_configs:
+        if result['success']:
             print('\nAll PASSED')
-        else:
-            for preset_type, names in failed_configs.items():
-                print('\nFAILED {}: {}'.format(preset_type, ', '.join(sorted(names))))
-            return False
+            return True
 
-    return True
+        print('unknown error')
+        return False
+
+    for preset_type, names in failed_configs.items():
+        print('\nFAILED {}: {}'.format(preset_type, ', '.join(sorted(names))))
+    return False
 
 
 def process():
