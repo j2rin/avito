@@ -206,7 +206,7 @@ def get_errors(result, file_name):
             )
             for m in data[marks_attribute]
         )
-    if not result['success']:
+    if not result.get('success'):
         return False, (
             marks_to_str(file_name, result, 'error_marks')
             if 'error_marks' in result
