@@ -459,6 +459,8 @@ metric.counter:
   total_metros_in_searches:                {filter: [*is_1p, *is_search], obs: [metro_count]}
   write_button_clicks:                     {filter: [*is_msg_btn]}
   write_button_clicks_with_shop_id:        {filter: [*is_msg_btn, *is_shop]}
+  cnt_cs_metageo:                          {filter: [*is_contact_wo_guessing, {$or: [[*x_is_map],[*x_is_search, {$or: [[*is_s_metro],[*is_s_district],[*is_s_road],[*is_s_radius],[*is_s_map],[*is_serp_regions]]}]]}], m42: False}
+  searches_metageo:                        {filter: {$or: [[*x_is_map],[*is_1p, *is_search, {$or: [[*is_s_metro],[*is_s_district],[*is_s_road],[*is_s_radius],[*is_s_map],[*is_serp_regions]]}]]}, m42: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -957,6 +959,8 @@ metric.uniq:
   multi_city_sess:                         {counter: cnt_cities_in_s,                 key: [{session: 2}]}
   multi_region_sess:                       {counter: cnt_reg_in_s,                    key: [{session: 2}]}
   multiloc_sess:                           {counter: searches,                        key: [{session: 2}]}
+  buyers_metageo:                          {counter: cnt_cs_metageo,          key: [participant]}
+  user_searches_metageo:                   {counter: searches_metageo,          key: [participant]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
