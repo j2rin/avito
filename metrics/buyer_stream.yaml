@@ -127,6 +127,9 @@ definitions:
   - &is_region_with_double_groups {region_id: [697, 4181]}
   - &is_developer_acc {SFAccount_Type: 'Девелопер'}
 
+  - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, x_flags.bit: [0, 1, 2, 3, 4, 11]]]}
+  - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, x_flags.bit: [0, 1, 2, 3, 4, 11]]]}
+
 metric.counter:
   base_serp_empty:                         {filter: [*is_1p, *is_base_serp_empty, *is_search]}
   base_serp_small:                         {filter: [*is_1p, *is_base_serp_small, *is_search]}
@@ -459,6 +462,10 @@ metric.counter:
   total_metros_in_searches:                {filter: [*is_1p, *is_search], obs: [metro_count]}
   write_button_clicks:                     {filter: [*is_msg_btn]}
   write_button_clicks_with_shop_id:        {filter: [*is_msg_btn, *is_shop]}
+  contacts_metageo:                        {filter: [*is_contact_wo_guessing, *x_is_metageo]}
+  buyer_target_clicks_metageo:             {filter: [*is_btc_wo_guessing, *x_is_metageo]}
+  item_views_metageo:                      {filter: [*is_iv_wo_guessing, *x_is_metageo]}
+  searches_metageo:                        {filter: [*is_metageo]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -957,6 +964,13 @@ metric.uniq:
   multi_city_sess:                         {counter: cnt_cities_in_s,                 key: [{session: 2}]}
   multi_region_sess:                       {counter: cnt_reg_in_s,                    key: [{session: 2}]}
   multiloc_sess:                           {counter: searches,                        key: [{session: 2}]}
+  users_contact_metageo:                   {counter: contacts_metageo,                key: [participant]}
+  users_btc_metageo:                       {counter: buyer_target_clicks_metageo,     key: [participant]}
+  users_iv_metageo:                        {counter: item_views_metageo,              key: [participant]}
+  users_search_metageo:                    {counter: searches_metageo,                key: [participant]}
+  searches_contact_metageo:                {counter: contacts_metageo,                key: [x]}
+  searches_btc_metageo:                    {counter: buyer_target_clicks_metageo,     key: [x]}
+  searches_iv_metageo:                     {counter: item_views_metageo,              key: [x]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1256,4 +1270,10 @@ metric.ratio:
   wtc_per_witcher_new_auto:                {num: wtc_from_witcher_new_auto,       den: searches_witcher_new_auto}
   wtc_per_witcher_new_flats:               {num: wtc_from_witcher_new_flats,      den: searches_witcher_new_flats}
   wtc_per_witcher_region:                  {num: wtc_from_witcher_regions,        den: searches_witcher_regions}
+  users_contact_metageo_per_users_search_metageo:     {num: users_contact_metageo,        den: users_search_metageo}
+  users_btc_metageo_per_users_search_metageo:         {num: users_btc_metageo,            den: users_search_metageo}
+  users_iv_metageo_per_users_search_metageo:          {num: users_iv_metageo,             den: users_search_metageo}
+  searches_contact_metageo_per_searches_metageo:      {num: searches_contact_metageo,     den: searches_metageo}
+  searches_btc_metageo_per_searches_metageo:          {num: searches_btc_metageo,         den: searches_metageo}
+  searches_iv_metageo_per_searches_metageo:           {num: searches_iv_metageo,          den: searches_metageo}
 
