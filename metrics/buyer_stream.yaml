@@ -81,6 +81,7 @@ definitions:
   - &x_is_witcher_delivery    {x_flags.bit: 14}
   - &x_is_witcher_new_auto    {x_flags.bit: 15}
   - &x_is_witcher_new_flats   {x_flags.bit: 16}
+
   - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
 
   - &is_serp_delivery {serp_block: 10}
@@ -464,7 +465,7 @@ metric.counter:
   contacts_metageo:                        {filter: [*is_contact_wo_guessing, *x_is_metageo]}
   buyer_target_clicks_metageo:             {filter: [*is_btc_wo_guessing, *x_is_metageo]}
   item_views_metageo:                      {filter: [*is_iv_wo_guessing, *x_is_metageo]}
-  searches_metageo:                        {filter: [{*is_metageo}]}
+  searches_metageo:                        {filter: [*is_metageo]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
