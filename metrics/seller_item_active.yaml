@@ -1,9 +1,9 @@
 definitions:
-  - &no_coordinates:     {$or: [location_distance.isnull: True, location_distance: -1]}
-  - &no_address_id:      {has_address_id: False}
-  - &bad_level:          {min_kind_level.!in: [40, 50, 55, 60, 70]}
-  - &bad_distance:       {location_distance.<=: 0.1}
-  - &bad_address         {$or: [*no_coordinates, *no_address_id, *bad_level, *bad_distance]}
+  - &no_coordinates     {$or: [location_distance.isnull: True, location_distance: -1]}
+  - &no_address_id      {has_address_id: False}
+  - &bad_level          {min_kind_level.!in: [40, 50, 55, 60, 70]}
+  - &bad_distance       {location_distance.<=: 0.1}
+  - &bad_address        {$or: [*no_coordinates, *no_address_id, *bad_level, *bad_distance]}
 
 metric.counter:
   active_items:                            {filter: [{is_active: True}]}
