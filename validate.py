@@ -134,7 +134,7 @@ def post(url, data):
     status, text = _post()
 
     # retry on gateway timeout
-    for i in range(3):
+    for i in range(10):
         if status != 504:
             break
         print('Gateway timeout, retrying...')
