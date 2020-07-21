@@ -3,6 +3,8 @@ metric.counter:
   cnt_map_with_iv:                         {filter: [{item_views.>: 0}], m42: False}
   cnt_nav_actions_to_c:                    {obs: [nav_actions_to_contact], m42: False}
   cnt_nav_actions_to_iv:                   {obs: [nav_actions_to_item_view], m42: False}
+  pins_to_c:                               {obs: [pins_to_contact], m42: False}
+  pins_to_iv:                              {obs: [pins_to_item_view], m42: False}
   cnt_pins_with_zoom_levels:               {filter: [{pins_zoom_levels.>: 0}], obs: [pins], m42: False}
   cnt_pins_zoom_levels:                    {obs: [pins_zoom_levels], m42: False}
   cnt_scrolls_with_zoom_levels:            {filter: [{scrolls_zoom_levels.>: 0}], obs: [scrolls], m42: False}
@@ -45,6 +47,8 @@ metric.ratio:
   map_nav_actions_per_user_map:            {num: map_nav_actions,                 den: map_users}
   map_nav_actions_to_contact_map:          {num: cnt_nav_actions_to_c,            den: cnt_map_with_c}
   map_nav_actions_to_item_view_map:        {num: cnt_nav_actions_to_iv,           den: cnt_map_with_iv}
+  pins_to_c_per_map_with_c:                {num: pins_to_c,                       den: cnt_map_with_c}
+  pins_to_iv_per_map_with_iv:              {num: pins_to_iv,                      den: cnt_map_with_iv}
   map_pin_avg_zoom_level:                  {num: cnt_pins_zoom_levels,            den: cnt_pins_with_zoom_levels}
   map_price_rubricator_filters_per_map:    {num: map_price_rubricator_filters,    den: map_searches}
   map_scroll_avg_zoom_level:               {num: cnt_scrolls_zoom_levels,         den: cnt_scrolls_with_zoom_levels}
@@ -55,4 +59,3 @@ metric.ratio:
   pin_clickers_per_map_serchers:           {num: pin_clickers,                    den: map_users}
   pins_per_map_s:                          {num: pin_clicks,                      den: map_searches}
   sess_pin_per_sess_map:                   {num: pin_clicks_sessions,             den: map_searches_sessions}
-
