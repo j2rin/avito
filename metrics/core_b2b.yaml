@@ -4,6 +4,7 @@ metric.counter:
   avito_amount_net_adj:                    {obs: [ext_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj, vas_amount_net_adj]}
   classified_amount_net_adj:               {obs: [ext_amount_net_adj, lf_amount_net_adj, subs_amount_net_adj, vas_amount_net_adj, paid_contact_amount_net_adj]}
   classified_transactions:                 {obs: [ext_transactions, lf_transactions, subs_transactions, vas_transactions]}
+  vas_transactions_core:                   {obs: [vas_transactions]}
   cnt_advertisement_amount_net_adj_increased_for_rpm: {obs: [advertisement_amount_net_adj_increased_for_RPM], m42: False}
   cpa_amount_net_adj:                      {obs: [cpa_amount_net_adj]}
   cpa_transactions:                        {obs: [cpa_transactions]}
@@ -34,3 +35,8 @@ metric.ratio:
   extensions_price_net_adj:                {num: extensions_amount_net_adj,       den: extensions_transactions}
   lf_price_net_adj:                        {num: lf_amount_net_adj,               den: lf_transactions}
   subs_price_net_adj:                      {num: subs_amount_net_adj,             den: subs_transactions}
+  vas_transactions_per_user:               {num: vas_transactions_core,           den: vas_users}
+  subs_transactions_per_user:              {num: subs_transactions,               den: subs_users}
+  lf_transactions_per_user:                {num: lf_transactions,                 den: lf_users}
+  extensions_transactions_per_user:        {num: extensions_transactions,         den: extensions_users}
+  classified_transactions_per_user:        {num: classified_transactions,         den: classified_users}
