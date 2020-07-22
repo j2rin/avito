@@ -129,11 +129,9 @@ metric.counter:
   stories_list_shows:                      {obs: [stories_list_shows]}
   icebreakers_message_template_shows:      {obs: [icebreakers_message_template_shows]}
   icebreakers_message_template_clicks:     {obs: [icebreakers_message_template_clicks]}
-  location_window_time_span:               {obs: [location_window_time_span]}
-  location_text_inputs_length:             {obs: [location_text_inputs_length]}
-  location_suggest_clicks:                 {obs: [location_suggest_clicks]}
-  location_suggest_clicks_null:            {obs: [location_suggest_clicks_null]}
-  location_window_displays:                {obs: [location_window_displays]}
+  loc_window_time_span:                    {obs: [location_window_time_span], m42: False}
+  loc_text_inputs_length:                  {obs: [location_text_inputs_length], m42: False}
+  loc_suggest_clicks_null:                 {obs: [location_suggest_clicks_null]}
 
 metric.uniq:
   daily_active_authorized_users:           {counter: authorized_page_views,           key: [participant]}
@@ -217,9 +215,7 @@ metric.uniq:
   user_stories_list_shows:                 {counter: stories_list_shows,              key: [participant]}
   user_icebreakers_message_template_shows: {counter: icebreakers_message_template_shows, key: [participant]}
   user_icebreakers_message_template_clicks: {counter: icebreakers_message_template_clicks, key: [participant]}
-  users_location_suggest_clicks:           {counter: location_suggest_clicks,         key: [participant]}
-  users_location_suggest_clicks_null:      {counter: location_suggest_clicks_null,    key: [participant]}
-  users_location_window_displays:          {counter: location_window_displays,        key: [participant]}
+  users_loc_suggest_clicks_null:            {counter: loc_suggest_clicks_null,        key: [participant]}
 
 metric.ratio:
   authorized_visitors_share:               {num: daily_active_authorized_users,   den: daily_active_users}
@@ -247,7 +243,3 @@ metric.ratio:
   story_click_per_show:                    {num: story_clicks,                    den: story_shows}
   story_show_per_story_list_click:         {num: story_shows,                     den: stories_list_clicks}
   icebreaker_click_per_show:               {num: icebreakers_message_template_clicks, den: icebreakers_message_template_shows}
-  location_suggest_clicks_ctr:             {num: location_suggest_clicks,              den: location_window_displays}
-  location_suggest_clicks_null_ctr:        {num: location_suggest_clicks_null,         den: location_window_displays}
-  users_location_suggest_clicks_ctr:       {num: users_location_suggest_clicks,        den: users_location_window_displays}
-  users_location_suggest_clicks_null_ctr:  {num: users_location_suggest_clicks_null,   den: users_location_window_displays}
