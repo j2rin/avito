@@ -82,6 +82,11 @@ definitions:
   - &x_is_witcher_new_auto    {x_flags.bit: 15}
   - &x_is_witcher_new_flats   {x_flags.bit: 16}
 
+  - &is_delivery_pvz          {x_flags.bit: 17}
+  - &is_safedeal              {x_flags.bit: 18}
+  - &is_delivery_courier      {x_flags.bit: 19}
+  - &is_marketplace           {x_flags.bit: 20}
+
   - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
 
   - &is_serp_delivery {serp_block: 10}
@@ -466,6 +471,9 @@ metric.counter:
   buyer_target_clicks_metageo:             {filter: [*is_btc_wo_guessing, *x_is_metageo]}
   item_views_metageo:                      {filter: [*is_iv_wo_guessing, *x_is_metageo]}
   searches_metageo:                        {filter: [*is_metageo]}
+  total_courier_click:                     {filter: [*is_delivery_courier, eid: 2483]}
+  total_courier_widget:                    {filter: [eid: 4033]}
+  total_courier_contact:                   {filter: [eid: 4035]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -971,6 +979,9 @@ metric.uniq:
   searches_contact_metageo:                {counter: contacts_metageo,                key: [x]}
   searches_btc_metageo:                    {counter: buyer_target_clicks_metageo,     key: [x]}
   searches_iv_metageo:                     {counter: item_views_metageo,              key: [x]}
+  courier_click:                           {counter: total_courier_click,             key: [item]}
+  courier_widget:                          {counter: total_courier_widget,            key: [item]}
+  courier_contact:                         {counter: total_courier_contact,           key: [item]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1276,4 +1287,7 @@ metric.ratio:
   searches_contact_metageo_per_searches_metageo:      {num: searches_contact_metageo,     den: searches_metageo}
   searches_btc_metageo_per_searches_metageo:          {num: searches_btc_metageo,         den: searches_metageo}
   searches_iv_metageo_per_searches_metageo:           {num: searches_iv_metageo,          den: searches_metageo}
+  courier_click_contact_ratio:             {num: courier_contact,                 den: courier_click}
+  courier_click_widget_ratio:              {num: courier_widget,                  den: courier_click}
+  courier_widget_contact_ratio:            {num: courier_contact,                 den: courier_widget}
 

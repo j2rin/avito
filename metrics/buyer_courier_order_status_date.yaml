@@ -1,5 +1,7 @@
 metric.counter:
   buyer_courier_deals:                        {filter: [status: 'accepted']}
+  buyer_courier_affirmed_orders:              {filter: [is_affirmed: True]}
+  buyer_courier_orders_with_courier:          {filter: [{is_affirmed: True}, {iscourierfound: True}]}
   buyer_courier_returned_orders:              {filter: [status: 'returned']}
   buyer_courier_canceled_orders_total:        {filter: [status: ['canceled', 'revoked', 'rejected','voided']]}
   buyer_courier_canceled_orders_by_buyer:     {filter: [status: ['canceled', 'revoked']]}
@@ -7,3 +9,6 @@ metric.counter:
   buyer_courier_revenue:                      {filter: [status: ['accepted', 'returned', 'on_return']], obs: [courier_revenue]}
   buyer_courier_costs:                        {filter: [status: ['accepted', 'returned', 'on_return']], obs: [courier_costs]}
   buyer_courier_losses:                       {filter: [status: ['accepted', 'returned', 'on_return]']], obs: [courier_losses]}
+
+metric.ratio:
+  buyer_courier_orders_with_courier_share:   {num: buyer_courier_orders_with_courier,  den: buyer_courier_affirmed_orders}
