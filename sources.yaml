@@ -297,7 +297,7 @@ delivery:
 core_b2b:
   vertica:
     table: dma.vo_core_b2b
-    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, region_id, city_id, population_group, location_group_id, location_level_id]
+    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, region_id, city_id, population_group, location_group_id, location_level_id, user_segment]
     participant: {user: user_id}
     dtm: event_date
     segm: user_id
@@ -424,7 +424,7 @@ image:
 proprofile:
   vertica:
     table: dma.vo_proprofile
-    dimensions: [platform_id, traffic_source, proprofile_type, proprofile_version, tariff_type, tariff_subtype, tariffvertical_name]
+    dimensions: [platform_id, proprofile_traffic, proprofile_type, proprofile_version, tariff_type, tariff_subtype, tariffvertical_name]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
