@@ -131,6 +131,8 @@ definitions:
 
   - &is_region_with_double_groups {region_id: [697, 4181]}
   - &is_developer_acc {SFAccount_Type: 'Девелопер'}
+  - &is_re_agency_acc {SFAccount_Type: 'Агентство Недвижимости'}
+  - &is_re_private_acc {SFAccount_Type: null}  
 
   - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, x_flags.bit: [0, 1, 2, 3, 4, 11]]]}
   - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, x_flags.bit: [0, 1, 2, 3, 4, 11]]]}
@@ -474,6 +476,10 @@ metric.counter:
   total_courier_click:                     {filter: [*is_delivery_courier, eid: 2483]}
   total_courier_widget:                    {filter: [eid: 4033]}
   total_courier_contact:                   {filter: [eid: 4035]}
+  iv_re_agency:                            {filter: [*is_re_agency_acc, *is_iv]}
+  iv_re_private:                           {filter: [*is_re_private_acc, *is_iv]} 
+  c_re_agency:                             {filter: [*is_contact, *is_re_agency_acc]}
+  c_re_private:                            {filter: [*is_contact, *is_re_private_acc]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1290,4 +1296,8 @@ metric.ratio:
   courier_click_contact_ratio:             {num: courier_contact,                 den: courier_click}
   courier_click_widget_ratio:              {num: courier_widget,                  den: courier_click}
   courier_widget_contact_ratio:            {num: courier_contact,                 den: courier_widget}
+  developer_buyers_per_buyers:                     {num: user_c_developer,                 den: buyers}
+  developer_c_per_contacts:                        {num: c_developer,                      den: contacts}
+  re_agency_c_per_contacts:                        {num: c_re_agency,                      den: contacts}
+  re_private_c_per_contacts:                       {num: c_re_private,                     den: contacts}
 
