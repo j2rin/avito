@@ -69,6 +69,13 @@ metric.counter:
   cnt_first_input_delay_events_p50:        {filter: [{stage_name: first_input_delay}], obs: [events_p50], m42: False}
   cnt_first_input_delay_events_p75:        {filter: [{stage_name: first_input_delay}], obs: [events_p75], m42: False}
   cnt_first_input_delay_events_p95:        {filter: [{stage_name: first_input_delay}], obs: [events_p95], m42: False}
+  cnt_largest_contentful_paint_duration:   {filter: [{stage_name: largest_contentful_paint}], obs: [duration], m42: False}
+  cnt_largest_contentful_paint_duration_events: {filter: [{stage_name: largest_contentful_paint}], obs: [duration_events], m42: False}
+  cnt_largest_contentful_paint_events:     {filter: [{stage_name: largest_contentful_paint}], obs: [events], m42: False}
+  cnt_largest_contentful_paint_events_p25: {filter: [{stage_name: largest_contentful_paint}], obs: [events_p25], m42: False}
+  cnt_largest_contentful_paint_events_p50: {filter: [{stage_name: largest_contentful_paint}], obs: [events_p50], m42: False}
+  cnt_largest_contentful_paint_events_p75: {filter: [{stage_name: largest_contentful_paint}], obs: [events_p75], m42: False}
+  cnt_largest_contentful_paint_events_p95: {filter: [{stage_name: largest_contentful_paint}], obs: [events_p95], m42: False}
   cnt_first_paint_session_duration:        {filter: [{stage_name: first_paint_session}], obs: [duration], m42: False}
   cnt_first_paint_session_duration_events: {filter: [{stage_name: first_paint_session}], obs: [duration_events], m42: False}
   cnt_first_paint_session_events:          {filter: [{stage_name: first_paint_session}], obs: [events], m42: False}
@@ -212,6 +219,11 @@ metric.ratio:
   first_input_delay_percent_p50:           {num: cnt_first_input_delay_events_p50, den: cnt_first_input_delay_events}
   first_input_delay_percent_p75:           {num: cnt_first_input_delay_events_p75, den: cnt_first_input_delay_events}
   first_input_delay_percent_p95:           {num: cnt_first_input_delay_events_p95, den: cnt_first_input_delay_events}
+  largest_contentful_paint_duration:       {num: cnt_largest_contentful_paint_duration,  den: cnt_largest_contentful_paint_duration_events}
+  largest_contentful_paint_percent_p25:    {num: cnt_largest_contentful_paint_events_p25, den: cnt_largest_contentful_paint_events}
+  largest_contentful_paint_percent_p50:    {num: cnt_largest_contentful_paint_events_p50, den: cnt_largest_contentful_paint_events}
+  largest_contentful_paint_percent_p75:    {num: cnt_largest_contentful_paint_events_p75, den: cnt_largest_contentful_paint_events}
+  largest_contentful_paint_percent_p95:    {num: cnt_largest_contentful_paint_events_p95, den: cnt_largest_contentful_paint_events}
   first_paint_session_duration:            {num: cnt_first_paint_session_duration, den: cnt_first_paint_session_duration_events}
   first_paint_session_percent_p25:         {num: cnt_first_paint_session_events_p25, den: cnt_first_paint_session_events}
   first_paint_session_percent_p50:         {num: cnt_first_paint_session_events_p50, den: cnt_first_paint_session_events}
