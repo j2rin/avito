@@ -649,3 +649,11 @@ calltracking:
     participant: {user: user_id}
     dtm: event_date
     segm: user_id
+
+buyer_weighted:
+  vertica:
+    table: dma.vo_buyer_weighted
+    dimensions: [platform_id, vertical_id, logical_category_id, logical_region, user_segment, price_group]
+    participant: {visitor: cookie_id}
+    dtm: event_date
+    segm: cookie_id_event_date
