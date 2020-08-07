@@ -1,0 +1,34 @@
+metric.counter:
+	rmp_requests:							{filter: [eventtype_ext: 3963]}
+	rmp_errors:								{filter: [eventtype_ext: 3964]}
+	ads_requests:							{filter: [eventtype_ext: 3967]}
+	passbacks:								{filter: [eventtype_ext: 3969]}
+	ad_fails:								{filter: [eventtype_ext: 3250]}
+	full_ad_renders:						{filter: [eventtype_ext: 3970], m42: False}
+	full_ad_views:							{filter: [eventtype_ext: 3968], m42: False}
+	ad_clicks:								{filter: [eventtype_ext: 3215]}
+	full_ad_inventory:						{filter: [eventtype_ext: 3967, reqnum: 1], m42: False}
+	sum_waterfall_depth:					{filter: [eventtype_ext: 3967, reqnum: $max_reqnum], obs: [reqnum], m42: False}
+	requests_max_num:						{filter: [eventtype_ext: 3967, reqnum: $max_reqnum], m42: False}
+	sum_requests_time:						{filter: [eventtype_ext: 3967, cdtm: $min_cdtm, platform_id.bit: [1, 2]], obs: [cdtm], m42: False}
+	sum_renders_time:						{filter: [eventtype_ext: 3970, cdtm: $min_cdtm, platform_id.bit: [1, 2]], obs: [cdtm], m42: False}
+	sum_views_time:							{filter: [eventtype_ext: 3968, cdtm: $min_cdtm, platform_id.bit: [1, 2]], obs: [cdtm], m42: False}
+	sum_clicks_time:						{filter: [eventtype_ext: 3215, cdtm: $min_cdtm, platform_id.bit: [1, 2]], obs: [cdtm], m42: False}
+	requests_for_time:						{filter: [eventtype_ext: 3967, cdtm: $min_cdtm, platform_id.bit: [1, 2]], m42: False}
+	renders_for_time:						{filter: [eventtype_ext: 3970, cdtm: $min_cdtm, platform_id.bit: [1, 2]], m42: False}
+	views_for_time:							{filter: [eventtype_ext: 3968, cdtm: $min_cdtm, platform_id.bit: [1, 2]], m42: False}
+	clicks_for_time:						{filter: [eventtype_ext: 3215, cdtm: $min_cdtm, platform_id.bit: [1, 2]], m42: False}
+		
+metric.uniq:
+	ad_renders:                         	{counter: full_ad_renders,               key: [alid_id]}
+	ad_views:                         		{counter: full_ad_views,                 key: [alid_id]}
+	ad_inventory:                         	{counter: full_ad_inventory,             key: [alid_id]}
+	
+metric.ratio:
+	waterfall_depth:             			{num: sum_waterfall_depth,               den: requests_max_num}
+	requests_time:             				{num: sum_requests_time,             	 den: requests_for_time}
+	renders_time:             				{num: sum_renders_time,             	 den: renders_for_time}
+	views_time:             				{num: sum_views_time,     	        	 den: views_for_time}
+	clicks_time:             				{num: sum_clicks_time,       	      	 den: clicks_for_time}
+	
+  
