@@ -206,6 +206,16 @@ advert:
     dtm: event_date
     segm: cookie_id
 
+advert_funnel:
+  vertica:
+    column_map:
+      session: session_hash
+    table: dma.vo_advert_funnel
+    dimensions: [platform_id, category_id, subcategory_id, microcat_id]
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+    segm: cookie_id
+
 core_c2c:
   vertica:
     table: dma.vo_core_c2c
