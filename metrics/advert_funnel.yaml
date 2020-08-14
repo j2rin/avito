@@ -4,31 +4,31 @@ metric.counter:
     ads_requests:                           {filter: [eventtype_ext: 3967]}
     ads_passbacks:                          {filter: [eventtype_ext: 3969]}
     ad_fails:                               {filter: [eventtype_ext: 3250]}
-    full_ad_renders:                        {filter: [eventtype_ext: 3970], m42: False}
-    full_ad_views:                          {filter: [eventtype_ext: 3968], m42: False}
+    ads_full_renders:                       {filter: [eventtype_ext: 3970], m42: False}
+    ads_full_views:                         {filter: [eventtype_ext: 3968], m42: False}
     ad_clicks:                              {filter: [eventtype_ext: 3215]}
-    full_ad_inventory:                      {filter: [eventtype_ext: 3967, reqnum: 1], m42: False}
-    ad_sum_waterfall_depth:                 {filter: [eventtype_ext: 3967, reqnum: $max_reqnum], obs: [reqnum], m42: False}
-    ad_requests_max_num:                    {filter: [eventtype_ext: 3967, reqnum: $max_reqnum], m42: False}
-    ad_sum_requests_time:                   {filter: [eventtype_ext: 3967, cdtm: $min_cdtm], obs: [cdtm], m42: False}
-    ad_sum_renders_time:                    {filter: [eventtype_ext: 3970, cdtm: $min_cdtm], obs: [cdtm], m42: False}
-    ad_sum_views_time:                      {filter: [eventtype_ext: 3968, cdtm: $min_cdtm], obs: [cdtm], m42: False}
-    ad_sum_clicks_time:                     {filter: [eventtype_ext: 3215, cdtm: $min_cdtm], obs: [cdtm], m42: False}
-    ad_requests_for_time:                   {filter: [eventtype_ext: 3967, cdtm: $min_cdtm], m42: False}
-    ad_renders_for_time:                    {filter: [eventtype_ext: 3970, cdtm: $min_cdtm], m42: False}
-    ad_views_for_time:                      {filter: [eventtype_ext: 3968, cdtm: $min_cdtm], m42: False}
-    ad_clicks_for_time:                     {filter: [eventtype_ext: 3215, cdtm: $min_cdtm], m42: False}
+    ads_full_inventory:                     {filter: [eventtype_ext: 3967, reqnum: 1], m42: False}
+    ads_sum_waterfall_depth:                {filter: [eventtype_ext: 3967, reqnum: $max_reqnum], obs: [reqnum], m42: False}
+    ads_requests_max_num:                   {filter: [eventtype_ext: 3967, reqnum: $max_reqnum], m42: False}
+    ads_sum_requests_time:                  {filter: [eventtype_ext: 3967, cdtm: $min_cdtm], obs: [cdtm], m42: False}
+    ads_sum_renders_time:                   {filter: [eventtype_ext: 3970, cdtm: $min_cdtm], obs: [cdtm], m42: False}
+    ads_sum_views_time:                     {filter: [eventtype_ext: 3968, cdtm: $min_cdtm], obs: [cdtm], m42: False}
+    ads_sum_clicks_time:                    {filter: [eventtype_ext: 3215, cdtm: $min_cdtm], obs: [cdtm], m42: False}
+    ads_requests_for_time:                  {filter: [eventtype_ext: 3967, cdtm: $min_cdtm], m42: False}
+    ads_renders_for_time:                   {filter: [eventtype_ext: 3970, cdtm: $min_cdtm], m42: False}
+    ads_views_for_time:                     {filter: [eventtype_ext: 3968, cdtm: $min_cdtm], m42: False}
+    ads_clicks_for_time:                    {filter: [eventtype_ext: 3215, cdtm: $min_cdtm], m42: False}
 
 metric.uniq:
-    ads_renders:                            {counter: full_ad_renders,         key: [alid_id]}
-    ads_views:                              {counter: full_ad_views,           key: [alid_id]}
-    ads_inventory:                          {counter: full_ad_inventory,       key: [alid_id]}
+    ads_renders:                            {counter: ads_full_renders,         key: [alid_id]}
+    ads_views:                              {counter: ads_full_views,           key: [alid_id]}
+    ads_inventory:                          {counter: ads_full_inventory,       key: [alid_id]}
 
 metric.ratio:
-    ads_waterfall_depth:                    {num: ad_sum_waterfall_depth,      den: ad_requests_max_num}
-    ads_requests_time:                      {num: ad_sum_requests_time,        den: ad_requests_for_time}
-    ads_renders_time:                       {num: ad_sum_renders_time,         den: ad_renders_for_time}
-    ads_views_time:                         {num: ad_sum_views_time,           den: ad_views_for_time}
-    ads_clicks_time:                        {num: ad_sum_clicks_time,          den: ad_clicks_for_time}
-    ads_viewability:                        {num: ads_views,                   den: ads_renders}
-    ads_vctr:                               {num: ad_clicks,                   den: ads_views}
+    ads_waterfall_depth:                    {num: ads_sum_waterfall_depth,      den: ads_requests_max_num}
+    ads_requests_time:                      {num: ads_sum_requests_time,        den: ads_requests_for_time}
+    ads_renders_time:                       {num: ads_sum_renders_time,         den: ads_renders_for_time}
+    ads_views_time:                         {num: ads_sum_views_time,           den: ads_views_for_time}
+    ads_clicks_time:                        {num: ads_sum_clicks_time,          den: ads_clicks_for_time}
+    ads_viewability:                        {num: ads_views,                    den: ads_renders}
+    ads_vctr:                               {num: ad_clicks,                    den: ads_views}
