@@ -4,14 +4,14 @@ definitions:
   - &item_scenario      [item,item_gallery]
   - &any_scenario       [item,item_gallery,messenger_chat_menu,messenger_chat_long_answer,notification_call_back,deeplink_call_back,messenger_call_back,call_log_callback]
 
-  - &is_callback_c      {appcallscenario: *callback_scenario}
-  - &is_direct_c        {appcallscenario: *direct_scenario}
-  - &is_item_c          {appcallscenario: *item_scenario}
-  - &is_c               {appcallscenario: *any_scenario}
-  - &is_outgoing        {calltype: outgoing}
-  - &is_incoming        {calltype: incoming}
-  - &is_answered        {talkduration.>: 0}
-  - &is_success         {talkduration.>: 30}
+  - &is_callback_c      {AppCallScenario: *callback_scenario}
+  - &is_direct_c        {AppCallScenario: *direct_scenario}
+  - &is_item_c          {AppCallScenario: *item_scenario}
+  - &is_c               {AppCallScenario: *any_scenario}
+  - &is_outgoing        {CallType: outgoing}
+  - &is_incoming        {CallType: incoming}
+  - &is_answered        {TalkDuration.>: 0}
+  - &is_success         {TalkDuration.>: 30}
   
   - &mic_granted        {reciever_micaccess: True}
   - &mic_notgranted     {reciever_micaccess: False}
