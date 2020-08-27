@@ -107,6 +107,12 @@ definitions:
   - &is_fp_witcher_new_auto  {from_page: witcher-new-auto}
   - &is_fp_witcher_new_flats {from_page: witcher-new-flats}
 
+  - &is_x_fp_witcher_regions    {x_from_page: witcher-extra-regions}
+  - &is_x_fp_witcher_delivery   {x_from_page: witcher-extra-delivery}
+  - &is_x_fp_witcher_new_auto   {x_from_page: witcher-new-auto}
+  - &is_x_fp_witcher_new_flats  {x_from_page: witcher-new-flats}
+  - &is_x_fp_witcher_any        {x_from_page: [witcher-extra-regions, witcher-extra-delivery, witcher-new-auto, witcher-new-flats]}
+
   - &is_serp_ext          {x_flags.bit: [11, 12]}
   - &is_serp_ext_delivery {x_flags.bit: 12}
   - &is_serp_ext_regions  {x_flags.bit: 11}
@@ -505,6 +511,26 @@ metric.counter:
   iv_re_private:                           {filter: [*is_re_private_acc, *is_iv]} 
   c_re_agency:                             {filter: [*is_contact, *is_re_agency_acc]}
   c_re_private:                            {filter: [*is_contact, *is_re_private_acc]}
+  iv_witcher_funnel_any:                   {filter: [*is_x_fp_witcher_any, *is_iv_wo_guessing]}
+  iv_witcher_funnel_delivery:              {filter: [*is_x_fp_witcher_delivery, *is_iv_wo_guessing]}
+  iv_witcher_funnel_new_auto:              {filter: [*is_x_fp_witcher_new_auto, *is_iv_wo_guessing]}
+  iv_witcher_funnel_new_flats:             {filter: [*is_x_fp_witcher_new_flats, *is_iv_wo_guessing]}
+  iv_witcher_funnel_regions:               {filter: [*is_x_fp_witcher_regions, *is_iv_wo_guessing]}
+  btc_witcher_funnel_any:                  {filter: [*is_x_fp_witcher_any, *is_btc_wo_guessing]}
+  btc_witcher_funnel_delivery:             {filter: [*is_x_fp_witcher_delivery, *is_btc_wo_guessing]}
+  btc_witcher_funnel_new_auto:             {filter: [*is_x_fp_witcher_new_auto, *is_btc_wo_guessing]}
+  btc_witcher_funnel_new_flats:            {filter: [*is_x_fp_witcher_new_flats, *is_btc_wo_guessing]}
+  btc_witcher_funnel_regions:              {filter: [*is_x_fp_witcher_regions, *is_btc_wo_guessing]}
+  c_witcher_funnel_any:                    {filter: [*is_x_fp_witcher_any, *is_btc_wo_guessing]}
+  c_witcher_funnel_delivery:               {filter: [*is_x_fp_witcher_delivery, *is_btc_wo_guessing]}
+  c_witcher_funnel_new_auto:               {filter: [*is_x_fp_witcher_new_auto, *is_btc_wo_guessing]}
+  c_witcher_funnel_new_flats:              {filter: [*is_x_fp_witcher_new_flats, *is_btc_wo_guessing]}
+  c_witcher_funnel_regions:                {filter: [*is_x_fp_witcher_regions, *is_btc_wo_guessing]}
+  fav_witcher_funnel_any:                  {filter: [*is_x_fp_witcher_any, *is_fav]}
+  fav_witcher_funnel_delivery:             {filter: [*is_x_fp_witcher_delivery, *is_fav]}
+  fav_witcher_funnel_new_auto:             {filter: [*is_x_fp_witcher_new_auto, *is_fav]}
+  fav_witcher_funnel_new_flats:            {filter: [*is_x_fp_witcher_new_flats, *is_fav]}
+  fav_witcher_funnel_regions:              {filter: [*is_x_fp_witcher_regions, *is_fav]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1045,6 +1071,26 @@ metric.uniq:
   courier_click:                           {counter: total_courier_click,             key: [item]}
   courier_widget:                          {counter: total_courier_widget,            key: [item]}
   courier_contact:                         {counter: total_courier_contact,           key: [item]}
+  user_iv_witcher_funnel_any:              {counter: iv_witcher_funnel_any,           key: [participant]}
+  user_iv_witcher_funnel_delivery:         {counter: iv_witcher_funnel_delivery,      key: [participant]}
+  user_iv_witcher_funnel_new_auto:         {counter: iv_witcher_funnel_new_auto,      key: [participant]}
+  user_iv_witcher_funnel_new_flats:        {counter: iv_witcher_funnel_new_flats,     key: [participant]}
+  user_iv_witcher_funnel_regions:          {counter: iv_witcher_funnel_regions,       key: [participant]}
+  user_btc_witcher_funnel_any:             {counter: btc_witcher_funnel_any,          key: [participant]}
+  user_btc_witcher_funnel_delivery:        {counter: btc_witcher_funnel_delivery,     key: [participant]}
+  user_btc_witcher_funnel_new_auto:        {counter: btc_witcher_funnel_new_auto,     key: [participant]}
+  user_btc_witcher_funnel_new_flats:       {counter: btc_witcher_funnel_new_flats,    key: [participant]}
+  user_btc_witcher_funnel_regions:         {counter: btc_witcher_funnel_regions,      key: [participant]}
+  user_c_witcher_funnel_any:               {counter: c_witcher_funnel_any,            key: [participant]}
+  user_c_witcher_funnel_delivery:          {counter: c_witcher_funnel_delivery,       key: [participant]}
+  user_c_witcher_funnel_new_auto:          {counter: c_witcher_funnel_new_auto,       key: [participant]}
+  user_c_witcher_funnel_new_flats:         {counter: c_witcher_funnel_new_flats,      key: [participant]}
+  user_c_witcher_funnel_regions:           {counter: c_witcher_funnel_regions,        key: [participant]}
+  user_fav_witcher_funnel_any:             {counter: fav_witcher_funnel_any,          key: [participant]}
+  user_fav_witcher_funnel_delivery:        {counter: fav_witcher_funnel_delivery,     key: [participant]}
+  user_fav_witcher_funnel_new_auto:        {counter: fav_witcher_funnel_new_auto,     key: [participant]}
+  user_fav_witcher_funnel_new_flats:       {counter: fav_witcher_funnel_new_flats,    key: [participant]}
+  user_fav_witcher_funnel_regions:         {counter: fav_witcher_funnel_regions,      key: [participant]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1362,4 +1408,44 @@ metric.ratio:
   developer_c_per_contacts:                        {num: c_developer,                      den: contacts}
   re_agency_c_per_contacts:                        {num: c_re_agency,                      den: contacts}
   re_private_c_per_contacts:                       {num: c_re_private,                     den: contacts}
+  iv_witcher_funnel_any_per_searches_from_witcher_any:                        {num: iv_witcher_funnel_any,                den:  searches_from_witcher_any}
+  iv_witcher_funnel_delivery_per_searches_from_witcher_delivery:              {num: iv_witcher_funnel_delivery,           den:  searches_from_witcher_delivery}
+  iv_witcher_funnel_new_auto_per_searches_from_witcher_new_auto:              {num: iv_witcher_funnel_new_auto,           den:  searches_from_witcher_new_auto}
+  iv_witcher_funnel_new_flats_per_searches_from_witcher_new_flats:            {num: iv_witcher_funnel_new_flats,          den:  searches_from_witcher_new_flats}
+  iv_witcher_funnel_regions_per_searches_from_witcher_regions:                {num: iv_witcher_funnel_regions,            den:  searches_from_witcher_regions}
+  btc_witcher_funnel_any_per_searches_from_witcher_any:                       {num: btc_witcher_funnel_any,               den:  searches_from_witcher_any}
+  btc_witcher_funnel_delivery_per_searches_from_witcher_delivery:             {num: btc_witcher_funnel_delivery,          den:  searches_from_witcher_delivery}
+  btc_witcher_funnel_new_auto_per_searches_from_witcher_new_auto:             {num: btc_witcher_funnel_new_auto,          den:  searches_from_witcher_new_auto}
+  btc_witcher_funnel_new_flats_per_searches_from_witcher_new_flats:           {num: btc_witcher_funnel_new_flats,         den:  searches_from_witcher_new_flats}
+  btc_witcher_funnel_regions_per_searches_from_witcher_regions:               {num: btc_witcher_funnel_regions,           den:  searches_from_witcher_regions}
+  c_witcher_funnel_any_per_searches_from_witcher_any:                         {num: c_witcher_funnel_any,                 den:  searches_from_witcher_any}
+  c_witcher_funnel_delivery_per_searches_from_witcher_delivery:               {num: c_witcher_funnel_delivery,            den:  searches_from_witcher_delivery}
+  c_witcher_funnel_new_auto_per_searches_from_witcher_new_auto:               {num: c_witcher_funnel_new_auto,            den:  searches_from_witcher_new_auto}
+  c_witcher_funnel_new_flats_per_searches_from_witcher_new_flats:             {num: c_witcher_funnel_new_flats,           den:  searches_from_witcher_new_flats}
+  c_witcher_funnel_regions_per_searches_from_witcher_regions:                 {num: c_witcher_funnel_regions,             den:  searches_from_witcher_regions}
+  fav_witcher_funnel_any_per_searches_from_witcher_any:                       {num: fav_witcher_funnel_any,               den:  searches_from_witcher_any}
+  fav_witcher_funnel_delivery_per_searches_from_witcher_delivery:             {num: fav_witcher_funnel_delivery,          den:  searches_from_witcher_delivery}
+  fav_witcher_funnel_new_auto_per_searches_from_witcher_new_auto:             {num: fav_witcher_funnel_new_auto,          den:  searches_from_witcher_new_auto}
+  fav_witcher_funnel_new_flats_per_searches_from_witcher_new_flats:           {num: fav_witcher_funnel_new_flats,         den:  searches_from_witcher_new_flats}
+  fav_witcher_funnel_regions_per_searches_from_witcher_regions:               {num: fav_witcher_funnel_regions,           den:  searches_from_witcher_regions}
+  user_iv_witcher_funnel_any_per_user_s_from_witcher_any:                     {num: user_iv_witcher_funnel_any,           den: user_s_from_witcher_any}
+  user_iv_witcher_funnel_delivery_per_user_s_from_witcher_del:                {num: user_iv_witcher_funnel_delivery,      den: user_s_from_witcher_del}
+  user_iv_witcher_funnel_new_auto_per_user_s_from_witcher_auto:               {num: user_iv_witcher_funnel_new_auto,      den: user_s_from_witcher_auto}
+  user_iv_witcher_funnel_new_flats_per_user_s_from_witcher_flats:             {num: user_iv_witcher_funnel_new_flats,     den: user_s_from_witcher_flats}
+  user_iv_witcher_funnel_regions_per_user_s_from_witcher_reg:                 {num: user_iv_witcher_funnel_regions,       den: user_s_from_witcher_reg}
+  user_btc_witcher_funnel_any_per_user_s_from_witcher_any:                    {num: user_btc_witcher_funnel_any,          den: user_s_from_witcher_any}
+  user_btc_witcher_funnel_delivery_per_user_s_from_witcher_del:               {num: user_btc_witcher_funnel_delivery,     den: user_s_from_witcher_del}
+  user_btc_witcher_funnel_new_auto_per_user_s_from_witcher_auto:              {num: user_btc_witcher_funnel_new_auto,     den: user_s_from_witcher_auto}
+  user_btc_witcher_funnel_new_flats_per_user_s_from_witcher_flats:            {num: user_btc_witcher_funnel_new_flats,    den: user_s_from_witcher_flats}
+  user_btc_witcher_funnel_regions_per_user_s_from_witcher_reg:                {num: user_btc_witcher_funnel_regions,      den: user_s_from_witcher_reg}
+  user_c_witcher_funnel_any_per_user_s_from_witcher_any:                      {num: user_c_witcher_funnel_any,            den: user_s_from_witcher_any}
+  user_c_witcher_funnel_delivery_per_user_s_from_witcher_del:                 {num: user_c_witcher_funnel_delivery,       den: user_s_from_witcher_del}
+  user_c_witcher_funnel_new_auto_per_user_s_from_witcher_auto:                {num: user_c_witcher_funnel_new_auto,       den: user_s_from_witcher_auto}
+  user_c_witcher_funnel_new_flats_per_user_s_from_witcher_flats:              {num: user_c_witcher_funnel_new_flats,      den: user_s_from_witcher_flats}
+  user_c_witcher_funnel_regions_per_user_s_from_witcher_reg:                  {num: user_c_witcher_funnel_regions,        den: user_s_from_witcher_reg}
+  user_fav_witcher_funnel_any_per_user_s_from_witcher_any:                    {num: user_fav_witcher_funnel_any,          den: user_s_from_witcher_any}
+  user_fav_witcher_funnel_delivery_per_user_s_from_witcher_del:               {num: user_fav_witcher_funnel_delivery,     den: user_s_from_witcher_del}
+  user_fav_witcher_funnel_new_auto_per_user_s_from_witcher_auto:              {num: user_fav_witcher_funnel_new_auto,     den: user_s_from_witcher_auto}
+  user_fav_witcher_funnel_new_flats_per_user_s_from_witcher_flats:            {num: user_fav_witcher_funnel_new_flats,    den: user_s_from_witcher_flats}
+  user_fav_witcher_funnel_regions_per_user_s_from_witcher_reg:                {num: user_fav_witcher_funnel_regions,      den: user_s_from_witcher_reg}
 
