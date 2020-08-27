@@ -13,9 +13,9 @@ definitions:
   - &sort_price   [3, 4]
   - &sort_dft     5
 
-  - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, flags.!bit: 4]}
-  - &is_rec     {$or: [{eid: *eid_rec}, {flags.bit: 10}]}
-  - &is_rec_sg  {flags.bit: 10}
+  - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, search_flags.!bit: 4]}
+  - &is_rec     {$or: [{eid: *eid_rec}, {search_flags.bit: 10}]}
+  - &is_rec_sg  {search_flags.bit: 10}
   - &is_u2i     {eid: *eid_u2i}
   - &is_i2i     {eid: *eid_i2i}
   - &is_job_ast {eid: *eid_job_ast}
@@ -23,8 +23,8 @@ definitions:
   - &is_map     {eid: *eid_map}
 
   - &x_is_search  {x_eid: *eid_search}
-  - &x_is_rec     {$or: [{x_eid: *eid_rec}, {x_flags.bit: 10}]}
-  - &x_is_rec_sg  {x_flags.bit: 10}
+  - &x_is_rec     {$or: [{x_eid: *eid_rec}, {search_flags.bit: 10}]}
+  - &x_is_rec_sg  {search_flags.bit: 10}
   - &x_is_u2i     {x_eid: *eid_u2i}
   - &x_is_i2i     {x_eid: *eid_i2i}
   - &x_is_job_ast {x_eid: *eid_job_ast}
@@ -57,34 +57,34 @@ definitions:
   - &is_btc_wo_guessing     {$or: [{<<: *is_btc, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
   - &is_contact_wo_guessing    {$or: [{<<: *is_contact, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
 
-  - &is_shop {flags.bit: 7}
-  - &x_is_shop {x_flags.bit: 7}
+  - &is_shop {search_flags.bit: 7}
+  - &x_is_shop {search_flags.bit: 7}
 
-  - &is_s_geo       {x_flags.bit: [0, 1, 2, 3]}
-  - &is_s_local_geo {x_flags.bit: [0, 1, 2]}
-  - &is_s_metro     {x_flags.bit: 0}
-  - &is_s_district  {x_flags.bit: 1}
-  - &is_s_road      {x_flags.bit: 2}
-  - &is_s_radius    {x_flags.bit: 3}
-  - &is_default_radius {x_flags.bit: 30}
-  - &is_not_default_radius {$or: [x_flags.!bit: 30, search_radius.isnull: false]}
-  - &is_s_map       {x_flags.bit: 4}
-  - &is_s_delivery  {x_flags.bit: 5}
-  - &is_s_saved     {x_flags.bit: 6}
+  - &is_s_geo       {search_flags.bit: [0, 1, 2, 3]}
+  - &is_s_local_geo {search_flags.bit: [0, 1, 2]}
+  - &is_s_metro     {search_flags.bit: 0}
+  - &is_s_district  {search_flags.bit: 1}
+  - &is_s_road      {search_flags.bit: 2}
+  - &is_s_radius    {search_flags.bit: 3}
+  - &is_default_radius {search_flags.bit: 30}
+  - &is_not_default_radius {$or: [search_flags.!bit: 30, search_radius.isnull: false]}
+  - &is_s_map       {search_flags.bit: 4}
+  - &is_s_delivery  {search_flags.bit: 5}
+  - &is_s_saved     {search_flags.bit: 6}
 
-  - &x_is_filter_search       {x_flags.bit: 8}
-  - &x_is_price_filter_search {x_flags.bit: 9}
-  - &x_is_sg_rec              {x_flags.bit: 10}
-  - &x_is_extra_regions       {x_flags.bit: 11}
-  - &x_is_extra_delivery      {x_flags.bit: 12}
-  - &x_is_witcher_regions     {x_flags.bit: 13}
-  - &x_is_witcher_delivery    {x_flags.bit: 14}
-  - &x_is_witcher_new_auto    {x_flags.bit: 15}
-  - &x_is_witcher_new_flats   {x_flags.bit: 16}
+  - &x_is_filter_search       {search_flags.bit: 8}
+  - &x_is_price_filter_search {search_flags.bit: 9}
+  - &x_is_sg_rec              {search_flags.bit: 10}
+  - &x_is_extra_regions       {search_flags.bit: 11}
+  - &x_is_extra_delivery      {search_flags.bit: 12}
+  - &x_is_witcher_regions     {search_flags.bit: 13}
+  - &x_is_witcher_delivery    {search_flags.bit: 14}
+  - &x_is_witcher_new_auto    {search_flags.bit: 15}
+  - &x_is_witcher_new_flats   {search_flags.bit: 16}
 
-  - &is_delivery_pvz          {flags.bit: 17}
-  - &is_safedeal              {flags.bit: 18}
-  - &is_delivery_courier      {flags.bit: 19}
+  - &is_delivery_pvz          {other_flags.bit: 0}
+  - &is_safedeal              {other_flags.bit: 1}
+  - &is_delivery_courier      {other_flags.bit: 2}
 
   - &is_item_marketplace      {item_flags.bit: 2}
   - &is_search_marketplace    {search_flags.bit: 17}
@@ -115,23 +115,23 @@ definitions:
   - &is_x_fp_witcher_new_flats  {x_from_page: witcher-new-flats}
   - &is_x_fp_witcher_any        {x_from_page: [witcher-extra-regions, witcher-extra-delivery, witcher-new-auto, witcher-new-flats]}
 
-  - &is_serp_ext          {x_flags.bit: [11, 12]}
-  - &is_serp_ext_delivery {x_flags.bit: 12}
-  - &is_serp_ext_regions  {x_flags.bit: 11}
+  - &is_serp_ext          {search_flags.bit: [11, 12]}
+  - &is_serp_ext_delivery {search_flags.bit: 12}
+  - &is_serp_ext_regions  {search_flags.bit: 11}
 
-  - &is_serp_vas        {serp_item_flags.bit: [0, 1, 2, 3]}
-  - &is_item_vas        {item_vas_flags.bit: [0, 1, 2, 3]}
+  - &is_serp_vas        {serp_item_flags.bit: [0, 1, 2, 3, 9, 10, 11, 12, 13, 14, 15]}
+  - &is_item_vas        {item_vas_flags.bit: [0, 1, 2, 3, 5, 6, 10, 11, 12, 13, 14, 15, 16]}
   - &is_item_vip        {item_vas_flags.bit: 0}
   - &is_item_highlight  {item_vas_flags.bit: 1}
   - &is_item_push       {item_vas_flags.bit: 2}
-  - &is_item_premium    {item_vas_flags.bit: 3}
+  - &is_item_premium    {item_vas_flags.bit: [3, 5]}
 
-  - &is_s_sort_date     {x_search_sort: *sort_date}
-  - &is_s_sort_price    {x_search_sort: *sort_price}
-  - &is_s_sort_dft      {x_search_sort: *sort_dft}
+  - &is_s_sort_date     {search_sort: *sort_date}
+  - &is_s_sort_price    {search_sort: *sort_price}
+  - &is_s_sort_dft      {search_sort: *sort_dft}
 
-  - &q                  {x_query.isnull: false}
-  - &noq                {x_query.isnull: true}
+  - &q                  {query.isnull: false}
+  - &noq                {query.isnull: true}
   - &is_1p              {page_no: 0}
 
   - &is_serp_empty      {item_cnt: 0}
@@ -144,8 +144,8 @@ definitions:
   - &is_re_agency_acc {SFAccount_Type: 'Агентство Недвижимости'}
   - &is_re_private_acc {SFAccount_Type.isnull: true}  
 
-  - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, $or: [x_flags.bit: [0, 1, 2, 3, 4], *is_serp_regions]]]}
-  - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, x_flags.bit: [0, 1, 2, 3, 4, 11]]]}
+  - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, $or: [search_flags.bit: [0, 1, 2, 3, 4], *is_serp_regions]]]}
+  - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, search_flags.bit: [0, 1, 2, 3, 4, 11]]]}
 
 metric.counter:
   base_serp_empty:                         {filter: [*is_1p, *is_base_serp_empty, *is_search]}
