@@ -143,9 +143,12 @@ definitions:
   - &is_developer_acc {SFAccount_Type: 'Девелопер'}
   - &is_re_agency_acc {SFAccount_Type: 'Агентство Недвижимости'}
   - &is_re_private_acc {SFAccount_Type.isnull: true}  
+  - &is_item_pro_image {item_flags: 0}
+  - &is_item_str_actual_calendar {item_flags: 1}
 
   - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, $or: [search_flags.bit: [0, 1, 2, 3, 4], *is_serp_regions]]]}
   - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, search_flags.bit: [0, 1, 2, 3, 4, 11]]]}
+
 
 metric.counter:
   base_serp_empty:                         {filter: [*is_1p, *is_base_serp_empty, *is_search]}
@@ -534,6 +537,13 @@ metric.counter:
   fav_witcher_funnel_new_auto:             {filter: [*is_x_fp_witcher_new_auto, *is_fav]}
   fav_witcher_funnel_new_flats:            {filter: [*is_x_fp_witcher_new_flats, *is_fav]}
   fav_witcher_funnel_regions:              {filter: [*is_x_fp_witcher_regions, *is_fav]}
+  btc_actual_calendar:                     {filter: [*is_item_str_actual_calendar, *is_btc]}
+  c_actual_calendar:                       {filter: [*is_item_str_actual_calendar, *is_contact]}
+  iv_actual_calendar:                      {filter: [*is_item_str_actual_calendar, *is_iv]}
+  btc_pro_image:                           {filter: [*is_item_pro_image, *is_btc]}
+  c_pro_image:                             {filter: [*is_item_pro_image, *is_contact]}
+  iv_pro_image:                            {filter: [*is_item_pro_image, *is_iv]}
+
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1094,6 +1104,18 @@ metric.uniq:
   user_fav_witcher_funnel_new_auto:        {counter: fav_witcher_funnel_new_auto,     key: [participant]}
   user_fav_witcher_funnel_new_flats:       {counter: fav_witcher_funnel_new_flats,    key: [participant]}
   user_fav_witcher_funnel_regions:         {counter: fav_witcher_funnel_regions,      key: [participant]}
+  user_btc_actual_calendar:                {counter: btc_actual_calendar,             key: [participant]}
+  user_c_actual_calendar:                  {counter: c_actual_calendar,               key: [participant]}
+  user_iv_actual_calendar:                 {counter: iv_actual_calendar,              key: [participant]}
+  user_btc_pro_image:                      {counter: btc_pro_image,                   key: [participant]}
+  user_c_pro_image:                        {counter: c_pro_image,                     key: [participant]}
+  user_iv_pro_image:                       {counter: iv_pro_image,                    key: [participant]}
+  sess_btc_actual_calendar:                {counter: btc_actual_calendar,             key: [session]}
+  sess_c_actual_calendar:                  {counter: c_actual_calendar,               key: [session]}
+  sess_iv_actual_calendar:                 {counter: iv_actual_calendar,              key: [session]}
+  sess_btc_pro_image:                      {counter: btc_pro_image,                   key: [session]}
+  sess_c_pro_image:                        {counter: c_pro_image,                     key: [session]}
+  sess_iv_pro_image:                       {counter: iv_pro_image,                    key: [session]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
