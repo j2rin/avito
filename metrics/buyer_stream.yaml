@@ -40,10 +40,10 @@ definitions:
   - &is_ph_btn        {eid: [2216, 2650]}
   - &is_ph            {eid: *eid_ph}
   - &is_ph_realdev    {eid: *eid_ph_realdev}
-  - &is_ph_snip       {ph_src: s}
-  - &is_ph_right      {$or: [{ph_src: r}, {ph_src.isnull: true}]}
-  - &is_ph_xlvas      {ph_src: xs}
-  - &is_ph_top        {ph_src: t}
+  - &is_ph_snip       {phone_view_source: s}
+  - &is_ph_right      {$or: [{phone_view_source: r}, {phone_view_source.isnull: true}]}
+  - &is_ph_xlvas      {phone_view_source: xs}
+  - &is_ph_top        {phone_view_source: t}
   - &is_ph_chat       {eid: 3005}
   - &is_ph_tot        {eid: [303, 3005]}
   - &is_msg_btn       {eid: 2654}
@@ -93,15 +93,15 @@ definitions:
   
   - &is_msg_available    {item_flags.!bit: 3}
 
-  - &is_serp_delivery {serp_block: 10}
-  - &is_serp_regions  {serp_block: 9}
-  - &is_serp_vip      {serp_block: 3}
-  - &is_serp_premium  {serp_block: 2}
-  - &is_serp_witcher_regions {serp_block: 11}
-  - &is_serp_witcher_delivery {serp_block: 12}
-  - &is_serp_witcher_new_auto {serp_block: 13}
-  - &is_serp_witcher_new_flats {serp_block: 14}
-  - &is_serp_push     {serp_block: 1, serp_item_flags.bit: 2}
+  - &is_serp_delivery {search_query_type: 10}
+  - &is_serp_regions  {search_query_type: 9}
+  - &is_serp_vip      {search_query_type: 3}
+  - &is_serp_premium  {search_query_type: 2}
+  - &is_serp_witcher_regions {search_query_type: 11}
+  - &is_serp_witcher_delivery {search_query_type: 12}
+  - &is_serp_witcher_new_auto {search_query_type: 13}
+  - &is_serp_witcher_new_flats {search_query_type: 14}
+  - &is_serp_push     {search_query_type: 1, item_serp_flags.bit: 2}
   - &is_serp_grouping {x_from_page: items_ungrouped}
 
   - &is_fp_witcher_regions   {from_page: witcher-extra-regions}
@@ -119,7 +119,7 @@ definitions:
   - &is_serp_ext_delivery {search_flags.bit: 12}
   - &is_serp_ext_regions  {search_flags.bit: 11}
 
-  - &is_serp_vas        {serp_item_flags.bit: [0, 1, 2, 3, 9, 10, 11, 12, 13, 14, 15]}
+  - &is_serp_vas        {item_serp_flags.bit: [0, 1, 2, 3, 9, 10, 11, 12, 13, 14, 15]}
   - &is_item_vas        {item_vas_flags.bit: [0, 1, 2, 3, 5, 6, 10, 11, 12, 13, 14, 15, 16]}
   - &is_item_vip        {item_vas_flags.bit: 0}
   - &is_item_highlight  {item_vas_flags.bit: 1}
