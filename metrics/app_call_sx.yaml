@@ -1,0 +1,53 @@
+definitions:
+  - &callback_scenario  [notification_call_back,deeplink_call_back,messenger_call_back,call_log_callback]
+  - &direct_scenario    [item,item_gallery,messenger_chat_menu,messenger_chat_long_answer]
+  - &item_scenario      [item,item_gallery]
+  - &any_scenario       [item,item_gallery,messenger_chat_menu,messenger_chat_long_answer,notification_call_back,deeplink_call_back,messenger_call_back,call_log_callback]
+
+  - &is_callback_c      {AppCallScenario: *callback_scenario}
+  - &is_direct_c        {AppCallScenario: *direct_scenario}
+  - &is_item_c          {AppCallScenario: *item_scenario}
+  - &is_c               {AppCallScenario: *any_scenario}
+  - &is_outgoing        {CallType: outgoing}
+  - &is_incoming        {CallType: incoming}
+  - &is_answered        {TalkDuration.>: 0}
+  - &is_success         {TalkDuration.>: 30}
+  
+  - &mic_granted        {Reciever_MicAccess: True}
+  - &mic_notgranted     {Reciever_MicAccess: False}
+  - &mic_checked        {Reciever_MicAccess.isnull: False}
+
+metric.counter:
+  
+  appcall_sx_outgoing:                     {filter: [*is_outgoing, *is_callback_c]}
+  appcall_sx_outgoing_answered:            {filter: [*is_outgoing, *is_callback_c, *is_answered], m42: False}
+  appcall_sx_outgoing_success:             {filter: [*is_outgoing, *is_callback_c, *is_success], m42: False}
+  
+  appcall_sx_incoming:                     {filter: [*is_incoming, *is_c]}
+  appcall_sx_incoming_answered:            {filter: [*is_incoming, *is_c, *is_answered]}
+  appcall_sx_incoming_success:             {filter: [*is_incoming, *is_c, *is_success]}
+  
+  appcall_sx_incoming_callback:            {filter: [*is_incoming, *is_callback_c], m42: False}
+  appcall_sx_incoming_callback_answered:   {filter: [*is_incoming, *is_callback_c, *is_answered], m42: False}
+  appcall_sx_incoming_callback_success:    {filter: [*is_incoming, *is_callback_c, *is_success], m42: False}
+  
+  appcall_sx_incoming_direct:              {filter: [*is_incoming, *is_direct_c]}
+  appcall_sx_incoming_direct_answered:     {filter: [*is_incoming, *is_direct_c, *is_answered]}
+  appcall_sx_incoming_direct_success:      {filter: [*is_incoming, *is_direct_c, *is_success]}
+  
+  appcall_sx_any_calls:                    {filter: [*is_c], m42: False}
+  
+  appcall_sx_incoming_direct_mic_granted:  {filter: [*is_incoming, *is_direct_c, *mic_granted], m42: False}
+  appcall_sx_incoming_direct_mic_checked:  {filter: [*is_incoming, *is_direct_c, *mic_checked], m42: False}
+ 
+metric.uniq:
+  unq_appcall_sx_incoming_direct:           {counter: appcall_sx_incoming_direct, key: [participant], m42: False}
+  unq_appcall_sx_incoming_direct_answered:  {counter: appcall_sx_incoming_direct_answered, key: [participant], m42: False}
+  unq_appcall_sx_incoming_direct_success:   {counter: appcall_sx_incoming_direct_success, key: [participant], m42: False}
+
+metric.ratio:
+  appcall_sx_incoming_direct_answered_ratio:            {num: appcall_sx_incoming_direct_answered, den: appcall_sx_incoming_direct}
+  appcall_sx_incoming_direct_success_answered_ratio:    {num: appcall_sx_incoming_direct_success, den: appcall_sx_incoming_direct_answered}
+  appcall_sx_incoming_direct_success_ratio:             {num: appcall_sx_incoming_direct_success, den: appcall_sx_incoming_direct}
+  
+  appcall_sx_incoming_direct_mic_granted_ratio:         {num: appcall_sx_incoming_direct_mic_granted, den: appcall_sx_incoming_direct_mic_checked, m42: False}
