@@ -90,6 +90,8 @@ definitions:
   - &is_search_marketplace    {search_flags.bit: 17}
 
   - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
+  
+  - &is_msg_available    {item_flags.!bit: 3}
 
   - &is_serp_delivery {serp_block: 10}
   - &is_serp_regions  {serp_block: 9}
@@ -409,6 +411,7 @@ metric.counter:
   item_views_total_vas:                    {filter: [*is_item_vas, *is_iv]}
   item_views_total_vip:                    {filter: [*is_item_vip, *is_iv]}
   item_views_with_shop_id:                 {filter: [*is_iv_wo_guessing, *x_is_shop]}
+  item_views_with_available_msg:           {filter: [*is_msg_available, *is_iv]}
   iv_developer:                            {filter: [*is_developer_acc, *is_iv]}
   iv_developer_search:                     {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_search]}
   meta_regions_level_searches:             {filter: [{location_level_id: 2}, *is_1p, *is_search]}
