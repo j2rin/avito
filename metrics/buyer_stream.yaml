@@ -143,8 +143,8 @@ definitions:
   - &is_developer_acc {SFAccount_Type: 'Девелопер'}
   - &is_re_agency_acc {SFAccount_Type: 'Агентство Недвижимости'}
   - &is_re_private_acc {SFAccount_Type.isnull: true}  
-  - &is_item_pro_image {item_flags: 0}
-  - &is_item_str_actual_calendar {item_flags: 1}
+  - &is_item_pro_image {item_flags.bit: 0}
+  - &is_item_str_actual_calendar {item_flags.bit: 1}
 
   - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, $or: [search_flags.bit: [0, 1, 2, 3, 4], *is_serp_regions]]]}
   - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, search_flags.bit: [0, 1, 2, 3, 4, 11]]]}
