@@ -92,6 +92,7 @@ seller_item_active:
       - population_group
       - location_level_id
       - user_segment
+      - is_asd
     participant: {user: user_id}
     dtm: event_date
     segm: user_id
@@ -117,6 +118,7 @@ seller_item_event:
       - population_group
       - location_level_id
       - user_segment
+      - is_asd
     participant: {user: user_id}
     dtm: event_date
     segm: user_id
@@ -216,7 +218,7 @@ advert_funnel:
 core_c2c:
   vertica:
     table: dma.vo_core_c2c
-    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment]
+    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment, is_asd]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -306,7 +308,7 @@ delivery:
 core_b2b:
   vertica:
     table: dma.vo_core_b2b
-    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, region_id, city_id, population_group, location_group_id, location_level_id, user_segment]
+    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, region_id, city_id, population_group, location_group_id, location_level_id, user_segment, is_asd]
     participant: {user: user_id}
     dtm: event_date
     segm: user_id
