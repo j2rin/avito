@@ -13,9 +13,9 @@ definitions:
   - &sort_price   [3, 4]
   - &sort_dft     5
 
-  - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, flags.!bit: 4]}
-  - &is_rec     {$or: [{eid: *eid_rec}, {flags.bit: 10}]}
-  - &is_rec_sg  {flags.bit: 10}
+  - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, search_flags.!bit: 4]}
+  - &is_rec     {$or: [{eid: *eid_rec}, {search_flags.bit: 10}]}
+  - &is_rec_sg  {search_flags.bit: 10}
   - &is_u2i     {eid: *eid_u2i}
   - &is_i2i     {eid: *eid_i2i}
   - &is_job_ast {eid: *eid_job_ast}
@@ -23,8 +23,8 @@ definitions:
   - &is_map     {eid: *eid_map}
 
   - &x_is_search  {x_eid: *eid_search}
-  - &x_is_rec     {$or: [{x_eid: *eid_rec}, {x_flags.bit: 10}]}
-  - &x_is_rec_sg  {x_flags.bit: 10}
+  - &x_is_rec     {$or: [{x_eid: *eid_rec}, {search_flags.bit: 10}]}
+  - &x_is_rec_sg  {search_flags.bit: 10}
   - &x_is_u2i     {x_eid: *eid_u2i}
   - &x_is_i2i     {x_eid: *eid_i2i}
   - &x_is_job_ast {x_eid: *eid_job_ast}
@@ -40,10 +40,10 @@ definitions:
   - &is_ph_btn        {eid: [2216, 2650]}
   - &is_ph            {eid: *eid_ph}
   - &is_ph_realdev    {eid: *eid_ph_realdev}
-  - &is_ph_snip       {ph_src: s}
-  - &is_ph_right      {$or: [{ph_src: r}, {ph_src.isnull: true}]}
-  - &is_ph_xlvas      {ph_src: xs}
-  - &is_ph_top        {ph_src: t}
+  - &is_ph_snip       {phone_view_source: s}
+  - &is_ph_right      {$or: [{phone_view_source: r}, {phone_view_source.isnull: true}]}
+  - &is_ph_xlvas      {phone_view_source: xs}
+  - &is_ph_top        {phone_view_source: t}
   - &is_ph_chat       {eid: 3005}
   - &is_ph_tot        {eid: [303, 3005]}
   - &is_msg_btn       {eid: 2654}
@@ -57,47 +57,51 @@ definitions:
   - &is_btc_wo_guessing     {$or: [{<<: *is_btc, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
   - &is_contact_wo_guessing    {$or: [{<<: *is_contact, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
 
-  - &is_shop {flags.bit: 7}
-  - &x_is_shop {x_flags.bit: 7}
+  - &is_shop {search_flags.bit: 7}
+  - &x_is_shop {search_flags.bit: 7}
 
-  - &is_s_geo       {x_flags.bit: [0, 1, 2, 3]}
-  - &is_s_local_geo {x_flags.bit: [0, 1, 2]}
-  - &is_s_metro     {x_flags.bit: 0}
-  - &is_s_district  {x_flags.bit: 1}
-  - &is_s_road      {x_flags.bit: 2}
-  - &is_s_radius    {x_flags.bit: 3}
-  - &is_default_radius {x_flags.bit: 30}
-  - &is_not_default_radius {$or: [x_flags.!bit: 30, search_radius.isnull: false]}
-  - &is_s_map       {x_flags.bit: 4}
-  - &is_s_delivery  {x_flags.bit: 5}
-  - &is_s_saved     {x_flags.bit: 6}
+  - &is_s_geo       {search_flags.bit: [0, 1, 2, 3]}
+  - &is_s_local_geo {search_flags.bit: [0, 1, 2]}
+  - &is_s_metro     {search_flags.bit: 0}
+  - &is_s_district  {search_flags.bit: 1}
+  - &is_s_road      {search_flags.bit: 2}
+  - &is_s_radius    {search_flags.bit: 3}
+  - &is_default_radius {search_flags.bit: 30}
+  - &is_not_default_radius {$or: [search_flags.!bit: 30, search_radius.isnull: false]}
+  - &is_s_map       {search_flags.bit: 4}
+  - &is_s_delivery  {search_flags.bit: 5}
+  - &is_s_saved     {search_flags.bit: 6}
 
-  - &x_is_filter_search       {x_flags.bit: 8}
-  - &x_is_price_filter_search {x_flags.bit: 9}
-  - &x_is_sg_rec              {x_flags.bit: 10}
-  - &x_is_extra_regions       {x_flags.bit: 11}
-  - &x_is_extra_delivery      {x_flags.bit: 12}
-  - &x_is_witcher_regions     {x_flags.bit: 13}
-  - &x_is_witcher_delivery    {x_flags.bit: 14}
-  - &x_is_witcher_new_auto    {x_flags.bit: 15}
-  - &x_is_witcher_new_flats   {x_flags.bit: 16}
+  - &x_is_filter_search       {search_flags.bit: 8}
+  - &x_is_price_filter_search {search_flags.bit: 9}
+  - &x_is_sg_rec              {search_flags.bit: 10}
+  - &x_is_extra_regions       {search_flags.bit: 11}
+  - &x_is_extra_delivery      {search_flags.bit: 12}
+  - &x_is_witcher_regions     {search_flags.bit: 13}
+  - &x_is_witcher_delivery    {search_flags.bit: 14}
+  - &x_is_witcher_new_auto    {search_flags.bit: 15}
+  - &x_is_witcher_new_flats   {search_flags.bit: 16}
 
-  - &is_delivery_pvz          {x_flags.bit: 17}
-  - &is_safedeal              {x_flags.bit: 18}
-  - &is_delivery_courier      {x_flags.bit: 19}
-  - &is_marketplace           {x_flags.bit: 20}
+  - &is_delivery_pvz          {other_flags.bit: 0}
+  - &is_safedeal              {other_flags.bit: 1}
+  - &is_delivery_courier      {other_flags.bit: 2}
+
+  - &is_item_marketplace      {item_flags.bit: 2}
+  - &is_search_marketplace    {search_flags.bit: 17}
 
   - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
+  
+  - &is_msg_available    {item_flags.!bit: 3}
 
-  - &is_serp_delivery {serp_block: 10}
-  - &is_serp_regions  {serp_block: 9}
-  - &is_serp_vip      {serp_block: 3}
-  - &is_serp_premium  {serp_block: 2}
-  - &is_serp_witcher_regions {serp_block: 11}
-  - &is_serp_witcher_delivery {serp_block: 12}
-  - &is_serp_witcher_new_auto {serp_block: 13}
-  - &is_serp_witcher_new_flats {serp_block: 14}
-  - &is_serp_push     {serp_block: 1, serp_item_flags.bit: 2}
+  - &is_serp_delivery {search_query_type: 10}
+  - &is_serp_regions  {search_query_type: 9}
+  - &is_serp_vip      {search_query_type: 3}
+  - &is_serp_premium  {search_query_type: 2}
+  - &is_serp_witcher_regions {search_query_type: 11}
+  - &is_serp_witcher_delivery {search_query_type: 12}
+  - &is_serp_witcher_new_auto {search_query_type: 13}
+  - &is_serp_witcher_new_flats {search_query_type: 14}
+  - &is_serp_push     {search_query_type: 1, item_serp_flags.bit: 2}
   - &is_serp_grouping {x_from_page: items_ungrouped}
 
   - &is_fp_witcher_regions   {from_page: witcher-extra-regions}
@@ -105,35 +109,46 @@ definitions:
   - &is_fp_witcher_new_auto  {from_page: witcher-new-auto}
   - &is_fp_witcher_new_flats {from_page: witcher-new-flats}
 
-  - &is_serp_ext          {x_flags.bit: [11, 12]}
-  - &is_serp_ext_delivery {x_flags.bit: 12}
-  - &is_serp_ext_regions  {x_flags.bit: 11}
+  - &is_x_fp_witcher_regions    {x_from_page: witcher-extra-regions}
+  - &is_x_fp_witcher_delivery   {x_from_page: witcher-extra-delivery}
+  - &is_x_fp_witcher_new_auto   {x_from_page: witcher-new-auto}
+  - &is_x_fp_witcher_new_flats  {x_from_page: witcher-new-flats}
+  - &is_x_fp_witcher_any        {x_from_page: [witcher-extra-regions, witcher-extra-delivery, witcher-new-auto, witcher-new-flats]}
 
-  - &is_serp_vas        {serp_item_flags.bit: [0, 1, 2, 3]}
-  - &is_item_vas        {item_vas_flags.bit: [0, 1, 2, 3]}
+  - &is_serp_ext          {search_flags.bit: [11, 12]}
+  - &is_serp_ext_delivery {search_flags.bit: 12}
+  - &is_serp_ext_regions  {search_flags.bit: 11}
+
+  - &is_serp_vas        {item_serp_flags.bit: [0, 1, 2, 3, 9, 10, 11, 12, 13, 14, 15]}
+  - &is_item_vas        {item_vas_flags.bit: [0, 1, 2, 3, 5, 6, 10, 11, 12, 13, 14, 15, 16]}
   - &is_item_vip        {item_vas_flags.bit: 0}
   - &is_item_highlight  {item_vas_flags.bit: 1}
   - &is_item_push       {item_vas_flags.bit: 2}
-  - &is_item_premium    {item_vas_flags.bit: 3}
+  - &is_item_premium    {item_vas_flags.bit: [3, 5]}
 
-  - &is_s_sort_date     {x_search_sort: *sort_date}
-  - &is_s_sort_price    {x_search_sort: *sort_price}
-  - &is_s_sort_dft      {x_search_sort: *sort_dft}
+  - &is_s_sort_date     {search_sort: *sort_date}
+  - &is_s_sort_price    {search_sort: *sort_price}
+  - &is_s_sort_dft      {search_sort: *sort_dft}
 
-  - &q                  {x_query.isnull: false}
-  - &noq                {x_query.isnull: true}
+  - &q                  {query.isnull: false}
+  - &noq                {query.isnull: true}
   - &is_1p              {page_no: 0}
 
-  - &is_serp_empty      {item_cnt: 0}
-  - &is_serp_small      {item_cnt.>=: 1, item_cnt.<=: 9}
-  - &is_base_serp_empty {base_item_cnt: 0}
-  - &is_base_serp_small {base_item_cnt.>=: 1, base_item_cnt.<=: 9}
+  - &is_serp_empty      {item_count: 0}
+  - &is_serp_small      {item_count.>=: 1, item_count.<=: 9}
+  - &is_base_serp_empty {base_item_count: 0}
+  - &is_base_serp_small {base_item_count.>=: 1, base_item_count.<=: 9}
 
   - &is_region_with_double_groups {region_id: [697, 4181]}
   - &is_developer_acc {SFAccount_Type: 'Девелопер'}
+  - &is_re_agency_acc {SFAccount_Type: 'Агентство Недвижимости'}
+  - &is_re_private_acc {SFAccount_Type.isnull: true}  
+  - &is_item_pro_image {item_flags.bit: 0}
+  - &is_item_str_actual_calendar {item_flags.bit: 1}
 
-  - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, x_flags.bit: [0, 1, 2, 3, 4, 11]]]}
-  - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, x_flags.bit: [0, 1, 2, 3, 4, 11]]]}
+  - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, $or: [search_flags.bit: [0, 1, 2, 3, 4], *is_serp_regions]]]}
+  - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, search_flags.bit: [0, 1, 2, 3, 4, 11]]]}
+
 
 metric.counter:
   base_serp_empty:                         {filter: [*is_1p, *is_base_serp_empty, *is_search]}
@@ -144,6 +159,8 @@ metric.counter:
   base_serp_without_query_small:           {filter: [*is_1p, *is_base_serp_small, *is_search, *noq]}
   booking_created_short_rent:              {filter: [*is_booking]}
   bt_clicks:                               {filter: [{$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
+  cnt_btc:                                 {filter: [*is_btc]}
+  btc_mp:                                  {filter: [*is_item_marketplace, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
   btc_developer:                           {filter: [*is_btc, *is_developer_acc]}
   btc_developer_search:                    {filter: [*is_btc_wo_guessing, *is_developer_acc, *x_is_search]}
   buyer_target_clicks_with_shop_id:        {filter: [*is_btc, *is_shop]}
@@ -166,15 +183,19 @@ metric.counter:
   cnt_btc_premium:                         {filter: [*is_btc_wo_guessing, *is_serp_premium, *x_is_search], m42: False}
   cnt_btc_push:                            {filter: [*is_btc_wo_guessing, *is_serp_push, *x_is_search], m42: False}
   cnt_btc_rec:                             {filter: [*is_btc_wo_guessing, *x_is_rec], m42: False}
+  cnt_btc_rec_mp:                          {filter: [*is_btc_wo_guessing, *x_is_rec, *is_item_marketplace], m42: False}
   cnt_btc_job_ast:                         {filter: [*is_btc_wo_guessing, *x_is_job_ast], m42: False}
   cnt_btc_rec_i2i:                         {filter: [*is_btc_wo_guessing, *x_is_i2i], m42: False}
+  cnt_btc_rec_i2i_mp:                      {filter: [*is_btc_wo_guessing, *x_is_i2i, *is_item_marketplace], m42: False}
   cnt_btc_rec_u2i:                         {filter: [*is_btc_wo_guessing, *x_is_u2i], m42: False}
+  cnt_btc_rec_u2i_mp:                      {filter: [*is_btc_wo_guessing, *x_is_u2i, *is_item_marketplace], m42: False}
   cnt_btc_rec_vas:                         {filter: [*is_btc_wo_guessing, *is_item_vas, *x_is_rec], m42: False}
   cnt_btc_reg:                             {filter: [*is_btc_wo_guessing, *is_serp_regions, *x_is_search], m42: False}
   cnt_btc_s_distr:                         {filter: [*is_btc_wo_guessing, *is_s_district, *x_is_search], m42: False}
   cnt_btc_s_distr_metro_radius_road:       {filter: [*is_btc_wo_guessing, *x_is_search, {$or: [[*is_s_district], [*is_s_metro], [*is_s_radius], [*is_s_road]]}], m42: False}
   cnt_btc_s_distr_metro_road:              {filter: [*is_btc_wo_guessing, *x_is_search, {$or: [[*is_s_district], [*is_s_metro], [*is_s_road]]}], m42: False}
   cnt_btc_s_item_attr:                     {filter: [*is_btc_wo_guessing, *x_is_search], m42: False}
+  cnt_btc_s_item_attr_mp:                  {filter: [*is_btc_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
   cnt_btc_s_map_area:                      {filter: [*is_btc_wo_guessing, *is_s_map, *x_is_search], m42: False}
   cnt_btc_s_metro:                         {filter: [*is_btc_wo_guessing, *is_s_metro, *x_is_search], m42: False}
   cnt_btc_s_noquery:                       {filter: [*is_btc_wo_guessing, *noq, *x_is_search], m42: False}
@@ -206,8 +227,10 @@ metric.counter:
   cnt_cs_premium:                          {filter: [*is_contact_wo_guessing, *is_serp_premium, *x_is_search], m42: False}
   cnt_cs_push:                             {filter: [*is_contact_wo_guessing, *is_serp_push, *x_is_search], m42: False}
   cnt_cs_rec:                              {filter: [*is_contact_wo_guessing, *x_is_rec], m42: False}
+  cnt_cs_rec_mp:                           {filter: [*is_contact_wo_guessing, *x_is_rec, *is_item_marketplace], m42: False}
   cnt_c_rec_job_ast:                       {filter: [*is_contact_wo_guessing, *x_is_job_ast], m42: False}
   cnt_cs_rec_i2i:                          {filter: [*is_contact_wo_guessing, *x_is_i2i], m42: False}
+  cnt_cs_rec_i2i_mp:                       {filter: [*is_contact_wo_guessing, *x_is_i2i, *is_item_marketplace], m42: False}
   cnt_cs_rec_i2i_premium:                  {filter: [*is_contact_wo_guessing, *is_item_premium, *x_is_i2i], m42: False}
   cnt_cs_rec_i2i_push:                     {filter: [*is_contact_wo_guessing, *is_item_push, *x_is_i2i], m42: False}
   cnt_cs_rec_i2i_vas:                      {filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_i2i], m42: False}
@@ -216,6 +239,7 @@ metric.counter:
   cnt_cs_rec_push:                         {filter: [*is_contact_wo_guessing, *is_item_push, *x_is_rec], m42: False}
   cnt_cs_rec_s:                            {filter: [*is_contact_wo_guessing, {$or: [[*x_is_rec], [*x_is_search]]}], m42: False}
   cnt_cs_rec_u2i:                          {filter: [*is_contact_wo_guessing, *x_is_u2i], m42: False}
+  cnt_cs_rec_u2i_mp:                       {filter: [*is_contact_wo_guessing, *x_is_u2i, *is_item_marketplace], m42: False}
   cnt_cs_rec_u2i_premium:                  {filter: [*is_contact_wo_guessing, *is_item_premium, *x_is_u2i], m42: False}
   cnt_cs_rec_u2i_push:                     {filter: [*is_contact_wo_guessing, *is_item_push, *x_is_u2i], m42: False}
   cnt_cs_rec_u2i_vas:                      {filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_u2i], m42: False}
@@ -227,6 +251,7 @@ metric.counter:
   cnt_cs_s_distr_metro_road:               {filter: [*is_contact_wo_guessing, *x_is_search, {$or: [[*is_s_district], [*is_s_metro], [*is_s_road]]}], m42: False}
   cnt_cs_s_grouped_doubles:                {filter: [*is_contact_wo_guessing, *is_region_with_double_groups, *is_serp_grouping, *x_is_search], m42: False}
   cnt_cs_s_item_attr:                      {filter: [*is_contact_wo_guessing, *x_is_search], m42: False}
+  cnt_cs_s_item_attr_mp:                   {filter: [*is_contact_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
   cnt_cs_s_map_area:                       {filter: [*is_contact_wo_guessing, *is_s_map, *x_is_search], m42: False}
   cnt_cs_s_metro:                          {filter: [*is_contact_wo_guessing, *is_s_metro, *x_is_search], m42: False}
   cnt_cs_s_radius:                         {filter: [*is_contact_wo_guessing, *is_s_radius, *x_is_search], m42: False}
@@ -295,8 +320,10 @@ metric.counter:
   cnt_iv_premium:                          {filter: [*is_iv_wo_guessing, *is_serp_premium, *x_is_search], m42: False}
   cnt_iv_push:                             {filter: [*is_iv_wo_guessing, *is_serp_push, *x_is_search], m42: False}
   cnt_iv_rec:                              {filter: [*is_iv_wo_guessing, *x_is_rec], m42: False}
+  cnt_iv_rec_mp:                           {filter: [*is_iv_wo_guessing, *x_is_rec, *is_item_marketplace], m42: False}
   cnt_iv_rec_job_ast:                      {filter: [*is_iv_wo_guessing, *x_is_job_ast], m42: False}
   cnt_iv_rec_i2i:                          {filter: [*is_iv_wo_guessing, *x_is_i2i], m42: False}
+  cnt_iv_rec_i2i_mp:                       {filter: [*is_iv_wo_guessing, *x_is_i2i, *is_item_marketplace], m42: False}
   cnt_iv_rec_i2i_premium:                  {filter: [*is_item_premium, *is_iv_wo_guessing, *x_is_i2i], m42: False}
   cnt_iv_rec_i2i_push:                     {filter: [*is_item_push, *is_iv_wo_guessing, *x_is_i2i], m42: False}
   cnt_iv_rec_i2i_vas:                      {filter: [*is_item_vas, *is_iv_wo_guessing, *x_is_i2i], m42: False}
@@ -305,6 +332,7 @@ metric.counter:
   cnt_iv_rec_push:                         {filter: [*is_item_push, *is_iv_wo_guessing, *x_is_rec], m42: False}
   cnt_iv_rec_s:                            {filter: [*is_iv_wo_guessing, {$or: [[*x_is_rec], [*x_is_search]]}], m42: False}
   cnt_iv_rec_u2i:                          {filter: [*is_iv_wo_guessing, *x_is_u2i], m42: False}
+  cnt_iv_rec_u2i_mp:                       {filter: [*is_iv_wo_guessing, *x_is_u2i, *is_item_marketplace], m42: False}
   cnt_iv_rec_u2i_premium:                  {filter: [*is_item_premium, *is_iv_wo_guessing, *x_is_u2i], m42: False}
   cnt_iv_rec_u2i_push:                     {filter: [*is_item_push, *is_iv_wo_guessing, *x_is_u2i], m42: False}
   cnt_iv_rec_u2i_vas:                      {filter: [*is_item_vas, *is_iv_wo_guessing, *x_is_u2i], m42: False}
@@ -315,6 +343,7 @@ metric.counter:
   cnt_iv_s_distr:                          {filter: [*is_iv_wo_guessing, *is_s_district, *x_is_search], m42: False}
   cnt_iv_s_filter_price:                   {filter: [*is_iv_wo_guessing, *x_is_search, {$or: [[*x_is_filter_search], [*x_is_price_filter_search]]}], m42: False}
   cnt_iv_s_item_attr:                      {filter: [*is_iv_wo_guessing, *x_is_search], m42: False}
+  cnt_iv_s_item_attr_mp:                   {filter: [*is_iv_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
   cnt_iv_s_map_area:                       {filter: [*is_iv_wo_guessing, *is_s_map, *x_is_search], m42: False}
   cnt_iv_s_metro:                          {filter: [*is_iv_wo_guessing, *is_s_metro, *x_is_search], m42: False}
   cnt_iv_s_radius:                         {filter: [*is_iv_wo_guessing, *is_s_radius, *x_is_search], m42: False}
@@ -366,6 +395,7 @@ metric.counter:
   fav_added_developer:                     {filter: [*is_developer_acc, *is_fav]}
   fav_added_with_shop_id:                  {filter: [*is_fav, *is_shop]}
   favorites_added:                         {filter: [*is_fav]}
+  favorites_added_mp:                      {filter: [*is_fav, *is_item_marketplace]}
   favorites_list_views:                    {filter: [*is_fav_lst]}
   favorites_removed:                       {filter: [*is_fav_rmv]}
   federal_city_level_searches:             {filter: [{location_level_id: 4}, *is_1p, *is_search]}
@@ -375,6 +405,7 @@ metric.counter:
   first_messages:                          {filter: [*is_msg]}
   first_messages_vas:                      {filter: [*is_item_vas, *is_msg]}
   item_views:                              {filter: [*is_iv]}
+  item_views_mp:                           {filter: [*is_iv, *is_item_marketplace]}
   item_views_client:                       {filter: [*is_iv_client]}
   item_views_client_rec_from_msg:          {filter: [*is_iv_client, *x_is_rec_msg]}
   item_views_total_premium:                {filter: [*is_item_premium, *is_iv]}
@@ -382,6 +413,7 @@ metric.counter:
   item_views_total_vas:                    {filter: [*is_item_vas, *is_iv]}
   item_views_total_vip:                    {filter: [*is_item_vip, *is_iv]}
   item_views_with_shop_id:                 {filter: [*is_iv_wo_guessing, *x_is_shop]}
+  item_views_with_available_msg:           {filter: [*is_msg_available, *is_iv]}
   iv_developer:                            {filter: [*is_developer_acc, *is_iv]}
   iv_developer_search:                     {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_search]}
   meta_regions_level_searches:             {filter: [{location_level_id: 2}, *is_1p, *is_search]}
@@ -421,6 +453,7 @@ metric.counter:
   saved_searches:                          {filter: [*is_1p, *is_s_saved, *is_search]}
   search_u2i:                              {filter: [*is_search, *x_is_rec_sg]}
   searches:                                {filter: [*is_1p, *is_search]}
+  searches_mp:                             {filter: [*is_1p, *is_search, *is_search_marketplace]}
   searches_any_ext_block:                  {filter: [*is_1p, *is_search, {$or: [[*x_is_extra_delivery], [*x_is_extra_regions]]}]}
   searches_date_sort:                      {filter: [*is_1p, *is_s_sort_date, *is_search]}
   searches_default_sort:                   {filter: [*is_1p, *is_s_sort_dft, *is_search]}
@@ -442,6 +475,7 @@ metric.counter:
   searches_radius:                         {filter: [*is_1p, *is_s_radius, *is_search]}
   searches_road:                           {filter: [*is_1p, *is_s_road, *is_search]}
   searches_serp:                           {filter: [*is_search]}
+  searches_serp_mp:                        {filter: [*is_search, *is_search_marketplace]}
   searches_serp_extra_delivery:            {filter: [*is_search, *x_is_extra_delivery]}
   searches_serp_extra_regions:             {filter: [*is_search, *x_is_extra_regions]}
   searches_shop:                           {filter: [*is_1p, *is_search, *x_is_shop]}
@@ -454,11 +488,15 @@ metric.counter:
   searches_with_filter_any:                {filter: [*is_1p, *is_search, {$or: [[*x_is_filter_search], [*x_is_price_filter_search]]}]}
   searches_with_price_filter:              {filter: [*is_1p, *is_search, *x_is_price_filter_search]}
   searches_with_query:                     {filter: [*is_1p, *is_search, *q]}
+  searches_with_query_mp:                  {filter: [*is_1p, *is_search, *q, *is_search_marketplace]}
   searches_with_query_date_sort:           {filter: [*is_1p, *is_s_sort_date, *is_search, *q]}
   searches_with_shop_id:                   {filter: [*is_1p, *is_search, *is_shop]}
   searches_without_query:                  {filter: [*is_1p, *is_search, *noq]}
+  searches_without_query_mp:               {filter: [*is_1p, *is_search, *noq, *is_search_marketplace]}
   serp_empty:                              {filter: [*is_1p, *is_search, *is_serp_empty]}
+  serp_empty_mp:                           {filter: [*is_1p, *is_search, *is_serp_empty, *is_search_marketplace]}
   serp_small:                              {filter: [*is_1p, *is_search, *is_serp_small]}
+  serp_small_mp:                           {filter: [*is_1p, *is_search, *is_serp_small, *is_search_marketplace]}
   serp_with_query_empty:                   {filter: [*is_1p, *is_search, *is_serp_empty, *q]}
   serp_with_query_small:                   {filter: [*is_1p, *is_search, *is_serp_small, *q]}
   serp_without_query_empty:                {filter: [*is_1p, *is_search, *is_serp_empty, *noq]}
@@ -474,6 +512,41 @@ metric.counter:
   total_courier_click:                     {filter: [*is_delivery_courier, eid: 2483]}
   total_courier_widget:                    {filter: [eid: 4033]}
   total_courier_contact:                   {filter: [eid: 4035]}
+  total_delivery_click_mp:                 {filter: [*is_item_marketplace, eid: 2483]}
+  total_delivery_widget_mp:                {filter: [*is_item_marketplace, eid: 2013]}
+  total_delivery_confirm_mp:               {filter: [*is_item_marketplace, eid: 2749]}
+  total_delivery_contact_mp:               {filter: [*is_item_marketplace, *is_delivery]}
+  iv_re_agency:                            {filter: [*is_re_agency_acc, *is_iv]}
+  iv_re_private:                           {filter: [*is_re_private_acc, *is_iv]} 
+  c_re_agency:                             {filter: [*is_contact, *is_re_agency_acc]}
+  c_re_private:                            {filter: [*is_contact, *is_re_private_acc]}
+  iv_witcher_funnel_any:                   {filter: [*is_x_fp_witcher_any, *is_iv_wo_guessing]}
+  iv_witcher_funnel_delivery:              {filter: [*is_x_fp_witcher_delivery, *is_iv_wo_guessing]}
+  iv_witcher_funnel_new_auto:              {filter: [*is_x_fp_witcher_new_auto, *is_iv_wo_guessing]}
+  iv_witcher_funnel_new_flats:             {filter: [*is_x_fp_witcher_new_flats, *is_iv_wo_guessing]}
+  iv_witcher_funnel_regions:               {filter: [*is_x_fp_witcher_regions, *is_iv_wo_guessing]}
+  btc_witcher_funnel_any:                  {filter: [*is_x_fp_witcher_any, *is_btc_wo_guessing]}
+  btc_witcher_funnel_delivery:             {filter: [*is_x_fp_witcher_delivery, *is_btc_wo_guessing]}
+  btc_witcher_funnel_new_auto:             {filter: [*is_x_fp_witcher_new_auto, *is_btc_wo_guessing]}
+  btc_witcher_funnel_new_flats:            {filter: [*is_x_fp_witcher_new_flats, *is_btc_wo_guessing]}
+  btc_witcher_funnel_regions:              {filter: [*is_x_fp_witcher_regions, *is_btc_wo_guessing]}
+  c_witcher_funnel_any:                    {filter: [*is_x_fp_witcher_any, *is_btc_wo_guessing]}
+  c_witcher_funnel_delivery:               {filter: [*is_x_fp_witcher_delivery, *is_btc_wo_guessing]}
+  c_witcher_funnel_new_auto:               {filter: [*is_x_fp_witcher_new_auto, *is_btc_wo_guessing]}
+  c_witcher_funnel_new_flats:              {filter: [*is_x_fp_witcher_new_flats, *is_btc_wo_guessing]}
+  c_witcher_funnel_regions:                {filter: [*is_x_fp_witcher_regions, *is_btc_wo_guessing]}
+  fav_witcher_funnel_any:                  {filter: [*is_x_fp_witcher_any, *is_fav]}
+  fav_witcher_funnel_delivery:             {filter: [*is_x_fp_witcher_delivery, *is_fav]}
+  fav_witcher_funnel_new_auto:             {filter: [*is_x_fp_witcher_new_auto, *is_fav]}
+  fav_witcher_funnel_new_flats:            {filter: [*is_x_fp_witcher_new_flats, *is_fav]}
+  fav_witcher_funnel_regions:              {filter: [*is_x_fp_witcher_regions, *is_fav]}
+  btc_actual_calendar:                     {filter: [*is_item_str_actual_calendar, *is_btc]}
+  c_actual_calendar:                       {filter: [*is_item_str_actual_calendar, *is_contact]}
+  iv_actual_calendar:                      {filter: [*is_item_str_actual_calendar, *is_iv]}
+  btc_pro_image:                           {filter: [*is_item_pro_image, *is_btc]}
+  c_pro_image:                             {filter: [*is_item_pro_image, *is_contact]}
+  iv_pro_image:                            {filter: [*is_item_pro_image, *is_iv]}
+
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -514,10 +587,11 @@ metric.uniq:
   buyer_target_clicks_rec:                 {counter: cnt_btc_rec,                     key: [item_x]}
   buyer_target_clicks_rec_i2i:             {counter: cnt_btc_rec_i2i,                 key: [item_x]}
   buyer_target_clicks_rec_u2i:             {counter: cnt_btc_rec_u2i,                 key: [item_x]}
-  buyer_target_clicks_rec_job_ast:         {counter: cnt_btc_job_ast,             key: [item_x]}
+  buyer_target_clicks_rec_job_ast:         {counter: cnt_btc_job_ast,                 key: [item_x]}
   buyer_target_clicks_regions:             {counter: cnt_btc_reg,                     key: [item_x]}
   buyer_target_clicks_searches_u2i:        {counter: cnt_btc_s_u2i,                   key: [item_x]}
   buyer_target_clicks_serp:                {counter: cnt_btc_s_item_attr,             key: [item_x]}
+  buyer_target_clicks_serp_mp:             {counter: cnt_btc_s_item_attr_mp,          key: [item_x]}
   buyer_target_clicks_serp_district:       {counter: cnt_btc_s_distr,                 key: [item_x]}
   buyer_target_clicks_serp_metro:          {counter: cnt_btc_s_metro,                 key: [item_x]}
   buyer_target_clicks_serp_radius:         {counter: cnt_btc_s_radius,                key: [item_x]}
@@ -543,8 +617,10 @@ metric.uniq:
   contacts_premium:                        {counter: cnt_cs_premium,                  key: [item_x]}
   contacts_push:                           {counter: cnt_cs_push,                     key: [item_x]}
   contacts_rec:                            {counter: cnt_cs_rec,                      key: [item_x]}
+  contacts_rec_mp:                         {counter: cnt_cs_rec_mp,                   key: [item_x]}
   contacts_rec_job_ast:                    {counter: cnt_c_rec_job_ast,               key: [item_x]}
   contacts_rec_i2i:                        {counter: cnt_cs_rec_i2i,                  key: [item_x]}
+  contacts_rec_i2i_mp:                     {counter: cnt_cs_rec_i2i_mp,               key: [item_x]}
   contacts_rec_i2i_premium:                {counter: cnt_cs_rec_i2i_premium,          key: [item_x]}
   contacts_rec_i2i_push:                   {counter: cnt_cs_rec_i2i_push,             key: [item_x]}
   contacts_rec_i2i_vas:                    {counter: cnt_cs_rec_i2i_vas,              key: [item_x]}
@@ -552,6 +628,7 @@ metric.uniq:
   contacts_rec_premium:                    {counter: cnt_cs_rec_premium,              key: [item_x]}
   contacts_rec_push:                       {counter: cnt_cs_rec_push,                 key: [item_x]}
   contacts_rec_u2i:                        {counter: cnt_cs_rec_u2i,                  key: [item_x]}
+  contacts_rec_u2i_mp:                     {counter: cnt_cs_rec_u2i_mp,               key: [item_x]}
   contacts_rec_u2i_premium:                {counter: cnt_cs_rec_u2i_premium,          key: [item_x]}
   contacts_rec_u2i_push:                   {counter: cnt_cs_rec_u2i_push,             key: [item_x]}
   contacts_rec_u2i_vas:                    {counter: cnt_cs_rec_u2i_vas,              key: [item_x]}
@@ -561,6 +638,7 @@ metric.uniq:
   contacts_regions:                        {counter: cnt_cs_reg,                      key: [item_x]}
   contacts_searches_u2i:                   {counter: cnt_cs_s_u2i,                    key: [item_x]}
   contacts_serp:                           {counter: cnt_cs_s_item_attr,              key: [item_x]}
+  contacts_serp_mp:                        {counter: cnt_cs_s_item_attr_mp,           key: [item_x]}
   contacts_serp_district:                  {counter: cnt_cs_s_distr,                  key: [item_x]}
   contacts_serp_local_geo:                 {counter: cnt_cs_s_distr_metro_road,       key: [item_x]}
   contacts_serp_map_area:                  {counter: cnt_cs_s_map_area,               key: [item_x]}
@@ -572,6 +650,11 @@ metric.uniq:
   contacts_shop:                           {counter: cnt_cs_shopx,                    key: [item_x]}
   contacts_vas:                            {counter: cnt_cs_vas,                      key: [item_x]}
   contacts_vip:                            {counter: cnt_cs_vip,                      key: [item_x]}
+  delivery_item_view_mp:                   {counter: item_views_mp,                   key: [item]}
+  delivery_click_mp:                       {counter: total_delivery_click_mp,         key: [item]}
+  delivery_widget_mp:                      {counter: total_delivery_widget_mp,        key: [item]}
+  delivery_confirm_mp:                     {counter: total_delivery_confirm_mp,       key: [item]}
+  delivery_contact_mp:                     {counter: total_delivery_contact_mp,       key: [item]}
   fav_added_delivery:                      {counter: cnt_fav_dlv,                     key: [item_x]}
   fav_added_from_map:                      {counter: cnt_fav_from_map,                key: [item_x]}
   fav_added_premium:                       {counter: cnt_fav_premium,                 key: [item_x]}
@@ -620,8 +703,10 @@ metric.uniq:
   item_views_premium:                      {counter: cnt_iv_premium,                  key: [item_x]}
   item_views_push:                         {counter: cnt_iv_push,                     key: [item_x]}
   item_views_rec:                          {counter: cnt_iv_rec,                      key: [item_x]}
+  item_views_rec_mp:                       {counter: cnt_iv_rec_mp,                   key: [item_x]}
   item_views_rec_job_ast:                  {counter: cnt_iv_rec_job_ast,              key: [item_x]}
   item_views_rec_i2i:                      {counter: cnt_iv_rec_i2i,                  key: [item_x]}
+  item_views_rec_i2i_mp:                   {counter: cnt_iv_rec_i2i_mp,               key: [item_x]}
   item_views_rec_i2i_premium:              {counter: cnt_iv_rec_i2i_premium,          key: [item_x]}
   item_views_rec_i2i_push:                 {counter: cnt_iv_rec_i2i_push,             key: [item_x]}
   item_views_rec_i2i_vas:                  {counter: cnt_iv_rec_i2i_vas,              key: [item_x]}
@@ -629,6 +714,7 @@ metric.uniq:
   item_views_rec_premium:                  {counter: cnt_iv_rec_premium,              key: [item_x]}
   item_views_rec_push:                     {counter: cnt_iv_rec_push,                 key: [item_x]}
   item_views_rec_u2i:                      {counter: cnt_iv_rec_u2i,                  key: [item_x]}
+  item_views_rec_u2i_mp:                   {counter: cnt_iv_rec_u2i_mp,               key: [item_x]}
   item_views_rec_u2i_premium:              {counter: cnt_iv_rec_u2i_premium,          key: [item_x]}
   item_views_rec_u2i_push:                 {counter: cnt_iv_rec_u2i_push,             key: [item_x]}
   item_views_rec_u2i_vas:                  {counter: cnt_iv_rec_u2i_vas,              key: [item_x]}
@@ -668,12 +754,16 @@ metric.uniq:
   locations_in_search:                     {counter: searches,                        key: [location_session_microcat]}
   regions_in_search:                       {counter: cnt_reg_in_s,                    key: [location_session_microcat]}
   btc_s_item_attr_users:                   {counter: cnt_btc_s_item_attr,             key: [participant]}
+  btc_s_item_attr_users_mp:                {counter: cnt_btc_s_item_attr_mp,          key: [participant]}
   buyers:                                  {counter: contacts,                        key: [participant]}
+  user_c_mp:                               {counter: total_delivery_contact_mp,       key: [participant]}
+  user_cnt_cs:                             {counter: cnt_cs,                          key: [participant]}
   buyers_from_map:                         {counter: cnt_cs_from_map,                 key: [participant]}
   buyers_from_map_area:                    {counter: cnt_cs_s_map_area,               key: [participant]}
   buyers_from_map_total:                   {counter: cnt_cs_from_map_s_area,          key: [participant]}
   buyers_vas:                              {counter: contacts_total_vas,              key: [participant]}
   contact_s_item_attr_users:               {counter: cnt_cs_s_item_attr,              key: [participant]}
+  contact_s_item_attr_users_mp:            {counter: cnt_cs_s_item_attr_mp,           key: [participant]}
   item_views_s_item_attr_users:            {counter: cnt_iv_s_item_attr,              key: [participant]}
   map_area_users:                          {counter: searches_map_area,               key: [participant]}
   unq_book_dlv_fmsg_ph:                    {counter: cnt_book_dlv_fmsg_ph,            key: [participant], m42: False}
@@ -768,23 +858,29 @@ metric.uniq:
   users_buyer_target_click_from_map:       {counter: cnt_btc_from_map,                key: [participant]}
   users_buyer_target_click_from_map_area:  {counter: cnt_btc_s_map_area,              key: [participant]}
   users_buyer_target_click_rec_daily:      {counter: cnt_btc_rec,                     key: [participant]}
-  users_buyer_target_click_rec_job_ast:    {counter: cnt_btc_job_ast,             key: [participant]}
+  users_buyer_target_click_rec_mp:         {counter: cnt_btc_rec_mp,                  key: [participant]}
+  users_buyer_target_click_rec_job_ast:    {counter: cnt_btc_job_ast,                 key: [participant]}
   users_buyer_target_click_rec_daily_vas:  {counter: cnt_btc_rec_vas,                 key: [participant]}
   users_buyer_target_click_serp_daily:     {counter: cnt_btc_s_item_attr,             key: [participant]}
+  users_buyer_target_click_serp_mp:        {counter: cnt_btc_s_item_attr_mp,          key: [participant]}
   users_buyer_target_clicks_serp_district: {counter: cnt_btc_s_distr,                 key: [participant]}
   users_buyer_target_clicks_serp_metro:    {counter: cnt_btc_s_metro,                 key: [participant]}
   users_buyer_target_clicks_serp_radius:   {counter: cnt_btc_s_radius,                key: [participant]}
   users_buyer_target_clicks_serp_road:     {counter: cnt_btc_s_road,                  key: [participant]}
   users_contact_rec_daily:                 {counter: cnt_cs_rec,                      key: [participant]}
+  users_contact_rec_daily_mp:              {counter: cnt_cs_rec_mp,                   key: [participant]}
   users_contact_rec_job_ast:               {counter: cnt_c_rec_job_ast,               key: [participant]}
   users_contact_rec_daily_vas:             {counter: cnt_cs_rec_vas,                  key: [participant]}
   users_contact_rec_i2i:                   {counter: cnt_cs_rec_i2i,                  key: [participant]}
+  users_contact_rec_i2i_mp:                {counter: cnt_cs_rec_i2i_mp,               key: [participant]}
   users_contact_rec_i2i_vas:               {counter: cnt_cs_rec_i2i_vas,              key: [participant]}
   users_contact_rec_u2i:                   {counter: cnt_cs_rec_u2i,                  key: [participant]}
+  users_contact_rec_u2i_mp:                {counter: cnt_cs_rec_u2i_mp,               key: [participant]}
   users_contact_rec_u2i_vas:               {counter: cnt_cs_rec_u2i_vas,              key: [participant]}
   users_contact_search_query:              {counter: cnt_s_query_c,                   key: [participant]}
   users_contact_search_u2i:                {counter: cnt_cs_s_u2i,                    key: [participant]}
   users_contact_serp_daily:                {counter: cnt_cs_s_item_attr,              key: [participant]}
+  users_contact_serp_mp:                   {counter: cnt_cs_s_item_attr_mp,           key: [participant]}
   users_contacts_fav_list:                 {counter: cnt_cs_fav_list,                 key: [participant]}
   users_contacts_serp_district:            {counter: cnt_cs_s_distr,                  key: [participant]}
   users_contacts_serp_local_geo:           {counter: cnt_cs_s_distr_metro_road,       key: [participant]}
@@ -794,15 +890,20 @@ metric.uniq:
   users_fav_from_map:                      {counter: cnt_fav_from_map,                key: [participant]}
   users_fav_from_map_area:                 {counter: cnt_fav_s_map_area,              key: [participant]}
   users_favorites:                         {counter: favorites_added,                 key: [participant]}
+  users_favorites_mp:                      {counter: favorites_added_mp,              key: [participant]}
   users_first_messages:                    {counter: first_messages,                  key: [participant]}
   users_item_view_client_daily:            {counter: item_views_client,               key: [participant]}
   users_item_view_daily:                   {counter: item_views,                      key: [participant]}
+  users_item_view_mp:                      {counter: item_views_mp,                   key: [participant]}
   users_item_view_rec_daily:               {counter: cnt_iv_rec,                      key: [participant]}
+  users_item_view_rec_daily_mp:            {counter: cnt_iv_rec_mp,                   key: [participant]}
   users_item_view_rec_job_ast:             {counter: cnt_iv_rec_job_ast,              key: [participant]}
   users_item_view_rec_daily_vas:           {counter: cnt_iv_rec_vas,                  key: [participant]}
   users_item_view_rec_i2i:                 {counter: cnt_iv_rec_i2i,                  key: [participant]}
+  users_item_view_rec_i2i_mp:              {counter: cnt_iv_rec_i2i_mp,               key: [participant]}
   users_item_view_rec_i2i_vas:             {counter: cnt_iv_rec_i2i_vas,              key: [participant]}
   users_item_view_rec_u2i:                 {counter: cnt_iv_rec_u2i,                  key: [participant]}
+  users_item_view_rec_u2i_mp:              {counter: cnt_iv_rec_u2i_mp,               key: [participant]}
   users_item_view_rec_u2i_vas:             {counter: cnt_iv_rec_u2i_vas,              key: [participant]}
   users_item_view_search_query:            {counter: cnt_s_query_iv,                  key: [participant]}
   users_item_view_search_u2i:              {counter: cnt_iv_s_u2i,                    key: [participant]}
@@ -820,6 +921,7 @@ metric.uniq:
   users_realty_dev_phone_view:             {counter: realty_dev_phone_views,          key: [participant]}
   users_saved_searches:                    {counter: saved_searches,                  key: [participant]}
   users_search:                            {counter: searches,                        key: [participant]}
+  users_search_mp:                         {counter: searches_mp,                     key: [participant]}
   users_search_filter_any:                 {counter: searches_with_filter_any,        key: [participant]}
   users_search_query:                      {counter: searches_with_query,             key: [participant]}
   users_searches_any_ext_block:            {counter: searches_any_ext_block,          key: [participant]}
@@ -846,31 +948,39 @@ metric.uniq:
   sessions_active:                         {counter: cnt_sessions_active,             key: [session]}
   sessions_btc:                            {counter: cnt_sessions_btc,                key: [session]}
   sessions_btc_r:                          {counter: cnt_btc_rec,                     key: [session]}
-  sessions_btc_r_job_ast:                  {counter: cnt_btc_job_ast,             key: [session]}
+  sessions_btc_r_mp:                       {counter: cnt_btc_rec_mp,                  key: [session]}
+  sessions_btc_r_job_ast:                  {counter: cnt_btc_job_ast,                 key: [session]}
   sessions_btc_r_i2i:                      {counter: cnt_btc_rec_i2i,                 key: [session]}
   sessions_btc_r_u2i:                      {counter: cnt_btc_rec_u2i,                 key: [session]}
   sessions_btc_s:                          {counter: cnt_btc_s_item_attr,             key: [session]}
+  sessions_btc_s_mp:                       {counter: cnt_btc_s_item_attr_mp,          key: [session]}
   sessions_btc_s_noq:                      {counter: cnt_btc_s_noquery,               key: [session]}
   sessions_btc_s_q:                        {counter: cnt_btc_s_query,                 key: [session]}
-  sessions_btc_snoq:                       {counter: cnt_btc_s_noquery,               key: [session]}
-  sessions_btc_sq:                         {counter: cnt_btc_s_query,                 key: [session]}
   sessions_c:                              {counter: cnt_book_dlv_flow_beginings_fmsg_ph_realty_development, key: [session]}
   sessions_c_r:                            {counter: cnt_cs_rec,                      key: [session]}
   sessions_c_r_job_ast:                    {counter: cnt_c_rec_job_ast,               key: [session]}
   sessions_c_r_i2i:                        {counter: cnt_cs_rec_i2i,                  key: [session]}
+  sessions_c_r_i2i_mp:                     {counter: cnt_cs_rec_i2i_mp,               key: [session]}
   sessions_c_r_u2i:                        {counter: cnt_cs_rec_u2i,                  key: [session]}
+  sessions_c_r_u2i_mp:                     {counter: cnt_cs_rec_u2i_mp,               key: [session]}
   sessions_c_s:                            {counter: cnt_cs_s_item_attr,              key: [session]}
+  sessions_c_s_mp:                         {counter: cnt_cs_s_item_attr_mp,           key: [session]}
   sessions_c_s_noq:                        {counter: cnt_s_noquery_c,                 key: [session]}
   sessions_c_s_q:                          {counter: cnt_s_query_c,                   key: [session]}
   sessions_iv:                             {counter: item_views,                      key: [session]}
+  sessions_iv_mp:                          {counter: item_views_mp,                   key: [session]}
   sessions_iv_r:                           {counter: cnt_iv_rec,                      key: [session]}
+  sessions_iv_r_mp:                        {counter: cnt_iv_rec_mp,                   key: [session]}
   sessions_iv_r_job_ast:                   {counter: cnt_iv_rec_job_ast,              key: [session]}
   sessions_iv_r_i2i:                       {counter: cnt_iv_rec_i2i,                  key: [session]}
+  sessions_iv_r_i2i_mp:                    {counter: cnt_iv_rec_i2i_mp,               key: [session]}
   sessions_iv_r_u2i:                       {counter: cnt_iv_rec_u2i,                  key: [session]}
+  sessions_iv_r_u2i_mp:                    {counter: cnt_iv_rec_u2i_mp,               key: [session]}
   sessions_iv_s:                           {counter: cnt_iv_s_item_attr,              key: [session]}
   sessions_iv_s_noq:                       {counter: cnt_s_noquery_iv,                key: [session]}
   sessions_iv_s_q:                         {counter: cnt_s_query_iv,                  key: [session]}
   sessions_s:                              {counter: searches,                        key: [session]}
+  sessions_s_mp:                           {counter: searches_mp,                     key: [session]}
   unq_session_cs_from_map_s_area:          {counter: cnt_cs_from_map_s_area,          key: [session], m42: False}
   unq_session_cs_rec_s:                    {counter: cnt_cs_rec_s,                    key: [session], m42: False}
   unq_session_iv_from_map_s_area:          {counter: cnt_iv_from_map_s_area,          key: [session], m42: False}
@@ -982,6 +1092,38 @@ metric.uniq:
   courier_click:                           {counter: total_courier_click,             key: [item]}
   courier_widget:                          {counter: total_courier_widget,            key: [item]}
   courier_contact:                         {counter: total_courier_contact,           key: [item]}
+  user_iv_witcher_funnel_any:              {counter: iv_witcher_funnel_any,           key: [participant]}
+  user_iv_witcher_funnel_delivery:         {counter: iv_witcher_funnel_delivery,      key: [participant]}
+  user_iv_witcher_funnel_new_auto:         {counter: iv_witcher_funnel_new_auto,      key: [participant]}
+  user_iv_witcher_funnel_new_flats:        {counter: iv_witcher_funnel_new_flats,     key: [participant]}
+  user_iv_witcher_funnel_regions:          {counter: iv_witcher_funnel_regions,       key: [participant]}
+  user_btc_witcher_funnel_any:             {counter: btc_witcher_funnel_any,          key: [participant]}
+  user_btc_witcher_funnel_delivery:        {counter: btc_witcher_funnel_delivery,     key: [participant]}
+  user_btc_witcher_funnel_new_auto:        {counter: btc_witcher_funnel_new_auto,     key: [participant]}
+  user_btc_witcher_funnel_new_flats:       {counter: btc_witcher_funnel_new_flats,    key: [participant]}
+  user_btc_witcher_funnel_regions:         {counter: btc_witcher_funnel_regions,      key: [participant]}
+  user_c_witcher_funnel_any:               {counter: c_witcher_funnel_any,            key: [participant]}
+  user_c_witcher_funnel_delivery:          {counter: c_witcher_funnel_delivery,       key: [participant]}
+  user_c_witcher_funnel_new_auto:          {counter: c_witcher_funnel_new_auto,       key: [participant]}
+  user_c_witcher_funnel_new_flats:         {counter: c_witcher_funnel_new_flats,      key: [participant]}
+  user_c_witcher_funnel_regions:           {counter: c_witcher_funnel_regions,        key: [participant]}
+  user_fav_witcher_funnel_any:             {counter: fav_witcher_funnel_any,          key: [participant]}
+  user_fav_witcher_funnel_delivery:        {counter: fav_witcher_funnel_delivery,     key: [participant]}
+  user_fav_witcher_funnel_new_auto:        {counter: fav_witcher_funnel_new_auto,     key: [participant]}
+  user_fav_witcher_funnel_new_flats:       {counter: fav_witcher_funnel_new_flats,    key: [participant]}
+  user_fav_witcher_funnel_regions:         {counter: fav_witcher_funnel_regions,      key: [participant]}
+  user_btc_actual_calendar:                {counter: btc_actual_calendar,             key: [participant]}
+  user_c_actual_calendar:                  {counter: c_actual_calendar,               key: [participant]}
+  user_iv_actual_calendar:                 {counter: iv_actual_calendar,              key: [participant]}
+  user_btc_pro_image:                      {counter: btc_pro_image,                   key: [participant]}
+  user_c_pro_image:                        {counter: c_pro_image,                     key: [participant]}
+  user_iv_pro_image:                       {counter: iv_pro_image,                    key: [participant]}
+  sess_btc_actual_calendar:                {counter: btc_actual_calendar,             key: [session]}
+  sess_c_actual_calendar:                  {counter: c_actual_calendar,               key: [session]}
+  sess_iv_actual_calendar:                 {counter: iv_actual_calendar,              key: [session]}
+  sess_btc_pro_image:                      {counter: btc_pro_image,                   key: [session]}
+  sess_c_pro_image:                        {counter: c_pro_image,                     key: [session]}
+  sess_iv_pro_image:                       {counter: iv_pro_image,                    key: [session]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1029,6 +1171,17 @@ metric.ratio:
   contacts_delivery_per_search_delivery:   {num: contacts_delivery,               den: searches_serp_extra_delivery}
   contacts_from_map_area_per_map_area:     {num: contacts_serp_map_area,          den: searches_map_area}
   contacts_per_item_view:                  {num: cnt_book_dlv_fmsg_ph_item_right_top_realty_development, den: item_views}
+  total_delivery_contacts_per_item_view_mp:    {num: total_delivery_contact_mp,       den: item_views_mp}
+  delivery_contacts_per_delivery_item_view_mp: {num: delivery_contact_mp,             den: delivery_item_view_mp}
+  delivery_clicks_per_delivery_item_view_mp:   {num: delivery_click_mp,               den: delivery_item_view_mp}
+  delivery_confirm_per_delivery_click_mp:      {num: delivery_confirm_mp,             den: delivery_click_mp}
+  delivery_contacts_per_delivery_click_mp:     {num: delivery_contact_mp,             den: delivery_click_mp}
+  delivery_contacts_per_delivery_widget_mp:    {num: delivery_contact_mp,             den: delivery_widget_mp}
+  delivery_contacts_per_delivery_confirm_mp:   {num: delivery_contact_mp,             den: delivery_confirm_mp}
+  share_item_view_mp:                          {num: item_views_mp,                   den: item_views}
+  share_contacts_mp:                           {num: total_delivery_contact_mp,       den: contacts}
+  share_search_mp:                             {num: searches_mp,                     den: searches}
+  share_users_c_mp:                            {num: user_c_mp,                       den: buyers}
   contacts_per_searches_shop:              {num: contacts_shop,                   den: searches_shop}
   contacts_premium_per_item_views_premium: {num: contacts_premium,                den: item_views_premium}
   contacts_premium_per_search:             {num: contacts_premium,                den: searches_serp}
@@ -1047,6 +1200,7 @@ metric.ratio:
   contacts_serp_metro_per_search_metro:    {num: contacts_serp_metro,             den: searches_metro}
   contacts_serp_per_item_views_serp:       {num: contacts_serp,                   den: item_views_serp}
   contacts_serp_per_search:                {num: contacts_serp,                   den: searches_serp}
+  contacts_serp_per_search_mp:             {num: contacts_serp_mp,                den: searches_serp_mp}
   contacts_serp_radius_per_search_radius:  {num: contacts_serp_radius,            den: searches_radius}
   contacts_serp_road_per_search_road:      {num: contacts_serp_road,              den: searches_road}
   contacts_serp_saved_per_search_saved:    {num: contacts_serp_saved,             den: saved_searches}
@@ -1290,4 +1444,48 @@ metric.ratio:
   courier_click_contact_ratio:             {num: courier_contact,                 den: courier_click}
   courier_click_widget_ratio:              {num: courier_widget,                  den: courier_click}
   courier_widget_contact_ratio:            {num: courier_contact,                 den: courier_widget}
+  developer_buyers_per_buyers:                     {num: user_c_developer,                 den: buyers}
+  developer_c_per_contacts:                        {num: c_developer,                      den: contacts}
+  re_agency_c_per_contacts:                        {num: c_re_agency,                      den: contacts}
+  re_private_c_per_contacts:                       {num: c_re_private,                     den: contacts}
+  iv_witcher_funnel_any_per_searches_from_witcher_any:                        {num: iv_witcher_funnel_any,                den:  searches_from_witcher_any}
+  iv_witcher_funnel_delivery_per_searches_from_witcher_delivery:              {num: iv_witcher_funnel_delivery,           den:  searches_from_witcher_delivery}
+  iv_witcher_funnel_new_auto_per_searches_from_witcher_new_auto:              {num: iv_witcher_funnel_new_auto,           den:  searches_from_witcher_new_auto}
+  iv_witcher_funnel_new_flats_per_searches_from_witcher_new_flats:            {num: iv_witcher_funnel_new_flats,          den:  searches_from_witcher_new_flats}
+  iv_witcher_funnel_regions_per_searches_from_witcher_regions:                {num: iv_witcher_funnel_regions,            den:  searches_from_witcher_regions}
+  btc_witcher_funnel_any_per_searches_from_witcher_any:                       {num: btc_witcher_funnel_any,               den:  searches_from_witcher_any}
+  btc_witcher_funnel_delivery_per_searches_from_witcher_delivery:             {num: btc_witcher_funnel_delivery,          den:  searches_from_witcher_delivery}
+  btc_witcher_funnel_new_auto_per_searches_from_witcher_new_auto:             {num: btc_witcher_funnel_new_auto,          den:  searches_from_witcher_new_auto}
+  btc_witcher_funnel_new_flats_per_searches_from_witcher_new_flats:           {num: btc_witcher_funnel_new_flats,         den:  searches_from_witcher_new_flats}
+  btc_witcher_funnel_regions_per_searches_from_witcher_regions:               {num: btc_witcher_funnel_regions,           den:  searches_from_witcher_regions}
+  c_witcher_funnel_any_per_searches_from_witcher_any:                         {num: c_witcher_funnel_any,                 den:  searches_from_witcher_any}
+  c_witcher_funnel_delivery_per_searches_from_witcher_delivery:               {num: c_witcher_funnel_delivery,            den:  searches_from_witcher_delivery}
+  c_witcher_funnel_new_auto_per_searches_from_witcher_new_auto:               {num: c_witcher_funnel_new_auto,            den:  searches_from_witcher_new_auto}
+  c_witcher_funnel_new_flats_per_searches_from_witcher_new_flats:             {num: c_witcher_funnel_new_flats,           den:  searches_from_witcher_new_flats}
+  c_witcher_funnel_regions_per_searches_from_witcher_regions:                 {num: c_witcher_funnel_regions,             den:  searches_from_witcher_regions}
+  fav_witcher_funnel_any_per_searches_from_witcher_any:                       {num: fav_witcher_funnel_any,               den:  searches_from_witcher_any}
+  fav_witcher_funnel_delivery_per_searches_from_witcher_delivery:             {num: fav_witcher_funnel_delivery,          den:  searches_from_witcher_delivery}
+  fav_witcher_funnel_new_auto_per_searches_from_witcher_new_auto:             {num: fav_witcher_funnel_new_auto,          den:  searches_from_witcher_new_auto}
+  fav_witcher_funnel_new_flats_per_searches_from_witcher_new_flats:           {num: fav_witcher_funnel_new_flats,         den:  searches_from_witcher_new_flats}
+  fav_witcher_funnel_regions_per_searches_from_witcher_regions:               {num: fav_witcher_funnel_regions,           den:  searches_from_witcher_regions}
+  user_iv_witcher_funnel_any_per_user_s_from_witcher_any:                     {num: user_iv_witcher_funnel_any,           den: user_s_from_witcher_any}
+  user_iv_witcher_funnel_delivery_per_user_s_from_witcher_del:                {num: user_iv_witcher_funnel_delivery,      den: user_s_from_witcher_del}
+  user_iv_witcher_funnel_new_auto_per_user_s_from_witcher_auto:               {num: user_iv_witcher_funnel_new_auto,      den: user_s_from_witcher_auto}
+  user_iv_witcher_funnel_new_flats_per_user_s_from_witcher_flats:             {num: user_iv_witcher_funnel_new_flats,     den: user_s_from_witcher_flats}
+  user_iv_witcher_funnel_regions_per_user_s_from_witcher_reg:                 {num: user_iv_witcher_funnel_regions,       den: user_s_from_witcher_reg}
+  user_btc_witcher_funnel_any_per_user_s_from_witcher_any:                    {num: user_btc_witcher_funnel_any,          den: user_s_from_witcher_any}
+  user_btc_witcher_funnel_delivery_per_user_s_from_witcher_del:               {num: user_btc_witcher_funnel_delivery,     den: user_s_from_witcher_del}
+  user_btc_witcher_funnel_new_auto_per_user_s_from_witcher_auto:              {num: user_btc_witcher_funnel_new_auto,     den: user_s_from_witcher_auto}
+  user_btc_witcher_funnel_new_flats_per_user_s_from_witcher_flats:            {num: user_btc_witcher_funnel_new_flats,    den: user_s_from_witcher_flats}
+  user_btc_witcher_funnel_regions_per_user_s_from_witcher_reg:                {num: user_btc_witcher_funnel_regions,      den: user_s_from_witcher_reg}
+  user_c_witcher_funnel_any_per_user_s_from_witcher_any:                      {num: user_c_witcher_funnel_any,            den: user_s_from_witcher_any}
+  user_c_witcher_funnel_delivery_per_user_s_from_witcher_del:                 {num: user_c_witcher_funnel_delivery,       den: user_s_from_witcher_del}
+  user_c_witcher_funnel_new_auto_per_user_s_from_witcher_auto:                {num: user_c_witcher_funnel_new_auto,       den: user_s_from_witcher_auto}
+  user_c_witcher_funnel_new_flats_per_user_s_from_witcher_flats:              {num: user_c_witcher_funnel_new_flats,      den: user_s_from_witcher_flats}
+  user_c_witcher_funnel_regions_per_user_s_from_witcher_reg:                  {num: user_c_witcher_funnel_regions,        den: user_s_from_witcher_reg}
+  user_fav_witcher_funnel_any_per_user_s_from_witcher_any:                    {num: user_fav_witcher_funnel_any,          den: user_s_from_witcher_any}
+  user_fav_witcher_funnel_delivery_per_user_s_from_witcher_del:               {num: user_fav_witcher_funnel_delivery,     den: user_s_from_witcher_del}
+  user_fav_witcher_funnel_new_auto_per_user_s_from_witcher_auto:              {num: user_fav_witcher_funnel_new_auto,     den: user_s_from_witcher_auto}
+  user_fav_witcher_funnel_new_flats_per_user_s_from_witcher_flats:            {num: user_fav_witcher_funnel_new_flats,    den: user_s_from_witcher_flats}
+  user_fav_witcher_funnel_regions_per_user_s_from_witcher_reg:                {num: user_fav_witcher_funnel_regions,      den: user_s_from_witcher_reg}
 
