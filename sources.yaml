@@ -38,6 +38,7 @@ buyer_stream:
       - x_location_level_id
       - x_rec_engine_id
       - user_segment
+      - is_asd
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -259,7 +260,7 @@ public_profile:
 mnz_vas:
   vertica:
     table: dma.vo_mnz_vas
-    dimensions: [platform_id, page_from, vertical_id, category_id, subcategory_id, logical_category_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment]
+    dimensions: [platform_id, page_from, vertical_id, category_id, subcategory_id, logical_category_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment, is_asd]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -275,7 +276,7 @@ mnz_lf:
 messenger:
   vertica:
     table: dma.vo_messenger
-    dimensions: [platform_id, appversion, vertical_id, category_id, subcategory_id, logical_category_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment]
+    dimensions: [platform_id, appversion, vertical_id, category_id, subcategory_id, logical_category_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment, is_asd]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -301,7 +302,7 @@ express_cv:
 delivery:
   vertica:
     table: dma.vo_delivery
-    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, is_intercity, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment]
+    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, is_intercity, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment, is_asd]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
