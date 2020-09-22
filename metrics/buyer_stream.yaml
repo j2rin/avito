@@ -145,6 +145,7 @@ definitions:
   - &is_re_private_acc {SFAccount_Type.isnull: true}  
   - &is_item_pro_image {item_flags.bit: 0}
   - &is_item_str_actual_calendar {item_flags.bit: 1}
+  - &is_item_str_not_actual_calendar {logical_category_id: 1393250002, item_flags.!bit: 1}
   - &is_item_leadgen {item_flags.bit: 4}
 
   - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, $or: [search_flags.bit: [0, 1, 2, 3, 4], *is_serp_regions]]]}
@@ -544,6 +545,9 @@ metric.counter:
   btc_actual_calendar:                     {filter: [*is_item_str_actual_calendar, *is_btc]}
   c_actual_calendar:                       {filter: [*is_item_str_actual_calendar, *is_contact]}
   iv_actual_calendar:                      {filter: [*is_item_str_actual_calendar, *is_iv]}
+  btc_not_actual_calendar:                 {filter: [*is_item_str_not_actual_calendar, *is_btc]}
+  c_not_actual_calendar:                   {filter: [*is_item_str_not_actual_calendar, *is_contact]}
+  iv_not_actual_calendar:                  {filter: [*is_item_str_not_actual_calendar, *is_iv]}
   btc_pro_image:                           {filter: [*is_item_pro_image, *is_btc]}
   c_pro_image:                             {filter: [*is_item_pro_image, *is_contact]}
   iv_pro_image:                            {filter: [*is_item_pro_image, *is_iv]}
@@ -1123,12 +1127,18 @@ metric.uniq:
   user_btc_actual_calendar:                {counter: btc_actual_calendar,             key: [participant]}
   user_c_actual_calendar:                  {counter: c_actual_calendar,               key: [participant]}
   user_iv_actual_calendar:                 {counter: iv_actual_calendar,              key: [participant]}
+  user_btc_not_actual_calendar:            {counter: btc_not_actual_calendar,         key: [participant]}
+  user_c_not_actual_calendar:              {counter: c_not_actual_calendar,           key: [participant]}
+  user_iv_not_actual_calendar:             {counter: iv_not_actual_calendar,          key: [participant]}
   user_btc_pro_image:                      {counter: btc_pro_image,                   key: [participant]}
   user_c_pro_image:                        {counter: c_pro_image,                     key: [participant]}
   user_iv_pro_image:                       {counter: iv_pro_image,                    key: [participant]}
   sess_btc_actual_calendar:                {counter: btc_actual_calendar,             key: [session]}
   sess_c_actual_calendar:                  {counter: c_actual_calendar,               key: [session]}
   sess_iv_actual_calendar:                 {counter: iv_actual_calendar,              key: [session]}
+  sess_btc_not_actual_calendar:            {counter: btc_not_actual_calendar,         key: [session]}
+  sess_c_not_actual_calendar:              {counter: c_not_actual_calendar,           key: [session]}
+  sess_iv_not_actual_calendar:             {counter: iv_not_actual_calendar,          key: [session]}
   sess_btc_pro_image:                      {counter: btc_pro_image,                   key: [session]}
   sess_c_pro_image:                        {counter: c_pro_image,                     key: [session]}
   sess_iv_pro_image:                       {counter: iv_pro_image,                    key: [session]}
