@@ -514,6 +514,8 @@ metric.counter:
   total_courier_click:                     {filter: [*is_delivery_courier, eid: 2483]}
   total_courier_widget:                    {filter: [eid: 4033]}
   total_courier_contact:                   {filter: [eid: 4035]}
+  total_courier_btc:                       {filter: [$or: [[*is_delivery_courier, eid: 2483], [eid: [4033, 4035]]]], m42: False}
+  total_delivery_btc:                      {filter: [$or: [[*is_delivery_pvz, eid: 2483], [eid: [2013, 2015, 2749]]]],  m42: False}
   total_delivery_click_mp:                 {filter: [*is_item_marketplace, eid: 2483]}
   total_delivery_widget_mp:                {filter: [*is_item_marketplace, eid: 2013]}
   total_delivery_confirm_mp:               {filter: [*is_item_marketplace, eid: 2749]}
@@ -658,11 +660,11 @@ metric.uniq:
   contacts_shop:                           {counter: cnt_cs_shopx,                    key: [item_x]}
   contacts_vas:                            {counter: cnt_cs_vas,                      key: [item_x]}
   contacts_vip:                            {counter: cnt_cs_vip,                      key: [item_x]}
-  delivery_item_view_mp:                   {counter: item_views_mp,                   key: [item]}
-  delivery_click_mp:                       {counter: total_delivery_click_mp,         key: [item]}
-  delivery_widget_mp:                      {counter: total_delivery_widget_mp,        key: [item]}
-  delivery_confirm_mp:                     {counter: total_delivery_confirm_mp,       key: [item]}
-  delivery_contact_mp:                     {counter: total_delivery_contact_mp,       key: [item]}
+  delivery_item_view_mp:                   {counter: item_views_mp,                   key: [participant, item]}
+  delivery_click_mp:                       {counter: total_delivery_click_mp,         key: [participant, item]}
+  delivery_widget_mp:                      {counter: total_delivery_widget_mp,        key: [participant, item]}
+  delivery_confirm_mp:                     {counter: total_delivery_confirm_mp,       key: [participant, item]}
+  delivery_contact_mp:                     {counter: total_delivery_contact_mp,       key: [participant, item]}
   fav_added_delivery:                      {counter: cnt_fav_dlv,                     key: [item_x]}
   fav_added_from_map:                      {counter: cnt_fav_from_map,                key: [item_x]}
   fav_added_premium:                       {counter: cnt_fav_premium,                 key: [item_x]}
@@ -1101,9 +1103,11 @@ metric.uniq:
   searches_contact_metageo:                {counter: contacts_metageo,                key: [x]}
   searches_btc_metageo:                    {counter: buyer_target_clicks_metageo,     key: [x]}
   searches_iv_metageo:                     {counter: item_views_metageo,              key: [x]}
-  courier_click:                           {counter: total_courier_click,             key: [item]}
-  courier_widget:                          {counter: total_courier_widget,            key: [item]}
-  courier_contact:                         {counter: total_courier_contact,           key: [item]}
+  courier_click:                           {counter: total_courier_click,             key: [participant, item]}
+  courier_widget:                          {counter: total_courier_widget,            key: [participant, item]}
+  courier_contact:                         {counter: total_courier_contact,           key: [participant, item]}
+  user_courier_btc:                        {counter: total_courier_btc,               key: [participant]}
+  user_delivery_btc:                       {counter: total_delivery_btc,              key: [participant]}
   user_iv_witcher_funnel_any:              {counter: iv_witcher_funnel_any,           key: [participant]}
   user_iv_witcher_funnel_delivery:         {counter: iv_witcher_funnel_delivery,      key: [participant]}
   user_iv_witcher_funnel_new_auto:         {counter: iv_witcher_funnel_new_auto,      key: [participant]}
@@ -1158,7 +1162,7 @@ metric.ratio:
   btc_serp_q_per_s_q:                      {num: btc_serp_query,                  den: cnt_s_query}
   btc_with_shop_id_per_iv_with_shop_id:    {num: buyer_target_clicks_with_shop_id, den: item_views_with_shop_id}
   buyer_target_clicks_delivery_per_search: {num: buyer_target_clicks_delivery,    den: searches_serp}
-  buyer_target_clicks_delivery_per_search_delivery: {num: buyer_target_clicks_delivery,    den: searches_witcher_delivery}
+  buyer_target_clicks_delivery_per_search_delivery: {num: buyer_target_clicks_delivery,    den: searches_extra_delivery}
   buyer_target_clicks_ext_block_any_per_search_ext_block_any: {num: buyer_target_clicks_any_ext_block, den: searches_any_ext_block}
   buyer_target_clicks_per_searches_shop:   {num: buyer_target_clicks_shop,        den: searches_shop}
   buyer_target_clicks_premium_per_search:  {num: buyer_target_clicks_premium,     den: searches_serp}

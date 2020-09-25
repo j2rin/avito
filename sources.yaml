@@ -647,3 +647,125 @@ app_call_event:
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: event_date    
+
+delivery_shipments_by_create_date:
+  vertica:
+    table: dma.vo_delivery_shipments
+    column_map:
+      item: item_id
+    dimensions:
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: buyer_id}
+    dtm: create_date
+    segm: shipment_id
+
+delivery_shipments_by_status_date:
+  vertica:
+    table: dma.vo_delivery_shipments
+    column_map:
+      item: item_id
+    dimensions:
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: buyer_id}
+    dtm: status_date
+    segm: shipment_id
+
+buyer_delivery_shipment_items_by_create_date:
+  vertica:
+    table: dma.vo_delivery_shipment_items
+    column_map:
+      item: item_id
+    dimensions:
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: buyer_id}
+    dtm: create_date
+    segm: shipment_id
+
+buyer_delivery_shipment_items_by_status_date:
+  vertica:
+    table: dma.vo_delivery_shipment_items
+    column_map:
+      item: item_id
+    dimensions:
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: buyer_id}
+    dtm: status_date
+    segm: shipment_id
+
+seller_delivery_shipment_items_by_create_date:
+  vertica:
+    table: dma.vo_delivery_shipment_items
+    column_map:
+      item: item_id
+    dimensions:
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: seller_id}
+    dtm: create_date
+    segm: shipment_id
+
+seller_delivery_shipment_items_by_status_date:
+  vertica:
+    table: dma.vo_delivery_shipment_items
+    column_map:
+      item: item_id
+    dimensions:
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: seller_id}
+    dtm: status_date
+    segm: shipment_id
