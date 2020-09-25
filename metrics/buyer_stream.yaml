@@ -514,7 +514,7 @@ metric.counter:
   total_courier_click:                     {filter: [*is_delivery_courier, eid: 2483]}
   total_courier_widget:                    {filter: [eid: 4033]}
   total_courier_contact:                   {filter: [eid: 4035]}
-  total_courier_btc:                       {filter: {$or: [{<<: *is_delivery_courier, eid: 2483}, {eid: [4033, 4035]}]}, m42: False}
+  total_courier_btc:                       {filter: {$or: [[*is_delivery_courier, eid: 2483], [eid: [4033, 4035]]]}, m42: False}
   total_delivery_btc:                      {filter: {$or: [{<<: *is_delivery_pvz, eid: 2483}, {eid: [2013, 2015, 2749]}]},  m42: False}
   total_delivery_click_mp:                 {filter: [*is_item_marketplace, eid: 2483]}
   total_delivery_widget_mp:                {filter: [*is_item_marketplace, eid: 2013]}
