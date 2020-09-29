@@ -1,5 +1,6 @@
 definitions:
   - &changed {prev_location_id.!=: $location_id}
+  - &rechoiced {prev_location_id.=: $location_id}
   - &saved {close_by.>: 0}
   - &is_open {eid: 2916}
   - &is_close {eid: 2918}
@@ -43,6 +44,7 @@ metric.counter:
   loc_bad_chng:                            {filter: [{changing_quality_type: bad}, *changed, *is_close, *saved], obs: [events_count]}
   loc_bad_susp_chng:                       {filter: [*changed, *is_close, *saved, {$or: [[{changing_quality_type: bad}], [{changing_quality_type: suspicious}]]}], obs: [events_count]}
   loc_chng:                                {filter: [*changed, *is_close, *saved], obs: [events_count]}
+  loc_rechoice:                            {filter: [*rechoiced, *is_close, *saved], obs: [events_count]}
   loc_chng_app_settings:                   {filter: [{open_from: app settings}, *changed, *is_close, *saved], obs: [events_count]}
   loc_chng_bad_city:                       {filter: [{changing_quality_type: bad}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
   loc_chng_bad_region:                     {filter: [{changing_quality_type: bad}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
@@ -97,6 +99,7 @@ metric.uniq:
   users_loc_bad_and_chng:                  {counter: loc_bad_susp_chng,               key: [participant]}
   users_loc_bad_chng:                      {counter: loc_bad_chng,                    key: [participant]}
   users_loc_chng:                          {counter: loc_chng,                        key: [participant]}
+  users_loc_rechoiced:                     {counter: loc_rechoice,                    key: [participant]}
   users_loc_detailed_chng:                 {counter: loc_detailed_chng,               key: [participant]}
   users_loc_expanded_chng:                 {counter: loc_expanded_chng,               key: [participant]}
   users_loc_horizontal_chng:               {counter: loc_horizontal_chng,             key: [participant]}
@@ -108,6 +111,7 @@ metric.uniq:
   loc_bad_and_chng_sessions:               {counter: loc_bad_susp_chng,               key: [session]}
   loc_bad_chng_sessions:                   {counter: loc_bad_chng,                    key: [session]}
   loc_chng_sessions:                       {counter: loc_chng,                        key: [session]}
+  loc_rechoiced_sessions:                  {counter: loc_rechoice,                    key: [session]}
   loc_neutral_chng_sessions:               {counter: loc_neutral_chng,                key: [session]}
   loc_susp_chng_sessions:                  {counter: loc_susp_chng,                   key: [session]}
   users_loc_window_closings:               {counter: loc_window_closings,             key: [session]}
