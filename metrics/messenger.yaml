@@ -1,12 +1,14 @@
 metric.counter:
   active_items_with_msg:                   {filter: [{observation_name: active_items_with_msg}], obs: [observation_value]}
   answered_first_messages:                 {filter: [{observation_name: answered_first_messages}], obs: [observation_value]}
+  answered_first_messages_by_bot:          {filter: [{observation_name: answered_first_messages_by_bot}], obs: [observation_value]}
   answered_first_messages_1hour:           {filter: [{observation_name: answered_first_messages_within_1hour}], obs: [observation_value]}
   answered_first_messages_within_1day:     {filter: [{observation_name: answered_first_messages_within_1day}], obs: [observation_value]}
   answered_first_messages_within_1hour_7hour: {filter: [{observation_name: answered_first_messages_within_1hour_7hour}], obs: [observation_value]}
   chat_open_errors:                        {filter: [{observation_name: chat_open_errors}], obs: [observation_value]}
   cnt_chat_list_views:                     {filter: [{$or: [[{observation_name: chat_list_views}], [{observation_name: chat_views}]]}], obs: [observation_value], m42: False}
   first_response_messages:                 {filter: [{observation_name: first_response_messages}], obs: [observation_value]}
+  first_response_messages_by_bot:          {filter: [{observation_name: first_response_messages_by_bot}], obs: [observation_value]} 
   item_views_from_messenger:               {filter: [{observation_name: item_views_from_messenger}], obs: [observation_value]}
   item_views_with_msg:                     {filter: [{observation_name: item_views_with_msg}], obs: [observation_value]}
   items_closed_from_messenger:             {filter: [{observation_name: closed_items_from_messenger}], obs: [observation_value]}
@@ -18,6 +20,7 @@ metric.counter:
   messenger_image_messages:                {filter: [{observation_name: messenger_image_messages}], obs: [observation_value]}
   messenger_item_messages:                 {filter: [{observation_name: messenger_item_messages}], obs: [observation_value]}
   messenger_links_messages:                {filter: [{observation_name: messenger_links_messages}], obs: [observation_value]}
+  messenger_chatbot_messages:              {filter: [{observation_name: messenger_chatbot_messages}], obs: [observation_value]}
   messenger_spam_blocks:                   {filter: [{observation_name: messenger_spam_blocks}], obs: [observation_value]}
   messenger_text_messages:                 {filter: [{observation_name: messenger_text_messages}], obs: [observation_value]}
   messenger_users_blocked:                 {filter: [{observation_name: messenger_users_blocked}], obs: [observation_value]}
@@ -29,9 +32,9 @@ metric.uniq:
   messenger_visitors:                      {counter: cnt_chat_list_views,             key: [participant]}
   users_chat_open_errors:                  {counter: chat_open_errors,                key: [participant]}
   users_first_response_messages:           {counter: first_response_messages,         key: [participant]}
+  users_first_response_messages_by_bot:    {counter: first_response_messages_by_bot,  key: [participant]}
   users_item_closed_from_messenger:        {counter: items_closed_from_messenger,     key: [participant]}
   users_item_sold_onavito_from_messenger:  {counter: items_sold_onavito_from_messenger, key: [participant]}
 
 metric.ratio:
   messenger_spam_ratio:                    {num: messenger_spam_blocks,           den: messenger_active_chats}
-
