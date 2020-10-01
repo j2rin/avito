@@ -88,6 +88,7 @@ definitions:
 
   - &is_item_marketplace      {item_flags.bit: 2}
   - &is_search_marketplace    {search_flags.bit: 17}
+  - &is_search_w_mp_item      {search_flags.bit: 18}
 
   - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
   
@@ -456,6 +457,7 @@ metric.counter:
   search_u2i:                              {filter: [*is_search, *x_is_rec_sg]}
   searches:                                {filter: [*is_1p, *is_search]}
   searches_mp:                             {filter: [*is_1p, *is_search, *is_search_marketplace]}
+  searches_with_mp_items:                  {filter: [*is_1p, *is_search, *is_search_w_mp_item]}
   searches_any_ext_block:                  {filter: [*is_1p, *is_search, {$or: [[*x_is_extra_delivery], [*x_is_extra_regions]]}]}
   searches_date_sort:                      {filter: [*is_1p, *is_s_sort_date, *is_search]}
   searches_default_sort:                   {filter: [*is_1p, *is_s_sort_dft, *is_search]}
@@ -478,6 +480,7 @@ metric.counter:
   searches_road:                           {filter: [*is_1p, *is_s_road, *is_search]}
   searches_serp:                           {filter: [*is_search]}
   searches_serp_mp:                        {filter: [*is_search, *is_search_marketplace]}
+  searches_serp_with_mp:                   {filter: [*is_search, *is_search_w_mp_item]}
   searches_serp_extra_delivery:            {filter: [*is_search, *x_is_extra_delivery]}
   searches_serp_extra_regions:             {filter: [*is_search, *x_is_extra_regions]}
   searches_shop:                           {filter: [*is_1p, *is_search, *x_is_shop]}
@@ -660,17 +663,18 @@ metric.uniq:
   contacts_shop:                           {counter: cnt_cs_shopx,                    key: [item_x]}
   contacts_vas:                            {counter: cnt_cs_vas,                      key: [item_x]}
   contacts_vip:                            {counter: cnt_cs_vip,                      key: [item_x]}
-  delivery_item_view_mp:                   {counter: item_views_mp,                   key: [participant, item]}
-  delivery_click_mp:                       {counter: total_delivery_click_mp,         key: [participant, item]}
-  delivery_widget_mp:                      {counter: total_delivery_widget_mp,        key: [participant, item]}
-  delivery_confirm_mp:                     {counter: total_delivery_confirm_mp,       key: [participant, item]}
-  delivery_contact_mp:                     {counter: total_delivery_contact_mp,       key: [participant, item]}
+  delivery_item_view_serp_mp:              {counter: cnt_iv_s_item_attr_mp,           key: [item]}
+  delivery_item_view_mp:                   {counter: item_views_mp,                   key: [item]}
+  delivery_click_mp:                       {counter: total_delivery_click_mp,         key: [item]}
+  delivery_widget_mp:                      {counter: total_delivery_widget_mp,        key: [item]}
+  delivery_confirm_mp:                     {counter: total_delivery_confirm_mp,       key: [item]}
+  delivery_contact_mp:                     {counter: total_delivery_contact_mp,       key: [item]}
   fav_added_delivery:                      {counter: cnt_fav_dlv,                     key: [item_x]}
   fav_added_from_map:                      {counter: cnt_fav_from_map,                key: [item_x]}
   fav_added_premium:                       {counter: cnt_fav_premium,                 key: [item_x]}
   fav_added_push:                          {counter: cnt_fav_push,                    key: [item_x]}
   fav_added_rec:                           {counter: cnt_fav_rec,                     key: [item_x]}
-  fav_added_rec_job_ast:                   {counter: cnt_fav_rec_job_ast,            key: [item_x]}
+  fav_added_rec_job_ast:                   {counter: cnt_fav_rec_job_ast,             key: [item_x]}
   fav_added_rec_i2i:                       {counter: cnt_fav_rec_i2i,                 key: [item_x]}
   fav_added_rec_i2i_premium:               {counter: cnt_fav_rec_i2i_premium,         key: [item_x]}
   fav_added_rec_i2i_push:                  {counter: cnt_fav_rec_i2i_push,            key: [item_x]}
@@ -733,6 +737,7 @@ metric.uniq:
   item_views_rec_vip:                      {counter: cnt_iv_rec_vip,                  key: [item_x]}
   item_views_regions:                      {counter: cnt_iv_reg,                      key: [item_x]}
   item_views_serp:                         {counter: cnt_iv_s_item_attr,              key: [item_x]}
+  item_views_serp_mp:                      {counter: cnt_iv_s_item_attr_mp,           key: [item_x]}
   item_views_serp_district:                {counter: cnt_iv_s_distr,                  key: [item_x]}
   item_views_serp_metro:                   {counter: cnt_iv_s_metro,                  key: [item_x]}
   item_views_serp_radius:                  {counter: cnt_iv_s_radius,                 key: [item_x]}
@@ -936,6 +941,7 @@ metric.uniq:
   users_saved_searches:                    {counter: saved_searches,                  key: [participant]}
   users_search:                            {counter: searches,                        key: [participant]}
   users_search_mp:                         {counter: searches_mp,                     key: [participant]}
+  users_search_with_mp_items:              {counter: searches_with_mp_items,          key: [participant]}
   users_search_filter_any:                 {counter: searches_with_filter_any,        key: [participant]}
   users_search_query:                      {counter: searches_with_query,             key: [participant]}
   users_searches_any_ext_block:            {counter: searches_any_ext_block,          key: [participant]}
@@ -1103,9 +1109,9 @@ metric.uniq:
   searches_contact_metageo:                {counter: contacts_metageo,                key: [x]}
   searches_btc_metageo:                    {counter: buyer_target_clicks_metageo,     key: [x]}
   searches_iv_metageo:                     {counter: item_views_metageo,              key: [x]}
-  courier_click:                           {counter: total_courier_click,             key: [participant, item]}
-  courier_widget:                          {counter: total_courier_widget,            key: [participant, item]}
-  courier_contact:                         {counter: total_courier_contact,           key: [participant, item]}
+  courier_click:                           {counter: total_courier_click,             key: [item]}
+  courier_widget:                          {counter: total_courier_widget,            key: [item]}
+  courier_contact:                         {counter: total_courier_contact,           key: [item]}
   user_courier_btc:                        {counter: total_courier_btc,               key: [participant]}
   user_delivery_btc:                       {counter: total_delivery_btc,              key: [participant]}
   user_iv_witcher_funnel_any:              {counter: iv_witcher_funnel_any,           key: [participant]}
@@ -1203,6 +1209,7 @@ metric.ratio:
   delivery_contacts_per_delivery_click_mp:     {num: delivery_contact_mp,             den: delivery_click_mp}
   delivery_contacts_per_delivery_widget_mp:    {num: delivery_contact_mp,             den: delivery_widget_mp}
   delivery_contacts_per_delivery_confirm_mp:   {num: delivery_contact_mp,             den: delivery_confirm_mp}
+  delivery_item_views_per_user_searhes_with_mp_items:   {num: delivery_item_view_serp_mp,  den: users_search_with_mp_items}
   share_item_view_mp:                          {num: item_views_mp,                   den: item_views}
   share_contacts_mp:                           {num: total_delivery_contact_mp,       den: contacts}
   share_search_mp:                             {num: searches_mp,                     den: searches}
@@ -1269,7 +1276,8 @@ metric.ratio:
   item_views_serp_district_per_search_district: {num: item_views_serp_district,        den: searches_district}
   item_views_serp_metro_per_search_metro:  {num: item_views_serp_metro,           den: searches_metro}
   item_views_serp_per_search:              {num: item_views_serp,                 den: searches_serp}
-  item_views_serp_radius_per_search_radius: {num: item_views_serp_radius,          den: searches_radius}
+  item_views_mp_per_searches_with_mp_items: {num: item_views_serp_mp,             den: searches_serp_with_mp}
+  item_views_serp_radius_per_search_radius: {num: item_views_serp_radius,         den: searches_radius}
   item_views_serp_road_per_search_road:    {num: item_views_serp_road,            den: searches_road}
   item_views_serp_saved_per_search_saved:  {num: item_views_serp_saved,           den: saved_searches}
   item_views_shop_per_searches_shop:       {num: item_views_shop,                 den: searches_shop}
