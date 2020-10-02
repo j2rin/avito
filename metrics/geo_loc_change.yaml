@@ -49,8 +49,8 @@ metric.counter:
   loc_bad_susp_chng:                       {filter: [*changed, *is_close, *saved, {$or: [[{changing_quality_type: bad}], [{changing_quality_type: suspicious}]]}], obs: [events_count]}
   loc_chng:                                {filter: [*changed, *is_close, *saved], obs: [events_count]}
   loc_rechoice:                            {filter: [*rechoiced, *is_close, *saved], obs: [events_count]}
-  loc_chng_app_settings:                   {filter: [{open_from: app settings}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_rechoice_app_settings:               {filter: [{open_from: app settings}, *rechoiced, *is_close, *saved], obs: [events_count]}
+  loc_chng_app_settings:                   {filter: [open_from: app settings, *changed, *is_close, *saved], obs: [events_count]}
+  loc_rechoice_app_settings:               {filter: [open_from: app settings, *rechoiced, *is_close, *saved], obs: [events_count]}
   loc_chng_bad_city:                       {filter: [{changing_quality_type: bad}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
   loc_chng_bad_region:                     {filter: [{changing_quality_type: bad}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
   loc_chng_bad_russia:                     {filter: [{changing_quality_type: bad}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
@@ -67,7 +67,7 @@ metric.counter:
   loc_chng_russia_city:                    {filter: [{changing_geo_type: detailed}, {location_level_id: [4, 5, 6]}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
   loc_chng_russia_region:                  {filter: [{changing_geo_type: detailed}, {location_level_id: [2, 3]}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
   loc_chng_search:                         {filter: [{open_from: search}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_rechoice_search:                     {filter: [{open_from: search}, *rechoiced, *is_close, *saved], obs: [events_count]}
+  loc_rechoice_search:                     {filter: [open_from: search, *rechoiced, *is_close, *saved], obs: [events_count]}
   loc_chng_suspicious_city:                {filter: [{changing_quality_type: suspicious}, {prev_location_level_id: [4, 5, 6]}, *changed, *is_close, *saved], obs: [events_count]}
   loc_chng_suspicious_region:              {filter: [{changing_quality_type: suspicious}, {prev_location_level_id: [2, 3]}, *changed, *is_close, *saved], obs: [events_count]}
   loc_chng_suspicious_russia:              {filter: [{changing_quality_type: suspicious}, {prev_location_level_id: 1}, *changed, *is_close, *saved], obs: [events_count]}
