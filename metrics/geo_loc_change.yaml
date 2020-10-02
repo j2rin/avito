@@ -76,17 +76,17 @@ metric.counter:
   loc_horizontal_chng:                     {filter: [{changing_geo_type: horizontal}, *changed, *is_close, *saved], obs: [events_count]}
   loc_neutral_chng:                        {filter: [{changing_quality_type: neutral}, *changed, *is_close, *saved], obs: [events_count]}
   loc_susp_chng:                           {filter: [{changing_quality_type: suspicious}, *changed, *is_close, *saved], obs: [events_count]}
-  loc_chng_category_level:                 {filter: [{subcategory_id.isnull: true},*changed, *is_close, *saved, *is_category,*is_search], obs: [events_count]}
-  loc_chng_subcategory_level:              {filter: [*changed, *is_close, *saved, *is_category, *is_subcategory,*is_search], obs: [events_count]}
-  loc_chng_na_category_level:              {filter: [{subcategory_id.isnull: true},{category_id.isnull: true},*changed, *is_close, *saved,*is_search], obs: [events_count]}
-  loc_rechoice_category_level:             {filter: [{subcategory_id.isnull: true},*rechoiced, *is_close, *saved, *is_category,*is_search], obs: [events_count]}
-  loc_rechoice_subcategory_level:          {filter: [*rechoiced, *is_close, *saved, *is_category, *is_subcategory,*is_search], obs: [events_count]}
-  loc_rechoice_na_category_level:          {filter: [{subcategory_id.isnull: true},{category_id.isnull: true},*rechoiced, *is_close, *saved,*is_search], obs: [events_count]}
+  loc_chng_category_level:                 {filter: [subcategory_id.isnull: true, *changed, *is_close, *saved, *is_category, *is_search], obs: [events_count]}
+  loc_chng_subcategory_level:              {filter: [*changed, *is_close, *saved, *is_category, *is_subcategory, *is_search], obs: [events_count]}
+  loc_chng_na_category_level:              {filter: [subcategory_id.isnull: true, category_id.isnull: true, *changed, *is_close, *saved, *is_search], obs: [events_count]}
+  loc_rechoice_category_level:             {filter: [subcategory_id.isnull: true, *rechoiced, *is_close, *saved, *is_category, *is_search], obs: [events_count]}
+  loc_rechoice_subcategory_level:          {filter: [*rechoiced, *is_close, *saved, *is_category, *is_subcategory, *is_search], obs: [events_count]}
+  loc_rechoice_na_category_level:          {filter: [subcategory_id.isnull: true, category_id.isnull: true, *rechoiced, *is_close, *saved, *is_search], obs: [events_count]}
   loc_window_closings:                     {filter: [*is_close], obs: [events_count]}
   loc_window_opens:                        {filter: [*is_open], obs: [events_count]}
-  loc_window_opens_category_level:         {filter: [{subcategory_id.isnull: true},*is_category, *is_search, *is_open], obs: [events_count]}
+  loc_window_opens_category_level:         {filter: [subcategory_id.isnull: true, *is_category, *is_search, *is_open], obs: [events_count]}
   loc_window_opens_subcategory_level:      {filter: [*is_category, *is_subcategory, *is_search, *is_open], obs: [events_count]}
-  loc_window_opens_na_category_level:      {filter: [{subcategory_id.isnull: true},{category_id.isnull: true},*is_search, *is_open], obs: [events_count]}
+  loc_window_opens_na_category_level:      {filter: [subcategory_id.isnull: true, category_id.isnull: true, *is_search, *is_open], obs: [events_count]}
   loc_window_opens_app_settings:           {filter: [{open_from: app settings}, *is_open], obs: [events_count]}
   loc_window_opens_radius:                 {filter: [{open_from: radius}, *is_open], obs: [events_count]}
   loc_window_opens_search:                 {filter: [{open_from: search}, *is_open], obs: [events_count]}
