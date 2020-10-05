@@ -785,6 +785,7 @@ metric.uniq:
   wtc_from_witcher_regions:                {counter: cnt_iv_wtc_reg_s_from,           key: [item_x]}
   cities_in_search:                        {counter: cnt_cities_in_s,                 key: [location_session_microcat]}
   locations_in_search:                     {counter: searches,                        key: [location_session_microcat]}
+  uniq_locations_in_search:                {counter: searches,                        key: [location_id]}
   regions_in_search:                       {counter: cnt_reg_in_s,                    key: [location_session_microcat]}
   btc_s_item_attr_users:                   {counter: cnt_btc_s_item_attr,             key: [participant]}
   btc_s_item_attr_users_mp:                {counter: cnt_btc_s_item_attr_mp,          key: [participant]}
@@ -1124,10 +1125,12 @@ metric.uniq:
   unq_x_s_query_iv:                        {counter: cnt_s_query_iv,                  key: [x], m42: False}
   users_1plus_actions:                     {counter: cnt_users_1plus_actions,         key: [{participant: 1}]}
   users_2plus_actions:                     {counter: cnt_users_1plus_actions,         key: [{participant: 2}]}
-  user_search_1_plus_locations:            {counter: searches,                        key: [participant,session, microcat_id: 1, location_id: 0]}
-  multiloc_users:                          {counter: searches,                        key: [participant,session, microcat_id: 2, location_id: 0]}
+  user_search_1_plus_locations:            {counter: searches,                        key: [participant, microcat_id: 1, location_id: 0]}
+  user_search_1_plus_cities:               {counter: cnt_cities_in_s,                 key: [participant, microcat_id: 1, location_id: 0]}
+  user_search_1_plus_regions:              {counter: cnt_reg_in_s,                    key: [participant, microcat_id: 1, location_id: 0]}
+  multiloc_users:                          {counter: searches,                        key: [participant, microcat_id: 2, location_id: 0]}
+  sess_search_1_plus_locations:            {counter: searches,                        key: [session, microcat_id: 1, location_id: 0]}  
   sess_search_1_plus_cities:               {counter: cnt_cities_in_s,                 key: [session, microcat_id: 1, location_id: 0]}
-  sess_search_1_plus_locations:            {counter: searches,                        key: [session, microcat_id: 1, location_id: 0]}
   sess_search_1_plus_regions:              {counter: cnt_reg_in_s,                    key: [session, microcat_id: 1, location_id: 0]}
   multi_city_sess:                         {counter: cnt_cities_in_s,                 key: [session, microcat_id: 2, location_id: 0]}
   multi_region_sess:                       {counter: cnt_reg_in_s,                    key: [session, microcat_id: 2, location_id: 0]}
@@ -1334,6 +1337,8 @@ metric.ratio:
   iv_from_witcher_new_flats_per_witcher_new_flats: {num: iv_from_witcher_new_flats,       den: searches_witcher_new_flats}
   iv_from_witcher_regions_per_witcher_reg: {num: iv_from_witcher_regions,         den: searches_witcher_regions}
   locations_per_search:                    {num: locations_in_search,             den: searches}
+  uniq_locations_per_search:               {num: uniq_locations_in_search,             den: searches}
+  uniq_locations_per_user_search:          {num: uniq_locations_in_search,             den: users_search}
   map_area_btc_users_per_map_serchers:     {num: users_buyer_target_click_from_map_area, den: map_area_users}
   map_area_buyers_per_map_area_serchers:   {num: buyers_from_map_area,            den: map_area_users}
   map_area_item_viewers_per_map_serchers:  {num: users_item_views_from_map_area,  den: map_area_users}
