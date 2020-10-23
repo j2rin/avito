@@ -1,0 +1,7 @@
+metric.counter:
+  authorized_page_views:                   {filter: [user_id.isnull: false],  obs: [events_count]}
+  page_views:                              {                                  obs: [events_count]}
+
+metric.uniq:
+  daily_active_authorized_users:           {counter: authorized_page_views,   key: [participant]}
+  daily_active_users:                      {counter: page_views,              key: [participant]}
