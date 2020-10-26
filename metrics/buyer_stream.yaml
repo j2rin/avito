@@ -463,12 +463,12 @@ metric.counter:
   cnt_users_1plus_actions:                 {filter: [{$or: [[*is_1p, *is_search, *noq], [*is_1p, *is_search, *q], [*is_booking], [*is_delivery], [*is_delivery_btn], [*is_fav], [*is_iv], [*is_msg], [*is_ph_realdev], [*is_ph_tot]]}], m42: False}
   contacts:                                {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_realdev], [*is_ph_tot]]}]}
   contacts_total_vas:                      {filter: [*is_item_vas, {$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}]}
-  contacts_perfvas_X2_1:                   {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}], *is_item_perfvas_X2_1], m42: False}
-  contacts_perfvas_X2_7:                   {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}], *is_item_perfvas_X2_7], m42: False}
-  contacts_perfvas_X5_1:                   {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}], *is_item_perfvas_X5_1], m42: False}
-  contacts_perfvas_X5_7:                   {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}], *is_item_perfvas_X5_7], m42: False}
-  contacts_perfvas_X10_1:                  {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}], *is_item_perfvas_X10_1], m42: False}
-  contacts_perfvas_X10_7:                  {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}], *is_item_perfvas_X10_7], m42: False}
+  contacts_perfvas_X2_1:                   {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_X2_1], m42: False}
+  contacts_perfvas_X2_7:                   {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_X2_7], m42: False}
+  contacts_perfvas_X5_1:                   {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_X5_1], m42: False}
+  contacts_perfvas_X5_7:                   {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_X5_7], m42: False}
+  contacts_perfvas_X10_1:                  {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_X10_1], m42: False}
+  contacts_perfvas_X10_7:                  {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_X10_7], m42: False}
   default_radius_searches:                 {filter: [*is_1p, *is_default_radius, *is_search]}
   delivery_orders_created:                 {filter: [*is_delivery]}
   fav_added_developer:                     {filter: [*is_developer_acc, *is_fav]}
