@@ -12,6 +12,7 @@ definitions:
   - &sort_date    [1, 2]
   - &sort_price   [3, 4]
   - &sort_dft     5
+  - &adv_page     [300, 301, 2572, 2592]
 
   - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, search_flags.!bit: 4]}
   - &is_rec     {$or: [{eid: *eid_rec}, {search_flags.bit: 10}]}
@@ -650,7 +651,18 @@ metric.counter:
   btc_leadgen_item:                        {filter: [*is_item_leadgen, *is_btc]}
   c_leadgen_item:                          {filter: [*is_item_leadgen, *is_contact]}
   iv_leadgen_item:                         {filter: [*is_item_leadgen, *is_iv]}  
-
+  advertisement_page_views:                {filter: *adv_page}
+  saved_searches_added:                    {filter: [eid: 2071]}
+  head_main_pages:                         {filter: [eid: 2572]}
+  services_main_pages:                     {filter: [eid: 2592, microcat_id: [1741, 1748]]}
+  re_main_pages:                           {filter: [eid: 2592, microcat_id: 2605]}
+  transport_main_pages:                    {filter: [eid: 2592, microcat_id: 7096]}
+  all_main_pages:                          {filter: [eid: [2572, 2592]]}
+  vertical_main_pages:                     {filter: [eid: 2592]}
+  shortcut_clicks:                         {filter: [eid: 2664]}
+  realty_dev_views:                        {filter: [eid: 3459]}
+  realty_development_phone_views:          {filter: [eid: 3461]}
+  item_views_from_fs:                      {filter: [*is_iv, from_page: fs]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1098,6 +1110,15 @@ metric.uniq:
   users_searches_radius:                   {counter: searches_radius,                 key: [participant]}
   users_searches_road:                     {counter: searches_road,                   key: [participant]}
   users_write_button_clicks:               {counter: write_button_clicks,             key: [participant]}
+  users_saved_searches_added:              {counter: saved_searches_added,            key: [participant]}
+  users_head_main_page_daily:              {counter: head_main_pages,                 key: [participant]}
+  users_all_main_page_daily:               {counter: all_main_pages,                  key: [participant]}
+  users_re_main_page_daily:                {counter: re_main_pages,                   key: [participant]}
+  users_services_main_page_daily:          {counter: services_main_pages,             key: [participant]}
+  users_transport_main_page_daily:         {counter: transport_main_pages,            key: [participant]}
+  users_vertical_main_page_daily:          {counter: vertical_main_pages,             key: [participant]}
+  shortcut_users:                          {counter: shortcut_clicks,                 key: [participant]}
+  users_realty_dev_view:                   {counter: realty_dev_views,                key: [participant]}
   btc_sessions_from_map:                   {counter: cnt_btc_from_map,                key: [session]}
   btc_sessions_from_map_area:              {counter: cnt_btc_s_map_area,              key: [session]}
   buyer_target_clicks_geo_sess:            {counter: cnt_btc_s_distr_metro_radius_road, key: [session]}
