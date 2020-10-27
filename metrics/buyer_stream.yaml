@@ -12,7 +12,6 @@ definitions:
   - &sort_date    [1, 2]
   - &sort_price   [3, 4]
   - &sort_dft     5
-  - &adv_page     [300, 301, 2572, 2592]
 
   - &is_search  {eid: *eid_search, $or: [platform_id.!=: 1, search_flags.!bit: 4]}
   - &is_rec     {$or: [{eid: *eid_rec}, {search_flags.bit: 10}]}
@@ -22,6 +21,7 @@ definitions:
   - &is_job_ast {eid: *eid_job_ast}
   - &is_fav_lst {eid: *eid_fav_lst}
   - &is_map     {eid: *eid_map}
+  - &adv_page   {eid: [300, 301, 2572, 2592]}
 
   - &x_is_search  {x_eid: *eid_search}
   - &x_is_rec     {$or: [{x_eid: *eid_rec}, {search_flags.bit: 10}]}
@@ -652,17 +652,17 @@ metric.counter:
   c_leadgen_item:                          {filter: [*is_item_leadgen, *is_contact]}
   iv_leadgen_item:                         {filter: [*is_item_leadgen, *is_iv]}  
   advertisement_page_views:                {filter: *adv_page}
-  saved_searches_added:                    {filter: [eid: 2071]}
-  head_main_pages:                         {filter: [eid: 2572]}
-  services_main_pages:                     {filter: [eid: 2592, microcat_id: [1741, 1748]]}
-  re_main_pages:                           {filter: [eid: 2592, microcat_id: 2605]}
-  transport_main_pages:                    {filter: [eid: 2592, microcat_id: 7096]}
-  all_main_pages:                          {filter: [eid: [2572, 2592]]}
-  vertical_main_pages:                     {filter: [eid: 2592]}
-  shortcut_clicks:                         {filter: [eid: 2664]}
-  realty_dev_views:                        {filter: [eid: 3459]}
-  realty_development_phone_views:          {filter: [eid: 3461]}
-  item_views_from_fs:                      {filter: [*is_iv, from_page: fs]}
+  saved_searches_added:                    {filter: {eid: 2071}}
+  head_main_pages:                         {filter: {eid: 2572}}
+  services_main_pages:                     {filter: [{eid: 2592}, {microcat_id: [1741, 1748]}]}
+  re_main_pages:                           {filter: {eid: 2592}, {microcat_id: 2605}}
+  transport_main_pages:                    {filter: {eid: 2592}, {microcat_id: 7096}}
+  all_main_pages:                          {filter: {eid: [2572, 2592]}}
+  vertical_main_pages:                     {filter: {eid: 2592}}
+  shortcut_clicks:                         {filter: {eid: 2664}}
+  realty_dev_views:                        {filter: {eid: 3459}}
+  realty_development_phone_views:          {filter: {eid: 3461}}
+  item_views_from_fs:                      {filter: [*is_iv, {from_page: fs}]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
