@@ -551,20 +551,20 @@ metric.counter:
   searches:                                {filter: [*is_1p, *is_search]}
   searches_mp:                             {filter: [*is_1p, *is_search, *is_search_marketplace]}
   searches_with_mp_items:                  {filter: [*is_1p, *is_search, *is_search_w_mp_item]}
-  searches_any_ext_block:                  {filter: [*is_1p, *is_search, {$or: [[*x_is_extra_delivery], [*x_is_extra_regions], [*x_is_extra_quorum], [*x_is_extra_vector]]}]}
+  searches_any_ext_block:                  {filter: [*is_search, {$or: [[*x_is_extra_delivery], [*x_is_extra_regions], [*x_is_extra_quorum], [*x_is_extra_vector]]}]}
   searches_date_sort:                      {filter: [*is_1p, *is_s_sort_date, *is_search]}
   searches_default_sort:                   {filter: [*is_1p, *is_s_sort_dft, *is_search]}
   searches_district:                       {filter: [*is_1p, *is_s_district, *is_search]}
-  searches_extra_delivery:                 {filter: [*is_1p, *is_search, *x_is_extra_delivery]}
-  searches_extra_regions:                  {filter: [*is_1p, *is_search, *x_is_extra_regions]}
-  searches_extra_quorum:                   {filter: [*is_1p, *is_search, *x_is_extra_quorum]}
-  searches_extra_vector:                   {filter: [*is_1p, *is_search, *x_is_extra_vector]}
-  searches_from_witcher_any:               {filter: [*is_search, {$or: [[*is_fp_witcher_delivery], [*is_fp_witcher_new_auto], [*is_fp_witcher_new_flats], [*is_fp_witcher_regions], [*is_fp_witcher_marketplace]]}]}
-  searches_from_witcher_delivery:          {filter: [*is_fp_witcher_delivery, *is_search]}
-  searches_from_witcher_marketplace:       {filter: [*is_fp_witcher_marketplace, *is_search]}
-  searches_from_witcher_new_auto:          {filter: [*is_fp_witcher_new_auto, *is_search]}
-  searches_from_witcher_new_flats:         {filter: [*is_fp_witcher_new_flats, *is_search]}
-  searches_from_witcher_regions:           {filter: [*is_fp_witcher_regions, *is_search]}
+  searches_extra_delivery:                 {filter: [*is_search, *x_is_extra_delivery]}
+  searches_extra_regions:                  {filter: [*is_search, *x_is_extra_regions]}
+  searches_extra_quorum:                   {filter: [*is_search, *x_is_extra_quorum]}
+  searches_extra_vector:                   {filter: [*is_search, *x_is_extra_vector]}
+  searches_from_witcher_any:               {filter: [*is_1p,*is_search, {$or: [[*is_fp_witcher_delivery], [*is_fp_witcher_new_auto], [*is_fp_witcher_new_flats], [*is_fp_witcher_regions], [*is_fp_witcher_marketplace]]}]}
+  searches_from_witcher_delivery:          {filter: [*is_1p,*is_fp_witcher_delivery, *is_search]}
+  searches_from_witcher_marketplace:       {filter: [*is_1p,*is_fp_witcher_marketplace, *is_search]}
+  searches_from_witcher_new_auto:          {filter: [*is_1p,*is_fp_witcher_new_auto, *is_search]}
+  searches_from_witcher_new_flats:         {filter: [*is_1p,*is_fp_witcher_new_flats, *is_search]}
+  searches_from_witcher_regions:           {filter: [*is_1p,*is_fp_witcher_regions, *is_search]}
   searches_geo:                            {filter: [*is_1p, *is_search, {$or: [[*is_s_district], [*is_s_metro], [*is_s_radius], [*is_s_road]]}]}
   searches_group:                          {filter: [*is_search, *is_serp_grouping]}
   searches_group_doubles:                  {filter: [*is_region_with_double_groups, *is_search, *is_serp_grouping]}
@@ -584,9 +584,9 @@ metric.counter:
   searches_shop:                           {filter: [*is_1p, *is_search, *x_is_shop]}
   searches_shop_empty:                     {filter: [*is_1p, *is_search, *is_serp_empty, *x_is_shop]}
   searches_shop_small:                     {filter: [*is_1p, *is_search, *is_serp_small, *x_is_shop]}
-  searches_witcher_new_auto:               {filter: [*is_1p, *is_search, *x_is_witcher_new_auto]}
-  searches_witcher_new_flats:              {filter: [*is_1p, *is_search, *x_is_witcher_new_flats]}
-  searches_witcher_regions:                {filter: [*is_1p, *is_search, *x_is_witcher_regions]}
+  searches_witcher_new_auto:               {filter: [*is_search, *x_is_witcher_new_auto]}
+  searches_witcher_new_flats:              {filter: [*is_search, *x_is_witcher_new_flats]}
+  searches_witcher_regions:                {filter: [*is_search, *x_is_witcher_regions]}
   searches_with_filter:                    {filter: [*is_1p, *is_search, *x_is_filter_search]}
   searches_with_filter_any:                {filter: [*is_1p, *is_search, {$or: [[*x_is_filter_search], [*x_is_price_filter_search]]}]}
   searches_with_price_filter:              {filter: [*is_1p, *is_search, *x_is_price_filter_search]}
