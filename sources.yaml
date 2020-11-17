@@ -3,7 +3,6 @@ buyer_stream:
     table: dma.vo_buyer_stream
     column_map:
       query: query_id
-      x_query: x_query_id
       item: item_id
       session: session_no
       cookie: cookie_id
@@ -38,6 +37,8 @@ buyer_stream:
       - x_population_group
       - x_location_level_id
       - x_rec_engine_id
+      - user_segment
+      - is_asd
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -51,6 +52,31 @@ click_stream:
     table: dma.vo_clickstream
     column_map:
       session: session_no
+      cookie: cookie_id
+      user: user_id
+    dimensions:
+      - platform_id
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+    segm: cookie_id
+
+pageviews:
+  vertica:
+    table: dma.vo_clickstream_pageviews
+    column_map:
       cookie: cookie_id
       user: user_id
     dimensions:
@@ -92,6 +118,9 @@ seller_item_active:
       - location_group_id
       - population_group
       - location_level_id
+      - user_segment
+      - is_asd
+      - user_segment_market
     participant: {user: user_id}
     dtm: event_date
     segm: user_id
@@ -116,6 +145,11 @@ seller_item_event:
       - location_group_id
       - population_group
       - location_level_id
+      - user_segment
+      - is_asd
+      - user_segment_market
+      - location_id
+      - microcat_id
     participant: {user: user_id}
     dtm: event_date
     segm: user_id
@@ -178,6 +212,14 @@ perf_mobile:
     dtm: observation_date
     segm: cookie_id
 
+perf_mobile_memory_warnings:
+  vertica:
+    table: dma.o_perf_memory_warnings
+    dimensions: [platform_id, screen_name]
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+    segm: cookie_id
+
 perf_web:
   vertica:
     table: dma.o_perf_web
@@ -189,17 +231,17 @@ perf_web:
 core_contacts:
   vertica:
     table: dma.vo_core_contacts
-    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, region_id, city_id, location_group_id, population_group, location_level_id]
-    participant: {visitor: cookie_id}
+    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment, price_group, is_asd]
+    participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id_event_date
 
-advert:
+advert_funnel:
   vertica:
     column_map:
-      session: session_no
-    table: dma.vo_advert
-    dimensions: [platform_id, category_id, subcategory_id]
+      session: session_hash
+    table: dma.vo_advert_funnel
+    dimensions: [platform_id, category_id, subcategory_id, vertical_id, logical_category_id]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -207,7 +249,7 @@ advert:
 core_c2c:
   vertica:
     table: dma.vo_core_c2c
-    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, region_id, city_id, location_group_id, population_group, location_level_id]
+    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment, is_asd]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -247,7 +289,7 @@ public_profile:
 mnz_vas:
   vertica:
     table: dma.vo_mnz_vas
-    dimensions: [platform_id, page_from, vertical_id, category_id, subcategory_id, logical_category_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id]
+    dimensions: [platform_id, page_from, vertical_id, category_id, subcategory_id, logical_category_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment, is_asd, user_segment_market]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -263,7 +305,7 @@ mnz_lf:
 messenger:
   vertica:
     table: dma.vo_messenger
-    dimensions: [platform_id, appversion, vertical_id, category_id, subcategory_id, logical_category_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id]
+    dimensions: [platform_id, appversion, vertical_id, category_id, subcategory_id, logical_category_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment, is_asd, user_segment_market]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -289,7 +331,7 @@ express_cv:
 delivery:
   vertica:
     table: dma.vo_delivery
-    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, is_intercity, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id]
+    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, is_intercity, param1_id, param2_id, param3_id, param4_id, region_id, city_id, location_group_id, population_group, location_level_id, user_segment, is_asd, user_segment_market]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
@@ -297,7 +339,7 @@ delivery:
 core_b2b:
   vertica:
     table: dma.vo_core_b2b
-    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, region_id, city_id, population_group, location_group_id, location_level_id]
+    dimensions: [platform_id, vertical_id, category_id, subcategory_id, logical_category_id, region_id, city_id, population_group, location_group_id, location_level_id, user_segment, is_asd]
     participant: {user: user_id}
     dtm: event_date
     segm: user_id
@@ -475,17 +517,6 @@ buyer_call:
     dtm: event_date
     segm: cookie_id
 
-buyer_funnel:
-  vertica:
-    table: dma.vo_buyer_funnel
-    column_map:
-      item: item_id
-      session: session_no
-    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, population_group]
-    participant: {visitor: cookie_id, user: user_id}
-    dtm: event_date
-    segm: cookie_id
-
 buyer_courier_order_create_date:
   vertica:
     table: dma.vo_courier_orders
@@ -578,46 +609,6 @@ notification:
     dtm: event_date
     segm: cookie_id
 
-buyer_item:
-  vertica:
-    table: dma.vo_buyer_item
-    column_map:
-      item: item_id
-      session: session_no
-      cookie: cookie_id
-      user: user_id
-    dimensions:
-      - platform_id
-      - vertical_id
-      - logical_category_id
-      - category_id
-      - subcategory_id
-      - param1_id
-      - param2_id
-      - param3_id
-      - param4_id
-      - region_id
-      - city_id
-      - location_group_id
-      - population_group
-      - location_level_id
-      - x_vertical_id
-      - x_logical_category_id
-      - x_category_id
-      - x_subcategory_id
-      - x_param1_id
-      - x_param2_id
-      - x_param3_id
-      - x_param4_id
-      - x_region_id
-      - x_city_id
-      - x_location_group_id
-      - x_population_group
-      - x_location_level_id
-    participant: {visitor: cookie_id, user: user_id}
-    dtm: event_date
-    segm: cookie_id
-
 calltracking:
   vertica:
     table: dma.vo_calltracking
@@ -631,3 +622,169 @@ calltracking:
     participant: {user: user_id}
     dtm: event_date
     segm: user_id
+
+buyer_weighted:
+  vertica:
+    table: dma.vo_buyer_weighted
+    dimensions: [platform_id, vertical_id, logical_category_id, logical_region, user_segment, price_group]
+    participant: {visitor: cookie_id}
+    dtm: event_date
+    segm: cookie_id_event_date
+    
+app_call_bx:
+  vertica:
+    table: dma.vo_app_call_buyer
+    column_map:
+      item: item_id
+      cookie: cookie_id
+      user: user_id
+    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, population_group]
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+    segm: event_date
+    
+app_call_sx:
+  vertica:
+    table: dma.vo_app_call_seller
+    column_map:
+      item: item_id
+      cookie: cookie_id
+      user: user_id
+    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, population_group]
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+    segm: event_date
+
+app_call_event:
+  vertica:
+    table: dma.vo_app_call_event
+    column_map:
+      item: item_id
+      cookie: cookie_id
+      user: user_id
+    dimensions: [platform_id, vertical_id, logical_category_id, category_id, subcategory_id, param1_id, param2_id, param3_id, param4_id, region_id, city_id, population_group]
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+    segm: event_date    
+
+delivery_shipments_by_create_date:
+  vertica:
+    table: dma.vo_delivery_shipments
+    column_map:
+      item: item_id
+    dimensions:
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: buyer_id}
+    dtm: create_date
+    segm: shipment_id
+
+delivery_shipments_by_status_date:
+  vertica:
+    table: dma.vo_delivery_shipments
+    column_map:
+      item: item_id
+    dimensions:
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: buyer_id}
+    dtm: status_date
+    segm: shipment_id
+
+buyer_delivery_shipment_items_by_create_date:
+  vertica:
+    table: dma.vo_delivery_shipment_items
+    column_map:
+      item: item_id
+    dimensions:
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: buyer_id}
+    dtm: create_date
+    segm: shipment_id
+
+buyer_delivery_shipment_items_by_status_date:
+  vertica:
+    table: dma.vo_delivery_shipment_items
+    column_map:
+      item: item_id
+    dimensions:
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: buyer_id}
+    dtm: status_date
+    segm: shipment_id
+
+seller_delivery_shipment_items_by_create_date:
+  vertica:
+    table: dma.vo_delivery_shipment_items
+    column_map:
+      item: item_id
+    dimensions:
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: seller_id}
+    dtm: create_date
+    segm: shipment_id
+
+seller_delivery_shipment_items_by_status_date:
+  vertica:
+    table: dma.vo_delivery_shipment_items
+    column_map:
+      item: item_id
+    dimensions:
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: seller_id}
+    dtm: status_date
+    segm: shipment_id
