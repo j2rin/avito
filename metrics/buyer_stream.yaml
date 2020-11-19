@@ -683,7 +683,7 @@ metric.counter:
   realty_dev_views:                        {filter: [eid: 3459]}
   realty_development_phone_views:          {filter: [eid: 3461]}
   item_views_from_fs:                      {filter: [*is_iv, from_page: fs]}
-  total_developer_contacts:		 		   {$or: [{<<: *is_contact, *is_developer_acc},  {eid: *is_ph_realdev}]}
+  total_developer_contacts:                {filter: [{$or: [[*is_contact, *is_developer_acc], [*is_ph_realdev]]}]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
