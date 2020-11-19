@@ -3,7 +3,7 @@ definitions:
   - &eid_search   [300]
   - &eid_rec      [2437, 2012, 2309, 4126]
   - &eid_ph       [303]
-  - &eid_ph_realdev [3461]
+  - &eid_ph_realdev [3461, 4600]
   - &eid_u2i      [2012, 2309]
   - &eid_i2i      [2437]
   - &eid_job_ast  [4126]
@@ -683,6 +683,7 @@ metric.counter:
   realty_dev_views:                        {filter: [eid: 3459]}
   realty_development_phone_views:          {filter: [eid: 3461]}
   item_views_from_fs:                      {filter: [*is_iv, from_page: fs]}
+  total_developer_contacts:                {filter: [{$or: [[*is_contact, *is_developer_acc], [*is_ph_realdev]]}]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
