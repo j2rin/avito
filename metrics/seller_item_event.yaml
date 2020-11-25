@@ -16,12 +16,18 @@ metric.counter:
   item_edits_title:                        {obs: [edits_title]}
   item_edits_title_start_date:             {filter: [{start_date.>=: $ab_start_date}], obs: [edits_title]}
   items_allowed:                           {filter: [{moder_flags.bit: [0, 1, 2]}]}
+  items_allowed_marketplace:               {filter: [{moder_flags.bit: [0, 1, 2]}, {is_marketplace: True}]}
+  items_allowed_classified:                {filter: [{moder_flags.bit: [0, 1, 2]}, {is_marketplace: False}]}
   items_allowed_start_date:                {filter: [{moder_flags.bit: [0, 1, 2]}, {start_date.>=: $ab_start_date}]}
   items_archived:                          {filter: [{close_status_id: 10536750001}]}
   items_blocked:                           {filter: [{moder_flags.bit: 3}]}
+  items_blocked_marketplace:               {filter: [{moder_flags.bit: 3}, {is_marketplace: True}]}
+  items_blocked_classified:                {filter: [{moder_flags.bit: 3}, {is_marketplace: False}]}
   items_blocked_duplicate:                 {filter: [{moder_flags.bit: 5}]}
   items_blocked_duplicate_start_date:      {filter: [{moder_flags.bit: 5}, {start_date.>=: $ab_start_date}]}
   items_blocked_rejected:                  {filter: [{moder_flags.bit: [3, 6]}]}
+  items_blocked_rejected_marketplace:      {filter: [{moder_flags.bit: [3, 6]}, {is_marketplace: True}]}
+  items_blocked_rejected_classified:       {filter: [{moder_flags.bit: [3, 6]}, {is_marketplace: False}]}
   items_blocked_rejected_start_date:       {filter: [{moder_flags.bit: [3, 6]}, {start_date.>=: $ab_start_date}]}
   items_blocked_start_date:                {filter: [{moder_flags.bit: 3}, {start_date.>=: $ab_start_date}]}
   items_blocked_user_blocked:              {filter: [{moder_flags.bit: 4}]}
@@ -33,11 +39,17 @@ metric.counter:
   items_closed_no_answer:                  {filter: [{$or: [[{close_reason_id.isnull: True}], [{close_reason_id: 500006}]]}, {close_status_id: 7}]}
   items_closed_with_answer:                {filter: [{close_reason_id.!=: 500006, close_status_id: 7}]}
   items_reactivated:                       {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_item_start: False}]}
+  items_reactivated_marketplace:           {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_item_start: False, is_marketplace: True}]}
+  items_reactivated_classified:            {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_item_start: False, is_marketplace: False}]}
   items_reactivated_free:                  {filter: [{activation_type: [NoLF, Free, Free.Reopen], is_after_ttl: True, is_item_start: False}]}
   items_reactivated_net:                   {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_dead: False, is_item_start: False}]}
+  items_reactivated_net_marketplace:       {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_dead: False, is_item_start: False, is_marketplace: True}]}
+  items_reactivated_net_classified:        {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_dead: False, is_item_start: False, is_marketplace: False}]}
   items_reactivated_paid:                  {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_after_ttl: True, is_item_start: False}]}
   items_reactivated_wait:                  {filter: [{activation_type: Wait, is_after_ttl: True, is_item_start: False}]}
   items_rejected:                          {filter: [{moder_flags.bit: 6}]}
+  items_rejected_marketplace:              {filter: [{moder_flags.bit: 6}, {is_marketplace = True}]}
+  items_rejected_classified:               {filter: [{moder_flags.bit: 6}, {is_marketplace = False}]}
   items_rejected_contacts_in_description:  {filter: [{moder_flags.bit: 11}]}
   items_rejected_contacts_in_description_start_date: {filter: [{moder_flags.bit: 11}, {start_date.>=: $ab_start_date}]}
   items_rejected_contacts_on_photo:        {filter: [{moder_flags.bit: 14}]}
@@ -66,8 +78,12 @@ metric.counter:
   items_sold_onavito:                      {filter: [{close_reason_id: 500004}]}
   items_sold_onavito_start_date:           {filter: [{close_reason_id: 500004}, {start_date.>=: $ab_start_date}]}
   items_started:                           {filter: [{activation_type.!=: Wait, is_item_start: True}]}
+  items_started_marketplace:               {filter: [{activation_type.!=: Wait, is_item_start: True, is_marketplace: True}]}
+  items_started_classified:                {filter: [{activation_type.!=: Wait, is_item_start: True, is_marketplace: False}]}
   items_started_free:                      {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: True}]}
   items_started_net:                       {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True}]}
+  items_started_net_marketplace:           {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True, is_marketplace: True}]}
+  items_started_net_classified:            {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True, is_marketplace: False}]}
   items_started_paid:                      {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_item_start: True}]}
   items_started_wait:                      {filter: [{activation_type: Wait, is_item_start: True}]}
   lf_amount_net:                           {obs: [lf_amount_net]}
