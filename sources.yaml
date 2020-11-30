@@ -722,3 +722,27 @@ fraud_support_tickets:
     - subcategory
   participant: {visitor: cookie_id, user: user_id}
   dtm: create_date
+
+autoteka_callbacks:
+  table: dma.autoteka_callbacks
+  dimensions: [payment_method, reports_count, searchtype, is_authorized, is_new_user, platform_id]
+  participant: {visitor: cookie_id}
+  dtm: event_date
+
+autoteka_previews:
+  table: dma.autoteka_previews
+  dimensions: [is_authorized, searchtype, platform_id]
+  participant: {visitor: cookie_id}
+  dtm: event_date
+
+autoteka_product_selections:
+  table: dma.autoteka_product_selections
+  dimensions: [reports_count, searchtype, is_authorized, platform_id]
+  participant: {visitor: cookie_id}
+  dtm: event_date
+
+autoteka_paypage_loads:
+  table: dma.autoteka_paypage_loads
+  dimensions: [payment_method, reports_count, searchtype, is_authorized, is_new_user, platform_id]
+  participant: {visitor: cookie_id}
+  dtm: event_date
