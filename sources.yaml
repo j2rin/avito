@@ -38,6 +38,13 @@ buyer_stream:
       - x_location_level_id
       - x_rec_engine_id
       - user_segment
+    m42_cartesian_groups:
+      - [is_logged_in, user_segment, vertical_id, logical_category_id, region_id]
+      - [is_logged_in, is_asd, vertical_id, logical_category_id, region_id, user_segment_market]
+      - [category_id, subcategory_id, param1_id]
+      - [vertical_id, logical_category_id, region_id, city_id]
+      - [price_group]
+      - [app_version]
     participant: {visitor: cookie_id, user: user_id}
     dtm: event_date
     segm: cookie_id
