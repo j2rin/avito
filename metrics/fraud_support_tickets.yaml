@@ -1,0 +1,46 @@
+definitions:
+  - &via_avito_messenger    [where_is_avito_messenger: True]
+  - &via_other_messenger    [where_is_avito_messenger: False]
+  - &seller                 [ticket_author_role: 'seller']
+  - &buyer                  [ticket_author_role: 'buyer']
+  - &is_fraud               [where_is_avito_messenger: True]
+
+metric.counter:
+  fraud_tickets:                                        {}
+  fraud_tickets_fraud_commited:                         {filter: [*is_fraud]}
+  fraud_tickets_avito_messenger:                        {filter: [*via_avito_messenger]}
+  fraud_tickets_fraud_committed_avito_messenger:        {filter: [*is_fraud, *via_avito_messenger]}
+  fraud_tickets_other_messenger:                        {filter: [*via_other_messenger]}
+  fraud_tickets_fraud_committed_other_messenger:        {filter: [*is_fraud, *via_other_messenger]}
+  fraud_tickets_seller:                                 {filter: [*seller]}
+  fraud_tickets_buyer:                                  {filter: [*buyer]}
+  fraud_tickets_fraud_commited_seller:                  {filter: [*is_fraud, *seller]}
+  fraud_tickets_fraud_commited_buyer:                   {filter: [*is_fraud, *buyer]}
+  fraud_tickets_avito_messenger_buyer:                  {filter: [*via_avito_messenger, *buyer]}
+  fraud_tickets_fraud_commited_avito_messenger_buyer:   {filter: [*is_fraud, *via_avito_messenger, *buyer]}
+  fraud_tickets_other_messenger_buyer:                  {filter: [*via_other_messenger, *buyer]}
+  fraud_tickets_fraud_commited_other_messenger_buyer:   {filter: [*is_fraud, *via_other_messenger, *buyer]}
+  fraud_tickets_avito_messenger_seller:                 {filter: [*via_avito_messenger, *seller]}
+  fraud_tickets_fraud_commited_avito_messenger_seller:  {filter: [*is_fraud, *via_avito_messenger, *seller]}
+  fraud_tickets_other_messenger_seller:                 {filter: [*via_other_messenger, *seller]}
+  fraud_tickets_fraud_commited_other_messenger_seller:  {filter: [*is_fraud, *via_avito_messenger, *seller]}
+
+metric.uniq:
+  unq_fraud_tickets:                                    {counter: fraud_tickets, key: [participant]}
+  unq_fraud_tickets_fraud_commited:                     {counter: fraud_tickets_fraud_commited, key: [participant]}
+  unq_fraud_tickets_avito_messenger:                    {counter: fraud_tickets_avito_messenger, key: [participant]}
+  unq_fraud_tickets_fraud_committed_avito_messenger:    {counter: fraud_tickets_fraud_committed_avito_messenger, key: [participant]}
+  unq_fraud_tickets_other_messenger:                    {counter: fraud_tickets_other_messenger, key: [participant]}
+  unq_fraud_tickets_fraud_committed_other_messenger:    {counter: fraud_tickets_fraud_committed_other_messenger, key: [participant]}
+  unq_fraud_tickets_seller:                             {counter: fraud_tickets_seller, key: [participant]}
+  unq_fraud_tickets_buyer:                              {counter: fraud_tickets_buyer, key: [participant]}
+  unq_fraud_tickets_fraud_commited_seller:              {counter: fraud_tickets_fraud_commited_seller, key: [participant]}
+  unq_fraud_tickets_fraud_commited_buyer:               {counter: fraud_tickets_fraud_commited_buyer, key: [participant]}
+  unq_fraud_tickets_avito_messenger_buyer:              {counter: fraud_tickets_avito_messenger_buyer, key: [participant]}
+  unq_fraud_tickets_fraud_commited_avito_messenger_buyer: {counter: fraud_tickets_fraud_commited_avito_messenger_buyer, key: [participant]}
+  unq_fraud_tickets_other_messenger_buyer:              {counter: fraud_tickets_other_messenger_buyer, key: [participant]}
+  unq_fraud_tickets_fraud_commited_other_messenger_buyer: {counter: fraud_tickets_fraud_commited_other_messenger_buyer, key: [participant]}
+  unq_fraud_tickets_avito_messenger_seller:             {counter: fraud_tickets_avito_messenger_seller, key: [participant]}
+  unq_fraud_tickets_fraud_commited_avito_messenger_seller: {counter: fraud_tickets_fraud_commited_avito_messenger_seller, key: [participant]}
+  unq_fraud_tickets_other_messenger_seller:             {counter: fraud_tickets_other_messenger_seller, key: [participant]}
+  unq_fraud_tickets_fraud_commited_other_messenger_seller: {counter: fraud_tickets_fraud_commited_other_messenger_seller, key: [participant]}
