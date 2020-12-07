@@ -1,3 +1,8 @@
+# level — откуда тянется дименшен. event — из источника, participant — из таблицы participant_dimension
+# has_id — в источниках дименшен представлен в виде id, столбец имеет имя <slug>_id
+# is_bool — булев дименшен
+# parent — слаг дименшена-родителя
+
 common:
   platform:                 {level: event, has_id: true}
   vertical:                 {level: event, has_id: true}
@@ -82,10 +87,12 @@ ab:
   initial_user_experience:  {level: ab_participant}
 
 
+# has_any — для дименшена нужно считать значение Any. Дефолт — true
+# cartesian_default — дименшен декартово перемножается со всеми другими дименшенами m42
 m42:
   metric_date:              {level: participant, has_any: false, cartesian_default: true}
   participant_type:         {level: participant, has_any: false, cartesian_default: true}
   is_participant_new:       {level: participant, has_any: false, cartesian_default: true}
   is_human:                 {level: participant, has_any: false, cartesian_default: true}
-  platform:                 {level: participant,   has_id: true, cartesian_default: true}
+  platform:                 {level: participant, has_id: true,   cartesian_default: true}
 
