@@ -231,6 +231,24 @@ if __name__ == '__main__':
         elif sys.argv[1] == '--publish':
             publish()
             exit(0)
+        elif sys.argv[1] == '--publish-staging':
+            AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
+            VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
+            PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
+            PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
+
+            os.environ["API_KEY"] = 'api_key'
+
+            publish()
+            exit(0)
+        elif sys.argv[1] == '--validate-staging':
+            AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
+            VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
+            PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
+            PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
+
+            validate()
+            exit(0)
         else:
             print('Unknown argument')
             exit(1)
