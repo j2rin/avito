@@ -33,6 +33,7 @@ CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 # Формат: (<имя поля в json>, <путь к файлу/директории>, <является ли путь директорией>)
 CONFIGS = [
     ('sources', os.path.join(CUR_DIR_PATH, 'sources.yaml'), False),
+    ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions.yaml'), False),
     ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
     ('ratio_configs', os.path.join(CUR_DIR_PATH, 'metrics/ratio'), True),
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
@@ -123,7 +124,7 @@ def send_all(url, api_key=None):
 
 def post(url, data):
     def _post():
-        #conn = httplib.HTTPConnection('127.0.0.1', 5000)
+        # conn = httplib.HTTPConnection('127.0.0.1', 5000)
         conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
 
         conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
