@@ -1,0 +1,115 @@
+# level — откуда тянется дименшен. event — из источника, participant — из таблицы participant_dimension
+# has_id — в источниках дименшен представлен в виде id, столбец имеет имя <slug>_id
+# is_bool — булев дименшен
+# parent — слаг дименшена-родителя
+# alias — имя дименшена, если не совпадает с ключом. Например, ab_platform -> platform
+# m42_has_any — для дименшена нужно считать значение Any. Дефолт — true
+# m42_cartesian_default — дименшен декартово перемножается со всеми другими дименшенами m42
+
+
+# Информодельные иерархии ----------------------------------------------------------------------------------------------
+microcat:                 {level: event, has_id: true}
+vertical:                 {level: event, has_id: true}
+logical_category:         {level: event, has_id: true, parent: vertical}
+category:                 {level: event, has_id: true}
+subcategory:              {level: event, has_id: true, parent: category}
+param1:                   {level: event, has_id: true, parent: subcategory}
+param2:                   {level: event, has_id: true, parent: param1}
+param3:                   {level: event, has_id: true, parent: param2}
+param4:                   {level: event, has_id: true, parent: param3}
+
+location:                 {level: event, has_id: true}
+region:                   {level: event, has_id: true}
+city:                     {level: event, has_id: true, parent: region}
+location_group:           {level: event, has_id: true}
+location_level:           {level: event, has_id: true}
+population_group:         {level: event}
+
+x_microcat:               {level: event, has_id: true}
+x_vertical:               {level: event, has_id: true}
+x_logical_category:       {level: event, has_id: true, parent: x_vertical}
+x_category:               {level: event, has_id: true}
+x_subcategory:            {level: event, has_id: true, parent: x_category}
+x_param1:                 {level: event, has_id: true, parent: x_subcategory}
+x_param2:                 {level: event, has_id: true, parent: x_param1}
+x_param3:                 {level: event, has_id: true, parent: x_param3}
+x_param4:                 {level: event, has_id: true, parent: x_param4}
+
+x_location:               {level: event, has_id: true}
+x_region:                 {level: event, has_id: true}
+x_city:                   {level: event, has_id: true, parent: x_region}
+x_location_group:         {level: event, has_id: true}
+x_location_level:         {level: event, has_id: true}
+x_population_group:       {level: event}
+
+# Булевы дименшены -----------------------------------------------------------------------------------------------------
+is_asd:                   {level: event,       is_bool: true}
+is_core_content:          {level: event,       is_bool: true}
+is_intercity:             {level: event,       is_bool: true}
+is_cookie_new:            {level: participant, is_bool: true}
+is_user_new:              {level: participant, is_bool: true}
+is_logged_in:             {level: participant, is_bool: true}
+is_human:                 {level: participant, is_bool: true, m42_has_any: false, m42_cartesian_default: true}
+
+# event-level ----------------------------------------------------------------------------------------------------------
+platform:                 {level: event, has_id: true}
+phone_region:             {level: event, has_id: true}
+phone_city:               {level: event, has_id: true}
+phone_location_group:     {level: event, has_id: true}
+phone_location_level:     {level: event, has_id: true}
+rec_engine:               {level: event, has_id: true}
+user_segment_market:      {level: event}
+user_segment:             {level: event}
+price_group:              {level: event}
+appversion:               {level: event}
+content_type:             {level: event}
+from_page:                {level: event}
+logical_region:           {level: event}
+network_type:             {level: event}
+page_from:                {level: event}
+phone_population_group:   {level: event}
+proprofile_traffic:       {level: event}
+proprofile_type:          {level: event}
+proprofile_version:       {level: event}
+screen_name:              {level: event}
+stage_name:               {level: event}
+tariff_subtype:           {level: event}
+tariff_type:              {level: event}
+tariffvertical_name:      {level: event}
+
+# participant-level ----------------------------------------------------------------------------------------------------
+app_version:              {level: participant}
+vendor:                   {level: participant}
+type_device:              {level: participant}
+os_version:               {level: participant}
+os_name:                  {level: participant}
+model:                    {level: participant}
+browser:                  {level: participant}
+app_category:             {level: participant}
+app:                      {level: participant}
+display_size:             {level: participant}
+display_X:                {level: participant}
+display_Y:                {level: participant}
+browser_version:          {level: participant}
+user_experience:          {level: participant}
+seeker_segment:           {level: participant}
+ad_segment:               {level: participant}
+seller_segment:           {level: participant}
+type_contacts_segment:    {level: participant}
+attendance_segment:       {level: participant}
+quantity_c:               {level: participant}
+quantity_iv:              {level: participant}
+
+# Специфичные для M42 --------------------------------------------------------------------------------------------------
+m42_platform:             {level: participant, has_id: true,                alias: platform, m42_cartesian_default: true}
+is_participant_new:       {level: participant,               is_bool: true,                  m42_cartesian_default: true, m42_has_any: false}
+metric_date:              {level: participant,                                               m42_cartesian_default: true, m42_has_any: false}
+participant_type:         {level: participant,                                               m42_cartesian_default: true, m42_has_any: false}
+
+# Специфичные для AB ---------------------------------------------------------------------------------------------------
+ab_platform:                 {level: ab_participant,                has_id: true, alias: platform}
+ab_is_logged_in:             {level: ab_participant, is_bool: true,               alias: is_logged_in}
+ab_is_cookie_new:            {level: ab_participant, is_bool: true,               alias: is_cookie_new}
+ab_app_version:              {level: ab_participant,                              alias: app_version}
+initial_user_segment:        {level: ab_participant}
+initial_user_experience:     {level: ab_participant}
