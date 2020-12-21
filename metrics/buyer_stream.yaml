@@ -167,6 +167,7 @@ definitions:
   - &is_item_str_actual_calendar {item_flags.bit: 1}
   - &is_item_str_not_actual_calendar {logical_category_id: 1393250002, item_flags.!bit: 1}
   - &is_item_leadgen {item_flags.bit: 4}
+  - &is_item_used_car {logical_category_id: 24144500001}
 
   - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, $or: [search_flags.bit: [0, 1, 2, 3, 4], *is_serp_regions]]]}
   - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, search_flags.bit: [0, 1, 2, 3, 4, 11]]]}
@@ -470,6 +471,7 @@ metric.counter:
   cnt_s_wtc_dlv_new_auto_flats_reg:        {filter: [*is_1p, *is_search, {$or: [[*x_is_witcher_delivery], [*x_is_witcher_new_auto], [*x_is_witcher_new_flats], [*x_is_witcher_regions], [*x_is_witcher_marketplace]]}], m42: False}
   cnt_sessions_active:                     {filter: [{$or: [[*is_1p, *is_search], [*is_booking], [*is_delivery], [*is_delivery_btn], [*is_fav], [*is_iv], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}], m42: False}
   cnt_sessions_btc:                        {filter: [{$or: [[*is_booking], [*is_delivery], [*is_delivery_btn], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}], m42: False}
+  cnt_used_cars_views:                     {filter: [*is_iv, *is_item_used_car]}
   cnt_users_1plus_actions:                 {filter: [{$or: [[*is_1p, *is_search, *noq], [*is_1p, *is_search, *q], [*is_booking], [*is_delivery], [*is_delivery_btn], [*is_fav], [*is_iv], [*is_msg], [*is_ph_realdev], [*is_ph_tot]]}], m42: False}
   contacts:                                {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_realdev], [*is_ph_tot]]}]}
   contacts_total_vas:                      {filter: [*is_item_vas, {$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}]}
@@ -1018,6 +1020,7 @@ metric.uniq:
   user_item_views_total_push:              {counter: item_views_total_push,           key: [participant]}
   user_item_views_total_vas:               {counter: item_views_total_vas,            key: [participant]}
   user_item_views_total_vip:               {counter: item_views_total_vip,            key: [participant]}
+  user_item_views_used_cars:               {counter: cnt_used_cars_views,             key: [participant]}
   user_iv_developer:                       {counter: iv_developer,                    key: [participant]}
   user_iv_developer_map:                   {counter: cnt_iv_developer_from_map,       key: [participant]}
   user_iv_developer_rec:                   {counter: cnt_iv_developer_rec,            key: [participant]}
