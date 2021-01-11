@@ -166,6 +166,7 @@ definitions:
   - &is_item_pro_image {item_flags.bit: 0}
   - &is_item_str_actual_calendar {item_flags.bit: 1}
   - &is_item_str_not_actual_calendar {logical_category_id: 1393250002, item_flags.!bit: 1}
+  - &is_item_str_online_booking {item_flags.bit: 5}
   - &is_item_leadgen {item_flags.bit: 4}
   - &is_item_used_car {logical_category_id: 24144500001}
 
@@ -661,6 +662,10 @@ metric.counter:
   btc_not_actual_calendar:                 {filter: [*is_item_str_not_actual_calendar, *is_btc]}
   c_not_actual_calendar:                   {filter: [*is_item_str_not_actual_calendar, *is_contact]}
   iv_not_actual_calendar:                  {filter: [*is_item_str_not_actual_calendar, *is_iv]}
+  btc_str_online_booking_items:            {filter: [*is_item_str_online_booking, *is_btc]}
+  c_str_online_booking_items:              {filter: [*is_item_str_online_booking, *is_contact]}
+  iv_str_online_booking_items:             {filter: [*is_item_str_online_booking, *is_iv]}
+  c_msg_str_online_booking_items:          {filter: [*is_item_str_online_booking, *is_msg]}
   btc_pro_image:                           {filter: [*is_item_pro_image, *is_btc]}
   c_pro_image:                             {filter: [*is_item_pro_image, *is_contact]}
   iv_pro_image:                            {filter: [*is_item_pro_image, *is_iv]}
@@ -1350,6 +1355,11 @@ metric.uniq:
   user_btc_not_actual_calendar:            {counter: btc_not_actual_calendar,         key: [participant]}
   user_c_not_actual_calendar:              {counter: c_not_actual_calendar,           key: [participant]}
   user_iv_not_actual_calendar:             {counter: iv_not_actual_calendar,          key: [participant]}
+  user_btc_str_online_booking_items:       {counter: btc_str_online_booking_items,    key: [participant]}
+  user_c_str_online_booking_items:         {counter: c_str_online_booking_items,      key: [participant]}
+  user_iv_str_online_booking_items:        {counter: iv_str_online_booking_items,     key: [participant]}
+  user_c_msg_str_online_booking_items:     {counter: c_msg_str_online_booking_items,  key: [participant]}
+  user_booking_created_short_rent:         {counter: booking_created_short_rent,      key: [participant]}
   user_btc_pro_image:                      {counter: btc_pro_image,                   key: [participant]}
   user_c_pro_image:                        {counter: c_pro_image,                     key: [participant]}
   user_iv_pro_image:                       {counter: iv_pro_image,                    key: [participant]}
