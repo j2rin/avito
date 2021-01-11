@@ -36,6 +36,10 @@ buyer_stream:
     - x_population_group
     - x_location_level
   participant: {visitor: cookie_id, user: user_id}
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category, region]
+    - [category, subcategory, param1]
+    - [vertical, logical_category, region, city]
   dtm: event_date
   segm: cookie_id
 
@@ -725,24 +729,24 @@ fraud_support_tickets:
 
 autoteka_callbacks:
   table: dma.autoteka_callbacks
-  dimensions: [payment_method, reports_count, searchtype, is_authorized, is_new_user, platform_id]
+  dimensions: [payment_method, reports_count, searchtype, is_authorized, is_new_user, platform]
   participant: {visitor: cookie_id}
   dtm: event_date
 
 autoteka_previews:
   table: dma.autoteka_previews
-  dimensions: [is_authorized, searchtype, platform_id]
+  dimensions: [is_authorized, searchtype, platform]
   participant: {visitor: cookie_id}
   dtm: event_date
 
 autoteka_product_selections:
   table: dma.autoteka_product_selections
-  dimensions: [reports_count, searchtype, is_authorized, platform_id]
+  dimensions: [reports_count, searchtype, is_authorized, platform]
   participant: {visitor: cookie_id}
   dtm: event_date
 
 autoteka_paypage_loads:
   table: dma.autoteka_paypage_loads
-  dimensions: [payment_method, reports_count, searchtype, is_authorized, is_new_user, platform_id]
+  dimensions: [payment_method, reports_count, searchtype, is_authorized, is_new_user, platform]
   participant: {visitor: cookie_id}
   dtm: event_date
