@@ -263,6 +263,18 @@ advert_funnel:
   dtm: event_date
   segm: cookie_id
 
+mnz_bundle:
+  table: dma.vo_mnz_bundle
+  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, user_segment, is_asd, user_segment_market]
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory, param1]
+    - [user_segment, vertical, logical_category]
+    - [is_asd, vertical, logical_category, user_segment_market]
+  participant: {user: user_id}
+  dtm: event_date
+  segm: user_id
+
 core_c2c:
   table: dma.vo_core_c2c
   dimensions: [platform, vertical, logical_category, category, subcategory, region, city, location_group, population_group, location_level, user_segment, is_asd, user_segment_market]
