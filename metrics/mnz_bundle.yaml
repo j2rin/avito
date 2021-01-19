@@ -9,7 +9,7 @@ metric.counter:
   bdl_bundle_exposure: {filter: [{eventtype : 'bundle show'}], obs: [exposure], m42: False}
   bdl_first_day_vas_transactions: {filter: [{eventtype : 'vas show'}], obs: [first_day_transaction_count], m42: False}
   bdl_vas_exposure: {filter: [{eventtype : 'bundle show'}], obs: [exposure], m42: False}
-  bdl_lifetime_spend: {filter: [{transaction_type: ['VAS', 'VAS write off', 'Performance VAS write off', 'bundle write off', 'listing.fee']}, {start_date.>: $ab_start_date, first_activation_end_date.<: current_date}], obs : [revenue]}
+  bdl_lifetime_spend: {filter: [{transaction_type: ['VAS', 'VAS write off', 'Performance VAS write off', 'bundle write off', 'listing.fee']}, {start_date.>: $ab_start_date}], obs : [cut_revenue]}
 
 metric.uniq:
   bdl_vas_or_bundle_users: {counter: bdl_vas_and_bundle_revenue, key: [user_id]}
