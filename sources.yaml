@@ -746,3 +746,13 @@ autoteka_paypage_loads:
   dimensions: [payment_method, reports_count, searchtype, is_authorized, is_new_user, platform_id]
   participant: {visitor: cookie_id}
   dtm: event_date
+
+coordinates_stream:
+  table: dma.vo_coordinates_stream
+  dimensions:
+    - platform,
+    - location_group
+    - population_group
+    - location_level
+  participant: {visitor: cookie_id, user: seller_id}
+  dtm: event_date

@@ -1,0 +1,79 @@
+definitions:
+
+  - &has_coordinates        	[!geopoint.isnull]
+  - &resolved        		[resolved:true]
+  - &has_error        		[!error.isnull]
+  - &old_events      		[eid:3508]
+  - &new_events      		[eid:4615]
+  - &coords_2000m_24h     	[accuracy.<=:2000, freshness_hours.<=24]
+  - &coords_1000m_8h		[accuracy.<=:1000, freshness_hours.<=8]
+  - &coords_1000m_1h		[accuracy.<=:100,  freshness_hours.<=1]
+
+
+metric.counter:
+  old_coord_events:                       {filter: [*old_events]}
+  old_coord_events_with_coords:           {filter: [*old_events, *has_coordinates]}
+  old_coord_events_2000m_24h:             {filter: [*old_events, *has_coordinates, *coords_2000m_24h]}
+  old_coord_events_1000m_8h:   		  {filter: [*old_events, *has_coordinates, *coords_1000m_8h]}
+  old_coord_events_100m_1h:   		  {filter: [*old_events, *has_coordinates, *coords_100m_1h]}
+  old_coord_events_100m:      		  {filter: [*old_events, *has_coordinates, accuracy.<=100]}
+  old_coord_events_1000m:      		  {filter: [*old_events, *has_coordinates, accuracy.<=1000]}
+  old_coord_events_2000m:      		  {filter: [*old_events, *has_coordinates, accuracy.<=2000]}
+  old_coord_events_1h:      		  {filter: [*old_events, *has_coordinates, freshness_hours.<=1]}
+  old_coord_events_8h:      		  {filter: [*old_events, *has_coordinates, freshness_hours.<=8]}
+  old_coord_events_24h:      		  {filter: [*old_events, *has_coordinates, freshness_hours.<=24]}
+
+  coord_request:      		          {filter: [*new_events]}
+  coord_answers:      		          {filter: [*new_events, *resolved]}
+  coord_answers_with_coords:	          {filter: [*new_events, *resolved, *has_coordinates]}
+  coord_answers_with_errors:	          {filter: [*new_events, *has_error]}
+  coord_answers_2000m_24h:	          {filter: [*new_events, *resolved, *has_coordinates, *coords_2000m_24h]} 
+  coord_answers_1000m_8h:	          {filter: [*new_events, *resolved, *has_coordinates, *coords_1000m_8h]} 
+  coord_answers_100m_1h:	          {filter: [*new_events, *resolved, *has_coordinates, *coords_100m_1h]} 
+  coord_answers_100m:      		  {filter: [*new_events, *resolved, *has_coordinates, accuracy.<=100]}
+  coord_answers_1000m:      		  {filter: [*new_events, *resolved, *has_coordinates, accuracy.<=1000]}
+  coord_answers_2000m:      		  {filter: [*new_events, *resolved, *has_coordinates, accuracy.<=2000]}
+  coord_answers_1h:      		  {filter: [*new_events, *resolved, *has_coordinates, freshness_hours.<=1]}
+  coord_answers_8h:      		  {filter: [*new_events, *resolved, *has_coordinates, freshness_hours.<=8]}
+  coord_answers_24h:      		  {filter: [*new_events, *resolved, *has_coordinates, freshness_hours.<=24]}
+
+  any_events_coords_2000m_24h:		  {*has_coordinates,*coords_2000m_24h, m42: False}
+  any_events_coords_1000m_8h:		  {*has_coordinates,*coords_1000m_8h, m42: False}
+  any_events_coords_100m_1h:		  {*has_coordinates,*coords_100m_1h, m42: False}
+
+  any_events_100m:      		  {filter: [*has_coordinates, accuracy.<=100], m42: False}
+  any_events_1000m:      		  {filter: [*has_coordinates, accuracy.<=1000], m42: False}
+  any_events_2000m:      		  {filter: [*has_coordinates, accuracy.<=2000], m42: False}
+
+  any_events_1h:      			  {filter: [*has_coordinates, freshness_hours.<=1], m42: False}
+  any_events_8h:      			  {filter: [*has_coordinates, freshness_hours.<=8], m42: False}
+  any_events_24h:      			  {filter: [*has_coordinates, freshness_hours.<=24], m42: False}
+
+
+metric.uniq:
+  users_coords_2000m_24h:      		  {counter: any_events_coords_2000m_24h,      	key: [participant]}
+  users_coords_1000m_8h:      		  {counter: any_events_coords_1000m_8h,      	key: [participant]}
+  users_coords_100m_1h:      		  {counter: any_events_coords_100m_1h,      	key: [participant]}
+
+  users_coords_100m:      		  {counter: any_events_100m,      		key: [participant]}
+  users_coords_1000m:      		  {counter: any_events_1000m,      		key: [participant]}
+  users_coords_2000m:      		  {counter: any_events_2000m,      		key: [participant]}
+
+  users_coords_1h:      		  {counter: any_events_1h,      		key: [participant]}
+  users_coords_8h:      		  {counter: any_events_8h,      		key: [participant]}
+  users_coords_24h:      		  {counter: any_events_24h,      		key: [participant]}
+
+
+metric.ratio:
+  old_events_with_coords_per_old_events:        		{num: old_coord_events_with_coords, den: old_coord_events}
+  old_events_2000m_24h_per_old_events_with_coords:        	{num: old_coord_events_2000m_24h, den: old_coord_events_with_coords}
+  old_events_1000m_8h_per_old_events_with_coords:        	{num: old_coord_events_1000m_8h, den: old_coord_events_with_coords}
+  old_events_100m_1h_per_old_events_with_coords:        	{num: old_coord_events_100m_1h, den: old_coord_events_with_coords}
+
+  coord_answers_per_requests:        				{num: coord_answers, den: coord_request}
+  coord_answers_with_errors_per_requests:	          	{num: coord_answers_with_errors, den: coord_request}
+  coord_answers_with_coords_per_answers:        		{num: coord_answers_with_coords, den: coord_answers}  
+
+  old_events_2000m_24h_per_old_events_with_coords:        	{num: coord_answers_2000m_24h, den: coord_answers_with_coords}
+  old_events_1000m_8h_per_old_events_with_coords:        	{num: coord_answers_1000m_8h, den: coord_answers_with_coords}
+  old_events_100m_1h_per_old_events_with_coords:        	{num: coord_answers_100m_1h, den: coord_answers_with_coords}
