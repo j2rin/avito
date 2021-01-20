@@ -134,6 +134,7 @@ definitions:
   - &is_serp_perfvas_x5_7   {item_serp_flags.bit: [12]}
   - &is_serp_perfvas_x10_1  {item_serp_flags.bit: [13]}
   - &is_serp_perfvas_x10_7  {item_serp_flags.bit: [14]}
+  - &is_multiloc            {item_serp_flags.bit: [15]}
   - &is_item_vas            {item_vas_flags.bit: [0, 1, 2, 3, 5, 6, 10, 11, 12, 13, 14, 15, 16]}
   - &is_item_vip            {item_vas_flags.bit: 0}
   - &is_item_highlight      {item_vas_flags.bit: 1}
@@ -166,6 +167,7 @@ definitions:
   - &is_item_pro_image {item_flags.bit: 0}
   - &is_item_str_actual_calendar {item_flags.bit: 1}
   - &is_item_str_not_actual_calendar {logical_category_id: 1393250002, item_flags.!bit: 1}
+  - &is_item_str_online_booking {item_flags.bit: 5}
   - &is_item_leadgen {item_flags.bit: 4}
   - &is_item_used_car {logical_category_id: 24144500001}
 
@@ -661,6 +663,10 @@ metric.counter:
   btc_not_actual_calendar:                 {filter: [*is_item_str_not_actual_calendar, *is_btc]}
   c_not_actual_calendar:                   {filter: [*is_item_str_not_actual_calendar, *is_contact]}
   iv_not_actual_calendar:                  {filter: [*is_item_str_not_actual_calendar, *is_iv]}
+  btc_str_online_booking_items:            {filter: [*is_item_str_online_booking, *is_btc]}
+  c_str_online_booking_items:              {filter: [*is_item_str_online_booking, *is_contact]}
+  iv_str_online_booking_items:             {filter: [*is_item_str_online_booking, *is_iv]}
+  c_msg_str_online_booking_items:          {filter: [*is_item_str_online_booking, *is_msg]}
   btc_pro_image:                           {filter: [*is_item_pro_image, *is_btc]}
   c_pro_image:                             {filter: [*is_item_pro_image, *is_contact]}
   iv_pro_image:                            {filter: [*is_item_pro_image, *is_iv]}
@@ -680,6 +686,10 @@ metric.counter:
   realty_development_phone_views:          {filter: [eid: 3461]}
   item_views_from_fs:                      {filter: [*is_iv, from_page: fs]}
   total_developer_contacts:                {filter: [{$or: [[*is_contact, *is_developer_acc], [*is_ph_realdev]]}]}
+  iv_multiloc:                             {filter: [*is_multiloc, *is_iv_wo_guessing]}
+  c_multiloc:                              {filter: [*is_multiloc, *is_contact_wo_guessing]}
+  fav_multiloc:                            {filter: [*is_multiloc, *is_fav]}
+  btc_multiloc:                            {filter: [*is_multiloc, *is_btc_wo_guessing]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1079,6 +1089,7 @@ metric.uniq:
   users_contact_rec_u2i_mp:                {counter: cnt_cs_rec_u2i_mp,               key: [participant]}
   users_contact_rec_u2i_vas:               {counter: cnt_cs_rec_u2i_vas,              key: [participant]}
   users_contact_search_query:              {counter: cnt_s_query_c,                   key: [participant]}
+  users_contact_search_noquery:            {counter: cnt_s_noquery_c,                 key: [participant]}
   users_contact_search_u2i:                {counter: cnt_cs_s_u2i,                    key: [participant]}
   users_contact_serp_daily:                {counter: cnt_cs_s_item_attr,              key: [participant]}
   users_contact_serp_mp:                   {counter: cnt_cs_s_item_attr_mp,           key: [participant]}
@@ -1350,6 +1361,11 @@ metric.uniq:
   user_btc_not_actual_calendar:            {counter: btc_not_actual_calendar,         key: [participant]}
   user_c_not_actual_calendar:              {counter: c_not_actual_calendar,           key: [participant]}
   user_iv_not_actual_calendar:             {counter: iv_not_actual_calendar,          key: [participant]}
+  user_btc_str_online_booking_items:       {counter: btc_str_online_booking_items,    key: [participant]}
+  user_c_str_online_booking_items:         {counter: c_str_online_booking_items,      key: [participant]}
+  user_iv_str_online_booking_items:        {counter: iv_str_online_booking_items,     key: [participant]}
+  user_c_msg_str_online_booking_items:     {counter: c_msg_str_online_booking_items,  key: [participant]}
+  user_booking_created_short_rent:         {counter: booking_created_short_rent,      key: [participant]}
   user_btc_pro_image:                      {counter: btc_pro_image,                   key: [participant]}
   user_c_pro_image:                        {counter: c_pro_image,                     key: [participant]}
   user_iv_pro_image:                       {counter: iv_pro_image,                    key: [participant]}
@@ -1364,7 +1380,11 @@ metric.uniq:
   sess_iv_pro_image:                       {counter: iv_pro_image,                    key: [session]}
   user_btc_leadgen_item:                   {counter: btc_leadgen_item,                key: [participant]}
   user_c_leadgen_item:                     {counter: c_leadgen_item,                  key: [participant]}
-  user_iv_leadgen_item:                    {counter: iv_leadgen_item,                 key: [participant]}  
+  user_iv_leadgen_item:                    {counter: iv_leadgen_item,                 key: [participant]}
+  user_iv_multiloc:                        {counter: iv_multiloc,                     key: [participant]}
+  user_c_multiloc:                         {counter: c_multiloc,                      key: [participant]}
+  user_fav_multiloc:                       {counter: fav_multiloc,                    key: [participant]}
+  user_btc_multiloc:                       {counter: btc_multiloc,                    key: [participant]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1694,6 +1714,8 @@ metric.ratio:
   users_searches_metro_per_users_search:   {num: users_searches_metro,            den: users_search}
   users_searches_radius_per_users_search:  {num: users_searches_radius,           den: users_search}
   users_searches_road_per_users_search:    {num: users_searches_road,             den: users_search}
+  user_c_per_user_iv:                      {num: buyers,                          den: users_item_view_daily}
+  user_btc_per_user_iv:                    {num: users_bt_click_daily,            den: users_item_view_daily}
   write_button_clicks_per_item_views:      {num: write_button_clicks,             den: item_views}
   wtc_per_witcher_any:                     {num: wtc_from_witcher_any,            den: searches_witcher_any}
   wtc_per_witcher_delivery:                {num: wtc_from_witcher_delivery,       den: searches_witcher_delivery}
@@ -1762,4 +1784,10 @@ metric.ratio:
   user_fav_witcher_funnel_new_auto_per_user_s_from_witcher_auto:              {num: user_fav_witcher_funnel_new_auto,     den: user_s_from_witcher_auto}
   user_fav_witcher_funnel_new_flats_per_user_s_from_witcher_flats:            {num: user_fav_witcher_funnel_new_flats,    den: user_s_from_witcher_flats}
   user_fav_witcher_funnel_regions_per_user_s_from_witcher_reg:                {num: user_fav_witcher_funnel_regions,      den: user_s_from_witcher_reg}
+  iv_multiloc_per_iv_s:                                                       {num: iv_multiloc,                          den: item_views_serp}
+  c_multiloc_per_c_s:                                                         {num: c_multiloc,                           den: contacts_serp}
+  user_iv_multiloc_per_user_iv_s:                                             {num: user_iv_multiloc,                     den: users_item_view_serp_daily}
+  user_c_multiloc_per_user_c_s:                                               {num: user_c_multiloc,                      den: users_contact_serp_daily}
+  c_multiloc_per_iv_multiloc:                                                 {num: c_multiloc,                           den: iv_multiloc}
+  user_c_multiloc_per_user_iv_multiloc:                                       {num: user_c_multiloc,                      den: user_iv_multiloc}
 

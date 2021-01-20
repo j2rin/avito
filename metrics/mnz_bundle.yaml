@@ -1,0 +1,20 @@
+metric.counter:    
+  bdl_bundle_revenue: {filter: [{transaction_type: 'bundle write off'}], obs: [revenue]}
+  bdl_vas_revenue: {filter: [{transaction_type: ['VAS write off', 'Performance VAS write off', 'VAS']}], obs: [revenue]}
+  bdl_lf_revenue: {filter: [{transaction_type: 'listing.fee'}], obs: [revenue]}
+  bdl_vas_and_bundle_revenue: {filter: [{transaction_type: ['VAS write off', 'Performance VAS write off', 'VAS', 'bundle write off']}], obs: [revenue]}
+  bdl_bundle_clean_reserved: {filter: [{transaction_type: ['bundle reserve', 'bundle return']}], obs: [revenue]}
+  bdl_vas_clean_reserved: {filter: [{transaction_type: ['VAS','VAS reserve', 'VAS return', 'Performance VAS reserve', 'Performance VAS return']}], obs: [revenue]}
+  bdl_first_day_bundle_transactions: {filter: [{eventtype : 'bundle show'}], obs: [first_day_transaction_count], m42: False}
+  bdl_bundle_exposure: {filter: [{eventtype : 'bundle show'}], obs: [exposure], m42: False}
+  bdl_first_day_vas_transactions: {filter: [{eventtype : 'vas show'}], obs: [first_day_transaction_count], m42: False}
+  bdl_vas_exposure: {filter: [{eventtype : 'bundle show'}], obs: [exposure], m42: False}
+  bdl_lifetime_spend: {filter: [{transaction_type: ['VAS', 'VAS write off', 'Performance VAS write off', 'bundle write off', 'listing.fee']}, {start_date.>: $ab_start_date}], obs : [cut_revenue]}
+
+metric.uniq:
+  bdl_vas_or_bundle_users: {counter: bdl_vas_and_bundle_revenue, key: [user_id]}
+  bdl_bundle_users: {counter: bdl_bundle_revenue, key: [user_id]}
+
+metric.ratio:
+  bdl_bundle_conversion_rate_item_add: {num: bdl_first_day_bundle_transactions, den: bdl_bundle_exposure}
+  bdl_vas_conversion_rate_item_add: {num: bdl_first_day_vas_transactions, den: bdl_vas_exposure}
