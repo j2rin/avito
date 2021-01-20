@@ -19,7 +19,7 @@ metric.counter:
   old_coord_events_1000m:                 {filter: [*old_events, *has_coordinates, accuracy.<=1000]}
   old_coord_events_2000m:                 {filter: [*old_events, *has_coordinates, accuracy.<=2000]}
   old_coord_events_1h:                    {filter: [*old_events, *has_coordinates, freshness_hours.<=1]}
-  old_coord_events_8h:{filter:            [*old_events, *has_coordinates, freshness_hours.<=8]}
+  old_coord_events_8h:{filter:            {[*old_events, *has_coordinates, freshness_hours.<=8]}
   old_coord_events_24h:                   {filter: [*old_events, *has_coordinates, freshness_hours.<=24]}
 
   coord_request:                          {filter: [*new_events]}
