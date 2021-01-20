@@ -36,7 +36,7 @@ metric.counter:
   coord_answers_8h:                       {filter: [*new_events, *resolved, *has_coordinates, freshness_hours.<=: 8]}
   coord_answers_24h:                      {filter: [*new_events, *resolved, *has_coordinates, freshness_hours.<=: 24]}
 
-  any_events_with_coords:                 {filter: [*has_coordinates], m42: False}
+  any_coords_events_with_coords:          {filter: [*has_coordinates], m42: False}
   any_coords_events_2000m_24h:            {filter: [*has_coordinates,*coords_2000m_24h], m42: False}
   any_coords_events_1000m_8h:             {filter: [*has_coordinates,*coords_1000m_8h], m42: False}
   any_coords_events_100m_1h:              {filter: [*has_coordinates,*coords_100m_1h], m42: False}
@@ -51,19 +51,19 @@ metric.counter:
 
 
 metric.uniq:
-  users_with_coords:                      {counter: any_events_with_coords,       key: [participant]}
+  users_with_coords:                      {counter: any_coords_events_with_coords,       key: [participant]}
 
-  users_coords_2000m_24h:                 {counter: any_events_coords_2000m_24h,       key: [participant]}
-  users_coords_1000m_8h:                  {counter: any_events_coords_1000m_8h,        key: [participant]}
-  users_coords_100m_1h:                   {counter: any_events_coords_100m_1h,         key: [participant]}
+  users_coords_2000m_24h:                 {counter: any_coords_events_2000m_24h,       key: [participant]}
+  users_coords_1000m_8h:                  {counter: any_coords_events_1000m_8h,        key: [participant]}
+  users_coords_100m_1h:                   {counter: any_coords_events_100m_1h,         key: [participant]}
 
-  users_coords_100m:                      {counter: any_events_100m,            key: [participant]}
-  users_coords_1000m:                     {counter: any_events_1000m,           key: [participant]}
-  users_coords_2000m:                     {counter: any_events_2000m,           key: [participant]}
+  users_coords_100m:                      {counter: any_coords_events_100m,            key: [participant]}
+  users_coords_1000m:                     {counter: any_coords_events_1000m,           key: [participant]}
+  users_coords_2000m:                     {counter: any_coords_events_2000m,           key: [participant]}
 
-  users_coords_1h:                        {counter: any_events_1h,            key: [participant]}
-  users_coords_8h:                        {counter: any_events_8h,            key: [participant]}
-  users_coords_24h:                       {counter: any_events_24h,           key: [participant]}
+  users_coords_1h:                        {counter: any_coords_events_1h,            key: [participant]}
+  users_coords_8h:                        {counter: any_coords_events_8h,            key: [participant]}
+  users_coords_24h:                       {counter: any_coords_events_24h,           key: [participant]}
 
 
 metric.ratio:
