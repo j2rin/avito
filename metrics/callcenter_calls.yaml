@@ -3,9 +3,9 @@ definitions:
   - &asd_excluded   {queue: *queue_not_asd}
 
 metric.counter:
-  callcenter_calls_big10:            {filter: *asd_excluded}
-  calls_answered:                    {filter: *asd_excluded, obs: [call_answered], m42: False}
-  calls_sec_to_reply:                {filter: *asd_excluded, obs: [sec_to_reply], m42: False}
+  callcenter_calls_big10:            {filter: [*asd_excluded]}
+  calls_answered:                    {filter: [*asd_excluded], obs: [call_answered], m42: False}
+  calls_sec_to_reply:                {filter: [*asd_excluded], obs: [sec_to_reply], m42: False}
   scored_calls:                      {filter: [*asd_excluded, feedbackmark.isnull: false], m42: False}
   high_scored_calls:                 {filter: [*asd_excluded, feedbackmark.>=: 4], m42: False}
   low_scored_calls:                  {filter: [*asd_excluded, feedbackmark: 1], m42: False}
