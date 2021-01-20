@@ -1,6 +1,20 @@
+definitions:
+  - &fair   {is_normal: true, by_amuser: false, first_line: '1ая линия'}
+
 metric.counter:
-  helpdesk_seller_tickets:                 {obs: [helpdesk_seller_tickets]}
+  helpdesk_seller_tickets:           {obs: [helpdesk_seller_tickets]}
+  tickets_created_big10:             {filter: *fair}
+  tickets_created_big10_less48:      {filter: [*fair, hours_to_reply.<: 48], m42: False}
+  tickets_hours_to_reply:            {filter: *fair, obs: [hours_to_reply], m42: False}
+  tickets_hours_to_reply_less48:     {filter: [*fair, hours_to_reply.<: 48], obs: [hours_to_reply], m42: False}
+  scored_tickets:                    {filter: [*fair, satisfaction_score.isnull: false], m42: False}
+  high_scored_tickets:               {filter: [*fair, satisfaction_score.>=: 4], m42: False}
+  low_scored_tickets:                {filter: [*fair, satisfaction_score: 1], m42: False}
 
 metric.uniq:
-  users_with_helpdesk_tickets:             {counter: helpdesk_seller_tickets,         key: [participant]}
+  users_with_helpdesk_tickets:       {counter: helpdesk_seller_tickets,         key: [participant]}
 
+metric.ratio:
+  tickets_avg_waiting_time:          {num: tickets_hours_to_reply_less48, den: tickets_created_big10_less48}
+  tickets_csat:                      {num: high_scored_tickets, den: scored_tickets}
+  tickets_dsat:                      {num: low_scored_tickets, den: scored_tickets}
