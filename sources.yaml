@@ -780,3 +780,93 @@ seller_delivery_shipment_items_by_status_date:
     participant: {user: seller_id}
     dtm: status_date
     segm: shipment_id
+
+lf_metrics_transactions_by_event_date:
+  vertica:
+    table: dma.vo_lf_metrics_transactions
+    column_map:
+      user: user_id
+    dimensions:
+      - user_segment
+      - user_segment_market
+      - tariff_type
+      - tariff_subtype
+      - platform_id
+      - vertical_id
+      - logical_category_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: user_id}
+    dtm: event_date
+    segm: user_id
+
+lf_metrics_by_event_date:
+  vertica:
+    table: dma.vo_lf_metrics
+    column_map:
+      user: user_id
+    dimensions:
+      - user_segment
+      - user_segment_market
+      - tariff_type
+      - tariff_subtype
+      - vertical_id
+      - logical_category_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: user_id}
+    dtm: event_date
+    segm: user_id
+
+tariff_metrics_funnel_by_event_date:
+  vertica:
+    table: dma.vo_tariff_metrics_funnel
+    column_map:
+      user: user_id
+    dimensions:
+      - user_segment
+      - user_segment_market
+      - platform_id
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+    participant: {user: user_id}
+    dtm: event_date
+    segm: user_id
+
+paying_user_report_by_event_date:
+  vertica:
+    table: dma.v_paying_user_report_full
+    column_map:
+      user: user_id
+    dimensions:
+      - user_segment
+      - user_segment_market
+      - platform_id
+      - vertical_id
+      - logical_category_id
+      - category_id
+      - subcategory_id
+      - param1_id
+      - param2_id
+      - param3_id
+      - param4_id
+      - region_id
+      - city_id
+      - location_group_id
+      - population_group
+      - location_level_id
+    participant: {user: user_id}
+    dtm: event_date
+    segm: user_id
