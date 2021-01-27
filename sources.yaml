@@ -912,3 +912,88 @@ callcenter_calls:
   table: dma.vo_callcenter_calls
   participant: {user: user_id}
   dtm: enter_date
+
+lf_metrics_transactions_by_event_date:
+  table: dma.vo_lf_metrics_transactions
+  column_map:
+    user: user_id
+  dimensions:
+    - user_segment
+    - user_segment_market
+    - tariff_type
+    - tariff_subtype
+    - platform
+    - vertical
+    - logical_category
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  participant: {user: user_id}
+  dtm: event_date
+  segm: user_id
+
+lf_metrics_by_event_date:
+  table: dma.vo_lf_metrics
+  column_map:
+    user: user_id
+  dimensions:
+    - user_segment
+    - user_segment_market
+    - tariff_type
+    - tariff_subtype
+    - vertical
+    - logical_category
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  participant: {user: user_id}
+  dtm: event_date
+  segm: user_id
+
+tariff_metrics_funnel_by_event_date:
+  table: dma.vo_tariff_metrics_funnel
+  column_map:
+    user: user_id
+  dimensions:
+    - user_segment
+    - user_segment_market
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+  participant: {user: user_id}
+  dtm: event_date
+  segm: user_id
+
+paying_user_report_by_event_date:
+  table: dma.vo_revenue_metrics
+  column_map:
+    user: user_id
+  dimensions:
+    - user_segment
+    - user_segment_market
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  participant: {user: user_id}
+  dtm: event_date
+  segm: user_id
