@@ -1,0 +1,58 @@
+metric.counter:
+  cnt_tf_ia_start:    {filter: [configurator_source: 'item activation', step: 'item activation']}
+  cnt_tf_ia_config:   {filter: [configurator_source: 'item activation', step: 'configurator']}
+  cnt_tf_ia_submit:   {filter: [configurator_source: 'item activation', step: 'configurator submit']}
+  cnt_tf_ia_purchase: {filter: [configurator_source: 'item activation', step: 'purchase']}
+
+  cnt_tf_cf_config:   {filter: [$or: [configurator_source.!=: 'item activation', configurator_source.isnull: true], step: 'configurator']}
+  cnt_tf_cf_submit:   {filter: [$or: [configurator_source.!=: 'item activation', configurator_source.isnull: true], step: 'configurator submit']}
+  cnt_tf_cf_purchase: {filter: [$or: [configurator_source.!=: 'item activation', configurator_source.isnull: true], step: 'purchase']}
+
+  cnt_tf_config:   {filter: [step: 'configurator']}
+  cnt_tf_submit:   {filter: [step: 'configurator submit']}
+  cnt_tf_purchase: {filter: [step: 'purchase']}
+
+  metric.uniq:
+  users_tf_ia_start:    {counter: cnt_tf_ia_start,    key: [user_id]}
+  users_tf_ia_config:   {counter: cnt_tf_ia_config,   key: [user_id]}
+  users_tf_ia_submit:   {counter: cnt_tf_ia_submit,   key: [user_id]}
+  users_tf_ia_purchase: {counter: cnt_tf_ia_purchase, key: [user_id]}
+
+  users_tf_cf_config:   {counter: cnt_tf_cf_config,   key: [user_id]}
+  users_tf_cf_submit:   {counter: cnt_tf_cf_submit,   key: [user_id]}
+  users_tf_cf_purchase: {counter: cnt_tf_cf_purchase, key: [user_id]}
+
+  users_tf_config:   {counter: cnt_tf_config,         key: [user_id]}
+  users_tf_submit:   {counter: cnt_tf_submit,         key: [user_id]}
+  users_tf_purchase: {counter: cnt_tf_purchase,       key: [user_id]}
+
+metric.ratio:
+  cnt_tf_ia_config_per_ia_start:    {num: cnt_tf_ia_config,   den: cnt_tf_ia_start}
+  cnt_tf_ia_submit_per_ia_start:    {num: cnt_tf_ia_submit,   den: cnt_tf_ia_start}
+  cnt_tf_ia_purchase_per_ia_start:  {num: cnt_tf_ia_purchase, den: cnt_tf_ia_start}
+  cnt_tf_ia_submit_per_ia_config:   {num: cnt_tf_ia_submit,   den: cnt_tf_ia_config}
+  cnt_tf_ia_purchase_per_ia_config: {num: cnt_tf_ia_purchase, den: cnt_tf_ia_config}
+  cnt_tf_ia_purchase_per_ia_submit: {num: cnt_tf_ia_purchase, den: cnt_tf_ia_submit}
+
+  cnt_tf_cf_submit_per_cf_config:   {num: cnt_tf_cf_submit,   den: cnt_tf_cf_config}
+  cnt_tf_cf_purchase_per_cf_config: {num: cnt_tf_cf_purchase, den: cnt_tf_cf_config}
+  cnt_tf_cf_purchase_per_cf_submit: {num: cnt_tf_cf_purchase, den: cnt_tf_cf_submit}
+
+  cnt_tf_submit_per_config:   {num: cnt_tf_submit,    den: cnt_tf_config}
+  cnt_tf_purchase_per_config: {num: cnt_tf_purchase,  den: cnt_tf_config}
+  cnt_tf_purchase_per_submit: {num: cnt_tf_purchase,  den: cnt_tf_submit}
+
+  users_tf_ia_config_per_ia_start:    {num: users_tf_ia_config,   den: users_tf_ia_start}
+  users_tf_ia_submit_per_ia_start:    {num: users_tf_ia_submit,   den: users_tf_ia_start}
+  users_tf_ia_purchase_per_ia_start:  {num: users_tf_ia_purchase, den: users_tf_ia_start}
+  users_tf_ia_submit_per_ia_config:   {num: users_tf_ia_submit,   den: users_tf_ia_config}
+  users_tf_ia_purchase_per_ia_config: {num: users_tf_ia_purchase, den: users_tf_ia_config}
+  users_tf_ia_purchase_per_ia_submit: {num: users_tf_ia_purchase, den: users_tf_ia_submit}
+
+  users_tf_cf_submit_per_cf_config:   {num: users_tf_cf_submit,   den: users_tf_cf_config}
+  users_tf_cf_purchase_per_cf_config: {num: users_tf_cf_purchase, den: users_tf_cf_config}
+  users_tf_cf_purchase_per_cf_submit: {num: users_tf_cf_purchase, den: users_tf_cf_submit}
+
+  users_tf_submit_per_config:   {num: users_tf_submit,    den: users_tf_config}
+  users_tf_purchase_per_config: {num: users_tf_purchase,  den: users_tf_config}
+  users_tf_purchase_per_submit: {num: users_tf_purchase,  den: users_tf_submit}
