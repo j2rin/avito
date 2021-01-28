@@ -1,5 +1,5 @@
 metric.counter:
-  backlog_hours:                     {obs: [backlog_hours], m42: False}
+  backlog_hours:                     {filter: [backlog_hours.<: 48], obs: [backlog_hours], m42: False}
   backlog_items:                     {filter: [backlog_hours.isnull: false, backlog_hours.<: 48], m42: False}
   items_processed_before_ttl:        {obs: [items_processed_before_ttl], m42: False}
   items_processed:                   {obs: [items_processed], m42: False}
