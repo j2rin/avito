@@ -174,6 +174,9 @@ definitions:
   - &x_is_metageo       {$or: [*x_is_map,  [*x_is_search, $or: [search_flags.bit: [0, 1, 2, 3, 4], *is_serp_regions]]]}
   - &is_metageo         {$or: [*is_map,  [*is_search, *is_1p, search_flags.bit: [0, 1, 2, 3, 4, 11]]]}
 
+  - &x_is_map_or_s       {$or: [*x_is_map, *x_is_search]}
+  - &is_map_or_s         {$or: [*is_map,  [*is_search, *is_1p]]}
+
 
 metric.counter:
   base_serp_empty:                         {filter: [*is_1p, *is_base_serp_empty, *is_search]}
@@ -690,6 +693,11 @@ metric.counter:
   c_multiloc:                              {filter: [*is_multiloc, *is_contact_wo_guessing]}
   fav_multiloc:                            {filter: [*is_multiloc, *is_fav]}
   btc_multiloc:                            {filter: [*is_multiloc, *is_btc_wo_guessing]}
+  c_map_or_s:                              {filter: [*is_contact_wo_guessing, *x_is_map_or_s]}
+  btc_map_or_s:                            {filter: [*is_btc_wo_guessing, *x_is_map_or_s]}
+  fav_map_or_s:                            {filter: [*x_is_map_or_s, *is_fav]}
+  iv_map_or_s:                             {filter: [*is_iv_wo_guessing, *x_is_map_or_s]}
+  s_map_or_s:                              {filter: [*is_map_or_s]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1385,6 +1393,11 @@ metric.uniq:
   user_c_multiloc:                         {counter: c_multiloc,                      key: [participant]}
   user_fav_multiloc:                       {counter: fav_multiloc,                    key: [participant]}
   user_btc_multiloc:                       {counter: btc_multiloc,                    key: [participant]}
+  user_c_map_or_s:                         {counter: c_map_or_s,                      key: [participant]}
+  user_iv_map_or_s:                        {counter: iv_map_or_s,                     key: [participant]}
+  user_btc_map_or_s:                       {counter: btc_map_or_s,                    key: [participant]}
+  user_fav_map_or_s:                       {counter: fav_map_or_s,                    key: [participant]}
+  user_s_map_or_s:                         {counter: s_map_or_s,                      key: [participant]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1790,4 +1803,10 @@ metric.ratio:
   user_c_multiloc_per_user_c_s:                                               {num: user_c_multiloc,                      den: users_contact_serp_daily}
   c_multiloc_per_iv_multiloc:                                                 {num: c_multiloc,                           den: iv_multiloc}
   user_c_multiloc_per_user_iv_multiloc:                                       {num: user_c_multiloc,                      den: user_iv_multiloc}
+  user_c_map_or_s_per_user_iv_map_or_s:                                       {num: user_c_map_or_s,                      den: user_iv_map_or_s}
+  user_iv_map_or_s_per_user_s_map_or_s:                                       {num: user_iv_map_or_s,                     den: user_s_map_or_s}
+  user_c_map_or_s_per_user_s_map_or_s:                                        {num: user_c_map_or_s,                      den: user_s_map_or_s}
+  c_map_or_s_per_iv_map_or_s:                                                 {num: c_map_or_s,                           den: iv_map_or_s}
+  iv_map_or_s_per_s_map_or_s:                                                 {num: iv_map_or_s,                          den: s_map_or_s}
+  c_map_or_s_per_s_map_or_s:                                                  {num: c_map_or_s,                           den: s_map_or_s}
 
