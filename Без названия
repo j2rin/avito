@@ -1,0 +1,12 @@
+create or replace view dev_dma.v_users_home_location_segment as
+select
+    t.event_date,
+    t.participant_id,
+    t.participant_type,
+    cl.LocationGroup_id                                          as user_location_group_id,
+    cl.City_Population_Group                                     as user_population_group,
+    cl.Logical_Level                                             as user_location_level_id,
+from
+	dma.users_home_location_segment t
+		join DMA.current_locations cl on  t.home_city_id = cl.location_id
+;
