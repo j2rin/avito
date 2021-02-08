@@ -174,6 +174,10 @@ metric.counter:
   cnt_user_interactive_events_p50:         {filter: [{stage_name: user_interactive}], obs: [events_p50], m42: False}
   cnt_user_interactive_events_p75:         {filter: [{stage_name: user_interactive}], obs: [events_p75], m42: False}
   cnt_user_interactive_events_p95:         {filter: [{stage_name: user_interactive}], obs: [events_p95], m42: False}
+  cnt_initial_page_render:                 {filter: [{stage_name: initial_page_render}], obs: [initial_page_render], m42: False}
+  
+metric.uniq:
+  users_initial_page_render:               {counter: cnt_initial_page_render,     key: [participant], m42: False}
 
 metric.ratio:
   app_cache_duration:                      {num: cnt_app_cache_duration,          den: cnt_app_cache_duration_events}
