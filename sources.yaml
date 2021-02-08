@@ -980,3 +980,24 @@ support_comment:
   table: dma.vo_support_comment
   participant: {user: comment_id}
   dtm: comment_create_date
+  
+time_to_interview_for_job_seeker:
+  table: dma.vo_time_to_interview
+  column_map:
+    user: job_seeker_user_id
+  dimensions:
+    - platform
+  participant: {user: job_seeker_user_id}
+  dtm: event_time
+  segm: job_seeker_user_id
+  
+time_to_interview_for_job_employer:
+  table: dma.vo_time_to_interview
+  column_map:
+    user: job_employer_user_id
+  dimensions:
+    - platform
+  participant: {user: job_employer_user_id}
+  dtm: event_time
+  segm: job_employer_user_id
+
