@@ -135,6 +135,7 @@ definitions:
   - &is_serp_perfvas_x10_1  {item_serp_flags.bit: [13]}
   - &is_serp_perfvas_x10_7  {item_serp_flags.bit: [14]}
   - &is_multiloc            {item_serp_flags.bit: [15]}
+  - &is_not_multiloc		{item_serp_flags.!bit: [15]}
   - &is_item_vas            {item_vas_flags.bit: [0, 1, 2, 3, 5, 6, 10, 11, 12, 13, 14, 15, 16]}
   - &is_item_vip            {item_vas_flags.bit: 0}
   - &is_item_highlight      {item_vas_flags.bit: 1}
@@ -698,6 +699,12 @@ metric.counter:
   fav_map_or_s:                            {filter: [*x_is_map_or_s, *is_fav]}
   iv_map_or_s:                             {filter: [*is_iv_wo_guessing, *x_is_map_or_s]}
   s_map_or_s:                              {filter: [*is_map_or_s]}
+  cnt_iv_mp_s_local:                       {filter: [*is_not_multiloc, *is_item_marketplace, *is_iv_wo_guessing], m42: False}
+  cnt_iv_mp_s_multiloc:                    {filter: [*is_multiloc, *is_item_marketplace, *is_iv_wo_guessing], m42: False}
+  total_delivery_click_mp_local:           {filter: [*is_not_multiloc, *is_item_marketplace, eid:2483], m42: False}
+  total_delivery_click_mp_multiloc:        {filter: [*is_multiloc, *is_item_marketplace, eid:2483], m42: False}
+  total_delivery_contact_mp_local:         {filter: [*is_not_multiloc, *is_item_marketplace, eid:2015], m42: False}
+  total_delivery_contact_mp_multiloc:      {filter: [*is_multiloc, *is_item_marketplace, eid:2015], m42: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -839,22 +846,30 @@ metric.uniq:
   contacts_serp_perfvas_x10_1:             {counter: cnt_cs_serp_perfvas_x10_1,       key: [item_x]}
   contacts_serp_perfvas_x10_7:             {counter: cnt_cs_serp_perfvas_x10_7,       key: [item_x]}
   contacts_vip:                            {counter: cnt_cs_vip,                      key: [item_x]}
-  delivery_click_all_services:             {counter: total_delivery_click_all_services,         key: [item]}
-  delivery_click_all_services_serp:        {counter: total_delivery_click_all_services_serp,    key: [item_x]}
-  delivery_click_all_services_rec_i2i:     {counter: total_delivery_click_all_services_rec_i2i, key: [item_x]}
-  delivery_click_all_services_rec_u2i:     {counter: total_delivery_click_all_services_rec_u2i, key: [item_x]}
-  delivery_click_all_services_fav:         {counter: total_delivery_click_all_services_fav, key: [item_x]}
-  delivery_contact_all_services:           {counter: total_delivery_contact_all_services,         key: [item]}
-  delivery_contact_all_services_serp:      {counter: total_delivery_contact_all_services_serp,    key: [item_x]}
-  delivery_contact_all_services_rec_i2i:   {counter: total_delivery_contact_all_services_rec_i2i, key: [item_x]}
-  delivery_contact_all_services_rec_u2i:   {counter: total_delivery_contact_all_services_rec_u2i, key: [item_x]}
-  delivery_contact_all_services_fav:       {counter: total_delivery_contact_all_services_fav, key: [item_x]}
-  delivery_item_view_serp_mp:              {counter: cnt_iv_s_item_attr_mp,           key: [item]}
-  delivery_item_view_mp:                   {counter: item_views_mp,                   key: [item]}
-  delivery_click_mp:                       {counter: total_delivery_click_mp,         key: [item]}
-  delivery_widget_mp:                      {counter: total_delivery_widget_mp,        key: [item]}
-  delivery_confirm_mp:                     {counter: total_delivery_confirm_mp,       key: [item]}
-  delivery_contact_mp:                     {counter: total_delivery_contact_mp,       key: [item]}
+  delivery_click_all_services:             {counter: total_delivery_click_all_services,              key: [item]}
+  delivery_click_all_services_serp:        {counter: total_delivery_click_all_services_serp,         key: [item_x]}
+  delivery_click_all_services_rec_i2i:     {counter: total_delivery_click_all_services_rec_i2i,      key: [item_x]}
+  delivery_click_all_services_rec_u2i:     {counter: total_delivery_click_all_services_rec_u2i,      key: [item_x]}
+  delivery_click_all_services_fav:         {counter: total_delivery_click_all_services_fav,          key: [item_x]}
+  delivery_contact_all_services:           {counter: total_delivery_contact_all_services,            key: [item]}
+  delivery_contact_all_services_serp:      {counter: total_delivery_contact_all_services_serp,       key: [item_x]}
+  delivery_contact_all_services_rec_i2i:   {counter: total_delivery_contact_all_services_rec_i2i,    key: [item_x]}
+  delivery_contact_all_services_rec_u2i:   {counter: total_delivery_contact_all_services_rec_u2i,    key: [item_x]}
+  delivery_contact_all_services_fav:       {counter: total_delivery_contact_all_services_fav,        key: [item_x]}
+  delivery_item_view_serp_mp:              {counter: cnt_iv_s_item_attr_mp,                          key: [item_x]}
+  delivery_item_views_mp_serp_local:       {counter: cnt_iv_mp_s_local,                              key: [item_x]}
+  delivery_item_views_mp_serp_multilocal:  {counter: cnt_iv_mp_s_multilocal,                         key: [item_x]}
+  delivery_item_view_mp:                   {counter: item_views_mp,                                  key: [item]}
+  delivery_click_mp:                       {counter: total_delivery_click_mp,                        key: [item]}
+  delivery_click_mp_serp:                  {counter: total_delivery_click_mp_serp,                   key: [item_x]}
+  delivery_click_mp_serp_local:            {counter: total_delivery_click_mp_serp_local,             key: [item_x]}
+  delivery_click_mp_serp_multiloc:         {counter: total_delivery_click_mp_serp_multiloc,          key: [item_x]}
+  delivery_widget_mp:                      {counter: total_delivery_widget_mp,                       key: [item]}
+  delivery_confirm_mp:                     {counter: total_delivery_confirm_mp,                      key: [item]}
+  delivery_contact_mp:                     {counter: total_delivery_contact_mp,                      key: [item]}
+  delivery_contact_mp_serp:                {counter: total_delivery_contact_mp_serp,                 key: [item_x]}
+  delivery_contact_mp_serp_local:          {counter: total_delivery_contact_mp_serp_local,           key: [item_x]}
+  delivery_contact_mp_serp_multiloc:       {counter: total_delivery_contact_mp_serp_multiloc,        key: [item_x]}
   fav_added_delivery:                      {counter: cnt_fav_dlv,                     key: [item_x]}
   fav_added_from_map:                      {counter: cnt_fav_from_map,                key: [item_x]}
   fav_added_premium:                       {counter: cnt_fav_premium,                 key: [item_x]}
