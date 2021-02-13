@@ -82,6 +82,7 @@ metric.counter:
   items_started_classified:                {filter: [{activation_type.!=: Wait, is_item_start: True, is_marketplace: False}]}
   items_started_free:                      {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: True}]}
   items_started_net:                       {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True}]}
+  items_started_dead:                      {filter: [{activation_type.!=: Wait, is_dead: True, is_item_start: True}]}
   items_started_net_marketplace:           {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True, is_marketplace: True}]}
   items_started_net_classified:            {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True, is_marketplace: False}]}
   items_started_paid:                      {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_item_start: True}]}
@@ -188,4 +189,5 @@ metric.ratio:
   items_sold_onavito_per_items_reactivated_net: {num: items_sold_onavito,              den: items_reactivated_net}
   items_sold_onavito_per_items_started_net_start_date: {num: items_sold_onavito_start_date,   den: cnt_items_started_net}
   sellers_edited_address_per_editor:       {num: sellers_edited_address,          den: users_item_edit}
+  items_dead_per_started:                  {num: items_started_dead,          den: items_started}
 
