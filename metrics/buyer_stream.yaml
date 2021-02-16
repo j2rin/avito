@@ -710,6 +710,7 @@ metric.counter:
   total_delivery_contact_mp_serp_multiloc: {filter: [*is_multiloc, *is_item_marketplace, eid: 2015], m42: False}
   item_views_from_suggest:                 {filter: [*is_iv, *x_is_suggest_click], m42: False}
   contacts_from_suggest:                   {filter: [*is_contact, *x_is_suggest_click], m42: False}
+  searches_from_suggest:                   {filter: [*is_search, *x_is_suggest_click], m24: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1420,6 +1421,7 @@ metric.uniq:
   user_s_map_or_s:                         {counter: s_map_or_s,                      key: [participant]}
   user_iv_from_suggest:                    {counter: item_views_from_suggest,         key: [participant]}     
   user_c_from_suggest:                     {counter: contacts_from_suggest,           key: [participant]}
+  user_s_from_sugest:                      {counter: searches_from_suggest,           key: [participant]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1837,3 +1839,5 @@ metric.ratio:
   user_c_from_suggest_per_user_c:                                             {num: user_c_from_suggest,                  den: buyers}
   user_iv_from_suggest_per_user_iv_s:                                         {num: user_iv_from_suggest,                 den: users_item_view_serp_daily}
   user_c_from_suggest_per_user_c_s:                                           {num: user_c_from_suggest,                  den: users_contact_serp_daily}
+  user_iv_sgt_per_user_s_sgt:                                                 {num: user_c_from_suggest,                  den: user_s_from_sugest}
+  user_c_sgt_per_user_s_sgt:                                                  {num: user_iv_from_suggest,                 den: user_s_from_sugest}
