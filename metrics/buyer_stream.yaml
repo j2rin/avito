@@ -87,6 +87,7 @@ definitions:
   - &x_is_witcher_marketplace {search_flags.bit: 19}
   - &x_is_extra_quorum        {search_flags.bit: 20}
   - &x_is_extra_vector        {search_flags.bit: 21}
+  - &x_is_suggest_click       {search_flags.bit: 23}
 
   - &is_delivery_pvz          {other_flags.bit: 0}
   - &is_safedeal              {other_flags.bit: 1}
@@ -707,6 +708,8 @@ metric.counter:
   total_delivery_contact_mp_serp:          {filter: [*x_is_search, *is_item_marketplace, eid: 2483], m42: False}
   total_delivery_contact_mp_serp_local:    {filter: [*is_not_multiloc, *is_item_marketplace, eid: 2015], m42: False}
   total_delivery_contact_mp_serp_multiloc: {filter: [*is_multiloc, *is_item_marketplace, eid: 2015], m42: False}
+  item_views_from_suggest:                 {filter: [*is_iv, *x_is_suggest_click], m42: False}
+  contacts_from_suggest:                   {filter: [*is_contact, *x_is_suggest_click], m42: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1415,6 +1418,8 @@ metric.uniq:
   user_btc_map_or_s:                       {counter: btc_map_or_s,                    key: [participant]}
   user_fav_map_or_s:                       {counter: fav_map_or_s,                    key: [participant]}
   user_s_map_or_s:                         {counter: s_map_or_s,                      key: [participant]}
+  user_iv_from_suggest:                    {counter: item_views_from_suggest,         key: [participant]}     
+  user_c_from_suggest:                     {counter: contacts_from_suggest,           key: [participant]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1798,7 +1803,7 @@ metric.ratio:
   user_iv_witcher_funnel_regions_per_user_s_from_witcher_reg:                 {num: user_iv_witcher_funnel_regions,       den: user_s_from_witcher_reg}
   user_btc_witcher_funnel_any_per_user_s_from_witcher_any:                    {num: user_btc_witcher_funnel_any,          den: user_s_from_witcher_any}
   user_btc_witcher_funnel_delivery_per_user_s_from_witcher_del:               {num: user_btc_witcher_funnel_delivery,     den: user_s_from_witcher_del}
-  user_btc_witcher_funnel_mp_per_user_s_from_witcher_mp:                      {num: user_btc_witcher_funnel_marketplace,     den: user_s_from_witcher_mp}
+  user_btc_witcher_funnel_mp_per_user_s_from_witcher_mp:                      {num: user_btc_witcher_funnel_marketplace,  den: user_s_from_witcher_mp}
   user_btc_witcher_funnel_new_auto_per_user_s_from_witcher_auto:              {num: user_btc_witcher_funnel_new_auto,     den: user_s_from_witcher_auto}
   user_btc_witcher_funnel_new_flats_per_user_s_from_witcher_flats:            {num: user_btc_witcher_funnel_new_flats,    den: user_s_from_witcher_flats}
   user_btc_witcher_funnel_regions_per_user_s_from_witcher_reg:                {num: user_btc_witcher_funnel_regions,      den: user_s_from_witcher_reg}
@@ -1810,7 +1815,7 @@ metric.ratio:
   user_c_witcher_funnel_regions_per_user_s_from_witcher_reg:                  {num: user_c_witcher_funnel_regions,        den: user_s_from_witcher_reg}
   user_fav_witcher_funnel_any_per_user_s_from_witcher_any:                    {num: user_fav_witcher_funnel_any,          den: user_s_from_witcher_any}
   user_fav_witcher_funnel_delivery_per_user_s_from_witcher_del:               {num: user_fav_witcher_funnel_delivery,     den: user_s_from_witcher_del}
-  user_fav_witcher_funnel_mp_per_user_s_from_witcher_mp:                      {num: user_fav_witcher_funnel_marketplace,     den: user_s_from_witcher_mp}
+  user_fav_witcher_funnel_mp_per_user_s_from_witcher_mp:                      {num: user_fav_witcher_funnel_marketplace,  den: user_s_from_witcher_mp}
   user_fav_witcher_funnel_new_auto_per_user_s_from_witcher_auto:              {num: user_fav_witcher_funnel_new_auto,     den: user_s_from_witcher_auto}
   user_fav_witcher_funnel_new_flats_per_user_s_from_witcher_flats:            {num: user_fav_witcher_funnel_new_flats,    den: user_s_from_witcher_flats}
   user_fav_witcher_funnel_regions_per_user_s_from_witcher_reg:                {num: user_fav_witcher_funnel_regions,      den: user_s_from_witcher_reg}
@@ -1826,5 +1831,9 @@ metric.ratio:
   c_map_or_s_per_iv_map_or_s:                                                 {num: c_map_or_s,                           den: iv_map_or_s}
   iv_map_or_s_per_s_map_or_s:                                                 {num: iv_map_or_s,                          den: s_map_or_s}
   c_map_or_s_per_s_map_or_s:                                                  {num: c_map_or_s,                           den: s_map_or_s}
-
-
+  user_iv_from_sugges_per_users:                                              {num: user_iv_from_suggest,                 den: users_active_daily}
+  user_c_from_suggest_per_users:                                              {num: user_c_from_suggest,                  den: users_active_daily}
+  user_iv_from_suggest_per_user_iv:                                           {num: user_iv_from_suggest,                 den: users_item_view_daily}
+  user_c_from_suggest_per_user_c:                                             {num: user_c_from_suggest,                  den: buyers}
+  user_iv_from_suggest_per_user_iv_s:                                         {num: user_iv_from_suggest,                 den: users_item_view_serp_daily}
+  user_c_from_suggest_per_user_c_s:                                           {num: user_c_from_suggest,                  den: users_contact_serp_daily}
