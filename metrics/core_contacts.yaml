@@ -1,11 +1,11 @@
 metric.counter:
-  cnt_new_buyers:                          {filter: [{is_buyer_new: True}], obs: [contacts], m42: False}
-  cnt_returned_buyers:                     {filter: [{is_buyer_new: False}], obs: [contacts], m42: False}
-  contacts_canonical:                      {obs: [contacts]}
+  cnt_new_buyers:                          {filter: [{is_buyer_new: True}], m42: False}
+  cnt_returned_buyers:                     {filter: [{is_buyer_new: False}],  m42: False}
   cnt_contact:                             {}
 
 metric.uniq:
-  buyers_canonical:                        {counter: contacts_canonical,              key: [logical_category_id]}
-  buyers_any:                              {counter: contacts_canonical,              }
-  new_buyers:                              {counter: cnt_new_buyers,                  key: [logical_category_id]}
-  returned_buyers:                         {counter: cnt_returned_buyers,             key: [logical_category_id]}
+  contacts_canonical:                      {counter: contacts_canonical,                     key: [logical_category_id, item_id]}
+  buyers_canonical:                        {counter: contacts_canonical,                     key: [logical_category_id]}
+  buyers_any:                              {counter: contacts_canonical,                     }
+  new_buyers:                              {counter: cnt_new_buyers,                         key: [logical_category_id]}
+  returned_buyers:                         {counter: cnt_returned_buyers,                    key: [logical_category_id]}
