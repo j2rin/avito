@@ -15,14 +15,22 @@ breakdowns:
       - {vertical: [Jobs], logical_category: [Jobs.Undefined]}
     breakdown_vertical_general:
       - {vertical: [General]}
+      - {vertical: [SpareParts]}
       - {vertical: [General], logical_category: [General.Animals]}
+      - {vertical: [General], logical_category: [General.GoodsForPets]}
       - {vertical: [General], logical_category: [General.GoodsForChildren]}
       - {vertical: [General], logical_category: [General.ConstructionRenovation]}
       - {vertical: [General], logical_category: [General.Electronics]}
-      - {vertical: [General], logical_category: [General.ForBusiness]}
-      - {vertical: [General], logical_category: [General.ForHome]}
+      - {vertical: [General], logical_category: [General.Business]}
+      - {vertical: [General], logical_category: [General.GoodsForBusiness]}
+      - {vertical: [General], logical_category: [General.HomeAndGarden]}
+      - {vertical: [General], logical_category: [General.Furniture]}
       - {vertical: [General], logical_category: [General.Hobby]}
-      - {vertical: [General], logical_category: [General.PersonalBelongings]}
+      - {vertical: [General], logical_category: [General.Sports]}
+      - {vertical: [General], logical_category: [General.Food]}
+      - {vertical: [General], logical_category: [General.HealthAndBeauty]}
+      - {vertical: [General], logical_category: [General.Fashion]}
+      - {vertical: [General], logical_category: [General.Undefined]}
     is_cookie_new:
       - {}
       - {is_cookie_new: ['true']}
@@ -351,9 +359,11 @@ subscriptions:
 
   - owner: almirskoy
     subscribers: ['#general-green-light']
-    metrics_by_breakdowns:
-      breakdown_total:
-        - seller_mp_items_with_created_shipment
+    metrics_config:
+      rec: [breakdown_vertical_general, breakdown_total]
+      mp: [breakdown_vertical_general, breakdown_total]
+      bx: [breakdown_vertical_general, breakdown_total]
+
       
   - owner: igurov
     subscribers: [igurov]
