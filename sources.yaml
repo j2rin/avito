@@ -1000,4 +1000,31 @@ time_to_interview_for_job_employer:
   participant: {user: job_employer_user_id}
   dtm: event_time
   segm: job_employer_user_id
+  
+session_key_event_type:
+  table: dma.vo_session_key_event_type
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  participant: {visitor: cookie_id, user: user_id}
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category, region]
+    - [category, subcategory]
+  dtm: event_date
+  segm: cookie_id
 
