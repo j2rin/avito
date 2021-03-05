@@ -27,6 +27,10 @@ metric.counter:
   messenger_users_blocked:                 {filter: [{observation_name: messenger_users_blocked}], obs: [observation_value]}
   profile_views_from_messenger:            {filter: [{observation_name: profile_views_from_messenger}], obs: [observation_value]}
   total_messages:                          {filter: [{observation_name: messenger_total_messeges}], obs: [observation_value]}
+  total_messages_chatbot_chat:             {filter: [{observation_name: messenger_total_messeges_inchat_with_bot}], obs: [observation_value]}
+  total_messages_chatbot_chat_seller:      {filter: [{observation_name: messenger_seller_total_messages_inchat_with_bot}], obs: [observation_value] , m42: False}
+  total_messages_chatbot_chat_buyer:       {filter: [{observation_name: messenger_buyer_total_messages_inchat_with_bot}], obs: [observation_value], m42: False}
+
 
 metric.uniq:
   messenger_dau:                           {counter: total_messages,                  key: [participant]}
@@ -36,6 +40,12 @@ metric.uniq:
   users_first_response_messages_by_bot:    {counter: first_response_messages_by_bot,  key: [participant]}
   users_item_closed_from_messenger:        {counter: items_closed_from_messenger,     key: [participant]}
   users_item_sold_onavito_from_messenger:  {counter: items_sold_onavito_from_messenger, key: [participant]}
+  messenger_chatbot_dau:                   {counter: total_messages_chatbot_chat,        key: [participant]}
+  messenger_chatbot_seller:                {counter: total_messages_chatbot_chat_seller, key: [participant], m42: False}
+  messenger_chatbot_buyer:                 {counter: total_messages_chatbot_chat_buyer,  key: [participant], m42: False}
+
+  
+
 
 metric.ratio:
   messenger_spam_ratio:                    {num: messenger_spam_blocks,           den: messenger_active_chats}
