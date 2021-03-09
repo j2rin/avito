@@ -1,13 +1,23 @@
 metric.counter:
-  invites_less_1_day_job_employer:      {filter: [cohort: 'invite', time_to_invite_days.<=: 24]}
-  invites_1_2_day_job_employer:     {filter: [cohort: 'invite', time_to_invite_days.<=: 48, time_to_invite_days.>: 24]}
-  invites_2_5_day_job_employer:       {filter: [cohort: 'invite', time_to_invite_days.<=: 120, time_to_invite_days.>: 48]}
-  invites_5_10_day_job_employer:       {filter: [cohort: 'invite', time_to_invite_days.<=: 240, time_to_invite_days.>: 120]}
-  invites_more_than_10_day_job_employer:    {filter: [cohort: 'invite', time_to_invite_days.>: 240]}
+  invites_less_1_day_job_employer:             {filter: [cohort: 'invite', time_to_invite_days.<=: 24]}
+  invites_1_2_day_job_employer:                {filter: [cohort: 'invite', time_to_invite_days.<=: 48, time_to_invite_days.>: 24]}
+  invites_2_5_day_job_employer:                {filter: [cohort: 'invite', time_to_invite_days.<=: 120, time_to_invite_days.>: 48]}
+  invites_5_10_day_job_employer:               {filter: [cohort: 'invite', time_to_invite_days.<=: 240, time_to_invite_days.>: 120]}
+  invites_more_than_10_day_job_employer:       {filter: [cohort: 'invite', time_to_invite_days.>: 240]}
+  interview_less_1_day_after_activation:       {filter: [cohort: 'activation', time_from_activation_to_interview.<=: 24]}
+  interview_1_2_day_after_activation:          {filter: [cohort: 'activation', time_from_activation_to_interview.<=: 48, time_from_activation_to_interview.>: 24]}
+  interview_2_5_day_after_activation:          {filter: [cohort: 'activation', time_from_activation_to_interview.<=: 120, time_from_activation_to_interview.>: 48]}
+  interview_5_10_day_after_activation:         {filter: [cohort: 'activation', time_from_activation_to_interview.<=: 240, time_from_activation_to_interview.>: 120]}
+  interview_more_than_10_day_after_activation: {filter: [cohort: 'activation', time_from_activation_to_interview.>: 240]}
 
 metric.uniq:
-  job_employer_with_invite_less_1_day:      {counter: invites_less_1_day_job_employer,         key: [participant]}
-  job_employer_with_invite_1_2_day:     {counter: invites_1_2_day_job_employer,        key: [participant]}
-  job_employer_with_invite_2_5_day:       {counter: invites_2_5_day_job_employer,          key: [participant]}
-  job_employer_with_invite_5_10_day:    {counter:  invites_5_10_day_job_employer,       key: [participant]}
-  job_employer_with_invite_more_than_10_day:    {counter: invites_more_than_10_day_job_employer,       key: [participant]}
+  job_employer_with_invite_less_1_day:                        {counter: invites_less_1_day_job_employer,             key: [participant]}
+  job_employer_with_invite_1_2_day:                           {counter: invites_1_2_day_job_employer,                key: [participant]}
+  job_employer_with_invite_2_5_day:                           {counter: invites_2_5_day_job_employer,                key: [participant]}
+  job_employer_with_invite_5_10_day:                          {counter: invites_5_10_day_job_employer,               key: [participant]}
+  job_employer_with_invite_more_than_10_day:                  {counter: invites_more_than_10_day_job_employer,       key: [participant]}
+  job_employer_with_invite_less_1_day_after_activation:       {counter: interview_less_1_day_after_activation,       key: [participant]}
+  job_employer_with_invite_1_2_day_after_activation:          {counter: interview_1_2_day_after_activation,          key: [participant]}
+  job_employer_with_invite_2_5_day_after_activation:          {counter: interview_2_5_day_after_activation,          key: [participant]}
+  job_employer_with_invite_5_10_day_after_activation:         {counter: interview_5_10_day_after_activation,         key: [participant]}
+  job_employer_with_invite_more_than_10_day_after_activation: {counter: interview_more_than_10_day_after_activation, key: [participant]}
