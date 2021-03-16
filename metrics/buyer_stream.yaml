@@ -84,18 +84,18 @@ definitions:
   - &x_is_witcher_delivery    {search_flags.bit: 14}
   - &x_is_witcher_new_auto    {search_flags.bit: 15}
   - &x_is_witcher_new_flats   {search_flags.bit: 16}
-  - &x_is_witcher_marketplace {search_flags.bit: 19}
-  - &x_is_extra_quorum        {search_flags.bit: 20}
-  - &x_is_extra_vector        {search_flags.bit: 21}
-  - &x_is_suggest_click       {search_flags.bit: 23}
+  - &x_is_witcher_marketplace {search_flags.bit: 17}
+  - &x_is_extra_quorum        {search_flags.bit: 18}
+  - &x_is_extra_vector        {search_flags.bit: 19}
+  - &x_is_suggest_click       {search_flags.bit: 21}
 
   - &is_delivery_pvz          {other_flags.bit: 0}
   - &is_safedeal              {other_flags.bit: 1}
   - &is_delivery_courier      {other_flags.bit: 2}
 
   - &is_item_marketplace      {item_flags.bit: 2}
-  - &is_search_marketplace    {search_flags.bit: 17}
-  - &is_search_w_mp_item      {search_flags.bit: 18}
+  - &is_search_marketplace    {search_flags.bit: 31}
+  - &is_search_w_mp_item      {search_flags.bit: 32}
 
   - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
   
@@ -1839,5 +1839,5 @@ metric.ratio:
   user_c_from_suggest_per_user_c:                                             {num: user_c_from_suggest,                  den: buyers}
   user_iv_from_suggest_per_user_iv_s:                                         {num: user_iv_from_suggest,                 den: users_item_view_serp_daily}
   user_c_from_suggest_per_user_c_s:                                           {num: user_c_from_suggest,                  den: users_contact_serp_daily}
-  user_iv_sgt_per_user_s_sgt:                                                 {num: user_c_from_suggest,                  den: user_s_from_suggest}
-  user_c_sgt_per_user_s_sgt:                                                  {num: user_iv_from_suggest,                 den: user_s_from_suggest}
+  user_iv_sgt_per_user_s_sgt:                                                 {num: user_iv_from_suggest,                 den: user_s_from_suggest}
+  user_c_sgt_per_user_s_sgt:                                                  {num: user_c_from_suggest,                  den: user_s_from_suggest}

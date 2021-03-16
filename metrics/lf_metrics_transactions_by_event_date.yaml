@@ -1,31 +1,51 @@
 metric.counter:
-  amount_tr_lf:                 {filter: [transaction_type: 'listing.fee'],           obs: [amount]}
-  amount_tr_tf_burned:          {filter: [transaction_type: 'subscription burned'],   obs: [amount]}
-  amount_tr_tf_return:          {filter: [transaction_type: 'subscription return'],   obs: [amount]}
-  amount_tr_tf_payin:           {filter: [transaction_type: 'subscription pay in'],   obs: [amount]}
-  amount_tr_tf_upgrade:         {filter: [transaction_type: 'subscription upgrade'],  obs: [amount]}
+  amount_tr_lf:                 {filter: [transaction_type: 'listing.fee'],                                             obs: [amount]}
+  amount_tr_tf_burned:          {filter: [transaction_type: 'subscription burned'],                                     obs: [amount]}
+  amount_tr_tf_return:          {filter: [transaction_type: 'subscription return'],                                     obs: [amount]}
+  amount_tr_tf_payin:           {filter: [transaction_type: 'subscription pay in'],                                     obs: [amount]}
+  amount_tr_tf_upgrade:         {filter: [transaction_type: 'subscription upgrade'],                                    obs: [amount]}
+  amount_tr_tf_ia_payin:        {filter: [transaction_type: 'subscription pay in',  tariff_source: 'item activation'],  obs: [amount]}
+  amount_tr_tf_ia_upgrade:      {filter: [transaction_type: 'subscription upgrade', tariff_source: 'item activation'],  obs: [amount]}
+  amount_tr_tf_cf_payin:        {filter: [transaction_type: 'subscription pay in',  tariff_source: 'configurator'],     obs: [amount]}
+  amount_tr_tf_cf_upgrade:      {filter: [transaction_type: 'subscription upgrade', tariff_source: 'configurator'],     obs: [amount]}
 
-  amount_net_tr_lf:             {filter: [transaction_type: 'listing.fee'],           obs: [amount_net]}
-  amount_net_tr_tf_burned:      {filter: [transaction_type: 'subscription burned'],   obs: [amount_net]}
-  amount_net_tr_tf_return:      {filter: [transaction_type: 'subscription return'],   obs: [amount_net]}
-  amount_net_tr_tf_payin:       {filter: [transaction_type: 'subscription pay in'],   obs: [amount_net]}
-  amount_net_tr_tf_upgrade:     {filter: [transaction_type: 'subscription upgrade'],  obs: [amount_net]}
+  amount_net_tr_lf:             {filter: [transaction_type: 'listing.fee'],                                             obs: [amount_net]}
+  amount_net_tr_tf_burned:      {filter: [transaction_type: 'subscription burned'],                                     obs: [amount_net]}
+  amount_net_tr_tf_return:      {filter: [transaction_type: 'subscription return'],                                     obs: [amount_net]}
+  amount_net_tr_tf_payin:       {filter: [transaction_type: 'subscription pay in'],                                     obs: [amount_net]}
+  amount_net_tr_tf_upgrade:     {filter: [transaction_type: 'subscription upgrade'],                                    obs: [amount_net]}
+  amount_net_tr_tf_ia_payin:    {filter: [transaction_type: 'subscription pay in',  tariff_source: 'item activation'],  obs: [amount_net]}
+  amount_net_tr_tf_ia_upgrade:  {filter: [transaction_type: 'subscription upgrade', tariff_source: 'item activation'],  obs: [amount_net]}
+  amount_net_tr_tf_cf_payin:    {filter: [transaction_type: 'subscription pay in',  tariff_source: 'configurator'],     obs: [amount_net]}
+  amount_net_tr_tf_cf_upgrade:  {filter: [transaction_type: 'subscription upgrade', tariff_source: 'configurator'],     obs: [amount_net]}
 
-  amount_net_adj_tr_lf:         {filter: [transaction_type: 'listing.fee'],           obs: [amount_net_adj]}
-  amount_net_adj_tr_tf_burned:  {filter: [transaction_type: 'subscription burned'],   obs: [amount_net_adj]}
-  amount_net_adj_tr_tf_return:  {filter: [transaction_type: 'subscription return'],   obs: [amount_net_adj]}
-  amount_net_adj_tr_tf_payin:   {filter: [transaction_type: 'subscription pay in'],   obs: [amount_net_adj]}
-  amount_net_adj_tr_tf_upgrade: {filter: [transaction_type: 'subscription upgrade'],  obs: [amount_net_adj]}
+  amount_net_adj_tr_lf:                 {filter: [transaction_type: 'listing.fee'],                                             obs: [amount_net_adj]}
+  amount_net_adj_tr_tf_burned:          {filter: [transaction_type: 'subscription burned'],                                     obs: [amount_net_adj]}
+  amount_net_adj_tr_tf_return:          {filter: [transaction_type: 'subscription return'],                                     obs: [amount_net_adj]}
+  amount_net_adj_tr_tf_payin:           {filter: [transaction_type: 'subscription pay in'],                                     obs: [amount_net_adj]}
+  amount_net_adj_tr_tf_upgrade:         {filter: [transaction_type: 'subscription upgrade'],                                    obs: [amount_net_adj]}
+  amount_net_adj_tr_tf_ia_payin:        {filter: [transaction_type: 'subscription pay in',  tariff_source: 'item activation'],  obs: [amount_net_adj]}
+  amount_net_adj_tr_tf_ia_upgrade:      {filter: [transaction_type: 'subscription upgrade', tariff_source: 'item activation'],  obs: [amount_net_adj]}
+  amount_net_adj_tr_tf_cf_payin:        {filter: [transaction_type: 'subscription pay in',  tariff_source: 'configurator'],     obs: [amount_net_adj]}
+  amount_net_adj_tr_tf_cf_upgrade:      {filter: [transaction_type: 'subscription upgrade', tariff_source: 'configurator'],     obs: [amount_net_adj]}
 
 metric.uniq:
-  transactions_lf:              {counter: amount_tr_lf,         key: [first_vasfact_id, second_vasfact_id]}
-  transactions_tf_burned:       {counter: amount_tr_tf_burned,  key: [first_vasfact_id, second_vasfact_id]}
-  transactions_tf_return:       {counter: amount_tr_tf_return,  key: [first_vasfact_id, second_vasfact_id]}
-  transactions_tf_payin:        {counter: amount_tr_tf_payin,   key: [first_vasfact_id, second_vasfact_id]}
-  transactions_tf_upgrade:      {counter: amount_tr_tf_upgrade, key: [first_vasfact_id, second_vasfact_id]}
+  transactions_lf:              {counter: amount_tr_lf,             key: [first_vasfact_id, second_vasfact_id]}
+  transactions_tf_burned:       {counter: amount_tr_tf_burned,      key: [first_vasfact_id, second_vasfact_id]}
+  transactions_tf_return:       {counter: amount_tr_tf_return,      key: [first_vasfact_id, second_vasfact_id]}
+  transactions_tf_payin:        {counter: amount_tr_tf_payin,       key: [first_vasfact_id, second_vasfact_id]}
+  transactions_tf_upgrade:      {counter: amount_tr_tf_upgrade,     key: [first_vasfact_id, second_vasfact_id]}
+  transactions_tf_ia_payin:     {counter: amount_tr_tf_ia_payin,    key: [first_vasfact_id, second_vasfact_id]}
+  transactions_tf_ia_upgrade:   {counter: amount_tr_tf_ia_upgrade,  key: [first_vasfact_id, second_vasfact_id]}
+  transactions_tf_cf_payin:     {counter: amount_tr_tf_cf_payin,    key: [first_vasfact_id, second_vasfact_id]}
+  transactions_tf_cf_upgrade:   {counter: amount_tr_tf_cf_upgrade,  key: [first_vasfact_id, second_vasfact_id]}
 
-  users_tr_lf:                  {counter: amount_tr_lf,         key: [user_id]}
-  users_tr_tf_burned:           {counter: amount_tr_tf_burned,  key: [user_id]}
-  users_tr_tf_return:           {counter: amount_tr_tf_return,  key: [user_id]}
-  users_tr_tf_payin:            {counter: amount_tr_tf_payin,   key: [user_id]}
-  users_tr_tf_upgrade:          {counter: amount_tr_tf_upgrade, key: [user_id]}
+  users_tr_lf:                  {counter: amount_tr_lf,             key: [user_id]}
+  users_tr_tf_burned:           {counter: amount_tr_tf_burned,      key: [user_id]}
+  users_tr_tf_return:           {counter: amount_tr_tf_return,      key: [user_id]}
+  users_tr_tf_payin:            {counter: amount_tr_tf_payin,       key: [user_id]}
+  users_tr_tf_upgrade:          {counter: amount_tr_tf_upgrade,     key: [user_id]}
+  users_tr_tf_ia_payin:         {counter: amount_tr_tf_ia_payin,    key: [user_id]}
+  users_tr_tf_ia_upgrade:       {counter: amount_tr_tf_ia_upgrade,  key: [user_id]}
+  users_tr_tf_cf_payin:         {counter: amount_tr_tf_cf_payin,    key: [user_id]}
+  users_tr_tf_cf_upgrade:       {counter: amount_tr_tf_cf_upgrade,  key: [user_id]}

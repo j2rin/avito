@@ -1,0 +1,10 @@
+metric.counter:
+  perf_internal_time_to_interact_sum:    {obs: [time_to_interact_sum], m42: False}
+  perf_internal_time_to_interact_count:  {obs: [time_to_interact_count], m42: False}
+  perf_internal_startup_time_sum:        {obs: [startup_time_sum], m42: False}
+  perf_internal_startup_time_count:      {obs: [startup_time_count], m42: False}
+
+metric.ratio:
+    perf_startup_time:          {num: perf_internal_time_to_interact_sum,     den: perf_internal_time_to_interact_count}
+    perf_time_to_interact:      {num: perf_internal_startup_time_sum,         den: perf_internal_startup_time_count}
+

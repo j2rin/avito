@@ -1,9 +1,14 @@
 metric.counter:
-  interview_less_1_day_job_seeker:      {filter: [cohort: 'survey', time_to_survey_days.<=: 24]}
-  interview_1_2_day_job_seeker:     {filter: [cohort: 'survey', time_to_survey_days.<=: 48, time_to_survey_days.>: 24]}
-  interview_2_5_day_job_seeker:       {filter: [cohort: 'survey', time_to_survey_days.<=: 120, time_to_survey_days.>: 48]}
-  interview_5_10_day_job_seeker:       {filter: [cohort: 'survey', time_to_survey_days.<=: 240, time_to_survey_days.>: 120]}
-  interview_more_than_10_day_job_seeker:    {filter: [cohort: 'survey', time_to_survey_days.>: 240]}
+  interview_less_1_day_job_seeker:      {filter: [cohort: 'interview', time_to_interview.<=: 24]}
+  interview_1_2_day_job_seeker:     {filter: [cohort: 'interview', time_to_interview.<=: 48, time_to_interview.>: 24]}
+  interview_2_5_day_job_seeker:       {filter: [cohort: 'interview', time_to_interview.<=: 120, time_to_interview.>: 48]}
+  interview_5_10_day_job_seeker:       {filter: [cohort: 'interview', time_to_interview.<=: 240, time_to_interview.>: 120]}
+  interview_more_than_10_day_job_seeker:    {filter: [cohort: 'interview', time_to_interview.>: 240]}
+  acceptance_less_1_day_job_seeker:      {filter: [cohort: 'acceptance', time_to_acceptance.<=: 24]}
+  acceptance_1_2_day_job_seeker:     {filter: [cohort: 'acceptance', time_to_acceptance.<=: 48, time_to_acceptance.>: 24]}
+  acceptance_2_5_day_job_seeker:       {filter: [cohort: 'acceptance', time_to_acceptance.<=: 120, time_to_acceptance.>: 48]}
+  acceptance_5_10_day_job_seeker:       {filter: [cohort: 'acceptance', time_to_acceptance.<=: 240, time_to_acceptance.>: 120]}
+  acceptance_more_than_10_day_job_seeker:    {filter: [cohort: 'acceptance', time_to_acceptance.>: 240]}
 
 metric.uniq:
   job_seeker_with_interview_less_1_day:      {counter: interview_less_1_day_job_seeker,         key: [participant]}
@@ -11,3 +16,8 @@ metric.uniq:
   job_seeker_with_interview_2_5_day:       {counter: interview_2_5_day_job_seeker,          key: [participant]}
   job_seeker_with_interview_5_10_day:    {counter:  interview_5_10_day_job_seeker,       key: [participant]}
   job_seeker_with_interview_more_than_10_day:    {counter: interview_more_than_10_day_job_seeker,       key: [participant]}
+  job_seeker_with_acceptance_less_1_day:      {counter: acceptance_less_1_day_job_seeker,         key: [participant]}
+  job_seeker_with_acceptance_1_2_day:     {counter: acceptance_1_2_day_job_seeker,        key: [participant]}
+  job_seeker_with_acceptance_2_5_day:       {counter: acceptance_2_5_day_job_seeker,          key: [participant]}
+  job_seeker_with_acceptance_5_10_day:    {counter:  acceptance_5_10_day_job_seeker,       key: [participant]}
+  job_seeker_with_acceptance_more_than_10_day:    {counter: acceptance_more_than_10_day_job_seeker,       key: [participant]}
