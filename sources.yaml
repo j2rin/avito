@@ -877,6 +877,16 @@ geo_coordinates_stream:
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
 
+geo_laas_stream:
+    table: dma.vo_laas_stream
+    dimensions:
+      - platform
+      - location_group
+      - population_group
+      - location_level
+    participant: {visitor: cookie_id, user: user_id}
+    dtm: event_date
+
 moder:
   table: dma.vo_moder
   dimensions: [microcat]
@@ -987,7 +997,7 @@ support_comment:
   table: dma.vo_support_comment
   participant: {user: comment_id}
   dtm: comment_create_date
-  
+
 time_to_interview_for_job_seeker:
   table: dma.vo_time_to_interview
   column_map:
@@ -997,7 +1007,7 @@ time_to_interview_for_job_seeker:
   participant: {user: job_seeker_user_id}
   dtm: event_time
   segm: job_seeker_user_id
-  
+
 time_to_interview_for_job_employer:
   table: dma.vo_time_to_interview
   column_map:
@@ -1007,7 +1017,7 @@ time_to_interview_for_job_employer:
   participant: {user: job_employer_user_id}
   dtm: event_time
   segm: job_employer_user_id
-  
+
 session_key_event_type:
   table: dma.vo_session_key_event_type
   column_map:
@@ -1034,4 +1044,3 @@ session_key_event_type:
     - [category, subcategory]
   dtm: event_date
   segm: cookie_id
-
