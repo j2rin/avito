@@ -2,9 +2,9 @@ definitions:
   - &first   {line: '1ая линия'}
 
 metric.counter:
-  scored_comments:                   {filter: [*first]}
-  high_scored_comments:              {filter: [*first, SatisfactionScore.>=: 4]}
-  low_scored_comments:               {filter: [*first, SatisfactionScore: 1]}
+  scored_comments:                   {}
+  high_scored_comments:              {filter: [SatisfactionScore.>=: 4]}
+  low_scored_comments:               {filter: [SatisfactionScore: 1]}
 
 metric.ratio:
   comments_csat:                     {num: high_scored_comments, den: scored_comments}
