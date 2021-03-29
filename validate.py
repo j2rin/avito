@@ -33,12 +33,14 @@ CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 # Формат: (<имя поля в json>, <путь к файлу/директории>, <является ли путь директорией>)
 CONFIGS = [
     ('sources', os.path.join(CUR_DIR_PATH, 'sources.yaml'), False),
+    ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions.yaml'), False),
     ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
     ('ratio_configs', os.path.join(CUR_DIR_PATH, 'metrics/ratio'), True),
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
     ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
     ('metrics_lists', os.path.join(CUR_DIR_PATH, 'presets/metrics'), True),
     ('m42_dimensions', os.path.join(CUR_DIR_PATH, 'config/m42.yaml'), False),
+    ('m42_cartesian_groups', os.path.join(CUR_DIR_PATH, 'config/m42_cartesian_groups.yaml'), False),
     ('m42_subscriptions', os.path.join(CUR_DIR_PATH, 'config/metrics_subscriptions.yaml'), False),
 ]
 
@@ -123,7 +125,7 @@ def send_all(url, api_key=None):
 
 def post(url, data):
     def _post():
-        #conn = httplib.HTTPConnection('127.0.0.1', 5000)
+        # conn = httplib.HTTPConnection('127.0.0.1', 5000)
         conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
 
         conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
@@ -230,6 +232,24 @@ if __name__ == '__main__':
             exit(0)
         elif sys.argv[1] == '--publish':
             publish()
+            exit(0)
+        elif sys.argv[1] == '--publish-staging':
+            AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
+            VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
+            PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
+            PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
+
+            os.environ["API_KEY"] = 'api_key'
+
+            publish()
+            exit(0)
+        elif sys.argv[1] == '--validate-staging':
+            AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
+            VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
+            PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
+            PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
+
+            validate()
             exit(0)
         else:
             print('Unknown argument')

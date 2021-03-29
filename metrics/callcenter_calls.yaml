@@ -1,0 +1,17 @@
+definitions:
+  - &queue_not_asd  [1stDelivery, 1st_Delivery, HelpCenter, Items, Mobile, Privatebuddy]
+  - &asd_excluded   {queue: *queue_not_asd}
+
+metric.counter:
+  callcenter_calls_big10:            {}
+  calls_answered:                    {obs: [call_answered], m42: False}
+  calls_sec_to_reply:                {obs: [sec_to_reply], m42: False}
+  scored_calls:                      {filter: [feedbackmark.isnull: false], m42: False}
+  high_scored_calls:                 {filter: [feedbackmark.>=: 4], m42: False}
+  low_scored_calls:                  {filter: [feedbackmark: 1], m42: False}
+
+metric.ratio:
+  answered_calls_rate:               {num: calls_answered, den: callcenter_calls_big10}
+  calls_avg_waiting_time:            {num: calls_sec_to_reply, den: calls_answered}
+  calls_csat:                        {num: high_scored_calls, den: scored_calls}
+  calls_dsat:                        {num: low_scored_calls, den: scored_calls}

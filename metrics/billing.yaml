@@ -13,6 +13,9 @@ metric.counter:
   successful_payment_services:             {obs: [successful_payment_services]}
   successful_payment_services_amount:      {obs: [services_amount]}
   successful_payment_wallet:               {obs: [successful_payment_wallet]}
+  payment_method_page_account_pay:         {obs: [payment_method_page_account_pay], m42: False}
+  payment_method_choice_account_pay:       {obs: [payment_method_choice_account_pay], m42: False}
+  successful_payment_account_pay:          {obs: [successful_payment_account_pay], m42: False}
 
 metric.uniq:
   unq_payment_method_choice_cv:            {counter: payment_method_choice_cv,        key: [participant], m42: False}
@@ -27,6 +30,9 @@ metric.uniq:
   user_payment_method_page_wallet:         {counter: payment_method_page_wallet,      key: [participant]}
   user_successful_payment:                 {counter: successful_payment,              key: [participant]}
   user_successful_payment_wallet:          {counter: successful_payment_wallet,       key: [participant]}
+  user_payment_method_page_account_pay:    {counter: payment_method_page_account_pay,    key: [participant], m42: False}
+  user_payment_method_choice_account_pay:  {counter: payment_method_choice_account_pay,  key: [participant], m42: False}
+  user_successful_payment_account_pay:     {counter: successful_payment_account_pay,     key: [participant], m42: False}
 
 metric.ratio:
   main_payment_methods_share:              {num: cnt_successful_payment_sbol_card, den: successful_payment}
@@ -42,4 +48,11 @@ metric.ratio:
   successful_payment_share_proportion_cv:  {num: unq_successful_payment_cv,       den: unq_payment_method_page_cv}
   successful_payment_share_proportion_services: {num: unq_successful_payment_services, den: unq_payment_method_page_services}
   successful_payment_share_services:       {num: successful_payment_services,     den: payment_method_page_services}
-
+  selected_payment_method_share_wallet:    {num: payment_method_choice_wallet,    den: payment_method_page_wallet}
+  selected_payment_method_share_proportion_wallet: {num: user_payment_method_choice_wallet,    den: user_payment_method_page_wallet}
+  successful_payment_share_wallet:         {num: successful_payment_wallet,       den: payment_method_page_wallet}
+  successful_payment_share_proportion_wallet:  {num: user_successful_payment_wallet,       den: user_payment_method_page_wallet}
+  selected_payment_method_share_account_pay:    {num: payment_method_choice_account_pay,    den: payment_method_page_account_pay, m42: False}
+  selected_payment_method_share_proportion_account_pay: {num: user_payment_method_choice_account_pay,    den: user_payment_method_page_account_pay, m42: False}
+  successful_payment_share_account_pay:         {num: successful_payment_account_pay,       den: payment_method_page_account_pay, m42: False}
+  successful_payment_share_proportion_account_pay:  {num: user_successful_payment_account_pay,       den: user_payment_method_page_account_pay, m42: False}

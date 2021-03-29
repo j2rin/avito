@@ -1,0 +1,16 @@
+definitions:
+  - &is_marketplace                               {workflow: 'marketplace'}
+  - &is_b2c                                       {workflow: 'delivery-b2c'}
+
+metric.counter:
+  mp_shipments_created:                           {filter: [*is_marketplace]}
+  mp_shipments_paid:                              {filter: [*is_marketplace,                {is_paid: True}]}
+  b2c_shipments_created:                          {filter: [*is_b2c]}
+  b2c_shipments_paid:                             {filter: [*is_b2c,                        {is_paid: True}]}
+
+
+metric.uniq:
+  buyer_mp_shipments_created:                     {counter: mp_shipments_created,           key: [participant]}
+  buyer_mp_shipments_paid:                        {counter: mp_shipments_paid,              key: [participant]}
+  buyer_b2c_shipments_created:                    {counter: b2c_shipments_created,          key: [participant]}
+  buyer_b2c_shipments_paid:                       {counter: b2c_shipments_paid,             key: [participant]}

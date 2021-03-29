@@ -1,0 +1,20 @@
+definitions:
+  - &is_marketplace                                   {workflow: 'marketplace'}
+  - &is_b2c                                           {workflow: 'delivery-b2c'}
+
+metric.counter:
+  mp_total_items_with_created_shipment:               {filter: [*is_marketplace]}
+  mp_total_items_with_paid_shipment:                  {filter: [*is_marketplace,                        {is_paid: True}]}
+  b2c_total_items_with_created_shipment:              {filter: [*is_b2c]}
+  b2c_total_items_with_paid_shipment:                 {filter: [*is_b2c,                                {is_paid: True}]}
+
+
+metric.uniq:
+  mp_items_with_created_shipment:                     {counter: mp_total_items_with_created_shipment,   key: [item]}
+  mp_items_with_paid_shipment:                        {counter: mp_total_items_with_paid_shipment,      key: [item]}
+  buyer_mp_items_with_created_shipment:               {counter: mp_total_items_with_created_shipment,   key: [participant]}
+  buyer_mp_items_with_paid_shipment:                  {counter: mp_total_items_with_paid_shipment,      key: [participant]}
+  b2c_items_with_created_shipment:                    {counter: b2c_total_items_with_created_shipment,  key: [item]}
+  b2c_items_with_paid_shipment:                       {counter: b2c_total_items_with_paid_shipment,     key: [item]}
+  buyer_b2c_items_with_created_shipment:              {counter: b2c_total_items_with_created_shipment,  key: [participant]}
+  buyer_b2c_items_with_paid_shipment:                 {counter: b2c_total_items_with_paid_shipment,     key: [participant]}

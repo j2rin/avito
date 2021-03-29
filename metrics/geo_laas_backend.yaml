@@ -1,0 +1,55 @@
+definitions:
+  - &rule_search                  {search_rule: true}
+  - &rule_default                 {laas_rule: default}
+  - &rule_fallback                {laas_rule: fallback}
+  - &rule_ip_fallback             {laas_rule: ip_fallback}
+  - &rule_coords_fallback         {laas_rule: coords_fallback}
+  - &rule_coords_choice           {laas_rule: coords_choice}
+  - &rule_settings_choice         {laas_rule: settings_choice}
+  - &rule_tooltip_choice          {laas_rule: tooltip_choice}
+
+  - &has_client_location          {client_location_id.isnull: false}
+
+  - &laas_type_regular            {laas_tooltip_type: regular}
+  - &laas_type_change             {laas_tooltip_type: change}
+
+
+metric.counter:
+  laas_requests:                                {}
+  laas_requests_default_rule:                   {filter: [*rule_default]}
+  laas_requests_search_rule:                    {filter: [*rule_search]}
+  laas_requests_fallback_rule:                  {filter: [*rule_fallback]}
+  laas_requests_ip_fallback_rule:               {filter: [*rule_ip_fallback]}
+  laas_requests_coords_fallback_rule:           {filter: [*rule_coords_fallback]}
+  laas_requests_coords_choice_rule:             {filter: [*rule_coords_choice]}
+  laas_requests_settings_choice_rule:           {filter: [*rule_settings_choice]}
+  laas_requests_tooltip_choice_rule:            {filter: [*rule_tooltip_choice]}
+
+  laas_requests_has_client_location:            {filter: [*has_client_location]}
+
+
+  laas_requests_any_fallback_rule:              {filter: [ {$or: [[*rule_fallback], [*rule_ip_fallback],[*rule_coords_fallback]]} ] }
+
+  laas_requests_any_stack_rule:                 {filter: [ {$or: [[*rule_search],[*rule_coords_choice]] }    ]}
+  laas_requests_any_manual_rule:                {filter: [ {$or: [[*rule_tooltip_choice],[*rule_settings_choice]]}  ]}
+
+  laas_requests_regular:                        {filter: [*laas_type_regular]}
+  laas_requests_change:                         {filter: [*laas_type_change]}
+
+  laas_requests_city:                           {filter: [{location_level_id: [4, 5,6]}]}
+  laas_requests_region:                         {filter: [{location_level_id: [2, 3]}]}
+  laas_requests_russia:                         {filter: [{location_level_id: 1}]}
+
+  laas_requests_city_regular:                   {filter: [{location_level_id: [4, 5,6]}, *laas_type_regular]}
+  laas_requests_region_regular:                 {filter: [{location_level_id: [2, 3]}, *laas_type_regular]}
+  laas_requests_russia_regular:                 {filter: [{location_level_id: 1}, *laas_type_regular]}
+
+  laas_requests_city_change:                    {filter: [{location_level_id: [4, 5,6]}, *laas_type_change]}
+  laas_requests_region_change:                  {filter: [{location_level_id: [2, 3]}, *laas_type_change]}
+  laas_requests_russia_change:                  {filter: [{location_level_id: 1}, *laas_type_change]}
+
+metric.uniq:
+  user_laas_requests_any_fallback_rule:        {counter: laas_requests_any_fallback_rule,        key: [participant]}
+  user_laas_requests_any_stack_rule:           {counter: laas_requests_any_stack_rule,           key: [participant]}
+  user_laas_requests_any_manual_rule:          {counter: laas_requests_any_manual_rule,          key: [participant]}
+  user_laas_requests_default_rule:             {counter: laas_requests_default_rule,             key: [participant]}
