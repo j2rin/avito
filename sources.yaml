@@ -1044,3 +1044,21 @@ session_key_event_type:
     - [category, subcategory]
   dtm: event_date
   segm: cookie_id
+
+search_items:
+  table: dma.vo_search_items
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - region
+  participant: {visitor: cookie_id}
+  m42_cartesian_groups:
+    - [vertical, logical_category, region]
+    - [category, subcategory]
+  dtm: event_date
+  segm: event_date  # Просто рандомный столбец, не совпадающий с cookie_id. Чтобы вынудить сделать материализацию при расчете витрин
