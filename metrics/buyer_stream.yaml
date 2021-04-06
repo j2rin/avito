@@ -180,6 +180,7 @@ definitions:
 
   - &x_is_map_or_s       {$or: [*x_is_map, *x_is_search]}
   - &is_map_or_s         {$or: [*is_map,  [*is_search, *is_1p]]}
+  - &is_not_s_map        {search_flags.!bit: 4}
 
 
 metric.counter:
@@ -238,6 +239,7 @@ metric.counter:
   cnt_btc_s_item_attr:                     {filter: [*is_btc_wo_guessing, *x_is_search], m42: False}
   cnt_btc_s_item_attr_mp:                  {filter: [*is_btc_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
   cnt_btc_s_map_area:                      {filter: [*is_btc_wo_guessing, *is_s_map, *x_is_search], m42: False}
+  cnt_btc_s_wo_map_area:                   {filter: [*is_btc_wo_guessing, *is_not_s_map, *x_is_search], m42: False}
   cnt_btc_s_metro:                         {filter: [*is_btc_wo_guessing, *is_s_metro, *x_is_search], m42: False}
   cnt_btc_s_noquery:                       {filter: [*is_btc_wo_guessing, *noq, *x_is_search], m42: False}
   cnt_btc_s_query:                         {filter: [*is_btc_wo_guessing, *q, *x_is_search], m42: False}
@@ -325,6 +327,7 @@ metric.counter:
   cnt_cs_ph_s_item_attr:                   {filter: [*is_ph, *x_is_search], m42: False}
   cnt_cs_s_item_attr_mp:                   {filter: [*is_contact_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
   cnt_cs_s_map_area:                       {filter: [*is_contact_wo_guessing, *is_s_map, *x_is_search], m42: False}
+  cnt_cs_s_wo_map_area:                    {filter: [*is_contact_wo_guessing, *is_not_s_map, *x_is_search], m42: False}
   cnt_cs_s_metro:                          {filter: [*is_contact_wo_guessing, *is_s_metro, *x_is_search], m42: False}
   cnt_cs_s_radius:                         {filter: [*is_contact_wo_guessing, *is_s_radius, *x_is_search], m42: False}
   cnt_cs_s_road:                           {filter: [*is_contact_wo_guessing, *is_s_road, *x_is_search], m42: False}
@@ -374,6 +377,7 @@ metric.counter:
   cnt_fav_s:                               {filter: [*is_fav, *x_is_search], m42: False}
   cnt_fav_s_distr:                         {filter: [*is_fav, *is_s_district, *x_is_search], m42: False}
   cnt_fav_s_map_area:                      {filter: [*is_fav, *is_s_map, *x_is_search], m42: False}
+  cnt_fav_s_wo_map_area:                   {filter: [*is_fav, *is_not_s_map, *x_is_search], m42: False}
   cnt_fav_s_metro:                         {filter: [*is_fav, *is_s_metro, *x_is_search], m42: False}
   cnt_fav_s_radius:                        {filter: [*is_fav, *is_s_radius, *x_is_search], m42: False}
   cnt_fav_s_road:                          {filter: [*is_fav, *is_s_road, *x_is_search], m42: False}
@@ -437,6 +441,7 @@ metric.counter:
   cnt_iv_s_item_attr:                      {filter: [*is_iv_wo_guessing, *x_is_search], m42: False}
   cnt_iv_s_item_attr_mp:                   {filter: [*is_iv_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
   cnt_iv_s_map_area:                       {filter: [*is_iv_wo_guessing, *is_s_map, *x_is_search], m42: False}
+  cnt_iv_s_wo_map_area:                    {filter: [*is_iv_wo_guessing, *is_not_s_map, *x_is_search], m42: False}
   cnt_iv_s_metro:                          {filter: [*is_iv_wo_guessing, *is_s_metro, *x_is_search], m42: False}
   cnt_iv_s_radius:                         {filter: [*is_iv_wo_guessing, *is_s_radius, *x_is_search], m42: False}
   cnt_iv_s_road:                           {filter: [*is_iv_wo_guessing, *is_s_road, *x_is_search], m42: False}
@@ -760,6 +765,7 @@ metric.uniq:
   buyer_target_clicks_delivery:            {counter: cnt_btc_dlv,                     key: [item_x]}
   buyer_target_clicks_from_map:            {counter: cnt_btc_from_map,                key: [item_x]}
   buyer_target_clicks_from_map_area:       {counter: cnt_btc_s_map_area,              key: [item_x]}
+  buyer_target_clicks_serp_wo_map_area:    {counter: cnt_btc_s_wo_map_area,           key: [item_x]}
   buyer_target_clicks_from_map_total:      {counter: cnt_btc_from_map_s_area,         key: [item_x]}
   buyer_target_clicks_premium:             {counter: cnt_btc_premium,                 key: [item_x]}
   buyer_target_clicks_push:                {counter: cnt_btc_push,                    key: [item_x]}
@@ -854,6 +860,7 @@ metric.uniq:
   contacts_serp_district:                  {counter: cnt_cs_s_distr,                  key: [item_x]}
   contacts_serp_local_geo:                 {counter: cnt_cs_s_distr_metro_road,       key: [item_x]}
   contacts_serp_map_area:                  {counter: cnt_cs_s_map_area,               key: [item_x]}
+  contacts_serp_wo_map_area:               {counter: cnt_cs_s_wo_map_area,            key: [item_x]}
   contacts_serp_map_total:                 {counter: cnt_cs_from_map_s_area,          key: [item_x]}
   contacts_serp_metro:                     {counter: cnt_cs_s_metro,                  key: [item_x]}
   contacts_serp_radius:                    {counter: cnt_cs_s_radius,                 key: [item_x]}
@@ -921,6 +928,7 @@ metric.uniq:
   fav_added_serp:                          {counter: cnt_fav_s,                       key: [item_x]}
   fav_added_serp_district:                 {counter: cnt_fav_s_distr,                 key: [item_x]}
   fav_added_serp_map_area:                 {counter: cnt_fav_s_map_area,              key: [item_x]}
+  fav_added_serp_wo_map_area:              {counter: cnt_fav_s_wo_map_area,           key: [item_x]}
   fav_added_serp_map_total:                {counter: cnt_fav_from_map_s_area,         key: [item_x]}
   fav_added_serp_metro:                    {counter: cnt_fav_s_metro,                 key: [item_x]}
   fav_added_serp_radius:                   {counter: cnt_fav_s_radius,                key: [item_x]}
@@ -940,6 +948,7 @@ metric.uniq:
   item_views_fav_list:                     {counter: cnt_fav_list_iv,                 key: [item_x]}
   item_views_from_map:                     {counter: cnt_iv_from_map,                 key: [item_x]}
   item_views_from_map_area:                {counter: cnt_iv_s_map_area,               key: [item_x]}
+  item_views_from_wo_map_area:             {counter: cnt_iv_s_wo_map_area,            key: [item_x]}
   item_views_from_map_total:               {counter: cnt_iv_from_map_s_area,          key: [item_x]}
   item_views_from_search_filter_any:       {counter: cnt_iv_s_filter_price,           key: [item_x]}
   item_views_premium:                      {counter: cnt_iv_premium,                  key: [item_x]}
@@ -1020,6 +1029,7 @@ metric.uniq:
   user_cnt_cs:                             {counter: cnt_cs,                          key: [participant]}
   buyers_from_map:                         {counter: cnt_cs_from_map,                 key: [participant]}
   buyers_from_map_area:                    {counter: cnt_cs_s_map_area,               key: [participant]}
+  buyers_from_serp_wo_map_area:            {counter: cnt_cs_s_wo_map_area,            key: [participant]}
   buyers_from_map_total:                   {counter: cnt_cs_from_map_s_area,          key: [participant]}
   buyers_vas:                              {counter: contacts_total_vas,              key: [participant]}
   map_area_users:                          {counter: searches_map_area,               key: [participant]}
@@ -1125,6 +1135,7 @@ metric.uniq:
   users_btc_search_filter_any:             {counter: cnt_btc_views_s_filter_price,    key: [participant]}
   users_buyer_target_click_from_map:       {counter: cnt_btc_from_map,                key: [participant]}
   users_buyer_target_click_from_map_area:  {counter: cnt_btc_s_map_area,              key: [participant]}
+  users_buyer_target_click_serp_wo_map_area: {counter: cnt_btc_s_wo_map_area,              key: [participant]}
   users_buyer_target_click_rec_daily:      {counter: cnt_btc_rec,                     key: [participant]}
   users_buyer_target_click_rec_mp:         {counter: cnt_btc_rec_mp,                  key: [participant]}
   users_buyer_target_click_rec_job_ast:    {counter: cnt_btc_job_ast,                 key: [participant]}
@@ -1158,6 +1169,7 @@ metric.uniq:
   users_contacts_serp_road:                {counter: cnt_cs_s_road,                   key: [participant]}
   users_fav_from_map:                      {counter: cnt_fav_from_map,                key: [participant]}
   users_fav_from_map_area:                 {counter: cnt_fav_s_map_area,              key: [participant]}
+  users_fav_serp_wo_map_area:              {counter: cnt_fav_s_wo_map_area,              key: [participant]}
   users_favorites:                         {counter: favorites_added,                 key: [participant]}
   users_favorites_mp:                      {counter: favorites_added_mp,              key: [participant]}
   users_first_messages:                    {counter: first_messages,                  key: [participant]}
@@ -1183,6 +1195,7 @@ metric.uniq:
   users_item_views_fav_list:               {counter: cnt_fav_list_iv,                 key: [participant]}
   users_item_views_from_map:               {counter: cnt_iv_from_map,                 key: [participant]}
   users_item_views_from_map_area:          {counter: cnt_iv_s_map_area,               key: [participant]}
+  users_item_views_serp_wo_map_area:       {counter: cnt_iv_s_wo_map_area,            key: [participant]}
   users_item_views_search_filter_any:      {counter: cnt_iv_s_filter_price,           key: [participant]}
   users_item_views_serp_district:          {counter: cnt_iv_s_distr,                  key: [participant]}
   users_item_views_serp_metro:             {counter: cnt_iv_s_metro,                  key: [participant]}
