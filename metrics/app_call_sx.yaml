@@ -10,6 +10,9 @@ definitions:
   - &is_c               {AppCallScenario: *any_scenario}
   - &is_outgoing        {CallType: outgoing}
   - &is_incoming        {CallType: incoming}
+  
+  - &is_initiated       {$or: [{is_receiver_init: True}, {is_receiver_ringing: True}, {TalkDuration.>: 0}]}
+  - &is_ringing         {$or: [{is_receiver_ringing: True}, {TalkDuration.>: 0}]}
   - &is_answered        {TalkDuration.>: 0}
   - &is_success         {TalkDuration.>: 30}
   
@@ -24,14 +27,20 @@ metric.counter:
   appcall_sx_outgoing_success:             {filter: [*is_outgoing, *is_callback_c, *is_success], m42: False}
   
   appcall_sx_incoming:                     {filter: [*is_incoming, *is_c]}
+  appcall_sx_incoming_initiated:           {filter: [*is_incoming, *is_c, *is_initiated], m42: False}
+  appcall_sx_incoming_ringing:             {filter: [*is_incoming, *is_c, *is_ringing]}
   appcall_sx_incoming_answered:            {filter: [*is_incoming, *is_c, *is_answered]}
   appcall_sx_incoming_success:             {filter: [*is_incoming, *is_c, *is_success]}
   
   appcall_sx_incoming_callback:            {filter: [*is_incoming, *is_callback_c], m42: False}
+  appcall_sx_incoming_callback_initiated:  {filter: [*is_incoming, *is_callback_c, *is_initiated], m42: False}
+  appcall_sx_incoming_callback_ringing:    {filter: [*is_incoming, *is_callback_c, *is_ringing], m42: False}
   appcall_sx_incoming_callback_answered:   {filter: [*is_incoming, *is_callback_c, *is_answered], m42: False}
   appcall_sx_incoming_callback_success:    {filter: [*is_incoming, *is_callback_c, *is_success], m42: False}
   
   appcall_sx_incoming_direct:              {filter: [*is_incoming, *is_direct_c]}
+  appcall_sx_incoming_direct_initiated:    {filter: [*is_incoming, *is_direct_c, *is_initiated], m42: False}
+  appcall_sx_incoming_direct_ringing:      {filter: [*is_incoming, *is_direct_c, *is_ringing]}
   appcall_sx_incoming_direct_answered:     {filter: [*is_incoming, *is_direct_c, *is_answered]}
   appcall_sx_incoming_direct_success:      {filter: [*is_incoming, *is_direct_c, *is_success]}
   
@@ -42,12 +51,19 @@ metric.counter:
  
 metric.uniq:
   unq_appcall_sx_incoming_direct:           {counter: appcall_sx_incoming_direct, key: [participant], m42: False}
+  unq_appcall_sx_incoming_direct_initiated: {counter: appcall_sx_incoming_direct_initiated, key: [participant], m42: False}
+  unq_appcall_sx_incoming_direct_ringing:   {counter: appcall_sx_incoming_direct_ringing, key: [participant], m42: False}
   unq_appcall_sx_incoming_direct_answered:  {counter: appcall_sx_incoming_direct_answered, key: [participant], m42: False}
   unq_appcall_sx_incoming_direct_success:   {counter: appcall_sx_incoming_direct_success, key: [participant], m42: False}
 
 metric.ratio:
+  appcall_sx_incoming_direct_initiated_ratio:           {num: appcall_sx_incoming_direct_initiated, den: appcall_sx_incoming_direct}
+  appcall_sx_incoming_direct_ringing_ratio:             {num: appcall_sx_incoming_direct_ringing, den: appcall_sx_incoming_direct}
   appcall_sx_incoming_direct_answered_ratio:            {num: appcall_sx_incoming_direct_answered, den: appcall_sx_incoming_direct}
-  appcall_sx_incoming_direct_success_answered_ratio:    {num: appcall_sx_incoming_direct_success, den: appcall_sx_incoming_direct_answered}
   appcall_sx_incoming_direct_success_ratio:             {num: appcall_sx_incoming_direct_success, den: appcall_sx_incoming_direct}
+  appcall_sx_incoming_direct_ringing_initiated_ratio:   {num: appcall_sx_incoming_direct_ringing, den: appcall_sx_incoming_direct_initiated}
+  appcall_sx_incoming_direct_answered_ringing_ratio:    {num: appcall_sx_incoming_direct_answered, den: appcall_sx_incoming_direct_ringing}
+  appcall_sx_incoming_direct_success_answered_ratio:    {num: appcall_sx_incoming_direct_success, den: appcall_sx_incoming_direct_answered}
+  
   
   appcall_sx_incoming_direct_mic_granted_ratio:         {num: appcall_sx_incoming_direct_mic_granted, den: appcall_sx_incoming_direct_mic_checked, m42: False}
