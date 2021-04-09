@@ -1,0 +1,12 @@
+definitions:
+  - &fatal_error                  {error_type: fatal}
+  - &not_found_error              {error_type: not_found}
+
+
+metric.counter:
+  fatal_app_errors:               {filter: [*fatal_error]}
+  not_found_errors:               {filter: [*not_found_error]}
+
+metric.uniq:
+  users_fatal_app_errors:         {counter: fatal_app_errors,        key: [participant]}
+  user_not_found_errors:          {counter: not_found_errors,        key: [participant]}
