@@ -91,7 +91,7 @@ metric.counter:
   loc_window_opens_radius:                 {filter: [{open_from: radius}, *is_open], obs: [events_count]}
   loc_window_opens_search:                 {filter: [{open_from: search}, *is_open], obs: [events_count]}
   loc_window_savings:                      {filter: [*is_close, *saved], obs: [events_count]}
-  loc_window_time_span:                    {filter: [*is_close, time_span.>:0], obs: [time_span], m42: False}
+  loc_window_time_span:                    {filter: [*is_close, {time_span.>: 0}], obs: [time_span], m42: False}
 
 metric.uniq:
   default_loc_tooltip_accepts_city:        {counter: cnt_tooltip_accepts_city,        key: [participant]}
