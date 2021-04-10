@@ -1,0 +1,21 @@
+definitions:
+  - &click {FromBlock.=: 1}
+
+metric.counter:
+
+  cnt_location_suggest_clicks:             {filter: [*click], obs: [events]}
+  loc_suggest_clicks_null:                 {filter: [*click, {locationInput.isnull: true}], obs: [events]}
+  location_text_inputs:                    {obs: [events]}
+  location_manual_text_inputs:             {filter: [{LocationInputLength.>=: 0}], obs: [events]}
+  loc_text_inputs_length:                  {obs: [LocationInputLength], m42: False}
+
+
+metric.uniq:
+  users_loc_suggest_clicks:                {counter: cnt_location_suggest_clicks,    key: [participant]}
+  users_loc_suggest_clicks_null:           {counter: loc_suggest_clicks_null,        key: [participant]}
+  users_loc_suggest_manual_text_inputs:    {counter: location_manual_text_inputs,    key: [participant]}
+
+metric.ratio:
+  loc_suggests_per_text_inputs:            {num: cnt_location_suggest_clicks,     den: location_text_inputs}
+  loc_suggests_null_per_text_inputs:       {num: loc_suggest_clicks_null,     den: location_text_inputs}
+  location_manual_text_inputs_per_text_inputs: {num: location_manual_text_inputs,     den: location_text_inputs}

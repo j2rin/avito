@@ -91,6 +91,7 @@ metric.counter:
   loc_window_opens_radius:                 {filter: [{open_from: radius}, *is_open], obs: [events_count]}
   loc_window_opens_search:                 {filter: [{open_from: search}, *is_open], obs: [events_count]}
   loc_window_savings:                      {filter: [*is_close, *saved], obs: [events_count]}
+  loc_window_time_span:                    {filter: [*is_close, {time_span.>: 0}], obs: [time_span], m42: False}
 
 metric.uniq:
   default_loc_tooltip_accepts_city:        {counter: cnt_tooltip_accepts_city,        key: [participant]}
@@ -158,4 +159,5 @@ metric.ratio:
   user_laas_answers_per_user_shows:        {num: unq_laas_tooltip_accepts_declines, den: unq_laas_tooltip_shows}
   user_laas_answers_per_user_shows_change: {num: unq_laas_tooltip_accepts_change_declines, den: unq_laas_tooltip_shows_change}
   user_laas_answers_per_user_shows_regular: {num: unq_laas_tooltip_accepts_regular_declines, den: unq_laas_tooltip_shows_regular}
-
+  loc_window_time_span_per_closings:                  {num: loc_window_time_span,                 den: loc_window_closings}
+  loc_window_time_span_per_users_closings:            {num: loc_window_time_span,                 den: users_loc_window_closings}
