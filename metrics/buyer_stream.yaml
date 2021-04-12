@@ -182,6 +182,10 @@ definitions:
   - &is_map_or_s         {$or: [*is_map,  [*is_search, *is_1p]]}
   - &is_not_s_map        {search_flags.!bit: 4}
 
+  - &imv_re_good:			{item_flags.bit: 6}
+  - &imv_re_low:			{item_flags.bit: 7}
+  - &imv_re_high:			{item_flags.bit: 8}
+  - &imv_re_no_label:		{item_flags.bit: 9}
 
 metric.counter:
   base_serp_empty:                         {filter: [*is_1p, *is_base_serp_empty, *is_search]}
@@ -730,14 +734,14 @@ metric.counter:
   item_views_from_suggest:                 {filter: [*is_iv, *x_is_suggest_click], m42: False}
   contacts_from_suggest:                   {filter: [*is_contact, *x_is_suggest_click], m42: False}
   searches_from_suggest:                   {filter: [*is_search, *x_is_suggest_click], m42: False}
-  contact_imv_re_good:                     {filter: [item_flags.bit: 6, *is_contact], m42: False}
-  contact_imv_re_low:                      {filter: [item_flags.bit: 7, *is_contact], m42: False}
-  contact_imv_re_high:                     {filter: [item_flags.bit: 8, *is_contact], m42: False}
-  contact_imv_re_no_label:                 {filter: [item_flags.bit: 9, *is_contact], m42: False}
-  iv_imv_re_good:                          {filter: [item_flags.bit: 6, *is_iv], m42: False}
-  iv_imv_re_low:                           {filter: [item_flags.bit: 7, *is_iv], m42: False}
-  iv_imv_re_high:                          {filter: [item_flags.bit: 8, *is_iv], m42: False}
-  iv_imv_re_no_label:                      {filter: [item_flags.bit: 9, *is_iv], m42: False}
+  contact_imv_re_good:                     {filter: [*imv_re_good, *is_contact], m42: False}
+  contact_imv_re_low:                      {filter: [*imv_re_low, *is_contact], m42: False}
+  contact_imv_re_high:                     {filter: [*imv_re_high, *is_contact], m42: False}
+  contact_imv_re_no_label:                 {filter: [*imv_re_no_label, *is_contact], m42: False}
+  iv_imv_re_good:                          {filter: [*imv_re_good, *is_iv], m42: False}
+  iv_imv_re_low:                           {filter: [*imv_re_low, *is_iv], m42: False}
+  iv_imv_re_high:                          {filter: [*imv_re_high, *is_iv], m42: False}
+  iv_imv_re_no_label:                      {filter: [*imv_re_no_label, *is_iv], m42: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
