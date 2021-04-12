@@ -182,6 +182,10 @@ definitions:
   - &is_map_or_s         {$or: [*is_map,  [*is_search, *is_1p]]}
   - &is_not_s_map        {search_flags.!bit: 4}
 
+  - &imv_re_good {item_flags.bit: 6}
+  - &imv_re_low {item_flags.bit: 7}
+  - &imv_re_high {item_flags.bit: 8}
+  - &imv_re_no_label {item_flags.bit: 9}
 
 metric.counter:
   base_serp_empty:                         {filter: [*is_1p, *is_base_serp_empty, *is_search]}
@@ -730,6 +734,14 @@ metric.counter:
   item_views_from_suggest:                 {filter: [*is_iv, *x_is_suggest_click], m42: False}
   contacts_from_suggest:                   {filter: [*is_contact, *x_is_suggest_click], m42: False}
   searches_from_suggest:                   {filter: [*is_search, *x_is_suggest_click], m42: False}
+  contact_imv_re_good: {filter: [*imv_re_good, *is_contact], m42: False}
+  contact_imv_re_low: {filter: [*imv_re_low, *is_contact], m42: False}
+  contact_imv_re_high: {filter: [*imv_re_high, *is_contact], m42: False}
+  contact_imv_re_no_label: {filter: [*imv_re_no_label, *is_contact], m42: False}
+  iv_imv_re_good: {filter: [*imv_re_good, *is_iv], m42: False}
+  iv_imv_re_low: {filter: [*imv_re_low, *is_iv], m42: False}
+  iv_imv_re_high: {filter: [*imv_re_high, *is_iv], m42: False}
+  iv_imv_re_no_label: {filter: [*imv_re_no_label, *is_iv], m42: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1469,6 +1481,14 @@ metric.uniq:
   user_iv_from_suggest:                    {counter: item_views_from_suggest,         key: [participant]}
   user_c_from_suggest:                     {counter: contacts_from_suggest,           key: [participant]}
   user_s_from_suggest:                     {counter: searches_from_suggest,           key: [participant]}
+  buyers_imv_re_good: {counter: contact_imv_re_good, key: [participant], m42: False}
+  buyers_imv_re_low: {counter: contact_imv_re_low, key: [participant], m42: False}
+  buyers_imv_re_high: {counter: contact_imv_re_high, key: [participant], m42: False}
+  buyers_imv_re_no_label: {counter: contact_imv_re_no_label, key: [participant], m42: False}
+  user_iv_imv_re_good: {counter: iv_imv_re_good, key: [participant], m42: False}
+  user_iv_imv_re_low: {counter: iv_imv_re_low, key: [participant], m42: False}
+  user_iv_imv_re_high: {counter: iv_imv_re_high, key: [participant], m42: False}
+  user_iv_imv_re_no_label: {counter: iv_imv_re_no_label, key: [participant], m42: False}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1896,3 +1916,7 @@ metric.ratio:
   user_c_from_suggest_per_user_c_s:                                           {num: user_c_from_suggest,                  den: users_contact_serp_daily}
   user_iv_sgt_per_user_s_sgt:                                                 {num: user_iv_from_suggest,                 den: user_s_from_suggest}
   user_c_sgt_per_user_s_sgt:                                                  {num: user_c_from_suggest,                  den: user_s_from_suggest}
+  conv_to_cont_imv_re_good: {num: contact_imv_re_good, den: iv_imv_re_good}
+  conv_to_cont_imv_re_low: {num: contact_imv_re_low, den: iv_imv_re_low}
+  conv_to_cont_imv_re_high: {num: contact_imv_re_high, den: iv_imv_re_high}
+  conv_to_cont_imv_re_no_label: {num: contact_imv_re_no_label, den: iv_imv_re_no_label}
