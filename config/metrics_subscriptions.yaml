@@ -100,15 +100,6 @@ subscriptions:
         - user_enter_start
         - search_items_ratings_coverage
 
-  - owner: gvfandeev
-    subscribers: ['#general-green-light']
-    metrics_by_breakdowns:
-      breakdown_vertical_general:
-        - buyers_canonical
-        - fatal_app_errors
-        - user_fatal_error_per_users
-        - users_fatal_app_errors
-
   - owner: aaazimova
     subscribers: ['#general-green-light']
     metrics_by_breakdowns:
@@ -132,15 +123,30 @@ subscriptions:
       breakdown_vertical_general:
         - items_sold_onavito
 
-  - owner: gvfandeev
-    subscribers: [satimofeev]
+  - owner: satimofeev
+    subscribers: [satimofeev, gvfandeev, epchumachenko, asprimak, '#bx-metrics-alarms']
     metrics_config:
       bx: [breakdown_total]
 
-  - owner: gvfandeev
-    subscribers: [asprimak]
+  - owner: asprimak
+    subscribers: [asprimak, gvfandeev,'#bx-metrics-alarms']
     metrics_config:
       geo: [breakdown_total]
+      geo_map: [breakdown_total]
+
+  - owner: asprimak
+    subscribers: [gvfandeev,satimofeev,epchumachenko, '#bx-metrics-alarms']
+    metrics_config:
+      app_errors: [breakdown_total]
+      web_errors: [breakdown_total]
+
+  - owner: gvfandeev
+    subscribers: [asprimak, '#laas-metrics-alarms']
+    metrics_config:
+      geo_loc_chng: [breakdown_total]
+      geo_laas: [breakdown_total]
+      geo_laas_backend: [breakdown_total]
+      geo_coords: [breakdown_total]
 
   - owner: aaazimova
     subscribers: []
@@ -194,7 +200,7 @@ subscriptions:
     subscribers: [avdenisova, mrkhabibrakhmanov]
     metrics_config:
       sx_ss: [breakdown_total]
-      
+
   - owner: advelnikovskaya
     subscribers: [avdenisova]
     metrics_config:
@@ -222,7 +228,7 @@ subscriptions:
     subscribers: [makamenshchikov, vnrubtsov, vskopytov, spopova]
     metrics_config:
       rec: [breakdown_total]
-  
+
   - owner: epchumachenko
     subscribers: [epchumachenko, makamenshchikov, vnrubtsov, vskopytov, spopova]
     metrics_config:
@@ -248,12 +254,6 @@ subscriptions:
         - session_percent_p50
         - session_percent_p75
         - session_percent_p95
-        
-  - owner: gvfandeev
-    subscribers: [gvfandeev]
-    metrics_by_breakdowns:
-      breakdown_total:
-        - cnt_map_s_to_btc
 
   - owner: megoncharov
     subscribers: [megoncharov]
@@ -271,7 +271,7 @@ subscriptions:
     subscribers: ['#general-green-light']
     metrics_by_breakdowns:
       breakdown_total:
-        - mp_items_with_created_shipment   
+        - mp_items_with_created_shipment
 
   - owner: almirskoy
     subscribers: ['#general-green-light']
@@ -301,61 +301,61 @@ subscriptions:
     subscribers: ['#general-green-light']
     metrics_by_breakdowns:
       breakdown_total:
-        - buyer_mp_shipments_created 
+        - buyer_mp_shipments_created
 
   - owner: aaboboshko
     subscribers: [aaboboshko]
     metrics_by_breakdowns:
       breakdown_total:
-        - support_hc_ticket_platform_created 
+        - support_hc_ticket_platform_created
 
   - owner: maosipova
     subscribers: [maosipova]
     metrics_by_breakdowns:
       breakdown_total:
-        - unq_appcall_sx_incoming_direct 
+        - unq_appcall_sx_incoming_direct
 
   - owner: igurov
     subscribers: [igurov]
     metrics_by_breakdowns:
       breakdown_total:
-        - image_draw_appstart_exceptions_percent 
+        - image_draw_appstart_exceptions_percent
 
   - owner: abkrasnikov
     subscribers: [abkrasnikov]
     metrics_by_breakdowns:
       breakdown_total:
-        - express_cv_allowed_conversion 
+        - express_cv_allowed_conversion
 
   - owner: dvpimenova
     subscribers: [dvpimenova]
     metrics_by_breakdowns:
       breakdown_total:
-        - search_suggest_clicks 
+        - search_suggest_clicks
 
   - owner: maosipova
     subscribers: [maosipova]
     metrics_by_breakdowns:
       breakdown_total:
-        - anonnumber_long_talkers 
+        - anonnumber_long_talkers
 
   - owner: igurov
     subscribers: [igurov]
     metrics_by_breakdowns:
       breakdown_total:
-        - total_memory_warnings_users 
+        - total_memory_warnings_users
 
   - owner: inzhuchkov
     subscribers: [inzhuchkov]
     metrics_by_breakdowns:
       breakdown_total:
-        - proprofile_iv_per_s 
+        - proprofile_iv_per_s
 
   - owner: maosipova
     subscribers: [maosipova]
     metrics_by_breakdowns:
       breakdown_total:
-        - appcall_bx_outgoing_direct_answered_ratio 
+        - appcall_bx_outgoing_direct_answered_ratio
 
   - owner: dyurogova
     subscribers: [dyurogova]
@@ -363,8 +363,8 @@ subscriptions:
       breakdown_total:
         - app_pushes_open_per_push_to_receiver
 
-  - owner: almirskoy
-    subscribers: ['#general-green-light']
+  - owner: satimofeev
+    subscribers: [almirskoy, '#general-green-light']
     metrics_by_breakdowns:
       breakdown_total:
         - buyers
@@ -399,13 +399,13 @@ subscriptions:
         - delivery_click_mp
         - delivery_contact_mp
 
-      
+
   - owner: igurov
     subscribers: [igurov]
     metrics_by_breakdowns:
       breakdown_total:
         - async_target_content_dur
-      
+
   - owner: mdavydov
     subscribers: [mdavydov]
     metrics_by_breakdowns:
@@ -478,4 +478,3 @@ subscriptions:
     metrics_config:
       app_errors: [breakdown_vertical_jobs]
       web_errors: [breakdown_vertical_jobs]
-
