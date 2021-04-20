@@ -4,21 +4,33 @@ definitions:
   - &is_canceled                                  {status: ['canceled', 'rejected']}
 
 metric.counter:
-  mp_shipments_confirmed:                         {filter: [*is_marketplace,                  {is_confirmed: True}]}
-  mp_shipments_intransit:                         {filter: [*is_marketplace,                  {in_transit: True}]}
-  mp_shipments_received:                          {filter: [*is_marketplace,                  {is_received: True}]}
-  mp_shipments_accepted:                          {filter: [*is_marketplace,                  {is_accepted: True}]}
-  mp_shipments_canceled:                          {filter: [*is_marketplace,                  *is_canceled]}
-  mp_shipments_returned:                          {filter: [*is_marketplace,                  {status: ['return_performed']}]}
-  b2c_shipments_confirmed:                        {filter: [*is_b2c,                          {is_confirmed: True}]}
-  b2c_shipments_intransit:                        {filter: [*is_b2c,                          {in_transit: True}]}
-  b2c_shipments_received:                         {filter: [*is_b2c,                          {is_received: True}]}
-  b2c_shipments_accepted:                         {filter: [*is_b2c,                          {is_accepted: True}]}
-  b2c_shipments_canceled:                         {filter: [*is_b2c,                          *is_canceled]}
-  b2c_shipments_returned:                         {filter: [*is_b2c,                          {status: ['return_performed']}]}
+  mp_orders_confirmed:                         {filter: [*is_marketplace,                  {is_confirmed: True}]}
+  mp_orders_intransit:                         {filter: [*is_marketplace,                  {in_transit: True}]}
+  mp_orders_received:                          {filter: [*is_marketplace,                  {is_received: True}]}
+  mp_orders_accepted:                          {filter: [*is_marketplace,                  {is_accepted: True}]}
+  mp_orders_canceled:                          {filter: [*is_marketplace,                  *is_canceled]}
+  mp_orders_returned:                          {filter: [*is_marketplace,                  {status: ['return_performed']}]}
+  b2c_orders_confirmed:                        {filter: [*is_b2c,                          {is_confirmed: True}]}
+  b2c_orders_intransit:                        {filter: [*is_b2c,                          {in_transit: True}]}
+  b2c_orders_received:                         {filter: [*is_b2c,                          {is_received: True}]}
+  b2c_orders_accepted:                         {filter: [*is_b2c,                          {is_accepted: True}]}
+  b2c_orders_canceled:                         {filter: [*is_b2c,                          *is_canceled]}
+  b2c_orders_returned:                         {filter: [*is_b2c,                          {status: ['return_performed']}]}
 
 
 metric.uniq:
+  mp_shipments_confirmed:                         {counter: mp_orders_confirmed,              key: [purchase_id]}
+  mp_shipments_intransit:                         {counter: mp_orders_intransit,              key: [purchase_id]}
+  mp_shipments_received:                          {counter: mp_orders_received,               key: [purchase_id]}
+  mp_shipments_accepted:                          {counter: mp_orders_accepted,               key: [purchase_id]}
+  mp_shipments_canceled:                          {counter: mp_orders_canceled,               key: [purchase_id]}
+  mp_shipments_returned:                          {counter: mp_orders_returned,               key: [purchase_id]}
+  b2c_shipments_confirmed:                        {counter: b2c_orders_confirmed,             key: [purchase_id]}
+  b2c_shipments_intransit:                        {counter: b2c_orders_intransit,             key: [purchase_id]}
+  b2c_shipments_received:                         {counter: b2c_orders_received,              key: [purchase_id]}
+  b2c_shipments_accepted:                         {counter: b2c_orders_accepted,              key: [purchase_id]}
+  b2c_shipments_canceled:                         {counter: b2c_orders_canceled,              key: [purchase_id]}
+  b2c_shipments_returned:                         {counter: b2c_orders_returned,              key: [purchase_id]}
   buyer_mp_shipments_confirmed:                   {counter: mp_shipments_confirmed,           key: [participant]}
   buyer_mp_shipments_intransit:                   {counter: mp_shipments_intransit,           key: [participant]}
   buyer_mp_shipments_received:                    {counter: mp_shipments_received,            key: [participant]}
