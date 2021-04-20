@@ -55,6 +55,7 @@ metric.counter:
   cnt_localloading_duration:               {filter: [{stage_name: LocalLoading}], obs: [duration], m42: False}
   cnt_localloading_duration_events:        {filter: [{stage_name: LocalLoading}], obs: [duration_events], m42: False}
   cnt_localloading_events:                 {filter: [{stage_name: LocalLoading}], obs: [events], m42: False}
+  cnt_localloading_events_p25:             {filter: [{stage_name: LocalLoading}], obs: [events_p25], m42: False}
   cnt_localloading_events_p50:             {filter: [{stage_name: LocalLoading}], obs: [events_p50], m42: False}
   cnt_localloading_events_p75:             {filter: [{stage_name: LocalLoading}], obs: [events_p75], m42: False}
   cnt_localloading_events_p95:             {filter: [{stage_name: LocalLoading}], obs: [events_p95], m42: False}
@@ -64,6 +65,7 @@ metric.counter:
   cnt_prepare_duration_events:             {filter: [{stage_name: Prepare}], obs: [duration_events], m42: False}
   cnt_prepare_events:                      {filter: [{stage_name: Prepare}], obs: [events], m42: False}
   cnt_prepare_events_exceptions:           {filter: [{stage_name: Prepare}], obs: [events, exceptions], m42: False}
+  cnt_prepare_events_p25:                  {filter: [{stage_name: Prepare}], obs: [events_p25], m42: False}
   cnt_prepare_events_p50:                  {filter: [{stage_name: Prepare}], obs: [events_p50], m42: False}
   cnt_prepare_events_p75:                  {filter: [{stage_name: Prepare}], obs: [events_p75], m42: False}
   cnt_prepare_events_p95:                  {filter: [{stage_name: Prepare}], obs: [events_p95], m42: False}
@@ -123,12 +125,14 @@ metric.ratio:
   init_session_percent_p95:                {num: cnt_init_sessions_p95,           den: cnt_init_sessions}
   init_session_percent_sla:                {num: cnt_init_sessions_sla,           den: cnt_init_sessions}
   localloading_duration:                   {num: cnt_localloading_duration,       den: cnt_localloading_duration_events}
+  localloading_percent_p25:                {num: cnt_localloading_events_p25,     den: cnt_localloading_events}
   localloading_percent_p50:                {num: cnt_localloading_events_p50,     den: cnt_localloading_events}
   localloading_percent_p75:                {num: cnt_localloading_events_p75,     den: cnt_localloading_events}
   localloading_percent_p95:                {num: cnt_localloading_events_p95,     den: cnt_localloading_events}
   localloading_session_duration:           {num: cnt_localloading_session_duration, den: cnt_localloading_session_duration_events}
   prepare_duration:                        {num: cnt_prepare_duration,            den: cnt_prepare_duration_events}
   prepare_percent_exceptions:              {num: cnt_prepare_exceptions,          den: cnt_prepare_events_exceptions}
+  prepare_percent_p25:                     {num: cnt_prepare_events_p25,          den: cnt_prepare_events}
   prepare_percent_p50:                     {num: cnt_prepare_events_p50,          den: cnt_prepare_events}
   prepare_percent_p75:                     {num: cnt_prepare_events_p75,          den: cnt_prepare_events}
   prepare_percent_p95:                     {num: cnt_prepare_events_p95,          den: cnt_prepare_events}
