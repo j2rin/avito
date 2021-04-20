@@ -5,7 +5,6 @@ metric.counter:
   item_add_chains_form_input:              {filter: [{chain_last_form_input_time.isnull: False}]}
   item_chains_started:                     {}
   items_created:                           {filter: [{chain_item_create_time.isnull: False}]}
-  item_add_title_start:                    {filter: [{chain_title_add_time.isnull: False}]}
   title_suggest_clicks:                    {obs: [chain_title_suggest_click_count]}
   title_suggest_shows:                     {obs: [chain_title_suggest_show_count]}
 
@@ -16,7 +15,6 @@ metric.uniq:
   users_item_add_created:                  {counter: items_created,                   key: [participant]}
   users_item_add_form_input:               {counter: item_add_chains_form_input,      key: [participant]}
   users_item_chain_started:                {counter: item_chains_started,             key: [participant]}
-  users_item_add_title_start:              {counter: item_add_title_start,            key: [participant]}
   users_title_suggest_click:               {counter: title_suggest_clicks,            key: [participant]}
   users_title_suggest_show:                {counter: title_suggest_shows,             key: [participant]}
 
@@ -33,6 +31,6 @@ metric.ratio:
   users_item_create_per_users_item_chain_started: {num: users_item_add_created,          den: users_item_chain_started}
   title_suggest_clicks_per_shows:     {num: title_suggest_clicks, den: title_suggest_shows}
   users_title_suggest_click_per_show: {num: users_title_suggest_click, den: users_title_suggest_show}
-  users_title_suggest_show_per_users_item_add_title_start:  {num: users_title_suggest_show, den: users_item_add_title_start}
-  users_title_suggest_click_per_users_item_add_title_start: {num: users_title_suggest_click, den: users_item_add_title_start}
+  users_title_suggest_show_per_users_item_chain_started:  {num: users_title_suggest_show, den: users_item_chain_started}
+  users_title_suggest_click_per_users_item_chain_started: {num: users_title_suggest_click, den: users_item_chain_started}
 
