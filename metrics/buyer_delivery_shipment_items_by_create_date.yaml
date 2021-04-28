@@ -7,6 +7,10 @@ metric.counter:
   mp_total_items_with_paid_shipment:                  {filter: [*is_marketplace,                        {is_paid: True}]}
   b2c_total_items_with_created_shipment:              {filter: [*is_b2c]}
   b2c_total_items_with_paid_shipment:                 {filter: [*is_b2c,                                {is_paid: True}]}
+  mp_gmv_created:                                     {filter: [*is_marketplace],                       obs: [item_price]}
+  mp_gmv_paid:                                        {filter: [*is_marketplace, {is_paid: True}],      obs: [item_price]}
+  b2c_gmv_created:                                    {filter: [*is_b2c],                               obs: [item_price]}
+  b2c_gmv_paid:                                       {filter: [*is_b2c, {is_paid: True}],              obs: [item_price]}
 
 
 metric.uniq:
