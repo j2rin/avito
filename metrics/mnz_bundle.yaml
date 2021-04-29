@@ -3,7 +3,7 @@ metric.counter:
   bdl_vas_revenue: {filter: [{transaction_type: ['VAS write off', 'Performance VAS write off', 'VAS']}, {is_tariff_user = false}], obs: [amount_net_adj]}
   bdl_lf_revenue: {filter: [{transaction_type: 'listing.fee'}, {is_tariff_user = false}], obs: [amount_net_adj]}
   bdl_vas_and_bundle_revenue: {filter: [{transaction_type: ['VAS write off', 'Performance VAS write off', 'VAS', 'bundle write off']}, {is_tariff_user = false}], obs: [amount_net_adj]}
-  bdl_bundle_clean_reserved_revenue: {filter: [{transaction_type: ['bundle reserve', 'bundle return'], {is_tariff_user = false}]}, obs: [amount_net_adj]}
+  bdl_bundle_clean_reserved_revenue: {filter: [{transaction_type: ['bundle reserve', 'bundle return']}, {is_tariff_user = false}], obs: [amount_net_adj]}
   bdl_total_clean_reserved_revenue: {filter: [{transaction_type: ['bundle reserve', 'bundle return', 'VAS reserve', 'VAS return', 'Performance VAS reserve', 'Performance VAS return', 'VAS', 'listing.fee']}, {is_tariff_user = false}], obs: [amount_net_adj]}
   bdl_total_revenue: {filter: [{transaction_type: ['VAS write off', 'Performance VAS write off', 'VAS', 'bundle write off', 'listing.fee']}, {is_tariff_user = false}], obs: [amount_net_adj]}
   bdl_bundle_first_day_transactions: {filter:[{exposure_eventtype: 'bundle show'}, {is_tariff_user = false}], obs: [first_day_transaction_count]}
