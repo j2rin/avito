@@ -38,7 +38,7 @@ breakdowns:
 
 subscriptions:
   - owner: gvfandeev
-    subscribers: [vleksin, dobelyakov]
+    subscribers: [epchumachenko, dobelyakov]
     metrics:
       buyers:
         breakdowns:
@@ -100,15 +100,6 @@ subscriptions:
         - user_enter_start
         - search_items_ratings_coverage
 
-  - owner: gvfandeev
-    subscribers: ['#general-green-light']
-    metrics_by_breakdowns:
-      breakdown_vertical_general:
-        - buyers_canonical
-        - fatal_app_errors
-        - user_fatal_error_per_users
-        - users_fatal_app_errors
-
   - owner: aaazimova
     subscribers: ['#general-green-light']
     metrics_by_breakdowns:
@@ -132,15 +123,30 @@ subscriptions:
       breakdown_vertical_general:
         - items_sold_onavito
 
-  - owner: gvfandeev
-    subscribers: [satimofeev]
+  - owner: satimofeev
+    subscribers: [satimofeev, gvfandeev, epchumachenko, asprimak, '#bx-metrics-alarms']
     metrics_config:
       bx: [breakdown_total]
 
-  - owner: gvfandeev
-    subscribers: [asprimak]
+  - owner: asprimak
+    subscribers: [asprimak, gvfandeev,'#bx-metrics-alarms']
     metrics_config:
       geo: [breakdown_total]
+      geo_map: [breakdown_total]
+
+  - owner: asprimak
+    subscribers: [gvfandeev,satimofeev,epchumachenko, '#bx-metrics-alarms']
+    metrics_config:
+      app_errors: [breakdown_total]
+      web_errors: [breakdown_total]
+
+  - owner: gvfandeev
+    subscribers: [asprimak, '#laas-metrics-alarms']
+    metrics_config:
+      geo_loc_chng: [breakdown_total]
+      geo_laas: [breakdown_total]
+      geo_laas_backend: [breakdown_total]
+      geo_coords: [breakdown_total]
 
   - owner: aaazimova
     subscribers: []
@@ -194,7 +200,7 @@ subscriptions:
     subscribers: [avdenisova, mrkhabibrakhmanov]
     metrics_config:
       sx_ss: [breakdown_total]
-      
+
   - owner: advelnikovskaya
     subscribers: [avdenisova]
     metrics_config:
@@ -219,12 +225,12 @@ subscriptions:
       ads: [breakdown_total]
 
   - owner: epchumachenko
-    subscribers: [makamenshchikov, vnrubtsov, vskopytov, vleksin, spopova]
+    subscribers: [makamenshchikov, vnrubtsov, vskopytov, spopova]
     metrics_config:
       rec: [breakdown_total]
-  
+
   - owner: epchumachenko
-    subscribers: [epchumachenko, makamenshchikov, vnrubtsov, vskopytov, vleksin, spopova]
+    subscribers: [epchumachenko, makamenshchikov, vnrubtsov, vskopytov, spopova]
     metrics_config:
       rec: [breakdown_vertical]
 
@@ -248,12 +254,6 @@ subscriptions:
         - session_percent_p50
         - session_percent_p75
         - session_percent_p95
-        
-  - owner: gvfandeev
-    subscribers: [gvfandeev]
-    metrics_by_breakdowns:
-      breakdown_total:
-        - cnt_map_s_to_btc
 
   - owner: megoncharov
     subscribers: [megoncharov]
@@ -271,7 +271,7 @@ subscriptions:
     subscribers: ['#general-green-light']
     metrics_by_breakdowns:
       breakdown_total:
-        - mp_items_with_created_shipment   
+        - mp_items_with_created_shipment
 
   - owner: almirskoy
     subscribers: ['#general-green-light']
@@ -301,61 +301,61 @@ subscriptions:
     subscribers: ['#general-green-light']
     metrics_by_breakdowns:
       breakdown_total:
-        - buyer_mp_shipments_created 
+        - buyer_mp_shipments_created
 
   - owner: aaboboshko
     subscribers: [aaboboshko]
     metrics_by_breakdowns:
       breakdown_total:
-        - support_hc_ticket_platform_created 
+        - support_hc_ticket_platform_created
 
   - owner: maosipova
     subscribers: [maosipova]
     metrics_by_breakdowns:
       breakdown_total:
-        - unq_appcall_sx_incoming_direct 
+        - unq_appcall_sx_incoming_direct
 
   - owner: igurov
     subscribers: [igurov]
     metrics_by_breakdowns:
       breakdown_total:
-        - image_draw_appstart_exceptions_percent 
+        - image_draw_appstart_exceptions_percent
 
   - owner: abkrasnikov
     subscribers: [abkrasnikov]
     metrics_by_breakdowns:
       breakdown_total:
-        - express_cv_allowed_conversion 
+        - express_cv_allowed_conversion
 
   - owner: dvpimenova
     subscribers: [dvpimenova]
     metrics_by_breakdowns:
       breakdown_total:
-        - search_suggest_clicks 
+        - search_suggest_clicks
 
   - owner: maosipova
     subscribers: [maosipova]
     metrics_by_breakdowns:
       breakdown_total:
-        - anonnumber_long_talkers 
+        - anonnumber_long_talkers
 
   - owner: igurov
     subscribers: [igurov]
     metrics_by_breakdowns:
       breakdown_total:
-        - total_memory_warnings_users 
+        - total_memory_warnings_users
 
   - owner: inzhuchkov
     subscribers: [inzhuchkov]
     metrics_by_breakdowns:
       breakdown_total:
-        - proprofile_iv_per_s 
+        - proprofile_iv_per_s
 
   - owner: maosipova
     subscribers: [maosipova]
     metrics_by_breakdowns:
       breakdown_total:
-        - appcall_bx_outgoing_direct_answered_ratio 
+        - appcall_bx_outgoing_direct_answered_ratio
 
   - owner: dyurogova
     subscribers: [dyurogova]
@@ -363,11 +363,12 @@ subscriptions:
       breakdown_total:
         - app_pushes_open_per_push_to_receiver
 
-  - owner: almirskoy
-    subscribers: ['#general-green-light']
+  - owner: satimofeev
+    subscribers: [almirskoy, '#general-green-light']
     metrics_by_breakdowns:
       breakdown_total:
         - buyers
+        - buyers_canonical
         - bt_clicks
         - buyer_target_clicks_serp
         - buyer_target_clicks_rec
@@ -399,13 +400,13 @@ subscriptions:
         - delivery_click_mp
         - delivery_contact_mp
 
-      
+
   - owner: igurov
     subscribers: [igurov]
     metrics_by_breakdowns:
       breakdown_total:
         - async_target_content_dur
-      
+
   - owner: mdavydov
     subscribers: [mdavydov]
     metrics_by_breakdowns:
@@ -416,3 +417,95 @@ subscriptions:
     subscribers: ['#bi-and-dwh']
     metrics_by_breakdowns:
       is_cookie_new: [daily_active_users]
+
+  - owner: satimofeev
+    subscribers: ['#job-green-light', nevigul]
+    metrics_by_breakdowns:
+      breakdown_vertical_jobs:
+        - buyers_canonical
+        - bt_clicks
+        - buyer_target_clicks_serp
+        - buyer_target_clicks_rec
+        - contacts
+        - contacts_rec
+        - contacts_serp
+        - item_views
+        - item_views_rec
+        - item_views_serp
+        - phone_views
+        - ad_clicks
+        - favorites_added
+
+  - owner: satimofeev
+    subscribers: ['#job-green-light', nevigul]
+    metrics_by_breakdowns:
+      breakdown_vertical_jobs:
+        - searches
+        - serp_empty
+
+  - owner: msyablochnikova
+    subscribers: ['#job-green-light', nevigul]
+    metrics_by_breakdowns:
+      breakdown_vertical_jobs:
+        - first_messages
+
+  - owner: aaazimova
+    subscribers: ['#job-green-light', nefomichev]
+    metrics_by_breakdowns:
+      breakdown_vertical_jobs:
+        - classified_amount_net_adj
+        - classified_arpu_net_adj
+        - classified_price_net_adj
+        - classified_transactions
+        - classified_users
+        - other_projects_amount_net_adj
+
+  - owner: easaltykova
+    subscribers: ['#job-green-light', nefomichev]
+    metrics_by_breakdowns:
+      breakdown_vertical_jobs:
+        - lf_revenue_net
+        - lf_revenue_single_net
+        - lf_revenue_package_net
+        - tariff_base_revenue_net
+        - tariff_pro_revenue_net
+
+  - owner: advelnikovskaya
+    subscribers: ['#job-green-light', nefomichev]
+    metrics_by_breakdowns:
+      breakdown_vertical_jobs:
+        - items_started_net
+        - items_added_per_items_add_started
+        - items_blocked_rejected
+        - items_blocked
+        - items_rejected
+        - active_items
+        - active_listers
+        - item_edits
+        - items_sold_onavito
+        - items_closed_by_user
+        - items_sold_another_reason
+        - items_sold_notonavito
+
+  - owner: nefomichev
+    subscribers: ['#job-green-light', nefomichev]
+    metrics_by_breakdowns:
+      breakdown_vertical_jobs:
+        - paid_contact_amount_net_adj
+
+  - owner: eibesedin
+    subscribers: ['#job-green-light', nefomichev]
+    metrics_by_breakdowns:
+      breakdown_vertical_jobs:
+        - vas_amount_net
+        - vas_amount_net_visual
+        - vas_amount_net_performance
+        - vas_transactions
+        - vas_transactions_mnz_visual
+        - vas_transactions_mnz_performance
+
+  - owner: abkrasnikov
+    subscribers: ['#job-green-light']
+    metrics_config:
+      app_errors: [breakdown_vertical_jobs]
+      web_errors: [breakdown_vertical_jobs]
