@@ -13,8 +13,17 @@ metric.counter:
   b2c_total_items_with_intransit_shipment:        {filter: [*is_b2c,                                  {in_transit: True}]}
   b2c_total_items_with_received_shipment:         {filter: [*is_b2c,                                  {is_received: True}]}
   b2c_total_items_with_accepted_shipment:         {filter: [*is_b2c,                                  {is_accepted: True}]}
-  b2c_total_items_with_canceled_shipment:        {filter: [*is_b2c,                                  *is_canceled]}
-
+  b2c_total_items_with_canceled_shipment:         {filter: [*is_b2c,                                  *is_canceled]}
+  mp_gmv_confirmed:                               {filter: [*is_marketplace, {is_confirmed: True}],   obs: [item_price]}
+  mp_gmv_intransit:                               {filter: [*is_marketplace, {in_transit: True}],     obs: [item_price]}
+  mp_gmv_received:                                {filter: [*is_marketplace, {is_received: True}],    obs: [item_price]}
+  mp_gmv_accepted:                                {filter: [*is_marketplace, {is_accepted: True}],    obs: [item_price]}
+  mp_gmv_canceled:                                {filter: [*is_marketplace, *is_canceled],           obs: [item_price]}
+  b2c_gmv_confirmed:                              {filter: [*is_b2c, {is_confirmed: True}],           obs: [item_price]}
+  b2c_gmv_intransit:                              {filter: [*is_b2c, {in_transit: True}],             obs: [item_price]}
+  b2c_gmv_received:                               {filter: [*is_b2c, {is_received: True}],            obs: [item_price]}
+  b2c_gmv_accepted:                               {filter: [*is_b2c, {is_accepted: True}],            obs: [item_price]}
+  b2c_gmv_canceled:                               {filter: [*is_b2c, *is_canceled],                   obs: [item_price]}
 
 metric.uniq:
   mp_items_with_confirmed_shipment:               {counter: mp_total_items_with_confirmed_shipment,   key: [item]}
