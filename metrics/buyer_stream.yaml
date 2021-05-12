@@ -99,6 +99,9 @@ definitions:
   - &is_search_marketplace    {search_flags.bit: 31}
   - &is_search_w_mp_item      {search_flags.bit: 32}
 
+  - &is_s_localpriority       {search_flags.bit: 33}
+  - &is_s_multiloc            {search_flags.bit: 34}
+
   - &is_map_tot     {$or: [*is_s_map, *x_is_map]}
 
   - &is_msg_available    {item_flags.!bit: 3}
@@ -746,6 +749,12 @@ metric.counter:
   iv_imv_re_low: {filter: [*imv_re_low, *is_iv], m42: False}
   iv_imv_re_high: {filter: [*imv_re_high, *is_iv], m42: False}
   iv_imv_re_no_label: {filter: [*imv_re_no_label, *is_iv], m42: False}
+  s_localpriority:                         {filter: [*is_search, *is_s_localpriority]}
+  s_multiloc:                              {filter: [*is_search, *is_s_multiloc]}
+  iv_s_multiloc:                           {filter: [*is_s_multiloc, *is_iv_wo_guessing]}
+  c_s_multiloc:                            {filter: [*is_s_multiloc, *is_contact_wo_guessing]}
+  fav_s_multiloc:                          {filter: [*is_s_multiloc, *is_fav]}
+  btc_s_multiloc:                          {filter: [*is_s_multiloc, *is_btc_wo_guessing]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [item]}
@@ -1498,6 +1507,16 @@ metric.uniq:
   user_iv_imv_re_low: {counter: iv_imv_re_low, key: [participant], m42: False}
   user_iv_imv_re_high: {counter: iv_imv_re_high, key: [participant], m42: False}
   user_iv_imv_re_no_label: {counter: iv_imv_re_no_label, key: [participant], m42: False}
+  user_s_localpriority:                    {counter: s_localpriority,                 key: [participant]}
+  user_s_multiloc:                         {counter: s_multiloc,                      key: [participant]}
+  user_iv_s_multiloc:                      {counter: iv_s_multiloc,                   key: [participant]}
+  user_c_s_multiloc:                       {counter: c_s_multiloc,                    key: [participant]}
+  user_fav_s_multiloc:                     {counter: fav_s_multiloc,                  key: [participant]}
+  user_btc_s_multiloc:                     {counter: btc_s_multiloc,                  key: [participant]}
+  s_multiloc_iv:                           {counter: iv_s_multiloc,                   key: [x], m42: False}
+  s_multiloc_c:                            {counter: c_s_multiloc,                    key: [x], m42: False}
+  s_multiloc_fav:                          {counter: fav_s_multiloc,                  key: [x], m42: False}
+  s_multiloc_btc:                          {counter: btc_s_multiloc,                  key: [x], m42: False}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -1929,3 +1948,23 @@ metric.ratio:
   conv_to_cont_imv_re_low: {num: contact_imv_re_low, den: iv_imv_re_low}
   conv_to_cont_imv_re_high: {num: contact_imv_re_high, den: iv_imv_re_high}
   conv_to_cont_imv_re_no_label: {num: contact_imv_re_no_label, den: iv_imv_re_no_label}
+  user_s_localpriority_per_user_s:                                            {num: user_s_localpriority,                 den: users_search}
+  user_s_multiloc_per_user_s:                                                 {num: user_s_multiloc,                      den: users_search}
+  user_iv_multiloc_per_user_s_multiloc:                                       {num: user_iv_multiloc,                     den: user_s_multiloc}
+  user_c_multiloc_per_user_s_multiloc:                                        {num: user_c_multiloc,                      den: user_s_multiloc}
+  user_fav_multiloc_per_user_s_multiloc:                                      {num: user_fav_multiloc,                    den: user_s_multiloc}
+  user_btc_multiloc_per_user_s_multiloc:                                      {num: user_btc_multiloc,                    den: user_s_multiloc}
+  user_iv_s_multiloc_per_user_s_multiloc:                                     {num: user_iv_s_multiloc,                   den: user_s_multiloc}
+  user_c_s_multiloc_per_user_s_multiloc:                                      {num: user_c_s_multiloc,                    den: user_s_multiloc}
+  user_fav_s_multiloc_per_user_s_multiloc:                                    {num: user_fav_s_multiloc,                  den: user_s_multiloc}
+  user_btc_s_multiloc_per_user_s_multiloc:                                    {num: user_btc_s_multiloc,                  den: user_s_multiloc}
+  s_localpriority_per_s:                                                      {num: s_localpriority,                      den: searches_serp}
+  s_multiloc_per_s:                                                           {num: s_multiloc,                           den: searches_serp}
+  iv_multiloc_per_s_multiloc:                                                 {num: iv_multiloc,                          den: s_multiloc}
+  c_multiloc_per_s_multiloc:                                                  {num: c_multiloc,                           den: s_multiloc}
+  fav_multiloc_per_s_multiloc:                                                {num: fav_multiloc,                         den: s_multiloc}
+  btc_multiloc_per_s_multiloc:                                                {num: btc_multiloc,                         den: s_multiloc}
+  iv_s_multiloc_per_s_multiloc:                                               {num: iv_s_multiloc,                        den: s_multiloc}
+  c_s_multiloc_per_s_multiloc:                                                {num: c_s_multiloc,                         den: s_multiloc}
+  fav_s_multiloc_per_s_multiloc:                                              {num: fav_s_multiloc,                       den: s_multiloc}
+  btc_s_multiloc_per_s_multiloc:                                              {num: btc_s_multiloc,                       den: s_multiloc}
