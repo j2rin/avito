@@ -1,11 +1,12 @@
 metric.counter:    
   bdl_bundle_revenue: {filter: [transaction_type: 'bundle write off', is_tariff_user: false], obs: [amount_net_adj]}
+  bdl_bundle_vas_revenue: {filter: [transaction_type: 'Bundle VAS write off', is_tariff_user: false], obs: [amount_net_adj]}
   bdl_vas_revenue: {filter: [transaction_type.in: ['VAS write off', 'Performance VAS write off', 'VAS'], is_tariff_user: false], obs: [amount_net_adj]}
   bdl_lf_revenue: {filter: [transaction_type: 'listing.fee', is_tariff_user: false], obs: [amount_net_adj]}
-  bdl_vas_and_bundle_revenue: {filter: [transaction_type.in: ['VAS write off', 'Performance VAS write off', 'VAS', 'bundle write off'], is_tariff_user: false], obs: [amount_net_adj]}
+  bdl_vas_and_bundle_revenue: {filter: [transaction_type.in: ['VAS write off', 'Performance VAS write off', 'VAS', 'bundle write off', 'Bundle VAS write off'], is_tariff_user: false], obs: [amount_net_adj]}
   bdl_bundle_clean_reserved_revenue: {filter: [transaction_type.in: ['bundle reserve', 'bundle return'], is_tariff_user: false], obs: [amount_net_adj]}
-  bdl_total_clean_reserved_revenue: {filter: [transaction_type.in: ['bundle reserve', 'bundle return', 'VAS reserve', 'VAS return', 'Performance VAS reserve', 'Performance VAS return', 'VAS', 'listing.fee'], is_tariff_user: false], obs: [amount_net_adj]}
-  bdl_total_revenue: {filter: [transaction_type.in: ['VAS write off', 'Performance VAS write off', 'VAS', 'bundle write off', 'listing.fee'], is_tariff_user: false], obs: [amount_net_adj]}
+  bdl_total_clean_reserved_revenue: {filter: [transaction_type.in: ['bundle reserve', 'bundle return', 'VAS reserve', 'VAS return', 'Performance VAS reserve', 'Performance VAS return', 'VAS', 'listing.fee', 'Bundle VAS reserve', 'Bundle VAS return'], is_tariff_user: false], obs: [amount_net_adj]}
+  bdl_total_revenue: {filter: [transaction_type.in: ['VAS write off', 'Performance VAS write off', 'VAS', 'bundle write off', 'listing.fee', 'Bundle VAS write off'], is_tariff_user: false], obs: [amount_net_adj]}
   bdl_bundle_first_day_transactions: {filter: [exposure_eventtype: 'bundle show', is_tariff_user: false], obs: [first_day_transaction_count]}
   bdl_bundle_or_vas_first_day_transactions: {filter: [exposure_eventtype: 'bundle or vas show', is_tariff_user: false], obs: [first_day_transaction_count]}
   bdl_bundle_exposure: {filter: [exposure_eventtype: 'bundle show', is_tariff_user: false], obs: [exposure]}
@@ -14,6 +15,7 @@ metric.counter:
 metric.uniq:
   bdl_vas_or_bundle_users: {counter: bdl_vas_and_bundle_revenue, key: [user_id]}
   bdl_bundle_users: {counter: bdl_bundle_revenue, key: [user_id]}
+  bdl_bundle_vas_users: {counter: bdl_bundle_vas_revenue, key: [user_id]}
 
 metric.ratio:
   bdl_bundle_conversion_rate: {num: bdl_bundle_first_day_transactions, den: bdl_bundle_exposure}
