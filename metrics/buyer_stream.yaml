@@ -157,6 +157,8 @@ definitions:
   - &is_item_perfvas_x5_7   {item_vas_flags.bit: [15]}
   - &is_item_perfvas_x10_1  {item_vas_flags.bit: [16]}
   - &is_item_perfvas_x10_7  {item_vas_flags.bit: [17]}
+  - &is_item_perfvas        {item_vas_flags.bit: [12, 13, 14, 15, 16, 17]}
+  
 
   - &is_s_sort_date     {search_sort: *sort_date}
   - &is_s_sort_price    {search_sort: *sort_price}
@@ -351,6 +353,7 @@ metric.counter:
   cnt_cs_vertical_main:                    {filter: [*is_contact_wo_guessing, *x_is_vertical_main, *x_is_search], m42: False}
   cnt_cs_shopx:                            {filter: [*is_contact_wo_guessing, *x_is_search, *x_is_shop], m42: False}
   cnt_cs_vas:                              {filter: [*is_contact_wo_guessing, *is_serp_vas, *x_is_search], m42: False}
+  cnt_cs_vas_w:							   {filter: [*is_contact, *is_item_perfvas], obs: [vas_power], m42: False}
   cnt_cs_serp_perfvas_x2_1:                {filter: [*is_contact_wo_guessing, *is_serp_perfvas_x2_1, *x_is_search], m42: False}
   cnt_cs_serp_perfvas_x2_7:                {filter: [*is_contact_wo_guessing, *is_serp_perfvas_x2_7, *x_is_search], m42: False}
   cnt_cs_serp_perfvas_x5_1:                {filter: [*is_contact_wo_guessing, *is_serp_perfvas_x5_1, *x_is_search], m42: False}
