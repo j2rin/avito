@@ -317,8 +317,7 @@ metric.counter:
   cnt_cs_rec_s:                            {filter: [*is_contact_wo_guessing, {$or: [[*x_is_rec], [*x_is_search]]}], m42: False}
   cnt_cs_rec_u2i:                          {filter: [*is_contact_wo_guessing, *x_is_u2i], m42: False}
   cnt_cs_msg_rec_u2i:                      {filter: [*is_msg, *x_is_u2i], m42: False}
-  cnt_cs_perfvas:                          {filter: [*is_contact, *is_item_perfvas], m42: False}
-  cnt_cs_perfvas_w:                        {filter: [*is_contact, *is_item_perfvas], obs: [vas_power], m42: False}
+  cnt_cs_perfvas_w:                        {filter: [*is_contact_wo_guessing, *x_is_search, *is_serp_vas, *is_item_perfvas], obs: [vas_power], m42: False}
   cnt_cs_ph_rec_u2i:                       {filter: [*is_ph, *x_is_u2i], m42: False}
   cnt_cs_rec_u2i_mp:                       {filter: [*is_contact_wo_guessing, *x_is_u2i, *is_item_marketplace], m42: False}
   cnt_cs_rec_u2i_premium:                  {filter: [*is_contact_wo_guessing, *is_item_premium, *x_is_u2i], m42: False}
@@ -921,6 +920,7 @@ metric.uniq:
   contacts_serp_perfvas_x5_7:              {counter: cnt_cs_serp_perfvas_x5_7,        key: [item_x]}
   contacts_serp_perfvas_x10_1:             {counter: cnt_cs_serp_perfvas_x10_1,       key: [item_x]}
   contacts_serp_perfvas_x10_7:             {counter: cnt_cs_serp_perfvas_x10_7,       key: [item_x]}
+  contacts_serp_perfvas_weighted:          {counter: cnt_cs_perfvas_w,                key: [item_x]}
   contacts_vip:                            {counter: cnt_cs_vip,                      key: [item_x]}
   delivery_click_all_services:             {counter: total_delivery_click_all_services,              key: [item]}
   delivery_click_all_services_serp:        {counter: total_delivery_click_all_services_serp,         key: [item_x]}
