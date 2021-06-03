@@ -41,14 +41,14 @@ metric.counter:
 
 metric.uniq:
   classified_users:                        {counter: classified_amount_net_adj,   key: [participant]}
-  classified_users_p:                      {counter: classified_payments_net_adj, key: [participant]}
+  user_classified_payments:                {counter: classified_payments_net_adj, key: [participant]}
   lf_users:                                {counter: lf_amount_net_adj,           key: [participant]}
-  lf_users_p:                              {counter: lf_payments_net_adj,         key: [participant]}
+  user_lf_payments:                        {counter: lf_payments_net_adj,         key: [participant]}
   paying_users:                            {counter: avito_amount_net_adj,        key: [participant]}
   subs_w_extensions_users:                 {counter: subs_w_extensions_amount_net_adj, key: [participant]}
-  subs_w_extensions_users_p:               {counter: subs_w_extensions_payments_net_adj, key: [participant]}
+  users_subs_extensions_payments:          {counter: subs_w_extensions_payments_net_adj, key: [participant]}
   vas_users:                               {counter: vas_amount_net_adj,          key: [participant]}
-  vas_users_p:                             {counter: vas_payments_net_adj,        key: [participant]}
+  user_vas_payments:                       {counter: vas_payments_net_adj,        key: [participant]}
 
 metric.ratio:
   classified_price_net_adj:                {num: classified_amount_net_adj,       den: classified_transactions}
@@ -58,12 +58,12 @@ metric.ratio:
   subs_w_extensions_price_net_adj:         {num: subs_w_extensions_amount_net_adj, den: subs_w_extensions_transactions}
   subs_w_extensions_price_net_adj_p:       {num: subs_w_extensions_payments_net_adj, den: subs_w_extensions_transactions_p}
   vas_transactions_per_user:               {num: vas_transactions,                den: vas_users}
-  vas_transactions_per_user_p:             {num: vas_transactions_p,              den: vas_users_p}
+  vas_transactions_per_user_p:             {num: vas_transactions_p,              den: user_vas_payments}
   subs_w_extensions_transactions_per_user: {num: subs_w_extensions_transactions,  den: subs_w_extensions_users}
-  subs_w_extensions_transactions_per_user_p:   {num: subs_w_extensions_transactions_p,         den: subs_w_extensions_users_p}
+  subs_w_extensions_transactions_per_user_p:   {num: subs_w_extensions_transactions_p,         den: users_subs_extensions_payments}
   lf_transactions_per_user:                {num: lf_transactions,                 den: lf_users}
-  lf_transactions_per_user_p:              {num: lf_transactions_p,               den: lf_users_p}
+  lf_transactions_per_user_p:              {num: lf_transactions_p,               den: user_lf_payments}
   classified_transactions_per_user:        {num: classified_transactions,         den: classified_users}
-  classified_transactions_per_user_p:      {num: classified_transactions_p,       den: classified_users_p}
+  classified_transactions_per_user_p:      {num: classified_transactions_p,       den: user_classified_payments}
   vas_price_net_adj:                       {num: vas_amount_net_adj,              den: vas_transactions}
   vas_price_net_adj_p:                     {num: vas_payments_net_adj,            den: vas_transactions_p}
