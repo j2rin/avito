@@ -4,12 +4,19 @@ metric.counter:
   avito_amount_net_adj:                    {obs: [advertisement_amount_net_adj, classified_amount_net_adj, paid_contact_amount_net_adj]}
   classified_amount_net_adj:               {obs: [classified_amount_net_adj]}
   classified_transactions:                 {obs: [classified_transactions]}
+  classified_payments_net_adj:             {obs: [classified_payments_net_adj]}
+  classified_transactions_p:               {obs: [classified_transactions_p]}
+  vas_amount_net_adj:                      {obs: [vas_amount_net_adj]}
   vas_transactions:                        {obs: [vas_transactions]}
+  vas_payments_net_adj:                    {obs: [vas_payments_net_adj]}
+  vas_transactions_p:                      {obs: [vas_transactions_p]}
   cnt_advertisement_amount_net_adj_increased_for_rpm: {obs: [advertisement_amount_net_adj_increased_for_RPM], m42: False}
   cpa_amount_net_adj:                      {obs: [cpa_amount_net_adj]}
   cpa_transactions:                        {obs: [cpa_transactions]}
   bundle_amount_net_adj:                   {obs: [bundle_amount_net_adj]}
   bundle_transactions:                     {obs: [bundle_transactions]}
+  bundle_payments_net_adj:                 {obs: [bundle_payments_net_adj]}
+  bundle_transactions_p:                   {obs: [bundle_transactions_p]}
   delivery_amount_net_adj:                 {obs: [delivery_amount_net_adj]}
   domofond_amount_net_adj:                 {obs: [domofond_amount_net_adj]}
   domoteka_amount_net_adj:                 {obs: [domoteka_amount_net_adj]}
@@ -18,31 +25,45 @@ metric.counter:
   extensions_transactions:                 {obs: [ext_transactions]}
   lf_amount_net_adj:                       {obs: [lf_amount_net_adj]}
   lf_transactions:                         {obs: [lf_transactions]}
+  lf_payments_net_adj:                     {obs: [lf_payments_net_adj]}
+  lf_transactions_p:                       {obs: [lf_transactions_p]}
   other_projects_amount_net_adj:           {obs: [autoteka_amount_net_adj, delivery_amount_net_adj, domofond_amount_net_adj, domoteka_amount_net_adj, str_amount_net_adj]}
   paid_contact_amount_net_adj:             {obs: [paid_contact_amount_net_adj]}
   subs_amount_net_adj:                     {obs: [subs_amount_net_adj]}
   subs_transactions:                       {obs: [subs_transactions]}
+  subs_w_extensions_payments_net_adj:      {obs: [ext_payments_net_adj, subs_payments_net_adj]}
+  subs_w_extensions_transactions_p:        {obs: [ext_transactions_p, subs_transactions_p]}
   subs_w_extensions_amount_net_adj:        {obs: [ext_amount_net_adj, subs_amount_net_adj]}
   subs_w_extensions_transactions:          {obs: [ext_transactions, subs_transactions]}
-  vas_amount_net_adj:                      {obs: [vas_amount_net_adj]}
   total_amount_net_adj:                    {obs: [advertisement_amount_net_adj, classified_amount_net_adj, 
                                            autoteka_amount_net_adj, delivery_amount_net_adj, domofond_amount_net_adj, paid_contact_amount_net_adj,
                                            domoteka_amount_net_adj, str_amount_net_adj]}
 
 metric.uniq:
   classified_users:                        {counter: classified_amount_net_adj,   key: [participant]}
+  classified_payments_users:               {counter: classified_payments_net_adj, key: [participant]}
   lf_users:                                {counter: lf_amount_net_adj,           key: [participant]}
+  lf_payments_users:                       {counter: lf_payments_net_adj,         key: [participant]}
   paying_users:                            {counter: avito_amount_net_adj,        key: [participant]}
-  subs_w_extensions_users:                 {counter: subs_w_extensions_amount_net_adj, key: [participant]}
+  subs_w_extensions_users:                 {counter: subs_w_extensions_amount_net_adj,   key: [participant]}
+  subs_extensions_payments_users:          {counter: subs_w_extensions_payments_net_adj, key: [participant]}
   vas_users:                               {counter: vas_amount_net_adj,          key: [participant]}
+  vas_payments_users:                      {counter: vas_payments_net_adj,        key: [participant]}
 
 metric.ratio:
   classified_price_net_adj:                {num: classified_amount_net_adj,       den: classified_transactions}
+  classified_price_net_adj_p:              {num: classified_payments_net_adj,     den: classified_transactions_p}
   lf_price_net_adj:                        {num: lf_amount_net_adj,               den: lf_transactions}
-  subs_w_extensions_price_net_adj:         {num: subs_w_extensions_amount_net_adj, den: subs_w_extensions_transactions}
+  lf_price_net_adj_p:                      {num: lf_payments_net_adj,             den: lf_transactions_p}
+  subs_w_extensions_price_net_adj:         {num: subs_w_extensions_amount_net_adj,   den: subs_w_extensions_transactions}
+  subs_w_extensions_price_net_adj_p:       {num: subs_w_extensions_payments_net_adj, den: subs_w_extensions_transactions_p}
   vas_transactions_per_user:               {num: vas_transactions,                den: vas_users}
+  vas_transactions_per_user_p:             {num: vas_transactions_p,              den: vas_payments_users}
   subs_w_extensions_transactions_per_user: {num: subs_w_extensions_transactions,  den: subs_w_extensions_users}
+  subs_w_extensions_transactions_per_user_p:   {num: subs_w_extensions_transactions_p,         den: subs_extensions_payments_users}
   lf_transactions_per_user:                {num: lf_transactions,                 den: lf_users}
+  lf_transactions_per_user_p:              {num: lf_transactions_p,               den: lf_payments_users}
   classified_transactions_per_user:        {num: classified_transactions,         den: classified_users}
+  classified_transactions_per_user_p:      {num: classified_transactions_p,       den: classified_payments_users}
   vas_price_net_adj:                       {num: vas_amount_net_adj,              den: vas_transactions}
-
+  vas_price_net_adj_p:                     {num: vas_payments_net_adj,            den: vas_transactions_p}
