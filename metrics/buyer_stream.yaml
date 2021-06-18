@@ -195,6 +195,11 @@ definitions:
   - &imv_re_low {item_flags.bit: 7}
   - &imv_re_high {item_flags.bit: 8}
   - &imv_re_no_label {item_flags.bit: 9}
+  
+  - &part_qual_exists {PartItemQuality: 176267005501}
+  - &part_qual_compab {PartItemQuality: 176267005502}
+  - &part_qual_unknown {PartItemQuality: 161907250001}
+
 
 metric.counter:
   base_serp_empty:                         {filter: [*is_1p, *is_base_serp_empty, *is_search]}
@@ -205,7 +210,13 @@ metric.counter:
   base_serp_without_query_small:           {filter: [*is_1p, *is_base_serp_small, *is_search, *noq]}
   booking_created_short_rent:              {filter: [*is_booking]}
   bt_clicks:                               {filter: [{$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
+  btc_part_qual_exists:                    {filter: [*part_qual_exists, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
+  btc_part_qual_compab:                    {filter: [*part_qual_compab, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
+  btc_part_qual_unknown:                   {filter: [*part_qual_unknown, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
   cnt_btc:                                 {filter: [*is_btc]}
+  cnt_btc_part_qual_exists:                {filter: [*part_qual_exists, *is_btc]}
+  cnt_btc_part_qual_compab:                {filter: [*part_qual_compab, *is_btc]}
+  cnt_btc_part_qual_unknown:               {filter: [*part_qual_unknown, *is_btc]}
   btc_mp:                                  {filter: [*is_item_marketplace, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
   btc_developer:                           {filter: [*is_btc, *is_developer_acc]}
   btc_developer_search:                    {filter: [*is_btc_wo_guessing, *is_developer_acc, *x_is_search]}
@@ -341,6 +352,9 @@ metric.counter:
   cnt_cs_s_distr_metro_road:               {filter: [*is_contact_wo_guessing, *x_is_search, {$or: [[*is_s_district], [*is_s_metro], [*is_s_road]]}], m42: False}
   cnt_cs_s_grouped_doubles:                {filter: [*is_contact_wo_guessing, *is_region_with_double_groups, *is_serp_grouping, *x_is_search], m42: False}
   cnt_cs_s_item_attr:                      {filter: [*is_contact_wo_guessing, *x_is_search], m42: False}
+  cnt_cs_s_item_part_qual_exists:          {filter: [*is_contact, *x_is_search, *part_qual_exists], m42: False}
+  cnt_cs_s_item_part_qual_compab:          {filter: [*is_contact, *x_is_search, *part_qual_compab], m42: False}
+  cnt_cs_s_item_part_qual_unknown:         {filter: [*is_contact, *x_is_search, *part_qual_unknown], m42: False}
   cnt_cs_msg_s_item_attr:                  {filter: [*is_msg, *x_is_search], m42: False}
   cnt_cs_ph_s_item_attr:                   {filter: [*is_ph, *x_is_search], m42: False}
   cnt_cs_s_item_attr_mp:                   {filter: [*is_contact_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
@@ -395,6 +409,9 @@ metric.counter:
   cnt_fav_reg_mix:                         {filter: [*is_fav, *is_serp_regions_mix, *x_is_search], m42: False}
   cnt_fav_reg_any:                         {filter: [*is_fav, {$or: [[*is_serp_regions], [*is_serp_regions_mix]]}, *x_is_search], m42: False}
   cnt_fav_s:                               {filter: [*is_fav, *x_is_search], m42: False}
+  cnt_fav_s_part_qual_exists:              {filter: [*is_fav, *x_is_search, *part_qual_exists], m42: False}
+  cnt_fav_s_part_qual_compab:              {filter: [*is_fav, *x_is_search, *part_qual_compab], m42: False}
+  cnt_fav_s_part_qual_unknown:             {filter: [*is_fav, *x_is_search, *part_qual_unknown], m42: False}
   cnt_fav_s_distr:                         {filter: [*is_fav, *is_s_district, *x_is_search], m42: False}
   cnt_fav_s_map_area:                      {filter: [*is_fav, *is_s_map, *x_is_search], m42: False}
   cnt_fav_s_wo_map_area:                   {filter: [*is_fav, *is_not_s_map, *x_is_search], m42: False}
@@ -460,6 +477,9 @@ metric.counter:
   cnt_iv_s_distr:                          {filter: [*is_iv_wo_guessing, *is_s_district, *x_is_search], m42: False}
   cnt_iv_s_filter_price:                   {filter: [*is_iv_wo_guessing, *x_is_search, {$or: [[*x_is_filter_search], [*x_is_price_filter_search]]}], m42: False}
   cnt_iv_s_item_attr:                      {filter: [*is_iv_wo_guessing, *x_is_search], m42: False}
+  cnt_iv_s_part_qual_exists:               {filter: [*is_iv, *x_is_search, *part_qual_exists], m42: False}
+  cnt_iv_s_part_qual_compab:               {filter: [*is_iv, *x_is_search, *part_qual_compab], m42: False}
+  cnt_iv_s_part_qual_unknown:              {filter: [*is_iv, *x_is_search, *part_qual_unknown], m42: False}
   cnt_iv_s_item_attr_mp:                   {filter: [*is_iv_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
   cnt_iv_s_map_area:                       {filter: [*is_iv_wo_guessing, *is_s_map, *x_is_search], m42: False}
   cnt_iv_s_wo_map_area:                    {filter: [*is_iv_wo_guessing, *is_not_s_map, *x_is_search], m42: False}
@@ -518,6 +538,9 @@ metric.counter:
   cnt_used_cars_views:                     {filter: [*is_iv, *is_item_used_car]}
   cnt_users_1plus_actions:                 {filter: [{$or: [[*is_1p, *is_search, *noq], [*is_1p, *is_search, *q], [*is_booking], [*is_delivery], [*is_delivery_btn], [*is_fav], [*is_iv], [*is_msg], [*is_ph_realdev], [*is_ph_tot]]}], m42: False}
   contacts:                                {filter: [{$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_realdev], [*is_ph_tot]]}]}
+  contact_part_qual_exists:                {filter: [*part_qual_exists, *is_contact], m42: False}
+  contact_part_qual_compab:                {filter: [*part_qual_compab, *is_contact], m42: False}
+  contact_part_qual_unknown:               {filter: [*part_qual_unknown, *is_contact], m42: False}
   contacts_total_vas:                      {filter: [*is_item_vas, {$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}]}
   contacts_perfvas_x2_1:                   {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_x2_1], m42: False}
   contacts_perfvas_x2_7:                   {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_x2_7], m42: False}
@@ -529,6 +552,9 @@ metric.counter:
   delivery_orders_created:                 {filter: [*is_delivery]}
   fav_added_developer:                     {filter: [*is_developer_acc, *is_fav]}
   favorites_added:                         {filter: [*is_fav]}
+  favorites_added_part_qual_exists:        {filter: [*part_qual_exists, *is_fav]} 
+  favorites_added_part_qual_compab:        {filter: [*part_qual_compab, *is_fav]} 
+  favorites_added_part_qual_unknown:       {filter: [*part_qual_unknown, *is_fav]} 
   favorites_added_mp:                      {filter: [*is_fav, *is_item_marketplace]}
   favorites_list_views:                    {filter: [*is_fav_lst]}
   favorites_removed:                       {filter: [*is_fav_rmv]}
@@ -537,8 +563,14 @@ metric.counter:
   filters_price_searches:                  {filter: [*is_search, *x_is_price_filter_search]}
   filters_rubricator_searches:             {filter: [*is_search, *x_is_filter_search]}
   first_messages:                          {filter: [*is_msg]}
+  first_messages_part_qual_exists:         {filter: [*part_qual_exists ,*is_msg]} 
+  first_messages_part_qual_compab:         {filter: [*part_qual_compab ,*is_msg]} 
+  first_messages_part_qual_unknown:        {filter: [*part_qual_unknown ,*is_msg]} 
   first_messages_vas:                      {filter: [*is_item_vas, *is_msg]}
   item_views:                              {filter: [*is_iv]}
+  item_views_part_qual_exists:             {filter: [*part_qual_exists ,*is_iv]} 
+  item_views_part_qual_compab:             {filter: [*part_qual_compab ,*is_iv]} 
+  item_views_part_qual_unknown:            {filter: [*part_qual_unknown,*is_iv]} 
   item_views_mp:                           {filter: [*is_iv, *is_item_marketplace]}
   item_views_client:                       {filter: [*is_iv_client]}
   item_views_client_rec_from_msg:          {filter: [*is_iv_client, *x_is_rec_msg]}
@@ -560,6 +592,9 @@ metric.counter:
   not_default_radius_searches:             {filter: [*is_1p, *is_not_default_radius, *is_search]}
   phone_view_button_clicks:                {filter: [*is_ph_btn]}
   phone_views:                             {filter: [*is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
+  phone_views_part_qual_compab:            {filter: [*part_qual_compab , *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]} 
+  phone_views_part_qual_unknown:           {filter: [*part_qual_unknown, *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
+  phone_views_part_qual_exists:            {filter: [*part_qual_exists , *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
   phone_views_in_chat:                     {filter: [*is_ph_chat]}
   phone_views_snippet:                     {filter: [*is_ph, {$or: [[*is_ph_snip], [*is_ph_xlvas]]}]}
   phone_views_total:                       {filter: [*is_ph_tot]}
@@ -594,6 +629,9 @@ metric.counter:
   vertical_main:                           {filter: [*is_search, *x_is_vertical_main]}
   vertical_main_first_page:                {filter: [*is_1p, *is_search, *x_is_vertical_main]}
   searches:                                {filter: [*is_1p, *is_search]}
+  searches_part_qual_exists:               {filter: [*part_qual_exists ,*is_1p, *is_search]}
+  searches_part_qual_compab:               {filter: [*part_qual_compab ,*is_1p, *is_search]}
+  searches_part_qual_unknown:              {filter: [*part_qual_unknown ,*is_1p, *is_search]}
   searches_mp:                             {filter: [*is_1p, *is_search, *is_search_marketplace]}
   searches_with_mp_items:                  {filter: [*is_1p, *is_search, *is_search_w_mp_item]}
   searches_any_ext_block:                  {filter: [*is_search, {$or: [[*x_is_extra_delivery], [*x_is_extra_regions],[*x_is_extra_regions_mix], [*x_is_extra_quorum], [*x_is_extra_vector]]}]}
@@ -1543,6 +1581,12 @@ metric.uniq:
   user_iv_imv_re_low: {counter: iv_imv_re_low, key: [participant], m42: False}
   user_iv_imv_re_high: {counter: iv_imv_re_high, key: [participant], m42: False}
   user_iv_imv_re_no_label: {counter: iv_imv_re_no_label, key: [participant], m42: False}
+  buyers_part_qual_exists:                 {counter: contact_part_qual_exists, key: [participant], m42: False}
+  buyers_part_qual_compab:                 {counter: contact_part_qual_compab, key: [participant], m42: False}
+  buyers_part_qual_unknown:                {counter: contact_part_qual_unknown, key: [participant], m42: False}
+  user_iv_part_qual_exists:                {counter: item_views_part_qual_exists, key: [participant], m42: False}
+  user_iv_part_qual_compab:                {counter: item_views_part_qual_compab, key: [participant], m42: False}
+  user_iv_part_qual_unknown:               {counter: item_views_part_qual_unknown, key: [participant], m42: False}
   user_s_localpriority:                    {counter: s_localpriority,                 key: [participant]}
   user_s_multiloc:                         {counter: s_multiloc,                      key: [participant]}
   user_iv_s_multiloc:                      {counter: iv_s_multiloc,                   key: [participant]}
