@@ -267,7 +267,7 @@ metric.counter:
   cnt_btc_s_distr_metro_radius_road:       {filter: [*is_btc_wo_guessing, *x_is_search, {$or: [[*is_s_district], [*is_s_metro], [*is_s_radius], [*is_s_road]]}], m42: False}
   cnt_btc_s_distr_metro_road:              {filter: [*is_btc_wo_guessing, *x_is_search, {$or: [[*is_s_district], [*is_s_metro], [*is_s_road]]}], m42: False}
   cnt_btc_s_item_attr:                     {filter: [*is_btc_wo_guessing, *x_is_search], m42: False}
-  cnt_btc_ext_s_item_attr:                 {filter: [*is_btc_ext_wo_guessing, *x_is_search], m42: False}
+  cnt_btc_ext_s:                           {filter: [*is_btc_ext_wo_guessing, *x_is_search], m42: False}
   cnt_btc_s_item_attr_mp:                  {filter: [*is_btc_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
   cnt_btc_s_map_area:                      {filter: [*is_btc_wo_guessing, *is_s_map, *x_is_search], m42: False}
   cnt_btc_s_wo_map_area:                   {filter: [*is_btc_wo_guessing, *is_not_s_map, *x_is_search], m42: False}
@@ -873,7 +873,7 @@ metric.uniq:
   buyer_target_clicks_vector:              {counter: cnt_btc_vec,                     key: [item_x]}
   buyer_target_clicks_searches_u2i:        {counter: cnt_btc_s_u2i,                   key: [item_x]}
   buyer_target_clicks_serp:                {counter: cnt_btc_s_item_attr,             key: [item_x]}
-  btc_ext_serp:                            {counter: cnt_btc_ext_s_item_attr,         key: [item_x]}
+  btc_ext_serp:                            {counter: cnt_btc_ext_s,                   key: [item_x]}
   buyer_target_clicks_serp_perfvas_x2_1:   {counter: cnt_btc_serp_perfvas_x2_1,       key: [item_x]}
   buyer_target_clicks_serp_perfvas_x2_7:   {counter: cnt_btc_serp_perfvas_x2_7,       key: [item_x]}
   buyer_target_clicks_serp_perfvas_x5_1:   {counter: cnt_btc_serp_perfvas_x5_1,       key: [item_x]}
@@ -1239,7 +1239,7 @@ metric.uniq:
   users_buyer_target_click_rec_job_ast:    {counter: cnt_btc_job_ast,                 key: [participant]}
   users_buyer_target_click_rec_daily_vas:  {counter: cnt_btc_rec_vas,                 key: [participant]}
   users_buyer_target_click_serp_daily:     {counter: cnt_btc_s_item_attr,             key: [participant]}
-  user_btc_ext_serp:                       {counter: cnt_btc_ext_s_item_attr,         key: [participant]}
+  user_btc_ext_serp:                       {counter: cnt_btc_ext_s,                   key: [participant]}
   users_buyer_target_click_serp_mp:        {counter: cnt_btc_s_item_attr_mp,          key: [participant]}
   users_buyer_target_clicks_serp_district: {counter: cnt_btc_s_distr,                 key: [participant]}
   users_buyer_target_clicks_serp_metro:    {counter: cnt_btc_s_metro,                 key: [participant]}
