@@ -101,6 +101,7 @@ seller_item_active:
   table: dma.vo_seller_item_active
   column_map:
     item: item_id
+    user: user_id
   dimensions:
     - platform
     - vertical
@@ -131,6 +132,7 @@ seller_item_event:
   table: dma.vo_seller_item_event
   column_map:
     item: item_id
+    user: user_id
   dimensions:
     - platform
     - vertical
@@ -162,6 +164,7 @@ seller_item_event:
 geo_loc_change:
   table: dma.vo_geo_loc_change
   column_map:
+    cookie: cookie_id
     session: session_no
   dimensions:
     - platform
@@ -189,6 +192,7 @@ geo_map_stream:
   table: dma.vo_geo_map_stream
   column_map:
     session: session_no
+    cookie: cookie_id
   dimensions:
     - platform
     - vertical
@@ -227,6 +231,8 @@ perf_mobile_apps_startup_times:
 
 perf_mobile_memory_warnings:
   table: dma.o_perf_memory_warnings
+  column_map:
+    cookie: cookie_id
   dimensions: [platform, screen_name]
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
@@ -234,6 +240,8 @@ perf_mobile_memory_warnings:
 
 perf_web:
   table: dma.o_perf_web
+  column_map:
+    cookie: cookie_id
   dimensions: [platform, network_type, screen_name, stage_name]
   participant: {visitor: cookie_id, user: user_id}
   dtm: observation_date
@@ -276,6 +284,9 @@ mnz_bundle:
 
 core_c2c:
   table: dma.vo_core_c2c
+  column_map:
+    user: user_id
+    participant: participant_id
   dimensions: [platform, vertical, logical_category, category, subcategory, region, city, location_group, population_group, location_level, user_segment, is_asd, user_segment_market]
   m42_cartesian_groups:
     - [is_logged_in, user_segment, vertical, logical_category, region]
@@ -296,6 +307,8 @@ user_rating:
 
 str:
   table: dma.vo_str
+  column_map:
+    participant: participant_id
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, region]
@@ -306,6 +319,8 @@ str:
 
 ratings:
   table: dma.vo_ratings
+  column_map:
+    participant: participant_id
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, region]
@@ -316,6 +331,8 @@ ratings:
 
 public_profile:
   table: dma.vo_public_profile
+  column_map:
+    cookie: cookie_id
   dimensions: [platform]
   participant: {visitor: cookie_id}
   dtm: event_date
@@ -323,8 +340,11 @@ public_profile:
 
 mnz_vas:
   table: dma.vo_mnz_vas
+  column_map:
+    user: user_id
+    participant: participant_id
   dimensions: [platform, page_from, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, user_segment, is_asd, user_segment_market]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: {user: user_id}
   m42_cartesian_groups:
     - [is_logged_in, user_segment, vertical, logical_category, region]
     - [is_logged_in, is_asd, vertical, logical_category, region, user_segment_market]
@@ -344,6 +364,10 @@ mnz_lf:
 
 messenger:
   table: dma.vo_messenger
+  column_map:
+    cookie: cookie_id
+    user: user_id
+    participant: participant_id
   dimensions: [platform, appversion, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, user_segment, is_asd, user_segment_market]
   m42_cartesian_groups:
     - [is_logged_in, user_segment, vertical, logical_category, region]
@@ -356,7 +380,9 @@ messenger:
 labor:
   table: dma.vo_labor
   column_map:
+    cookie: cookie_id
     session: session_no
+    participant: participant_id
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
@@ -374,6 +400,8 @@ express_cv:
 
 delivery:
   table: dma.vo_delivery
+  column_map:
+    participant: participant_id
   dimensions: [platform, vertical, category, subcategory, logical_category, is_intercity, param1, param2, param3, param4, region, city, location_group, population_group, location_level, user_segment, is_asd, user_segment_market]
   m42_cartesian_groups:
     - [is_logged_in, user_segment, vertical, logical_category, region]
@@ -385,6 +413,8 @@ delivery:
 
 core_b2b:
   table: dma.vo_core_b2b
+  column_map:
+    user: user_id
   dimensions: [platform, vertical, category, subcategory, logical_category, region, city, population_group, location_group, location_level, user_segment, is_asd, user_segment_market]
   m42_cartesian_groups:
     - [is_logged_in, user_segment, vertical, logical_category, region]
@@ -396,6 +426,8 @@ core_b2b:
 
 billing:
   table: dma.vo_billing
+  column_map:
+    user: user_id
   dimensions: [platform]
   participant: {user: user_id}
   dtm: event_date
@@ -403,6 +435,8 @@ billing:
 
 session_source:
   table: dma.vo_session_source
+  column_map:
+    cookie: cookie_id
   dimensions:
     - platform
     - vertical
@@ -427,6 +461,8 @@ session_source:
 
 support:
   table: dma.vo_support
+  column_map:
+    participant: participant_id
   dimensions: [platform]
   participant:  {visitor: cookie_id, user: user_id}
   dtm: event_date
@@ -434,6 +470,8 @@ support:
 
 perf_web_speed:
   table: dma.vo_perf_web_speed
+  column_map:
+    participant: participant_id
   dimensions: [platform, region, city, location_group, from_page, population_group, location_level]
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
@@ -441,6 +479,8 @@ perf_web_speed:
 
 cookie_account_enter:
   table: dma.vo_cookie_account_enter
+  column_map:
+    cookie: cookie_id
   dimensions: [platform]
   participant: {visitor: cookie_id}
   dtm: event_date
@@ -448,12 +488,16 @@ cookie_account_enter:
 
 favourite_sellers_totals:
   table: dma.favourite_sellers_totals
+  column_map:
+    user: user_id
   participant: {user: user_id}
   dtm: event_date
   segm: user_id
 
 communications:
   table: dma.vo_communications
+  column_map:
+    user: user_id
   dimensions:
     - vertical
     - logical_category
@@ -482,6 +526,8 @@ communications:
 
 image:
   table: dma.vo_image
+  column_map:
+    participant: participant_id
   dimensions: [platform, network_type, screen_name]
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
@@ -489,6 +535,8 @@ image:
 
 proprofile:
   table: dma.vo_proprofile
+  column_map:
+    participant: participant_id
   dimensions: [platform, proprofile_traffic, proprofile_type, proprofile_version, tariff_type, tariff_subtype, tariffvertical_name]
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
@@ -496,6 +544,8 @@ proprofile:
 
 buyer_suggest:
   table: dma.vo_buyer_suggest
+  column_map:
+    cookie: cookie_id
   dimensions:
     - platform
   participant: {visitor: cookie_id, user: user_id}
@@ -505,6 +555,9 @@ buyer_suggest:
   segm: cookie_id
 
 seller_item_add:
+  column_map:
+    cookie: cookie_id
+    user: user_id
   table: dma.vo_seller_item_add
   dimensions:
     - platform
@@ -514,6 +567,9 @@ seller_item_add:
 
 seller_item_add_finish:
   table: dma.vo_seller_item_add
+  column_map:
+    cookie: cookie_id
+    user: user_id
   dimensions:
     - platform
   participant: {visitor: cookie_id, user: user_id}
@@ -528,6 +584,8 @@ support_ticket:
 
 geo_map_labor:
   table: dma.vo_geo_map_labor
+  column_map:
+    participant: participant_id
   dimensions:
     - platform
     - param1
@@ -549,6 +607,7 @@ buyer_call:
   table: dma.vo_buyer_call
   column_map:
     item: item_id
+    participant: participant_id
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, region]
@@ -651,6 +710,9 @@ seller_courier_order_status_date:
 
 notification:
   table: dma.vo_notification
+  column_map:
+    cookie: cookie_id
+    participant: participant_id
   dimensions: [platform]
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
@@ -658,6 +720,8 @@ notification:
 
 calltracking:
   table: dma.vo_calltracking
+  column_map:
+    user: user_id
   dimensions:
     - vertical
     - region
@@ -756,6 +820,7 @@ buyer_delivery_shipment_items_by_create_date:
   table: dma.vo_delivery_shipment_items
   column_map:
     item: item_id
+    user: buyer_id
   dimensions:
     - vertical
     - logical_category
@@ -782,6 +847,7 @@ buyer_delivery_shipment_items_by_status_date:
   table: dma.vo_delivery_shipment_items
   column_map:
     item: item_id
+    user: buyer_id
   dimensions:
     - vertical
     - logical_category
@@ -808,6 +874,7 @@ seller_delivery_shipment_items_by_create_date:
   table: dma.vo_delivery_shipment_items
   column_map:
     item: item_id
+    user: seller_id
   dimensions:
     - vertical
     - logical_category
@@ -834,6 +901,7 @@ seller_delivery_shipment_items_by_status_date:
   table: dma.vo_delivery_shipment_items
   column_map:
     item: item_id
+    user: seller_id
   dimensions:
     - vertical
     - logical_category
@@ -858,6 +926,8 @@ seller_delivery_shipment_items_by_status_date:
 
 fraud_support_tickets:
   table: dma.vo_fraud_support_tickets
+  column_map:
+    cookie: cookie_id
   dimensions:
     - vertical
     - logical_category
@@ -877,6 +947,8 @@ autoteka_stream:
 
 geo_coordinates_stream:
   table: dma.vo_coordinates_stream
+  column_map:
+    cookie: cookie_id
   dimensions:
     - platform
     - location_group
@@ -889,6 +961,8 @@ geo_coordinates_stream:
 
 geo_laas_backend:
     table: dma.vo_laas_stream
+    column_map:
+      cookie: cookie_id
     dimensions:
       - platform
       - location_group
@@ -1077,6 +1151,8 @@ search_items:
 
 production_errors:
   table: dma.vo_production_errors
+  column_map:
+    cookie: cookie_id
   dimensions:
     - platform
   participant: {visitor: cookie_id, user: user_id}
@@ -1084,6 +1160,8 @@ production_errors:
 
 geo_loc_suggest:
   table: dma.vo_geo_loc_suggest
+  column_map:
+    cookie: cookie_id
   dimensions:
     - platform
     - location_group
@@ -1094,6 +1172,8 @@ geo_loc_suggest:
 
 clickstream_eid_counter:
   table: dma.vo_clickstream_eid_counter
+  column_map:
+    cookie: cookie_id
   dimensions: [platform]
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
