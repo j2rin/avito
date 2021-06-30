@@ -36,7 +36,7 @@ definitions:
   - &x_is_fav_lst {x_eid: *eid_fav_lst}
   - &x_is_map     {x_eid: *eid_map}
   - &x_is_vertical_main {x_category_id.isnull: false, x_subcategory_id.isnull: true, query.isnull: true, search_flags.!bit: [8,9]}
-  
+
   - &is_sgt           {eid: 2443}
   - &is_iv            {eid: 301}
   - &is_iv_client     {eid: 2649}
@@ -161,7 +161,7 @@ definitions:
   - &is_item_perfvas_x10_1  {item_vas_flags.bit: [16]}
   - &is_item_perfvas_x10_7  {item_vas_flags.bit: [17]}
   - &is_item_perfvas        {item_vas_flags.bit: [12, 13, 14, 15, 16, 17]}
-  
+
 
   - &is_s_sort_date     {search_sort: *sort_date}
   - &is_s_sort_price    {search_sort: *sort_price}
@@ -198,10 +198,13 @@ definitions:
   - &imv_re_low {item_flags.bit: 7}
   - &imv_re_high {item_flags.bit: 8}
   - &imv_re_no_label {item_flags.bit: 9}
-  
+
   - &part_qual_exists {item_flags.bit: 13}
   - &part_qual_compab {item_flags.bit: 14}
   - &part_qual_unknown {item_flags.bit: 15}
+
+  - &is_item_pessimized      {item_flags.bit: 11}
+  - &is_seller_pessimized    {item_flags.bit: 12}
 
 
 metric.counter:
@@ -556,13 +559,31 @@ metric.counter:
   contacts_perfvas_x5_7:                   {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_x5_7], m42: False}
   contacts_perfvas_x10_1:                  {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_x10_1], m42: False}
   contacts_perfvas_x10_7:                  {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_x10_7], m42: False}
+  contacts_item_pessimized:                {filter: [*is_contact, *is_item_pessimized]}
+  contacts_seller_pessimized:              {filter: [*is_contact, *is_seller_pessimized]}
+  contacts_item_pessimized_rec:            {filter: [*is_contact_wo_guessing, *x_is_rec, *is_item_pessimized], m42: True}
+  contacts_seller_pessimized_rec:          {filter: [*is_contact_wo_guessing, *x_is_rec, *is_seller_pessimized], m42: True}
+  contacts_item_pessimized_serp:           {filter: [*is_contact_wo_guessing, *x_is_search, *is_item_pessimized], m42: True}
+  contacts_seller_pessimized_serp:         {filter: [*is_contact_wo_guessing, *x_is_search, *is_seller_pessimized], m42: True}
+  contacts_item_pessimized_map:            {filter: [*is_contact_wo_guessing, *x_is_map, *is_item_pessimized], m42: True}
+  contacts_item_pessimized_map_serp:       {filter: [*is_contact_wo_guessing, *is_s_map, *x_is_search, *is_item_pessimized], m42: True}
+  contacts_item_pessimized_map_total:      {filter: [*is_contact_wo_guessing, {$or: [[*is_s_map, *x_is_search], [*x_is_map]]}, *is_item_pessimized], m42: True}
+  contacts_seller_pessimized_map:          {filter: [*is_contact_wo_guessing, *x_is_map, *is_seller_pessimized], m42: True}
+  contacts_seller_pessimized_map_serp:     {filter: [*is_contact_wo_guessing, *is_s_map, *x_is_search, *is_seller_pessimized], m42: True}
+  contacts_seller_pessimized_map_total:    {filter: [*is_contact_wo_guessing, {$or: [[*is_s_map, *x_is_search], [*x_is_map]]}, *is_seller_pessimized], m42: True}
+  contacts_pessimized:                     {filter: [*is_contact, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  contacts_pessimized_rec:                 {filter: [*is_contact_wo_guessing, *x_is_rec, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  contacts_pessimized_serp:                {filter: [*is_contact_wo_guessing, *x_is_search, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  contacts_pessimized_map:                 {filter: [*is_contact_wo_guessing, *x_is_map, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  contacts_pessimized_map_serp:            {filter: [*is_contact_wo_guessing, *is_s_map, *x_is_search, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  contacts_pessimized_map_total:           {filter: [*is_contact_wo_guessing, {$or: [[*is_s_map, *x_is_search], [*x_is_map]]}, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
   default_radius_searches:                 {filter: [*is_1p, *is_default_radius, *is_search]}
   delivery_orders_created:                 {filter: [*is_delivery]}
   fav_added_developer:                     {filter: [*is_developer_acc, *is_fav]}
   favorites_added:                         {filter: [*is_fav]}
-  favorites_added_part_qual_exists:        {filter: [*part_qual_exists, *is_fav]} 
-  favorites_added_part_qual_compab:        {filter: [*part_qual_compab, *is_fav]} 
-  favorites_added_part_qual_unknown:       {filter: [*part_qual_unknown, *is_fav]} 
+  favorites_added_part_qual_exists:        {filter: [*part_qual_exists, *is_fav]}
+  favorites_added_part_qual_compab:        {filter: [*part_qual_compab, *is_fav]}
+  favorites_added_part_qual_unknown:       {filter: [*part_qual_unknown, *is_fav]}
   favorites_added_mp:                      {filter: [*is_fav, *is_item_marketplace]}
   favorites_list_views:                    {filter: [*is_fav_lst]}
   favorites_removed:                       {filter: [*is_fav_rmv]}
@@ -571,14 +592,14 @@ metric.counter:
   filters_price_searches:                  {filter: [*is_search, *x_is_price_filter_search]}
   filters_rubricator_searches:             {filter: [*is_search, *x_is_filter_search]}
   first_messages:                          {filter: [*is_msg]}
-  first_messages_part_qual_exists:         {filter: [*part_qual_exists ,*is_msg]} 
-  first_messages_part_qual_compab:         {filter: [*part_qual_compab ,*is_msg]} 
-  first_messages_part_qual_unknown:        {filter: [*part_qual_unknown ,*is_msg]} 
+  first_messages_part_qual_exists:         {filter: [*part_qual_exists ,*is_msg]}
+  first_messages_part_qual_compab:         {filter: [*part_qual_compab ,*is_msg]}
+  first_messages_part_qual_unknown:        {filter: [*part_qual_unknown ,*is_msg]}
   first_messages_vas:                      {filter: [*is_item_vas, *is_msg]}
   item_views:                              {filter: [*is_iv]}
-  item_views_part_qual_exists:             {filter: [*part_qual_exists ,*is_iv]} 
-  item_views_part_qual_compab:             {filter: [*part_qual_compab ,*is_iv]} 
-  item_views_part_qual_unknown:            {filter: [*part_qual_unknown,*is_iv]} 
+  item_views_part_qual_exists:             {filter: [*part_qual_exists ,*is_iv]}
+  item_views_part_qual_compab:             {filter: [*part_qual_compab ,*is_iv]}
+  item_views_part_qual_unknown:            {filter: [*part_qual_unknown,*is_iv]}
   item_views_mp:                           {filter: [*is_iv, *is_item_marketplace]}
   item_views_client:                       {filter: [*is_iv_client]}
   item_views_client_rec_from_msg:          {filter: [*is_iv_client, *x_is_rec_msg]}
@@ -595,12 +616,30 @@ metric.counter:
   item_views_with_available_msg:           {filter: [*is_msg_available, *is_iv]}
   iv_developer:                            {filter: [*is_developer_acc, *is_iv]}
   iv_developer_search:                     {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_search]}
+  item_views_item_pessimized:              {filter: [*is_item_pessimized ,*is_iv]}
+  item_views_seller_pessimized:            {filter: [*is_seller_pessimized ,*is_iv]}
+  item_views_item_pessimized_rec:          {filter: [*is_iv_wo_guessing, *x_is_rec, *is_item_pessimized], m42: True}
+  item_views_seller_pessimized_rec:        {filter: [*is_iv_wo_guessing, *x_is_rec, *is_seller_pessimized], m42: True}
+  item_views_item_pessimized_serp:         {filter: [*is_iv_wo_guessing, *x_is_search, *is_item_pessimized], m42: True}
+  item_views_seller_pessimized_serp:       {filter: [*is_iv_wo_guessing, *x_is_search, *is_seller_pessimized], m42: True}
+  item_views_item_pessimized_map:          {filter: [*is_iv_wo_guessing, *x_is_map, *is_item_pessimized], m42: True}
+  item_views_item_pessimized_map_serp:     {filter: [*is_iv_wo_guessing, *is_s_map, *x_is_search, *is_item_pessimized], m42: True}
+  item_views_item_pessimized_map_total:    {filter: [*is_iv_wo_guessing, {$or: [[*is_s_map, *x_is_search], [*x_is_map]]}, *is_item_pessimized], m42: True}
+  item_views_seller_pessimized_map:        {filter: [*is_iv_wo_guessing, *x_is_map, *is_seller_pessimized], m42: True}
+  item_views_seller_pessimized_map_serp:   {filter: [*is_iv_wo_guessing, *is_s_map, *x_is_search, *is_seller_pessimized], m42: True}
+  item_views_seller_pessimized_map_total:  {filter: [*is_iv_wo_guessing, {$or: [[*is_s_map, *x_is_search], [*x_is_map]]}, *is_seller_pessimized], m42: True}
+  item_views_pessimized:                   {filter: [*is_iv, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  item_views_pessimized_rec:               {filter: [*is_iv_wo_guessing, *x_is_rec, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  item_views_pessimized_serp:              {filter: [*is_iv_wo_guessing, *x_is_search, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  item_views_pessimized_map:               {filter: [*is_iv_wo_guessing, *x_is_map, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  item_views_pessimized_map_serp:          {filter: [*is_iv_wo_guessing, *is_s_map, *x_is_search, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
+  item_views_pessimized_map_total:         {filter: [*is_iv_wo_guessing, {$or: [[*is_s_map, *x_is_search], [*x_is_map]]}, {$or: [*is_item_pessimized,*is_seller_pessimized]}]}
   meta_regions_level_searches:             {filter: [{location_level_id: 2}, *is_1p, *is_search]}
   noncapital_city_level_searches:          {filter: [{location_level_id: 6}, *is_1p, *is_search]}
   not_default_radius_searches:             {filter: [*is_1p, *is_not_default_radius, *is_search]}
   phone_view_button_clicks:                {filter: [*is_ph_btn]}
   phone_views:                             {filter: [*is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
-  phone_views_part_qual_compab:            {filter: [*part_qual_compab , *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]} 
+  phone_views_part_qual_compab:            {filter: [*part_qual_compab , *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
   phone_views_part_qual_unknown:           {filter: [*part_qual_unknown, *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
   phone_views_part_qual_exists:            {filter: [*part_qual_exists , *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
   phone_views_in_chat:                     {filter: [*is_ph_chat]}
@@ -1615,6 +1654,44 @@ metric.uniq:
   s_multiloc_c:                            {counter: c_s_multiloc,                    key: [x], m42: False}
   s_multiloc_fav:                          {counter: fav_s_multiloc,                  key: [x], m42: False}
   s_multiloc_btc:                          {counter: btc_s_multiloc,                  key: [x], m42: False}
+
+  user_c_item_pessimized:                  {counter: contacts_item_pessimized,            key: [cookie]}
+  user_c_item_pessimized_rec:              {counter: contacts_item_pessimized_rec,        key: [cookie]}
+  user_c_item_pessimized_serp:             {counter: contacts_item_pessimized_serp,       key: [cookie]}
+  user_c_item_pessimized_map:              {counter: contacts_item_pessimized_map,        key: [cookie]}
+  user_c_item_pessimized_map_serp:         {counter: contacts_item_pessimized_map_serp,   key: [cookie]}
+  user_c_item_pessimized_map_total:        {counter: contacts_item_pessimized_map_total,  key: [cookie]}
+  user_iv_item_pessimized:                 {counter: item_views_item_pessimized,            key: [cookie]}
+  user_iv_item_pessimized_rec:             {counter: item_views_item_pessimized_rec,        key: [cookie]}
+  user_iv_item_pessimized_serp:            {counter: item_views_item_pessimized_serp,       key: [cookie]}
+  user_iv_item_pessimized_map:             {counter: item_views_item_pessimized_map,        key: [cookie]}
+  user_iv_item_pessimized_map_serp:        {counter: item_views_item_pessimized_map_serp,   key: [cookie]}
+  user_iv_item_pessimized_map_total:       {counter: item_views_item_pessimized_map_total,  key: [cookie]}
+  user_c_seller_pessimized:                {counter: contacts_seller_pessimized,            key: [cookie]}
+  user_c_seller_pessimized_rec:            {counter: contacts_seller_pessimized_rec,        key: [cookie]}
+  user_c_seller_pessimized_serp:           {counter: contacts_seller_pessimized_serp,       key: [cookie]}
+  user_c_seller_pessimized_map:            {counter: contacts_seller_pessimized_map,        key: [cookie]}
+  user_c_seller_pessimized_map_serp:       {counter: contacts_seller_pessimized_map_serp,   key: [cookie]}
+  user_c_seller_pessimized_map_total:      {counter: contacts_seller_pessimized_map_total,  key: [cookie]}
+  user_iv_seller_pessimized:               {counter: item_views_seller_pessimized,            key: [cookie]}
+  user_iv_seller_pessimized_rec:           {counter: item_views_seller_pessimized_rec,        key: [cookie]}
+  user_iv_seller_pessimized_serp:          {counter: item_views_seller_pessimized_serp,       key: [cookie]}
+  user_iv_seller_pessimized_map:           {counter: item_views_seller_pessimized_map,        key: [cookie]}
+  user_iv_seller_pessimized_map_serp:      {counter: item_views_seller_pessimized_map_serp,   key: [cookie]}
+  user_iv_seller_pessimized_map_total:     {counter: item_views_seller_pessimized_map_total,  key: [cookie]}
+  user_c_pessimized:                       {counter: contacts_pessimized,            key: [cookie]}
+  user_c_pessimized_rec:                   {counter: contacts_pessimized_rec,        key: [cookie]}
+  user_c_pessimized_serp:                  {counter: contacts_pessimized_serp,       key: [cookie]}
+  user_c_pessimized_map:                   {counter: contacts_pessimized_map,        key: [cookie]}
+  user_c_pessimized_map_serp:              {counter: contacts_pessimized_map_serp,   key: [cookie]}
+  user_c_pessimized_map_total:             {counter: contacts_pessimized_map_total,  key: [cookie]}
+  user_iv_pessimized:                      {counter: item_views_pessimized,            key: [cookie]}
+  user_iv_pessimized_rec:                  {counter: item_views_pessimized_rec,        key: [cookie]}
+  user_iv_pessimized_serp:                 {counter: item_views_pessimized_serp,       key: [cookie]}
+  user_iv_pessimized_map:                  {counter: item_views_pessimized_map,        key: [cookie]}
+  user_iv_pessimized_map_serp:             {counter: item_views_pessimized_map_serp,   key: [cookie]}
+  user_iv_pessimized_map_total:            {counter: item_views_pessimized_map_total,  key: [cookie]}
+
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
