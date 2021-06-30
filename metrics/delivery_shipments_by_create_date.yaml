@@ -1,12 +1,24 @@
 definitions:
   - &is_marketplace                               {workflow: 'marketplace'}
   - &is_b2c                                       {workflow: 'delivery-b2c'}
+  - &is_c2c_pvz                                   {workflow: 'delivery-c2c'}
+  - &is_c2c_courier                               {workflow: 'delivery-c2c-courier'}
 
 metric.counter:
   mp_orders_created:                           {filter: [*is_marketplace]}
   mp_orders_paid:                              {filter: [*is_marketplace,                {is_paid: True}]}
   b2c_orders_created:                          {filter: [*is_b2c]}
   b2c_orders_paid:                             {filter: [*is_b2c,                        {is_paid: True}]}
+  c2c_orders_created:                          {filter: [*is_c2c_pvz]}
+  c2c_orders_paid:                             {filter: [*is_c2c_pvz,                    {is_paid: True}]}
+  c2c_orders_in_transit:                       {filter: [*is_c2c_pvz,                    {in_transit: True}]}
+  c2c_orders_recieved:                         {filter: [*is_c2c_pvz,                    {is_received: True}]}
+  c2c_orders_accepted:                         {filter: [*is_c2c_pvz,                    {is_accepted: True}]}
+  courier_orders_created:                      {filter: [*is_c2c_courier]}
+  courier_orders_paid:                         {filter: [*is_c2c_courier,                {is_paid: True}]}
+  courier_orders_in_transit:                   {filter: [*is_c2c_courier,                {in_transit: True}]}
+  courier_orders_recieved:                     {filter: [*is_c2c_courier,                {is_received: True}]}
+  courier_orders_accepted:                     {filter: [*is_c2c_courier,                {is_accepted: True}]}
 
 
 metric.uniq:
