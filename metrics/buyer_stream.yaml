@@ -61,6 +61,7 @@ definitions:
   - &is_courier       {eid: 4035}
   - &is_delivery_tot  {eid: [2015, 4035]}
   - &is_booking       {eid: 2581}
+  - &is_soc_btn       {eid: 308}
   - &is_iv_wo_guessing    {<<: *is_iv, item_x_type: 0}
   - &is_btc_wo_guessing     {$or: [{<<: *is_btc, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
   - &is_btc_ext_wo_guessing    {$or: [{<<: *is_btc_ext, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
@@ -220,6 +221,7 @@ metric.counter:
   cnt_btc_part_qual_exists:                {filter: [*part_qual_exists, *is_btc]}
   cnt_btc_part_qual_compab:                {filter: [*part_qual_compab, *is_btc]}
   cnt_btc_part_qual_unknown:               {filter: [*part_qual_unknown, *is_btc]}
+  cnt_soc_btn:                             {filter: [*is_soc_btn]}
   btc_mp:                                  {filter: [*is_item_marketplace, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
   btc_developer:                           {filter: [*is_btc, *is_developer_acc]}
   btc_developer_search:                    {filter: [*is_btc_wo_guessing, *is_developer_acc, *x_is_search]}
@@ -854,6 +856,7 @@ metric.uniq:
   buyer_target_clicks_push:                {counter: cnt_btc_push,                    key: [item_x]}
   buyer_target_clicks_rec:                 {counter: cnt_btc_rec,                     key: [item_x]}
   btc_ext:                                 {counter: cnt_btc_ext,                     key: [item_x]}
+  soc_btn:                                 {counter: cnt_soc_btn,                     key: [item_x]}
   buyer_target_clicks_rec_perfvas_x2_1:    {counter: cnt_btc_rec_perfvas_x2_1,        key: [item_x]}
   buyer_target_clicks_rec_perfvas_x2_7:    {counter: cnt_btc_rec_perfvas_x2_7,        key: [item_x]}
   buyer_target_clicks_rec_perfvas_x5_1:    {counter: cnt_btc_rec_perfvas_x5_1,        key: [item_x]}
@@ -1230,6 +1233,7 @@ metric.uniq:
   users_active_daily:                      {counter: cnt_users_1plus_actions,         key: [cookie]}
   users_bt_click_daily:                    {counter: cnt_book_dlv_favorites_added_fmsg_ph_realty_development, key: [cookie]}
   user_btc_ext:                            {counter: cnt_btc_ext,                     key: [cookie]}
+  user_soc_btn:                            {counter: cnt_soc_btn,                     key: [cookie]}
   users_btc_search_filter_any:             {counter: cnt_btc_views_s_filter_price,    key: [cookie]}
   users_buyer_target_click_from_map:       {counter: cnt_btc_from_map,                key: [cookie]}
   users_buyer_target_click_from_map_area:  {counter: cnt_btc_s_map_area,              key: [cookie]}
