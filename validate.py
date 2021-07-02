@@ -35,7 +35,6 @@ CONFIGS = [
     ('sources', os.path.join(CUR_DIR_PATH, 'sources.yaml'), False),
     ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions.yaml'), False),
     ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
-    ('ratio_configs', os.path.join(CUR_DIR_PATH, 'metrics/ratio'), True),
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
     ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
     ('metrics_lists', os.path.join(CUR_DIR_PATH, 'presets/metrics'), True),
