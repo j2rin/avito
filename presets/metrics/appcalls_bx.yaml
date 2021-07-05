@@ -1,5 +1,10 @@
 
 appcalls_bx:
+
+# counters
+
+## source: app_call_bx
+    - appcall_bx_any_calls
     - appcall_bx_outgoing
     - appcall_bx_outgoing_answered
     - appcall_bx_outgoing_success
@@ -12,28 +17,79 @@ appcalls_bx:
     - appcall_bx_incoming
     - appcall_bx_incoming_answered
     - appcall_bx_incoming_success
-    - appcall_bx_any_calls
-    
+    # - appcall_bx_outgoing_item # same as appcall_bx_outgoing_direct
+    # - appcall_bx_outgoing_item_answered # same as appcall_bx_outgoing_direct_answered
+    # - appcall_bx_outgoing_item_success # same as appcall_bx_outgoing_direct_success
+
+## source: app_call_event
+    - appcall_show_buttons
+    - appcall_click_inapp
+    - appcall_click_phone
+    - appcall_click_inapp_or_phone 
+
+    - appcall_item_show_buttons
+    - appcall_item_click_inapp
+    - appcall_item_click_phone
+    - appcall_item_click_inapp_or_phone 
+
+## source: buyer_stream.yaml
+    - phone_view_button_clicks
+    - users_pv_button_clicks
+
+
+
+# unique
+
+## source: app_call_bx
+    - unq_appcall_bx_outgoing_item
+    - unq_appcall_bx_outgoing_item_success
+
+
+## source: app_call_event
+    - appcall_show_buttons_users
+    - appcall_click_inapp_users
+    - appcall_click_phone_users
+    - appcall_click_inapp_or_phone_users
+
+    - unq_item_appcall_item_show_buttons
+
+
+
+## source: buyer_stream.yaml
+    - unq_item_ph_button_clicks
+
+
+
+
+# ratio
+
+## source: app_call_bx
     - appcall_bx_outgoing_direct_answered_ratio
     - appcall_bx_outgoing_direct_success_ratio
     - appcall_bx_outgoing_direct_success_answered_ratio
-        
-    - appcall_show_buttons
-    - appcall_show_buttons_users
-    - appcall_click_inapp
-    - appcall_click_inapp_users
-    - appcall_click_phone
-    
+  
+## source: app_call_event
     - appcall_click_inapp_ratio
-    - appcall_click_inapp_users_share
     - appcall_click_phone_ratio
-    
+	- appcall_click_inapp_or_phone_ratio
+
+    - appcall_click_inapp_proportion
+    - appcall_click_phone_proportion
+
+    - appcall_click_inapp_users_share
+    - appcall_click_phone_users_share
+
+
+## source: ratio.yaml
     - appcall_show_items_ratio
+
     - appcall_per_pv_btn
     - appcall_per_pv_btn_user
     - appcall_success_per_pv_btn
     - appcall_success_per_pv_btn_user
-    - phone_view_button_clicks
-    - users_pv_button_clicks
-    - unq_item_ph_button_clicks
 
+
+
+  
+  
+  
