@@ -1,4 +1,6 @@
 buyer_stream:
+  metric_configs: [buyer_stream]
+  database: vertica
   table: dma.vo_buyer_stream
   column_map:
     query: query_id
@@ -43,6 +45,8 @@ buyer_stream:
   segm: cookie_id
 
 click_stream:
+  metric_configs: [click_stream]
+  database: vertica
   table: dma.vo_clickstream
   column_map:
     session: session_no
@@ -71,6 +75,8 @@ click_stream:
   segm: cookie_id
 
 pageviews:
+  metric_configs: [pageviews]
+  database: vertica
   table: dma.vo_clickstream_pageviews
   column_map:
     cookie: cookie_id
@@ -98,6 +104,8 @@ pageviews:
   segm: cookie_id
 
 seller_item_active:
+  metric_configs: [seller_item_active]
+  database: vertica
   table: dma.vo_seller_item_active
   column_map:
     item: item_id
@@ -127,6 +135,8 @@ seller_item_active:
   segm: user_id
 
 seller_item_event:
+  metric_configs: [seller_item_event]
+  database: vertica
   table: dma.vo_seller_item_event
   column_map:
     item: item_id
@@ -158,6 +168,8 @@ seller_item_event:
   segm: user_id
 
 geo_loc_change:
+  metric_configs: [geo_loc_change]
+  database: vertica
   table: dma.vo_geo_loc_change
   column_map:
     cookie: cookie_id
@@ -185,6 +197,8 @@ geo_loc_change:
   segm: cookie_id
 
 geo_map_stream:
+  metric_configs: [geo_map_stream]
+  database: vertica
   table: dma.vo_geo_map_stream
   column_map:
     session: session_no
@@ -212,6 +226,8 @@ geo_map_stream:
   segm: cookie_id
 
 perf_mobile:
+  metric_configs: [perf_mobile]
+  database: vertica
   table: dma.o_perf_mobile
   dimensions: [platform, network_type, is_core_content, screen_name, content_type]
   participant: {visitor: cookie_id, user: user_id}
@@ -219,6 +235,8 @@ perf_mobile:
   segm: cookie_id
 
 perf_mobile_apps_startup_times:
+  metric_configs: [perf_mobile_apps_startup_times]
+  database: vertica
   table: dma.o_perf_mobile_apps_startup_times
   dimensions: [platform]
   participant: {visitor: cookie_id, user: user_id}
@@ -226,6 +244,8 @@ perf_mobile_apps_startup_times:
   segm: cookie_id
 
 perf_mobile_memory_warnings:
+  metric_configs: [perf_mobile_memory_warnings]
+  database: vertica
   table: dma.o_perf_memory_warnings
   column_map:
     cookie: cookie_id
@@ -235,6 +255,8 @@ perf_mobile_memory_warnings:
   segm: cookie_id
 
 perf_web:
+  metric_configs: [perf_web]
+  database: vertica
   table: dma.o_perf_web
   column_map:
     cookie: cookie_id
@@ -244,6 +266,8 @@ perf_web:
   segm: cookie_id
 
 core_contacts:
+  metric_configs: [core_contacts]
+  database: vertica
   table: dma.vo_core_contacts
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, region, city, location_group, population_group, location_level, price_group, is_asd, user_segment_market]
   m42_cartesian_groups:
@@ -254,8 +278,10 @@ core_contacts:
   segm: cookie_id
 
 advert_funnel:
+  metric_configs: [advert_funnel]
   column_map:
     session: session_hash
+  database: vertica
   table: dma.vo_advert_funnel
   dimensions: [platform, category, subcategory, vertical, logical_category]
   m42_cartesian_groups:
@@ -266,6 +292,8 @@ advert_funnel:
   segm: cookie_id
 
 mnz_bundle:
+  metric_configs: [mnz_bundle]
+  database: vertica
   table: dma.vo_mnz_bundle
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, is_asd, user_segment_market]
   m42_cartesian_groups:
@@ -277,6 +305,8 @@ mnz_bundle:
   segm: user_id
 
 core_c2c:
+  metric_configs: [core_c2c]
+  database: vertica
   table: dma.vo_core_c2c
   column_map:
     user: user_id
@@ -290,6 +320,8 @@ core_c2c:
   segm: cookie_id
 
 user_rating:
+  metric_configs: [user_rating]
+  database: vertica
   table: dma.vo_user_rating
   dimensions: [vertical, logical_category]
   m42_cartesian_groups:
@@ -299,6 +331,8 @@ user_rating:
   segm: user_id
 
 str:
+  metric_configs: [str]
+  database: vertica
   table: dma.vo_str
   column_map:
     participant: participant_id
@@ -311,6 +345,8 @@ str:
   segm: cookie_id
 
 ratings:
+  metric_configs: [ratings]
+  database: vertica
   table: dma.vo_ratings
   column_map:
     participant: participant_id
@@ -323,6 +359,8 @@ ratings:
   segm: cookie_id
 
 public_profile:
+  metric_configs: [public_profile]
+  database: vertica
   table: dma.vo_public_profile
   column_map:
     cookie: cookie_id
@@ -332,6 +370,8 @@ public_profile:
   segm: cookie_id
 
 mnz_vas:
+  metric_configs: [mnz_vas]
+  database: vertica
   table: dma.vo_mnz_vas
   column_map:
     user: user_id
@@ -346,6 +386,8 @@ mnz_vas:
   segm: cookie_id
 
 mnz_lf:
+  metric_configs: [mnz_lf]
+  database: vertica
   table: dma.vo_mnz_lf
   dimensions: [platform, vertical, logical_category, category, subcategory, region, city, location_group, population_group, location_level]
   m42_cartesian_groups:
@@ -356,6 +398,8 @@ mnz_lf:
   segm: user_id
 
 messenger:
+  metric_configs: [messenger]
+  database: vertica
   table: dma.vo_messenger
   column_map:
     cookie: cookie_id
@@ -370,6 +414,8 @@ messenger:
   segm: cookie_id
 
 labor:
+  metric_configs: [labor]
+  database: vertica
   table: dma.vo_labor
   column_map:
     cookie: cookie_id
@@ -384,6 +430,8 @@ labor:
   segm: cookie_id
 
 express_cv:
+  metric_configs: [express_cv]
+  database: vertica
   table: dma.vo_express_cv
   dimensions: [platform]
   participant: {user: user_id}
@@ -391,6 +439,8 @@ express_cv:
   segm: user_id
 
 delivery:
+  metric_configs: [delivery]
+  database: vertica
   table: dma.vo_delivery
   column_map:
     participant: participant_id
@@ -403,6 +453,8 @@ delivery:
   segm: cookie_id
 
 core_b2b:
+  metric_configs: [core_b2b]
+  database: vertica
   table: dma.vo_core_b2b
   column_map:
     user: user_id
@@ -415,6 +467,8 @@ core_b2b:
   segm: user_id
 
 billing:
+  metric_configs: [billing]
+  database: vertica
   table: dma.vo_billing
   column_map:
     user: user_id
@@ -424,6 +478,8 @@ billing:
   segm: user_id
 
 session_source:
+  metric_configs: [session_source]
+  database: vertica
   table: dma.vo_session_source
   column_map:
     cookie: cookie_id
@@ -450,6 +506,8 @@ session_source:
   segm: cookie_id
 
 support:
+  metric_configs: [support]
+  database: vertica
   table: dma.vo_support
   column_map:
     participant: participant_id
@@ -459,6 +517,8 @@ support:
   segm: cookie_id
 
 perf_web_speed:
+  metric_configs: [perf_web_speed]
+  database: vertica
   table: dma.vo_perf_web_speed
   column_map:
     participant: participant_id
@@ -468,6 +528,8 @@ perf_web_speed:
   segm: cookie_id
 
 cookie_account_enter:
+  metric_configs: [cookie_account_enter]
+  database: vertica
   table: dma.vo_cookie_account_enter
   column_map:
     cookie: cookie_id
@@ -477,6 +539,8 @@ cookie_account_enter:
   segm: cookie_id
 
 favourite_sellers_totals:
+  metric_configs: [favourite_sellers_totals]
+  database: vertica
   table: dma.favourite_sellers_totals
   column_map:
     user: user_id
@@ -485,6 +549,8 @@ favourite_sellers_totals:
   segm: user_id
 
 communications:
+  metric_configs: [communications]
+  database: vertica
   table: dma.vo_communications
   column_map:
     user: user_id
@@ -515,6 +581,8 @@ communications:
   segm: user_id
 
 image:
+  metric_configs: [image]
+  database: vertica
   table: dma.vo_image
   column_map:
     participant: participant_id
@@ -524,6 +592,8 @@ image:
   segm: cookie_id
 
 proprofile:
+  metric_configs: [proprofile]
+  database: vertica
   table: dma.vo_proprofile
   column_map:
     participant: participant_id
@@ -533,6 +603,8 @@ proprofile:
   segm: cookie_id
 
 buyer_suggest:
+  metric_configs: [buyer_suggest]
+  database: vertica
   table: dma.vo_buyer_suggest
   column_map:
     cookie: cookie_id
@@ -545,10 +617,12 @@ buyer_suggest:
   segm: cookie_id
 
 seller_item_add:
+  metric_configs: [seller_item_add]
+  database: vertica
+  table: dma.vo_seller_item_add
   column_map:
     cookie: cookie_id
     user: user_id
-  table: dma.vo_seller_item_add
   dimensions:
     - platform
   participant: {visitor: cookie_id, user: user_id}
@@ -556,6 +630,8 @@ seller_item_add:
   segm: eventchain_id
 
 seller_item_add_finish:
+  metric_configs: [seller_item_add_finish]
+  database: vertica
   table: dma.vo_seller_item_add
   column_map:
     cookie: cookie_id
@@ -567,12 +643,16 @@ seller_item_add_finish:
   segm: eventchain_id
 
 support_ticket:
+  metric_configs: [support_ticket]
+  database: vertica
   table: dma.vo_support_ticket
   participant: {user: user_id}
   dtm: create_date
   segm: user_id
 
 geo_map_labor:
+  metric_configs: [geo_map_labor]
+  database: vertica
   table: dma.vo_geo_map_labor
   column_map:
     participant: participant_id
@@ -594,6 +674,8 @@ geo_map_labor:
   segm: cookie_id
 
 buyer_call:
+  metric_configs: [buyer_call]
+  database: vertica
   table: dma.vo_buyer_call
   column_map:
     item: item_id
@@ -607,6 +689,8 @@ buyer_call:
   segm: cookie_id
 
 buyer_courier_order_create_date:
+  metric_configs: [buyer_courier_order_create_date]
+  database: vertica
   table: dma.vo_courier_orders
   dimensions:
     - vertical
@@ -630,6 +714,8 @@ buyer_courier_order_create_date:
   segm: courierorder_id
 
 buyer_courier_order_status_date:
+  metric_configs: [buyer_courier_order_status_date]
+  database: vertica
   table: dma.vo_courier_orders
   dimensions:
     - vertical
@@ -653,6 +739,8 @@ buyer_courier_order_status_date:
   segm: courierorder_id
 
 seller_courier_order_create_date:
+  metric_configs: [seller_courier_order_create_date]
+  database: vertica
   table: dma.vo_courier_orders
   dimensions:
     - vertical
@@ -676,6 +764,8 @@ seller_courier_order_create_date:
   segm: courierorder_id
 
 seller_courier_order_status_date:
+  metric_configs: [seller_courier_order_status_date]
+  database: vertica
   table: dma.vo_courier_orders
   dimensions:
     - vertical
@@ -699,6 +789,8 @@ seller_courier_order_status_date:
   segm: courierorder_id
 
 notification:
+  metric_configs: [notification]
+  database: vertica
   table: dma.vo_notification
   column_map:
     cookie: cookie_id
@@ -708,6 +800,8 @@ notification:
   dtm: event_date
 
 calltracking:
+  metric_configs: [calltracking]
+  database: vertica
   table: dma.vo_calltracking
   column_map:
     user: user_id
@@ -725,6 +819,8 @@ calltracking:
   segm: user_id
 
 buyer_weighted:
+  metric_configs: [buyer_weighted]
+  database: vertica
   table: dma.vo_buyer_weighted
   dimensions: [platform, vertical, logical_category, logical_region, price_group]
   m42_cartesian_groups:
@@ -734,6 +830,8 @@ buyer_weighted:
   segm: cookie_id_event_date
 
 app_call_bx:
+  metric_configs: [app_call_bx]
+  database: vertica
   table: dma.vo_app_call_buyer
   column_map:
     item: item_id
@@ -748,6 +846,8 @@ app_call_bx:
   segm: event_date
 
 app_call_sx:
+  metric_configs: [app_call_sx]
+  database: vertica
   table: dma.vo_app_call_seller
   column_map:
     item: item_id
@@ -762,6 +862,8 @@ app_call_sx:
   segm: event_date
 
 app_call_event:
+  metric_configs: [app_call_event]
+  database: vertica
   table: dma.vo_app_call_event
   column_map:
     item: item_id
@@ -776,6 +878,8 @@ app_call_event:
   segm: event_date
 
 delivery_shipments_by_create_date:
+  metric_configs: [delivery_shipments_by_create_date]
+  database: vertica
   table: dma.vo_delivery_shipments
   dimensions:
     - region
@@ -791,6 +895,8 @@ delivery_shipments_by_create_date:
   segm: shipment_id
 
 delivery_shipments_by_status_date:
+  metric_configs: [delivery_shipments_by_status_date]
+  database: vertica
   table: dma.vo_delivery_shipments
   dimensions:
     - region
@@ -806,6 +912,8 @@ delivery_shipments_by_status_date:
   segm: shipment_id
 
 buyer_delivery_shipment_items_by_create_date:
+  metric_configs: [buyer_delivery_shipment_items_by_create_date]
+  database: vertica
   table: dma.vo_delivery_shipment_items
   column_map:
     item: item_id
@@ -833,6 +941,8 @@ buyer_delivery_shipment_items_by_create_date:
   segm: shipment_id
 
 buyer_delivery_shipment_items_by_status_date:
+  metric_configs: [buyer_delivery_shipment_items_by_status_date]
+  database: vertica
   table: dma.vo_delivery_shipment_items
   column_map:
     item: item_id
@@ -860,6 +970,8 @@ buyer_delivery_shipment_items_by_status_date:
   segm: shipment_id
 
 seller_delivery_shipment_items_by_create_date:
+  metric_configs: [seller_delivery_shipment_items_by_create_date]
+  database: vertica
   table: dma.vo_delivery_shipment_items
   column_map:
     item: item_id
@@ -887,6 +999,8 @@ seller_delivery_shipment_items_by_create_date:
   segm: shipment_id
 
 seller_delivery_shipment_items_by_status_date:
+  metric_configs: [seller_delivery_shipment_items_by_status_date]
+  database: vertica
   table: dma.vo_delivery_shipment_items
   column_map:
     item: item_id
@@ -914,6 +1028,8 @@ seller_delivery_shipment_items_by_status_date:
   segm: shipment_id
 
 fraud_support_tickets:
+  metric_configs: [fraud_support_tickets]
+  database: vertica
   table: dma.vo_fraud_support_tickets
   column_map:
     cookie: cookie_id
@@ -929,12 +1045,16 @@ fraud_support_tickets:
   dtm: create_date
 
 autoteka_stream:
+  metric_configs: [autoteka_stream]
+  database: vertica
   table: dma.autoteka_stream
   dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user]
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
 
 geo_coordinates_stream:
+  metric_configs: [geo_coordinates_stream]
+  database: vertica
   table: dma.vo_coordinates_stream
   column_map:
     cookie: cookie_id
@@ -949,31 +1069,39 @@ geo_coordinates_stream:
   dtm: event_date
 
 geo_laas_backend:
-    table: dma.vo_laas_stream
-    column_map:
-      cookie: cookie_id
-    dimensions:
-      - platform
-      - location_group
-      - population_group
-      - location_level
-    m42_cartesian_groups:
-        - [is_logged_in]
-    participant: {visitor: cookie_id, user: user_id}
-    dtm: event_date
+  metric_configs: [geo_laas_backend]
+  database: vertica
+  table: dma.vo_laas_stream
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - location_group
+    - population_group
+    - location_level
+  m42_cartesian_groups:
+      - [is_logged_in]
+  participant: {visitor: cookie_id, user: user_id}
+  dtm: event_date
 
 moder:
+  metric_configs: [moder]
+  database: vertica
   table: dma.vo_moder
   dimensions: [microcat]
   participant: {user: participant_id}
   dtm: event_date
 
 callcenter_calls:
+  metric_configs: [callcenter_calls]
+  database: vertica
   table: dma.vo_callcenter_calls
   participant: {user: user_id}
   dtm: enter_date
 
 lf_metrics_transactions_by_event_date:
+  metric_configs: [lf_metrics_transactions_by_event_date]
+  database: vertica
   table: dma.vo_lf_metrics_transactions
   column_map:
     user: user_id
@@ -996,6 +1124,8 @@ lf_metrics_transactions_by_event_date:
   segm: user_id
 
 lf_metrics_by_event_date:
+  metric_configs: [lf_metrics_by_event_date]
+  database: vertica
   table: dma.vo_lf_metrics
   column_map:
     user: user_id
@@ -1018,6 +1148,8 @@ lf_metrics_by_event_date:
   segm: user_id
 
 tariff_metrics_funnel_by_event_date:
+  metric_configs: [tariff_metrics_funnel_by_event_date]
+  database: vertica
   table: dma.vo_tariff_metrics_funnel
   column_map:
     user: user_id
@@ -1040,6 +1172,8 @@ tariff_metrics_funnel_by_event_date:
   segm: user_id
 
 paying_user_report_by_event_date:
+  metric_configs: [paying_user_report_by_event_date]
+  database: vertica
   table: dma.vo_revenue_metrics
   column_map:
     user: user_id
@@ -1066,11 +1200,15 @@ paying_user_report_by_event_date:
   segm: user_id
 
 support_comment:
+  metric_configs: [support_comment]
+  database: vertica
   table: dma.vo_support_comment
   participant: {user: comment_id}
   dtm: comment_create_date
 
 time_to_interview_for_job_seeker:
+  metric_configs: [time_to_interview_for_job_seeker]
+  database: vertica
   table: dma.vo_time_to_interview
   column_map:
     user: job_seeker_user_id
@@ -1081,6 +1219,8 @@ time_to_interview_for_job_seeker:
   segm: job_seeker_user_id
 
 time_to_interview_for_job_employer:
+  metric_configs: [time_to_interview_for_job_employer]
+  database: vertica
   table: dma.vo_time_to_interview
   column_map:
     user: job_employer_user_id
@@ -1091,6 +1231,8 @@ time_to_interview_for_job_employer:
   segm: job_employer_user_id
 
 session_key_event_type:
+  metric_configs: [session_key_event_type]
+  database: vertica
   table: dma.vo_session_key_event_type
   column_map:
     cookie: cookie_id
@@ -1118,6 +1260,8 @@ session_key_event_type:
   segm: cookie_id
 
 search_items:
+  metric_configs: [search_items]
+  database: vertica
   table: dma.vo_search_items
   column_map:
     cookie: cookie_id
@@ -1136,6 +1280,8 @@ search_items:
   segm: event_date  # Просто рандомный столбец, не совпадающий с cookie_id. Чтобы вынудить сделать материализацию при расчете витрин
 
 production_errors:
+  metric_configs: [production_errors]
+  database: vertica
   table: dma.vo_production_errors
   column_map:
     cookie: cookie_id
@@ -1145,6 +1291,8 @@ production_errors:
   dtm: event_date
 
 geo_loc_suggest:
+  metric_configs: [geo_loc_suggest]
+  database: vertica
   table: dma.vo_geo_loc_suggest
   column_map:
     cookie: cookie_id
@@ -1157,6 +1305,8 @@ geo_loc_suggest:
   dtm: event_date
 
 clickstream_eid_counter:
+  metric_configs: [clickstream_eid_counter]
+  database: vertica
   table: dma.vo_clickstream_eid_counter
   column_map:
     cookie: cookie_id
