@@ -1304,17 +1304,24 @@ geo_loc_suggest:
   participant: {visitor: cookie_id}
   dtm: event_date
 
-clickstream_eid_counter:
-  metric_configs: [clickstream_eid_counter]
+clickstream:
+  metric_configs: [clickstream]
   database: vertica
-  table: dma.vo_clickstream_eid_counter
+  table: dma.vo_clickstream_new
   column_map:
     cookie: cookie_id
-  dimensions: 
-    - platform
-    - vertical
-    - logical_category
-    - category
-    - region
+  dimensions: [platform, vertical, logical_category, category, region, city, location_group, population_group,
+               location_level, subcategory, param1, param2, param3, param4]
+  participant: {visitor: cookie_id, user: user_id}
+  dtm: event_date
+
+clickstream_counters:
+  metric_configs: [clickstream_counters]
+  database: vertica
+  table: dma.vo_clickstream_counters
+  column_map:
+    cookie: cookie_id
+  dimensions: [platform, vertical, logical_category, category, region, city, location_group, population_group,
+               location_level, subcategory, param1, param2, param3, param4]
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
