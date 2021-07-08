@@ -143,7 +143,7 @@ def post(url, data):
         status, text = _post()
 
     if status != 200:
-        print('FAILED: Cannot connect to AB Configurator')
+        print('FAILED: Unhandled error')
         print('status: {}'.format(status))
 
         try:
