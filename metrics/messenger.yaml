@@ -4,13 +4,8 @@ metric.counter:
   answered_first_messages_1hour:              {filter: [{observation_name: answered_first_messages_within_1hour}],                          obs: [observation_value]}
   answered_first_messages_within_1day:        {filter: [{observation_name: answered_first_messages_within_1day}],                           obs: [observation_value]}
   answered_first_messages_within_1hour_7hour: {filter: [{observation_name: answered_first_messages_within_1hour_7hour}],                    obs: [observation_value]}
-  chat_open_errors:                           {filter: [{observation_name: chat_open_errors}],                                              obs: [observation_value]}
-  cnt_chat_list_views:                        {filter: [{$or: [[{observation_name: chat_list_views}], [{observation_name: chat_views}]]}],  obs: [observation_value], m42: False}
   first_response_messages:                    {filter: [{observation_name: first_response_messages}],                                       obs: [observation_value]}
   first_response_messages_by_bot:             {filter: [{observation_name: first_response_messages_by_bot}],                                obs: [observation_value]} 
-  item_views_from_messenger:                  {filter: [{observation_name: item_views_from_messenger}],                                     obs: [observation_value]}
-  items_closed_from_messenger:                {filter: [{observation_name: closed_items_from_messenger}],                                   obs: [observation_value]}
-  items_sold_onavito_from_messenger:          {filter: [{observation_name: items_sold_onavito_from_messenger}],                             obs: [observation_value]}
   messenger_active_chats:                     {filter: [{observation_name: messenger_active_chats}],                                        obs: [observation_value]}
   messenger_active_chats_with_bot:            {filter: [{observation_name: messenger_active_chats_with_bot}],                               obs: [observation_value]}
   messenger_auto_messages:                    {filter: [{observation_name: messenger_auto_messages}],                                       obs: [observation_value]}
@@ -25,7 +20,6 @@ metric.counter:
   messenger_files_messages:                   {filter: [{observation_name: messenger_files_messages}],                                      obs: [observation_value]}
   messenger_supportchat_files_messages:       {filter: [{observation_name: messenger_supportchat_files_messages}],                          obs: [observation_value]}
   messenger_users_blocked:                    {filter: [{observation_name: messenger_users_blocked}],                                       obs: [observation_value]}
-  profile_views_from_messenger:               {filter: [{observation_name: profile_views_from_messenger}],                                  obs: [observation_value]}
   total_messages:                             {filter: [{observation_name: messenger_total_messeges}],                                      obs: [observation_value]}
   total_messages_chatbot_chat:                {filter: [{observation_name: messenger_total_messeges_inchat_with_bot}],                      obs: [observation_value]}
   total_messages_chatbot_chat_seller:         {filter: [{observation_name: messenger_seller_total_messages_inchat_with_bot}],               obs: [observation_value]}
@@ -34,12 +28,8 @@ metric.counter:
 
 metric.uniq:
   messenger_dau:                           {counter: total_messages,                     key: [participant]}
-  messenger_visitors:                      {counter: cnt_chat_list_views,                key: [participant]}
-  users_chat_open_errors:                  {counter: chat_open_errors,                   key: [participant]}
   users_first_response_messages:           {counter: first_response_messages,            key: [participant]}
   users_first_response_messages_by_bot:    {counter: first_response_messages_by_bot,     key: [participant]}
-  users_item_closed_from_messenger:        {counter: items_closed_from_messenger,        key: [participant]}
-  users_item_sold_onavito_from_messenger:  {counter: items_sold_onavito_from_messenger,  key: [participant]}
   messenger_chatbot_dau:                   {counter: total_messages_chatbot_chat,        key: [participant]}
   messenger_chatbot_seller:                {counter: total_messages_chatbot_chat_seller, key: [participant]}
   messenger_chatbot_buyer:                 {counter: total_messages_chatbot_chat_buyer,  key: [participant]}
