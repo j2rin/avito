@@ -77,11 +77,11 @@ metric.counter:
   favouriteseller_adds:                                 {filter: [eid: 2908], obs: [event_count]}
   favouriteseller_deletes:                              {filter: [eid: 2909], obs: [event_count]}
   notifications_on_any:                                 {filter: [$or: [{eid: 2558, is_notifications_on: true}, {eid: 2390, notification_value: true}]], obs: [event_count]}
-  notifications_off_any:                                {filter: [$or: [{eid: 2558, $or: [is_notifications_on: false, is_notifications_on.isnull: true]}, {eid: 2390, $or: [notification_value: false, notification_value.isnull: true]}]], obs: [event_count]}
+  notifications_off_any:                                {filter: [$or: [{eid: 2558, is_notifications_on: false}, {eid: 2390, notification_value: false}]], obs: [event_count]}
   notifications_on_profile:                             {filter: [eid: 2390, notification_value: true], obs: [event_count]}
   notifications_on_system:                              {filter: [eid: 2558, is_notifications_on: true], obs: [event_count]}
-  notifications_off_profile:                            {filter: [eid: 2390, $or: [notification_value: false, notification_value.isnull: true]], obs: [event_count]}
-  notifications_off_system:                             {filter: [eid: 2558, $or: [is_notifications_on: false, is_notifications_on.isnull: true]], obs: [event_count]}
+  notifications_off_profile:                            {filter: [eid: 2390, notification_value: false], obs: [event_count]}
+  notifications_off_system:                             {filter: [eid: 2558, is_notifications_on: false], obs: [event_count]}
 
 
 metric.uniq:
