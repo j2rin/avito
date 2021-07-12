@@ -54,6 +54,7 @@ metric.counter:
   sign_in_count:                               {filter: [eid: 210, has_error: false], obs: [event_count]}
   sign_in_errors:                              {filter: [eid: 210, has_error: true],  obs: [event_count]}
   items_add_started:                           {filter: [eid: 310, has_item: false, location_id.isnull: true, microcat_id.isnull: true], obs: [event_count]}
+  card_model:                                  {filter: [eid: 4670],  obs: [event_count]}
 
 metric.uniq:
   orders_page_views_users:                          {counter: orders_page_views,                           key: [cookie]}
@@ -96,6 +97,7 @@ metric.uniq:
   user_password_restore_request:                    {counter: password_restore_requests,                   key: [cookie]}
   user_password_restore_request_attempt:            {counter: password_restore_request_attempts,           key: [cookie]}
   users_item_add_started:                           {counter: items_add_started,                           key: [cookie]}
+  user_card_model:                                  {counter: card_model,                                  key: [cookie]}
 
 metric.ratio:
   items_added_per_items_add_started:       {num: items_added,                         den: items_add_started}
