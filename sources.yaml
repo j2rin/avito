@@ -240,6 +240,10 @@ perf_web:
 
 core_contacts:
   metric_configs: [core_contacts]
+  column_map:
+    cookie: cookie_id
+    logcat_item: [item_id, logical_category_id]
+    cookie_logcat: [cookie_id, logical_category_id]
   database: vertica
   table: dma.vo_core_contacts
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, region, city, location_group, population_group, location_level, price_group, is_asd, user_segment_market]
@@ -1335,3 +1339,24 @@ messenger_stream:
   participant: {visitor: cookie_id, user: user_id}
   dtm: event_date
   segm: cookie_id
+
+clickstream_sparse.clickhouse:
+    database: clickhouse
+    table: dwh.clickstream_sparse_local
+    column_map:
+      platform_id: business_platform
+      cookie: u
+      item: iid
+      item_x: [iid, x]
+      x_eid: __x_eid
+    dtm: event_date
+    participant: {visitor: u, user: uid}
+    metrics:
+      - bt_clicks
+      - bt_clicks_grouped
+      - buyers
+      - contacts
+      - contacts_grouped
+      - user_pv
+      - users_bt_click_daily
+      - users_first_messages
