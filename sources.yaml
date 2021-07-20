@@ -370,12 +370,24 @@ mnz_vas:
 mnz_lf:
   metric_configs: [mnz_lf]
   database: vertica
-  table: dma.vo_mnz_lf
-  dimensions: [platform, vertical, logical_category, category, subcategory, region, city, location_group, population_group, location_level]
+  table: dma.vo_lf_metrics
+  column_map:
+    user: user_id
+  dimensions:
+    - user_segment_market
+    - is_asd
+    - tariff_type
+    - tariff_subtype
+    - vertical
+    - logical_category
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  participant: {user: user_id}
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  participant: {user: user_id}
   dtm: event_date
   segm: user_id
 
