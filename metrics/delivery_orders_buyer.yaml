@@ -1,0 +1,630 @@
+definitions:
+  - &is_b2c_pvz                                   {workflow: 'delivery-b2c'}
+  - &is_c2c_pvz                                   {workflow: 'delivery-c2c'}
+  - &is_c2c_courier                               {workflow: 'delivery-c2c-courier'}
+
+metric.counter:
+  buyer_delivery_c2c_pvz_gmv_created:          {filter: [*is_c2c_pvz, {is_created: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_paid:             {filter: [*is_c2c_pvz, {is_paid: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_confirmed:        {filter: [*is_c2c_pvz, {is_confirmed: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_performed:        {filter: [*is_c2c_pvz, {is_performed: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_provided:         {filter: [*is_c2c_pvz, {is_provided: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_received:         {filter: [*is_c2c_pvz, {is_received: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_accepted:         {filter: [*is_c2c_pvz, {is_accepted: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_canceled:         {filter: [*is_c2c_pvz, {is_canceled: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_voided:           {filter: [*is_c2c_pvz, {is_voided: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_unperformed:      {filter: [*is_c2c_pvz, {is_unperformed: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_return_performed: {filter: [*is_c2c_pvz, {is_return_performed: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_return_delivered: {filter: [*is_c2c_pvz, {is_return_delivered: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_returned:         {filter: [*is_c2c_pvz, {is_returned: true}], obs: [item_price]}
+  buyer_delivery_c2c_pvz_gmv_unconfirmed:      {filter: [*is_c2c_pvz, {is_unconfirmed: true}], obs: [item_price]}
+
+  buyer_delivery_b2c_pvz_gmv_created:          {filter: [*is_b2c_pvz, {is_created: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_paid:             {filter: [*is_b2c_pvz, {is_paid: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_confirmed:        {filter: [*is_b2c_pvz, {is_confirmed: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_performed:        {filter: [*is_b2c_pvz, {is_performed: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_provided:         {filter: [*is_b2c_pvz, {is_provided: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_received:         {filter: [*is_b2c_pvz, {is_received: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_accepted:         {filter: [*is_b2c_pvz, {is_accepted: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_canceled:         {filter: [*is_b2c_pvz, {is_canceled: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_voided:           {filter: [*is_b2c_pvz, {is_voided: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_unperformed:      {filter: [*is_b2c_pvz, {is_unperformed: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_return_performed: {filter: [*is_b2c_pvz, {is_return_performed: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_return_delivered: {filter: [*is_b2c_pvz, {is_return_delivered: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_returned:         {filter: [*is_b2c_pvz, {is_returned: true}], obs: [item_price]}
+  buyer_delivery_b2c_pvz_gmv_unconfirmed:      {filter: [*is_b2c_pvz, {is_unconfirmed: true}], obs: [item_price]}
+
+  buyer_delivery_c2c_courier_gmv_created:          {filter: [*is_c2c_courier, {is_created: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_paid:             {filter: [*is_c2c_courier, {is_paid: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_confirmed:        {filter: [*is_c2c_courier, {is_confirmed: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_performed:        {filter: [*is_c2c_courier, {is_performed: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_provided:         {filter: [*is_c2c_courier, {is_provided: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_received:         {filter: [*is_c2c_courier, {is_received: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_accepted:         {filter: [*is_c2c_courier, {is_accepted: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_canceled:         {filter: [*is_c2c_courier, {is_canceled: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_voided:           {filter: [*is_c2c_courier, {is_voided: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_unperformed:      {filter: [*is_c2c_courier, {is_unperformed: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_return_performed: {filter: [*is_c2c_courier, {is_return_performed: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_return_delivered: {filter: [*is_c2c_courier, {is_return_delivered: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_returned:         {filter: [*is_c2c_courier, {is_returned: true}], obs: [item_price]}
+  buyer_delivery_c2c_courier_gmv_unconfirmed:      {filter: [*is_c2c_courier, {is_unconfirmed: true}], obs: [item_price]}
+
+  buyer_delivery_total_gmv_created:          {filter: [{is_created: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_paid:             {filter: [{is_paid: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_confirmed:        {filter: [{is_confirmed: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_performed:        {filter: [{is_performed: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_provided:         {filter: [{is_provided: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_received:         {filter: [{is_received: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_accepted:         {filter: [{is_accepted: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_canceled:         {filter: [{is_canceled: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_voided:           {filter: [{is_voided: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_unperformed:      {filter: [{is_unperformed: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_return_performed: {filter: [{is_return_performed: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_return_delivered: {filter: [{is_return_delivered: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_returned:         {filter: [{is_returned: true}], obs: [item_price]}
+  buyer_delivery_total_gmv_unconfirmed:      {filter: [{is_unconfirmed: true}], obs: [item_price]}
+
+  buyer_delivery_c2c_pvz_items_created:          {filter: [*is_c2c_pvz, {is_created: true}]}
+  buyer_delivery_c2c_pvz_items_paid:             {filter: [*is_c2c_pvz, {is_paid: true}]}
+  buyer_delivery_c2c_pvz_items_confirmed:        {filter: [*is_c2c_pvz, {is_confirmed: true}]}
+  buyer_delivery_c2c_pvz_items_performed:        {filter: [*is_c2c_pvz, {is_performed: true}]}
+  buyer_delivery_c2c_pvz_items_provided:         {filter: [*is_c2c_pvz, {is_provided: true}]}
+  buyer_delivery_c2c_pvz_items_received:         {filter: [*is_c2c_pvz, {is_received: true}]}
+  buyer_delivery_c2c_pvz_items_accepted:         {filter: [*is_c2c_pvz, {is_accepted: true}]}
+  buyer_delivery_c2c_pvz_items_canceled:         {filter: [*is_c2c_pvz, {is_canceled: true}]}
+  buyer_delivery_c2c_pvz_items_voided:           {filter: [*is_c2c_pvz, {is_voided: true}]}
+  buyer_delivery_c2c_pvz_items_unperformed:      {filter: [*is_c2c_pvz, {is_unperformed: true}]}
+  buyer_delivery_c2c_pvz_items_return_performed: {filter: [*is_c2c_pvz, {is_return_performed: true}]}
+  buyer_delivery_c2c_pvz_items_return_delivered: {filter: [*is_c2c_pvz, {is_return_delivered: true}]}
+  buyer_delivery_c2c_pvz_items_returned:         {filter: [*is_c2c_pvz, {is_returned: true}]}
+  buyer_delivery_c2c_pvz_items_unconfirmed:      {filter: [*is_c2c_pvz, {is_unconfirmed: true}]}
+
+  buyer_delivery_b2c_pvz_items_created:          {filter: [*is_b2c_pvz, {is_created: true}]}
+  buyer_delivery_b2c_pvz_items_paid:             {filter: [*is_b2c_pvz, {is_paid: true}]}
+  buyer_delivery_b2c_pvz_items_confirmed:        {filter: [*is_b2c_pvz, {is_confirmed: true}]}
+  buyer_delivery_b2c_pvz_items_performed:        {filter: [*is_b2c_pvz, {is_performed: true}]}
+  buyer_delivery_b2c_pvz_items_provided:         {filter: [*is_b2c_pvz, {is_provided: true}]}
+  buyer_delivery_b2c_pvz_items_received:         {filter: [*is_b2c_pvz, {is_received: true}]}
+  buyer_delivery_b2c_pvz_items_accepted:         {filter: [*is_b2c_pvz, {is_accepted: true}]}
+  buyer_delivery_b2c_pvz_items_canceled:         {filter: [*is_b2c_pvz, {is_canceled: true}]}
+  buyer_delivery_b2c_pvz_items_voided:           {filter: [*is_b2c_pvz, {is_voided: true}]}
+  buyer_delivery_b2c_pvz_items_unperformed:      {filter: [*is_b2c_pvz, {is_unperformed: true}]}
+  buyer_delivery_b2c_pvz_items_return_performed: {filter: [*is_b2c_pvz, {is_return_performed: true}]}
+  buyer_delivery_b2c_pvz_items_return_delivered: {filter: [*is_b2c_pvz, {is_return_delivered: true}]}
+  buyer_delivery_b2c_pvz_items_returned:         {filter: [*is_b2c_pvz, {is_returned: true}]}
+  buyer_delivery_b2c_pvz_items_unconfirmed:      {filter: [*is_b2c_pvz, {is_unconfirmed: true}]}
+
+  buyer_delivery_c2c_courier_items_created:          {filter: [*is_c2c_courier, {is_created: true}]}
+  buyer_delivery_c2c_courier_items_paid:             {filter: [*is_c2c_courier, {is_paid: true}]}
+  buyer_delivery_c2c_courier_items_confirmed:        {filter: [*is_c2c_courier, {is_confirmed: true}]}
+  buyer_delivery_c2c_courier_items_performed:        {filter: [*is_c2c_courier, {is_performed: true}]}
+  buyer_delivery_c2c_courier_items_provided:         {filter: [*is_c2c_courier, {is_provided: true}]}
+  buyer_delivery_c2c_courier_items_received:         {filter: [*is_c2c_courier, {is_received: true}]}
+  buyer_delivery_c2c_courier_items_accepted:         {filter: [*is_c2c_courier, {is_accepted: true}]}
+  buyer_delivery_c2c_courier_items_canceled:         {filter: [*is_c2c_courier, {is_canceled: true}]}
+  buyer_delivery_c2c_courier_items_voided:           {filter: [*is_c2c_courier, {is_voided: true}]}
+  buyer_delivery_c2c_courier_items_unperformed:      {filter: [*is_c2c_courier, {is_unperformed: true}]}
+  buyer_delivery_c2c_courier_items_return_performed: {filter: [*is_c2c_courier, {is_return_performed: true}]}
+  buyer_delivery_c2c_courier_items_return_delivered: {filter: [*is_c2c_courier, {is_return_delivered: true}]}
+  buyer_delivery_c2c_courier_items_returned:         {filter: [*is_c2c_courier, {is_returned: true}]}
+  buyer_delivery_c2c_courier_items_unconfirmed:      {filter: [*is_c2c_courier, {is_unconfirmed: true}]}
+
+  buyer_delivery_total_items_created:          {filter: [{is_created: true}]}
+  buyer_delivery_total_items_paid:             {filter: [{is_paid: true}]}
+  buyer_delivery_total_items_confirmed:        {filter: [{is_confirmed: true}]}
+  buyer_delivery_total_items_performed:        {filter: [{is_performed: true}]}
+  buyer_delivery_total_items_provided:         {filter: [{is_provided: true}]}
+  buyer_delivery_total_items_received:         {filter: [{is_received: true}]}
+  buyer_delivery_total_items_accepted:         {filter: [{is_accepted: true}]}
+  buyer_delivery_total_items_canceled:         {filter: [{is_canceled: true}]}
+  buyer_delivery_total_items_voided:           {filter: [{is_voided: true}]}
+  buyer_delivery_total_items_unperformed:      {filter: [{is_unperformed: true}]}
+  buyer_delivery_total_items_return_performed: {filter: [{is_return_performed: true}]}
+  buyer_delivery_total_items_return_delivered: {filter: [{is_return_delivered: true}]}
+  buyer_delivery_total_items_returned:         {filter: [{is_returned: true}]}
+  buyer_delivery_total_items_unconfirmed:      {filter: [{is_unconfirmed: true}]}
+
+  buyer_delivery_c2c_pvz_revenue_no_vat_created:          {filter: [*is_c2c_pvz, {is_created: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_paid:             {filter: [*is_c2c_pvz, {is_paid: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_confirmed:        {filter: [*is_c2c_pvz, {is_confirmed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_performed:        {filter: [*is_c2c_pvz, {is_performed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_provided:         {filter: [*is_c2c_pvz, {is_provided: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_received:         {filter: [*is_c2c_pvz, {is_received: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_accepted:         {filter: [*is_c2c_pvz, {is_accepted: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_canceled:         {filter: [*is_c2c_pvz, {is_canceled: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_voided:           {filter: [*is_c2c_pvz, {is_voided: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_unperformed:      {filter: [*is_c2c_pvz, {is_unperformed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_return_performed: {filter: [*is_c2c_pvz, {is_return_performed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_return_delivered: {filter: [*is_c2c_pvz, {is_return_delivered: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_returned:         {filter: [*is_c2c_pvz, {is_returned: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_pvz_revenue_no_vat_unconfirmed:      {filter: [*is_c2c_pvz, {is_unconfirmed: true}], obs: [delivery_revenue_no_vat]}
+
+  buyer_delivery_b2c_pvz_revenue_no_vat_created:          {filter: [*is_b2c_pvz, {is_created: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_paid:             {filter: [*is_b2c_pvz, {is_paid: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_confirmed:        {filter: [*is_b2c_pvz, {is_confirmed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_performed:        {filter: [*is_b2c_pvz, {is_performed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_provided:         {filter: [*is_b2c_pvz, {is_provided: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_received:         {filter: [*is_b2c_pvz, {is_received: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_accepted:         {filter: [*is_b2c_pvz, {is_accepted: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_canceled:         {filter: [*is_b2c_pvz, {is_canceled: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_voided:           {filter: [*is_b2c_pvz, {is_voided: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_unperformed:      {filter: [*is_b2c_pvz, {is_unperformed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_return_performed: {filter: [*is_b2c_pvz, {is_return_performed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_return_delivered: {filter: [*is_b2c_pvz, {is_return_delivered: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_returned:         {filter: [*is_b2c_pvz, {is_returned: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_b2c_pvz_revenue_no_vat_unconfirmed:      {filter: [*is_b2c_pvz, {is_unconfirmed: true}], obs: [delivery_revenue_no_vat]}
+
+  buyer_delivery_c2c_courier_revenue_no_vat_created:          {filter: [*is_c2c_courier, {is_created: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_paid:             {filter: [*is_c2c_courier, {is_paid: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_confirmed:        {filter: [*is_c2c_courier, {is_confirmed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_performed:        {filter: [*is_c2c_courier, {is_performed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_provided:         {filter: [*is_c2c_courier, {is_provided: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_received:         {filter: [*is_c2c_courier, {is_received: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_accepted:         {filter: [*is_c2c_courier, {is_accepted: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_canceled:         {filter: [*is_c2c_courier, {is_canceled: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_voided:           {filter: [*is_c2c_courier, {is_voided: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_unperformed:      {filter: [*is_c2c_courier, {is_unperformed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_return_performed: {filter: [*is_c2c_courier, {is_return_performed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_return_delivered: {filter: [*is_c2c_courier, {is_return_delivered: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_returned:         {filter: [*is_c2c_courier, {is_returned: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_c2c_courier_revenue_no_vat_unconfirmed:      {filter: [*is_c2c_courier, {is_unconfirmed: true}], obs: [delivery_revenue_no_vat]}
+
+  buyer_delivery_total_revenue_no_vat_created:          {filter: [{is_created: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_paid:             {filter: [{is_paid: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_confirmed:        {filter: [{is_confirmed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_performed:        {filter: [{is_performed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_provided:         {filter: [{is_provided: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_received:         {filter: [{is_received: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_accepted:         {filter: [{is_accepted: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_canceled:         {filter: [{is_canceled: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_voided:           {filter: [{is_voided: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_unperformed:      {filter: [{is_unperformed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_return_performed: {filter: [{is_return_performed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_return_delivered: {filter: [{is_return_delivered: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_returned:         {filter: [{is_returned: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_total_revenue_no_vat_unconfirmed:      {filter: [{is_unconfirmed: true}], obs: [delivery_revenue_no_vat]}
+
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_created:          {filter: [*is_c2c_pvz, {is_created: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_paid:             {filter: [*is_c2c_pvz, {is_paid: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_confirmed:        {filter: [*is_c2c_pvz, {is_confirmed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_performed:        {filter: [*is_c2c_pvz, {is_performed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_provided:         {filter: [*is_c2c_pvz, {is_provided: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_received:         {filter: [*is_c2c_pvz, {is_received: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_accepted:         {filter: [*is_c2c_pvz, {is_accepted: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_canceled:         {filter: [*is_c2c_pvz, {is_canceled: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_voided:           {filter: [*is_c2c_pvz, {is_voided: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_unperformed:      {filter: [*is_c2c_pvz, {is_unperformed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_return_performed: {filter: [*is_c2c_pvz, {is_return_performed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_return_delivered: {filter: [*is_c2c_pvz, {is_return_delivered: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_returned:         {filter: [*is_c2c_pvz, {is_returned: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_pvz_safedeal_comission_no_vat_unconfirmed:      {filter: [*is_c2c_pvz, {is_unconfirmed: true}], obs: [safedeal_comission_no_vat]}
+
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_created:          {filter: [*is_b2c_pvz, {is_created: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_paid:             {filter: [*is_b2c_pvz, {is_paid: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_confirmed:        {filter: [*is_b2c_pvz, {is_confirmed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_performed:        {filter: [*is_b2c_pvz, {is_performed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_provided:         {filter: [*is_b2c_pvz, {is_provided: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_received:         {filter: [*is_b2c_pvz, {is_received: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_accepted:         {filter: [*is_b2c_pvz, {is_accepted: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_canceled:         {filter: [*is_b2c_pvz, {is_canceled: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_voided:           {filter: [*is_b2c_pvz, {is_voided: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_unperformed:      {filter: [*is_b2c_pvz, {is_unperformed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_return_performed: {filter: [*is_b2c_pvz, {is_return_performed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_return_delivered: {filter: [*is_b2c_pvz, {is_return_delivered: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_returned:         {filter: [*is_b2c_pvz, {is_returned: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_b2c_pvz_safedeal_comission_no_vat_unconfirmed:      {filter: [*is_b2c_pvz, {is_unconfirmed: true}], obs: [safedeal_comission_no_vat]}
+
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_created:          {filter: [*is_c2c_courier, {is_created: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_paid:             {filter: [*is_c2c_courier, {is_paid: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_confirmed:        {filter: [*is_c2c_courier, {is_confirmed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_performed:        {filter: [*is_c2c_courier, {is_performed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_provided:         {filter: [*is_c2c_courier, {is_provided: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_received:         {filter: [*is_c2c_courier, {is_received: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_accepted:         {filter: [*is_c2c_courier, {is_accepted: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_canceled:         {filter: [*is_c2c_courier, {is_canceled: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_voided:           {filter: [*is_c2c_courier, {is_voided: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_unperformed:      {filter: [*is_c2c_courier, {is_unperformed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_return_performed: {filter: [*is_c2c_courier, {is_return_performed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_return_delivered: {filter: [*is_c2c_courier, {is_return_delivered: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_returned:         {filter: [*is_c2c_courier, {is_returned: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_c2c_courier_safedeal_comission_no_vat_unconfirmed:      {filter: [*is_c2c_courier, {is_unconfirmed: true}], obs: [safedeal_comission_no_vat]}
+
+  buyer_delivery_total_safedeal_comission_no_vat_created:          {filter: [{is_created: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_paid:             {filter: [{is_paid: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_confirmed:        {filter: [{is_confirmed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_performed:        {filter: [{is_performed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_provided:         {filter: [{is_provided: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_received:         {filter: [{is_received: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_accepted:         {filter: [{is_accepted: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_canceled:         {filter: [{is_canceled: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_voided:           {filter: [{is_voided: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_unperformed:      {filter: [{is_unperformed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_return_performed: {filter: [{is_return_performed: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_return_delivered: {filter: [{is_return_delivered: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_returned:         {filter: [{is_returned: true}], obs: [safedeal_comission_no_vat]}
+  buyer_delivery_total_safedeal_comission_no_vat_unconfirmed:      {filter: [{is_unconfirmed: true}], obs: [safedeal_comission_no_vat]}
+
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_created:          {filter: [*is_c2c_pvz, {is_created: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_paid:             {filter: [*is_c2c_pvz, {is_paid: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_confirmed:        {filter: [*is_c2c_pvz, {is_confirmed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_performed:        {filter: [*is_c2c_pvz, {is_performed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_provided:         {filter: [*is_c2c_pvz, {is_provided: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_received:         {filter: [*is_c2c_pvz, {is_received: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_accepted:         {filter: [*is_c2c_pvz, {is_accepted: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_canceled:         {filter: [*is_c2c_pvz, {is_canceled: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_voided:           {filter: [*is_c2c_pvz, {is_voided: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_unperformed:      {filter: [*is_c2c_pvz, {is_unperformed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_return_performed: {filter: [*is_c2c_pvz, {is_return_performed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_return_delivered: {filter: [*is_c2c_pvz, {is_return_delivered: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_returned:         {filter: [*is_c2c_pvz, {is_returned: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_pvz_delivery_comission_no_vat_unconfirmed:      {filter: [*is_c2c_pvz, {is_unconfirmed: true}], obs: [delivery_comission_no_vat]}
+
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_created:          {filter: [*is_b2c_pvz, {is_created: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_paid:             {filter: [*is_b2c_pvz, {is_paid: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_confirmed:        {filter: [*is_b2c_pvz, {is_confirmed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_performed:        {filter: [*is_b2c_pvz, {is_performed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_provided:         {filter: [*is_b2c_pvz, {is_provided: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_received:         {filter: [*is_b2c_pvz, {is_received: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_accepted:         {filter: [*is_b2c_pvz, {is_accepted: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_canceled:         {filter: [*is_b2c_pvz, {is_canceled: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_voided:           {filter: [*is_b2c_pvz, {is_voided: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_unperformed:      {filter: [*is_b2c_pvz, {is_unperformed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_return_performed: {filter: [*is_b2c_pvz, {is_return_performed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_return_delivered: {filter: [*is_b2c_pvz, {is_return_delivered: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_returned:         {filter: [*is_b2c_pvz, {is_returned: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_b2c_pvz_delivery_comission_no_vat_unconfirmed:      {filter: [*is_b2c_pvz, {is_unconfirmed: true}], obs: [delivery_comission_no_vat]}
+
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_created:          {filter: [*is_c2c_courier, {is_created: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_paid:             {filter: [*is_c2c_courier, {is_paid: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_confirmed:        {filter: [*is_c2c_courier, {is_confirmed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_performed:        {filter: [*is_c2c_courier, {is_performed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_provided:         {filter: [*is_c2c_courier, {is_provided: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_received:         {filter: [*is_c2c_courier, {is_received: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_accepted:         {filter: [*is_c2c_courier, {is_accepted: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_canceled:         {filter: [*is_c2c_courier, {is_canceled: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_voided:           {filter: [*is_c2c_courier, {is_voided: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_unperformed:      {filter: [*is_c2c_courier, {is_unperformed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_return_performed: {filter: [*is_c2c_courier, {is_return_performed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_return_delivered: {filter: [*is_c2c_courier, {is_return_delivered: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_returned:         {filter: [*is_c2c_courier, {is_returned: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_c2c_courier_delivery_comission_no_vat_unconfirmed:      {filter: [*is_c2c_courier, {is_unconfirmed: true}], obs: [delivery_comission_no_vat]}
+
+  buyer_delivery_total_delivery_comission_no_vat_created:          {filter: [{is_created: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_paid:             {filter: [{is_paid: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_confirmed:        {filter: [{is_confirmed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_performed:        {filter: [{is_performed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_provided:         {filter: [{is_provided: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_received:         {filter: [{is_received: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_accepted:         {filter: [{is_accepted: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_canceled:         {filter: [{is_canceled: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_voided:           {filter: [{is_voided: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_unperformed:      {filter: [{is_unperformed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_return_performed: {filter: [{is_return_performed: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_return_delivered: {filter: [{is_return_delivered: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_returned:         {filter: [{is_returned: true}], obs: [delivery_comission_no_vat]}
+  buyer_delivery_total_delivery_comission_no_vat_unconfirmed:      {filter: [{is_unconfirmed: true}], obs: [delivery_comission_no_vat]}
+
+  buyer_delivery_c2c_pvz_approximate_delivery_provider_cost_no_vat_created:          {filter: [*is_c2c_pvz, {is_created: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_approximate_delivery_provider_cost_no_vat_paid:             {filter: [*is_c2c_pvz, {is_paid: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_approximate_delivery_provider_cost_no_vat_confirmed:        {filter: [*is_c2c_pvz, {is_confirmed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_approximate_delivery_provider_cost_no_vat_canceled:         {filter: [*is_c2c_pvz, {is_canceled: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_approximate_delivery_provider_cost_no_vat_voided:           {filter: [*is_c2c_pvz, {is_voided: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_approximate_delivery_provider_cost_no_vat_unperformed:      {filter: [*is_c2c_pvz, {is_unperformed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_approximate_delivery_provider_cost_no_vat_unconfirmed:      {filter: [*is_c2c_pvz, {is_unconfirmed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+
+  buyer_delivery_b2c_pvz_approximate_delivery_provider_cost_no_vat_created:          {filter: [*is_b2c_pvz, {is_created: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_approximate_delivery_provider_cost_no_vat_paid:             {filter: [*is_b2c_pvz, {is_paid: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_approximate_delivery_provider_cost_no_vat_confirmed:        {filter: [*is_b2c_pvz, {is_confirmed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_approximate_delivery_provider_cost_no_vat_canceled:         {filter: [*is_b2c_pvz, {is_canceled: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_approximate_delivery_provider_cost_no_vat_voided:           {filter: [*is_b2c_pvz, {is_voided: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_approximate_delivery_provider_cost_no_vat_unperformed:      {filter: [*is_b2c_pvz, {is_unperformed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_approximate_delivery_provider_cost_no_vat_unconfirmed:      {filter: [*is_b2c_pvz, {is_unconfirmed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+
+  buyer_delivery_c2c_courier_approximate_delivery_provider_cost_no_vat_created:          {filter: [*is_c2c_courier, {is_created: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_approximate_delivery_provider_cost_no_vat_paid:             {filter: [*is_c2c_courier, {is_paid: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_approximate_delivery_provider_cost_no_vat_confirmed:        {filter: [*is_c2c_courier, {is_confirmed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_approximate_delivery_provider_cost_no_vat_canceled:         {filter: [*is_c2c_courier, {is_canceled: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_approximate_delivery_provider_cost_no_vat_voided:           {filter: [*is_c2c_courier, {is_voided: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_approximate_delivery_provider_cost_no_vat_unperformed:      {filter: [*is_c2c_courier, {is_unperformed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_approximate_delivery_provider_cost_no_vat_unconfirmed:      {filter: [*is_c2c_courier, {is_unconfirmed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+
+  buyer_delivery_total_approximate_delivery_provider_cost_no_vat_created:          {filter: [{is_created: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_approximate_delivery_provider_cost_no_vat_paid:             {filter: [{is_paid: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_approximate_delivery_provider_cost_no_vat_confirmed:        {filter: [{is_confirmed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_approximate_delivery_provider_cost_no_vat_canceled:         {filter: [{is_canceled: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_approximate_delivery_provider_cost_no_vat_voided:           {filter: [{is_voided: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_approximate_delivery_provider_cost_no_vat_unperformed:      {filter: [{is_unperformed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_approximate_delivery_provider_cost_no_vat_unconfirmed:      {filter: [{is_unconfirmed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+
+  buyer_delivery_c2c_pvz_real_delivery_provider_cost_no_vat_performed:        {filter: [*is_c2c_pvz, {is_performed: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_real_delivery_provider_cost_no_vat_provided:         {filter: [*is_c2c_pvz, {is_provided: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_real_delivery_provider_cost_no_vat_received:         {filter: [*is_c2c_pvz, {is_received: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_real_delivery_provider_cost_no_vat_accepted:         {filter: [*is_c2c_pvz, {is_accepted: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_real_delivery_provider_cost_no_vat_return_performed: {filter: [*is_c2c_pvz, {is_return_performed: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_real_delivery_provider_cost_no_vat_return_delivered: {filter: [*is_c2c_pvz, {is_return_delivered: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_pvz_real_delivery_provider_cost_no_vat_returned:         {filter: [*is_c2c_pvz, {is_returned: true}], obs: [real_delivery_provider_cost_no_vat]}
+
+  buyer_delivery_b2c_pvz_real_delivery_provider_cost_no_vat_performed:        {filter: [*is_b2c_pvz, {is_performed: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_real_delivery_provider_cost_no_vat_provided:         {filter: [*is_b2c_pvz, {is_provided: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_real_delivery_provider_cost_no_vat_received:         {filter: [*is_b2c_pvz, {is_received: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_real_delivery_provider_cost_no_vat_accepted:         {filter: [*is_b2c_pvz, {is_accepted: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_real_delivery_provider_cost_no_vat_return_performed: {filter: [*is_b2c_pvz, {is_return_performed: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_real_delivery_provider_cost_no_vat_return_delivered: {filter: [*is_b2c_pvz, {is_return_delivered: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_b2c_pvz_real_delivery_provider_cost_no_vat_returned:         {filter: [*is_b2c_pvz, {is_returned: true}], obs: [real_delivery_provider_cost_no_vat]}
+
+  buyer_delivery_c2c_courier_real_delivery_provider_cost_no_vat_performed:        {filter: [*is_c2c_courier, {is_performed: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_real_delivery_provider_cost_no_vat_provided:         {filter: [*is_c2c_courier, {is_provided: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_real_delivery_provider_cost_no_vat_received:         {filter: [*is_c2c_courier, {is_received: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_real_delivery_provider_cost_no_vat_accepted:         {filter: [*is_c2c_courier, {is_accepted: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_real_delivery_provider_cost_no_vat_return_performed: {filter: [*is_c2c_courier, {is_return_performed: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_real_delivery_provider_cost_no_vat_return_delivered: {filter: [*is_c2c_courier, {is_return_delivered: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_c2c_courier_real_delivery_provider_cost_no_vat_returned:         {filter: [*is_c2c_courier, {is_returned: true}], obs: [real_delivery_provider_cost_no_vat]}
+
+  buyer_delivery_total_real_delivery_provider_cost_no_vat_performed:        {filter: [{is_performed: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_real_delivery_provider_cost_no_vat_provided:         {filter: [{is_provided: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_real_delivery_provider_cost_no_vat_received:         {filter: [{is_received: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_real_delivery_provider_cost_no_vat_accepted:         {filter: [{is_accepted: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_real_delivery_provider_cost_no_vat_return_performed: {filter: [{is_return_performed: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_real_delivery_provider_cost_no_vat_return_delivered: {filter: [{is_return_delivered: true}], obs: [real_delivery_provider_cost_no_vat]}
+  buyer_delivery_total_real_delivery_provider_cost_no_vat_returned:         {filter: [{is_returned: true}], obs: [real_delivery_provider_cost_no_vat]}
+
+  buyer_delivery_c2c_pvz_approximate_delivery_margin_no_vat_created:          {filter: [*is_c2c_pvz, {is_created: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_pvz_approximate_delivery_margin_no_vat_paid:             {filter: [*is_c2c_pvz, {is_paid: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_pvz_approximate_delivery_margin_no_vat_confirmed:        {filter: [*is_c2c_pvz, {is_confirmed: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_pvz_approximate_delivery_margin_no_vat_canceled:         {filter: [*is_c2c_pvz, {is_canceled: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_pvz_approximate_delivery_margin_no_vat_voided:           {filter: [*is_c2c_pvz, {is_voided: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_pvz_approximate_delivery_margin_no_vat_unperformed:      {filter: [*is_c2c_pvz, {is_unperformed: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_pvz_approximate_delivery_margin_no_vat_unconfirmed:      {filter: [*is_c2c_pvz, {is_unconfirmed: true}], obs: [approximate_delivery_margin]}
+
+  buyer_delivery_b2c_pvz_approximate_delivery_margin_no_vat_created:          {filter: [*is_b2c_pvz, {is_created: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_b2c_pvz_approximate_delivery_margin_no_vat_paid:             {filter: [*is_b2c_pvz, {is_paid: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_b2c_pvz_approximate_delivery_margin_no_vat_confirmed:        {filter: [*is_b2c_pvz, {is_confirmed: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_b2c_pvz_approximate_delivery_margin_no_vat_canceled:         {filter: [*is_b2c_pvz, {is_canceled: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_b2c_pvz_approximate_delivery_margin_no_vat_voided:           {filter: [*is_b2c_pvz, {is_voided: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_b2c_pvz_approximate_delivery_margin_no_vat_unperformed:      {filter: [*is_b2c_pvz, {is_unperformed: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_b2c_pvz_approximate_delivery_margin_no_vat_unconfirmed:      {filter: [*is_b2c_pvz, {is_unconfirmed: true}], obs: [approximate_delivery_margin]}
+
+  buyer_delivery_c2c_courier_approximate_delivery_margin_no_vat_created:          {filter: [*is_c2c_courier, {is_created: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_courier_approximate_delivery_margin_no_vat_paid:             {filter: [*is_c2c_courier, {is_paid: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_courier_approximate_delivery_margin_no_vat_confirmed:        {filter: [*is_c2c_courier, {is_confirmed: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_courier_approximate_delivery_margin_no_vat_canceled:         {filter: [*is_c2c_courier, {is_canceled: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_courier_approximate_delivery_margin_no_vat_voided:           {filter: [*is_c2c_courier, {is_voided: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_courier_approximate_delivery_margin_no_vat_unperformed:      {filter: [*is_c2c_courier, {is_unperformed: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_c2c_courier_approximate_delivery_margin_no_vat_unconfirmed:      {filter: [*is_c2c_courier, {is_unconfirmed: true}], obs: [approximate_delivery_margin]}
+
+  buyer_delivery_total_approximate_delivery_margin_no_vat_created:          {filter: [{is_created: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_total_approximate_delivery_margin_no_vat_paid:             {filter: [{is_paid: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_total_approximate_delivery_margin_no_vat_confirmed:        {filter: [{is_confirmed: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_total_approximate_delivery_margin_no_vat_canceled:         {filter: [{is_canceled: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_total_approximate_delivery_margin_no_vat_voided:           {filter: [{is_voided: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_total_approximate_delivery_margin_no_vat_unperformed:      {filter: [{is_unperformed: true}], obs: [approximate_delivery_margin]}
+  buyer_delivery_total_approximate_delivery_margin_no_vat_unconfirmed:      {filter: [{is_unconfirmed: true}], obs: [approximate_delivery_margin]}
+
+  buyer_delivery_c2c_pvz_real_delivery_margin_no_vat_performed:        {filter: [*is_c2c_pvz, {is_performed: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_pvz_real_delivery_margin_no_vat_provided:         {filter: [*is_c2c_pvz, {is_provided: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_pvz_real_delivery_margin_no_vat_received:         {filter: [*is_c2c_pvz, {is_received: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_pvz_real_delivery_margin_no_vat_accepted:         {filter: [*is_c2c_pvz, {is_accepted: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_pvz_real_delivery_margin_no_vat_return_performed: {filter: [*is_c2c_pvz, {is_return_performed: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_pvz_real_delivery_margin_no_vat_return_delivered: {filter: [*is_c2c_pvz, {is_return_delivered: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_pvz_real_delivery_margin_no_vat_returned:         {filter: [*is_c2c_pvz, {is_returned: true}], obs: [real_delivery_margin]}
+
+  buyer_delivery_b2c_pvz_real_delivery_margin_no_vat_performed:        {filter: [*is_b2c_pvz, {is_performed: true}], obs: [real_delivery_margin]}
+  buyer_delivery_b2c_pvz_real_delivery_margin_no_vat_provided:         {filter: [*is_b2c_pvz, {is_provided: true}], obs: [real_delivery_margin]}
+  buyer_delivery_b2c_pvz_real_delivery_margin_no_vat_received:         {filter: [*is_b2c_pvz, {is_received: true}], obs: [real_delivery_margin]}
+  buyer_delivery_b2c_pvz_real_delivery_margin_no_vat_accepted:         {filter: [*is_b2c_pvz, {is_accepted: true}], obs: [real_delivery_margin]}
+  buyer_delivery_b2c_pvz_real_delivery_margin_no_vat_return_performed: {filter: [*is_b2c_pvz, {is_return_performed: true}], obs: [real_delivery_margin]}
+  buyer_delivery_b2c_pvz_real_delivery_margin_no_vat_return_delivered: {filter: [*is_b2c_pvz, {is_return_delivered: true}], obs: [real_delivery_margin]}
+  buyer_delivery_b2c_pvz_real_delivery_margin_no_vat_returned:         {filter: [*is_b2c_pvz, {is_returned: true}], obs: [real_delivery_margin]}
+
+  buyer_delivery_c2c_courier_real_delivery_margin_no_vat_performed:        {filter: [*is_c2c_courier, {is_performed: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_courier_real_delivery_margin_no_vat_provided:         {filter: [*is_c2c_courier, {is_provided: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_courier_real_delivery_margin_no_vat_received:         {filter: [*is_c2c_courier, {is_received: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_courier_real_delivery_margin_no_vat_accepted:         {filter: [*is_c2c_courier, {is_accepted: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_courier_real_delivery_margin_no_vat_return_performed: {filter: [*is_c2c_courier, {is_return_performed: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_courier_real_delivery_margin_no_vat_return_delivered: {filter: [*is_c2c_courier, {is_return_delivered: true}], obs: [real_delivery_margin]}
+  buyer_delivery_c2c_courier_real_delivery_margin_no_vat_returned:         {filter: [*is_c2c_courier, {is_returned: true}], obs: [real_delivery_margin]}
+
+  buyer_delivery_total_real_delivery_margin_no_vat_performed:        {filter: [{is_performed: true}], obs: [real_delivery_margin]}
+  buyer_delivery_total_real_delivery_margin_no_vat_provided:         {filter: [{is_provided: true}], obs: [real_delivery_margin]}
+  buyer_delivery_total_real_delivery_margin_no_vat_received:         {filter: [{is_received: true}], obs: [real_delivery_margin]}
+  buyer_delivery_total_real_delivery_margin_no_vat_accepted:         {filter: [{is_accepted: true}], obs: [real_delivery_margin]}
+  buyer_delivery_total_real_delivery_margin_no_vat_return_performed: {filter: [{is_return_performed: true}], obs: [real_delivery_margin]}
+  buyer_delivery_total_real_delivery_margin_no_vat_return_delivered: {filter: [{is_return_delivered: true}], obs: [real_delivery_margin]}
+  buyer_delivery_total_real_delivery_margin_no_vat_returned:         {filter: [{is_returned: true}], obs: [real_delivery_margin]}
+
+  buyer_delivery_b2c_pvz_seller_commission_created:          {filter: [*is_b2c_pvz, {is_created: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_paid:             {filter: [*is_b2c_pvz, {is_paid: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_confirmed:        {filter: [*is_b2c_pvz, {is_confirmed: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_performed:        {filter: [*is_b2c_pvz, {is_performed: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_provided:         {filter: [*is_b2c_pvz, {is_provided: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_received:         {filter: [*is_b2c_pvz, {is_received: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_accepted:         {filter: [*is_b2c_pvz, {is_accepted: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_canceled:         {filter: [*is_b2c_pvz, {is_canceled: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_voided:           {filter: [*is_b2c_pvz, {is_voided: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_unperformed:      {filter: [*is_b2c_pvz, {is_unperformed: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_return_performed: {filter: [*is_b2c_pvz, {is_return_performed: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_return_delivered: {filter: [*is_b2c_pvz, {is_return_delivered: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_returned:         {filter: [*is_b2c_pvz, {is_returned: true}], obs: [seller_commission]}
+  buyer_delivery_b2c_pvz_seller_commission_unconfirmed:      {filter: [*is_b2c_pvz, {is_unconfirmed: true}], obs: [seller_commission]}
+
+metric.uniq:
+  buyer_delivery_c2c_pvz_orders_created:          {counter: buyer_delivery_c2c_pvz_items_created, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_paid:             {counter: buyer_delivery_c2c_pvz_items_paid, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_confirmed:        {counter: buyer_delivery_c2c_pvz_items_confirmed, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_performed:        {counter: buyer_delivery_c2c_pvz_items_performed, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_provided:         {counter: buyer_delivery_c2c_pvz_items_provided, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_received:         {counter: buyer_delivery_c2c_pvz_items_received, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_accepted:         {counter: buyer_delivery_c2c_pvz_items_accepted, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_canceled:         {counter: buyer_delivery_c2c_pvz_items_canceled, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_voided:           {counter: buyer_delivery_c2c_pvz_items_voided, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_unperformed:      {counter: buyer_delivery_c2c_pvz_items_unperformed, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_return_performed: {counter: buyer_delivery_c2c_pvz_items_return_performed, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_return_delivered: {counter: buyer_delivery_c2c_pvz_items_return_delivered, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_returned:         {counter: buyer_delivery_c2c_pvz_items_returned, key: [deliveryorder_id]}
+  buyer_delivery_c2c_pvz_orders_unconfirmed:      {counter: buyer_delivery_c2c_pvz_items_unconfirmed, key: [deliveryorder_id]}
+  
+  buyer_delivery_b2c_pvz_orders_created:          {counter: buyer_delivery_b2c_pvz_items_created, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_paid:             {counter: buyer_delivery_b2c_pvz_items_paid, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_confirmed:        {counter: buyer_delivery_b2c_pvz_items_confirmed, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_performed:        {counter: buyer_delivery_b2c_pvz_items_performed, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_provided:         {counter: buyer_delivery_b2c_pvz_items_provided, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_received:         {counter: buyer_delivery_b2c_pvz_items_received, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_accepted:         {counter: buyer_delivery_b2c_pvz_items_accepted, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_canceled:         {counter: buyer_delivery_b2c_pvz_items_canceled, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_voided:           {counter: buyer_delivery_b2c_pvz_items_voided, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_unperformed:      {counter: buyer_delivery_b2c_pvz_items_unperformed, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_return_performed: {counter: buyer_delivery_b2c_pvz_items_return_performed, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_return_delivered: {counter: buyer_delivery_b2c_pvz_items_return_delivered, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_returned:         {counter: buyer_delivery_b2c_pvz_items_returned, key: [deliveryorder_id]}
+  buyer_delivery_b2c_pvz_orders_unconfirmed:      {counter: buyer_delivery_b2c_pvz_items_unconfirmed, key: [deliveryorder_id]}
+  
+  buyer_delivery_c2c_courier_orders_created:          {counter: buyer_delivery_c2c_courier_items_created, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_paid:             {counter: buyer_delivery_c2c_courier_items_paid, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_confirmed:        {counter: buyer_delivery_c2c_courier_items_confirmed, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_performed:        {counter: buyer_delivery_c2c_courier_items_performed, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_provided:         {counter: buyer_delivery_c2c_courier_items_provided, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_received:         {counter: buyer_delivery_c2c_courier_items_received, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_accepted:         {counter: buyer_delivery_c2c_courier_items_accepted, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_canceled:         {counter: buyer_delivery_c2c_courier_items_canceled, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_voided:           {counter: buyer_delivery_c2c_courier_items_voided, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_unperformed:      {counter: buyer_delivery_c2c_courier_items_unperformed, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_return_performed: {counter: buyer_delivery_c2c_courier_items_return_performed, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_return_delivered: {counter: buyer_delivery_c2c_courier_items_return_delivered, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_returned:         {counter: buyer_delivery_c2c_courier_items_returned, key: [deliveryorder_id]}
+  buyer_delivery_c2c_courier_orders_unconfirmed:      {counter: buyer_delivery_c2c_courier_items_unconfirmed, key: [deliveryorder_id]}
+  
+  buyer_delivery_total_orders_created:          {counter: buyer_delivery_total_items_created, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_paid:             {counter: buyer_delivery_total_items_paid, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_confirmed:        {counter: buyer_delivery_total_items_confirmed, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_performed:        {counter: buyer_delivery_total_items_performed, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_provided:         {counter: buyer_delivery_total_items_provided, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_received:         {counter: buyer_delivery_total_items_received, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_accepted:         {counter: buyer_delivery_total_items_accepted, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_canceled:         {counter: buyer_delivery_total_items_canceled, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_voided:           {counter: buyer_delivery_total_items_voided, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_unperformed:      {counter: buyer_delivery_total_items_unperformed, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_return_performed: {counter: buyer_delivery_total_items_return_performed, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_return_delivered: {counter: buyer_delivery_total_items_return_delivered, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_returned:         {counter: buyer_delivery_total_items_returned, key: [deliveryorder_id]}
+  buyer_delivery_total_orders_unconfirmed:      {counter: buyer_delivery_total_items_unconfirmed, key: [deliveryorder_id]}
+
+metric.ratio:
+  buyer_delivery_c2c_pvz_average_item_price_created: {num: buyer_delivery_c2c_pvz_gmv_created, den: buyer_delivery_c2c_pvz_items_created}
+  buyer_delivery_c2c_pvz_average_item_price_paid: {num: buyer_delivery_c2c_pvz_gmv_paid, den: buyer_delivery_c2c_pvz_items_paid}
+  buyer_delivery_c2c_pvz_average_item_price_confirmed: {num: buyer_delivery_c2c_pvz_gmv_confirmed, den: buyer_delivery_c2c_pvz_items_confirmed}
+  buyer_delivery_c2c_pvz_average_item_price_performed: {num: buyer_delivery_c2c_pvz_gmv_performed, den: buyer_delivery_c2c_pvz_items_performed}
+  buyer_delivery_c2c_pvz_average_item_price_provided: {num: buyer_delivery_c2c_pvz_gmv_provided, den: buyer_delivery_c2c_pvz_items_provided}
+  buyer_delivery_c2c_pvz_average_item_price_received: {num: buyer_delivery_c2c_pvz_gmv_received, den: buyer_delivery_c2c_pvz_items_received}
+  buyer_delivery_c2c_pvz_average_item_price_accepted: {num: buyer_delivery_c2c_pvz_gmv_accepted, den: buyer_delivery_c2c_pvz_items_accepted}
+  buyer_delivery_c2c_pvz_average_item_price_canceled: {num: buyer_delivery_c2c_pvz_gmv_canceled, den: buyer_delivery_c2c_pvz_items_canceled}
+  buyer_delivery_c2c_pvz_average_item_price_voided: {num: buyer_delivery_c2c_pvz_gmv_voided, den: buyer_delivery_c2c_pvz_items_voided}
+  buyer_delivery_c2c_pvz_average_item_price_unperformed: {num: buyer_delivery_c2c_pvz_gmv_unperformed, den: buyer_delivery_c2c_pvz_items_unperformed}
+  buyer_delivery_c2c_pvz_average_item_price_return_performed: {num: buyer_delivery_c2c_pvz_gmv_return_performed, den: buyer_delivery_c2c_pvz_items_return_performed}
+  buyer_delivery_c2c_pvz_average_item_price_return_delivered: {num: buyer_delivery_c2c_pvz_gmv_return_delivered, den: buyer_delivery_c2c_pvz_items_return_delivered}
+  buyer_delivery_c2c_pvz_average_item_price_returned: {num: buyer_delivery_c2c_pvz_gmv_returned, den: buyer_delivery_c2c_pvz_items_returned}
+  buyer_delivery_c2c_pvz_average_item_price_unconfirmed: {num: buyer_delivery_c2c_pvz_gmv_unconfirmed, den: buyer_delivery_c2c_pvz_items_unconfirmed}
+  
+  buyer_delivery_b2c_pvz_average_item_price_created: {num: buyer_delivery_b2c_pvz_gmv_created, den: buyer_delivery_b2c_pvz_items_created}
+  buyer_delivery_b2c_pvz_average_item_price_paid: {num: buyer_delivery_b2c_pvz_gmv_paid, den: buyer_delivery_b2c_pvz_items_paid}
+  buyer_delivery_b2c_pvz_average_item_price_confirmed: {num: buyer_delivery_b2c_pvz_gmv_confirmed, den: buyer_delivery_b2c_pvz_items_confirmed}
+  buyer_delivery_b2c_pvz_average_item_price_performed: {num: buyer_delivery_b2c_pvz_gmv_performed, den: buyer_delivery_b2c_pvz_items_performed}
+  buyer_delivery_b2c_pvz_average_item_price_provided: {num: buyer_delivery_b2c_pvz_gmv_provided, den: buyer_delivery_b2c_pvz_items_provided}
+  buyer_delivery_b2c_pvz_average_item_price_received: {num: buyer_delivery_b2c_pvz_gmv_received, den: buyer_delivery_b2c_pvz_items_received}
+  buyer_delivery_b2c_pvz_average_item_price_accepted: {num: buyer_delivery_b2c_pvz_gmv_accepted, den: buyer_delivery_b2c_pvz_items_accepted}
+  buyer_delivery_b2c_pvz_average_item_price_canceled: {num: buyer_delivery_b2c_pvz_gmv_canceled, den: buyer_delivery_b2c_pvz_items_canceled}
+  buyer_delivery_b2c_pvz_average_item_price_voided: {num: buyer_delivery_b2c_pvz_gmv_voided, den: buyer_delivery_b2c_pvz_items_voided}
+  buyer_delivery_b2c_pvz_average_item_price_unperformed: {num: buyer_delivery_b2c_pvz_gmv_unperformed, den: buyer_delivery_b2c_pvz_items_unperformed}
+  buyer_delivery_b2c_pvz_average_item_price_return_performed: {num: buyer_delivery_b2c_pvz_gmv_return_performed, den: buyer_delivery_b2c_pvz_items_return_performed}
+  buyer_delivery_b2c_pvz_average_item_price_return_delivered: {num: buyer_delivery_b2c_pvz_gmv_return_delivered, den: buyer_delivery_b2c_pvz_items_return_delivered}
+  buyer_delivery_b2c_pvz_average_item_price_returned: {num: buyer_delivery_b2c_pvz_gmv_returned, den: buyer_delivery_b2c_pvz_items_returned}
+  buyer_delivery_b2c_pvz_average_item_price_unconfirmed: {num: buyer_delivery_b2c_pvz_gmv_unconfirmed, den: buyer_delivery_b2c_pvz_items_unconfirmed}
+  
+  buyer_delivery_c2c_courier_average_item_price_created: {num: buyer_delivery_c2c_courier_gmv_created, den: buyer_delivery_c2c_courier_items_created}
+  buyer_delivery_c2c_courier_average_item_price_paid: {num: buyer_delivery_c2c_courier_gmv_paid, den: buyer_delivery_c2c_courier_items_paid}
+  buyer_delivery_c2c_courier_average_item_price_confirmed: {num: buyer_delivery_c2c_courier_gmv_confirmed, den: buyer_delivery_c2c_courier_items_confirmed}
+  buyer_delivery_c2c_courier_average_item_price_performed: {num: buyer_delivery_c2c_courier_gmv_performed, den: buyer_delivery_c2c_courier_items_performed}
+  buyer_delivery_c2c_courier_average_item_price_provided: {num: buyer_delivery_c2c_courier_gmv_provided, den: buyer_delivery_c2c_courier_items_provided}
+  buyer_delivery_c2c_courier_average_item_price_received: {num: buyer_delivery_c2c_courier_gmv_received, den: buyer_delivery_c2c_courier_items_received}
+  buyer_delivery_c2c_courier_average_item_price_accepted: {num: buyer_delivery_c2c_courier_gmv_accepted, den: buyer_delivery_c2c_courier_items_accepted}
+  buyer_delivery_c2c_courier_average_item_price_canceled: {num: buyer_delivery_c2c_courier_gmv_canceled, den: buyer_delivery_c2c_courier_items_canceled}
+  buyer_delivery_c2c_courier_average_item_price_voided: {num: buyer_delivery_c2c_courier_gmv_voided, den: buyer_delivery_c2c_courier_items_voided}
+  buyer_delivery_c2c_courier_average_item_price_unperformed: {num: buyer_delivery_c2c_courier_gmv_unperformed, den: buyer_delivery_c2c_courier_items_unperformed}
+  buyer_delivery_c2c_courier_average_item_price_return_performed: {num: buyer_delivery_c2c_courier_gmv_return_performed, den: buyer_delivery_c2c_courier_items_return_performed}
+  buyer_delivery_c2c_courier_average_item_price_return_delivered: {num: buyer_delivery_c2c_courier_gmv_return_delivered, den: buyer_delivery_c2c_courier_items_return_delivered}
+  buyer_delivery_c2c_courier_average_item_price_returned: {num: buyer_delivery_c2c_courier_gmv_returned, den: buyer_delivery_c2c_courier_items_returned}
+  buyer_delivery_c2c_courier_average_item_price_unconfirmed: {num: buyer_delivery_c2c_courier_gmv_unconfirmed, den: buyer_delivery_c2c_courier_items_unconfirmed}
+
+  buyer_delivery_total_average_item_price_created: {num: buyer_delivery_total_gmv_created, den: buyer_delivery_total_items_created}
+  buyer_delivery_total_average_item_price_paid: {num: buyer_delivery_total_gmv_paid, den: buyer_delivery_total_items_paid}
+  buyer_delivery_total_average_item_price_confirmed: {num: buyer_delivery_total_gmv_confirmed, den: buyer_delivery_total_items_confirmed}
+  buyer_delivery_total_average_item_price_performed: {num: buyer_delivery_total_gmv_performed, den: buyer_delivery_total_items_performed}
+  buyer_delivery_total_average_item_price_provided: {num: buyer_delivery_total_gmv_provided, den: buyer_delivery_total_items_provided}
+  buyer_delivery_total_average_item_price_received: {num: buyer_delivery_total_gmv_received, den: buyer_delivery_total_items_received}
+  buyer_delivery_total_average_item_price_accepted: {num: buyer_delivery_total_gmv_accepted, den: buyer_delivery_total_items_accepted}
+  buyer_delivery_total_average_item_price_canceled: {num: buyer_delivery_total_gmv_canceled, den: buyer_delivery_total_items_canceled}
+  buyer_delivery_total_average_item_price_voided: {num: buyer_delivery_total_gmv_voided, den: buyer_delivery_total_items_voided}
+  buyer_delivery_total_average_item_price_unperformed: {num: buyer_delivery_total_gmv_unperformed, den: buyer_delivery_total_items_unperformed}
+  buyer_delivery_total_average_item_price_return_performed: {num: buyer_delivery_total_gmv_return_performed, den: buyer_delivery_total_items_return_performed}
+  buyer_delivery_total_average_item_price_return_delivered: {num: buyer_delivery_total_gmv_return_delivered, den: buyer_delivery_total_items_return_delivered}
+  buyer_delivery_total_average_item_price_returned: {num: buyer_delivery_total_gmv_returned, den: buyer_delivery_total_items_returned}
+  buyer_delivery_total_average_item_price_unconfirmed: {num: buyer_delivery_total_gmv_unconfirmed, den: buyer_delivery_total_items_unconfirmed}
+  
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_created: {num: buyer_delivery_c2c_pvz_revenue_no_vat_created, den: buyer_delivery_c2c_pvz_orders_created}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_paid: {num: buyer_delivery_c2c_pvz_revenue_no_vat_paid, den: buyer_delivery_c2c_pvz_orders_paid}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_confirmed: {num: buyer_delivery_c2c_pvz_revenue_no_vat_confirmed, den: buyer_delivery_c2c_pvz_orders_confirmed}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_performed: {num: buyer_delivery_c2c_pvz_revenue_no_vat_performed, den: buyer_delivery_c2c_pvz_orders_performed}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_provided: {num: buyer_delivery_c2c_pvz_revenue_no_vat_provided, den: buyer_delivery_c2c_pvz_orders_provided}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_received: {num: buyer_delivery_c2c_pvz_revenue_no_vat_received, den: buyer_delivery_c2c_pvz_orders_received}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_accepted: {num: buyer_delivery_c2c_pvz_revenue_no_vat_accepted, den: buyer_delivery_c2c_pvz_orders_accepted}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_canceled: {num: buyer_delivery_c2c_pvz_revenue_no_vat_canceled, den: buyer_delivery_c2c_pvz_orders_canceled}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_voided: {num: buyer_delivery_c2c_pvz_revenue_no_vat_voided, den: buyer_delivery_c2c_pvz_orders_voided}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_unperformed: {num: buyer_delivery_c2c_pvz_revenue_no_vat_unperformed, den: buyer_delivery_c2c_pvz_orders_unperformed}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_return_performed: {num: buyer_delivery_c2c_pvz_revenue_no_vat_return_performed, den: buyer_delivery_c2c_pvz_orders_return_performed}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_return_delivered: {num: buyer_delivery_c2c_pvz_revenue_no_vat_return_delivered, den: buyer_delivery_c2c_pvz_orders_return_delivered}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_returned: {num: buyer_delivery_c2c_pvz_revenue_no_vat_returned, den: buyer_delivery_c2c_pvz_orders_returned}
+  buyer_delivery_c2c_pvz_average_revenue_no_vat_unconfirmed: {num: buyer_delivery_c2c_pvz_revenue_no_vat_unconfirmed, den: buyer_delivery_c2c_pvz_orders_unconfirmed}
+  
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_created: {num: buyer_delivery_b2c_pvz_revenue_no_vat_created, den: buyer_delivery_b2c_pvz_orders_created}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_paid: {num: buyer_delivery_b2c_pvz_revenue_no_vat_paid, den: buyer_delivery_b2c_pvz_orders_paid}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_confirmed: {num: buyer_delivery_b2c_pvz_revenue_no_vat_confirmed, den: buyer_delivery_b2c_pvz_orders_confirmed}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_performed: {num: buyer_delivery_b2c_pvz_revenue_no_vat_performed, den: buyer_delivery_b2c_pvz_orders_performed}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_provided: {num: buyer_delivery_b2c_pvz_revenue_no_vat_provided, den: buyer_delivery_b2c_pvz_orders_provided}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_received: {num: buyer_delivery_b2c_pvz_revenue_no_vat_received, den: buyer_delivery_b2c_pvz_orders_received}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_accepted: {num: buyer_delivery_b2c_pvz_revenue_no_vat_accepted, den: buyer_delivery_b2c_pvz_orders_accepted}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_canceled: {num: buyer_delivery_b2c_pvz_revenue_no_vat_canceled, den: buyer_delivery_b2c_pvz_orders_canceled}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_voided: {num: buyer_delivery_b2c_pvz_revenue_no_vat_voided, den: buyer_delivery_b2c_pvz_orders_voided}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_unperformed: {num: buyer_delivery_b2c_pvz_revenue_no_vat_unperformed, den: buyer_delivery_b2c_pvz_orders_unperformed}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_return_performed: {num: buyer_delivery_b2c_pvz_revenue_no_vat_return_performed, den: buyer_delivery_b2c_pvz_orders_return_performed}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_return_delivered: {num: buyer_delivery_b2c_pvz_revenue_no_vat_return_delivered, den: buyer_delivery_b2c_pvz_orders_return_delivered}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_returned: {num: buyer_delivery_b2c_pvz_revenue_no_vat_returned, den: buyer_delivery_b2c_pvz_orders_returned}
+  buyer_delivery_b2c_pvz_average_revenue_no_vat_unconfirmed: {num: buyer_delivery_b2c_pvz_revenue_no_vat_unconfirmed, den: buyer_delivery_b2c_pvz_orders_unconfirmed}
+  
+  buyer_delivery_c2c_courier_average_revenue_no_vat_created: {num: buyer_delivery_c2c_courier_revenue_no_vat_created, den: buyer_delivery_c2c_courier_orders_created}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_paid: {num: buyer_delivery_c2c_courier_revenue_no_vat_paid, den: buyer_delivery_c2c_courier_orders_paid}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_confirmed: {num: buyer_delivery_c2c_courier_revenue_no_vat_confirmed, den: buyer_delivery_c2c_courier_orders_confirmed}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_performed: {num: buyer_delivery_c2c_courier_revenue_no_vat_performed, den: buyer_delivery_c2c_courier_orders_performed}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_provided: {num: buyer_delivery_c2c_courier_revenue_no_vat_provided, den: buyer_delivery_c2c_courier_orders_provided}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_received: {num: buyer_delivery_c2c_courier_revenue_no_vat_received, den: buyer_delivery_c2c_courier_orders_received}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_accepted: {num: buyer_delivery_c2c_courier_revenue_no_vat_accepted, den: buyer_delivery_c2c_courier_orders_accepted}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_canceled: {num: buyer_delivery_c2c_courier_revenue_no_vat_canceled, den: buyer_delivery_c2c_courier_orders_canceled}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_voided: {num: buyer_delivery_c2c_courier_revenue_no_vat_voided, den: buyer_delivery_c2c_courier_orders_voided}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_unperformed: {num: buyer_delivery_c2c_courier_revenue_no_vat_unperformed, den: buyer_delivery_c2c_courier_orders_unperformed}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_return_performed: {num: buyer_delivery_c2c_courier_revenue_no_vat_return_performed, den: buyer_delivery_c2c_courier_orders_return_performed}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_return_delivered: {num: buyer_delivery_c2c_courier_revenue_no_vat_return_delivered, den: buyer_delivery_c2c_courier_orders_return_delivered}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_returned: {num: buyer_delivery_c2c_courier_revenue_no_vat_returned, den: buyer_delivery_c2c_courier_orders_returned}
+  buyer_delivery_c2c_courier_average_revenue_no_vat_unconfirmed: {num: buyer_delivery_c2c_courier_revenue_no_vat_unconfirmed, den: buyer_delivery_c2c_courier_orders_unconfirmed}
+
+  buyer_delivery_total_average_revenue_no_vat_created: {num: buyer_delivery_total_revenue_no_vat_created, den: buyer_delivery_total_orders_created}
+  buyer_delivery_total_average_revenue_no_vat_paid: {num: buyer_delivery_total_revenue_no_vat_paid, den: buyer_delivery_total_orders_paid}
+  buyer_delivery_total_average_revenue_no_vat_confirmed: {num: buyer_delivery_total_revenue_no_vat_confirmed, den: buyer_delivery_total_orders_confirmed}
+  buyer_delivery_total_average_revenue_no_vat_performed: {num: buyer_delivery_total_revenue_no_vat_performed, den: buyer_delivery_total_orders_performed}
+  buyer_delivery_total_average_revenue_no_vat_provided: {num: buyer_delivery_total_revenue_no_vat_provided, den: buyer_delivery_total_orders_provided}
+  buyer_delivery_total_average_revenue_no_vat_received: {num: buyer_delivery_total_revenue_no_vat_received, den: buyer_delivery_total_orders_received}
+  buyer_delivery_total_average_revenue_no_vat_accepted: {num: buyer_delivery_total_revenue_no_vat_accepted, den: buyer_delivery_total_orders_accepted}
+  buyer_delivery_total_average_revenue_no_vat_canceled: {num: buyer_delivery_total_revenue_no_vat_canceled, den: buyer_delivery_total_orders_canceled}
+  buyer_delivery_total_average_revenue_no_vat_voided: {num: buyer_delivery_total_revenue_no_vat_voided, den: buyer_delivery_total_orders_voided}
+  buyer_delivery_total_average_revenue_no_vat_unperformed: {num: buyer_delivery_total_revenue_no_vat_unperformed, den: buyer_delivery_total_orders_unperformed}
+  buyer_delivery_total_average_revenue_no_vat_return_performed: {num: buyer_delivery_total_revenue_no_vat_return_performed, den: buyer_delivery_total_orders_return_performed}
+  buyer_delivery_total_average_revenue_no_vat_return_delivered: {num: buyer_delivery_total_revenue_no_vat_return_delivered, den: buyer_delivery_total_orders_return_delivered}
+  buyer_delivery_total_average_revenue_no_vat_returned: {num: buyer_delivery_total_revenue_no_vat_returned, den: buyer_delivery_total_orders_returned}
+  buyer_delivery_total_average_revenue_no_vat_unconfirmed: {num: buyer_delivery_total_revenue_no_vat_unconfirmed, den: buyer_delivery_total_orders_unconfirmed}
