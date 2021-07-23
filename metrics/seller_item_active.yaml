@@ -111,7 +111,24 @@ metric.counter:
   items_with_bad_address:                  {filter: [is_active: True, *bad_address]}
   items_with_bad_address_new:              {filter: [is_active: True, start_date: $event_date, *bad_address]}
   items_with_bad_address_reactivated:      {filter: [is_active: True, last_activation_date: $event_date, activations_count.>: 1, *bad_address]}
-  
+  active_items_deliverable:                        {filter: [is_active: True, is_delivery_available: True]}
+  active_items_deliverable_start_date:             {filter: [is_active: True, is_delivery_available: True, start_date.>=: $ab_start_date]}
+  active_items_delivery_on:                        {filter: [is_active: True, is_delivery_active: True]}
+  active_items_delivery_on_start_date:             {filter: [is_active: True, is_delivery_active: True, start_date.>=: $ab_start_date]}
+  seller_deliverable_iv:                           {filter: [is_delivery_available: True ], obs: [item_views]}
+  seller_deliverable_iv_start_date:                {filter: [is_delivery_available: True, start_date.>=: $ab_start_date ], obs: [ item_views]}
+  seller_delivery_iv:                              {filter: [is_delivery_active: True ], obs: [ item_views]}
+  seller_delivery_iv_start_date:                   {filter: [is_delivery_active: True, start_date.>=: $ab_start_date ], obs: [item_views]}
+  seller_contacts_on_delivery_items:               {filter: [is_delivery_active: True], obs: [contacts]}
+  seller_contacts_on_delivery_items_start_date:    {filter: [is_delivery_available: True, start_date.>=: $ab_start_date], obs: [contacts]}
+  seller_contacts_on_deliverable_items:            {filter: [is_delivery_available: True ], obs: [contacts]}
+  seller_contacts_on_deliverable_items_start_date: {filter: [is_delivery_active: True, start_date.>=: $ab_start_date], obs: [contacts]}
+  seller_delivery_contacts:                        {obs: [delivery_contacts]}
+  seller_delivery_contacts_start_date:             {filter: [{start_date.>=: $ab_start_date}], obs: [delivery_contacts]}
+  seller_delivery_clicks:                          {obs: [delivery_clicks]}
+  seller_delivery_clicks_start_date:               {filter: [start_date.>=: $ab_start_date], obs: [delivery_clicks]}
+
+
 metric.uniq:
   active_items_0_photo:                    {counter: cnt_active_items_0_photo,        key: [item]}
   active_items_more_10_description_word:   {counter: cnt_active_items_more_10_description_word, key: [item]}
@@ -168,18 +185,22 @@ metric.uniq:
   user_active_items_2plus_locations_microcat:       {counter: active_items,   key: [user: 0, microcat_id: 2, location_id: 0]}
   user_active_items_5plus_locations_microcat:       {counter: active_items,   key: [user: 0, microcat_id: 5, location_id: 0]}
   user_active_items_10plus_locations_microcat:      {counter: active_items,   key: [user: 0, microcat_id: 10, location_id: 0]} 
-  user_active_items_locations:                      {counter: active_items,   key: [location_id]}           
+  user_active_items_locations:                      {counter: active_items,   key: [location_id]}
+  seller_items_with_delivery_contacts:             {counter: seller_delivery_contacts,         key: [item]}
+  seller_items_with_delivery_clicks:               {counter: seller_delivery_clicks,           key: [item]}
 
 metric.ratio:
-  avg_item_address_length:                      {num: cnt_item_address_length,         den: items_with_address_string}
-  avg_item_address_length_new:                  {num: cnt_item_address_length_new,     den: items_with_address_string_new}
-  avg_item_address_length_react:                {num: cnt_item_address_length_reactivated, den: items_with_address_string_reactivated}
-  seller_item_views_per_active_item:            {num: seller_item_views, den: active_items}
-  seller_items_with_item_views_per_active_item: {num: seller_items_with_item_views, den: active_items}
-  sellers_with_item_views_per_user_active_items: {num: sellers_with_item_views, den: users_active_items}
-  seller_btc_per_item_views:                    {num: seller_btc, den: seller_item_views}
-  seller_btc_per_active_item:                   {num: seller_btc, den: active_items}
-  seller_contacts_per_item_views:               {num: seller_contacts, den: seller_item_views}
-  seller_contact_per_active_item:               {num: seller_contacts, den: active_items}
-  seller_1plus_locations_per_user_active_items: {num: user_active_items_1plus_locations, den: users_active_items}
-  seller_1plus_multiloc_per_user_active_items:  {num: user_active_items_1plus_locations_microcat, den: users_active_items}
+  avg_item_address_length:                        {num: cnt_item_address_length,         den: items_with_address_string}
+  avg_item_address_length_new:                    {num: cnt_item_address_length_new,     den: items_with_address_string_new}
+  avg_item_address_length_react:                  {num: cnt_item_address_length_reactivated, den: items_with_address_string_reactivated}
+  seller_item_views_per_active_item:              {num: seller_item_views, den: active_items}
+  seller_items_with_item_views_per_active_item:   {num: seller_items_with_item_views, den: active_items}
+  sellers_with_item_views_per_user_active_items:  {num: sellers_with_item_views, den: users_active_items}
+  seller_btc_per_item_views:                      {num: seller_btc, den: seller_item_views}
+  seller_btc_per_active_item:                     {num: seller_btc, den: active_items}
+  seller_contacts_per_item_views:                 {num: seller_contacts, den: seller_item_views}
+  seller_contact_per_active_item:                 {num: seller_contacts, den: active_items}
+  seller_1plus_locations_per_user_active_items:   {num: user_active_items_1plus_locations, den: users_active_items}
+  seller_1plus_multiloc_per_user_active_items:    {num: user_active_items_1plus_locations_microcat, den: users_active_items}
+  seller_contacts_per_iv_on_deliverable:          {num: seller_contacts_on_deliverable_items, den: seller_deliverable_iv}
+  seller_contact_per_active_deliverable_item:     {num: seller_contacts_on_deliverable_items, den: active_items_deliverable}
