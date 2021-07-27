@@ -367,30 +367,6 @@ mnz_vas:
   dtm: event_date
   segm: cookie_id
 
-mnz_lf:
-  metric_configs: [mnz_lf]
-  database: vertica
-  table: dma.vo_lf_metrics
-  column_map:
-    user: user_id
-  dimensions:
-    - user_segment_market
-    - is_asd
-    - tariff_type
-    - tariff_subtype
-    - vertical
-    - logical_category
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  participant: {user: user_id}
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-  dtm: event_date
-  segm: user_id
-
 messenger:
   metric_configs: [messenger]
   database: vertica
@@ -1098,43 +1074,20 @@ callcenter_calls:
   participant: {user: user_id}
   dtm: enter_date
 
-lf_metrics_transactions_by_event_date:
-  metric_configs: [lf_metrics_transactions_by_event_date]
-  database: vertica
-  table: dma.vo_lf_metrics_transactions
-  column_map:
-    user: user_id
-  dimensions:
-    - user_segment_market
-    - tariff_type
-    - tariff_subtype
-    - platform
-    - vertical
-    - logical_category
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  participant: {user: user_id}
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-  dtm: event_date
-  segm: user_id
 
-lf_metrics_by_event_date:
-  metric_configs: [lf_metrics_by_event_date]
+listing_fees:
+  metric_configs: [listing_fees]
   database: vertica
   table: dma.vo_lf_metrics
   column_map:
     user: user_id
   dimensions:
-    - user_segment_market
-    - is_asd
     - tariff_type
     - tariff_subtype
     - vertical
     - logical_category
+    - user_segment_market
+    - is_asd
     - region
     - city
     - location_group
@@ -1146,29 +1099,31 @@ lf_metrics_by_event_date:
   dtm: event_date
   segm: user_id
 
-tariff_metrics_funnel_by_event_date:
-  metric_configs: [tariff_metrics_funnel_by_event_date]
+tariff_transactions:
+  metric_configs: [tariff_transactions]
   database: vertica
-  table: dma.vo_tariff_metrics_funnel
+  table: dma.vo_lf_metrics_transactions
   column_map:
     user: user_id
   dimensions:
-    - user_segment_market
-    - platform
+    - tariff_type
+    - tariff_subtype
     - vertical
     - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
+    - user_segment_market
+    - is_asd
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - platform
   participant: {user: user_id}
   m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category]
-    - [category, subcategory]
+    - [is_logged_in, vertical, logical_category, region]
   dtm: event_date
   segm: user_id
+
 
 paying_user_report_by_event_date:
   metric_configs: [paying_user_report_by_event_date]
