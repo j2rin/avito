@@ -1,0 +1,14 @@
+definitions:
+
+  - &is_not_chatbot_chat   {reply_message_bot.isnull: True} 
+  - &is_chat_subtype       {chat_subtype.isnull: False} 
+  - &with_reply            {with_reply: True}
+  - &reply_3days           {reply_time_minutes.<=: 4320}
+
+
+metric.counter:
+    answered_first_messages:                                 {filter: [*is_chat_subtype, *with_reply, *is_not_chatbot_chat, *reply_3days, reply_time_minutes.>=: 0]}
+    answered_first_messages_by_bot:                          {filter: [*is_chat_subtype, *with_reply, {reply_message_bot:True}, *reply_3days, reply_time_minutes.>=: 0]}
+    answered_first_messages_1hour:                           {filter: [*is_chat_subtype, *is_not_chatbot_chat, *with_reply, reply_time_minutes.>=: 0, reply_time_minutes.<=: 1440]} 
+    answered_first_messages_within_1hour_7hour:              {filter: [*is_chat_subtype, *with_reply, *is_not_chatbot_chat, reply_time_minutes.<=: 420, reply_time_minutes.>: 60]} 
+    answered_first_messages_within_1hour:                    {filter: [*is_chat_subtype, *with_reply, *is_not_chatbot_chat, reply_time_minutes.<=: 60, reply_time_minutes.>=: 0]} 
