@@ -1114,6 +1114,31 @@ tariff_transactions:
   segm: user_id
 
 
+tariff_funnel:
+  metric_configs: [tariff_funnel]
+  database: vertica
+  table: dma.vo_tariff_metrics_funnel
+  column_map:
+    user: user_id
+  dimensions:
+    - user_segment_market
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+  participant: {user: user_id}
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category]
+    - [category, subcategory]
+  dtm: event_date
+  segm: user_id
+
+
 paying_user_report_by_event_date:
   metric_configs: [paying_user_report_by_event_date]
   database: vertica

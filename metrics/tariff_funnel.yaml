@@ -1,0 +1,58 @@
+metric.counter:
+  cnt_tariff_itemactivation_start:        {filter: [configurator_source: 'item activation', step: 'item activation']}
+  cnt_tariff_itemactivation_openconfig:   {filter: [configurator_source: 'item activation', step: 'configurator']}
+  cnt_tariff_itemactivation_submit:       {filter: [configurator_source: 'item activation', step: 'configurator submit']}
+  cnt_tariff_itemactivation_purchase:     {filter: [configurator_source: 'item activation', step: 'purchase']}
+
+  cnt_tariff_config_openconfig:   {filter: [$or: [configurator_source.!=: 'item activation', configurator_source.isnull: true], step: 'configurator']}
+  cnt_tariff_config_submit:       {filter: [$or: [configurator_source.!=: 'item activation', configurator_source.isnull: true], step: 'configurator submit']}
+  cnt_tariff_config_purchase:     {filter: [$or: [configurator_source.!=: 'item activation', configurator_source.isnull: true], step: 'purchase']}
+
+  cnt_tariff_openconfig:   {filter: [step: 'configurator']}
+  cnt_tariff_submit:   {filter: [step: 'configurator submit']}
+  cnt_tariff_purchase: {filter: [step: 'purchase']}
+
+metric.uniq:
+  users_tariff_itemactivation_start:        {counter: cnt_tariff_itemactivation_start,        key: [user_id]}
+  users_tariff_itemactivation_openconfig:   {counter: cnt_tariff_itemactivation_openconfig,   key: [user_id]}
+  users_tariff_itemactivation_submit:       {counter: cnt_tariff_itemactivation_submit,       key: [user_id]}
+  users_tariff_itemactivation_purchase:     {counter: cnt_tariff_itemactivation_purchase,     key: [user_id]}
+
+  users_tariff_config_openconfig:   {counter: cnt_tariff_config_openconfig,   key: [user_id]}
+  users_tariff_config_submit:       {counter: cnt_tariff_config_submit,       key: [user_id]}
+  users_tariff_config_purchase:     {counter: cnt_tariff_config_purchase,     key: [user_id]}
+
+  users_tariff_openconfig:   {counter: cnt_tariff_openconfig,     key: [user_id]}
+  users_tariff_submit:       {counter: cnt_tariff_submit,         key: [user_id]}
+  users_tariff_purchase:     {counter: cnt_tariff_purchase,       key: [user_id]}
+
+metric.ratio:
+  cr_tariff_itemactivation_start_openconfig:    {num: cnt_tariff_itemactivation_openconfig,   	den: cnt_tariff_itemactivation_start}
+  cr_tariff_itemactivation_start_submit:        {num: cnt_tariff_itemactivation_submit,   	    den: cnt_tariff_itemactivation_start}
+  cr_tariff_itemactivation_purchase_per_start:  {num: cnt_tariff_itemactivation_purchase, 	    den: cnt_tariff_item_activation_start}
+  cr_tariff_itemactivation_openconfig_submit:   {num: cnt_tariff_itemactivation_submit,   	    den: cnt_tariff_itemactivation_openconfig}
+  cr_tariff_itemactivation_config_purchase:     {num: cnt_tariff_itemactivation_purchase, 	    den: cnt_tariff_itemactivation_openconfig}
+  cr_tariff_itemactivation_submit_purchase:     {num: ccnt_tariff_itemactivation_purchase,      den: cnt_tariff_itemactivation_submit}
+
+  cr_tariff_config_openconfig_submit:   {num: cnt_tariff_config_submit,   den: cnt_tariff_config_openconfig}
+  cr_tariff_config_openconfig_purchase: {num: cnt_tariff_config_purchase, den: cnt_tariff_config_openconfig}
+  cr_tariff_config_submit_purchase:     {num: cnt_tariff_config_purchase, den: cnt_tariff_config_submit}
+
+  cr_tariff_openconfig_submit:   {num: cnt_tariff_submit,    den: cnt_tariff_openconfig}
+  cr_tariff_openconfig_purchase: {num: cnt_tariff_purchase,  den: cnt_tariff_openconfig}
+  cr_tariff_submit_purchase:    {num: cnt_tariff_purchase,  den: cnt_tariff_submit}
+
+  cr_users_tariff_itemactivation_start_openconfig:    {num: users_tariff_itemactivation_openconfig,   den: users_tariff_itemactivation_start}
+  cr_users_tariff_itemactivation_start_submit:        {num: users_tariff_itemactivation_submit,       den: users_tariff_itemactivation_start}
+  cr_users_tariff_itemactivation_start_purchase:      {num: users_tariff_itemactivation_purchase,     den: users_tariff_itemactivation_start}
+  cr_users_tariff_itemactivation_openconfig_submit:   {num: users_tariff_itemactivation_submit,       den: users_tariff_itemactivation_openconfig}
+  cr_users_tariff_itemactivation_config_purchase:     {num: users_tariff_itemactivation_purchase,     den: users_tariff_itemactivation_openconfig}
+  cr_users_tariff_itemactivation_submit_purchase:     {num: users_tariff_itemactivation_purchase,     den: users_tariff_itemactivation_submit}
+
+  cr_users_tariff_config_openconfig_submit:   {num: users_tariff_config_submit,   den: users_tariff_config_openconfig}
+  cr_users_tariff_config_openconfig_purchase: {num: users_tariff_config_purchase, den: users_tariff_config_openconfig}
+  cr_users_tariff_config_submit_purchase:     {num: users_tariff_config_purchase, den: users_tariff_config_submit}
+
+  cr_users_tariff_openconfig_submit:   {num: users_tariff_submit,    den: users_tariff_openconfig}
+  cr_users_tariff_openconfig_purchase: {num: users_tariff_purchase,  den: users_tariff_openconfig}
+  cr_users_tariff_submit_purchase:     {num: users_tariff_purchase,  den: users_tariff_submit}
