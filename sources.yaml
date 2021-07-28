@@ -412,7 +412,7 @@ delivery_orders_buyer:
   metric_configs: [delivery_orders_buyer]
   database: vertica
   table: dma.vo_delivery_orders
-  dimension:
+  dimensions:
     - platform
     - vertical
     - logical_category
@@ -445,39 +445,41 @@ delivery_orders_buyer:
   dtm: status_date
   segm: deliveryorder_id
 
-  delivery_orders_seller:
-    metric_configs: [ delivery_orders_seller ]
-    database: vertica
-    table: dma.vo_delivery_orders
-    dimension:
-      - platform
-      - vertical
-      - logical_category
-      - category
-      - subcategory
-      - param1
-      - param2
-      - param3
-      - param4
-      - region
-      - city
-      - location_group
-      - population_group
-      - location_level
-      - buyer_location
-      - buyer_city
-      - buyer_location_group
-      - buyer_population_group
-      - buyer_location_level
-      - is_delivery_paid_new
-      - is_delivery_accepted_new
-      - delivery_workflow
-      - delivery_service
-      - is_intercity
-      - user_segment_market
-    participant: { user: seller_id }
-    dtm: status_date
-    segm: deliveryorder_id
+delivery_orders_seller:
+  metric_configs: [delivery_orders_seller]
+  database: vertica
+  table: dma.vo_delivery_orders
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - buyer_location
+    - buyer_city
+    - buyer_location_group
+    - buyer_population_group
+    - buyer_location_level
+    - is_delivery_paid_new
+    - is_delivery_accepted_new
+    - delivery_workflow
+    - delivery_service
+    - is_intercity
+    - user_segment_market
+  participant: {user: seller_id}
+  dtm: status_date
+  segm: deliveryorder_id
+
+
 
 delivery:
   metric_configs: [delivery]
