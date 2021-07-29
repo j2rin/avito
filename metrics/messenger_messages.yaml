@@ -1,0 +1,80 @@
+definitions:
+
+  - &is_user_event         {eventtype_id.!in: [123266750002,259585250001]}
+  - &is_seller             {is_item_owner: True}
+  - &is_item               {item_id.isnull: False}
+  - &is_u2u_chat           {chat_type: u2u}
+  - &is_support_chat       {chat_subtype: support}
+  - &is_chatbot_chat       {is_chatbot_chat: True}
+  - &is_chat_subtype       {chat_subtype.isnull: False} 
+
+  
+metric.counter:
+    cnt_messenger_total_messeges:                            {filter: [*is_item, *is_chat_subtype, *is_user_event], m42: False}
+    cnt_messenger_total_messeges_inchat_with_bot:            {filter: [*is_item, *is_chat_subtype, *is_chatbot_chat, *is_user_event], m42: False}
+    cnt_messenger_u2u_total_messeges:                        {filter: [*is_u2u_chat, *is_user_event], m42: False}
+    cnt_messenger_supportchat_total_messeges:                {filter: [*is_support_chat, *is_user_event], m42: False}    
+    cnt_messenger_seller_total_messages:                     {filter: [*is_chat_subtype, *is_user_event, *is_seller], m42: False}    
+    cnt_messenger_seller_total_messages_inchat_with_bot:     {filter: [*is_chat_subtype, *is_user_event, *is_seller, *is_chatbot_chat], m42: False}   
+    cnt_messenger_buyer_total_messages:                      {filter: [*is_chat_subtype, *is_user_event, is_item_owner: False], m42: False}   
+    cnt_messenger_buyer_total_messages_inchat_with_bot:      {filter: [*is_chat_subtype, *is_user_event, is_item_owner: False, *is_chatbot_chat], m42: False}   
+    cnt_messenger_first_messages:                            {filter: [*is_chat_subtype,  is_first_message: True], m42: False}   
+    cnt_messenger_text_messages:                             {filter: [*is_chat_subtype, eventtype_id: 18750001], m42: False}   
+    cnt_messenger_supportchat_text_messages:                 {filter: [*is_support_chat, eventtype_id: 18750001], m42: False}   
+    cnt_messenger_u2u_text_messages:                         {filter: [*is_u2u_chat, eventtype_id: 18750001], m42: False}   
+    cnt_messenger_image_messages:                            {filter: [*is_chat_subtype, eventtype_id: 123266750001], m42: False}   
+    cnt_messenger_supportchat_image_messages:                {filter: [*is_support_chat, eventtype_id: 123266750001], m42: False}   
+    cnt_messenger_u2u_image_messages:                        {filter: [*is_u2u_chat, eventtype_id: 123266750001], m42: False}   
+    cnt_messenger_item_messages:                             {filter: [*is_chat_subtype, eventtype_id: 18250001], m42: False}   
+    cnt_messenger_geo_messages:                              {filter: [*is_chat_subtype, eventtype_id: 173412000001], m42: False}   
+    cnt_messenger_links_messages:                            {filter: [*is_chat_subtype, eventtype_id: 173471000001], m42: False}   
+    cnt_messenger_auto_messages:                             {filter: [*is_chat_subtype, eventtype_id: 119892250001], m42: False}   
+    cnt_messenger_sendcall_messages:                         {filter: [*is_chat_subtype, eventtype_id: 123266750002], m42: False}   
+    cnt_messenger_u2u_sendcall_messages:                     {filter: [*is_u2u_chat, eventtype_id: 123266750002], m42: False}   
+    cnt_messenger_voip_call_message:                         {filter: [*is_chat_subtype, eventtype_id: 259585250001], m42: False}   
+    cnt_messenger_chatbot_messages:                          {filter: [*is_chat_subtype, eventtype_id: 289341250001], m42: False}   
+    cnt_messenger_files_messages:                            {filter: [*is_chat_subtype, eventtype_id: 340504000001]}   
+    cnt_messenger_supportchat_files_messages:                {filter: [*is_support_chat, eventtype_id: 340504000001], m42: False}   
+    cnt_messenger_active_chats:                              {filter: [*is_item, *is_chat_subtype], m42: False}   
+    cnt_messenger_u2u_active_chats:                          {filter: [*is_u2u_chat], m42: False}   
+    cnt_messenger_active_chats_with_bot:                     {filter: [*is_chatbot_chat, *is_item, eventtype_id: 289341250001], m42: False}   
+    cnt_messenger_support_chats:                             {filter: [*is_support_chat], m42: False}   
+
+ 
+metric.uniq:
+  total_messages:                                 {counter: cnt_messenger_total_messeges,                             key: [message]}
+  total_messages_chatbot_chat:                    {counter: cnt_messenger_total_messeges_inchat_with_bot,             key: [message]}
+  messenger_u2u_total_messeges:                   {counter: cnt_messenger_u2u_total_messeges,                         key: [message]}
+  messenger_supportchat_total_messeges:           {counter: cnt_messenger_supportchat_total_messeges,                 key: [message]}
+  messenger_seller_total_messages:                {counter: cnt_messenger_seller_total_messages,                      key: [message]}
+  total_messages_chatbot_chat_seller:             {counter: cnt_messenger_seller_total_messages_inchat_with_bot,      key: [message]}
+  messenger_buyer_total_messages:                 {counter: cnt_messenger_buyer_total_messages,                       key: [message]}
+  total_messages_chatbot_chat_buyer:              {counter: cnt_messenger_buyer_total_messages_inchat_with_bot,       key: [message]}
+  messenger_first_messages:                       {counter: cnt_messenger_first_messages,                             key: [message]}
+  messenger_text_messages:                        {counter: cnt_messenger_text_messages,                              key: [message]}
+  messenger_supportchat_text_messages:            {counter: cnt_messenger_supportchat_text_messages,                  key: [message]}
+  messenger_u2u_text_messages:                    {counter: cnt_messenger_u2u_text_messages,                          key: [message]}
+  messenger_image_messages:                       {counter: cnt_messenger_image_messages,                             key: [message]}
+  messenger_supportchat_image_messages:           {counter: cnt_messenger_supportchat_image_messages,                 key: [message]}
+  messenger_u2u_image_messages:                   {counter: cnt_messenger_u2u_image_messages,                         key: [message]}
+  messenger_item_messages:                        {counter: cnt_messenger_item_messages,                              key: [message]}
+  messenger_geo_messages:                         {counter: cnt_messenger_geo_messages,                               key: [message]}
+  messenger_links_messages:                       {counter: cnt_messenger_links_messages,                             key: [message]}
+  messenger_auto_messages:                        {counter: cnt_messenger_auto_messages,                              key: [message]}
+  messenger_sendcall_messages:                    {counter: cnt_messenger_sendcall_messages,                          key: [message]}
+  messenger_u2u_sendcall_messages:                {counter: cnt_messenger_u2u_sendcall_messages,                      key: [message]}
+  messenger_voip_call_message:                    {counter: cnt_messenger_voip_call_message,                          key: [message]}
+  messenger_chatbot_messages:                     {counter: cnt_messenger_chatbot_messages,                           key: [message]}
+  messenger_files_messages:                       {counter: cnt_messenger_files_messages,                             key: [message]}
+  messenger_supportchat_files_messages:           {counter: cnt_messenger_supportchat_files_messages,                 key: [message]}
+  messenger_active_chats:                         {counter: cnt_messenger_active_chats,                               key: [chat]}
+  messenger_u2u_active_chats:                     {counter: cnt_messenger_u2u_active_chats,                           key: [chat]}
+  messenger_active_chats_with_bot:                {counter: cnt_messenger_active_chats_with_bot,                      key: [chat]}
+  messenger_support_chats:                        {counter: cnt_messenger_support_chats,                              key: [chat]}
+  messenger_dau:                                  {counter: cnt_messenger_total_messeges,                             key: [user]}
+  messenger_chatbot_dau:                          {counter: cnt_messenger_total_messeges_inchat_with_bot,             key: [user]}
+  messenger_chatbot_seller:                       {counter: cnt_messenger_seller_total_messages_inchat_with_bot,      key: [user]}
+  messenger_chatbot_buyer:                        {counter: cnt_messenger_buyer_total_messages_inchat_with_bot,       key: [user]}
+  messenger_seller:                               {counter: cnt_messenger_seller_total_messages,                      key: [user]}
+  messenger_buyer:                                {counter: cnt_messenger_buyer_total_messages,                       key: [user]}
+
