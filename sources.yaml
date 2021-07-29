@@ -392,6 +392,79 @@ express_cv:
   dtm: event_date
   segm: user_id
 
+delivery_orders_buyer:
+  metric_configs: [delivery_orders_buyer]
+  database: vertica
+  table: dma.vo_delivery_orders
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - buyer_location
+    - buyer_city
+    - buyer_location_group
+    - buyer_population_group
+    - buyer_location_level
+    - is_delivery_paid_new
+    - is_delivery_accepted_new
+    - delivery_workflow
+    - delivery_service
+    - is_intercity
+    - user_segment_market
+  m42_cartesian_groups:
+      - [ platform, vertical, logical_category, region, city, user_segment_market,  is_asd ]
+      - [ platform, category, subcategory, param1, region, city, user_segment_market,  is_asd ]
+  participant: {user: buyer_id}
+  dtm: status_date
+  segm: deliveryorder_id
+
+delivery_orders_seller:
+  metric_configs: [delivery_orders_seller]
+  database: vertica
+  table: dma.vo_delivery_orders
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - buyer_location
+    - buyer_city
+    - buyer_location_group
+    - buyer_population_group
+    - buyer_location_level
+    - is_delivery_paid_new
+    - is_delivery_accepted_new
+    - delivery_workflow
+    - delivery_service
+    - is_intercity
+    - user_segment_market
+  participant: {user: seller_id}
+  dtm: status_date
+  segm: deliveryorder_id
+
+
+
 delivery:
   metric_configs: [delivery]
   database: vertica
@@ -620,105 +693,6 @@ buyer_call:
   dtm: event_date
   segm: cookie_id
 
-buyer_courier_order_create_date:
-  metric_configs: [buyer_courier_order_create_date]
-  database: vertica
-  table: dma.vo_courier_orders
-  dimensions:
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  participant: {user: buyer_id}
-  dtm: create_date
-  segm: courierorder_id
-
-buyer_courier_order_status_date:
-  metric_configs: [buyer_courier_order_status_date]
-  database: vertica
-  table: dma.vo_courier_orders
-  dimensions:
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  participant: {user: buyer_id}
-  dtm: status_date
-  segm: courierorder_id
-
-seller_courier_order_create_date:
-  metric_configs: [seller_courier_order_create_date]
-  database: vertica
-  table: dma.vo_courier_orders
-  dimensions:
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  participant: {user: seller_id}
-  dtm: create_date
-  segm: courierorder_id
-
-seller_courier_order_status_date:
-  metric_configs: [seller_courier_order_status_date]
-  database: vertica
-  table: dma.vo_courier_orders
-  dimensions:
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  participant: {user: seller_id}
-  dtm: status_date
-  segm: courierorder_id
 
 notification:
   metric_configs: [notification]
@@ -825,155 +799,6 @@ app_call_seller_event:
   dtm: event_date
   segm: event_date
 
-delivery_shipments_by_create_date:
-  metric_configs: [delivery_shipments_by_create_date]
-  database: vertica
-  table: dma.vo_delivery_shipments
-  dimensions:
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-    - platform
-  m42_cartesian_groups:
-    - [region]
-  participant: {user: buyer_id}
-  dtm: create_date
-  segm: shipment_id
-
-delivery_shipments_by_status_date:
-  metric_configs: [delivery_shipments_by_status_date]
-  database: vertica
-  table: dma.vo_delivery_shipments
-  dimensions:
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-    - platform
-  m42_cartesian_groups:
-    - [region]
-  participant: {user: buyer_id}
-  dtm: status_date
-  segm: shipment_id
-
-buyer_delivery_shipment_items_by_create_date:
-  metric_configs: [buyer_delivery_shipment_items_by_create_date]
-  database: vertica
-  table: dma.vo_delivery_shipment_items
-  column_map:
-    item: item_id
-    user: buyer_id
-  dimensions:
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-    - platform
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  participant: {user: buyer_id}
-  dtm: create_date
-  segm: shipment_id
-
-buyer_delivery_shipment_items_by_status_date:
-  metric_configs: [buyer_delivery_shipment_items_by_status_date]
-  database: vertica
-  table: dma.vo_delivery_shipment_items
-  column_map:
-    item: item_id
-    user: buyer_id
-  dimensions:
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-    - platform
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  participant: {user: buyer_id}
-  dtm: status_date
-  segm: shipment_id
-
-seller_delivery_shipment_items_by_create_date:
-  metric_configs: [seller_delivery_shipment_items_by_create_date]
-  database: vertica
-  table: dma.vo_delivery_shipment_items
-  column_map:
-    item: item_id
-    user: seller_id
-  dimensions:
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-    - platform
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  participant: {user: seller_id}
-  dtm: create_date
-  segm: shipment_id
-
-seller_delivery_shipment_items_by_status_date:
-  metric_configs: [seller_delivery_shipment_items_by_status_date]
-  database: vertica
-  table: dma.vo_delivery_shipment_items
-  column_map:
-    item: item_id
-    user: seller_id
-  dimensions:
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-    - platform
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  participant: {user: seller_id}
-  dtm: status_date
-  segm: shipment_id
 
 fraud_support_tickets:
   metric_configs: [fraud_support_tickets]
