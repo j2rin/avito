@@ -1240,3 +1240,17 @@ messenger_messages:
   participant: {user: user_id}
   dtm: event_date
   segm: user_id
+
+
+clickstream_antibot:
+  metric_configs: [clickstream_antibot]
+  database: vertica_ext
+  table: dwhcs.clickstream_core
+  column_map:
+      cookie: cookie_id
+      platform_id: business_platform
+      is_participant_new: is_new
+  dimensions: [platform, vertical, category, subcategory, is_human, is_participant_new]
+  dtm: event_date
+  participant: {visitor: cookie_id}
+  segm: cookie_id
