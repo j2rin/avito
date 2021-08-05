@@ -100,8 +100,10 @@ definitions:
   - &is_delivery_pvz          {other_flags.bit: 0}
   - &is_safedeal              {other_flags.bit: 1}
   - &is_delivery_courier      {other_flags.bit: 2}
+  - &is_delivery_active {item_flags.bit: 16}
 
   - &is_item_marketplace      {item_flags.bit: 2}
+  - &is_not_item_marketplace  {item_flags.!bit: 2}
   - &is_search_marketplace    {search_flags.bit: 31}
   - &is_search_w_mp_item      {search_flags.bit: 32}
 
@@ -203,7 +205,6 @@ definitions:
   - &part_qual_compab {item_flags.bit: 14}
   - &part_qual_unknown {item_flags.bit: 15}
 
-  - &is_delivery_active {item_flags.bit: 16}
   - &is_item_cpa      {item_flags.bit: 17}
 
   - &is_item_pessimized      {item_flags.bit: 11}
@@ -852,20 +853,26 @@ metric.counter:
   item_views_from_suggest:                 {filter: [*is_iv, *x_is_suggest_click], m42: False}
   contacts_from_suggest:                   {filter: [*is_contact, *x_is_suggest_click], m42: False}
   searches_from_suggest:                   {filter: [*is_search, *x_is_suggest_click], m42: False}
-  contact_imv_re_good: {filter: [*imv_re_good, *is_contact], m42: False}
-  contact_imv_re_low: {filter: [*imv_re_low, *is_contact], m42: False}
-  contact_imv_re_high: {filter: [*imv_re_high, *is_contact], m42: False}
-  contact_imv_re_no_label: {filter: [*imv_re_no_label, *is_contact], m42: False}
-  iv_imv_re_good: {filter: [*imv_re_good, *is_iv], m42: False}
-  iv_imv_re_low: {filter: [*imv_re_low, *is_iv], m42: False}
-  iv_imv_re_high: {filter: [*imv_re_high, *is_iv], m42: False}
-  iv_imv_re_no_label: {filter: [*imv_re_no_label, *is_iv], m42: False}
+  contact_imv_re_good:                     {filter: [*imv_re_good, *is_contact], m42: False}
+  contact_imv_re_low:                      {filter: [*imv_re_low, *is_contact], m42: False}
+  contact_imv_re_high:                     {filter: [*imv_re_high, *is_contact], m42: False}
+  contact_imv_re_no_label:                 {filter: [*imv_re_no_label, *is_contact], m42: False}
+  iv_imv_re_good:                          {filter: [*imv_re_good, *is_iv], m42: False}
+  iv_imv_re_low:                           {filter: [*imv_re_low, *is_iv], m42: False}
+  iv_imv_re_high:                          {filter: [*imv_re_high, *is_iv], m42: False}
+  iv_imv_re_no_label:                      {filter: [*imv_re_no_label, *is_iv], m42: False}
   s_localpriority:                         {filter: [*is_search, *is_s_localpriority]}
   s_multiloc:                              {filter: [*is_search, *is_s_multiloc]}
   iv_s_multiloc:                           {filter: [*is_s_multiloc, *is_iv_wo_guessing]}
   c_s_multiloc:                            {filter: [*is_s_multiloc, *is_contact_wo_guessing]}
   fav_s_multiloc:                          {filter: [*is_s_multiloc, *is_fav]}
   btc_s_multiloc:                          {filter: [*is_s_multiloc, *is_btc_wo_guessing]}
+  total_delivery_item_view:                {filter: [*is_delivery_active, *is_iv]}
+  total_delivery_click_wo_messenger:       {filter: [*is_delivery_pvz, *is_not_item_marketplace, eid: 2483]}
+  total_delivery_widget:                   {filter: [*is_not_item_marketplace, eid: 2013]}
+  total_delivery_confirm:                  {filter: [*is_not_item_marketplace, eid: 2749]}
+  total_delivery_contact:                  {filter: [*is_not_item_marketplace, *is_delivery]}
+  total_delivery_item_contact:             {filter: [*is_not_item_marketplace, *is_contact]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1050,6 +1057,12 @@ metric.uniq:
   delivery_contact_mp_serp:                {counter: total_delivery_contact_mp_serp,                 key: [item_x]}
   delivery_contact_mp_serp_local:          {counter: total_delivery_contact_mp_serp_local,           key: [item_x]}
   delivery_contact_mp_serp_multiloc:       {counter: total_delivery_contact_mp_serp_multiloc,        key: [item_x]}
+  delivery_item_view:                      {counter: total_delivery_item_view,                       key: [cookie_item]}
+  delivery_click_wo_messenger:             {counter: total_delivery_click_wo_messenger,              key: [cookie_item]}
+  delivery_widget:                         {counter: total_delivery_widget,                          key: [cookie_item]}
+  delivery_confirm:                        {counter: total_delivery_confirm,                         key: [cookie_item]}
+  delivery_contact:                        {counter: total_delivery_contact,                         key: [cookie_item]}
+  delivery_item_contact:                   {counter: total_delivery_item_contact,                    key: [cookie_item]}
   fav_added_delivery:                      {counter: cnt_fav_dlv,                     key: [item_x]}
   fav_added_from_map:                      {counter: cnt_fav_from_map,                key: [item_x]}
   fav_added_premium:                       {counter: cnt_fav_premium,                 key: [item_x]}
@@ -2183,3 +2196,11 @@ metric.ratio:
   rec_vas_contact_ratio:                                                      {num: users_contact_rec_daily_vas,          den: users_contact_rec_daily}
   user_rec_i2i_vas_contact_ratio:                                             {num: users_contact_rec_i2i_vas,            den: users_contact_rec_i2i}
   user_rec_u2i_vas_contact_ratio:                                             {num: users_contact_rec_u2i_vas,            den: users_contact_rec_u2i}
+  delivery_contact_delivery_button_ratio:                                     {num: delivery_contact,                     den: delivery_click_wo_messenger}
+  delivery_total_widget_confirm_ratio:                                        {num: total_delivery_confirm,               den: total_delivery_widget}
+  delivery_total_widget_contact_ratio:                                        {num: total_delivery_contact,               den: total_delivery_widget}
+  delivery_view_delivery_item_contact_ratio:                                  {num: delivery_item_contact,                den: delivery_item_view}
+  delivery_widget_confirm_ratio:                                              {num: delivery_confirm,                     den: delivery_widget }
+  delivery_widget_contact_ratio:                                              {num: delivery_contact,                     den: delivery_widget }
+  delivery_confirm_contact_ratio:                                             {num: delivery_contact,                     den: delivery_confirm}
+  delivery_iv_delivery_contact_ratio:                                         {num: delivery_contact,                     den: delivery_item_view}
