@@ -17,6 +17,8 @@ param1:                   {level: event, has_id: true, parent: subcategory}
 param2:                   {level: event, has_id: true, parent: param1}
 param3:                   {level: event, has_id: true, parent: param2}
 param4:                   {level: event, has_id: true, parent: param3}
+logical_param1:           {level: event, has_id: true, parent: logical_category}
+logical_param2:           {level: event, has_id: true, parent: logical_param1}
 
 location:                 {level: event, has_id: true}
 region:                   {level: event, has_id: true}
@@ -42,6 +44,13 @@ x_location_group:         {level: event, has_id: true}
 x_location_level:         {level: event, has_id: true}
 x_population_group:       {level: event}
 
+buyer_location:               {level: event, has_id: true}
+buyer_region:                 {level: event, has_id: true}
+buyer_city:                   {level: event, has_id: true, parent: buyer_region}
+buyer_location_group:         {level: event, has_id: true}
+buyer_location_level:         {level: event, has_id: true}
+buyer_population_group:       {level: event}
+
 # Булевы дименшены -----------------------------------------------------------------------------------------------------
 is_asd:                   {level: event,       is_bool: true}
 is_core_content:          {level: event,       is_bool: true}
@@ -50,6 +59,8 @@ is_cookie_new:            {level: participant, is_bool: true}
 is_user_new:              {level: participant, is_bool: true}
 is_logged_in:             {level: participant, is_bool: true}
 is_human:                 {level: participant, is_bool: true, m42_has_any: false, m42_cartesian_default: true}
+is_delivery_paid_new:     {level: event,       is_bool: true}
+is_delivery_accepted_new: {level: event,       is_bool: true}
 
 # event-level ----------------------------------------------------------------------------------------------------------
 platform:                 {level: event, has_id: true, m42_cartesian_default: true}
@@ -68,9 +79,6 @@ logical_region:           {level: event}
 network_type:             {level: event}
 page_from:                {level: event}
 phone_population_group:   {level: event}
-proprofile_traffic:       {level: event}
-proprofile_type:          {level: event}
-proprofile_version:       {level: event}
 screen_name:              {level: event}
 stage_name:               {level: event}
 tariff_subtype:           {level: event}
@@ -81,6 +89,8 @@ reports_count:            {level: event}
 searchtype:               {level: event}
 is_authorized:            {level: event}
 is_new_user:              {level: event}
+delivery_workflow:        {level: event}
+delivery_service:         {level: event}
 
 
 # participant-level ----------------------------------------------------------------------------------------------------

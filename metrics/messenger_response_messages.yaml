@@ -1,0 +1,18 @@
+definitions:
+
+  - &is_u2u_chat           {chat_type: u2u}
+  - &is_chatbot_chat       {reply_message_bot: True}
+  - &is_chat_subtype       {chat_subtype.isnull: True} 
+  - &with_reply            {with_reply: True}
+  - &is_item               {item_id.isnull: False}
+
+  
+metric.counter:
+    first_response_messages:                                 {filter: [*is_chat_subtype, *with_reply]}
+    first_response_messages_by_bot:                          {filter: [*is_item, *is_chatbot_chat, *with_reply]}
+    first_response_messages_u2u:                             {filter: [*is_u2u_chat, *with_reply]}
+
+
+metric.uniq:   
+   users_first_response_messages:           {counter: first_response_messages,            key: [user]}
+   users_first_response_messages_by_bot:    {counter: first_response_messages_by_bot,     key: [user]}

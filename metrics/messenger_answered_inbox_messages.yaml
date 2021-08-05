@@ -1,0 +1,19 @@
+definitions:
+
+  - &is_u2u_chat           {chat_type: u2u}
+  - &is_not_chatbot_chat   {reply_message_bot.isnull: True} 
+  - &is_chat_subtype       {chat_subtype.isnull: True} 
+  - &with_reply            {with_reply: True}
+  - &reply_3days           {reply_time_minutes.<=: 4320}
+
+  
+metric.counter:
+    answered_inbox_first_messages:                                 {filter: [*is_chat_subtype, *with_reply, *is_not_chatbot_chat, *reply_3days]}
+    answered_inbox_first_messages_by_bot:                          {filter: [ *with_reply, {reply_message_bot: True}, *reply_3days]}
+    answered_inbox_first_messages_u2u:                             {filter: [*is_u2u_chat, *with_reply, *is_not_chatbot_chat, *reply_3days]} 
+    answered_inbox_first_messages_with_sellers_first:              {filter: [*is_chat_subtype, *is_not_chatbot_chat, *with_reply, reply_time_minutes.<: 0]} 
+    answered_inbox_first_messages_within_1day:                     {filter: [*is_chat_subtype, *with_reply, *is_not_chatbot_chat, reply_time_minutes.<=: 1440, reply_time_minutes.>=: 0]} 
+    answered_inbox_first_messages_within_1hour_7hour:              {filter: [*is_chat_subtype, *with_reply, *is_not_chatbot_chat, reply_time_minutes.<=: 420, reply_time_minutes.>: 60]} 
+    answered_inbox_first_messages_within_1hour:                    {filter: [*is_chat_subtype, *with_reply, *is_not_chatbot_chat, reply_time_minutes.<=: 60, reply_time_minutes.>=: 0]} 
+
+    

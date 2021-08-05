@@ -1,0 +1,46 @@
+definitions:
+  - &eid_bc        [3176]
+  
+  - &is_bc         {eid: *eid_bc}
+  - &is_mini_msg   {source: mini_messenger}
+  - &is_text       {message_type: text}
+  - &is_geo        {message_type: geo}
+  - &is_item       {message_type: item}
+  - &is_image      {message_type: image}
+
+   
+   
+metric.counter:
+    message_start_writing:           {filter: [eid: 3129], obs: [event_count]}
+    attach_button_clicks:            {filter: [eid: 3109], obs: [event_count]}
+    geo_button_clicks:               {filter: [eid: 3110], obs: [event_count]}
+    retry_button_clicks:             {filter: [eid: 3177], obs: [event_count]}
+    total_send_button_clicks:        {filter: [*is_bc], obs: [event_count]}
+    total_text_send_button_clicks:   {filter: [*is_bc, *is_text], obs: [event_count]}
+    total_image_send_button_clicks:  {filter: [*is_bc, *is_image], obs: [event_count]}
+    total_item_send_button_clicks:   {filter: [*is_bc, *is_item], obs: [event_count]}
+    total_geo_send_button_clicks:    {filter: [*is_bc, *is_geo], obs: [event_count]}
+    mini_m_text_send_button_clicks:  {filter: [*is_bc, *is_text, *is_mini_msg], obs: [event_count]}
+    mini_m_image_send_button_clicks: {filter: [*is_bc, *is_image, *is_mini_msg], obs: [event_count]}
+    mini_m_item_send_button_clicks:  {filter: [*is_bc, *is_item, *is_mini_msg], obs: [event_count]}
+    mini_m_geo_send_button_clicks:   {filter: [*is_bc, *is_geo, *is_mini_msg], obs: [event_count]}
+    item_views_from_messenger:       {filter: [eid: 3130], obs: [event_count]}
+    profile_views_from_messenger:    {filter: [eid: 2998], obs: [event_count]}
+    chat_views:                      {filter: [eid: 2919], obs: [event_count]}
+    close_offer_shows:               {filter: [eid: 2724], obs: [event_count]}
+    close_offer_closes:              {filter: [eid: 2722], obs: [event_count]}
+    chat_list_views:                 {filter: [eid: 2920], obs: [event_count]}
+    chat_open_errors:                {filter: [eid: 3324], obs: [event_count]}
+    cnt_chat_list_views:             {filter: [$or: [eid: 2920, eid: 2919]],  obs: [event_count]}
+    items_closed_from_messenger:     {filter: [eid: 313, action_type_id: 1], obs: [event_count]}
+    items_sold_onavito_from_messenger: {filter: [eid: 313, action_type_id: 1, report_reason: ['22']],  obs: [event_count]}
+
+ 
+ 
+metric.uniq:
+  messenger_visitors:                      {counter: cnt_chat_list_views,                key: [cookie_id]}
+  users_chat_open_errors:                  {counter: chat_open_errors,                   key: [user_id]}
+  users_item_sold_onavito_from_messenger:  {counter: items_sold_onavito_from_messenger,  key: [user_id]}
+  users_item_closed_from_messenger:        {counter: items_closed_from_messenger,        key: [user_id]}
+
+  

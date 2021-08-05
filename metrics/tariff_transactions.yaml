@@ -1,0 +1,50 @@
+metric.counter:
+  tariff_payin_amount:   {filter: [transaction_type: 'subscription pay in'], obs: [amount]}
+  tariff_upgrade_amount: {filter: [transaction_type: 'subscription upgrade'], obs: [amount]}
+  tariff_burned_amount:  {filter: [transaction_type: 'subscription burned'], obs: [amount]}
+  tariff_return_amount:  {filter: [transaction_type: 'subscription return'], obs: [amount]}
+
+  tariff_itemactivation_payin_amount:   {filter: [transaction_type: 'subscription pay in', tariff_source: 'item activation'], obs: [amount]}
+  tariff_itemactivation_upgrade_amount: {filter: [transaction_type: 'subscription upgrade', tariff_source: 'item activation'], obs: [amount]}
+  tariff_itemactivation_burned_amount:  {filter: [transaction_type: 'subscription burned', tariff_source: 'item activation'], obs: [amount]}
+  tariff_itemactivation_return_amount:  {filter: [transaction_type: 'subscription return', tariff_source: 'item activation'], obs: [amount]}
+
+  tariff_config_payin_amount:   {filter: [transaction_type: 'subscription pay in', tariff_source: 'configurator'], obs: [amount]}
+  tariff_config_upgrade_amount: {filter: [transaction_type: 'subscription upgrade', tariff_source: 'configurator'], obs: [amount]}
+  tariff_config_burned_amount:  {filter: [transaction_type: 'subscription burned', tariff_source: 'configurator'], obs: [amount]}
+  tariff_config_return_amount:  {filter: [transaction_type: 'subscription return', tariff_source: 'configurator'], obs: [amount]}
+
+
+metric.uniq:
+  tariff_payin_users:     {counter: tariff_payin_amount, key: [user_id]}
+  tariff_upgrade_users:   {counter: tariff_upgrade_amount, key: [user_id]}
+  tariff_burned_users:    {counter: tariff_burned_amount, key: [user_id]}
+  tariff_return_users:    {counter: tariff_return_amount, key: [user_id]}
+
+  tariff_itemactivation_payin_users:     {counter: tariff_itemactivation_payin_amount, key: [user_id]}
+  tariff_itemactivation_upgrade_users:   {counter: tariff_itemactivation_upgrade_amount, key: [user_id]}
+  tariff_itemactivation_burned_users:    {counter: tariff_itemactivation_burned_amount, key: [user_id]}
+  tariff_itemactivation_return_users:    {counter: tariff_itemactivation_return_amount, key: [user_id]}
+
+  tariff_config_payin_users:     {counter: tariff_config_payin_amount, key: [user_id]}
+  tariff_config_upgrade_users:   {counter: tariff_config_upgrade_amount, key: [user_id]}
+  tariff_config_burned_users:    {counter: tariff_config_burned_amount, key: [user_id]}
+  tariff_config_return_users:    {counter: tariff_config_return_amount, key: [user_id]}
+
+
+metric.ratio:
+  tariff_payin_arppu:   {num: tariff_payin_amount, den: tariff_payin_users}
+  tariff_upgrade_arppu: {num: tariff_upgrade_amount, den: tariff_upgrade_users}
+  tariff_burned_arppu:  {num: tariff_burned_amount, den: tariff_burned_users}
+  tariff_return_arppu:  {num: tariff_return_amount, den: tariff_return_users}
+
+  tariff_itemactivation_payin_arppu:   {num: tariff_itemactivation_payin_amount, den: tariff_itemactivation_payin_users}
+  tariff_itemactivation_upgrade_arppu: {num: tariff_itemactivation_upgrade_amount, den: tariff_itemactivation_upgrade_users}
+  tariff_itemactivation_burned_arppu:  {num: tariff_itemactivation_burned_amount, den: tariff_itemactivation_burned_users}
+  tariff_itemactivation_return_arppu:  {num: tariff_itemactivation_return_amount, den: tariff_itemactivation_return_users}
+
+  tariff_config_payin_arppu:   {num: tariff_config_payin_amount, den: tariff_config_payin_users}
+  tariff_config_upgrade_arppu: {num: tariff_config_upgrade_amount, den: tariff_config_upgrade_users}
+  tariff_config_burned_arppu:  {num: tariff_config_burned_amount, den: tariff_config_burned_users}
+  tariff_config_return_arppu:  {num: tariff_config_return_amount, den: tariff_config_return_users}
+  

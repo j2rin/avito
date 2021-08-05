@@ -1,0 +1,116 @@
+metric.counter:
+  lf_revenue:                {obs: [amount]}
+  lf_revenue_net:            {obs: [amount_net]}
+  lf_revenue_net_adj:        {obs: [amount_net_adj]}
+  lf_activations:            {obs: [paid_activations_count]}
+  lf_users_counter:          {}
+
+  single_listing_revenue:      {filter: [tariff_type: 'single'], obs: [amount]}
+  single_listing_activations:  {filter: [tariff_type: 'single'], obs: [paid_activations_count]}
+  single_users_counter:        {filter: [tariff_type: 'single']}
+
+  tariff_revenue:            {filter: [tariff_type: 'tariff'], obs: [amount]}
+  tariff_package_revenue:    {filter: [tariff_type: 'tariff'], obs: [amount_tariff_package]}
+  tariff_level_revenue:      {filter: [tariff_type: 'tariff'], obs: [amount_tariff_level]}
+  tariff_base_revenue:       {filter: [tariff_type: 'tariff', tariff_subtype: 'base'], obs: [amount]}
+  tariff_ext_revenue:        {filter: [tariff_type: 'tariff', tariff_subtype: 'ext'], obs: [amount]}
+  tariff_max_revenue:        {filter: [tariff_type: 'tariff', tariff_subtype: 'max'], obs: [amount]}
+  tariff_pro_revenue:        {filter: [tariff_type: 'tariff', tariff_subtype.!=: 'base'], obs: [amount]}
+
+  tariff_activations:        {filter: [tariff_type: 'tariff'], obs: [paid_activations_count]}
+  tariff_base_activations:   {filter: [tariff_type: 'tariff', tariff_subtype: 'base'], obs: [paid_activations_count]}
+  tariff_ext_activations:    {filter: [tariff_type: 'tariff', tariff_subtype: 'ext'], obs: [paid_activations_count]}
+  tariff_max_activations:    {filter: [tariff_type: 'tariff', tariff_subtype: 'max'], obs: [paid_activations_count]}
+  tariff_pro_activations:    {filter: [tariff_type: 'tariff', tariff_subtype.!=: 'base'], obs: [paid_activations_count]}
+
+  tariff_users_counter:      {filter: [tariff_type: 'tariff']}
+  tariff_base_users_counter: {filter: [tariff_type: 'tariff', tariff_subtype: 'base']}
+  tariff_ext_users_counter:  {filter: [tariff_type: 'tariff', tariff_subtype: 'ext']}
+  tariff_max_users_counter:  {filter: [tariff_type: 'tariff', tariff_subtype: 'max']}
+  tariff_pro_users_counter:  {filter: [tariff_type: 'tariff', tariff_subtype.!=: 'base']}
+
+
+  tariff_itemactivation_revenue:            {filter: [tariff_type: 'tariff', tariff_source: 'item activation'], obs: [amount]}
+  tariff_itemactivation_package_revenue:    {filter: [tariff_type: 'tariff', tariff_source: 'item activation'], obs: [amount_tariff_package]}
+  tariff_itemactivation_level_revenue:      {filter: [tariff_type: 'tariff', tariff_source: 'item activation'], obs: [amount_tariff_level]}
+  tariff_itemactivation_base_revenue:       {filter: [tariff_type: 'tariff', tariff_subtype: 'base', tariff_source: 'item activation'], obs: [amount]}
+  tariff_itemactivation_ext_revenue:        {filter: [tariff_type: 'tariff', tariff_subtype: 'ext', tariff_source: 'item activation'], obs: [amount]}
+  tariff_itemactivation_max_revenue:        {filter: [tariff_type: 'tariff', tariff_subtype: 'max', tariff_source: 'item activation'], obs: [amount]}
+  tariff_itemactivation_pro_revenue:        {filter: [tariff_type: 'tariff', tariff_subtype.!=: 'base', tariff_source: 'item activation'], obs: [amount]}
+
+  tariff_itemactivation_activations:        {filter: [tariff_type: 'tariff', tariff_source: 'item activation'], obs: [paid_activations_count]}
+  tariff_itemactivation_base_activations:   {filter: [tariff_type: 'tariff', tariff_subtype: 'base', tariff_source: 'item activation'], obs: [paid_activations_count]}
+  tariff_itemactivation_ext_activations:    {filter: [tariff_type: 'tariff', tariff_subtype: 'ext', tariff_source: 'item activation'], obs: [paid_activations_count]}
+  tariff_itemactivation_max_activations:    {filter: [tariff_type: 'tariff', tariff_subtype: 'max', tariff_source: 'item activation'], obs: [paid_activations_count]}
+  tariff_itemactivation_pro_activations:    {filter: [tariff_type: 'tariff', tariff_subtype.!=: 'base', tariff_source: 'item activation'], obs: [paid_activations_count]}
+
+  tariff_itemactivation_users_counter:      {filter: [tariff_type: 'tariff', tariff_source: 'item activation']}
+  tariff_itemactivation_base_users_counter: {filter: [tariff_type: 'tariff', tariff_subtype: 'base', tariff_source: 'item activation']}
+  tariff_itemactivation_ext_users_counter:  {filter: [tariff_type: 'tariff', tariff_subtype: 'ext', tariff_source: 'item activation']}
+  tariff_itemactivation_max_users_counter:  {filter: [tariff_type: 'tariff', tariff_subtype: 'max', tariff_source: 'item activation']}
+  tariff_itemactivation_pro_users_counter:  {filter: [tariff_type: 'tariff', tariff_subtype.!=: 'base', tariff_source: 'item activation']}
+
+
+  tariff_config_revenue:             {filter: [tariff_type: 'tariff', tariff_source: 'configurator'], obs: [amount]}
+  tariff_config_package_revenue:     {filter: [tariff_type: 'tariff', tariff_source: 'configurator'], obs: [amount_tariff_package]}
+  tariff_config_level_revenue:       {filter: [tariff_type: 'tariff', tariff_source: 'configurator'], obs: [amount_tariff_level]}
+  tariff_config_base_revenue:        {filter: [tariff_type: 'tariff', tariff_subtype: 'base', tariff_source: 'configurator'], obs: [amount]}
+  tariff_config_ext_revenue:         {filter: [tariff_type: 'tariff', tariff_subtype: 'ext', tariff_source: 'configurator'], obs: [amount]}
+  tariff_config_max_revenue:         {filter: [tariff_type: 'tariff', tariff_subtype: 'max', tariff_source: 'configurator'], obs: [amount]}
+  tariff_config_pro_revenue:         {filter: [tariff_type: 'tariff', tariff_subtype.!=: 'base', tariff_source: 'configurator'], obs: [amount]}
+
+  tariff_config_activations:         {filter: [tariff_type: 'tariff', tariff_source: 'configurator'], obs: [paid_activations_count]}
+  tariff_config_base_activations:    {filter: [tariff_type: 'tariff', tariff_subtype: 'base', tariff_source: 'configurator'], obs: [paid_activations_count]}
+  tariff_config_ext_activations:     {filter: [tariff_type: 'tariff', tariff_subtype: 'ext', tariff_source: 'configurator'], obs: [paid_activations_count]}
+  tariff_config_max_activations:     {filter: [tariff_type: 'tariff', tariff_subtype: 'max', tariff_source: 'configurator'], obs: [paid_activations_count]}
+  tariff_config_pro_activations:     {filter: [tariff_type: 'tariff', tariff_subtype.!=: 'base', tariff_source: 'configurator'], obs: [paid_activations_count]}
+
+  tariff_config_users_counter:       {filter: [tariff_type: 'tariff', tariff_source: 'configurator']}
+  tariff_config_base_users_counter:  {filter: [tariff_type: 'tariff', tariff_subtype: 'base', tariff_source: 'configurator']}
+  tariff_config_ext_users_counter:   {filter: [tariff_type: 'tariff', tariff_subtype: 'ext', tariff_source: 'configurator']}
+  tariff_config_max_users_counter:   {filter: [tariff_type: 'tariff', tariff_subtype: 'max', tariff_source: 'configurator']}
+  tariff_config_pro_users_counter:   {filter: [tariff_type: 'tariff', tariff_subtype.!=: 'base', tariff_source: 'configurator']}
+
+
+metric.uniq:
+  lf_users_count:                    {counter: lf_users_counter, key: [user_id]}
+  single_listing_users:              {counter: single_users_counter, key: [user_id]}
+  tariff_users:                      {counter: tariff_users_counter, key: [user_id]}
+  tariff_base_users:                 {counter: tariff_base_users_counter, key: [user_id]}
+  tariff_ext_users:                  {counter: tariff_ext_users_counter, key: [user_id]}
+  tariff_max_users:                  {counter: tariff_max_users_counter, key: [user_id]}
+  tariff_pro_users:                  {counter: tariff_pro_users_counter, key: [user_id]}
+
+  tariff_itemactivation_users:              {counter: tariff_itemactivation_users_counter, key: [user_id]}
+  tariff_itemactivation_base_users:         {counter: tariff_itemactivation_base_users_counter, key: [user_id]}
+  tariff_itemactivation_ext_users:          {counter: tariff_itemactivation_ext_users_counter, key: [user_id]}
+  tariff_itemactivation_max_users:          {counter: tariff_itemactivation_max_users_counter, key: [user_id]}
+  tariff_itemactivation_pro_users:          {counter: tariff_itemactivation_pro_users_counter, key: [user_id]}
+
+  tariff_config_users:               {counter: tariff_config_users_counter, key: [user_id]}
+  tariff_config_base_users:          {counter: tariff_config_base_users_counter, key: [user_id]}
+  tariff_config_ext_users:           {counter: tariff_config_ext_users_counter, key: [user_id]}
+  tariff_config_max_users:           {counter: tariff_config_max_users_counter, key: [user_id]}
+  tariff_config_pro_users:           {counter: tariff_config_pro_users_counter, key: [user_id]}
+
+
+metric.ratio:
+  lf_arppu:                  {num: lf_revenue, den: lf_users_count}
+  single_listing_arppu:      {num: single_listing_revenue, den: single_listing_users}
+  tariff_arppu:              {num: tariff_revenue, den: tariff_users}
+  tariff_base_arppu:         {num: tariff_base_revenue, den: tariff_base_users}
+  tariff_ext_arppu:          {num: tariff_ext_revenue, den: tariff_ext_users}
+  tariff_max_arppu:          {num: tariff_max_revenue, den: tariff_max_users}
+  tariff_pro_arppu:          {num: tariff_pro_revenue, den: tariff_pro_users}
+
+  tariff_itemactivation_arppu:              {num: tariff_itemactivation_revenue, den: tariff_itemactivation_users}
+  tariff_itemactivation_base_arppu:         {num: tariff_itemactivation_base_revenue, den: tariff_itemactivation_base_users}
+  tariff_itemactivation_ext_arppu:          {num: tariff_itemactivation_ext_revenue, den: tariff_itemactivation_ext_users}
+  tariff_itemactivation_max_arppu:          {num: tariff_itemactivation_max_revenue, den: tariff_itemactivation_max_users}
+  tariff_itemactivation_pro_arppu:          {num: tariff_itemactivation_pro_revenue, den: tariff_itemactivation_pro_users}
+
+  tariff_config_arppu:              {num: tariff_config_revenue, den: tariff_config_users}
+  tariff_config_base_arppu:         {num: tariff_config_base_revenue, den: tariff_config_base_users}
+  tariff_config_ext_arppu:          {num: tariff_config_ext_revenue, den: tariff_config_ext_users}
+  tariff_config_max_arppu:          {num: tariff_config_max_revenue, den: tariff_config_max_users}
+  tariff_config_pro_arppu:          {num: tariff_config_pro_revenue, den: tariff_config_pro_users}
