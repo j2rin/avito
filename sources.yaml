@@ -1240,3 +1240,17 @@ messenger_messages:
   participant: {visitor: from_cookie_id, user: user_id}
   dtm: event_date
   segm: user_id
+
+messenger_active_chats:
+  metric_configs: [messenger_active_chats]
+  database: vertica
+  table: dma.vo_messenger_messages
+  column_map:
+    chat: chat_id
+  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  m42_cartesian_groups:
+    - [vertical, logical_category, region]
+    - [category, subcategory]
+  participant: {user: zero}
+  dtm: event_date
+  segm: chat_id
