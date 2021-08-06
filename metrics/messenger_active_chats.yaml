@@ -1,0 +1,21 @@
+definitions:
+
+  - &is_item               {item_id.isnull: False}
+  - &is_u2u_chat           {chat_type: u2u}
+  - &is_support_chat       {chat_subtype: support}
+  - &is_chatbot_chat       {is_chatbot_chat: True}
+  - &is_chat_subtype       {chat_subtype.isnull: True} 
+
+  
+metric.counter:
+    cnt_messenger_active_chats:                              {filter: [*is_item, *is_chat_subtype], m42: False}   
+    cnt_messenger_u2u_active_chats:                          {filter: [*is_u2u_chat], m42: False}   
+    cnt_messenger_active_chats_with_bot:                     {filter: [*is_chatbot_chat, *is_item, eventtype_id: 289341250001], m42: False}   
+    cnt_messenger_support_chats:                             {filter: [*is_support_chat], m42: False}   
+
+ 
+metric.uniq:
+  messenger_active_chats:                         {counter: cnt_messenger_active_chats,                               key: [chat]}
+  messenger_u2u_active_chats:                     {counter: cnt_messenger_u2u_active_chats,                           key: [chat]}
+  messenger_active_chats_with_bot:                {counter: cnt_messenger_active_chats_with_bot,                      key: [chat]}
+  messenger_support_chats:                        {counter: cnt_messenger_support_chats,                              key: [chat]}
