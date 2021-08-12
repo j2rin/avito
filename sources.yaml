@@ -1244,13 +1244,11 @@ messenger_messages:
 
 clickstream_antibot:
   metric_configs: [clickstream_antibot]
-  database: vertica_ext
-  table: dwhcs.clickstream_core
+  database: vertica
+  table: dma.o_clickstream_antibot
   column_map:
       cookie: cookie_id
-      platform_id: business_platform
-      is_participant_new: is_new
-  dimensions: [platform, vertical, category, subcategory, is_human, is_participant_new]
+  dimensions: [platform, vertical, category]
   dtm: event_date
   participant: {visitor: cookie_id}
   segm: cookie_id
