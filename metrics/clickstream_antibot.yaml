@@ -1,0 +1,11 @@
+metric.counter:
+  dirty_clickstream_events:                      {obs: [events]}
+  clean_clickstream_events:                      {filter: [is_human: 1], obs: [events]}
+
+metric.uniq:
+  dirty_clickstream_cookies:                     {counter: dirty_clickstream_events,   key: [cookie]}
+  clean_clickstream_cookies:                     {counter: clean_clickstream_events,   key: [cookie]}
+
+
+metric.ratio:
+  clickstream_clean_cookies_percent:             {num: clean_clickstream_cookies,      den: dirty_clickstream_cookies}

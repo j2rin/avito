@@ -1160,7 +1160,6 @@ messenger_blocks:
   participant: {user: user_id}
   dtm: event_date
   segm: user_id
-   
   
 messenger_response_messages:
   metric_configs: [messenger_response_messages]
@@ -1176,8 +1175,7 @@ messenger_response_messages:
   participant:  {visitor: first_message_cookie_id, user: user_id}
   dtm: reply_time
   segm: user_id
-  
-  
+
 messenger_answered_inbox_messages:
   metric_configs: [messenger_answered_inbox_messages]
   database: vertica
@@ -1192,9 +1190,7 @@ messenger_answered_inbox_messages:
   participant:  {visitor: first_message_cookie_id, user: user_id}
   dtm: first_message_event_date
   segm: user_id
- 
-  
-  
+
 messenger_answered_messages:
   metric_configs: [messenger_answered_messages]
   database: vertica
@@ -1208,8 +1204,7 @@ messenger_answered_messages:
   participant: {visitor: first_message_cookie_id, user: first_message_user_id}
   dtm: first_message_event_date
   segm: user_id
-  
-  
+
 messenger_inbox_messages:
   metric_configs: [messenger_inbox_messages]
   database: vertica
@@ -1223,15 +1218,14 @@ messenger_inbox_messages:
   participant: {visitor: first_message_cookie_id, user: user_id}
   dtm: first_message_event_date
   segm: user_id
-  
-  
+
 messenger_messages:
   metric_configs: [messenger_messages]
   database: vertica
   table: dma.vo_messenger_messages
   column_map:
     user: user_id
-    message: message_id 
+    message: message_id
     chat: chat_id
   dimensions: [platform,vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
   m42_cartesian_groups:
@@ -1254,3 +1248,14 @@ messenger_active_chats:
   participant: {user: zero}
   dtm: event_date
   segm: chat_id
+
+clickstream_antibot:
+  metric_configs: [clickstream_antibot]
+  database: vertica
+  table: dma.o_clickstream_antibot
+  column_map:
+      cookie: cookie_id
+  dimensions: [platform, vertical, category]
+  dtm: event_date
+  participant: {visitor: cookie_id}
+  segm: cookie_id
