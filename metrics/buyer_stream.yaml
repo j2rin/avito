@@ -38,8 +38,8 @@ definitions:
 
   - &x_is_vertical_main_all       {x_category_id.isnull: false, x_subcategory_id.isnull: true}
   - &x_is_vertical_main_services  {x_category_id: 250002, x_subcategory_id: 250005, x_param1_id.isnull: true}
-  - &x_is_vertical_main_serp      {$or: [*x_is_vertical_main_all, x_is_vertical_main_services], query.isnull: true, search_flags.!bit: [8,9], *x_is_search}
-  - &x_is_vertical_main_rec       {$or: [*x_is_vertical_main_all, x_is_vertical_main_services], *x_is_u2i}
+  - &x_is_vertical_main_serp      {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], query.isnull: true, search_flags.!bit: [8,9], <<: *x_is_search}
+  - &x_is_vertical_main_rec       {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], <<: *x_is_u2i}
   - &x_is_vertical_main           {$or: [*x_is_vertical_main_serp, *x_is_vertical_main_rec]}
 
   - &is_sgt           {eid: 2443}
