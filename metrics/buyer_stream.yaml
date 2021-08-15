@@ -35,7 +35,12 @@ definitions:
   - &x_is_rec_msg {x_from_page: msg_recommendations}
   - &x_is_fav_lst {x_eid: *eid_fav_lst}
   - &x_is_map     {x_eid: *eid_map}
-  - &x_is_vertical_main {x_category_id.isnull: false, x_subcategory_id.isnull: true, query.isnull: true, search_flags.!bit: [8,9]}
+
+  - &x_is_vertical_main_all       {x_category_id.isnull: false, x_subcategory_id.isnull: true}
+  - &x_is_vertical_main_services  {x_category_id: 250002, x_subcategory_id: 250005, x_param1_id.isnull: true}
+  - &x_is_vertical_main_serp      {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], query.isnull: true, search_flags.!bit: [8,9], <<: *x_is_search}
+  - &x_is_vertical_main_rec       {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], <<: *x_is_u2i}
+  - &x_is_vertical_main           {$or: [*x_is_vertical_main_serp, *x_is_vertical_main_rec]}
 
   - &is_sgt           {eid: 2443}
   - &is_iv            {eid: 301}
@@ -383,7 +388,7 @@ metric.counter:
   cnt_cs_s_road:                           {filter: [*is_contact_wo_guessing, *is_s_road, *x_is_search], m42: False}
   cnt_cs_s_saved:                          {filter: [*is_contact_wo_guessing, *is_s_saved, *x_is_search], m42: False}
   cnt_cs_s_u2i:                            {filter: [*is_contact_wo_guessing, *x_is_rec_sg, *x_is_search], m42: False}
-  cnt_cs_vertical_main:                    {filter: [*is_contact_wo_guessing, *x_is_vertical_main, *x_is_search], m42: False}
+  cnt_cs_vertical_main:                    {filter: [*is_contact_wo_guessing, *x_is_vertical_main], m42: False}
   cnt_cs_shopx:                            {filter: [*is_contact_wo_guessing, *x_is_search, *x_is_shop], m42: False}
   cnt_cs_vas:                              {filter: [*is_contact_wo_guessing, *is_serp_vas, *x_is_search], m42: False}
   cnt_cs_serp_perfvas_x2_1:                {filter: [*is_contact_wo_guessing, *is_serp_perfvas_x2_1, *x_is_search], m42: False}
@@ -509,7 +514,7 @@ metric.counter:
   cnt_iv_s_road:                           {filter: [*is_iv_wo_guessing, *is_s_road, *x_is_search], m42: False}
   cnt_iv_s_saved:                          {filter: [*is_iv_wo_guessing, *is_s_saved, *x_is_search], m42: False}
   cnt_iv_s_u2i:                            {filter: [*is_iv_wo_guessing, *x_is_rec_sg, *x_is_search], m42: False}
-  cnt_iv_vertical_main:                    {filter: [*is_iv_wo_guessing, *x_is_vertical_main, *x_is_search], m42: False}
+  cnt_iv_vertical_main:                    {filter: [*is_iv_wo_guessing, *x_is_vertical_main], m42: False}
   cnt_iv_shopx:                            {filter: [*is_iv_wo_guessing, *x_is_search, *x_is_shop], m42: False}
   cnt_iv_vas:                              {filter: [*is_iv_wo_guessing, *is_serp_vas, *x_is_search], m42: False}
   cnt_iv_serp_perfvas_x2_1:                {filter: [*is_iv_wo_guessing, *is_serp_perfvas_x2_1, *x_is_search], m42: False}
@@ -686,7 +691,7 @@ metric.counter:
   russia_level_searches:                   {filter: [{location_level_id: 1}, *is_1p, *is_search]}
   saved_searches:                          {filter: [*is_1p, *is_s_saved, *is_search]}
   search_u2i:                              {filter: [*is_search, *x_is_rec_sg]}
-  vertical_main:                           {filter: [*is_search, *x_is_vertical_main]}
+  vertical_main:                           {filter: [$or: [*is_search, *is_u2i], *x_is_vertical_main]}
   vertical_main_first_page:                {filter: [*is_1p, *is_search, *x_is_vertical_main]}
   searches:                                {filter: [*is_1p, *is_search]}
   searches_part_qual_exists:               {filter: [*part_qual_exists ,*is_1p, *is_search]}
