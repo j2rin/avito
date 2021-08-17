@@ -5,12 +5,16 @@ definitions:
   - &is_support_chat       {chat_subtype: support}
   - &is_chatbot_chat       {is_chatbot_chat: True}
   - &is_chat_subtype       {chat_subtype.isnull: True} 
+  - &is_test               {IsTest: False} 
+  - &is_test_null          {IsTest.isnull: True} 
+
+  
 
 metric.counter:
-    cnt_messenger_active_chats:                              {filter: [*is_item, *is_chat_subtype], m42: False}   
-    cnt_messenger_u2u_active_chats:                          {filter: [*is_u2u_chat], m42: False}   
-    cnt_messenger_active_chats_with_bot:                     {filter: [*is_chatbot_chat, $or: [eventtype_id: 289341250001, eventtype_id: 160844250001]], m42: False}   
-    cnt_messenger_support_chats:                             {filter: [*is_support_chat], m42: False}   
+    cnt_messenger_active_chats:                              {filter: [*is_item, *is_chat_subtype, *is_test], m42: False}   
+    cnt_messenger_u2u_active_chats:                          {filter: [*is_u2u_chat,*is_test], m42: False}   
+    cnt_messenger_active_chats_with_bot:                     {filter: [*is_chatbot_chat, $or: [*is_test, *is_test_null], $or: [eventtype_id: 289341250001, eventtype_id: 160844250001]], m42: False}   
+    cnt_messenger_support_chats:                             {filter: [*is_support_chat, *is_test], m42: False}   
 
 metric.uniq:
   messenger_active_chats:                         {counter: cnt_messenger_active_chats,                               key: [chat]}
