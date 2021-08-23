@@ -139,7 +139,7 @@ definitions:
   - &is_fp_witcher_new_auto     {from_page: witcher-new-auto}
   - &is_fp_witcher_new_flats    {from_page: witcher-new-flats}
   - &is_fp_witcher_marketplace  {from_page: witcher-marketplace}
-  - &is_seens_item              {from_page: witcher-seen-items}
+  - &is_seen_item               {from_page: witcher-seen-items}
 
   - &is_x_fp_witcher_regions        {x_from_page: witcher-extra-regions}
   - &is_x_fp_witcher_delivery       {x_from_page: witcher-extra-delivery}
@@ -540,7 +540,7 @@ metric.counter:
   cnt_iv_cpa:                              {filter: [*is_iv_wo_guessing, *is_item_cpa], m42: False}
   cnt_iv_s_cpa:                            {filter: [*is_iv_wo_guessing, *x_is_search, *is_item_cpa], m42: False}
   cnt_iv_rec_cpa:                          {filter: [*is_iv_wo_guessing, *x_is_rec, *is_item_cpa], m42: False}
-  cnt_iv_seens:                            {filter: [*is_iv, *is_seens_item], m42: False}
+  cnt_iv_seen:                             {filter: [*is_iv, *is_seen_item], m42: False}
   cnt_ph_item_right_top_snippet_xlvas:     {filter: [*is_ph, {$or: [[*is_ph_right], [*is_ph_snip], [*is_ph_top], [*is_ph_xlvas]]}], m42: False}
   cnt_ph_realty_development:               {filter: [{$or: [[*is_ph_realdev], [*is_ph_tot]]}], m42: False}
   cnt_reg_in_s:                            {filter: [{location_level_id: [2, 3]}, *is_1p, *is_search], m42: False}
@@ -1191,7 +1191,7 @@ metric.uniq:
   iv_grouped_doubles:                      {counter: cnt_iv_grouped_doubles,          key: [item_x]}
   iv_searches_u2i:                         {counter: cnt_iv_s_u2i,                    key: [item_x]}
   iv_vertical_main:                        {counter: cnt_iv_vertical_main,            key: [item_x]}
-  iv_seens:                                {counter: cnt_iv_seens,                    key: [item_x]}
+  iv_seen:                                 {counter: cnt_iv_seen,                     key: [item_x]}
   unq_item_x_btc_s_distr_metro_radius_road: {counter: cnt_btc_s_distr_metro_radius_road, key: [item_x], m42: False}
   unq_item_x_btc_s_distr_metro_road:       {counter: cnt_btc_s_distr_metro_road,      key: [item_x], m42: False}
   wtc_from_witcher_any:                    {counter: cnt_iv_wtc_dlv_new_auto_flats_reg_s_from, key: [item_x]}
@@ -1298,7 +1298,7 @@ metric.uniq:
   user_iv_from_witcher_mp:                 {counter: cnt_iv_wtc_mp,                   key: [cookie]}
   user_iv_from_witcher_flats:              {counter: cnt_iv_wtc_new_flats,            key: [cookie]}
   user_iv_from_witcher_reg:                {counter: cnt_iv_wtc_reg,                  key: [cookie]}
-  user_iv_seens:                           {counter: cnt_iv_seens,                    key: [cookie]}
+  user_iv_seen:                            {counter: cnt_iv_seen,                     key: [cookie]}
   user_pv:                                 {counter: cnt_ph_realty_development,       key: [cookie]}
   user_s_from_witcher_any:                 {counter: searches_from_witcher_any,       key: [cookie]}
   user_s_from_witcher_auto:                {counter: searches_from_witcher_new_auto,  key: [cookie]}
