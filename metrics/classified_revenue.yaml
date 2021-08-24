@@ -1,7 +1,3 @@
-definitions:
-  - &queue_not_asd  [1stDelivery, 1st_Delivery, HelpCenter, Items, Mobile, Privatebuddy]
-  - &asd_excluded   {queue: *queue_not_asd}
-
 metric.counter:
   classified_amount_net_adj:         {obs: [transaction_amount_net_adj], filter: [is_revenue: true]}
   classified_transactions:           {obs: [transaction_count], filter: [is_revenue: true]}
@@ -24,7 +20,6 @@ metric.counter:
 metric.uniq:
   classified_users:                        {counter: classified_amount_net_adj,   key: [user]}
   lf_users:                                {counter: lf_amount_net_adj,           key: [user]}
-  paying_users:                            {counter: avito_amount_net_adj,        key: [user]}
   subs_w_extensions_users:                 {counter: subs_w_extensions_amount_net_adj,   key: [user]}
   vas_users:                               {counter: vas_amount_net_adj,          key: [user]}
 
