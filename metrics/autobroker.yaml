@@ -1,0 +1,10 @@
+metric.counter:
+    broker_full_renders:                         {filter: [eventtype_ext: 4496]}
+    broker_full_clicks:                         {filter: [eventtype_ext: 4498]}
+
+metric.uniq:
+    broker_renders:                             {counter: broker_full_renders,  key: [cookie_id]}
+    broker_clicks:                              {counter: broker_full_clicks, key: [cookie_id]}
+
+metric.ratio:
+    broker_ctr:                                 {num: broker_clicks,  den: broker_renders}
