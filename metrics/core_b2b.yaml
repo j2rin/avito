@@ -2,39 +2,16 @@ metric.counter:
   advertisement_amount_net_adj:            {obs: [advertisement_amount_net_adj]}
   autoteka_amount_net_adj:                 {obs: [autoteka_amount_net_adj]}
   avito_amount_net_adj:                    {obs: [advertisement_amount_net_adj, classified_amount_net_adj, paid_contact_amount_net_adj]}
-  classified_payments_net_adj:             {obs: [classified_payments_net_adj]}
-  classified_transactions_p:               {obs: [classified_transactions_p]}
-  vas_payments_net_adj:                    {obs: [vas_payments_net_adj]}
-  vas_transactions_p:                      {obs: [vas_transactions_p]}
   cnt_advertisement_amount_net_adj_increased_for_rpm: {obs: [advertisement_amount_net_adj_increased_for_RPM], m42: False}
-  bundle_payments_net_adj:                 {obs: [bundle_payments_net_adj]}
-  bundle_transactions_p:                   {obs: [bundle_transactions_p]}
   delivery_amount_net_adj:                 {obs: [delivery_amount_net_adj]}
   domofond_amount_net_adj:                 {obs: [domofond_amount_net_adj]}
   domoteka_amount_net_adj:                 {obs: [domoteka_amount_net_adj]}
   str_amount_net_adj:                      {obs: [str_amount_net_adj]}
-  lf_payments_net_adj:                     {obs: [lf_payments_net_adj]}
-  lf_transactions_p:                       {obs: [lf_transactions_p]}
   other_projects_amount_net_adj:           {obs: [autoteka_amount_net_adj, delivery_amount_net_adj, domofond_amount_net_adj, domoteka_amount_net_adj, str_amount_net_adj]}
-  subs_w_extensions_payments_net_adj:      {obs: [ext_payments_net_adj, subs_payments_net_adj]}
-  subs_w_extensions_transactions_p:        {obs: [ext_transactions_p, subs_transactions_p]}
   total_amount_net_adj:                    {obs: [advertisement_amount_net_adj, classified_amount_net_adj, 
                                            autoteka_amount_net_adj, delivery_amount_net_adj, domofond_amount_net_adj, paid_contact_amount_net_adj,
                                            domoteka_amount_net_adj, str_amount_net_adj]}
 
 metric.uniq:
-  classified_payments_users:               {counter: classified_payments_net_adj, key: [user]}
-  lf_payments_users:                       {counter: lf_payments_net_adj,         key: [user]}
   paying_users:                            {counter: avito_amount_net_adj,        key: [user]}
-  subs_extensions_payments_users:          {counter: subs_w_extensions_payments_net_adj, key: [user]}
-  vas_payments_users:                      {counter: vas_payments_net_adj,        key: [user]}
 
-metric.ratio:
-  classified_price_net_adj_p:              {num: classified_payments_net_adj,     den: classified_transactions_p}
-  lf_price_net_adj_p:                      {num: lf_payments_net_adj,             den: lf_transactions_p}
-  subs_w_extensions_price_net_adj_p:       {num: subs_w_extensions_payments_net_adj, den: subs_w_extensions_transactions_p}
-  vas_transactions_per_user_p:             {num: vas_transactions_p,              den: vas_payments_users}
-  subs_w_extensions_transactions_per_user_p:   {num: subs_w_extensions_transactions_p,         den: subs_extensions_payments_users}
-  lf_transactions_per_user_p:              {num: lf_transactions_p,               den: lf_payments_users}
-  classified_transactions_per_user_p:      {num: classified_transactions_p,       den: classified_payments_users}
-  vas_price_net_adj_p:                     {num: vas_payments_net_adj,            den: vas_transactions_p}
