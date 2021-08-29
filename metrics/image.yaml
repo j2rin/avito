@@ -23,6 +23,11 @@ metric.counter:
   image_draw_appstart_exceptions:          {filter: [{observation_name: image_draw_appstart_exceptions}], obs: [observation_value]}
   image_draw_exceptions:                   {filter: [{observation_name: image_draw_exceptions}], obs: [observation_value]}
   image_load_exceptions:                   {filter: [{observation_name: image_load_exceptions}], obs: [observation_value]}
+  image_any_exceptions:                    {filter: [{observation_name: [image_draw_appstart_exceptions,image_draw_exceptions,image_load_exceptions]}], obs: [observation_value]}
+  image_any_core_exceptions:               {filter: [{observation_name: [image_draw_core_content_exceptions,image_load_core_content_exceptions,image_draw_appstart_core_content_exceptions]}], obs: [observation_value]}
+  image_draw_appstart_core_exceptions:     {filter: [{observation_name: [image_draw_appstart_core_content_exceptions]}], obs: [observation_value]}
+  image_draw_core_exceptions:              {filter: [{observation_name: [image_draw_core_content_exceptions]}], obs: [observation_value]}
+  image_load_core_exceptions:              {filter: [{observation_name: [image_load_core_content_exceptions]}], obs: [observation_value]}
 
 metric.ratio:
   image_draw_appstart_duration:            {num: cnt_image_draw_appstart_duration, den: cnt_image_draw_appstart_duration_events}
@@ -44,3 +49,9 @@ metric.ratio:
   image_load_p75:                          {num: cnt_image_load_events_p75,       den: cnt_image_load_events}
   image_load_p95:                          {num: cnt_image_load_events_p95,       den: cnt_image_load_events}
 
+metric.uniq:
+  user_image_draw_appstart_exceptions:     {counter: image_draw_appstart_exceptions, key: [participant_id], m42: True}
+  user_image_draw_exceptions:              {counter: image_draw_exceptions, key: [participant_id], m42: True}
+  user_image_load_exceptions:              {counter: image_load_exceptions, key: [participant_id], m42: True}
+  user_image_exceptions:                   {counter: image_any_exceptions, key: [participant_id], m42: True}
+  user_image_core_exceptions:              {counter: image_any_core_exceptions, key: [participant_id], m42: True}
