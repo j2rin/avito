@@ -1,31 +1,35 @@
+definitions:
+  - &revenue   {is_revenue: true, is_classified: true}
+  - &payment   {is_payment: true, is_classified: true}
+
 metric.counter:
-  classified_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [is_revenue: true]} 
-  classified_payments_net_adj:               {obs: [transaction_amount_net_adj],  filter: [is_payment: true]}
-  classified_transactions:                   {obs: [transaction_count],           filter: [is_revenue: true]}
-  classified_transactions_p:                 {obs: [transaction_count],           filter: [is_payment: true]}
-  lf_amount_net_adj:                         {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'lf']}
-  lf_payments_net_adj:                       {obs: [transaction_amount_net_adj],  filter: [is_payment: true, product_type: 'lf']}
-  lf_transactions:                           {obs: [transaction_count],           filter: [is_revenue: true, product_type: 'lf']}
-  lf_transactions_p:                         {obs: [transaction_count],           filter: [is_payment: true, product_type: 'lf']}
-  subs_amount_net_adj:                       {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'subscription', product_subtype.!=: 'extension']}
-  subs_transactions:                         {obs: [transaction_count],           filter: [is_revenue: true, product_type: 'subscription', product_subtype.!=: 'extension']}
-  extensions_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'subscription', product_subtype: 'extension']}
-  extensions_transactions:                   {obs: [transaction_count],           filter: [is_revenue: true, product_type: 'subscription', product_subtype: 'extension']}
-  subs_w_extensions_amount_net_adj:          {obs: [transaction_amount_net_adj ], filter: [is_revenue: true, product_type: 'subscription']}
-  subs_w_extensions_payments_net_adj:        {obs: [transaction_amount_net_adj],  filter: [is_payment: true, product_type: 'subscription']}
-  subs_w_extensions_transactions:            {obs: [transaction_count],           filter: [is_revenue: true, product_type: 'subscription']}
-  subs_w_extensions_transactions_p:          {obs: [transaction_count],           filter: [is_payment: true, product_type: 'subscription']}
-  vas_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'vas']}
-  vas_payments_net_adj:                      {obs: [transaction_amount_net_adj],  filter: [is_payment: true, product_type: 'vas']}
-  vas_transactions:                          {obs: [transaction_count],           filter: [is_revenue: true, product_type: 'vas']}
-  vas_transactions_p:                        {obs: [transaction_count],           filter: [is_payment: true, product_type: 'vas']}
-  paid_contact_amount_net_adj:               {obs: [transaction_count],           filter: [is_revenue: true, product_type: 'paid_contact']}
-  cpa_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'cpa']}
-  cpa_transactions:                          {obs: [transaction_count],           filter: [is_revenue: true, product_type: 'cpa']}
-  bundle_amount_net_adj:                     {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'bundle']}
-  bundle_payments_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [is_payment: true, product_type: 'bundle']}
-  bundle_transactions:                       {obs: [transaction_count],           filter: [is_revenue: true, product_type: 'bundle']}
-  bundle_transactions_p:                     {obs: [transaction_count],           filter: [is_payment: true, product_type: 'bundle']}
+  classified_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [*revenue]}
+  classified_payments_net_adj:               {obs: [transaction_amount_net_adj],  filter: [*payment]}
+  classified_transactions:                   {obs: [transaction_count],           filter: [*revenue]}
+  classified_transactions_p:                 {obs: [transaction_count],           filter: [*payment]}
+  lf_amount_net_adj:                         {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'lf']}
+  lf_payments_net_adj:                       {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'lf']}
+  lf_transactions:                           {obs: [transaction_count],           filter: [*revenue, product_type: 'lf']}
+  lf_transactions_p:                         {obs: [transaction_count],           filter: [*payment, product_type: 'lf']}
+  subs_amount_net_adj:                       {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
+  subs_transactions:                         {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
+  extensions_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', product_subtype: 'extension']}
+  extensions_transactions:                   {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', product_subtype: 'extension']}
+  subs_w_extensions_amount_net_adj:          {obs: [transaction_amount_net_adj ], filter: [*revenue, product_type: 'subscription']}
+  subs_w_extensions_payments_net_adj:        {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'subscription']}
+  subs_w_extensions_transactions:            {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription']}
+  subs_w_extensions_transactions_p:          {obs: [transaction_count],           filter: [*payment, product_type: 'subscription']}
+  vas_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'vas']}
+  vas_payments_net_adj:                      {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'vas']}
+  vas_transactions:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'vas']}
+  vas_transactions_p:                        {obs: [transaction_count],           filter: [*payment, product_type: 'vas']}
+  paid_contact_amount_net_adj:               {obs: [transaction_count],           filter: [*revenue, product_type: 'paid_contact']}
+  cpa_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa']}
+  cpa_transactions:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'cpa']}
+  bundle_amount_net_adj:                     {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'bundle']}
+  bundle_payments_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'bundle']}
+  bundle_transactions:                       {obs: [transaction_count],           filter: [*revenue, product_type: 'bundle']}
+  bundle_transactions_p:                     {obs: [transaction_count],           filter: [*payment, product_type: 'bundle']}
   
 
 metric.uniq:
