@@ -1171,14 +1171,14 @@ messenger_response_messages:
   table: dma.vo_messenger_chat_report
   column_map:
     user: user_id
-    platform: reply_platform_id
+    platform_id: reply_platform_id
   dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, region, user_segment_market]
     - [category, subcategory]
   participant:  {user: user_id}
   dtm: reply_time
-  segm: user_id
+  segm: chat_id
 
 messenger_answered_inbox_messages:
   metric_configs: [messenger_answered_inbox_messages]
@@ -1186,14 +1186,14 @@ messenger_answered_inbox_messages:
   table: dma.vo_messenger_chat_report
   column_map:
     user: user_id
-    platform: reply_platform_id
+    platform_id: reply_platform_id
   dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, region, user_segment_market]
     - [category, subcategory]
   participant:  {user: user_id}
   dtm: first_message_event_date
-  segm: user_id
+  segm: chat_id
 
 messenger_answered_messages:
   metric_configs: [messenger_answered_messages]
@@ -1207,7 +1207,7 @@ messenger_answered_messages:
     - [category, subcategory]
   participant: {visitor: first_message_cookie_id, user: first_message_user_id}
   dtm: first_message_event_date
-  segm: user_id
+  segm: chat_id
 
 messenger_inbox_messages:
   metric_configs: [messenger_inbox_messages]
@@ -1221,7 +1221,7 @@ messenger_inbox_messages:
     - [category, subcategory]
   participant: {user: user_id}
   dtm: first_message_event_date
-  segm: user_id
+  segm: chat_id
 
 messenger_messages:
   metric_configs: [messenger_messages]
