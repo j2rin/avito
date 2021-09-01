@@ -1274,3 +1274,16 @@ autobroker:
   dtm: event_date
   participant: {visitor: cookie_id}
   segm: cookie_id
+
+classified_revenue:
+  metric_configs: [classified_revenue]
+  database: vertica
+  table: dma.v_paying_user_report_full
+  column_map:
+    user: user_id
+  dimensions: [vertical, logical_category, location, region, city, location_group, location_level, is_asd, user_segment_market]
+  m42_cartesian_groups:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  dtm: event_date
+  participant: {user: user_id}
+  segm: user_id

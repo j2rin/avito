@@ -1,0 +1,61 @@
+definitions:
+  - &revenue   {is_revenue: true, is_classified: true}
+  - &payment   {is_payment: true, is_classified: true}
+
+metric.counter:
+  classified_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [*revenue]}
+  classified_payments_net_adj:               {obs: [transaction_amount_net_adj],  filter: [*payment]}
+  classified_transactions:                   {obs: [transaction_count],           filter: [*revenue]}
+  classified_transactions_p:                 {obs: [transaction_count],           filter: [*payment]}
+  lf_amount_net_adj:                         {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'lf']}
+  lf_payments_net_adj:                       {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'lf']}
+  lf_transactions:                           {obs: [transaction_count],           filter: [*revenue, product_type: 'lf']}
+  lf_transactions_p:                         {obs: [transaction_count],           filter: [*payment, product_type: 'lf']}
+  subs_amount_net_adj:                       {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
+  subs_transactions:                         {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
+  extensions_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', product_subtype: 'extension']}
+  extensions_transactions:                   {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', product_subtype: 'extension']}
+  subs_w_extensions_amount_net_adj:          {obs: [transaction_amount_net_adj ], filter: [*revenue, product_type: 'subscription']}
+  subs_w_extensions_payments_net_adj:        {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'subscription']}
+  subs_w_extensions_transactions:            {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription']}
+  subs_w_extensions_transactions_p:          {obs: [transaction_count],           filter: [*payment, product_type: 'subscription']}
+  vas_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'vas']}
+  vas_payments_net_adj:                      {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'vas']}
+  vas_transactions:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'vas']}
+  vas_transactions_p:                        {obs: [transaction_count],           filter: [*payment, product_type: 'vas']}
+  paid_contact_amount_net_adj:               {obs: [transaction_count],           filter: [*revenue, product_type: 'paid_contact']}
+  cpa_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa']}
+  cpa_transactions:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'cpa']}
+  bundle_amount_net_adj:                     {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'bundle']}
+  bundle_payments_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'bundle']}
+  bundle_transactions:                       {obs: [transaction_count],           filter: [*revenue, product_type: 'bundle']}
+  bundle_transactions_p:                     {obs: [transaction_count],           filter: [*payment, product_type: 'bundle']}
+  
+
+metric.uniq:
+  classified_users:                          {counter: classified_amount_net_adj,          key: [user]}
+  classified_payments_users:                 {counter: classified_payments_net_adj,        key: [user]}
+  lf_users:                                  {counter: lf_amount_net_adj,                  key: [user]}
+  lf_payments_users:                         {counter: lf_payments_net_adj,                key: [user]}
+  subs_w_extensions_users:                   {counter: subs_w_extensions_amount_net_adj,   key: [user]}
+  subs_extensions_payments_users:            {counter: subs_w_extensions_payments_net_adj, key: [user]}
+  vas_users:                                 {counter: vas_amount_net_adj,                 key: [user]}
+  vas_payments_users:                        {counter: vas_payments_net_adj,               key: [user]}
+
+metric.ratio:
+  classified_price_net_adj:                  {num: classified_amount_net_adj,              den: classified_transactions}
+  classified_price_net_adj_p:                {num: classified_payments_net_adj,            den: classified_transactions_p}
+  lf_price_net_adj:                          {num: lf_amount_net_adj,                      den: lf_transactions}
+  lf_price_net_adj_p:                        {num: lf_payments_net_adj,                    den: lf_transactions_p}
+  subs_w_extensions_price_net_adj:           {num: subs_w_extensions_amount_net_adj,       den: subs_w_extensions_transactions}
+  subs_w_extensions_price_net_adj_p:         {num: subs_w_extensions_payments_net_adj,     den: subs_w_extensions_transactions_p}
+  vas_transactions_per_user:                 {num: vas_transactions,                       den: vas_users}
+  vas_transactions_per_user_p:               {num: vas_transactions_p,                     den: vas_payments_users}
+  subs_w_extensions_transactions_per_user:   {num: subs_w_extensions_transactions,         den: subs_w_extensions_users}
+  subs_w_extensions_transactions_per_user_p: {num: subs_w_extensions_transactions_p,       den: subs_extensions_payments_users}
+  lf_transactions_per_user:                  {num: lf_transactions,                        den: lf_users}
+  lf_transactions_per_user_p:                {num: lf_transactions_p,                      den: lf_payments_users}
+  classified_transactions_per_user:          {num: classified_transactions,                den: classified_users}
+  classified_transactions_per_user_p:        {num: classified_transactions_p,              den: classified_payments_users}
+  vas_price_net_adj:                         {num: vas_amount_net_adj,                     den: vas_transactions}
+  vas_price_net_adj_p:                       {num: vas_payments_net_adj,                   den: vas_transactions_p}
