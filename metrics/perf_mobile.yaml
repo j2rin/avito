@@ -94,6 +94,8 @@ metric.counter:
   prepare_core_exceptions:                  {filter: [{stage_name: Prepare, is_core_content: true}], obs: [exceptions], m42: True}
   serverloading_core_exceptions:            {filter: [{stage_name: ServerLoading, is_core_content: true}], obs: [exceptions], m42: True}
 
+  cnt_screens_all_cores_exceptions:         {obs: [screens_all_cores_exceptions], m42: False}
+
 metric.uniq:
   user_draw_exceptions:                    {counter: cnt_draw_exceptions, key: [cookie_id], m42: True}
   user_prepare_exceptions:                 {counter: cnt_prepare_exceptions, key: [cookie_id], m42: True}
@@ -109,6 +111,7 @@ metric.uniq:
 
   user_exceptions:                         {counter: any_exceptions, key: [cookie_id], m42: True}
   user_core_exceptions:                    {counter: any_core_exceptions, key: [cookie_id], m42: True}
+  user_all_core_on_screen_exceptions:      {counter: cnt_screens_all_cores_exceptions, key: [cookie_id], m42: True}
 
 metric.ratio:
   bounce_rate_perf:                        {num: cnt_draw_events,                 den: cnt_init_events}
