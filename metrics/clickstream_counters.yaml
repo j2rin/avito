@@ -82,6 +82,13 @@ metric.counter:
   notifications_on_system:                              {filter: [eid: 2558, is_notifications_on: true], obs: [event_count]}
   notifications_off_profile:                            {filter: [eid: 2390, notification_value: false], obs: [event_count]}
   notifications_off_system:                             {filter: [eid: 2558, is_notifications_on: false], obs: [event_count]}
+  profile_views_public:                                 {filter: [eid: 2016, profile_type: 'public_profile'], obs: [event_count]}
+  profile_views_extended:                               {filter: [eid: 2016, profile_type: 'extended_profile'], obs: [event_count]}
+  shop_views:                                           {filter: [eid: 3060], obs: [event_count]}
+  profile_views_any:                                    {filter: [eid: 2016], obs: [event_count]}
+  profile_shop_views:                                   {filter: [eid.in: [2016, 3060]], obs: [event_count]}
+  ext_profile_on:                                       {filter: [eid: 5070, ext_profile_is_using: true], obs: [event_count]}
+  ext_profile_off:                                      {filter: [eid: 5070, ext_profile_is_using.isnull: true], obs: [event_count]}
 
 
 metric.uniq:
@@ -116,6 +123,13 @@ metric.uniq:
   users_mic_access_denied:           {counter: mic_access_denied,               key: [cookie]}
   user_show_banner_mygarage:         {counter: show_banner_mygarage,            key: [cookie]}
   user_click_banner_mygarage:        {counter: click_banner_mygarage,           key: [cookie]}
+  profile_viewers_public:            {counter: profile_views_public,            key: [cookie]}
+  profile_viewers_extended:          {counter: profile_views_extended,          key: [cookie]}
+  shop_viewers:                      {counter: shop_views,                      key: [cookie]}
+  profile_viewers_any:               {counter: profile_views_any,               key: [cookie]}
+  profile_shop_viewers:              {counter: profile_shop_views,              key: [cookie]}
+  ext_profile_on_uniq:               {counter: ext_profile_on,                  key: [cookie]}
+  ext_profile_off_uniq:              {counter: ext_profile_off,                 key: [cookie]}
 
 
 metric.ratio:
@@ -139,3 +153,4 @@ metric.ratio:
   typo_replace_ctr_disable:                  {num: typo_disabled,                            den: typo_replace}
   typo_suggest_ctr_disable:                  {num: typo_suggest_disabled,                    den: typo_suggest}
   ctr_click_banner_mygarage:                 {num: click_banner_mygarage,                    den: show_banner_mygarage, m42: False}
+  ext_profile_on_off_ratio:                  {num: ext_profile_on,                           den: ext_profile_off}
