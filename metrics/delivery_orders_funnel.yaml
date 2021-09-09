@@ -1,0 +1,15 @@
+metric.counter:
+  buyer_delivery_items_created_funnel:          {filter: [{is_created: true}]}
+  buyer_delivery_items_paid_funnel:             {filter: [{is_paid: true}]}
+  buyer_delivery_items_confirmed_funnel:        {filter: [{is_confirmed: true}]}
+  buyer_delivery_items_performed_funnel:        {filter: [{is_performed: true}]}
+  buyer_delivery_items_received_funnel:         {filter: [{is_received: true}]}
+  buyer_delivery_items_accepted_funnel:         {filter: [{is_accepted: true}]}
+
+metric.uniq:  
+  buyer_delivery_orders_created_funnel:          {counter: buyer_delivery_items_created_funnel, key: [deliveryorder_id]}
+  buyer_delivery_orders_paid_funnel:             {counter: buyer_delivery_items_paid_funnel, key: [deliveryorder_id]}
+  buyer_delivery_orders_confirmed_funnel:        {counter: buyer_delivery_items_confirmed_funnel, key: [deliveryorder_id]}
+  buyer_delivery_orders_performed_funnel:        {counter: buyer_delivery_items_performed_funnel, key: [deliveryorder_id]}
+  buyer_delivery_orders_received_funnel:         {counter: buyer_delivery_items_received_funnel, key: [deliveryorder_id]}
+  buyer_delivery_orders_accepted_funnel:         {counter: buyer_delivery_items_accepted_funnel, key: [deliveryorder_id]}
