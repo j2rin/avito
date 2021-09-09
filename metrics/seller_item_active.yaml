@@ -4,7 +4,6 @@ definitions:
   - &bad_level          {min_kind_level.!in: [40, 50, 55, 60, 70]}
   - &bad_distance       {location_distance.<=: 0.1}
   - &bad_address        {$or: [*no_coordinates, *no_address_id, *bad_level, *bad_distance]}
-  - &is_vas             {vas_mask.>: 0}
 
 metric.counter:
   active_items:                            {filter: [{is_active: True}]}
@@ -101,12 +100,12 @@ metric.counter:
   items_with_street_new:                   {filter: [{is_active: True}, {min_kind_level: 50}, {start_date: $event_date}]}
   items_with_street_reactivated:           {filter: [{activations_count.>: 1}, {is_active: True}, {last_activation_date: $event_date}, {min_kind_level: 50}]}
   seller_item_views:                       {obs: [item_views]}
-  seller_item_views_vas:                   {filter: [{*is_vas}], obs: [item_views]}
+  seller_item_views_vas:                   {filter: [{vas_mask.>: 0}], obs: [item_views]}
   item_views_with_msg:                     {filter: [{is_active: True}, {is_message_forbidden: False}], obs: [item_views]}
   seller_contacts:                         {obs: [contacts]}
-  seller_contacts_vas:                     {filter: [{*is_vas}], obs: [contacts]}
+  seller_contacts_vas:                     {filter: [{vas_mask.>: 0}], obs: [contacts]}
   seller_btc:                              {obs: [favs_added, contacts]}
-  seller_btc_vas:                          {filter: [{*is_vas}], obs: [favs_added, contacts]}
+  seller_btc_vas:                          {filter: [{vas_mask.>: 0}], obs: [favs_added, contacts]}
   seller_contacts_start_date:              {filter: [{start_date.>=: $ab_start_date}], obs: [contacts]}
   seller_favorites_added:                  {obs: [favs_added]}
   seller_favorites_added_start_date:       {filter: [{start_date.>=: $ab_start_date}], obs: [favs_added]}
