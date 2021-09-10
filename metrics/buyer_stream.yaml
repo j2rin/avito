@@ -215,6 +215,9 @@ definitions:
 
   - &is_item_pessimized      {item_flags.bit: 11}
   - &is_seller_pessimized    {item_flags.bit: 12}
+  
+  - &item_in_stock {item_flags.bit: 22}
+  - &item_to_order {item_flags.bit: 23}
 
 
 metric.counter:
@@ -229,11 +232,15 @@ metric.counter:
   btc_part_qual_exists:                    {filter: [*part_qual_exists, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
   btc_part_qual_compab:                    {filter: [*part_qual_compab, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
   btc_part_qual_unknown:                   {filter: [*part_qual_unknown, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
+  btc_in_stock:                            {filter: [*item_in_stock, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
+  btc_to_order:                            {filter: [*item_to_order, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
   cnt_btc:                                 {filter: [*is_btc]}
   cnt_btc_ext:                             {filter: [*is_btc_ext]}
   cnt_btc_part_qual_exists:                {filter: [*part_qual_exists, *is_btc]}
   cnt_btc_part_qual_compab:                {filter: [*part_qual_compab, *is_btc]}
   cnt_btc_part_qual_unknown:               {filter: [*part_qual_unknown, *is_btc]}
+  cnt_btc_in_stock:                        {filter: [*item_in_stock, *is_btc]}
+  cnt_btc_to_order:                        {filter: [*item_to_order, *is_btc]}
   cnt_soc_btn:                             {filter: [*is_soc_btn]}
   btc_mp:                                  {filter: [*is_item_marketplace, {$or: [[*is_booking], [*is_delivery], [*is_fav], [*is_msg], [*is_msg_btn], [*is_ph_realdev], [*is_ph_tot]]}]}
   btc_developer:                           {filter: [*is_btc, *is_developer_acc]}
@@ -379,6 +386,8 @@ metric.counter:
   cnt_cs_s_item_part_qual_exists:          {filter: [*is_contact, *x_is_search, *part_qual_exists], m42: False}
   cnt_cs_s_item_part_qual_compab:          {filter: [*is_contact, *x_is_search, *part_qual_compab], m42: False}
   cnt_cs_s_item_part_qual_unknown:         {filter: [*is_contact, *x_is_search, *part_qual_unknown], m42: False}
+  cnt_cs_s_in_stock:                       {filter: [*is_contact, *x_is_search, *item_in_stock], m42: False} 
+  cnt_cs_s_to_order:                       {filter: [*is_contact, *x_is_search, *item_to_order], m42: False} 
   cnt_cs_msg_s_item_attr:                  {filter: [*is_msg, *x_is_search], m42: False}
   cnt_cs_ph_s_item_attr:                   {filter: [*is_ph, *x_is_search], m42: False}
   cnt_cs_s_item_attr_mp:                   {filter: [*is_contact_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
@@ -439,6 +448,8 @@ metric.counter:
   cnt_fav_s_part_qual_exists:              {filter: [*is_fav, *x_is_search, *part_qual_exists], m42: False}
   cnt_fav_s_part_qual_compab:              {filter: [*is_fav, *x_is_search, *part_qual_compab], m42: False}
   cnt_fav_s_part_qual_unknown:             {filter: [*is_fav, *x_is_search, *part_qual_unknown], m42: False}
+  cnt_fav_s_in_stock:                      {filter: [*is_fav, *x_is_search, *item_in_stock], m42: False}
+  cnt_fav_s_to_order:                      {filter: [*is_fav, *x_is_search, *item_to_order], m42: False}
   cnt_fav_s_distr:                         {filter: [*is_fav, *is_s_district, *x_is_search], m42: False}
   cnt_fav_s_map_area:                      {filter: [*is_fav, *is_s_map, *x_is_search], m42: False}
   cnt_fav_s_wo_map_area:                   {filter: [*is_fav, *is_not_s_map, *x_is_search], m42: False}
@@ -507,6 +518,8 @@ metric.counter:
   cnt_iv_s_part_qual_exists:               {filter: [*is_iv, *x_is_search, *part_qual_exists], m42: False}
   cnt_iv_s_part_qual_compab:               {filter: [*is_iv, *x_is_search, *part_qual_compab], m42: False}
   cnt_iv_s_part_qual_unknown:              {filter: [*is_iv, *x_is_search, *part_qual_unknown], m42: False}
+  cnt_iv_s_in_stock:                       {filter: [*is_iv, *x_is_search, *item_in_stock], m42: False}
+  cnt_iv_s_to_order:                       {filter: [*is_iv, *x_is_search, *item_to_order], m42: False}
   cnt_iv_s_item_attr_mp:                   {filter: [*is_iv_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
   cnt_iv_s_map_area:                       {filter: [*is_iv_wo_guessing, *is_s_map, *x_is_search], m42: False}
   cnt_iv_s_wo_map_area:                    {filter: [*is_iv_wo_guessing, *is_not_s_map, *x_is_search], m42: False}
@@ -572,6 +585,8 @@ metric.counter:
   contact_part_qual_exists:                {filter: [*part_qual_exists, *is_contact], m42: False}
   contact_part_qual_compab:                {filter: [*part_qual_compab, *is_contact], m42: False}
   contact_part_qual_unknown:               {filter: [*part_qual_unknown, *is_contact], m42: False}
+  contact_in_stock:                        {filter: [*item_in_stock, *is_contact], m42: False}
+  contact_to_order:                        {filter: [*item_to_order, *is_contact], m42: False}
   contacts_total_vas:                      {filter: [*is_item_vas, {$or: [[*is_booking], [*is_delivery], [*is_msg], [*is_ph_tot]]}]}
   contacts_perfvas_x2_1:                   {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_x2_1], m42: False}
   contacts_perfvas_x2_7:                   {filter: [{$or: [*is_booking, *is_delivery, *is_msg, *is_ph_tot]}, *is_item_perfvas_x2_7], m42: False}
@@ -604,6 +619,8 @@ metric.counter:
   favorites_added_part_qual_exists:        {filter: [*part_qual_exists, *is_fav]}
   favorites_added_part_qual_compab:        {filter: [*part_qual_compab, *is_fav]}
   favorites_added_part_qual_unknown:       {filter: [*part_qual_unknown, *is_fav]}
+  favorites_added_in_stock:                {filter: [*item_in_stock, *is_fav]}
+  favorites_added_to_order:                {filter: [*item_to_order, *is_fav]}
   favorites_added_mp:                      {filter: [*is_fav, *is_item_marketplace]}
   favorites_list_views:                    {filter: [*is_fav_lst]}
   favorites_removed:                       {filter: [*is_fav_rmv]}
@@ -615,11 +632,15 @@ metric.counter:
   first_messages_part_qual_exists:         {filter: [*part_qual_exists ,*is_msg]}
   first_messages_part_qual_compab:         {filter: [*part_qual_compab ,*is_msg]}
   first_messages_part_qual_unknown:        {filter: [*part_qual_unknown ,*is_msg]}
+  first_messages_in_stock:                 {filter: [*item_in_stock ,*is_msg]}
+  first_messages_to_order:                 {filter: [*item_to_order ,*is_msg]}
   first_messages_vas:                      {filter: [*is_item_vas, *is_msg]}
   item_views:                              {filter: [*is_iv]}
   item_views_part_qual_exists:             {filter: [*part_qual_exists ,*is_iv]}
   item_views_part_qual_compab:             {filter: [*part_qual_compab ,*is_iv]}
   item_views_part_qual_unknown:            {filter: [*part_qual_unknown,*is_iv]}
+  item_views_in_stock:                     {filter: [*item_in_stock ,*is_iv]}
+  item_views_to_order:                     {filter: [*item_to_order ,*is_iv]}
   item_views_mp:                           {filter: [*is_iv, *is_item_marketplace]}
   item_views_client:                       {filter: [*is_iv_client]}
   item_views_client_rec_from_msg:          {filter: [*is_iv_client, *x_is_rec_msg]}
@@ -662,6 +683,8 @@ metric.counter:
   phone_views_part_qual_compab:            {filter: [*part_qual_compab , *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
   phone_views_part_qual_unknown:           {filter: [*part_qual_unknown, *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
   phone_views_part_qual_exists:            {filter: [*part_qual_exists , *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
+  phone_views_in_stock:                    {filter: [*item_in_stock , *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
+  phone_views_to_order:                    {filter: [*item_to_order , *is_ph, {$or: [[*is_ph_right], [*is_ph_top]]}]}
   phone_views_in_chat:                     {filter: [*is_ph_chat]}
   phone_views_snippet:                     {filter: [*is_ph, {$or: [[*is_ph_snip], [*is_ph_xlvas]]}]}
   phone_views_total:                       {filter: [*is_ph_tot]}
@@ -699,6 +722,8 @@ metric.counter:
   searches_part_qual_exists:               {filter: [*part_qual_exists ,*is_1p, *is_search]}
   searches_part_qual_compab:               {filter: [*part_qual_compab ,*is_1p, *is_search]}
   searches_part_qual_unknown:              {filter: [*part_qual_unknown ,*is_1p, *is_search]}
+  searches_in_stock:                       {filter: [*item_in_stock ,*is_1p, *is_search]}
+  searches_to_order:                       {filter: [*item_to_order ,*is_1p, *is_search]}
   searches_mp:                             {filter: [*is_1p, *is_search, *is_search_marketplace]}
   searches_with_mp_items:                  {filter: [*is_1p, *is_search, *is_search_w_mp_item]}
   searches_any_ext_block:                  {filter: [*is_search, {$or: [[*x_is_extra_delivery], [*x_is_extra_regions],[*x_is_extra_regions_mix], [*x_is_extra_quorum], [*x_is_extra_vector]]}]}
@@ -1705,9 +1730,13 @@ metric.uniq:
   buyers_part_qual_exists:                 {counter: contact_part_qual_exists, key: [cookie], m42: False}
   buyers_part_qual_compab:                 {counter: contact_part_qual_compab, key: [cookie], m42: False}
   buyers_part_qual_unknown:                {counter: contact_part_qual_unknown, key: [cookie], m42: False}
+  buyers_in_stock:                         {counter: contact_in_stock, key: [cookie], m42: False}
+  buyers_to_order:                         {counter: contact_to_order, key: [cookie], m42: False}
   user_iv_part_qual_exists:                {counter: item_views_part_qual_exists, key: [cookie], m42: False}
   user_iv_part_qual_compab:                {counter: item_views_part_qual_compab, key: [cookie], m42: False}
   user_iv_part_qual_unknown:               {counter: item_views_part_qual_unknown, key: [cookie], m42: False}
+  user_iv_in_stock:                        {counter: item_views_in_stock, key: [cookie], m42: False}
+  user_iv_to_order:                        {counter: item_views_to_order, key: [cookie], m42: False}
   user_s_localpriority:                    {counter: s_localpriority,                 key: [cookie]}
   user_s_multiloc:                         {counter: s_multiloc,                      key: [cookie]}
   user_iv_s_multiloc:                      {counter: iv_s_multiloc,                   key: [cookie]}
