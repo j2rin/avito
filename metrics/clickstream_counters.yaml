@@ -91,6 +91,16 @@ metric.counter:
   ext_profile_off:                                      {filter: [eid: 5070, ext_profile_is_using.isnull: true], obs: [event_count]}
 
 
+  fps_falls_below_10pct:                                {filter: [eid: 5243, fps_threshold.=: 10], obs: [event_count]}
+  fps_falls_below_30pct:                                {filter: [eid: 5243, fps_threshold.=: 30], obs: [event_count]}
+  fps_falls_below_50pct:                                {filter: [eid: 5243, fps_threshold.=: 50], obs: [event_count]}
+  fps_falls_below_70pct:                                {filter: [eid: 5243, fps_threshold.=: 70], obs: [event_count]}
+  fps_falls_below_85pct:                                {filter: [eid: 5243, fps_threshold.=: 85], obs: [event_count]}
+  fps_falls_below_90pct:                                {filter: [eid: 5243, fps_threshold.=: 90], obs: [event_count]}
+  fps_falls_below_95pct:                                {filter: [eid: 5243, fps_threshold.=: 95], obs: [event_count]}
+
+
+
 metric.uniq:
   unq_geo_redirect_replace:          {counter: geo_redirect_replace,            key: [cookie]}
   unq_geo_redirect_suggest:          {counter: geo_redirect_suggest,            key: [cookie]}
@@ -130,6 +140,14 @@ metric.uniq:
   profile_shop_viewers:              {counter: profile_shop_views,              key: [cookie]}
   ext_profile_on_uniq:               {counter: ext_profile_on,                  key: [cookie]}
   ext_profile_off_uniq:              {counter: ext_profile_off,                 key: [cookie]}
+
+  users_fps_falls_below_10pct:       {counter: fps_falls_below_10pct,                 key: [cookie]}
+  users_fps_falls_below_30pct:       {counter: fps_falls_below_30pct,                 key: [cookie]}
+  users_fps_falls_below_50pct:       {counter: fps_falls_below_50pct,                 key: [cookie]}
+  users_fps_falls_below_70pct:       {counter: fps_falls_below_70pct,                 key: [cookie]}
+  users_fps_falls_below_85pct:       {counter: fps_falls_below_85pct,                 key: [cookie]}
+  users_fps_falls_below_90pct:       {counter: fps_falls_below_90pct,                 key: [cookie]}
+  users_fps_falls_below_95pct:       {counter: fps_falls_below_95pct,                 key: [cookie]}
 
 
 metric.ratio:
