@@ -2,8 +2,8 @@ by_metric:
   users_active_daily: [[app_version], [vertical, logical_category, region]]
   buyers_canonical: [[price_group], [category, subcategory, param1], [vertical, logical_category, logical_param1, logical_param2, region]]
   contacts_canonical: [[category, subcategory, param1], [vertical, logical_category, logical_param1, logical_param2, region]]
-  active_items: [[category, subcategory, param1], [vertical, logical_category, region]]
-  items_started_net: [[category, subcategory, param1], [vertical, logical_category, region]]
+  active_items: [[category, subcategory, param1, param2], [vertical, logical_category, region, city]]
+  items_started_net: [[category, subcategory, param1, param2], [vertical, logical_category, region, city]]
   users_active_items: [[category, subcategory, param1], [vertical, logical_category, region]]
   users_item_started: [[category, subcategory, param1], [vertical, logical_category, region]]
   sellers_with_contacts: [[category, subcategory, param1], [vertical, logical_category, region]]
@@ -14,7 +14,7 @@ by_metric:
   lf_amount_net:
     - [is_logged_in, is_asd, vertical, logical_category, logical_param1, logical_param2, region, user_segment_market]
   items_reactivated_net:
-    - [is_logged_in, is_asd, vertical, logical_category, logical_param1, logical_param2, region, user_segment_market]
+    - [is_logged_in, is_asd, vertical, logical_category, logical_param1, logical_param2, region, city, user_segment_market]
   items_sold_onavito:
     - [is_logged_in, is_asd, vertical, logical_category, logical_param1, logical_param2, region, user_segment_market]
   items_sold_onavito_per_items_reactivated_net:
@@ -23,6 +23,9 @@ by_metric:
     - [is_logged_in, is_asd, vertical, logical_category, logical_param1, logical_param2, region, user_segment_market]
   cnt_returned_buyers:
     - [is_logged_in, is_asd, vertical, logical_category, logical_param1, logical_param2, region, user_segment_market]
+  item_views: [[is_logged_in, vertical, logical_category, region, city], [logical_category, param1, param2]
+  contacts: [[is_logged_in, vertical, logical_category, region, city], [logical_category, param1, param2]
+  
   # ---- временные метрики для теста(сравнить с метриками vas без приставки cfr_)
   cfr_vas_amount_net: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   cfr_vas_amount_net_x2_7: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
