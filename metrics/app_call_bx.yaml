@@ -15,13 +15,15 @@ definitions:
 
 metric.counter:
 
-  appcall_bx_incoming:                     {filter: [*is_incoming,  *is_callback_c], m42: False}
+  appcall_bx_incoming:                     {filter: [*is_incoming,  *is_callback_c]}
   appcall_bx_incoming_answered:            {filter: [*is_incoming,  *is_callback_c, *is_answered], m42: False}
-  appcall_bx_incoming_success:             {filter: [*is_incoming,  *is_callback_c, *is_success], m42: False}  
+  appcall_bx_incoming_success:             {filter: [*is_incoming,  *is_callback_c, *is_success]}
+  appcall_bx_incoming_talkminutes:         {filter: [*is_incoming,  *is_callback_c, *is_answered], obs: TalkDuration}
   
   appcall_bx_outgoing:                     {filter: [*is_outgoing, *is_c]}
   appcall_bx_outgoing_answered:            {filter: [*is_outgoing, *is_c, *is_answered]}
   appcall_bx_outgoing_success:             {filter: [*is_outgoing, *is_c, *is_success]}
+  appcall_bx_outgoing_talkminutes:         {filter: [*is_outgoing, *is_c, *is_answered], obs: TalkDuration}
   
   appcall_bx_outgoing_callback:            {filter: [*is_outgoing, *is_callback_c], m42: False}
   appcall_bx_outgoing_callback_answered:   {filter: [*is_outgoing, *is_callback_c, *is_answered], m42: False}
@@ -29,13 +31,16 @@ metric.counter:
   
   appcall_bx_outgoing_direct:              {filter: [*is_outgoing, *is_direct_c]}
   appcall_bx_outgoing_direct_answered:     {filter: [*is_outgoing, *is_direct_c, *is_answered]}
-  appcall_bx_outgoing_direct_success:      {filter: [*is_outgoing, *is_direct_c, *is_success]}  
+  appcall_bx_outgoing_direct_success:      {filter: [*is_outgoing, *is_direct_c, *is_success]}
   
   appcall_bx_outgoing_item:                {filter: [*is_outgoing, *is_item_c], m42: False}
   appcall_bx_outgoing_item_answered:       {filter: [*is_outgoing, *is_item_c, *is_answered], m42: False}
   appcall_bx_outgoing_item_success:        {filter: [*is_outgoing, *is_item_c, *is_success], m42: False}
    
-  appcall_bx_any_calls:                    {filter: [*is_c], m42: False}
+  appcall_bx_any_calls:                    {filter: [*is_c]}
+  appcall_bx_any_calls_answered:           {filter: [*is_c, *is_answered]}
+  appcall_bx_any_calls_success:            {filter: [*is_c, *is_success]}
+  appcall_bx_any_talkminutes:              {filter: [*is_c, *is_answered], obs: TalkDuration}
  
 metric.uniq:
   unq_appcall_bx_outgoing_item:            {counter: appcall_bx_outgoing_item, key: [cookie], m42: False}
@@ -45,3 +50,7 @@ metric.ratio:
   appcall_bx_outgoing_direct_answered_ratio:            {num: appcall_bx_outgoing_direct_answered, den: appcall_bx_outgoing_direct}
   appcall_bx_outgoing_direct_success_answered_ratio:    {num: appcall_bx_outgoing_direct_success, den: appcall_bx_outgoing_direct_answered}
   appcall_bx_outgoing_direct_success_ratio:             {num: appcall_bx_outgoing_direct_success, den: appcall_bx_outgoing_direct}
+  
+  appcall_bx_outgoing_talkminutes_avg:                  {num: appcall_bx_outgoing_talkminutes, den: appcall_bx_outgoing_answered}
+  appcall_bx_incoming_talkminutes_avg:                  {num: appcall_bx_incoming_talkminutes, den: appcall_bx_incoming_answered}
+  appcall_bx_any_talkminutes_avg:                       {num: appcall_bx_any_talkminutes, den: appcall_bx_any_calls_answered}
