@@ -22,12 +22,12 @@ metric.counter:
   appcall_bx_incoming:                     {filter: [*is_incoming,  *is_callback_c]}
   appcall_bx_incoming_answered:            {filter: [*is_incoming,  *is_callback_c, *is_answered], m42: False}
   appcall_bx_incoming_success:             {filter: [*is_incoming,  *is_callback_c, *is_success]}
-  appcall_bx_incoming_talkseconds:         {filter: [*is_incoming,  *is_callback_c, *is_answered], obs: TalkDuration}
+  appcall_bx_incoming_talkseconds:         {filter: [*is_incoming,  *is_callback_c, *is_answered], obs: [TalkDuration]}
   
   appcall_bx_outgoing:                     {filter: [*is_outgoing, *is_c]}
   appcall_bx_outgoing_answered:            {filter: [*is_outgoing, *is_c, *is_answered]}
   appcall_bx_outgoing_success:             {filter: [*is_outgoing, *is_c, *is_success]}
-  appcall_bx_outgoing_talkseconds:         {filter: [*is_outgoing, *is_c, *is_answered], obs: TalkDuration}
+  appcall_bx_outgoing_talkseconds:         {filter: [*is_outgoing, *is_c, *is_answered], obs: [TalkDuration]}
   appcall_bx_outgoing_less15seconds:       {filter: [*is_outgoing, *is_c, *is_answered, *is_less15]}
   appcall_bx_outgoing_less60seconds:       {filter: [*is_outgoing, *is_c, *is_answered, *is_less60]}
   appcall_bx_outgoing_less120seconds:      {filter: [*is_outgoing, *is_c, *is_answered, *is_less120]}
@@ -48,7 +48,7 @@ metric.counter:
   appcall_bx_any_calls:                    {filter: [*is_c]}
   appcall_bx_any_calls_answered:           {filter: [*is_c, *is_answered]}
   appcall_bx_any_calls_success:            {filter: [*is_c, *is_success]}
-  appcall_bx_any_talkseconds:              {filter: [*is_c, *is_answered], obs: TalkDuration}
+  appcall_bx_any_talkseconds:              {filter: [*is_c, *is_answered], obs: [TalkDuration]}
   appcall_bx_any_less15seconds:            {filter: [*is_c, *is_answered, *is_less15]}
   appcall_bx_any_less60seconds:            {filter: [*is_c, *is_answered, *is_less60]}
   appcall_bx_any_less120seconds:           {filter: [*is_c, *is_answered, *is_less120]}
