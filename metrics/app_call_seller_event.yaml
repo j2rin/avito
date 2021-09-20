@@ -1,6 +1,12 @@
-metric.counter:
+definitions:
+ - &was_end_call_feedback                  {appcall_receiver_end_call_rating.>: 0}
+ 
+ metric.counter:
   appcall_item_add_iac_popup_show:         {obs: [appcall_item_add_iac_popup_show]}
   appcall_item_add_iac_popup_accepted:     {obs: [appcall_item_add_iac_popup_accepted]}
+  
+  appcall_receiver_end_call_feedback_count: {filter: [*was_end_call_feedback]}
+  appcall_receiver_end_call_feedback_sum:   {filter: [*was_end_call_feedback], obs: [appcall_receiver_end_call_rating]}
 
 
 metric.uniq:
@@ -9,3 +15,5 @@ metric.uniq:
 
 metric.ratio:
   appcall_item_add_iac_popup_accepted_ratio:  {num: appcall_item_add_iac_popup_accepted, den: appcall_item_add_iac_popup_show}
+  
+  appcall_receiver_end_call_feedback_avg:     {num: appcall_receiver_end_call_feedback_sum, den: appcall_receiver_end_call_feedback_count}
