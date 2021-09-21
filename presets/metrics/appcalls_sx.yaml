@@ -6,12 +6,18 @@ appcalls_sx:
     - appcall_sx_outgoing
     - appcall_sx_outgoing_answered
     - appcall_sx_outgoing_success
+    - appcall_sx_outgoing_talkseconds
     
     - appcall_sx_incoming
     - appcall_sx_incoming_initiated
     - appcall_sx_incoming_ringing
     - appcall_sx_incoming_answered
     - appcall_sx_incoming_success
+    - appcall_sx_incoming_talkseconds
+    - appcall_sx_incoming_less15seconds
+    - appcall_sx_incoming_less60seconds
+    - appcall_sx_incoming_less120seconds
+    - appcall_sx_incoming_less300seconds
     
     - appcall_sx_incoming_callback
     - appcall_sx_incoming_callback_initiated
@@ -24,7 +30,15 @@ appcalls_sx:
     - appcall_sx_incoming_direct_ringing
     - appcall_sx_incoming_direct_answered
     - appcall_sx_incoming_direct_success
+    
     - appcall_sx_any_calls
+    - appcall_sx_any_calls_answered
+    - appcall_sx_any_calls_success
+    - appcall_sx_any_talkseconds
+    - appcall_sx_any_less15seconds
+    - appcall_sx_any_less60seconds
+    - appcall_sx_any_less120seconds
+    - appcall_sx_any_less300seconds
 
     - appcall_sx_incoming_direct_mic_granted
     - appcall_sx_incoming_direct_mic_checked
@@ -32,6 +46,9 @@ appcalls_sx:
 ## source: app_call_seller_event
     - appcall_item_add_iac_popup_show
     - appcall_item_add_iac_popup_accepted
+
+    - appcall_receiver_end_call_feedback_count
+    - appcall_receiver_end_call_feedback_sum
 
 ## source: clickstream_counters
     - mic_access_granted
@@ -58,17 +75,28 @@ appcalls_sx:
 # ratio
 
 ## source: app_call_sx
+    - appcall_sx_outgoing_talkseconds_avg
+    - appcall_sx_incoming_talkseconds_avg
+    - appcall_sx_any_talkseconds_avg
+    - appcall_sx_any_less15seconds_ratio
+    - appcall_sx_any_less60seconds_ratio
+    - appcall_sx_any_less120seconds_ratio
+    - appcall_sx_any_less300seconds_ratio
 
     - appcall_sx_incoming_direct_initiated_ratio
     - appcall_sx_incoming_direct_ringing_ratio
     - appcall_sx_incoming_direct_answered_ratio
     - appcall_sx_incoming_direct_success_ratio
     
+    
     - appcall_sx_incoming_direct_initiated_ringing_ratio
     - appcall_sx_incoming_direct_ringing_answered_ratio
     - appcall_sx_incoming_direct_answered_success_ratio
     
     - appcall_sx_incoming_direct_mic_granted_ratio
+    
 
 ## source: app_call_seller_event
     - appcall_item_add_iac_popup_accepted_ratio
+
+    - appcall_receiver_end_call_feedback_avg

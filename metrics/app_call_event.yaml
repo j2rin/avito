@@ -1,3 +1,6 @@
+definitions:
+ - &was_end_call_feedback                  {appcall_caller_end_call_rating.>: 0}
+
 metric.counter:
   appcall_show_buttons:                    {obs: [appcall_item_gallery_show_buttons, appcall_item_show_buttons, appcall_messenger_chat_long_answer_show_buttons, appcall_messenger_chat_menu_show_buttons]}
   appcall_click_inapp:                     {obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp, appcall_messenger_chat_long_answer_click_inapp, appcall_messenger_chat_menu_click_inapp]}
@@ -8,6 +11,9 @@ metric.counter:
   appcall_item_click_inapp:                {obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp]}
   appcall_item_click_phone:                {obs: [appcall_item_click_phone, appcall_item_gallery_click_phone]}
   appcall_item_click_inapp_or_phone:       {obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp, appcall_item_click_phone, appcall_item_gallery_click_phone]}
+  
+  appcall_caller_end_call_feedback_count:  {filter: [*was_end_call_feedback]}
+  appcall_caller_end_call_feedback_sum:    {filter: [*was_end_call_feedback], obs: [appcall_caller_end_call_rating]}
 
 
 metric.uniq:
@@ -29,3 +35,5 @@ metric.ratio:
   
   appcall_click_inapp_users_share:         {num: appcall_click_inapp_users,       den: appcall_show_buttons_users}
   appcall_click_phone_users_share:         {num: appcall_click_phone_users,       den: appcall_show_buttons_users}
+  
+  appcall_caller_end_call_feedback_avg:    {num: appcall_caller_end_call_feedback_sum, den: appcall_caller_end_call_feedback_count}
