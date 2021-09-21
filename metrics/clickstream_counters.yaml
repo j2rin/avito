@@ -118,6 +118,10 @@ metric.counter:
   network_client_error:                                 {filter: [eid: 4599, network_error_type: 'network client error'], obs: [event_count]}
   network_system_error:                                 {filter: [eid: 4599, network_error_type: 'network system error'], obs: [event_count]}
 
+  network_api_bad_request_error:                        {filter: [eid: 4599, network_error_type: 'network system error', network_error_sub_type: 'bad request'], obs: [event_count]}
+  network_client_parsing_error:                         {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'parsing failure'], obs: [event_count]}
+  network_client_no_session_error:                      {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'attempt to send authorized request with no session'], obs: [event_count]}
+
 metric.uniq:
   unq_geo_redirect_replace:          {counter: geo_redirect_replace,            key: [cookie]}
   unq_geo_redirect_suggest:          {counter: geo_redirect_suggest,            key: [cookie]}
@@ -184,6 +188,10 @@ metric.uniq:
   user_network_image_load_error:                             {counter: network_image_load_error,           key: [cookie]}
   user_network_client_error:                                 {counter: network_client_error,           key: [cookie]}
   user_network_system_error:                                 {counter: network_system_error,           key: [cookie]}
+  user_network_api_bad_request_error:                        {counter: network_api_bad_request_error,           key: [cookie]}
+  user_network_client_parsing_error:                         {counter: network_client_parsing_error,           key: [cookie]}
+  user_network_client_no_session_error:                      {counter: network_client_no_session_error,           key: [cookie]}
+
 
 metric.ratio:
   ctr_click_banner_download_app:             {num: click_banner_download_app,                den: show_banner_download_app}
