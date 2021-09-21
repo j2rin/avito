@@ -221,6 +221,10 @@ definitions:
   
   - &item_in_stock {item_flags.bit: 22}
   - &item_to_order {item_flags.bit: 23}
+  
+  - &x_is_public_profile                   {x_eid: 2017, from_page: 'public_profile'}
+  - &x_is_extended_profile                 {x_eid: 2017, from_page: ['profile_services']}
+  - &x_is_extended_profile_services        {x_eid: 2017, from_page: 'profile_services'}
 
 
 metric.counter:
@@ -913,6 +917,14 @@ metric.counter:
   total_delivery_confirm:                  {filter: [*is_not_item_marketplace, eid: 2749], m42: true}
   total_delivery_contact:                  {filter: [*is_not_item_marketplace, *is_delivery], m42: true}
   total_delivery_item_contact:             {filter: [*is_not_item_marketplace, *is_contact], m42: true}
+  cnt_iv_public_profile:                   {filter: [*is_iv_wo_guessing, *x_is_public_profile], m42: False}
+  cnt_iv_extended_profile:                 {filter: [*is_iv_wo_guessing, *x_is_extended_profile], m42: False}
+  cnt_iv_extended_profile_services:        {filter: [*is_iv_wo_guessing, *x_is_extended_profile_services], m42: False}
+  cnt_iv_profile_shop:                     {filter: [{$or: [[*is_iv_wo_guessing, *x_is_public_profile],[*is_iv_wo_guessing, *x_is_extended_profile],[*is_iv_wo_guessing, *x_is_search, *x_is_shop]]}], m42: False}
+  cnt_cs_public_profile:                   {filter: [*is_contact_wo_guessing, *x_is_public_profile], m42: False}
+  cnt_cs_extended_profile:                 {filter: [*is_contact_wo_guessing, *x_is_extended_profile], m42: False}
+  cnt_cs_extended_profile_services:        {filter: [*is_contact_wo_guessing, *x_is_extended_profile_services], m42: False}
+  cnt_cs_profile_shop:                     {filter: [{$or: [[*is_contact_wo_guessing, *x_is_public_profile],[*is_contact_wo_guessing, *x_is_extended_profile],[*is_contact_wo_guessing, *x_is_search, *x_is_shop]]}], m42: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1067,6 +1079,10 @@ metric.uniq:
   contacts_msg_serp:                       {counter: cnt_cs_msg_s_item_attr,          key: [item_x]}
   contacts_ph_serp:                        {counter: cnt_cs_ph_s_item_attr,           key: [item_x]}
   contacts_shop:                           {counter: cnt_cs_shopx,                    key: [item_x]}
+  contacts_public_profile:                 {counter: cnt_cs_public_profile,           key: [item_x]}
+  contacts_extended_profile:               {counter: cnt_cs_extended_profile,         key: [item_x]}
+  contacts_extended_profile_services:      {counter: cnt_cs_extended_profile_services, key: [item_x]}
+  contacts_profile_shop:                   {counter: cnt_cs_profile_shop,             key: [item_x]}
   contacts_vas:                            {counter: cnt_cs_vas,                      key: [item_x]}
   contacts_cpa:                            {counter: cnt_cs_cpa,                      key: [item_x]}
   contacts_s_cpa:                          {counter: cnt_cs_s_cpa,                    key: [item_x]}
@@ -1207,6 +1223,10 @@ metric.uniq:
   item_views_serp_saved:                   {counter: cnt_iv_s_saved,                  key: [item_x]}
   item_views_serp_similar:                 {counter: cnt_iv_grouped,                  key: [item_x]}
   item_views_shop:                         {counter: cnt_iv_shopx,                    key: [item_x]}
+  item_views_public_profile:               {counter: cnt_iv_public_profile,           key: [item_x]}
+  item_views_extended_profile:             {counter: cnt_iv_extended_profile,         key: [item_x]}
+  item_views_extended_profile_services:    {counter: cnt_iv_extended_profile_services, key: [item_x]}
+  item_views_profile_shop:                 {counter: cnt_iv_profile_shop,             key: [item_x]}
   item_views_vas:                          {counter: cnt_iv_vas,                      key: [item_x]}
   item_views_serp_perfvas_x2_1:            {counter: cnt_iv_serp_perfvas_x2_1,        key: [item_x]}
   item_views_serp_perfvas_x2_7:            {counter: cnt_iv_serp_perfvas_x2_7,        key: [item_x]}
@@ -1805,6 +1825,16 @@ metric.uniq:
   user_iv_pessimized_map:                  {counter: item_views_pessimized_map,        key: [cookie]}
   user_iv_pessimized_map_serp:             {counter: item_views_pessimized_map_serp,   key: [cookie]}
   user_iv_pessimized_map_total:            {counter: item_views_pessimized_map_total,  key: [cookie]}
+  item_views_shop_uniq:                    {counter: cnt_iv_shopx,                       key: [cookie_item]}
+  item_views_public_profile_uniq:          {counter: cnt_iv_public_profile,              key: [cookie_item]}
+  item_views_extended_profile_uniq:        {counter: cnt_iv_extended_profile,            key: [cookie_item]}
+  item_views_extended_profile_services_uniq: {counter: cnt_iv_extended_profile_services, key: [cookie_item]}
+  item_views_profile_shop_uniq:            {counter: cnt_iv_profile_shop,                key: [cookie_item]}
+  contacts_shop_uniq:                      {counter: cnt_cs_shopx,                       key: [cookie_item]}
+  contacts_public_profile_uniq:            {counter: cnt_cs_public_profile,              key: [cookie_item]}
+  contacts_extended_profile_uniq:          {counter: cnt_cs_extended_profile,            key: [cookie_item]}
+  contacts_extended_profile_services_uniq: {counter: cnt_cs_extended_profile_services,   key: [cookie_item]}
+  contacts_profile_shop_uniq:              {counter: cnt_cs_profile_shop,                key: [cookie_item]}
 
 
 metric.ratio:
