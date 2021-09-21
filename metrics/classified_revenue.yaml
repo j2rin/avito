@@ -30,7 +30,9 @@ metric.counter:
   bundle_payments_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'bundle']}
   bundle_transactions:                       {obs: [transaction_count],           filter: [*revenue, product_type: 'bundle']}
   bundle_transactions_p:                     {obs: [transaction_count],           filter: [*payment, product_type: 'bundle']}
-  
+  domoteka_amount_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'check']}
+  str_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'buyer book']}
+
 
 metric.uniq:
   classified_users:                          {counter: classified_amount_net_adj,          key: [user]}
