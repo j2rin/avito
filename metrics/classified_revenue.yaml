@@ -23,13 +23,22 @@ metric.counter:
   vas_payments_net_adj:                      {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'vas']}
   vas_transactions:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'vas']}
   vas_transactions_p:                        {obs: [transaction_count],           filter: [*payment, product_type: 'vas']}
-  paid_contact_amount_net_adj:               {obs: [transaction_count],           filter: [*revenue, product_type: 'paid_contact']}
+  paid_contact_amount_net_adj:               {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'paid_contact']}
   cpa_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa']}
   cpa_transactions:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'cpa']}
   bundle_amount_net_adj:                     {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'bundle']}
   bundle_payments_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'bundle']}
   bundle_transactions:                       {obs: [transaction_count],           filter: [*revenue, product_type: 'bundle']}
   bundle_transactions_p:                     {obs: [transaction_count],           filter: [*payment, product_type: 'bundle']}
+  # ---- метрики mnz_vas
+  vas_amount_net:                        {obs: [transaction_amount_net],      filter: [*revenue, product_type: 'vas']}
+  vas_amount_net_x2_7:                   {obs: [transaction_amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x2_7']}
+  vas_amount_net_x5_1:                   {obs: [transaction_amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x5_1']}
+  vas_amount_net_x2_1:                   {obs: [transaction_amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x2_1']}
+  vas_amount_net_x10_1:                  {obs: [transaction_amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x10_1']}
+  vas_amount_net_x5_7:                   {obs: [transaction_amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x5_7']}
+  vas_amount_net_x10_7:                  {obs: [transaction_amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x10_7']}
+  # ------------------------------------------------------------------------
   domoteka_amount_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'check']}
   str_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'buyer book']}
 
@@ -43,7 +52,14 @@ metric.uniq:
   subs_extensions_payments_users:            {counter: subs_w_extensions_payments_net_adj, key: [user]}
   vas_users:                                 {counter: vas_amount_net_adj,                 key: [user]}
   vas_payments_users:                        {counter: vas_payments_net_adj,               key: [user]}
-
+  cpa_users:                                 {counter: cpa_amount_net_adj,                 key: [user]}
+  users_vas:                               {counter: vas_amount_net,                  key: [user]}
+  users_vas_x2_1:                          {counter: vas_amount_net_x2_1,             key: [user]}
+  users_vas_x2_7:                          {counter: vas_amount_net_x2_7,             key: [user]}
+  users_vas_x5_1:                          {counter: vas_amount_net_x5_1,             key: [user]}
+  users_vas_x5_7:                          {counter: vas_amount_net_x5_7,             key: [user]}
+  users_vas_x10_1:                         {counter: vas_amount_net_x10_1,            key: [user]}
+  users_vas_x10_7:                         {counter: vas_amount_net_x10_7,            key: [user]}
 metric.ratio:
   classified_price_net_adj:                  {num: classified_amount_net_adj,              den: classified_transactions}
   classified_price_net_adj_p:                {num: classified_payments_net_adj,            den: classified_transactions_p}

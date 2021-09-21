@@ -14,15 +14,16 @@ metric.counter:
   vas_amount_fast_start_date:              {filter: [{observation_name: vas_amount_fast}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
   vas_amount_highlight:                    {filter: [{observation_name: vas_amount_highlight}], obs: [observation_value]}
   vas_amount_highlight_start_date:         {filter: [{observation_name: vas_amount_highlight}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net:                          {filter: [{observation_name: vas_amount_net}], obs: [observation_value]}
   vas_amount_net_visual:                   {filter: [{observation_name: vas_amount_net_visual}], obs: [observation_value]}
   vas_amount_net_performance:              {filter: [{observation_name: vas_amount_net_performance}], obs: [observation_value]}
-  vas_amount_net_x2_1:                     {filter: [{observation_name: vas_amount_net_x2_1}], obs: [observation_value]}
-  vas_amount_net_x2_7:                     {filter: [{observation_name: vas_amount_net_x2_7}], obs: [observation_value]}
-  vas_amount_net_x5_1:                     {filter: [{observation_name: vas_amount_net_x5_1}], obs: [observation_value]}
-  vas_amount_net_x5_7:                     {filter: [{observation_name: vas_amount_net_x5_7}], obs: [observation_value]}
-  vas_amount_net_x10_1:                    {filter: [{observation_name: vas_amount_net_x10_1}], obs: [observation_value]}
-  vas_amount_net_x10_7:                    {filter: [{observation_name: vas_amount_net_x10_7}], obs: [observation_value]}
+# перенесены в classified_revenue
+#  vas_amount_net: { filter: [ { observation_name: vas_amount_net } ], obs: [ observation_value ] }
+#  vas_amount_net_x2_1:                     {filter: [{observation_name: vas_amount_net_x2_1}], obs: [observation_value]}
+#  vas_amount_net_x2_7:                     {filter: [{observation_name: vas_amount_net_x2_7}], obs: [observation_value]}
+#  vas_amount_net_x5_1:                     {filter: [{observation_name: vas_amount_net_x5_1}], obs: [observation_value]}
+#  vas_amount_net_x5_7:                     {filter: [{observation_name: vas_amount_net_x5_7}], obs: [observation_value]}
+#  vas_amount_net_x10_1:                    {filter: [{observation_name: vas_amount_net_x10_1}], obs: [observation_value]}
+#  vas_amount_net_x10_7:                    {filter: [{observation_name: vas_amount_net_x10_7}], obs: [observation_value]}
   vas_amount_net_activation:               {filter: [{observation_name: vas_amount_net_activation}], obs: [observation_value]}
   vas_amount_net_activation_start_date:    {filter: [{observation_name: vas_amount_net_activation}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
   vas_amount_net_fast:                     {filter: [{observation_name: vas_amount_net_fast}], obs: [observation_value]}
@@ -79,15 +80,15 @@ metric.counter:
   vas_transactions_xl_start_date:          {filter: [{observation_name: vas_transactions_xl}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
 
 metric.uniq:
-  users_vas:                               {counter: vas_amount_net,                  key: [participant]}
+#  users_vas:                               {counter: vas_amount_net,                  key: [participant]}
   users_vas_visual:                        {counter: vas_amount_net_visual,           key: [participant]}
   users_vas_performance:                   {counter: vas_amount_net_performance,      key: [participant]}
-  users_vas_x2_1:                          {counter: vas_amount_net_x2_1,             key: [participant]}
-  users_vas_x2_7:                          {counter: vas_amount_net_x2_7,             key: [participant]}
-  users_vas_x5_1:                          {counter: vas_amount_net_x5_1,             key: [participant]}
-  users_vas_x5_7:                          {counter: vas_amount_net_x5_7,             key: [participant]}
-  users_vas_x10_1:                         {counter: vas_amount_net_x10_1,            key: [participant]}
-  users_vas_x10_7:                         {counter: vas_amount_net_x10_7,            key: [participant]}
+#  users_vas_x2_1:                          {counter: vas_amount_net_x2_1,             key: [participant]}
+#  users_vas_x2_7:                          {counter: vas_amount_net_x2_7,             key: [participant]}
+#  users_vas_x5_1:                          {counter: vas_amount_net_x5_1,             key: [participant]}
+#  users_vas_x5_7:                          {counter: vas_amount_net_x5_7,             key: [participant]}
+#  users_vas_x10_1:                         {counter: vas_amount_net_x10_1,            key: [participant]}
+#  users_vas_x10_7:                         {counter: vas_amount_net_x10_7,            key: [participant]}
   users_vas_activation:                    {counter: vas_amount_net_activation,       key: [participant]}
   users_vas_activation_start_date:         {counter: vas_amount_net_activation_start_date, key: [participant]}
   users_vas_fast:                          {counter: vas_amount_net_fast,             key: [participant]}
@@ -122,7 +123,7 @@ metric.ratio:
   vas_avo_fast_start_date:                 {num: vas_amount_fast_start_date,      den: vas_transactions_fast_start_date}
   vas_avo_highlight:                       {num: vas_amount_highlight,            den: vas_transactions_highlight}
   vas_avo_highlight_start_date:            {num: vas_amount_highlight_start_date, den: vas_transactions_highlight_start_date}
-  vas_avo_net:                             {num: vas_amount_net,                  den: vas_transactions_mnz}
+#  vas_avo_net:                             {num: vas_amount_net,                  den: vas_transactions_mnz}
   vas_avo_net_activation:                  {num: vas_amount_net_activation,       den: vas_transactions_activation}
   vas_avo_net_activation_start_date:       {num: vas_amount_net_activation_start_date, den: vas_transactions_activation_start_date}
   vas_avo_net_fast:                        {num: vas_amount_net_fast,             den: vas_transactions_fast}
