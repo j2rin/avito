@@ -90,6 +90,37 @@ metric.counter:
   ext_profile_on:                                       {filter: [eid: 5070, ext_profile_is_using: true], obs: [event_count]}
   ext_profile_off:                                      {filter: [eid: 5070, ext_profile_is_using.isnull: true], obs: [event_count]}
 
+  fps_falls_below_10pct:                                {filter: [eid: 5243, fps_threshold.=: 10], obs: [event_count]}
+  fps_falls_below_30pct:                                {filter: [eid: 5243, fps_threshold.=: 30], obs: [event_count]}
+  fps_falls_below_50pct:                                {filter: [eid: 5243, fps_threshold.=: 50], obs: [event_count]}
+  fps_falls_below_70pct:                                {filter: [eid: 5243, fps_threshold.=: 70], obs: [event_count]}
+  fps_falls_below_85pct:                                {filter: [eid: 5243, fps_threshold.=: 85], obs: [event_count]}
+  fps_falls_below_90pct:                                {filter: [eid: 5243, fps_threshold.=: 90], obs: [event_count]}
+  fps_falls_below_95pct:                                {filter: [eid: 5243, fps_threshold.=: 95], obs: [event_count]}
+
+  show_search_widget:                                   {filter: [eid: 4920, from_page: 'vertical_filter'], obs: [event_count]}
+  click_search_widget:                                  {filter: [eid: 4954], obs: [event_count]}
+  show_category_widget:                                 {filter: [eid: 4920, from_page: 'vertical_category'], obs: [event_count]}
+  click_category_widget:                                {filter: [eid: 4921, from_page: 'vertical_category'], obs: [event_count]}
+  show_promo_widget:                                    {filter: [eid: 4920, from_page: 'vertical_promo'], obs: [event_count]}
+  click_promo_widget:                                   {filter: [eid: 4921, from_page: 'vertical_promo'], obs: [event_count]}
+  show_featured_widget:                                 {filter: [eid: 4920, from_page: 'featured'], obs: [event_count]}
+  click_featured_widget:                                {filter: [eid: 4921, from_page: 'featured'], obs: [event_count]}
+  show_recent_search_widget:                            {filter: [eid: 4920, from_page: 'recentSearch'], obs: [event_count]}
+  click_recent_search_widget:                           {filter: [eid: 4921, from_page: 'recentSearch'], obs: [event_count]}
+
+
+  network_error:                                        {filter: [eid: 4599], obs: [event_count]}
+  network_api_error:                                    {filter: [eid: 4599, network_error_type: 'api error'], obs: [event_count]}
+  network_forbidden_error:                              {filter: [eid: 4599, network_error_type: 'forbidden'], obs: [event_count]}
+  network_unauthenticated_error:                        {filter: [eid: 4599, network_error_type: 'http unauthenticated'], obs: [event_count]}
+  network_image_load_error:                             {filter: [eid: 4599, network_error_type: 'image load error'], obs: [event_count]}
+  network_client_error:                                 {filter: [eid: 4599, network_error_type: 'network client error'], obs: [event_count]}
+  network_system_error:                                 {filter: [eid: 4599, network_error_type: 'network system error'], obs: [event_count]}
+
+  network_api_bad_request_error:                        {filter: [eid: 4599, network_error_type: 'network system error', network_error_sub_type: 'bad request'], obs: [event_count]}
+  network_client_parsing_error:                         {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'parsing failure'], obs: [event_count]}
+  network_client_no_session_error:                      {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'attempt to send authorized request with no session'], obs: [event_count]}
 
 metric.uniq:
   unq_geo_redirect_replace:          {counter: geo_redirect_replace,            key: [cookie]}
@@ -130,6 +161,36 @@ metric.uniq:
   profile_shop_viewers:              {counter: profile_shop_views,              key: [cookie]}
   ext_profile_on_uniq:               {counter: ext_profile_on,                  key: [cookie]}
   ext_profile_off_uniq:              {counter: ext_profile_off,                 key: [cookie]}
+
+  users_fps_falls_below_10pct:       {counter: fps_falls_below_10pct,                 key: [cookie]}
+  users_fps_falls_below_30pct:       {counter: fps_falls_below_30pct,                 key: [cookie]}
+  users_fps_falls_below_50pct:       {counter: fps_falls_below_50pct,                 key: [cookie]}
+  users_fps_falls_below_70pct:       {counter: fps_falls_below_70pct,                 key: [cookie]}
+  users_fps_falls_below_85pct:       {counter: fps_falls_below_85pct,                 key: [cookie]}
+  users_fps_falls_below_90pct:       {counter: fps_falls_below_90pct,                 key: [cookie]}
+  users_fps_falls_below_95pct:       {counter: fps_falls_below_95pct,                 key: [cookie]}
+
+  user_show_search_widget:           {counter: show_search_widget,                    key: [cookie]}
+  user_click_search_widget:          {counter: click_search_widget,                   key: [cookie]}
+  user_show_category_widget:         {counter: show_category_widget,                  key: [cookie]}
+  user_click_category_widget:        {counter: click_category_widget,                 key: [cookie]}
+  user_show_promo_widget:            {counter: show_promo_widget,                     key: [cookie]}
+  user_click_promo_widget:           {counter: click_promo_widget,                    key: [cookie]}
+  user_show_featured_widget:         {counter: show_featured_widget,                  key: [cookie]}
+  user_click_featured_widget:        {counter: click_featured_widget,                 key: [cookie]}
+  user_show_recent_search_widget:    {counter: show_recent_search_widget,             key: [cookie]}
+  user_click_recent_search_widget:    {counter: click_recent_search_widget,           key: [cookie]}
+
+  user_network_error:                                        {counter: network_error,           key: [cookie]}
+  user_network_api_error:                                    {counter: network_api_error,           key: [cookie]}
+  user_network_forbidden_error:                              {counter: network_forbidden_error,           key: [cookie]}
+  user_network_unauthenticated_error:                        {counter: network_unauthenticated_error,           key: [cookie]}
+  user_network_image_load_error:                             {counter: network_image_load_error,           key: [cookie]}
+  user_network_client_error:                                 {counter: network_client_error,           key: [cookie]}
+  user_network_system_error:                                 {counter: network_system_error,           key: [cookie]}
+  user_network_api_bad_request_error:                        {counter: network_api_bad_request_error,           key: [cookie]}
+  user_network_client_parsing_error:                         {counter: network_client_parsing_error,           key: [cookie]}
+  user_network_client_no_session_error:                      {counter: network_client_no_session_error,           key: [cookie]}
 
 
 metric.ratio:

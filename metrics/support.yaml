@@ -15,6 +15,7 @@ metric.counter:
   support_email_wizard_call_tickets_created: {obs: [ticket_email_created, ticket_wizard_created, ticket_call_created ]}
   support_email_wizard_call_chat_tickets_created: {obs: [ticket_email_created, ticket_wizard_created, ticket_call_created, chats_created]}
   support_ticket_chat_platform:                   {obs: [ticket_platform_created, chats_created]}
+  support_total_flow:                      {obs: [ticket_platform_created, ticket_call_created, chats_created]}
   #support_wizard_call_tickets_chat_created: {obs: [ticket_call_created, ticket_wizard_created, webim_chats]}
   #support_wizard_tickets_chat_created:     {obs: [ticket_wizard_created, webim_chats]}
   support_hc_ticket_platform_fraud_templates: {obs: [ticket_platform_fraud_templates]}
@@ -72,6 +73,7 @@ metric.ratio:
   support_hc_article_like_rate:            {num: support_hc_article_like,         den: support_hc_article_marks}
   support_ticket_with_changed_problem_rate: {num: cnt_tickets_problem_changed,     den: support_email_wizard_tickets_created}
   support_ticket_with_changed_problem_rate_platform: {num: cnt_tickets_problem_changed_platform, den: support_hc_ticket_platform_created}
+  support_chat_from_flow_share:        {num: support_chats_created, den: support_total_flow}
 # --- FREQUENT
   support_hc_article_like_freq_rate:       {num: support_hc_article_like_freq,    den: support_hc_article_marks_freq}
 
