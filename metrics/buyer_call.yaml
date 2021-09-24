@@ -1,5 +1,7 @@
 metric.counter:
   ancalls_any_type:                        {filter: [{observation_name: anon_calls_matched_any_type}], obs: [observation_value]}
+  ancalls_answered_any_type:               {filter: [{observation_name: anon_calls_matched_answered}], obs: [observation_value]}
+  ancalls_success_any_type:                {filter: [{observation_name: anon_calls_matched_success}], obs: [observation_value]}
   ancalls_any_type_fav:                    {filter: [{observation_name: anon_calls_matched_any_type_fav}], obs: [observation_value]}
   ancalls_any_type_map:                    {filter: [{observation_name: anon_calls_matched_any_type_map}], obs: [observation_value]}
   ancalls_any_type_rec:                    {filter: [{observation_name: anon_calls_matched_any_type_rec}], obs: [observation_value]}
@@ -46,7 +48,12 @@ metric.uniq:
   users_ancalls_by_phone:                  {counter: ancalls_by_phone,                key: [participant]}
   users_ancalls_by_phone_uid:              {counter: ancalls_by_phone_uid,            key: [participant]}
   users_ancalls_by_time:                   {counter: ancalls_by_time,                 key: [participant]}
+  users_ancalls_success_any_type:          {counter: ancalls_success_any_type,        key: [participant]}
   users_phone_calls_client:                {counter: calls,                           key: [participant]}
   users_phone_calls_client_fav:            {counter: calls_fav,                       key: [participant]}
   users_phone_calls_client_map:            {counter: calls_map,                       key: [participant]}
   users_phone_calls_client_serp:           {counter: calls_serp,                      key: [participant]}
+  
+metric.ratio:
+  ancalls_answered_share:                  {num: ancalls_answered_any_type,        den: ancalls_any_type}
+  ancalls_success_share:                   {num: ancalls_success_any_type,         den: ancalls_any_type}
