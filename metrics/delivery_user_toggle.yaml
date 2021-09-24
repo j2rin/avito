@@ -1,0 +1,7 @@
+metric.counter:
+    total_users_on_delivery_service:        {filter: [isDeliveryActive: True]}
+    total_users_off_delivery_service:       {filter: [isDeliveryActive: False]}
+
+metric.uniq:
+    users_on_delivery_service:              {counter: total_users_on_delivery_service,            key: [user_id]}
+    users_off_delivery_service:             {counter: total_users_off_delivery_service,           key: [user_id]}
