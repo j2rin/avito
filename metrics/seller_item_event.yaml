@@ -41,10 +41,12 @@ metric.counter:
   items_reactivated:                       {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_item_start: False}]}
   items_reactivated_marketplace:           {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_item_start: False, is_marketplace: True}]}
   items_reactivated_classified:            {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_item_start: False, is_marketplace: False}]}
+  items_reactivated_with_delivery:         {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_item_start: False, is_delivery_active: True}], m42: True}
   items_reactivated_free:                  {filter: [{activation_type: [NoLF, Free, Free.Reopen], is_after_ttl: True, is_item_start: False}]}
   items_reactivated_net:                   {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_dead: False, is_item_start: False}]}
   items_reactivated_net_marketplace:       {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_dead: False, is_item_start: False, is_marketplace: True}]}
   items_reactivated_net_classified:        {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_dead: False, is_item_start: False, is_marketplace: False}]}
+  items_reactivated_net_with_delivery:     {filter: [{activation_type.!=: Wait, is_after_ttl: True, is_dead: False, is_item_start: False, is_delivery_active: True}]}
   items_reactivated_paid:                  {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_after_ttl: True, is_item_start: False}]}
   items_reactivated_wait:                  {filter: [{activation_type: Wait, is_after_ttl: True, is_item_start: False}]}
   items_rejected:                          {filter: [{moder_flags.bit: 6}]}
@@ -80,11 +82,13 @@ metric.counter:
   items_started:                           {filter: [{activation_type.!=: Wait, is_item_start: True}]}
   items_started_marketplace:               {filter: [{activation_type.!=: Wait, is_item_start: True, is_marketplace: True}]}
   items_started_classified:                {filter: [{activation_type.!=: Wait, is_item_start: True, is_marketplace: False}]}
+  items_started_with_delivery:             {filter: [{activation_type.!=: Wait, is_item_start: True, is_delivery_active: True}], m42: True}
   items_started_free:                      {filter: [{activation_type.in: [NoLF, Free, Free.Reopen], is_item_start: True}]}
   items_started_net:                       {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True}]}
   items_started_dead:                      {filter: [{activation_type.!=: Wait, is_dead: True, is_item_start: True}]}
   items_started_net_marketplace:           {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True, is_marketplace: True}]}
   items_started_net_classified:            {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True, is_marketplace: False}]}
+  items_started_net_with_delivery:         {filter: [{activation_type.!=: Wait, is_dead: False, is_item_start: True, is_delivery_active: True}]}
   items_started_paid:                      {filter: [{activation_type: [Single_subs_afterpaid, Package, Single, Package_subs_afterpaid, Package_subs_prepaid], is_item_start: True}]}
   items_started_wait:                      {filter: [{activation_type: Wait, is_item_start: True}]}
   lf_amount_net:                           {obs: [lf_amount_net]}
