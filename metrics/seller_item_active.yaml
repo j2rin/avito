@@ -103,6 +103,10 @@ metric.counter:
   seller_item_views_vas:                   {filter: [{vas_mask.>: 0}], obs: [item_views]}
   item_views_with_msg:                     {filter: [{is_active: True}, {is_message_forbidden: False}], obs: [item_views]}
   seller_contacts:                         {obs: [contacts]}
+  seller_contacts_messenger:               {obs: [contacts_msg]}
+  seller_contacts_messenger_start_date:    {filter: [{start_date.>=: $ab_start_date}],obs: [contacts_msg]}
+  seller_contacts_phone_views:             {obs: [contacts_ph]}
+  seller_contacts_phone_views_start_date:  {filter: [{start_date.>=: $ab_start_date}],obs: [contacts_ph]}
   seller_contacts_vas:                     {filter: [{vas_mask.>: 0}], obs: [contacts]}
   seller_btc:                              {obs: [favs_added, contacts]}
   seller_btc_vas:                          {filter: [{vas_mask.>: 0}], obs: [favs_added, contacts]}
@@ -161,6 +165,8 @@ metric.uniq:
   sellers_favorite_removed_start_date:     {counter: seller_favorites_removed_start_date, key: [user]}
   sellers_with_contacts:                   {counter: seller_contacts,                 key: [user]}
   sellers_with_contacts_start_date:        {counter: seller_contacts_start_date,      key: [user]}
+  sellers_with_phone_views:                {counter: seller_contacts_phone_views,     key: [user]}
+  sellers_with_messages:                   {counter: seller_contacts_messenger,       key: [user]}
   sellers_with_item_views:                 {counter: seller_item_views_vas,                 key: [user]}
   sellers_with_btc_vas:                    {counter: seller_btc_vas,                        key: [user]}
   sellers_with_contacts_vas:               {counter: seller_contacts_vas,                 key: [user]}
@@ -206,6 +212,10 @@ metric.ratio:
   seller_btc_per_active_item:                     {num: seller_btc, den: active_items}
   seller_contacts_per_item_views:                 {num: seller_contacts, den: seller_item_views}
   seller_contact_per_active_item:                 {num: seller_contacts, den: active_items}
+  seller_phone_views_per_item_views:              {num: seller_contacts_phone_views, den: seller_item_views}
+  seller_phone_views_per_active_item:             {num: seller_contacts_phone_views, den: active_items}
+  seller_messenger_per_item_views:                {num: seller_contacts_messenger, den: seller_item_views}
+  seller_messenger_per_active_item:               {num: seller_contacts_messenger, den: active_items}
   seller_1plus_locations_per_user_active_items:   {num: user_active_items_1plus_locations, den: users_active_items}
   seller_1plus_multiloc_per_user_active_items:    {num: user_active_items_1plus_locations_microcat, den: users_active_items}
   seller_contacts_per_iv_on_deliverable:          {num: seller_contacts_on_deliverable_items, den: seller_deliverable_iv}
