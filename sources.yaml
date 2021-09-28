@@ -501,21 +501,6 @@ delivery_orders_seller:
   segm: deliveryorder_id
 
 
-
-delivery:
-  metric_configs: [delivery]
-  database: vertica
-  table: dma.vo_delivery
-  column_map:
-    participant: participant_id
-  dimensions: [platform, vertical, category, subcategory, logical_category, is_intercity, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
-  m42_cartesian_groups:
-    - [is_logged_in, is_asd, vertical, logical_category, region, user_segment_market]
-    - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
-  dtm: event_date
-  segm: cookie_id
-
 core_b2b:
   metric_configs: [core_b2b]
   database: vertica
