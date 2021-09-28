@@ -734,6 +734,21 @@ buyer_call:
   dtm: event_date
   segm: cookie_id
 
+seller_matched_call:
+  metric_configs: [seller_matched_call]
+  database: vertica
+  table: dma.vo_seller_matched_call 
+  column_map:
+    item: item_id
+    user: user_id
+  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
+  m42_cartesian_groups:
+    - [vertical, logical_category, region]
+    - [category, subcategory]
+  participant: {user: user_id}
+  dtm: event_date
+  segm: user_id
+
 
 notification:
   metric_configs: [notification]
