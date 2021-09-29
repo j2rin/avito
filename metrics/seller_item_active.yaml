@@ -118,9 +118,9 @@ metric.counter:
   items_with_bad_address:                  {filter: [is_active: True, *bad_address]}
   items_with_bad_address_new:              {filter: [is_active: True, start_date: $event_date, *bad_address]}
   items_with_bad_address_reactivated:      {filter: [is_active: True, last_activation_date: $event_date, activations_count.>: 1, *bad_address]}
-  active_items_deliverable:                        {filter: [is_active: True, is_delivery_available: True]}
+  items_delivery_available:                        {filter: [is_active: True, is_delivery_available: True]}
   active_items_deliverable_start_date:             {filter: [is_active: True, is_delivery_available: True, start_date.>=: $ab_start_date]}
-  active_items_delivery_on:                        {filter: [is_active: True, is_delivery_active: True]}
+  items_with_delivery:                             {filter: [is_active: True, is_delivery_active: True], m42: True}
   active_items_delivery_on_start_date:             {filter: [is_active: True, is_delivery_active: True, start_date.>=: $ab_start_date]}
   seller_deliverable_iv:                           {filter: [is_delivery_available: True ], obs: [item_views]}
   seller_deliverable_iv_start_date:                {filter: [is_delivery_available: True, start_date.>=: $ab_start_date ], obs: [ item_views]}
@@ -219,4 +219,5 @@ metric.ratio:
   seller_1plus_locations_per_user_active_items:   {num: user_active_items_1plus_locations, den: users_active_items}
   seller_1plus_multiloc_per_user_active_items:    {num: user_active_items_1plus_locations_microcat, den: users_active_items}
   seller_contacts_per_iv_on_deliverable:          {num: seller_contacts_on_deliverable_items, den: seller_deliverable_iv}
-  seller_contact_per_active_deliverable_item:     {num: seller_contacts_on_deliverable_items, den: active_items_deliverable}
+  seller_contact_per_active_deliverable_item:     {num: seller_contacts_on_deliverable_items, den: items_delivery_available}
+  items_delivery_ratio:                           {num: items_with_delivery,              den: items_delivery_available, m42: true}

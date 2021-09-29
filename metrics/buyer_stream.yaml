@@ -911,7 +911,8 @@ metric.counter:
   c_s_multiloc:                            {filter: [*is_s_multiloc, *is_contact_wo_guessing]}
   fav_s_multiloc:                          {filter: [*is_s_multiloc, *is_fav]}
   btc_s_multiloc:                          {filter: [*is_s_multiloc, *is_btc_wo_guessing]}
-  total_delivery_item_view:                {filter: [*is_delivery_active, *is_iv], m42: true}
+  delivery_total_item_view:                {filter: [*is_delivery_active, *is_iv], m42: true}
+  total_delivery_click:                    {filter: [*is_delivery_pvz, *is_not_item_marketplace, eid: 2483], m42: true} #сейчас дубль total_delivery_click_wo_messenger, после добавления кликов с платформенной кнопки мессенджера они разойдутся
   total_delivery_click_wo_messenger:       {filter: [*is_delivery_pvz, *is_not_item_marketplace, eid: 2483], m42: true}
   total_delivery_widget:                   {filter: [*is_not_item_marketplace, eid: 2013], m42: true}
   total_delivery_confirm:                  {filter: [*is_not_item_marketplace, eid: 2749], m42: true}
@@ -1119,7 +1120,8 @@ metric.uniq:
   delivery_contact_mp_serp:                {counter: total_delivery_contact_mp_serp,                 key: [item_x]}
   delivery_contact_mp_serp_local:          {counter: total_delivery_contact_mp_serp_local,           key: [item_x]}
   delivery_contact_mp_serp_multiloc:       {counter: total_delivery_contact_mp_serp_multiloc,        key: [item_x]}
-  delivery_item_view:                      {counter: total_delivery_item_view,                       key: [cookie_item], m42: true}
+  delivery_item_view:                      {counter: delivery_total_item_view,                       key: [cookie_item], m42: true}
+  delivery_click:                          {counter: total_delivery_click,                           key: [cookie_item], m42: true}  #сейчас дубль delivery_click_wo_messenger, после добавления кликов с платформенной кнопки мессенджера они разойдутся
   delivery_click_wo_messenger:             {counter: total_delivery_click_wo_messenger,              key: [cookie_item], m42: true}
   delivery_widget:                         {counter: total_delivery_widget,                          key: [cookie_item], m42: true}
   delivery_confirm:                        {counter: total_delivery_confirm,                         key: [cookie_item], m42: true}
@@ -1502,7 +1504,8 @@ metric.uniq:
   user_recblock_shows_i2i:                 {counter: recblock_shows_i2i,              key: [cookie], m42: False}
   user_recblock_shows_cv2vac:              {counter: recblock_shows_cv2vac,           key: [cookie], m42: False}
   user_recblock_shows_u2i:                 {counter: recblock_shows_u2i,              key: [cookie], m42: False}
-  user_delivery_item_view:                 {counter: total_delivery_item_view,                       key: [cookie], m42: true }
+  user_delivery_item_view:                 {counter: delivery_total_item_view,                       key: [cookie], m42: true }
+  user_delivery_click:                     {counter: total_delivery_click,                           key: [cookie], m42: true }
   user_delivery_click_wo_messenger:        {counter: total_delivery_click_wo_messenger,              key: [cookie], m42: true }
   user_delivery_widget:                    {counter: total_delivery_widget,                          key: [cookie], m42: true }
   user_delivery_confirm:                   {counter: total_delivery_confirm,                         key: [cookie], m42: true }
@@ -2308,10 +2311,17 @@ metric.ratio:
   user_rec_i2i_vas_contact_ratio:                                             {num: users_contact_rec_i2i_vas,            den: users_contact_rec_i2i}
   user_rec_u2i_vas_contact_ratio:                                             {num: users_contact_rec_u2i_vas,            den: users_contact_rec_u2i}
   delivery_contact_delivery_button_ratio:                                     {num: delivery_contact,                     den: delivery_click_wo_messenger, m42: true}
-  delivery_total_widget_confirm_ratio:                                        {num: total_delivery_confirm,               den: total_delivery_widget, m42: true}
-  delivery_total_widget_contact_ratio:                                        {num: total_delivery_contact,               den: total_delivery_widget, m42: true}
-  delivery_view_delivery_item_contact_ratio:                                  {num: delivery_item_contact,                den: delivery_item_view, m42: true}
-  delivery_widget_confirm_ratio:                                              {num: delivery_confirm,                     den: delivery_widget, m42: true}
-  delivery_widget_contact_ratio:                                              {num: delivery_contact,                     den: delivery_widget, m42: true}
-  delivery_confirm_contact_ratio:                                             {num: delivery_contact,                     den: delivery_confirm, m42: true}
-  delivery_iv_delivery_contact_ratio:                                         {num: delivery_contact,                     den: delivery_item_view, m42: true}
+  delivery_total_widget_confirm_ratio:                                        {num: total_delivery_confirm,               den: total_delivery_widget,    m42: true}
+  delivery_total_widget_contact_ratio:                                        {num: total_delivery_contact,               den: total_delivery_widget,    m42: true}
+  delivery_view_delivery_item_contact_ratio:                                  {num: delivery_item_contact,                den: delivery_item_view,       m42: true}
+  delivery_widget_confirm_ratio:                                              {num: delivery_confirm,                     den: delivery_widget,          m42: true}
+  delivery_widget_contact_ratio:                                              {num: delivery_contact,                     den: delivery_widget,          m42: true}
+  delivery_confirm_contact_ratio:                                             {num: delivery_contact,                     den: delivery_confirm,         m42: true}
+  delivery_iv_delivery_contact_ratio:                                         {num: delivery_contact,                     den: delivery_item_view,       m42: true}
+  delivery_click_widget_ratio:                                                {num: delivery_widget,                      den: delivery_click,           m42: true}
+  delivery_click_delivery_contact_ratio:                                      {num: delivery_contact,                     den: delivery_click,           m42: true}
+  delivery_total_click_widget_ratio:                                          {num: total_delivery_widget,                den: total_delivery_click,     m42: true}
+  delivery_total_view_delivery_click_ratio:                                   {num: total_delivery_click,                 den: delivery_total_item_view, m42: true}
+  delivery_view_delivery_click_ratio:                                         {num: delivery_click,                       den: delivery_item_view,       m42: true}
+  delivery_item_contact_delivery_click_ratio:                                 {num: delivery_click,                       den: delivery_item_contact,    m42: true}
+  delivery_contact_delivery_item_contact_ratio:                               {num: delivery_contact,                     den: delivery_item_contact,    m42: true}

@@ -123,6 +123,11 @@ metric.counter:
   network_client_parsing_error:                         {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'parsing failure'], obs: [event_count]}
   network_client_no_session_error:                      {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'attempt to send authorized request with no session'], obs: [event_count]}
 
+  total_item_on_delivery:                               {filter: [eid: 2703, is_delivery_available: True],  obs: [event_count]}
+  total_item_off_delivery:                              {filter: [eid: 2703, is_delivery_available: False], obs: [event_count]}
+  total_users_on_delivery:                              {filter: [eid: 2704, is_delivery_available: True],  obs: [event_count]}
+  total_users_off_delivery:                             {filter: [eid: 2704, is_delivery_available: False], obs: [event_count]}
+
 metric.uniq:
   unq_geo_redirect_replace:          {counter: geo_redirect_replace,            key: [cookie]}
   unq_geo_redirect_suggest:          {counter: geo_redirect_suggest,            key: [cookie]}
@@ -194,6 +199,11 @@ metric.uniq:
   user_network_api_bad_request_error:                        {counter: network_api_bad_request_error,           key: [cookie]}
   user_network_client_parsing_error:                         {counter: network_client_parsing_error,           key: [cookie]}
   user_network_client_no_session_error:                      {counter: network_client_no_session_error,           key: [cookie]}
+
+  item_on_delivery:                 {counter: total_item_on_delivery,           key: [item_id]}
+  item_off_delivery:                {counter: total_item_off_delivery,          key: [item_id]}
+  users_on_delivery:                {counter: total_users_on_delivery,          key: [item_id]}
+  users_off_delivery:               {counter: total_users_off_delivery,         key: [item_id]}
 
 
 metric.ratio:
