@@ -1386,13 +1386,3 @@ delivery_user_toggle:
   table: dma.v_user_isDeliveryActive
   participant: {user: user_id}
   dtm: event_date
-
-autoteka_stream_autoteka_participant:
-  metric_configs: [autoteka_stream_autoteka_participant]
-  database: vertica
-  table: dma.autoteka_stream
-  column_map:
-    platform: autoteka_platform_id
-  dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user]
-  participant: {visitor: additionalcookie_id, user: autotekauser_id}
-  dtm: event_date
