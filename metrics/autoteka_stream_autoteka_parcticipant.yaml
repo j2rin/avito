@@ -1,0 +1,12 @@
+metric.counter:
+  autoteka_revenue_autoteka_participant:     {filter: [funnel_stage_id: 4], obs: [amount]}
+  autoteka_cnt_reports_autoteka_participant: {filter: [funnel_stage_id: 4], obs: [reports_count]}
+  autoteka_cnt_paypage_loads_autoteka_participant: {filter: [funnel_stage_id: 3]}
+  autoteka_cnt_product_selections_autoteka_participant: {filter: [funnel_stage_id: 2]}
+  autoteka_cnt_previews_autoteka_participant: {filter: [funnel_stage_id: 1]}
+
+metric.uniq:
+  autoteka_unique_report_buyers_autoteka_participant: {counter: autoteka_cnt_reports_autoteka_participant, key: [autotekauser_id]}
+  autoteka_unique_paypage_visitors_autoteka_participant: {counter: autoteka_cnt_paypage_loads_autoteka_participant, key: [autotekauser_id]}
+  autoteka_unique_product_selection_visitors_autoteka_participant: {counter: autoteka_cnt_product_selections_autoteka_participant, key: [additionalcookie_id]}
+  autoteka_unique_preview_visitors_autoteka_participant: {counter: autoteka_cnt_previews_autoteka_participant, key: [additionalcookie_id]}
