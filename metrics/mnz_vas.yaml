@@ -130,6 +130,11 @@ metric.counter:
   vas_clean_reserved_amount_net_xl:                       {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
   vas_clean_reserved_amount_net_bundle_mid:               {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
   vas_clean_reserved_amount_net_bundle_max:               {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
+#clean reserved revenue (amount_net) start_date (items activated in AB test)   
+  vas_clean_reserved_amount_net_start_date:                   {obs: [amount_net],      filter: [*payment, product_type: 'vas', start_date.>=: $ab_start_date]}
+  vas_clean_reserved_amount_net_visual_start_date:            {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'visual', start_date.>=: $ab_start_date]}
+  vas_clean_reserved_amount_net_performance_start_date:       {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'performance', start_date.>=: $ab_start_date]}
+  vas_clean_reserved_amount_net_bundle_start_date:            {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', start_date.>=: $ab_start_date]}
 #transactions (write off, burn)
   vas_transactions_mnz:                    {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas']}
   vas_transactions_mnz_visual:             {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'visual']}
