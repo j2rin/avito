@@ -357,10 +357,9 @@ public_profile:
 mnz_vas:
   metric_configs: [mnz_vas]
   database: vertica
-  table: dma.vo_mnz_vas
+  table: dma.vo_mnz_vas_metrics
   column_map:
     user: user_id
-    participant: participant_id
   dimensions: [platform, page_from, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
   participant: {user: user_id}
   m42_cartesian_groups:
@@ -368,7 +367,7 @@ mnz_vas:
     - [is_logged_in, is_asd, vertical, logical_category, region, user_segment_market]
     - [category, subcategory]
   dtm: event_date
-  segm: cookie_id
+  segm: user_id
 
 labor:
   metric_configs: [labor]

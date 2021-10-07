@@ -1,154 +1,378 @@
+definitions:
+  - &revenue   {isrevenue: true, is_classified: true}
+  - &payment   {ispayment: true, is_classified: true}
+
 metric.counter:
-  vas_amount:                              {filter: [{observation_name: vas_amount}], obs: [observation_value]}
-  vas_amount_visual:                       {filter: [{observation_name: vas_amount_visual}], obs: [observation_value]}
-  vas_amount_performance:                  {filter: [{observation_name: vas_amount_performance}], obs: [observation_value]}
-  vas_amount_x2_1:                         {filter: [{observation_name: vas_amount_x2_1}], obs: [observation_value]}
-  vas_amount_x2_7:                         {filter: [{observation_name: vas_amount_x2_7}], obs: [observation_value]}
-  vas_amount_x5_1:                         {filter: [{observation_name: vas_amount_x5_1}], obs: [observation_value]}
-  vas_amount_x5_7:                         {filter: [{observation_name: vas_amount_x5_7}], obs: [observation_value]}
-  vas_amount_x10_1:                        {filter: [{observation_name: vas_amount_x10_1}], obs: [observation_value]}
-  vas_amount_x10_7:                        {filter: [{observation_name: vas_amount_x10_7}], obs: [observation_value]}
-  vas_amount_activation:                   {filter: [{observation_name: vas_amount_activation}], obs: [observation_value]}
-  vas_amount_activation_start_date:        {filter: [{observation_name: vas_amount_activation}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_fast:                         {filter: [{observation_name: vas_amount_fast}], obs: [observation_value]}
-  vas_amount_fast_start_date:              {filter: [{observation_name: vas_amount_fast}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_highlight:                    {filter: [{observation_name: vas_amount_highlight}], obs: [observation_value]}
-  vas_amount_highlight_start_date:         {filter: [{observation_name: vas_amount_highlight}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net_visual:                   {filter: [{observation_name: vas_amount_net_visual}], obs: [observation_value]}
-  vas_amount_net_performance:              {filter: [{observation_name: vas_amount_net_performance}], obs: [observation_value]}
-# перенесены в classified_revenue
-#  vas_amount_net: { filter: [ { observation_name: vas_amount_net } ], obs: [ observation_value ] }
-#  vas_amount_net_x2_1:                     {filter: [{observation_name: vas_amount_net_x2_1}], obs: [observation_value]}
-#  vas_amount_net_x2_7:                     {filter: [{observation_name: vas_amount_net_x2_7}], obs: [observation_value]}
-#  vas_amount_net_x5_1:                     {filter: [{observation_name: vas_amount_net_x5_1}], obs: [observation_value]}
-#  vas_amount_net_x5_7:                     {filter: [{observation_name: vas_amount_net_x5_7}], obs: [observation_value]}
-#  vas_amount_net_x10_1:                    {filter: [{observation_name: vas_amount_net_x10_1}], obs: [observation_value]}
-#  vas_amount_net_x10_7:                    {filter: [{observation_name: vas_amount_net_x10_7}], obs: [observation_value]}
-  vas_amount_net_activation:               {filter: [{observation_name: vas_amount_net_activation}], obs: [observation_value]}
-  vas_amount_net_activation_start_date:    {filter: [{observation_name: vas_amount_net_activation}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net_fast:                     {filter: [{observation_name: vas_amount_net_fast}], obs: [observation_value]}
-  vas_amount_net_fast_start_date:          {filter: [{observation_name: vas_amount_net_fast}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net_highlight:                {filter: [{observation_name: vas_amount_net_highlight}], obs: [observation_value]}
-  vas_amount_net_highlight_start_date:     {filter: [{observation_name: vas_amount_net_highlight}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net_premium:                  {filter: [{observation_name: vas_amount_net_premium}], obs: [observation_value]}
-  vas_amount_net_premium_start_date:       {filter: [{observation_name: vas_amount_net_premium}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net_pushup:                   {filter: [{observation_name: vas_amount_net_pushup}], obs: [observation_value]}
-  vas_amount_net_pushup_start_date:        {filter: [{observation_name: vas_amount_net_pushup}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net_start_date:               {filter: [{observation_name: vas_amount_net}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net_turbo:                    {filter: [{observation_name: vas_amount_net_turbo}], obs: [observation_value]}
-  vas_amount_net_turbo_start_date:         {filter: [{observation_name: vas_amount_net_turbo}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net_vip:                      {filter: [{observation_name: vas_amount_net_vip}], obs: [observation_value]}
-  vas_amount_net_vip_start_date:           {filter: [{observation_name: vas_amount_net_vip}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_net_xl:                       {filter: [{observation_name: vas_amount_net_xl}], obs: [observation_value]}
-  vas_amount_net_xl_start_date:            {filter: [{observation_name: vas_amount_net_xl}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_premium:                      {filter: [{observation_name: vas_amount_premium}], obs: [observation_value]}
-  vas_amount_premium_start_date:           {filter: [{observation_name: vas_amount_premium}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_pushup:                       {filter: [{observation_name: vas_amount_pushup}], obs: [observation_value]}
-  vas_amount_pushup_start_date:            {filter: [{observation_name: vas_amount_pushup}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_start_date:                   {filter: [{observation_name: vas_amount}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_turbo:                        {filter: [{observation_name: vas_amount_turbo}], obs: [observation_value]}
-  vas_amount_turbo_start_date:             {filter: [{observation_name: vas_amount_turbo}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_vip:                          {filter: [{observation_name: vas_amount_vip}], obs: [observation_value]}
-  vas_amount_vip_start_date:               {filter: [{observation_name: vas_amount_vip}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_amount_xl:                           {filter: [{observation_name: vas_amount_xl}], obs: [observation_value]}
-  vas_amount_xl_start_date:                {filter: [{observation_name: vas_amount_xl}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_transactions_mnz:                    {filter: [{observation_name: vas_transactions}], obs: [observation_value]}
-  vas_transactions_mnz_visual:             {filter: [{observation_name: vas_transactions_visual}], obs: [observation_value]}
-  vas_transactions_mnz_performance:        {filter: [{observation_name: vas_transactions_performance}], obs: [observation_value]}
-  vas_transactions_mnz_x2_1:               {filter: [{observation_name: vas_transactions_x2_1}], obs: [observation_value]}
-  vas_transactions_mnz_x2_7:               {filter: [{observation_name: vas_transactions_x2_7}], obs: [observation_value]}
-  vas_transactions_mnz_x5_1:               {filter: [{observation_name: vas_transactions_x5_1}], obs: [observation_value]}
-  vas_transactions_mnz_x5_7:               {filter: [{observation_name: vas_transactions_x5_7}], obs: [observation_value]}
-  vas_transactions_mnz_x10_1:              {filter: [{observation_name: vas_transactions_x10_1}], obs: [observation_value]}
-  vas_transactions_mnz_x10_7:              {filter: [{observation_name: vas_transactions_x10_7}], obs: [observation_value]}
-  vas_transactions_activation:             {filter: [{observation_name: vas_transactions_activation}], obs: [observation_value]}
-  vas_transactions_activation_start_date:  {filter: [{observation_name: vas_transactions_activation}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_transactions_fast:                   {filter: [{observation_name: vas_transactions_fast}], obs: [observation_value]}
-  vas_transactions_fast_start_date:        {filter: [{observation_name: vas_transactions_fast}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_transactions_highlight:              {filter: [{observation_name: vas_transactions_highlight}], obs: [observation_value]}
-  vas_transactions_highlight_start_date:   {filter: [{observation_name: vas_transactions_highlight}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_transactions_premium:                {filter: [{observation_name: vas_transactions_premium}], obs: [observation_value]}
-  vas_transactions_premium_start_date:     {filter: [{observation_name: vas_transactions_premium}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_transactions_pushup:                 {filter: [{observation_name: vas_transactions_pushup}], obs: [observation_value]}
-  vas_transactions_pushup_start_date:      {filter: [{observation_name: vas_transactions_pushup}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_transactions_start_date:             {filter: [{observation_name: vas_transactions}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_transactions_turbo:                  {filter: [{observation_name: vas_transactions_turbo}], obs: [observation_value]}
-  vas_transactions_turbo_start_date:       {filter: [{observation_name: vas_transactions_turbo}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_transactions_vip:                    {filter: [{observation_name: vas_transactions_vip}], obs: [observation_value]}
-  vas_transactions_vip_start_date:         {filter: [{observation_name: vas_transactions_vip}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
-  vas_transactions_xl:                     {filter: [{observation_name: vas_transactions_xl}], obs: [observation_value]}
-  vas_transactions_xl_start_date:          {filter: [{observation_name: vas_transactions_xl}, {start_date.>=: $ab_start_date}], obs: [observation_value]}
+#revenue (amount)
+  vas_amount:                              {obs: [amount],      filter: [*revenue, product_type: 'vas']}
+  vas_amount_visual:                       {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'visual']}
+  vas_amount_performance:                  {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'performance']}
+  vas_amount_bundle:                       {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle']}
+  vas_amount_x2_1:                         {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x2_1']}
+  vas_amount_x2_7:                         {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x2_7']}
+  vas_amount_x5_1:                         {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x5_1']}
+  vas_amount_x5_7:                         {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x5_7']}
+  vas_amount_x10_1:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x10_1']}
+  vas_amount_x10_7:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x10_7']}
+  vas_amount_x12_1:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x12_1']}
+  vas_amount_x12_7:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x12_7']}
+  vas_amount_x14_1:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x14_1']}
+  vas_amount_x14_7:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x14_7']} 
+  vas_amount_x15_1:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x15_1']}
+  vas_amount_x15_7:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x15_7']}
+  vas_amount_x16_1:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x16_1']}
+  vas_amount_x16_7:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x16_7']}
+  vas_amount_x18_1:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x18_1']}
+  vas_amount_x18_7:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x18_7']}  
+  vas_amount_x20_1:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x20_1']}
+  vas_amount_x20_7:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x20_7']}  
+  vas_amount_highlight:                    {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight']}
+  vas_amount_xl:                           {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_amount_bundle_mid:                   {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
+  vas_amount_bundle_max:                   {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
+  vas_amount_pushup:                       {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Pushup']}
+  vas_amount_turbo:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Turbo package']}
+  vas_amount_fast:                         {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Fast package']}
+  vas_amount_activation:                   {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Activation']}
+  vas_amount_vip:                          {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'VIP']} 
+  vas_amount_premium:                      {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Premium']} 
+#revenue (amount) start_date (items activated in AB test)
+  vas_amount_start_date:                   {obs: [amount],      filter: [*revenue, product_type: 'vas', start_date.>=: $ab_start_date]}
+  vas_amount_visual_start_date:            {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'visual', start_date.>=: $ab_start_date]}
+  vas_amount_performance_start_date:       {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'performance', start_date.>=: $ab_start_date]}
+  vas_amount_bundle_start_date:            {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', start_date.>=: $ab_start_date]}
+  vas_amount_highlight_start_date:         {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight', start_date.>=: $ab_start_date]}
+  vas_amount_xl_start_date:                {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL', start_date.>=: $ab_start_date]}
+   #revenue (amount_net)
+  vas_amount_net:                          {obs: [amount_net],      filter: [*revenue, product_type: 'vas']}
+  vas_amount_net_visual:                   {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'visual']}
+  vas_amount_net_performance:              {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'performance']}
+  vas_amount_net_bundle:                   {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle']}
+  vas_amount_net_x2_1:                     {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x2_1']}
+  vas_amount_net_x2_7:                     {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x2_7']}
+  vas_amount_net_x5_1:                     {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x5_1']}
+  vas_amount_net_x5_7:                     {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x5_7']}
+  vas_amount_net_x10_1:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x10_1']}
+  vas_amount_net_x10_7:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x10_7']}
+  vas_amount_net_x12_1:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x12_1']}
+  vas_amount_net_x12_7:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x12_7']}
+  vas_amount_net_x14_1:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x14_1']}
+  vas_amount_net_x14_7:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x14_7']} 
+  vas_amount_net_x15_1:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x15_1']}
+  vas_amount_net_x15_7:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x15_7']}
+  vas_amount_net_x16_1:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x16_1']}
+  vas_amount_net_x16_7:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x16_7']}
+  vas_amount_net_x18_1:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x18_1']}
+  vas_amount_net_x18_7:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x18_7']}  
+  vas_amount_net_x20_1:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x20_1']}
+  vas_amount_net_x20_7:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x20_7']}  
+  vas_amount_net_highlight:                {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight']}
+  vas_amount_net_xl:                       {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_amount_net_bundle_mid:               {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
+  vas_amount_net_bundle_max:               {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
+  vas_amount_net_pushup:                       {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Pushup']}
+  vas_amount_net_turbo:                        {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Turbo package']}
+  vas_amount_net_fast:                         {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Fast package']}
+  vas_amount_net_activation:                   {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Activation']}
+  vas_amount_net_vip:                          {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'VIP']} 
+  vas_amount_net_premium:                      {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Premium']}
+#revenue (amount_net)start_date (items activated in AB test) 
+  vas_amount_net_start_date:                   {obs: [amount_net],      filter: [*revenue, product_type: 'vas', start_date.>=: $ab_start_date]}
+  vas_amount_net_visual_start_date:            {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'visual', start_date.>=: $ab_start_date]}
+  vas_amount_net_performance_start_date:       {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'performance', start_date.>=: $ab_start_date]}
+  vas_amount_net_bundle_start_date:            {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', start_date.>=: $ab_start_date]}
+  vas_amount_net_highlight_start_date:         {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight', start_date.>=: $ab_start_date]}
+  vas_amount_net_xl_start_date:                {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL', start_date.>=: $ab_start_date]}
+#clean reserved revenue (amount)
+  vas_clean_reserved_amount:                              {obs: [amount],      filter: [*payment, product_type: 'vas']}
+  vas_clean_reserved_amount_visual:                       {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'visual']}
+  vas_clean_reserved_amount_performance:                  {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'performance']}
+  vas_clean_reserved_amount_bundle:                       {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle']}
+  vas_clean_reserved_amount_x2_1:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_1']}
+  vas_clean_reserved_amount_x2_7:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_7']}
+  vas_clean_reserved_amount_x5_1:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_1']}
+  vas_clean_reserved_amount_x5_7:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_7']}
+  vas_clean_reserved_amount_x10_1:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_1']}
+  vas_clean_reserved_amount_x10_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_7']}
+  vas_clean_reserved_amount_x12_1:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x12_1']}
+  vas_clean_reserved_amount_x12_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x12_7']}
+  vas_clean_reserved_amount_x14_1:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x14_1']}
+  vas_clean_reserved_amount_x14_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x14_7']} 
+  vas_clean_reserved_amount_x15_1:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x15_1']}
+  vas_clean_reserved_amount_x15_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x15_7']}
+  vas_clean_reserved_amount_x16_1:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x16_1']}
+  vas_clean_reserved_amount_x16_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x16_7']}
+  vas_clean_reserved_amount_x18_1:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x18_1']}
+  vas_clean_reserved_amount_x18_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x18_7']}  
+  vas_clean_reserved_amount_x20_1:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x20_1']}
+  vas_clean_reserved_amount_x20_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x20_7']}  
+  vas_clean_reserved_amount_highlight:                    {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
+  vas_clean_reserved_amount_xl:                           {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_clean_reserved_amount_bundle_mid:                   {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
+  vas_clean_reserved_amount_bundle_max:                   {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
+#clean reserved revenue (amount) start_date (items activated in AB test) 
+  vas_clean_reserved_amount_start_date:                   {obs: [amount],      filter: [*payment, product_type: 'vas', start_date.>=: $ab_start_date]}
+  vas_clean_reserved_amount_visual_start_date:            {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'visual', start_date.>=: $ab_start_date]}
+  vas_clean_reserved_amount_performance_start_date:       {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'performance', start_date.>=: $ab_start_date]}
+  vas_clean_reserved_amount_bundle_start_date:            {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', start_date.>=: $ab_start_date]}
+ #clean reserved revenue (amount_net)
+  vas_clean_reserved_amount_net:                          {obs: [amount_net],      filter: [*payment, product_type: 'vas']}
+  vas_clean_reserved_amount_net_visual:                   {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'visual']}
+  vas_clean_reserved_amount_net_performance:              {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'performance']}
+  vas_clean_reserved_amount_net_bundle:                   {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle']}
+  vas_clean_reserved_amount_net_x2_1:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_1']}
+  vas_clean_reserved_amount_net_x2_7:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_7']}
+  vas_clean_reserved_amount_net_x5_1:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_1']}
+  vas_clean_reserved_amount_net_x5_7:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_7']}
+  vas_clean_reserved_amount_net_x10_1:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_1']}
+  vas_clean_reserved_amount_net_x10_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_7']}
+  vas_clean_reserved_amount_net_x12_1:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x12_1']}
+  vas_clean_reserved_amount_net_x12_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x12_7']}
+  vas_clean_reserved_amount_net_x14_1:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x14_1']}
+  vas_clean_reserved_amount_net_x14_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x14_7']} 
+  vas_clean_reserved_amount_net_x15_1:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x15_1']}
+  vas_clean_reserved_amount_net_x15_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x15_7']}
+  vas_clean_reserved_amount_net_x16_1:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x16_1']}
+  vas_clean_reserved_amount_net_x16_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x16_7']}
+  vas_clean_reserved_amount_net_x18_1:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x18_1']}
+  vas_clean_reserved_amount_net_x18_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x18_7']}  
+  vas_clean_reserved_amount_net_x20_1:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x20_1']}
+  vas_clean_reserved_amount_net_x20_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x20_7']}  
+  vas_clean_reserved_amount_net_highlight:                {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
+  vas_clean_reserved_amount_net_xl:                       {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_clean_reserved_amount_net_bundle_mid:               {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
+  vas_clean_reserved_amount_net_bundle_max:               {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
+#clean reserved revenue (amount_net) start_date (items activated in AB test)   
+  vas_clean_reserved_amount_net_start_date:                   {obs: [amount_net],      filter: [*payment, product_type: 'vas', start_date.>=: $ab_start_date]}
+  vas_clean_reserved_amount_net_visual_start_date:            {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'visual', start_date.>=: $ab_start_date]}
+  vas_clean_reserved_amount_net_performance_start_date:       {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'performance', start_date.>=: $ab_start_date]}
+  vas_clean_reserved_amount_net_bundle_start_date:            {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', start_date.>=: $ab_start_date]}
+#transactions (write off, burn)
+  vas_transactions_mnz:                    {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas']}
+  vas_transactions_mnz_visual:             {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'visual']}
+  vas_transactions_mnz_performance:        {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'performance']}
+  vas_transactions_mnz_bundle:             {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle']}
+  vas_transactions_mnz_x2_1:               {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x2_1']}
+  vas_transactions_mnz_x2_7:               {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x2_7']}
+  vas_transactions_mnz_x5_1:               {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x5_1']}
+  vas_transactions_mnz_x5_7:               {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x5_7']}
+  vas_transactions_mnz_x10_1:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x10_1']}
+  vas_transactions_mnz_x10_7:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x10_7']}
+  vas_transactions_mnz_x12_1:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x12_1']}
+  vas_transactions_mnz_x12_7:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x12_7']}
+  vas_transactions_mnz_x14_1:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x14_1']}
+  vas_transactions_mnz_x14_7:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x14_7']}
+  vas_transactions_mnz_x15_1:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x15_1']}
+  vas_transactions_mnz_x15_7:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x15_7']}
+  vas_transactions_mnz_x16_1:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x16_1']}
+  vas_transactions_mnz_x16_7:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x16_7']}
+  vas_transactions_mnz_x18_1:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x18_1']}
+  vas_transactions_mnz_x18_7:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x18_7']}
+  vas_transactions_mnz_x20_1:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x20_1']}
+  vas_transactions_mnz_x20_7:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x20_7']}
+  vas_transactions_highlight:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight']}
+  vas_transactions_xl:                     {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_transactions_mnz_bundle_mid:         {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
+  vas_transactions_mnz_bundle_max:         {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
+  vas_transactions_pushup:                 {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Pushup']}
+  vas_transactions_turbo:                  {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Turbo package']}
+  vas_transactions_fast:                   {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Fast package']}
+  vas_transactions_activation:             {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Activation']}
+  vas_transactions_vip:                    {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'VIP']}
+  vas_transactions_premium:                {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Premium']}
+#transactions (write off, burn) start_date
+  vas_transactions_start_date:             {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', start_date.>=: $ab_start_date]}
+  vas_transactions_visual_start_date:      {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'visual',        start_date.>=: $ab_start_date]}
+  vas_transactions_performance_start_date: {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'performance',   start_date.>=: $ab_start_date]}
+  vas_transactions_bundle_start_date:      {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle',        start_date.>=: $ab_start_date]}
+  vas_transactions_highlight_start_date:   {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight', start_date.>=: $ab_start_date]}
+  vas_transactions_xl_start_date:          {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL',        start_date.>=: $ab_start_date]}
+# reserve transactions
+  vas_reserve_transactions:                    {obs: [transaction_counter],      filter: [*payment, product_type: 'vas']}
+  vas_reserve_transactions_visual:             {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'visual']}
+  vas_reserve_transactions_performance:        {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'performance']}
+  vas_reserve_transactions_bundle:             {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle']}
+  vas_reserve_transactions_x2_1:               {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_1']}
+  vas_reserve_transactions_x2_7:               {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_7']}
+  vas_reserve_transactions_x5_1:               {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_1']}
+  vas_reserve_transactions_x5_7:               {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_7']}
+  vas_reserve_transactions_x10_1:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_1']}
+  vas_reserve_transactions_x10_7:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_7']}
+  vas_reserve_transactions_x12_1:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x12_1']}
+  vas_reserve_transactions_x12_7:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x12_7']}
+  vas_reserve_transactions_x14_1:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x14_1']}
+  vas_reserve_transactions_x14_7:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x14_7']}
+  vas_reserve_transactions_x15_1:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x15_1']}
+  vas_reserve_transactions_x15_7:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x15_7']}
+  vas_reserve_transactions_x16_1:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x16_1']}
+  vas_reserve_transactions_x16_7:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x16_7']}
+  vas_reserve_transactions_x18_1:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x18_1']}
+  vas_reserve_transactions_x18_7:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x18_7']}
+  vas_reserve_transactions_x20_1:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x20_1']}
+  vas_reserve_transactions_x20_7:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x20_7']}
+  vas_reserve_transactions_highlight:          {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
+  vas_reserve_transactions_xl:                 {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_reserve_transactions_bundle_mid:         {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
+  vas_reserve_transactions_bundle_max:         {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
+# reserve transactions (start_date)
+  vas_reserve_transactions_start_date:             {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', start_date.>=: $ab_start_date]}
+  vas_reserve_transactions_visual_start_date:      {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'visual',        start_date.>=: $ab_start_date]}
+  vas_reserve_transactions_performance_start_date: {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'performance',   start_date.>=: $ab_start_date]}
+  vas_reserve_transactions_bundle_start_date:      {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle',        start_date.>=: $ab_start_date]}
+  vas_reserve_transactions_highlight_start_date:   {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight', start_date.>=: $ab_start_date]}
+  vas_reserve_transactions_xl_start_date:          {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL',        start_date.>=: $ab_start_date]}
+
 
 metric.uniq:
-#  users_vas:                               {counter: vas_amount_net,                  key: [participant]}
-  users_vas_visual:                        {counter: vas_amount_net_visual,           key: [participant]}
-  users_vas_performance:                   {counter: vas_amount_net_performance,      key: [participant]}
-#  users_vas_x2_1:                          {counter: vas_amount_net_x2_1,             key: [participant]}
-#  users_vas_x2_7:                          {counter: vas_amount_net_x2_7,             key: [participant]}
-#  users_vas_x5_1:                          {counter: vas_amount_net_x5_1,             key: [participant]}
-#  users_vas_x5_7:                          {counter: vas_amount_net_x5_7,             key: [participant]}
-#  users_vas_x10_1:                         {counter: vas_amount_net_x10_1,            key: [participant]}
-#  users_vas_x10_7:                         {counter: vas_amount_net_x10_7,            key: [participant]}
-  users_vas_activation:                    {counter: vas_amount_net_activation,       key: [participant]}
-  users_vas_activation_start_date:         {counter: vas_amount_net_activation_start_date, key: [participant]}
-  users_vas_fast:                          {counter: vas_amount_net_fast,             key: [participant]}
-  users_vas_fast_start_date:               {counter: vas_amount_net_fast_start_date,  key: [participant]}
-  users_vas_highlight:                     {counter: vas_amount_net_highlight,        key: [participant]}
-  users_vas_highlight_start_date:          {counter: vas_amount_net_highlight_start_date, key: [participant]}
-  users_vas_premium:                       {counter: vas_amount_net_premium,          key: [participant]}
-  users_vas_premium_start_date:            {counter: vas_amount_net_premium_start_date, key: [participant]}
-  users_vas_pushup:                        {counter: vas_amount_net_pushup,           key: [participant]}
-  users_vas_pushup_start_date:             {counter: vas_amount_net_pushup_start_date, key: [participant]}
-  users_vas_start_date:                    {counter: vas_amount_net_start_date,       key: [participant]}
-  users_vas_turbo:                         {counter: vas_amount_net_turbo,            key: [participant]}
-  users_vas_turbo_start_date:              {counter: vas_amount_net_turbo_start_date, key: [participant]}
-  users_vas_vip:                           {counter: vas_amount_net_vip,              key: [participant]}
-  users_vas_vip_start_date:                {counter: vas_amount_net_vip_start_date,   key: [participant]}
-  users_vas_xl:                            {counter: vas_amount_net_xl,               key: [participant]}
-  users_vas_xl_start_date:                 {counter: vas_amount_net_xl_start_date,    key: [participant]}
+#users write off (users with active vas)
+  users_vas:                               {counter: vas_amount_net,                  key: [user]}
+  users_vas_visual:                        {counter: vas_amount_net_visual,           key: [user]}
+  users_vas_bundle:                        {counter: vas_amount_net_bundle,           key: [user]}
+  users_vas_performance:                   {counter: vas_amount_net_performance,      key: [user]}
+  users_vas_x2_1:                          {counter: vas_amount_net_x2_1,             key: [user]}
+  users_vas_x2_7:                          {counter: vas_amount_net_x2_7,             key: [user]}
+  users_vas_x5_1:                          {counter: vas_amount_net_x5_1,             key: [user]}
+  users_vas_x5_7:                          {counter: vas_amount_net_x5_7,             key: [user]}
+  users_vas_x10_1:                         {counter: vas_amount_net_x10_1,            key: [user]}
+  users_vas_x10_7:                         {counter: vas_amount_net_x10_7,            key: [user]}
+  users_vas_x12_1:                         {counter: vas_amount_net_x12_1,            key: [user]}
+  users_vas_x12_7:                         {counter: vas_amount_net_x12_7,            key: [user]}
+  users_vas_x14_1:                         {counter: vas_amount_net_x14_1,            key: [user]}
+  users_vas_x14_7:                         {counter: vas_amount_net_x14_7,            key: [user]}
+  users_vas_x15_1:                         {counter: vas_amount_net_x15_1,            key: [user]}
+  users_vas_x15_7:                         {counter: vas_amount_net_x15_7,            key: [user]}
+  users_vas_x16_1:                         {counter: vas_amount_net_x16_1,            key: [user]}
+  users_vas_x16_7:                         {counter: vas_amount_net_x16_7,            key: [user]}
+  users_vas_x18_1:                         {counter: vas_amount_net_x18_1,            key: [user]}
+  users_vas_x18_7:                         {counter: vas_amount_net_x18_7,            key: [user]}
+  users_vas_x20_1:                         {counter: vas_amount_net_x20_1,            key: [user]}
+  users_vas_x20_7:                         {counter: vas_amount_net_x20_7,            key: [user]}
+  users_vas_highlight:                     {counter: vas_amount_net_highlight,        key: [user]}
+  users_vas_xl:                            {counter: vas_amount_net_xl,               key: [user]}
+  users_vas_bundle_mid:                    {counter: vas_amount_net_bundle_mid,       key: [user]}
+  users_vas_bundle_max:                    {counter: vas_amount_net_bundle_max,       key: [user]}
+  users_vas_pushup:                        {counter: vas_amount_net_pushup,           key: [user]}
+  users_vas_turbo:                         {counter: vas_amount_net_turbo,            key: [user]}
+  users_vas_fast:                          {counter: vas_amount_net_fast,             key: [user]}
+  users_vas_activation:                    {counter: vas_amount_net_activation,       key: [user]}
+  users_vas_vip:                           {counter: vas_amount_net_vip,              key: [user]}
+  users_vas_premium:                       {counter: vas_amount_net_premium,          key: [user]}
+#users start_date
+  users_vas_start_date:                               {counter: vas_amount_net_start_date,                  key: [user]}
+  users_vas_visual_start_date:                        {counter: vas_amount_net_visual_start_date,           key: [user]}
+  users_vas_bundle_start_date:                        {counter: vas_amount_net_bundle_start_date,           key: [user]}
+  users_vas_performance_start_date:                   {counter: vas_amount_net_performance_start_date,      key: [user]}
+  users_vas_xl_start_date:                            {counter: vas_amount_net_xl_start_date,               key: [user]} 
+  users_vas_highlight_start_date:                     {counter: vas_amount_net_highlight_start_date,        key: [user]}  
+#users reserve
+  users_vas_reserve:                               {counter: vas_reserve_transactions,                  key: [user]}
+  users_vas_reserve_visual:                        {counter: vas_reserve_transactions_visual,           key: [user]}
+  users_vas_reserve_bundle:                        {counter: vas_reserve_transactions_bundle,           key: [user]}
+  users_vas_reserve_performance:                   {counter: vas_reserve_transactions_performance,      key: [user]}
+  users_vas_reserve_x2_1:                          {counter: vas_reserve_transactions_x2_1,             key: [user]}
+  users_vas_reserve_x2_7:                          {counter: vas_reserve_transactions_x2_7,             key: [user]}
+  users_vas_reserve_x5_1:                          {counter: vas_reserve_transactions_x5_1,             key: [user]}
+  users_vas_reserve_x5_7:                          {counter: vas_reserve_transactions_x5_7,             key: [user]}
+  users_vas_reserve_x10_1:                         {counter: vas_reserve_transactions_x10_1,            key: [user]}
+  users_vas_reserve_x10_7:                         {counter: vas_reserve_transactions_x10_7,            key: [user]}
+  users_vas_reserve_x12_1:                         {counter: vas_reserve_transactions_x12_1,            key: [user]}
+  users_vas_reserve_x12_7:                         {counter: vas_reserve_transactions_x12_7,            key: [user]}
+  users_vas_reserve_x14_1:                         {counter: vas_reserve_transactions_x14_1,            key: [user]}
+  users_vas_reserve_x14_7:                         {counter: vas_reserve_transactions_x14_7,            key: [user]}
+  users_vas_reserve_x15_1:                         {counter: vas_reserve_transactions_x15_1,            key: [user]}
+  users_vas_reserve_x15_7:                         {counter: vas_reserve_transactions_x15_7,            key: [user]}
+  users_vas_reserve_x16_1:                         {counter: vas_reserve_transactions_x16_1,            key: [user]}
+  users_vas_reserve_x16_7:                         {counter: vas_reserve_transactions_x16_7,            key: [user]}
+  users_vas_reserve_x18_1:                         {counter: vas_reserve_transactions_x18_1,            key: [user]}
+  users_vas_reserve_x18_7:                         {counter: vas_reserve_transactions_x18_7,            key: [user]}
+  users_vas_reserve_x20_1:                         {counter: vas_reserve_transactions_x20_1,            key: [user]}
+  users_vas_reserve_x20_7:                         {counter: vas_reserve_transactions_x20_7,            key: [user]}
+  users_vas_reserve_highlight:                     {counter: vas_reserve_transactions_highlight,        key: [user]}
+  users_vas_reserve_xl:                            {counter: vas_reserve_transactions_xl,               key: [user]}
+  users_vas_reserve_bundle_mid:                    {counter: vas_reserve_transactions_bundle_mid,       key: [user]}
+  users_vas_reserve_bundle_max:                    {counter: vas_reserve_transactions_bundle_max,       key: [user]}
+
 
 metric.ratio:
   vas_avo:                                 {num: vas_amount,                      den: vas_transactions_mnz}
   vas_avo_visual:                          {num: vas_amount_visual,               den: vas_transactions_mnz_visual}
   vas_avo_performance:                     {num: vas_amount_performance,          den: vas_transactions_mnz_performance}
+  vas_avo_bundle:                          {num: vas_amount_bundle,               den: vas_transactions_mnz_bundle}
   vas_avo_x2_1:                            {num: vas_amount_x2_1,                 den: vas_transactions_mnz_x2_1}
   vas_avo_x2_7:                            {num: vas_amount_x2_7,                 den: vas_transactions_mnz_x2_7}
   vas_avo_x5_1:                            {num: vas_amount_x5_1,                 den: vas_transactions_mnz_x5_1}
   vas_avo_x5_7:                            {num: vas_amount_x5_7,                 den: vas_transactions_mnz_x5_7}
   vas_avo_x10_1:                           {num: vas_amount_x10_1,                den: vas_transactions_mnz_x10_1}
   vas_avo_x10_7:                           {num: vas_amount_x10_7,                den: vas_transactions_mnz_x10_7}
-  vas_avo_activation:                      {num: vas_amount_activation,           den: vas_transactions_activation}
-  vas_avo_activation_start_date:           {num: vas_amount_activation_start_date, den: vas_transactions_activation_start_date}
-  vas_avo_fast:                            {num: vas_amount_fast,                 den: vas_transactions_fast}
-  vas_avo_fast_start_date:                 {num: vas_amount_fast_start_date,      den: vas_transactions_fast_start_date}
+  vas_avo_x12_1:                           {num: vas_amount_x12_1,                den: vas_transactions_mnz_x12_1}
+  vas_avo_x12_7:                           {num: vas_amount_x12_7,                den: vas_transactions_mnz_x12_7}
+  vas_avo_x14_1:                           {num: vas_amount_x14_1,                den: vas_transactions_mnz_x14_1}
+  vas_avo_x14_7:                           {num: vas_amount_x14_7,                den: vas_transactions_mnz_x14_7}
+  vas_avo_x15_1:                           {num: vas_amount_x15_1,                den: vas_transactions_mnz_x15_1}
+  vas_avo_x15_7:                           {num: vas_amount_x15_7,                den: vas_transactions_mnz_x15_7}
+  vas_avo_x16_1:                           {num: vas_amount_x16_1,                den: vas_transactions_mnz_x16_1}
+  vas_avo_x16_7:                           {num: vas_amount_x16_7,                den: vas_transactions_mnz_x16_7}
+  vas_avo_x18_1:                           {num: vas_amount_x18_1,                den: vas_transactions_mnz_x18_1}
+  vas_avo_x18_7:                           {num: vas_amount_x18_7,                den: vas_transactions_mnz_x18_7}
+  vas_avo_x20_1:                           {num: vas_amount_x20_1,                den: vas_transactions_mnz_x20_1}
+  vas_avo_x20_7:                           {num: vas_amount_x20_7,                den: vas_transactions_mnz_x20_7}
   vas_avo_highlight:                       {num: vas_amount_highlight,            den: vas_transactions_highlight}
-  vas_avo_highlight_start_date:            {num: vas_amount_highlight_start_date, den: vas_transactions_highlight_start_date}
-#  vas_avo_net:                             {num: vas_amount_net,                  den: vas_transactions_mnz}
-  vas_avo_net_activation:                  {num: vas_amount_net_activation,       den: vas_transactions_activation}
-  vas_avo_net_activation_start_date:       {num: vas_amount_net_activation_start_date, den: vas_transactions_activation_start_date}
-  vas_avo_net_fast:                        {num: vas_amount_net_fast,             den: vas_transactions_fast}
-  vas_avo_net_fast_start_date:             {num: vas_amount_net_fast_start_date,  den: vas_transactions_fast_start_date}
-  vas_avo_net_highlight:                   {num: vas_amount_net_highlight,        den: vas_transactions_highlight}
-  vas_avo_net_highlight_start_date:        {num: vas_amount_net_highlight_start_date, den: vas_transactions_highlight_start_date}
-  vas_avo_net_premium:                     {num: vas_amount_net_premium,          den: vas_transactions_premium}
-  vas_avo_net_premium_start_date:          {num: vas_amount_net_premium_start_date, den: vas_transactions_premium_start_date}
-  vas_avo_net_pushup:                      {num: vas_amount_net_pushup,           den: vas_transactions_pushup}
-  vas_avo_net_pushup_start_date:           {num: vas_amount_net_pushup_start_date, den: vas_transactions_pushup_start_date}
-  vas_avo_net_start_date:                  {num: vas_amount_net_start_date,       den: vas_transactions_start_date}
-  vas_avo_net_turbo:                       {num: vas_amount_net_turbo,            den: vas_transactions_turbo}
-  vas_avo_net_turbo_start_date:            {num: vas_amount_net_turbo_start_date, den: vas_transactions_turbo_start_date}
-  vas_avo_net_vip:                         {num: vas_amount_net_vip,              den: vas_transactions_vip}
-  vas_avo_net_vip_start_date:              {num: vas_amount_net_vip_start_date,   den: vas_transactions_vip_start_date}
-  vas_avo_net_xl:                          {num: vas_amount_net_xl,               den: vas_transactions_xl}
-  vas_avo_net_xl_start_date:               {num: vas_amount_net_xl_start_date,    den: vas_transactions_xl_start_date}
-  vas_avo_premium:                         {num: vas_amount_premium,              den: vas_transactions_premium}
-  vas_avo_premium_start_date:              {num: vas_amount_premium_start_date,   den: vas_transactions_premium_start_date}
-  vas_avo_pushup:                          {num: vas_amount_pushup,               den: vas_transactions_pushup}
-  vas_avo_pushup_start_date:               {num: vas_amount_pushup_start_date,    den: vas_transactions_pushup_start_date}
-  vas_avo_start_date:                      {num: vas_amount_start_date,           den: vas_transactions_start_date}
-  vas_avo_turbo:                           {num: vas_amount_turbo,                den: vas_transactions_turbo}
-  vas_avo_turbo_start_date:                {num: vas_amount_turbo_start_date,     den: vas_transactions_turbo_start_date}
-  vas_avo_vip:                             {num: vas_amount_vip,                  den: vas_transactions_vip}
-  vas_avo_vip_start_date:                  {num: vas_amount_vip_start_date,       den: vas_transactions_vip_start_date}
   vas_avo_xl:                              {num: vas_amount_xl,                   den: vas_transactions_xl}
-  vas_avo_xl_start_date:                   {num: vas_amount_xl_start_date,        den: vas_transactions_xl_start_date}
+  vas_avo_bundle_mid:                      {num: vas_amount_bundle_mid,           den: vas_transactions_mnz_bundle_mid}
+  vas_avo_bundle_max:                      {num: vas_amount_bundle_max,           den: vas_transactions_mnz_bundle_max}
+  vas_avo_pushup:                          {num: vas_amount_pushup,               den: vas_transactions_pushup}
+  vas_avo_turbo:                           {num: vas_amount_turbo,                den: vas_transactions_turbo}
+  vas_avo_fast:                            {num: vas_amount_fast,                 den: vas_transactions_fast}
+  vas_avo_activation:                      {num: vas_amount_activation,           den: vas_transactions_activation}
+  vas_avo_vip:                             {num: vas_amount_vip,                  den: vas_transactions_vip}
+  vas_avo_premium:                         {num: vas_amount_premium,              den: vas_transactions_premium}
+#avo start_date
+  vas_avo_start_date:                                 {num: vas_amount_start_date,                      den: vas_transactions_start_date}
+  vas_avo_visual_start_date:                          {num: vas_amount_visual_start_date,               den: vas_transactions_visual_start_date}
+  vas_avo_performance_start_date:                     {num: vas_amount_performance_start_date,          den: vas_transactions_performance_start_date}
+  vas_avo_bundle_start_date:                          {num: vas_amount_bundle_start_date,               den: vas_transactions_bundle_start_date}
+  vas_avo_highlight_start_date:                       {num: vas_amount_highlight_start_date,            den: vas_transactions_highlight_start_date}
+  vas_avo_xl_start_date:                              {num: vas_amount_xl_start_date,                   den: vas_transactions_xl_start_date}
+#avo_net
+  vas_avo_net:                                 {num: vas_amount_net,                  den: vas_transactions_mnz}
+  vas_avo_net_visual:                          {num: vas_amount_net_visual,               den: vas_transactions_mnz_visual}
+  vas_avo_net_performance:                     {num: vas_amount_net_performance,          den: vas_transactions_mnz_performance}
+  vas_avo_net_bundle:                          {num: vas_amount_net_bundle,               den: vas_transactions_mnz_bundle}
+  vas_avo_net_x2_1:                            {num: vas_amount_net_x2_1,                 den: vas_transactions_mnz_x2_1}
+  vas_avo_net_x2_7:                            {num: vas_amount_net_x2_7,                 den: vas_transactions_mnz_x2_7}
+  vas_avo_net_x5_1:                            {num: vas_amount_net_x5_1,                 den: vas_transactions_mnz_x5_1}
+  vas_avo_net_x5_7:                            {num: vas_amount_net_x5_7,                 den: vas_transactions_mnz_x5_7}
+  vas_avo_net_x10_1:                           {num: vas_amount_net_x10_1,                den: vas_transactions_mnz_x10_1}
+  vas_avo_net_x10_7:                           {num: vas_amount_net_x10_7,                den: vas_transactions_mnz_x10_7}
+  vas_avo_net_x12_1:                           {num: vas_amount_net_x12_1,                den: vas_transactions_mnz_x12_1}
+  vas_avo_net_x12_7:                           {num: vas_amount_net_x12_7,                den: vas_transactions_mnz_x12_7}
+  vas_avo_net_x14_1:                           {num: vas_amount_net_x14_1,                den: vas_transactions_mnz_x14_1}
+  vas_avo_net_x14_7:                           {num: vas_amount_net_x14_7,                den: vas_transactions_mnz_x14_7}
+  vas_avo_net_x15_1:                           {num: vas_amount_net_x15_1,                den: vas_transactions_mnz_x15_1}
+  vas_avo_net_x15_7:                           {num: vas_amount_net_x15_7,                den: vas_transactions_mnz_x15_7}
+  vas_avo_net_x16_1:                           {num: vas_amount_net_x16_1,                den: vas_transactions_mnz_x16_1}
+  vas_avo_net_x16_7:                           {num: vas_amount_net_x16_7,                den: vas_transactions_mnz_x16_7}
+  vas_avo_net_x18_1:                           {num: vas_amount_net_x18_1,                den: vas_transactions_mnz_x18_1}
+  vas_avo_net_x18_7:                           {num: vas_amount_net_x18_7,                den: vas_transactions_mnz_x18_7}
+  vas_avo_net_x20_1:                           {num: vas_amount_net_x20_1,                den: vas_transactions_mnz_x20_1}
+  vas_avo_net_x20_7:                           {num: vas_amount_net_x20_7,                den: vas_transactions_mnz_x20_7}
+  vas_avo_net_highlight:                       {num: vas_amount_net_highlight,            den: vas_transactions_highlight}
+  vas_avo_net_xl:                              {num: vas_amount_net_xl,                   den: vas_transactions_xl}
+  vas_avo_net_bundle_mid:                      {num: vas_amount_net_bundle_mid,           den: vas_transactions_mnz_bundle_mid}
+  vas_avo_net_bundle_max:                      {num: vas_amount_net_bundle_max,           den: vas_transactions_mnz_bundle_max}
+  vas_avo_net_pushup:                          {num: vas_amount_net_pushup,               den: vas_transactions_pushup}
+  vas_avo_net_turbo:                           {num: vas_amount_net_turbo,                den: vas_transactions_turbo}
+  vas_avo_net_fast:                            {num: vas_amount_net_fast,                 den: vas_transactions_fast}
+  vas_avo_net_activation:                      {num: vas_amount_net_activation,           den: vas_transactions_activation}
+  vas_avo_net_vip:                             {num: vas_amount_net_vip,                  den: vas_transactions_vip}
+  vas_avo_net_premium:                         {num: vas_amount_net_premium,              den: vas_transactions_premium}
+  
+#avo_net  start_date
+  vas_avo_net_start_date:                                 {num: vas_amount_net_start_date,                      den: vas_transactions_start_date}
+  vas_avo_net_visual_start_date:                          {num: vas_amount_net_visual_start_date,               den: vas_transactions_visual_start_date}
+  vas_avo_net_performance_start_date:                     {num: vas_amount_net_performance_start_date,          den: vas_transactions_performance_start_date}
+  vas_avo_net_bundle_start_date:                          {num: vas_amount_net_bundle_start_date,               den: vas_transactions_bundle_start_date}
+  vas_avo_net_highlight_start_date:                       {num: vas_amount_net_highlight_start_date,            den: vas_transactions_highlight_start_date}
+  vas_avo_net_xl_start_date:                              {num: vas_amount_net_xl_start_date,                   den: vas_transactions_xl_start_date}
+  
+  
