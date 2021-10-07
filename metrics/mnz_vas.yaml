@@ -35,34 +35,33 @@ metric.counter:
   vas_amount_net_start_date:               {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight']}
   vas_amount_net_xl:                       {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL']}
   vas_amount_net_xl_start_date:            {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL', start_date.>=: $ab_start_date]}
- #clean reserved revenue (amount)
- vas_clean_reserved_amount:                              {obs: [amount],      filter: [*payment, product_type: 'vas']}
- vas_clean_reserved_amount_start_date:                   {obs: [amount],      filter: [*payment, product_type: 'vas', start_date.>=: $ab_start_date]}
- vas_clean_reserved_amount_visual:                       {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'visual']}
- vas_clean_reserved_amount_performance:                  {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'performance']}
- vas_clean_reserved_amount_bundle:                       {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle']}
- vas_clean_reserved_amount_x2_1:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_1']}
- vas_clean_reserved_amount_x2_7:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_7']}
- vas_clean_reserved_amount_x5_1:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_1']}
- vas_clean_reserved_amount_x5_7:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_7']}
- vas_clean_reserved_amount_x10_1:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_1']}
- vas_clean_reserved_amount_x10_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_7']}
- vas_clean_reserved_amount_highlight:                    {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
- vas_clean_reserved_amount_xl:                           {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
- #clean reserved revenue (amount_net)
- vas_clean_reserved_amount_net:                          {obs: [amount_net],      filter: [*payment, product_type: 'vas']}
- vas_clean_reserved_amount_net_visual:                   {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'visual']}
- vas_clean_reserved_amount_net_performance:              {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'performance']}
- vas_clean_reserved_amount_net_bundle:                   {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle']}
- vas_clean_reserved_amount_net_x2_1:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_1']}
- vas_clean_reserved_amount_net_x2_7:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_7']}
- vas_clean_reserved_amount_net_x5_1:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_1']}
- vas_clean_reserved_amount_net_x5_7:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_7']}
- vas_clean_reserved_amount_net_x10_1:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_1']}
- vas_clean_reserved_amount_net_x10_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_7']}
- vas_clean_reserved_amount_net_highlight:                {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
- vas_clean_reserved_amount_net_xl:                       {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
- #transactions (write off, burn)
+#clean reserved revenue (amount)
+  vas_clean_reserved_amount:                              {obs: [amount],      filter: [*payment, product_type: 'vas']}
+  vas_clean_reserved_amount_visual:                       {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'visual']}
+  vas_clean_reserved_amount_performance:                  {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'performance']}
+  vas_clean_reserved_amount_bundle:                       {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle']}
+  vas_clean_reserved_amount_x2_1:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_1']}
+  vas_clean_reserved_amount_x2_7:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_7']}
+  vas_clean_reserved_amount_x5_1:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_1']}
+  vas_clean_reserved_amount_x5_7:                         {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_7']}
+  vas_clean_reserved_amount_x10_1:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_1']}
+  vas_clean_reserved_amount_x10_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_7']}
+  vas_clean_reserved_amount_highlight:                    {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
+  vas_clean_reserved_amount_xl:                           {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
+#clean reserved revenue (amount_net)
+  vas_clean_reserved_amount_net:                          {obs: [amount_net],      filter: [*payment, product_type: 'vas']}
+  vas_clean_reserved_amount_net_visual:                   {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'visual']}
+  vas_clean_reserved_amount_net_performance:              {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'performance']}
+  vas_clean_reserved_amount_net_bundle:                   {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle']}
+  vas_clean_reserved_amount_net_x2_1:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_1']}
+  vas_clean_reserved_amount_net_x2_7:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x2_7']}
+  vas_clean_reserved_amount_net_x5_1:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_1']}
+  vas_clean_reserved_amount_net_x5_7:                     {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x5_7']}
+  vas_clean_reserved_amount_net_x10_1:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_1']}
+  vas_clean_reserved_amount_net_x10_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x10_7']}
+  vas_clean_reserved_amount_net_highlight:                {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
+  vas_clean_reserved_amount_net_xl:                       {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
+#transactions (write off, burn)
   vas_transactions_mnz:                    {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas']}
   vas_transactions_mnz_visual:             {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'visual']}
   vas_transactions_mnz_performance:        {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'performance']}
@@ -78,7 +77,7 @@ metric.counter:
   vas_transactions_start_date:             {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', start_date.>=: $ab_start_date]}
   vas_transactions_xl:                     {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL']}
   vas_transactions_xl_start_date:          {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL', start_date.>=: $ab_start_date]}
-  # reserve transactions
+# reserve transactions
   vas_reserve_transactions:                    {obs: [transaction_counter],      filter: [*payment, product_type: 'vas']}
   vas_reserve_transactions_visual:             {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'visual']}
   vas_reserve_transactions_performance:        {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'performance']}
