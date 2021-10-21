@@ -94,7 +94,15 @@ metric.counter:
   prepare_core_exceptions:                  {filter: [{stage_name: Prepare, is_core_content: true}], obs: [exceptions], m42: True}
   serverloading_core_exceptions:            {filter: [{stage_name: ServerLoading, is_core_content: true}], obs: [exceptions], m42: True}
 
-
+  draw_ok_events:                          {filter: [{stage_name: Draw, response: "ok"}], obs: [exceptions], m42: True}
+  draw_new_exceptions:                     {filter: [{stage_name: Draw, response.!=: "ok"}], obs: [exceptions], m42: True}
+  draw_exceptions_somehow_else_displayed:  {filter: [{stage_name: Draw, response: "somehow-else-displayed-error"}], obs: [exceptions], m42: True}
+  draw_exceptions_unknown:                 {filter: [{stage_name: Draw, response: "unknown-error"}], obs: [exceptions], m42: True}
+  draw_exceptions_something_went_wrong:    {filter: [{stage_name: Draw, response: "something-went-wrong-error"}], obs: [exceptions], m42: True}
+  draw_exceptions_no_internet:             {filter: [{stage_name: Draw, response: "no-internet-error"}], obs: [exceptions], m42: True}
+  draw_exceptions_nothing_found:           {filter: [{stage_name: Draw, response: "nothing-found-error"}], obs: [exceptions], m42: True}
+  draw_exceptions_no_data_placeholder:     {filter: [{stage_name: Draw, response: "no-data-placeholder"}], obs: [exceptions], m42: True}
+  draw_exceptions_failed_to_load:          {filter: [{stage_name: Draw, response: "failed-to-load-error"}], obs: [exceptions], m42: True}
 
 metric.uniq:
   user_draw_exceptions:                    {counter: cnt_draw_exceptions, key: [cookie_id], m42: True}
@@ -111,6 +119,17 @@ metric.uniq:
 
   user_exceptions:                         {counter: any_exceptions, key: [cookie_id], m42: True}
   user_core_exceptions:                    {counter: any_core_exceptions, key: [cookie_id], m42: True}
+
+  user_draw_ok_events:                     {counter: draw_ok_events, key: [cookie_id], m42: True}
+  user_draw_new_exceptions:                {counter: draw_new_exceptions, key: [cookie_id], m42: True}
+  user_draw_exceptions_somehow_else_displayed: {counter: draw_exceptions_somehow_else_displayed, key: [cookie_id], m42: True}
+  user_draw_exceptions_unknown:            {counter: draw_exceptions_unknown, key: [cookie_id], m42: True}
+  user_draw_exceptions_something_went_wrong: {counter: draw_exceptions_something_went_wrong, key: [cookie_id], m42: True}
+  user_draw_exceptions_no_internet:       {counter: draw_exceptions_no_internet, key: [cookie_id], m42: True}
+  user_draw_exceptions_nothing_found:     {counter: draw_ok_events, key: [cookie_id], m42: True}
+  user_draw_exceptions_no_data_placeholder: {counter: draw_exceptions_no_data_placeholder, key: [cookie_id], m42: True}
+  user_draw_exceptions_failed_to_load:    {counter: draw_exceptions_failed_to_load, key: [cookie_id], m42: True}
+
 
 
 metric.ratio:
