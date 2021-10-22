@@ -1298,7 +1298,7 @@ clickstream_sparse.clickhouse:
       - user_network_image_load_error
       - user_network_client_error
       - user_network_system_error
-      
+
 
 messenger_blocks:
   metric_configs: [messenger_blocks]
@@ -1504,6 +1504,29 @@ lister_reactivations:
     participant: {user: user_id}
     primary_subject: user
     dtm: event_date
+
+buyer_items_distance:
+  metric_configs: [buyers_items_distance]
+  database: vertica
+  table: dma.vo_buyers_items_distance
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  m42_cartesian_groups:
+    - [vertical]
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  dtm: event_date
+
 
 support_chat:
   metric_configs: [support_chat]
