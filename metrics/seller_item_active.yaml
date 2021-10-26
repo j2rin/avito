@@ -134,6 +134,12 @@ metric.counter:
   seller_delivery_contacts_start_date:             {filter: [{start_date.>=: $ab_start_date}], obs: [delivery_contacts]}
   seller_delivery_clicks:                          {obs: [delivery_clicks]}
   seller_delivery_clicks_start_date:               {filter: [start_date.>=: $ab_start_date], obs: [delivery_clicks]}
+  items_with_rating_1:                     {filter: [{is_active: True}, {seller_rating: 1}], m42: True}
+  items_with_rating_2:                     {filter: [{is_active: True}, {seller_rating: 2}], m42: True}
+  items_with_rating_3:                     {filter: [{is_active: True}, {seller_rating: 3}], m42: True}
+  items_with_rating_4:                     {filter: [{is_active: True}, {seller_rating: 4}], m42: True}
+  items_with_rating_5:                     {filter: [{is_active: True}, {seller_rating: 5}], m42: True}
+  items_with_rating_new:                   {filter: [{is_active: True}, {seller_rating.in: [1,2,3,4,5]}], m42: True}
 
 
 metric.uniq:
@@ -200,6 +206,12 @@ metric.uniq:
   user_active_items_locations:                      {counter: active_items,   key: [location_id]}
   seller_items_with_delivery_contacts:             {counter: seller_delivery_contacts,         key: [item]}
   seller_items_with_delivery_clicks:               {counter: seller_delivery_clicks,           key: [item]}
+  sellers_with_rating_1_new:               {counter: items_with_rating_1,             key: [user], m42: True}
+  sellers_with_rating_2_new:               {counter: items_with_rating_2,             key: [user], m42: True}
+  sellers_with_rating_3_new:               {counter: items_with_rating_3,             key: [user], m42: True}
+  sellers_with_rating_4_new:               {counter: items_with_rating_4,             key: [user], m42: True}
+  sellers_with_rating_5_new:               {counter: items_with_rating_5,             key: [user], m42: True}
+  sellers_with_rating_new:                 {counter: items_with_rating_new,           key: [user], m42: True}
 
 metric.ratio:
   avg_item_address_length:                        {num: cnt_item_address_length,         den: items_with_address_string}
@@ -221,3 +233,5 @@ metric.ratio:
   seller_contacts_per_iv_on_deliverable:          {num: seller_contacts_on_deliverable_items, den: seller_deliverable_iv}
   seller_contact_per_active_deliverable_item:     {num: seller_contacts_on_deliverable_items, den: items_delivery_available}
   items_delivery_ratio:                           {num: items_with_delivery,              den: items_delivery_available, m42: true}
+  items_rating_coverage:                          {num: items_with_rating_new,            den: active_items,             m42: True}
+  sellers_rating_coverage:                        {num: sellers_with_rating_new,          den: users_active_items,       m42: True}
