@@ -1,11 +1,15 @@
 metric.counter:
   dirty_clickstream_events:                      {obs: [events]}
   clean_clickstream_events:                      {filter: [is_human: 1], obs: [events]}
+  dirty_false_positive_events:                   {filter: [is_clean_cookie: 1, is_human: 0], obs: [events]}
+  clean_false_positive_events:                   {filter: [is_clean_cookie: 1], obs: [events]}
 
 metric.uniq:
   dirty_clickstream_cookies:                     {counter: dirty_clickstream_events,   key: [cookie]}
   clean_clickstream_cookies:                     {counter: clean_clickstream_events,   key: [cookie]}
-
+  dirty_false_positive_cookies:                  {counter: dirty_false_positive_events, key: [cookie]}
+  clean_false_positive_cookies:                  {counter: clean_false_positive_events, key: [cookie]}
 
 metric.ratio:
   clickstream_clean_cookies_percent:             {num: clean_clickstream_cookies,      den: dirty_clickstream_cookies}
+  antibot_fpr:                                   {num: dirty_false_positive_cookies,   den: clean_false_positive_cookies}
