@@ -1249,6 +1249,7 @@ clickstream_sparse.clickhouse:
       event_count: 1
       network_error_type: ios_network_error_type
       network_error_sub_type: ios_network_error_subtype
+      page_no: offset
     dtm: event_date
     participant: {visitor: u, user: uid}
     primary_subject: visitor
@@ -1298,7 +1299,11 @@ clickstream_sparse.clickhouse:
       - user_network_image_load_error
       - user_network_client_error
       - user_network_system_error
-
+      - users_buyer_target_click_serp_daily
+      - users_buyer_target_click_rec_daily
+      - users_search
+      - buyer_target_clicks_serp
+      - buyer_target_clicks_rec
 
 messenger_blocks:
   metric_configs: [messenger_blocks]
@@ -1526,7 +1531,6 @@ buyer_items_distance:
   participant: {visitor: cookie_id}
   primary_subject: visitor
   dtm: event_date
-
 
 support_chat:
   metric_configs: [support_chat]

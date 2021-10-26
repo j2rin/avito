@@ -15,7 +15,7 @@ definitions:
   - &sort_price     [3, 4]
   - &sort_dft       5
 
-  - &is_search      {eid: *eid_search, $or: [platform_id.!=: 1, search_flags.!bit: 4]}
+  - &is_search      {eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0]}
   - &is_rec         {$or: [{eid: *eid_rec}, {search_flags.bit: 10}]}
   - &is_rec_sg      {search_flags.bit: 10}
   - &is_u2i         {eid: *eid_u2i}
@@ -28,7 +28,7 @@ definitions:
   - &adv_page       {$or: [{eid: [300, 2592]}, {platform_id: [1, 2], eid: [2572]}, {platform_id: [1], eid: [301]}]}
 
   - &x_is_search    {x_eid: *eid_search}
-  - &x_is_rec       {$or: [{x_eid: *eid_rec}, {search_flags.bit: 10}]}
+  - &x_is_rec       {$or: [{x_eid: *eid_rec}, {search_features.bit: 0}]}
   - &x_is_rec_sg    {search_flags.bit: 10}
   - &x_is_u2i       {x_eid: *eid_u2i}
   - &x_is_i2i       {x_eid: *eid_i2i}
