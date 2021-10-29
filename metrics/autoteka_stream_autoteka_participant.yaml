@@ -1,12 +1,47 @@
 metric.counter:
-  autoteka_revenue_autoteka_participant:     {filter: [funnel_stage_id: 4], obs: [amount]}
-  autoteka_cnt_reports_autoteka_participant: {filter: [funnel_stage_id: 4], obs: [reports_count]}
-  autoteka_cnt_paypage_loads_autoteka_participant: {filter: [funnel_stage_id: 3]}
-  autoteka_cnt_product_selections_autoteka_participant: {filter: [funnel_stage_id: 2]}
-  autoteka_cnt_previews_autoteka_participant: {filter: [funnel_stage_id: 1]}
+  autoteka_revenue_ap: {filter: [funnel_stage_id: 4], obs: [amount]}
+  autoteka_revenue_new_users_ap: {filter: [funnel_stage_id: 4, is_new_user: true], obs: [amount]}
+  autoteka_cnt_reports_ap: {filter: [funnel_stage_id: 4], obs: [reports_count]}
+  autoteka_cnt_reports_new_users_ap: {filter: [funnel_stage_id: 4, is_new_user: true], obs: [reports_count]}
+  autoteka_cnt_one_report_ap: {filter: [funnel_stage_id: 4, reports_count: 1], obs: [reports_count]}
+  autoteka_cnt_small_package_ap: {filter: [funnel_stage_id: 4, reports_count.>=: 20], obs: [reports_count]}
+  autoteka_cnt_big_package_ap: {filter: [funnel_stage_id: 4, reports_count.>: 1, reports_count.<: 20], obs: [reports_count]}
+  autoteka_cnt_paypage_loads_ap: {filter: [funnel_stage_id: 3]}
+  autoteka_cnt_product_selections_ap: {filter: [funnel_stage_id: 2]}
+  autoteka_cnt_previews_ap: {filter: [funnel_stage_id: 1]}
+  autoteka_cnt_main_page_ap: {filter: [funnel_stage_id: 0]}
+  autoteka_cnt_card_ap: {filter: [funnel_stage_id: 4, payment_method: card]}
+  autoteka_cnt_appleInApp_ap: {filter: [funnel_stage_id: 4, payment_method: appleInAppPurchase]}
+  autoteka_cnt_gpay_ap: {filter: [funnel_stage_id: 4, payment_method: googlePay]}
+  autoteka_cnt_applePay_ap: {filter: [funnel_stage_id: 4, payment_method: applePay]}
+  autoteka_cnt_sms_ap: {filter: [funnel_stage_id: 4, payment_method: sms]}
 
 metric.uniq:
-  autoteka_unique_report_buyers_autoteka_participant: {counter: autoteka_cnt_reports_autoteka_participant, key: [autotekauser_id]}
-  autoteka_unique_paypage_visitors_autoteka_participant: {counter: autoteka_cnt_paypage_loads_autoteka_participant, key: [autotekauser_id]}
-  autoteka_unique_product_selection_visitors_autoteka_participant: {counter: autoteka_cnt_product_selections_autoteka_participant, key: [additionalcookie_id]}
-  autoteka_unique_preview_visitors_autoteka_participant: {counter: autoteka_cnt_previews_autoteka_participant, key: [additionalcookie_id]}
+  autoteka_unique_report_buyers_ap: {counter: autoteka_cnt_reports_ap, key: [autotekauser_id]}
+  autoteka_unique_paypage_visitors_ap: {counter: autoteka_cnt_paypage_loads_ap, key: [autotekauser_id]}
+  autoteka_unique_product_selection_visitors_ap: {counter: autoteka_cnt_product_selections_ap, key: [additionalcookie_id]}
+  autoteka_unique_preview_visitors_ap: {counter: autoteka_cnt_previews_ap, key: [additionalcookie_id]}
+  autoteka_unique_main_page_visitors_ap: {counter: autoteka_cnt_main_page_ap, key: [additionalcookie_id]}
+  autoteka_one_report_purchase_ap: {counter: autoteka_one_report_reports_ap, key: [autotekaorder_id]}
+  autoteka_small_package_purchase_ap: {counter: autoteka_small_package_reports_ap, key: [autotekaorder_id]}
+  autoteka_big_package_purchase_ap: {counter: autoteka_big_package_reports_ap, key: [autotekaorder_id]}
+  autoteka_one_report_buyer_ap: { counter: autoteka_one_report_reports_ap, key: [ autotekauser_id]}
+  autoteka_small_package_buyer_ap: { counter: autoteka_small_package_reports_ap, key:autotekauser_id]}
+  autoteka_big_package_buyer_ap: { counter: autoteka_big_package_reports_ap, key: [autotekauser_id]}
+  autoteka_payment_card_ap: {counter: autoteka_cnt_card_ap, key: [autotekaorder_id]}
+  autoteka_payment_appleInApp_ap: {counter: autoteka_cnt_appleInApp_ap, key: [autotekaorder_id]}
+  autoteka_payment_gpay_ap: {counter: autoteka_cnt_gpay_ap, key: [autotekaorder_id]}
+  autoteka_payment_applePay_ap: {counter: autoteka_cnt_applePay_ap, key: [autotekaorder_id]}
+  autoteka_payment_sms_ap: {counter: autoteka_cnt_sms_ap, key: [autotekaorder_id]}
+
+metric.ratio:
+  autoteka_report_price_ap: {num: autoteka_revenue_ap, den: autoteka_cnt_reports_ap}
+  autoteka_avg_reports_per_visitor: {num: autoteka_cnt_reports, den: user_item_views_used_cars}
+  autoteka_paypage_callback_conversion_ap: {num: autoteka_cnt_reports_ap, den: autoteka_cnt_paypage_loads_ap }
+  autoteka_paypage_callback_conversion_unique_ap: {num: autoteka_unique_report_buyers_ap, den: autoteka_unique_paypage_visitors_ap}
+  autoteka_preview_selection_conversion_ap: {num: autoteka_cnt_product_selections_ap, den: autoteka_cnt_previews_ap }
+  autoteka_preview_selection_conversion_unique_ap: {num: autoteka_unique_product_selection_visitors_ap, den: autoteka_unique_preview_visitors_ap}
+  autoteka_selection_paypage_conversion_ap: {num: autoteka_cnt_paypage_loads_ap, den: autoteka_cnt_product_selections_ap }
+  autoteka_selection_paypage_conversion_unique_ap: {num: autoteka_unique_paypage_visitors_ap, den: autoteka_unique_product_selection_visitors_ap}
+  autoteka_preview_callback_conversion_ap: { num: autoteka_cnt_reports_ap, den: autoteka_cnt_previews_ap }
+  autoteka_preview_callback_conversion_unique_ap: { num: autoteka_unique_report_buyers_ap, den: autoteka_unique_preview_visitors_ap }
