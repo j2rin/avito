@@ -225,6 +225,8 @@ definitions:
   - &x_is_public_profile                   {x_eid: 2017, from_page: 'public_profile'}
   - &x_is_extended_profile                 {x_eid: 2017, from_page: ['profile_services']}
   - &x_is_extended_profile_services        {x_eid: 2017, from_page: 'profile_services'}
+  
+  - &is_item_str_flat_verified_badge {item_flags.bit: 24}
 
 
 metric.counter:
@@ -921,6 +923,9 @@ metric.counter:
   cnt_cs_extended_profile:                 {filter: [*is_contact_wo_guessing, *x_is_extended_profile], m42: False}
   cnt_cs_extended_profile_services:        {filter: [*is_contact_wo_guessing, *x_is_extended_profile_services], m42: False}
   cnt_cs_profile_shop:                     {filter: [{$or: [[*is_contact_wo_guessing, *x_is_public_profile],[*is_contact_wo_guessing, *x_is_extended_profile],[*is_contact_wo_guessing, *x_is_search, *x_is_shop]]}], m42: False}
+  btc_str_flat_verified_badge:             {filter: [*is_item_str_flat_verified_badge, *is_btc]}
+  c_str_flat_verified_badge:               {filter: [*is_item_str_flat_verified_badge, *is_contact]}
+  iv_str_flat_verified_badge:              {filter: [*is_item_str_flat_verified_badge, *is_iv]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1831,6 +1836,12 @@ metric.uniq:
   contacts_extended_profile_uniq:          {counter: cnt_cs_extended_profile,            key: [cookie_item]}
   contacts_extended_profile_services_uniq: {counter: cnt_cs_extended_profile_services,   key: [cookie_item]}
   contacts_profile_shop_uniq:              {counter: cnt_cs_profile_shop,                key: [cookie_item]}
+  user_btc_str_flat_verified_badge:        {counter: btc_str_flat_verified_badge,        key: [cookie]}
+  user_c_str_flat_verified_badge           {counter: c_str_flat_verified_badge,          key: [cookie]}
+  user_iv_str_flat_verified_badge:         {counter: iv_str_flat_verified_badge,         key: [cookie]}
+  sess_btc_str_flat_verified_badge:        {counter: btc_str_flat_verified_badge,        key: [session]}
+  sess_c_str_flat_verified_badge:          {counter: c_str_flat_verified_badge,          key: [session]}
+  sess_iv_str_flat_verified_badge:         {counter: iv_str_flat_verified_badge,         key: [session]}
 
 
 metric.ratio:
