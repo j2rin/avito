@@ -300,6 +300,7 @@ metric.counter:
   cnt_btc_s_metro:                         {filter: [*is_btc_wo_guessing, *is_s_metro, *x_is_search], m42: False}
   cnt_btc_s_noquery:                       {filter: [*is_btc_wo_guessing, *noq, *x_is_search], m42: False}
   cnt_btc_s_query:                         {filter: [*is_btc_wo_guessing, *q, *x_is_search], m42: False}
+  cnt_btc_s:                               {filter: [*is_btc_wo_guessing, *x_is_search], m42: False}
   cnt_btc_s_radius:                        {filter: [*is_btc_wo_guessing, *is_s_radius, *x_is_search], m42: False}
   cnt_btc_s_road:                          {filter: [*is_btc_wo_guessing, *is_s_road, *x_is_search], m42: False}
   cnt_btc_s_saved:                         {filter: [*is_btc_wo_guessing, *is_s_saved, *x_is_search], m42: False}
@@ -1268,7 +1269,12 @@ metric.uniq:
   map_area_users:                          {counter: searches_map_area,               key: [cookie]}
   unq_ph:                                  {counter: phone_views_total,               key: [cookie], m42: False}
   user_btc_sq:                             {counter: cnt_btc_s_query,                 key: [cookie], m42: False}
-  user_sq:                                 {counter: search_q,                     key: [cookie], m42: False}
+  user_sq:                                 {counter: search_q,                        key: [cookie], m42: False}
+  sellers_with_btc:                        {counter: bt_clicks,                       key: [item_user_id], m42: False}
+  sellers_with_btc_rec:                    {counter: cnt_btc_rec,                     key: [item_user_id], m42: False}
+  sellers_with_btc_s:                      {counter: cnt_btc_s,                       key: [item_user_id], m42: False}
+  sellers_with_btc_s_q:                    {counter: cnt_btc_s_query,                 key: [item_user_id], m42: False}
+  sellers_with_btc_s_noq:                  {counter: cnt_btc_s_noquery,               key: [item_user_id], m42: False}
   user_btc_developer:                      {counter: btc_developer,                   key: [cookie]}
   user_btc_from_map_total:                 {counter: cnt_btc_from_map_s_area,         key: [cookie]}
   user_btc_from_witcher_any:               {counter: cnt_btc_wtc_dlv_new_auto_flats_reg, key: [cookie]}
