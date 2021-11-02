@@ -594,6 +594,18 @@ support:
   dtm: event_date
   segm: cookie_id
 
+support_hc:
+  metric_configs: [support_hc]
+  database: vertica
+  table: dma.vo_support_hc_metrics
+  column_map:
+    participant: participant_id
+  dimensions: [platform]
+  participant:  {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id
+
 cookie_account_enter:
   metric_configs: [cookie_account_enter]
   database: vertica

@@ -1,0 +1,24 @@
+metric.counter:
+  # --sessions
+  support_helpcenter_sessions: {obs: [helpcenter_sessions]} #-- кол-во сессии ХЦ
+  support_target_sessions: {obs: [target_sessions]} #-- кол-во сессий, в которых было хотя бы 2 события или хотя бы 1 чтение статьи
+  support_wizard_sessions: {obs: [wizard_sessions]} #-- кол-во сессий с заходом в визард создания обращения
+  support_only_nw_article_sessions: {obs: [only_nw_article_sessions]} #-- кол-во сессий, где БЫЛО событие чтения статей не из рекомендованных в визарде и НЕ БЫЛО создания обращения
+  support_only_invoice_sessions: {obs: [only_invoice_sessions]} #-- кол-во сессий, где НЕ БЫЛО события чтения статей не из рекомендованных в визарде и БЫЛО создания обращения
+  support_invoice_nw_article_sessions: {obs: [invoice_nw_article_sessions]} #-- кол-во сессий, где БЫЛО событие чтения статей не из рекомендованных в визарде и БЫЛО создания обращения
+  support_end_on_article_sessions: {obs: [end_on_article_sessions]} #-- кол-во сессий, закончившиеся чтением статьи или лайком  на ней
+  # --articles
+  #support_article_views: {obs: [article_views]} #-- число просмотров статей
+  support_nw_article_views: {obs: [nw_article_views]} #-- число просмотров статей из самого ХЦ (то есть НЕ переходом из рекомендованных статей в визарде создания обращения)
+  #support_article_like: {obs: [helpcenter_article_like]} #-- число лайков на статьях
+  #support_article_dislike: {obs: [helpcenter_article_dislike]} #-- число дизлайков на статьях
+  #support_article_marks: {obs: [helpcenter_article_dislike, helpcenter_article_like]} #-- число всех оценок
+  # --phone_requests
+  support_helpcenter_phone_requests: {obs: [helpcenter_phone_requests]} #-- число запросов на показ номера поддержки на плашке с номером
+  #support_helpcenter_phone_moder_block_requests: {obs: [helpcenter_phone_moder_block_requests]} #-- число запросов на показ номера поддержки на нодах с тематиками блокировок
+  #support_helpcenter_phone_moder_reject_requests: {obs: [helpcenter_phone_moder_reject_requests]} #-- число запросов на показ номера поддержки на нодах с тематиками отклонений
+  #support_helpcenter_phone_requests_moder: {obs: [helpcenter_phone_moder_block_requests, helpcenter_phone_moder_reject_requests]} #-- число запросов на показ номера поддержки на нодах с тематиками модерации
+
+metric.ratio:
+  #support_hc_article_like_rate: {num: support_hc_article_like, den: support_hc_article_marks} #-- доля лайков среди всех оценок статей
+  support_nw_article_views_by_session: {num: support_nw_article_views, den: support_target_sessions} #-- число просмотров статей не из визарда на целевую сессию
