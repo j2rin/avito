@@ -96,7 +96,7 @@ metric.counter:
 
   draw_ok_events:                          {filter: [{stage_name: Draw, response: "ok"}], obs: [exceptions], m42: True}
   draw_new_exceptions:                     {filter: [{stage_name: Draw, response.!=: "ok"}], obs: [exceptions], m42: True}
-  draw_new_exceptions_wo_no_data:          {filter: [{stage_name: Draw, response.!=: "no-data-placeholder"}], obs: [exceptions], m42: True}
+  draw_new_exceptions_wo_no_data:          {filter: [{stage_name: Draw, response.!=: "no-data-placeholder", response.!=: "ok"}], obs: [exceptions], m42: True}
   draw_exceptions_somehow_else_displayed:  {filter: [{stage_name: Draw, response: "somehow-else-displayed-error"}], obs: [exceptions], m42: True}
   draw_exceptions_unknown:                 {filter: [{stage_name: Draw, response: "unknown-error"}], obs: [exceptions], m42: True}
   draw_exceptions_something_went_wrong:    {filter: [{stage_name: Draw, response: "something-went-wrong-error"}], obs: [exceptions], m42: True}
