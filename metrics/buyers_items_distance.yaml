@@ -1,0 +1,35 @@
+definitions:
+  - &same_city {item_city_id.=: $city_id}
+  - &same_region {item_region_id.=: $region_id}
+  - &same_fo {item_location_group_id.=: $location_group_id}
+
+
+metric.counter:
+  buyer_item_distance:                         {obs: [distance], m42: false}
+  buyer_item_distance_1km:                     {filter: [{distance.<=: 1}], m42: False}
+  buyer_item_distance_3km:                     {filter: [{distance.<=: 3}], m42: False}
+  buyer_item_distance_5km:                     {filter: [{distance.<=: 5}], m42: False}
+  buyer_item_distance_10km:                    {filter: [{distance.<=: 10}], m42: False}
+  buyer_item_distance_25km:                    {filter: [{distance.<=: 25}], m42: False}
+  buyer_item_distance_50km:                    {filter: [{distance.<=: 50}], m42: False}
+  buyer_item_distance_100km:                   {filter: [{distance.<=: 100}], m42: False}
+  buyer_item_distance_500km:                   {filter: [{distance.<=: 500}], m42: False}
+  buyer_item_distance_1000km:                  {filter: [{distance.<=: 1000}], m42: False}
+
+  buyer_item_same_city:                        {filter: [*same_city], m42: True}
+  buyer_item_same_region:                      {filter: [*same_city], m42: True}
+  buyer_item_same_fo:                          {filter: [*same_fo], m42: True}
+
+metric.uniq:
+  user_buyer_item_distance_1km:                {counter: buyer_item_distance_1km,       key: [cookie], m42: True}
+  user_buyer_item_distance_3km:                {counter: buyer_item_distance_3km,       key: [cookie], m42: True}
+  user_buyer_item_distance_5km:                {counter: buyer_item_distance_5km,       key: [cookie], m42: True}
+  user_buyer_item_distance_10km:               {counter: buyer_item_distance_10km,      key: [cookie], m42: True}
+  user_buyer_item_distance_25km:               {counter: buyer_item_distance_25km,      key: [cookie], m42: True}
+  user_buyer_item_distance_50km:               {counter: buyer_item_distance_50km,      key: [cookie], m42: True}
+  user_buyer_item_distance_100km:              {counter: buyer_item_distance_100km,     key: [cookie], m42: True}
+  user_buyer_item_distance_500km:              {counter: buyer_item_distance_500km,     key: [cookie], m42: True}
+  user_buyer_item_distance_1000km:             {counter: buyer_item_distance_1000km,    key: [cookie], m42: True}
+  user_buyer_item_same_city:                   {counter: buyer_item_same_city,          key: [cookie], m42: True}
+  user_buyer_item_same_region:                 {counter: buyer_item_same_region,        key: [cookie], m42: True}
+  user_buyer_item_same_fo:                     {counter: buyer_item_same_fo,            key: [cookie], m42: True}

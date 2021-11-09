@@ -1,5 +1,41 @@
 metric.counter:
   suggest_click_ch: {filter: [eid: 2443]}
+  total_memory_warnings_ch: {filter: [eid: 4237]}
+  active_memory_warnings_ch: {filter: [{eid: 4237, app_state: active}]}
+  background_memory_warnings_ch: {filter: [{eid: 4237, app_state: background}]}
+  inactive_memory_warnings_ch: {filter: [{eid: 4237, app_state: inactive}]}
+
+  init_events_ch: {filter: [{eid: 3221}]}
+  init_di_events_ch: {filter: [{eid: 3222}]}
+  server_loading_events_ch: {filter: [{eid: 3223}]}
+  local_loading_events_ch: {filter: [{eid: 3224}]}
+  preparing_events_ch: {filter: [{eid: 3225}]}
+  draw_events_ch: {filter: [{eid: 3226}]}
+  draw_exceptions_ch: {filter: [{eid: 3226, new_exception_id.isnull: False}]}
+
+  image_loading_events_ch: {filter: [{eid: 4205}]}
+  image_loading_exceptions_ch: {filter: [{eid: 4205, image_error.isnull: false}]}
+
+  first_input_delay_events_ch: {filter: [{eid: 4156}]}
+  largest_contentful_paint_events_ch: {filter: [{eid: 4409}]}
+  time_to_interactive_events_ch: {filter: [{eid: 4154}]}
+  frontend_page_load_events_ch: {filter: [{eid: 3939}]}
+  cumulative_layout_shift_events_ch: {filter: [{eid: 4571}]}
+  initial_page_render_events_ch: {filter: [{eid: 3295}]}
 
 metric.uniq:
   user_suggest_click_ch: {counter: suggest_click_ch, key: [cookie]}
+  user_active_memory_warnings_ch: {counter: active_memory_warnings_ch, key: [cookie]}
+  user_background_memory_warnings_ch: {counter: background_memory_warnings_ch, key: [cookie]}
+  user_inactive_memory_warnings_ch: {counter: inactive_memory_warnings_ch, key: [cookie]}
+
+  user_draw_events_ch: {counter: draw_events_ch, key: [cookie]}
+  user_draw_exceptions_ch: {counter: draw_exceptions_ch, key: [cookie]}
+  user_image_loading_events_ch: {counter: image_loading_events_ch, key: [cookie]}
+  user_image_loading_exceptions_ch: {counter: image_loading_exceptions_ch, key: [cookie]}
+
+  user_first_input_delay_events_ch: {counter: first_input_delay_events_ch, key: [cookie]}
+  user_largest_contentful_paint_events_ch: {counter: largest_contentful_paint_events_ch, key: [cookie]}
+  user_time_to_interactive_events_ch: {counter: time_to_interactive_events_ch, key: [cookie]}
+  user_frontend_page_load_events_ch: {counter: frontend_page_load_events_ch, key: [cookie]}
+  user_cumulative_layout_shift_events_ch: {counter: cumulative_layout_shift_events_ch, key: [cookie]}

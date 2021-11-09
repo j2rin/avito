@@ -86,6 +86,7 @@ seller_item_active:
   column_map:
     item: item_id
     user: user_id
+    user_logcat: [user_id, logical_category_id]
   dimensions:
     - platform
     - vertical
@@ -593,6 +594,18 @@ support:
   dtm: event_date
   segm: cookie_id
 
+support_hc:
+  metric_configs: [support_hc]
+  database: vertica
+  table: dma.vo_support_hc_metrics
+  column_map:
+    participant: participant_id
+  dimensions: [platform]
+  participant:  {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id
+
 cookie_account_enter:
   metric_configs: [cookie_account_enter]
   database: vertica
@@ -712,6 +725,7 @@ support_ticket:
   metric_configs: [support_ticket]
   database: vertica
   table: dma.vo_support_ticket
+  dimensions: [logical_category, vertical, region, city, user_segment_market, is_asd]
   participant: {user: user_id}
   primary_subject: user
   dtm: create_date
@@ -760,7 +774,7 @@ buyer_call:
 seller_matched_call:
   metric_configs: [seller_matched_call]
   database: vertica
-  table: dma.vo_seller_matched_call 
+  table: dma.vo_seller_matched_call
   column_map:
     item: item_id
     user: user_id
@@ -1229,13 +1243,13 @@ messenger_stream:
     - [is_logged_in, is_asd, vertical, logical_category, region, user_segment_market]
     - [category, subcategory]
   participant: {visitor: cookie_id, user: user_id}
-  primary_subject: visitor
+  primary_subject: user
   dtm: event_date
   segm: cookie_id
 
 clickstream_sparse.clickhouse:
     database: clickhouse
-    table: dwh.clickstream_sparse_local
+    table: dwh.vo_clickstream_sparse_local
     column_map:
       platform_id: business_platform
       cookie_item: [u, iid]
@@ -1243,6 +1257,7 @@ clickstream_sparse.clickhouse:
       item: iid
       item_x: [iid, x]
       x_eid: __x_eid
+      q: __x_q
       item_x_type: 0
       event_count: 1
       network_error_type: ios_network_error_type
@@ -1296,6 +1311,23 @@ clickstream_sparse.clickhouse:
       - user_network_image_load_error
       - user_network_client_error
       - user_network_system_error
+      - users_buyer_target_click_serp_daily
+      - users_buyer_target_click_rec_daily
+      - users_search
+      - buyer_target_clicks_serp
+      - buyer_target_clicks_rec
+      - users_contact_serp_daily
+      - searches_serp
+      - searches
+      - contacts
+      - item_views
+      - search_btc
+      - searches_contact_serp
+      - user_btc_sq
+      - search_q
+      - user_sq
+      - sq_c
+      - users_contact_search_query
 
 messenger_blocks:
   metric_configs: [messenger_blocks]
@@ -1388,7 +1420,7 @@ messenger_messages:
     - [is_logged_in, is_asd, vertical, logical_category, region]
     - [category, subcategory]
   participant: {visitor: from_cookie_id, user: user_id}
-  primary_subject: visitor
+  primary_subject: user
   dtm: event_date
   segm: user_id
 
@@ -1490,3 +1522,47 @@ reviews:
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
+
+lister_reactivations:
+    metric_configs: [lister_reactivations]
+    database: vertica
+    table: dma.vo_lister_reactivations
+    dimensions: [logical_category, vertical, region, city]
+    m42_cartesian_groups:
+      - [logical_category, vertical, region, city]
+    participant: {user: user_id}
+    primary_subject: user
+    dtm: event_date
+
+buyer_items_distance:
+  metric_configs: [buyers_items_distance]
+  database: vertica
+  table: dma.vo_buyers_items_distance
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  m42_cartesian_groups:
+    - [vertical]
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  dtm: event_date
+
+support_chat:
+  metric_configs: [support_chat]
+  database: vertica
+  table: dma.vo_support_chat
+  dimensions: [logical_category, vertical, region, city, user_segment_market, is_asd]
+  m42_cartesian_groups:
+    - [logical_category, vertical, region, city, user_segment_market, is_asd]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: create_date
