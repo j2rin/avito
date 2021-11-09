@@ -23,6 +23,11 @@ metric.counter:
   cumulative_layout_shift_events_ch: {filter: [{eid: 4571}]}
   initial_page_render_events_ch: {filter: [{eid: 3295}]}
 
+  total_delivery_click_ch: {filter: [{ eid: 2483, safedeal_services.ilike: '%delivery%'}]}
+  total_delivery_widget_ch: {filter: [{ eid: 2013}]}
+  total_delivery_confirm_ch: {filter: [{ eid: 2749}]}
+  total_delivery_contact_ch: {filter: [{ eid: 2015}]}
+
 metric.uniq:
   user_suggest_click_ch: {counter: suggest_click_ch, key: [cookie]}
   user_active_memory_warnings_ch: {counter: active_memory_warnings_ch, key: [cookie]}
@@ -39,3 +44,8 @@ metric.uniq:
   user_time_to_interactive_events_ch: {counter: time_to_interactive_events_ch, key: [cookie]}
   user_frontend_page_load_events_ch: {counter: frontend_page_load_events_ch, key: [cookie]}
   user_cumulative_layout_shift_events_ch: {counter: cumulative_layout_shift_events_ch, key: [cookie]}
+
+  delivery_click_ch: {counter: total_delivery_click_ch, key: [cookie_item]}
+  delivery_widget_ch: {counter: total_delivery_widget_ch, key: [cookie_item]}
+  delivery_confirm_ch: {counter: total_delivery_confirm_ch, key: [cookie_item]}
+  delivery_contact_ch: {counter: total_delivery_contact_ch, key: [cookie_item]}
