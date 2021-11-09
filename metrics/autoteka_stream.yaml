@@ -11,9 +11,9 @@ metric.counter:
   autoteka_cnt_small_package: {filter: [funnel_stage_id: 4, reports_count.>: 1, reports_count.<: 20], obs: [reports_count]}
   autoteka_cnt_main_page: {filter: [funnel_stage_id: 0]}
   autoteka_cnt_card: { filter: [ funnel_stage_id: 4, payment_method: card ] }
-  autoteka_cntple_inp: { filter: [ funnel_stage_id: 4, payment_method: appleInAppPurchase ] }
+  autoteka_cnt_apple_in_app: { filter: [ funnel_stage_id: 4, payment_method: appleInAppPurchase ] }
   autoteka_cnt_gpay: { filter: [ funnel_stage_id: 4, payment_method: googlePay ] }
-  autoteka_cntple_pay: { filter: [ funnel_stage_id: 4, payment_method: applePay ] }
+  autoteka_cnt_apple_pay: { filter: [ funnel_stage_id: 4, payment_method: applePay ] }
   autoteka_cnt_sms: { filter: [ funnel_stage_id: 4, payment_method: sms ] }
 
 metric.uniq:
@@ -29,9 +29,9 @@ metric.uniq:
   autoteka_small_package_buyer: { counter: autoteka_cnt_small_package, key: [ autotekauser_id ] }
   autoteka_big_package_buyer: { counter: autoteka_cnt_big_package, key: [ autotekauser_id ] }
   autoteka_payment_card: { counter: autoteka_cnt_card, key: [ autotekaorder_id ] }
-  autoteka_paymentple_inp: { counter: autoteka_cntple_inp, key: [ autotekaorder_id ] }
+  autoteka_payment_apple_in_app: { counter: autoteka_cnt_apple_in_app, key: [ autotekaorder_id ] }
   autoteka_payment_gpay: { counter: autoteka_cnt_gpay, key: [ autotekaorder_id ] }
-  autoteka_paymentple_pay: { counter: autoteka_cntple_pay, key: [ autotekaorder_id ] }
+  autoteka_payment_apple_pay: { counter: autoteka_cnt_apple_pay, key: [ autotekaorder_id ] }
   autoteka_payment_sms: { counter: autoteka_cnt_sms, key: [ autotekaorder_id ] }
   
 metric.ratio:
