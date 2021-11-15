@@ -218,14 +218,14 @@ definitions:
 
   - &is_item_pessimized      {item_flags.bit: 11}
   - &is_seller_pessimized    {item_flags.bit: 12}
-  
+
   - &item_in_stock {item_flags.bit: 22}
   - &item_to_order {item_flags.bit: 23}
-  
+
   - &x_is_public_profile                   {x_eid: 2017, from_page: 'public_profile'}
   - &x_is_extended_profile                 {x_eid: 2017, from_page: ['profile_services']}
   - &x_is_extended_profile_services        {x_eid: 2017, from_page: 'profile_services'}
-  
+
   - &is_item_str_flat_verified_badge {item_flags.bit: 24}
 
 
@@ -394,8 +394,8 @@ metric.counter:
   cnt_cs_s_item_part_qual_exists:          {filter: [*is_contact, *x_is_search, *part_qual_exists], m42: False}
   cnt_cs_s_item_part_qual_compab:          {filter: [*is_contact, *x_is_search, *part_qual_compab], m42: False}
   cnt_cs_s_item_part_qual_unknown:         {filter: [*is_contact, *x_is_search, *part_qual_unknown], m42: False}
-  cnt_cs_s_in_stock:                       {filter: [*is_contact, *x_is_search, *item_in_stock], m42: False} 
-  cnt_cs_s_to_order:                       {filter: [*is_contact, *x_is_search, *item_to_order], m42: False} 
+  cnt_cs_s_in_stock:                       {filter: [*is_contact, *x_is_search, *item_in_stock], m42: False}
+  cnt_cs_s_to_order:                       {filter: [*is_contact, *x_is_search, *item_to_order], m42: False}
   cnt_cs_msg_s_item_attr:                  {filter: [*is_msg, *x_is_search], m42: False}
   cnt_cs_ph_s_item_attr:                   {filter: [*is_ph, *x_is_search], m42: False}
   cnt_cs_s_item_attr_mp:                   {filter: [*is_contact_wo_guessing, *x_is_search, *is_item_marketplace], m42: False}
@@ -712,8 +712,14 @@ metric.counter:
   radius_500_searches:                     {filter: [{search_radius: '500'}, *is_1p, *is_search]}
   radius_50_searches:                      {filter: [{search_radius: '50'}, *is_1p, *is_search]}
   radius_5_searches:                       {filter: [{search_radius: '5'}, *is_1p, *is_search]}
-  radius_big_searches:                     {filter: [*is_1p, *is_search, {$or: [[{search_radius: '100'}], [{search_radius: '1000'}], [{search_radius: '200'}], [{search_radius: '300'}], [{search_radius: '400'}], [{search_radius: '500'}]]}]}
-  radius_short_searches:                   {filter: [*is_1p, *is_search, {$or: [[{search_radius: '1'}], [{search_radius: '10'}], [{search_radius: '100'}], [{search_radius: '25'}], [{search_radius: '5'}], [{search_radius: '50'}]]}]}
+  radius_3000_searches:                    {filter: [{search_radius: '3000'}, *is_1p, *is_search]}
+  radius_2000_searches:                    {filter: [{search_radius: '2000'}, *is_1p, *is_search]}
+  radius_15_searches:                      {filter: [{search_radius: '15'}, *is_1p, *is_search]}
+  radius_75_searches:                      {filter: [{search_radius: '75'}, *is_1p, *is_search]}
+  radius_150_searches:                     {filter: [{search_radius: '150'}, *is_1p, *is_search]}
+  radius_3_searches:                       {filter: [{search_radius: '3'}, *is_1p, *is_search]}
+  radius_big_searches:                     {filter: [*is_1p, *is_search, {$or: [[{search_radius: '100'}], [{search_radius: '1000'}], [{search_radius: '200'}], [{search_radius: '300'}], [{search_radius: '400'}], [{search_radius: '500'}], [{search_radius: '2000'}], [{search_radius: '3000'}]]}]}
+  radius_short_searches:                   {filter: [*is_1p, *is_search, {$or: [[{search_radius: '1'}], [{search_radius: '10'}], [{search_radius: '100'}], [{search_radius: '25'}], [{search_radius: '5'}], [{search_radius: '50'}], [{search_radius: '3'}], [{search_radius: '15'}]]}]}
   realty_dev_phone_views:                  {filter: [*is_ph_realdev]}
   recblock_shows:                          {filter: [*is_rec]}
   job_ast_shows:                           {filter: [*is_job_ast]}
