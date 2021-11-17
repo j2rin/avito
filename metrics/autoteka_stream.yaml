@@ -15,12 +15,10 @@ metric.counter:
   autoteka_cnt_gpay: { filter: [ funnel_stage_id: 4, payment_method: googlePay ] }
   autoteka_cnt_apple_pay: { filter: [ funnel_stage_id: 4, payment_method: applePay ] }
   autoteka_cnt_sms: { filter: [ funnel_stage_id: 4, payment_method: sms ] }
-
   autoteka_revenue_pro_users: { filter: [ funnel_stage_id: 4,is_pro: true ], obs: [ amount ] }
   autoteka_revenue_nonpro_users: { filter: [ funnel_stage_id: 4,is_pro: false ], obs: [ amount ] }
   autoteka_cnt_reports_pro_users: { filter: [ funnel_stage_id: 4,is_pro: true ], obs: [ reports_count ] }
   autoteka_cnt_reports_nonpro_users: { filter: [ funnel_stage_id: 4,is_pro: false ], obs: [ reports_count ] }
-
 
 metric.uniq:
   autoteka_unique_report_buyers: {counter: autoteka_cnt_reports, key: [autotekauser_id]}
