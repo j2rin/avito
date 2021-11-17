@@ -31,6 +31,16 @@ breakdowns:
       - {vertical: [General], logical_category: [General.HealthAndBeauty]}
       - {vertical: [General], logical_category: [General.Fashion]}
       - {vertical: [General], logical_category: [General.Undefined]}
+    breakdown_vertical_realty:
+      - {vertical: [Realty]}
+      - {vertical: [Realty], logical_category: [Realty.Commercial]}
+      - {vertical: [Realty], logical_category: [Realty.LongRent]}
+      - {vertical: [Realty], logical_category: [Realty.NewDevelopments]}
+      - {vertical: [Realty], logical_category: [Realty.Other]}
+      - {vertical: [Realty], logical_category: [Realty.SecondarySell]}
+      - {vertical: [Realty], logical_category: [Realty.ShortRent]}
+      - {vertical: [Realty], logical_category: [Realty.Suburban]}
+      - {vertical: [Realty], logical_category: [Realty.Undefined]}
     is_cookie_new:
       - {}
       - {is_cookie_new: ['true']}
@@ -45,11 +55,28 @@ subscriptions:
           - is_human: ['false']
 
   - owner: smkosilov
-    subscribers: []
-    metrics:
-      domofond_amount_net_adj:
-        breakdowns:
-          - {}
+    subscribers: ['#realty-metrics-alerts']
+    metrics_by_breakdowns:
+      breakdown_vertical_realty:
+        - active_items
+        - active_listers
+        - buyers
+        - contacts
+        - classified_amount_net_adj
+        - lf_amount_net_adj
+        - vas_amount_net_adj
+        - subs_amount_net_adj
+        - cpa_amount_net_adj
+        - items_reactivated_net
+        - items_reactivated_net_conversion
+        - items_started_net
+        - items_started_net_conversion
+        - item_views
+        - searches
+        - daily_active_users
+        - calls
+        - c_developer
+        - contacts_cpa
 
   - owner: ryabudylin
     subscribers: []
