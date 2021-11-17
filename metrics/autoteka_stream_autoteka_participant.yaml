@@ -15,6 +15,10 @@ metric.counter:
   autoteka_cnt_gpay_ap: {filter: [funnel_stage_id: 4, payment_method: googlePay]}
   autoteka_cnt_apple_pay_ap: {filter: [funnel_stage_id: 4, payment_method: applePay]}
   autoteka_cnt_sms_ap: {filter: [funnel_stage_id: 4, payment_method: sms]}
+  autoteka_revenue_pro_users_ap: {filter: [funnel_stage_id: 4,is_pro: true], obs: [amount]}
+  autoteka_revenue_nonpro_users_ap: {filter: [funnel_stage_id: 4,is_pro: false], obs: [amount]}
+  autoteka_cnt_reports_pro_users_ap: { filter: [ funnel_stage_id: 4,is_pro: true ], obs: [ reports_count ] }
+  autoteka_cnt_reports_nonpro_users_ap: { filter: [ funnel_stage_id: 4,is_pro: false ], obs: [ reports_count ] }
 
 metric.uniq:
   autoteka_unique_report_buyers_ap: {counter: autoteka_cnt_reports_ap, key: [autotekauser_id]}
@@ -33,6 +37,9 @@ metric.uniq:
   autoteka_payment_gpay_ap: {counter: autoteka_cnt_gpay_ap, key: [autotekaorder_id]}
   autoteka_payment_apple_pay_ap: {counter: autoteka_cnt_apple_pay_ap, key: [autotekaorder_id]}
   autoteka_payment_sms_ap: {counter: autoteka_cnt_sms_ap, key: [autotekaorder_id]}
+  autoteka_unique_report_new_buyers_ap: {counter: autoteka_cnt_reports_new_users_ap, key: [autotekauser_id]}
+  autoteka_unique_report_pro_buyers_ap: {counter: autoteka_cnt_reports_pro_users_ap, key: [autotekauser_id]}
+  autoteka_unique_report_non_buyers_ap: {counter: autoteka_cnt_reports_nonpro_users_ap, key: [autotekauser_id]}
 
 metric.ratio:
   autoteka_report_price_ap: {num: autoteka_revenue_ap, den: autoteka_cnt_reports_ap}
