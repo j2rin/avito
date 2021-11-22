@@ -304,6 +304,7 @@ metric.counter:
   cnt_btc_s_noquery:                       {filter: [*is_btc_wo_guessing, *noq, *x_is_search], m42: False}
   cnt_btc_s_query:                         {filter: [*is_btc_wo_guessing, *q, *x_is_search], m42: False}
   cnt_btc_s:                               {filter: [*is_btc_wo_guessing, *x_is_search], m42: False}
+  cnt_btc_no:                              {filter: [*is_btc_wo_guessing, *x_no], m42: False}
   cnt_btc_s_radius:                        {filter: [*is_btc_wo_guessing, *is_s_radius, *x_is_search], m42: False}
   cnt_btc_s_road:                          {filter: [*is_btc_wo_guessing, *is_s_road, *x_is_search], m42: False}
   cnt_btc_s_saved:                         {filter: [*is_btc_wo_guessing, *is_s_saved, *x_is_search], m42: False}
@@ -392,6 +393,7 @@ metric.counter:
   cnt_cs_s_distr_metro_road:               {filter: [*is_contact_wo_guessing, *x_is_search, {$or: [[*is_s_district], [*is_s_metro], [*is_s_road]]}], m42: False}
   cnt_cs_s_grouped_doubles:                {filter: [*is_contact_wo_guessing, *is_region_with_double_groups, *is_serp_grouping, *x_is_search], m42: False}
   cnt_cs_s_item_attr:                      {filter: [*is_contact_wo_guessing, *x_is_search], m42: False}
+  cnt_cs_no_item_attr:                     {filter: [*is_contact_wo_guessing, *x_no], m42: False}
   cnt_cs_s_item_part_qual_exists:          {filter: [*is_contact, *x_is_search, *part_qual_exists], m42: False}
   cnt_cs_s_item_part_qual_compab:          {filter: [*is_contact, *x_is_search, *part_qual_compab], m42: False}
   cnt_cs_s_item_part_qual_unknown:         {filter: [*is_contact, *x_is_search, *part_qual_unknown], m42: False}
@@ -1003,6 +1005,7 @@ metric.uniq:
   buyer_target_clicks_vector:              {counter: cnt_btc_vec,                     key: [item_x]}
   buyer_target_clicks_searches_u2i:        {counter: cnt_btc_s_u2i,                   key: [item_x]}
   buyer_target_clicks_serp:                {counter: cnt_btc_s_item_attr,             key: [item_x]}
+  buyer_target_clicks_nox:                 {counter: cnt_btc_no,                      key: [item_x]}
   btc_ext_serp:                            {counter: cnt_btc_ext_s,                   key: [item_x]}
   buyer_target_clicks_serp_perfvas_x2_1:   {counter: cnt_btc_serp_perfvas_x2_1,       key: [item_x]}
   buyer_target_clicks_serp_perfvas_x2_7:   {counter: cnt_btc_serp_perfvas_x2_7,       key: [item_x]}
@@ -1079,6 +1082,7 @@ metric.uniq:
   contacts_searches_u2i:                   {counter: cnt_cs_s_u2i,                    key: [item_x]}
   contacts_vertical_main:                  {counter: cnt_cs_vertical_main,            key: [item_x]}
   contacts_serp:                           {counter: cnt_cs_s_item_attr,              key: [item_x]}
+  contacts_nox:                            {counter: cnt_cs_no_item_attr,             key: [item_x]}
   contacts_serp_mp:                        {counter: cnt_cs_s_item_attr_mp,           key: [item_x]}
   contacts_serp_district:                  {counter: cnt_cs_s_distr,                  key: [item_x]}
   contacts_serp_local_geo:                 {counter: cnt_cs_s_distr_metro_road,       key: [item_x]}
@@ -1412,6 +1416,7 @@ metric.uniq:
   users_buyer_target_click_rec_job_ast:    {counter: cnt_btc_job_ast,                 key: [cookie]}
   users_buyer_target_click_rec_daily_vas:  {counter: cnt_btc_rec_vas,                 key: [cookie]}
   users_buyer_target_click_serp_daily:     {counter: cnt_btc_s_item_attr,             key: [cookie]}
+  users_buyer_target_click_nox_daily:      {counter: cnt_btc_no,                      key: [cookie]}
   user_btc_ext_serp:                       {counter: cnt_btc_ext_s,                   key: [cookie]}
   users_buyer_target_click_serp_mp:        {counter: cnt_btc_s_item_attr_mp,          key: [cookie]}
   users_buyer_target_clicks_serp_district: {counter: cnt_btc_s_distr,                 key: [cookie]}
@@ -1441,6 +1446,7 @@ metric.uniq:
   users_contact_search_u2i:                {counter: cnt_cs_s_u2i,                    key: [cookie]}
   users_contact_vertical_main:             {counter: cnt_cs_vertical_main,            key: [cookie]}
   users_contact_serp_daily:                {counter: cnt_cs_s_item_attr,              key: [cookie]}
+  users_contact_nox_daily:                 {counter: cnt_cs_no_item_attr,             key: [cookie]}
   users_contact_serp_mp:                   {counter: cnt_cs_s_item_attr_mp,           key: [cookie]}
   users_contacts_fav_list:                 {counter: cnt_cs_fav_list,                 key: [cookie]}
   users_contacts_serp_district:            {counter: cnt_cs_s_distr,                  key: [cookie]}
