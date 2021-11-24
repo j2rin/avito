@@ -166,6 +166,7 @@ definitions:
   - &is_item_highlight      {item_vas_flags.bit: 1}
   - &is_item_push           {item_vas_flags.bit: 2}
   - &is_item_premium        {item_vas_flags.bit: [3, 5]}
+  - &is_item_xl	            {item_vas_flags.bit: 6}
   - &is_item_perfvas_x2_1   {item_vas_flags.bit: [12]}
   - &is_item_perfvas_x2_7   {item_vas_flags.bit: [13]}
   - &is_item_perfvas_x5_1   {item_vas_flags.bit: [14]}
@@ -334,6 +335,7 @@ metric.counter:
   btc_perfvas_x5_7:                        {filter: [*is_btc, *is_item_perfvas_x5_7], m42: False}
   btc_perfvas_x10_1:                       {filter: [*is_btc, *is_item_perfvas_x10_1], m42: False}
   btc_perfvas_x10_7:                       {filter: [*is_btc, *is_item_perfvas_x10_7], m42: False}
+  btc_xl:                                  {filter: [*is_btc, *is_item_xl], m42: False}
   cnt_cities_in_s:                         {filter: [{location_level_id: [4, 5, 6]}, *is_1p, *is_search], m42: False}
   cnt_cs:                                  {filter: [*is_contact], m42: False}
   cnt_cs_developer_from_map:               {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_map], m42: False}
@@ -608,6 +610,7 @@ metric.counter:
   contacts_perfvas_x5_7:                   {filter: [*is_contact, *is_item_perfvas_x5_7], m42: False}
   contacts_perfvas_x10_1:                  {filter: [*is_contact, *is_item_perfvas_x10_1], m42: False}
   contacts_perfvas_x10_7:                  {filter: [*is_contact, *is_item_perfvas_x10_7], m42: False}
+  contacts_xl:                             {filter: [*is_contact, *is_item_xl], m42: False}
   contacts_item_pessimized:                {filter: [*is_contact, *is_item_pessimized]}
   contacts_seller_pessimized:              {filter: [*is_contact, *is_seller_pessimized]}
   contacts_item_pessimized_rec:            {filter: [*is_contact_wo_guessing, *x_is_rec, *is_item_pessimized], m42: True}
@@ -667,6 +670,7 @@ metric.counter:
   item_views_perfvas_x5_7:                 {filter: [*is_iv, *is_item_perfvas_x5_7], m42: False}
   item_views_perfvas_x10_1:                {filter: [*is_iv, *is_item_perfvas_x10_1], m42: False}
   item_views_perfvas_x10_7:                {filter: [*is_iv, *is_item_perfvas_x10_7], m42: False}
+  item_views_xl:                           {filter: [*is_iv, *is_item_xl], m42: False}
   item_views_total_vip:                    {filter: [*is_item_vip, *is_iv]}
   item_views_with_available_msg:           {filter: [*is_msg_available, *is_iv]}
   iv_developer:                            {filter: [*is_developer_acc, *is_iv]}
