@@ -79,6 +79,36 @@ pageviews:
   dtm: event_date
   segm: cookie_id
 
+user_dau:
+  metric_configs: [user_dau]
+  database: vertica
+  table: dma.vo_clickstream_pageviews
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category, region]
+    - [category, subcategory]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: user
+  dtm: event_date
+  segm: cookie_id
+
 seller_item_active:
   metric_configs: [seller_item_active]
   database: vertica
