@@ -231,6 +231,8 @@ definitions:
 
   - &is_item_str_flat_verified_badge {item_flags.bit: 24}
 
+  - &is_item_with_multilocs {item_flags.bit: 25}
+
 
 metric.counter:
   base_serp_empty:                         {filter: [*is_1p, *is_base_serp_empty, *is_search]}
@@ -948,6 +950,10 @@ metric.counter:
   c_str_flat_verified_badge:               {filter: [*is_item_str_flat_verified_badge, *is_contact]}
   iv_str_flat_verified_badge:              {filter: [*is_item_str_flat_verified_badge, *is_iv]}
   booking_created_str_flat_verified_badge: {filter: [*is_item_str_flat_verified_badge, *is_booking]}
+  iv_with_multilocs:                       {filter: [*is_item_with_multilocs, *is_iv_wo_guessing]}
+  c_with_multilocs:                        {filter: [*is_item_with_multilocs, *is_contact_wo_guessing]}
+  fav_with_multilocs:                      {filter: [*is_item_with_multilocs, *is_fav]}
+  btc_with_multilocs:                      {filter: [*is_item_with_multilocs, *is_btc_wo_guessing]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1837,6 +1843,10 @@ metric.uniq:
   s_multiloc_c:                            {counter: c_s_multiloc,                    key: [x], m42: False}
   s_multiloc_fav:                          {counter: fav_s_multiloc,                  key: [x], m42: False}
   s_multiloc_btc:                          {counter: btc_s_multiloc,                  key: [x], m42: False}
+  user_iv_with_multilocs:                  {counter: iv_with_multilocs,               key: [cookie]}
+  user_c_with_multilocs:                   {counter: c_with_multilocs,                key: [cookie]}
+  user_fav_with_multilocs:                 {counter: btc_with_multilocs,              key: [cookie]}
+  user_btc_with_multilocs:                 {counter: fav_with_multilocs,              key: [cookie]}
 
   user_c_item_pessimized:                  {counter: contacts_item_pessimized,            key: [cookie]}
   user_c_item_pessimized_rec:              {counter: contacts_item_pessimized_rec,        key: [cookie]}
