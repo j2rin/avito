@@ -105,6 +105,17 @@ metric.counter:
   draw_exceptions_no_data_placeholder:     {filter: [{stage_name: Draw, response: "no-data-placeholder"}], obs: [exceptions], m42: True}
   draw_exceptions_failed_to_load:          {filter: [{stage_name: Draw, response: "failed-to-load-error"}], obs: [exceptions], m42: True}
 
+  toast_exceptions:                        {filter: [{error_dialog_type: toast}], obs: [exceptions], m42: True}
+  toast_core_exceptions:                   {filter: [{error_dialog_type: toast, is_core_content: true}], obs: [exceptions], m42: True}
+  toast_network_exceptions:                {filter: [{error_dialog_type: toast}], obs: [network_exceptions], m42: True}
+  toast_api_exceptions:                    {filter: [{error_dialog_type: toast}], obs: [api_exceptions], m42: True}
+  toast_silent_exceptions:                 {filter: [{error_dialog_type: toast}], obs: [silent_exceptions], m42: True}
+  toast_exceptions_unknown:                {filter: [{error_dialog_type: toast, response: "unknown-error"}], obs: [exceptions], m42: True}
+  toast_exceptions_somehow_else_displayed: {filter: [{error_dialog_type: toast, response: "somehow-else-displayed-error"}], obs: [exceptions], m42: True}
+  toast_exceptions_no_internet:            {filter: [{error_dialog_type: toast, response: "no-internet-error"}], obs: [exceptions], m42: True}
+  toast_exceptions_failed_to_load:         {filter: [{error_dialog_type: toast, response: "failed-to-load-error"}], obs: [exceptions], m42: True}  
+
+
 metric.uniq:
   user_draw_exceptions:                    {counter: cnt_draw_exceptions, key: [cookie_id], m42: True}
   user_prepare_exceptions:                 {counter: cnt_prepare_exceptions, key: [cookie_id], m42: True}
@@ -132,6 +143,15 @@ metric.uniq:
   user_draw_exceptions_no_data_placeholder: {counter: draw_exceptions_no_data_placeholder, key: [cookie_id], m42: True}
   user_draw_exceptions_failed_to_load:    {counter: draw_exceptions_failed_to_load, key: [cookie_id], m42: True}
 
+  user_toast_exceptions:                   {counter: toast_exceptions, key: [cookie_id], m42: True}
+  user_toast_core_exceptions:              {counter: toast_core_exceptions, key: [cookie_id], m42: True}
+  user_toast_network_exceptions:           {counter: toast_network_exceptions, key: [cookie_id], m42: True}
+  user_toast_api_exceptions:               {counter: toast_api_exceptions, key: [cookie_id], m42: True}
+  user_toast_silent_exceptions:            {counter: toast_silent_exceptions, key: [cookie_id], m42: True}
+  user_toast_exceptions_unknown:           {counter: toast_exceptions_unknown, key: [cookie_id], m42: True}
+  user_toast_exceptions_somehow_else_displayed:  {counter: toast_exceptions_somehow_else_displayed, key: [cookie_id], m42: True}
+  user_toast_exceptions_no_internet:       {counter: toast_exceptions_no_internet, key: [cookie_id], m42: True}
+  user_toast_exceptions_failed_to_load:    {counter: toast_exceptions, key: [cookie_id], m42: True}
 
 
 metric.ratio:
