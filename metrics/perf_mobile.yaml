@@ -1,3 +1,8 @@
+definitions:
+  - &no_data_placeholder_no_error {response: "no-data-placeholder", was_error_in_screen: false}
+  - &no_data_placeholder_error    {response: "no-data-placeholder", was_error_in_screen: true}
+
+
 metric.counter:
   cnt_di_events:                           {filter: [{stage_name: DI}], obs: [events], m42: False}
   cnt_di_events_p25:                       {filter: [{stage_name: DI}], obs: [events_p25], m42: False}
@@ -94,8 +99,8 @@ metric.counter:
   prepare_core_exceptions:                  {filter: [{stage_name: Prepare, is_core_content: true}], obs: [exceptions], m42: True}
   serverloading_core_exceptions:            {filter: [{stage_name: ServerLoading, is_core_content: true}], obs: [exceptions], m42: True}
 
-  draw_ok_events:                          {filter: [{stage_name: Draw, response: "ok"}], obs: [exceptions], m42: True}
-  draw_new_exceptions:                     {filter: [{stage_name: Draw, response.!=: "ok"}], obs: [exceptions], m42: True}
+  draw_ok_events:                          {filter: [{stage_name: Draw, $or: [response: "ok", *no_data_placeholder_no_error] }], obs: [exceptions], m42: True}
+  draw_new_exceptions:                     {filter: [{stage_name: Draw, $or: [[response.!=: "ok", response.!=: "no-data-placeholder"], *no_data_placeholder_error] }], obs: [exceptions], m42: True}
   draw_new_exceptions_wo_no_data:          {filter: [{stage_name: Draw, response.!in: ["no-data-placeholder","ok"]}], obs: [exceptions], m42: True}
   draw_exceptions_somehow_else_displayed:  {filter: [{stage_name: Draw, response: "somehow-else-displayed-error"}], obs: [exceptions], m42: True}
   draw_exceptions_unknown:                 {filter: [{stage_name: Draw, response: "unknown-error"}], obs: [exceptions], m42: True}
@@ -104,6 +109,9 @@ metric.counter:
   draw_exceptions_nothing_found:           {filter: [{stage_name: Draw, response: "nothing-found-error"}], obs: [exceptions], m42: True}
   draw_exceptions_no_data_placeholder:     {filter: [{stage_name: Draw, response: "no-data-placeholder"}], obs: [exceptions], m42: True}
   draw_exceptions_failed_to_load:          {filter: [{stage_name: Draw, response: "failed-to-load-error"}], obs: [exceptions], m42: True}
+  draw_exceptions_no_data_placeholder_error:     {filter: [stage_name: Draw, *no_data_placeholder_error], obs: [exceptions], m42: True}
+  draw_exceptions_no_data_placeholder_no_error:     {filter: [stage_name: Draw, *no_data_placeholder_no_error], obs: [exceptions], m42: True}
+
 
   toast_exceptions:                        {filter: [{error_dialog_type: toast}], obs: [exceptions], m42: True}
   toast_core_exceptions:                   {filter: [{error_dialog_type: toast, is_core_content: true}], obs: [exceptions], m42: True}
@@ -113,7 +121,7 @@ metric.counter:
   toast_exceptions_unknown:                {filter: [{error_dialog_type: toast, response: "unknown-error"}], obs: [exceptions], m42: True}
   toast_exceptions_somehow_else_displayed: {filter: [{error_dialog_type: toast, response: "somehow-else-displayed-error"}], obs: [exceptions], m42: True}
   toast_exceptions_no_internet:            {filter: [{error_dialog_type: toast, response: "no-internet-error"}], obs: [exceptions], m42: True}
-  toast_exceptions_failed_to_load:         {filter: [{error_dialog_type: toast, response: "failed-to-load-error"}], obs: [exceptions], m42: True}  
+  toast_exceptions_failed_to_load:         {filter: [{error_dialog_type: toast, response: "failed-to-load-error"}], obs: [exceptions], m42: True}
 
 
 metric.uniq:
@@ -142,6 +150,8 @@ metric.uniq:
   user_draw_exceptions_nothing_found:     {counter: draw_exceptions_nothing_found, key: [cookie_id], m42: True}
   user_draw_exceptions_no_data_placeholder: {counter: draw_exceptions_no_data_placeholder, key: [cookie_id], m42: True}
   user_draw_exceptions_failed_to_load:    {counter: draw_exceptions_failed_to_load, key: [cookie_id], m42: True}
+  user_draw_exceptions_no_data_placeholder_error: {counter: draw_exceptions_no_data_placeholder_error, key: [cookie_id], m42: True}
+  user_draw_exceptions_no_data_placeholder_no_error: {counter: draw_exceptions_no_data_placeholder_no_error, key: [cookie_id], m42: True}
 
   user_toast_exceptions:                   {counter: toast_exceptions, key: [cookie_id], m42: True}
   user_toast_core_exceptions:              {counter: toast_core_exceptions, key: [cookie_id], m42: True}
