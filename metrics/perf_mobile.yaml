@@ -100,7 +100,7 @@ metric.counter:
   serverloading_core_exceptions:            {filter: [{stage_name: ServerLoading, is_core_content: true}], obs: [exceptions], m42: True}
 
   draw_ok_events:                          {filter: [{stage_name: Draw, $or: [response: "ok", *no_data_placeholder_no_error] }], obs: [exceptions], m42: True}
-  draw_new_exceptions:                     {filter: [{stage_name: Draw, $or: [[response.!=: "ok", response.!=: "no-data-placeholder"], *no_data_placeholder_error] }], obs: [exceptions], m42: True}
+  draw_new_exceptions:                     {filter: [{stage_name: Draw, $or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error] }], obs: [exceptions], m42: True}
   draw_new_exceptions_wo_no_data:          {filter: [{stage_name: Draw, response.!in: ["no-data-placeholder","ok"]}], obs: [exceptions], m42: True}
   draw_exceptions_somehow_else_displayed:  {filter: [{stage_name: Draw, response: "somehow-else-displayed-error"}], obs: [exceptions], m42: True}
   draw_exceptions_unknown:                 {filter: [{stage_name: Draw, response: "unknown-error"}], obs: [exceptions], m42: True}
