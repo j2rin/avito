@@ -1596,3 +1596,43 @@ support_chat:
   participant: {user: user_id}
   primary_subject: user
   dtm: create_date
+
+
+chatbot_metrics_start:
+  metric_configs: [chatbot_metrics_start]
+  database: vertica
+  table: dma.vo_chatbot_metrics
+  column_map:
+    user: user_id
+    flow: flow_id
+    chat: chat_id
+    flow_run: flowrun_id
+  dimensions:
+    - vertical
+    - logical_category
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: start_flow_time
+
+
+chatbot_metrics_end:
+  metric_configs: [chatbot_metrics_end]
+  database: vertica
+  table: dma.vo_chatbot_metrics
+  column_map:
+    user: user_id
+    flow: flow_id
+    chat: chat_id
+    flow_run: flowrun_id
+  dimensions:
+    - vertical
+    - logical_category
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: end_flow_time

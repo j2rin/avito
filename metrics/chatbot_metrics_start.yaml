@@ -1,0 +1,21 @@
+definitions:
+
+  - &is_flow_done           {reason_end_flow: done}
+  - &is_a2u_chat            {chat_type: a2u}
+  - &is_u2i_chat            {chat_type: u2i}
+  - &is_support_chat        {is_support_chat: True}
+  - &is_start_time          {start_flow_time.isnull: false} 
+
+
+metric.counter:
+    started_flows:                                           {filter: [*is_start_time]}
+    flows_no_interaction:                                    {filter: [transitions.=: 0]}   
+    flows_1_transitions:                                     {filter: [transitions.=: 1]} 
+    cnt_a2u_chats:                                           {filter: [*is_a2u_chat], m42: False}   
+    cnt_u2i_chats:                                           {filter: [*is_u2i_chat], m42: False}  
+    started_support_flows:                                   {filter: [*is_support_chat, *is_start_time]}
+
+metric.uniq:
+    user_start_flows:                                 {counter: started_flows,                                            key: [user]}
+    a2uchat_start_flows:                              {counter: cnt_a2u_chats,                                            key: [chat]}
+    u2ichat_start_flows:                              {counter: cnt_u2i_chats,                                            key: [chat]}
