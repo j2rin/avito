@@ -1,0 +1,12 @@
+definitions:
+  - &is_flow_done           {reason_end_flow: done}
+  - &is_no_auto_reply       {group_name.!=: auto_reply}
+  - &is_support_chat        {is_support_chat: True}
+
+metric.counter:
+    flows_end_success:           {filter: [*is_flow_done, *is_no_auto_reply]}
+    support_flows_end_success:   {filter: [*is_flow_done, *is_no_auto_reply, *is_support_chat]}
+    flows_interrupted:           {filter: [{reason_end_flow: interrupted}]}
+    flows_end_less_1_minute:     {filter: [*is_flow_done, *is_no_auto_reply, minute_end.<=: 1]}
+    flows_end_less_1_5_minute:   {filter: [*is_flow_done, *is_no_auto_reply, minute_end.<=: 5, minute_end.>=: 1]}
+    flows_end_less_1_hour:       {filter: [*is_flow_done, *is_no_auto_reply, minute_end.<=: 60]}
