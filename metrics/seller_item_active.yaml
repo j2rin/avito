@@ -6,7 +6,6 @@ definitions:
   - &bad_address        {$or: [*no_coordinates, *no_address_id, *bad_level, *bad_distance]}
 
 metric.counter:
-  active_items:                            {filter: [{is_active: True}]}
   active_items_marketplace:                {filter: [is_active: True, is_marketplace: True]}
   active_items_classified:                 {filter: [{is_active: True}, {is_marketplace: False}]}
   active_items_with_msg:                   {filter: [{is_active: True}, {is_message_forbidden: False}]}
@@ -143,6 +142,7 @@ metric.counter:
 
 
 metric.uniq:
+  active_items:                            {filter: [{is_active: True}]}
   active_items_0_photo:                    {counter: cnt_active_items_0_photo,        key: [item]}
   active_items_more_10_description_word:   {counter: cnt_active_items_more_10_description_word, key: [item]}
   active_items_more_10_photo:              {counter: cnt_active_items_more_10_photo,  key: [item]}
