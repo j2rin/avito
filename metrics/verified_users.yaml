@@ -1,0 +1,10 @@
+metric.counter:
+  inn_verifications_success:                   {filter: [verification_type: INN, status: true]}
+  passport_verifications_success:              {filter: [verification_type: passport, status: true]}
+  driver_license_verifications_success:        {filter: [verification_type: driver_license, status: true]}
+
+
+metric.uniq:
+  inn_verified_users:                          {counter: inn_verifications_success, key: [user]}
+  passport_verified_users:                     {counter: passport_verifications_success, key: [user]}
+  driver_license_verified_users:               {counter: driver_license_verifications_success, key: [user]}
