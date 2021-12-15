@@ -1,19 +1,19 @@
 definitions:
-    - &auto       {$or: [from_page.isnull: true, from_page.in: [tinkoff, landing_tinkoff]]}
-    - &cash       {from_page: tinkoff_cash}
+    - &auto       {$or: [x_from_page.isnull: true, x_from_page.in: [tinkoff, landing_tinkoff]]}
+    - &cash       {x_from_page: tinkoff_cash}
 
 
 metric.counter:
-    broker_a_full_renders:                        {filter: [{eventtype_ext: 4496, *auto}], obs: [event_count]}
-    broker_a_full_clicks:                         {filter: [{eventtype_ext: 4498, *auto}], obs: [event_count]}
-    broker_a_full_loads:                          {filter: [{eventtype_ext: 5283, *auto}], obs: [event_count]}
-    broker_a_full_logo_clicks:                    {filter: [{eventtype_ext: 4801, *auto}], obs: [event_count]}
-    broker_a_full_fillings:                       {filter: [{eventtype_ext: 4590, *auto}], obs: [event_count]}
-    broker_a_full_requests:                       {filter: [{eventtype_ext: 4502, *auto}], obs: [event_count]}
-    broker_a_full_approvals:                      {filter: [{event_name_slug: broker_credit_approved, *auto}]}
-    broker_a_full_issues:                         {filter: [{is_issued: 1, *auto}]}
-    broker_a_full_early_close:                    {filter: [{is_early_closed: 1, *auto]}
-    broker_a_revenue:                             {filter: [{is_issued: 1, is_early_closed.isnull: true, *auto}], obs: [revenue]}
+    broker_a_full_renders:                         {filter: [{eventtype_ext: 4496, *auto}], obs: [event_count]}
+    broker_a_full_clicks:                          {filter: [{eventtype_ext: 4498, *auto}], obs: [event_count]}
+    broker_a_full_loads:                           {filter: [{eventtype_ext: 5283, *auto}], obs: [event_count]}
+    broker_a_full_logo_clicks:                     {filter: [{eventtype_ext: 4801, *auto}], obs: [event_count]}
+    broker_a_full_fillings:                        {filter: [{eventtype_ext: 4590, *auto}], obs: [event_count]}
+    broker_a_full_requests:                        {filter: [{eventtype_ext: 4502, *auto}], obs: [event_count]}
+    broker_a_full_approvals:                       {filter: [{event_name_slug: broker_credit_approved, *auto}]}
+    broker_a_full_issues:                          {filter: [{is_issued: 1, *auto}]}
+    broker_a_full_early_close:                     {filter: [{is_early_closed: 1, *auto]}
+    broker_a_revenue:                              {filter: [{is_issued: 1, is_early_closed.isnull: true, *auto}], obs: [revenue]}
 
     broker_kn_full_renders:                        {filter: [{eventtype_ext: 4496, *cash}], obs: [event_count]}
     broker_kn_full_clicks:                         {filter: [{eventtype_ext: 4498, *cash}], obs: [event_count]}
@@ -28,14 +28,14 @@ metric.counter:
 
 
 metric.uniq:
-    broker_a_renders:                             {counter: broker_a_full_renders,  key: [cookie_id]}
-    broker_a_clicks:                              {counter: broker_a_full_clicks,     key: [cookie_id]}
-    broker_a_loads:                               {counter: broker_a_full_loads,  key: [cookie_id]}
-    broker_a_logo_clicks:                         {counter: broker_a_full_logo_clicks,  key: [cookie_id]}
-    broker_a_fillings:                            {counter: broker_a_full_fillings,  key: [cookie_id]}
-    broker_a_requests:                            {counter: broker_a_full_requests,  key: [cookie_id]}
-    broker_a_approvals:                           {counter: broker_a_full_approvals,  key: [cookie_id]}
-    broker_a_issues:                              {counter: broker_a_full_issues,  key: [cookie_id]}
+    broker_a_renders:                              {counter: broker_a_full_renders,  key: [cookie_id]}
+    broker_a_clicks:                               {counter: broker_a_full_clicks,     key: [cookie_id]}
+    broker_a_loads:                                {counter: broker_a_full_loads,  key: [cookie_id]}
+    broker_a_logo_clicks:                          {counter: broker_a_full_logo_clicks,  key: [cookie_id]}
+    broker_a_fillings:                             {counter: broker_a_full_fillings,  key: [cookie_id]}
+    broker_a_requests:                             {counter: broker_a_full_requests,  key: [cookie_id]}
+    broker_a_approvals:                            {counter: broker_a_full_approvals,  key: [cookie_id]}
+    broker_a_issues:                               {counter: broker_a_full_issues,  key: [cookie_id]}
 
     broker_kn_renders:                             {counter: broker_kn_full_renders,  key: [cookie_id]}
     broker_kn_clicks:                              {counter: broker_kn_full_clicks,     key: [cookie_id]}
@@ -47,14 +47,14 @@ metric.uniq:
     broker_kn_issues:                              {counter: broker_kn_full_issues,  key: [cookie_id]}
 
 metric.ratio:
-    broker_a_ctr:                                 {num: broker_a_clicks,  den: broker_a_renders}
-    broker_a_load_ctr:                            {num: broker_a_loads,  den: broker_a_renders}
-    broker_a_logo_ctr:                            {num: broker_a_logo_clicks,  den: broker_a_renders}
-    broker_a_fr:                                  {num: broker_a_fillings,  den: broker_a_loads}
-    broker_a_sr:                                  {num: broker_a_requests,  den: broker_a_loads}
-    broker_a_ar:                                  {num: broker_a_approvals,  den: broker_a_requests}
-    broker_a_tr:                                  {num: broker_a_issues,  den: broker_a_approvals}
-    broker_a_cr:                                  {num: broker_a_issues,  den: broker_a_requests}
+    broker_a_ctr:                                  {num: broker_a_clicks,  den: broker_a_renders}
+    broker_a_load_ctr:                             {num: broker_a_loads,  den: broker_a_renders}
+    broker_a_logo_ctr:                             {num: broker_a_logo_clicks,  den: broker_a_renders}
+    broker_a_fr:                                   {num: broker_a_fillings,  den: broker_a_loads}
+    broker_a_sr:                                   {num: broker_a_requests,  den: broker_a_loads}
+    broker_a_ar:                                   {num: broker_a_approvals,  den: broker_a_requests}
+    broker_a_tr:                                   {num: broker_a_issues,  den: broker_a_approvals}
+    broker_a_cr:                                   {num: broker_a_issues,  den: broker_a_requests}
 
     broker_kn_ctr:                                 {num: broker_kn_clicks,  den: broker_kn_renders}
     broker_kn_load_ctr:                            {num: broker_kn_loads,  den: broker_kn_renders}
