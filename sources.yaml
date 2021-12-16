@@ -1478,7 +1478,9 @@ clickstream_antibot:
   table: dma.o_clickstream_antibot
   column_map:
       cookie: cookie_id
-  dimensions: [platform, vertical, category]
+  dimensions: [platform, vertical, category, app_version]
+  m42_cartesian_groups:
+    - [ category, vertical, app_version ]
   dtm: event_date
   participant: {visitor: cookie_id}
   primary_subject: visitor
