@@ -1,0 +1,67 @@
+definitions:
+    - &auto       {$or: [x_from_page.isnull: true, x_from_page.in: [tinkoff, landing_tinkoff]]}
+    - &cash       {x_from_page: tinkoff_cash}
+
+
+metric.counter:
+    credit_auto_full_renders:                         {filter: [eventtype_ext: 4496, *auto], obs: [event_count]}
+    credit_auto_full_clicks:                          {filter: [eventtype_ext: 4498, *auto], obs: [event_count]}
+    credit_auto_full_loads:                           {filter: [eventtype_ext: 5283, *auto], obs: [event_count]}
+    credit_auto_full_logo_clicks:                     {filter: [eventtype_ext: 4801, *auto], obs: [event_count]}
+    credit_auto_full_fillings:                        {filter: [eventtype_ext: 4590, *auto], obs: [event_count]}
+    credit_auto_full_requests:                        {filter: [eventtype_ext: 4502, *auto], obs: [event_count]}
+    credit_auto_full_approvals:                       {filter: [event_name_slug: broker_credit_approved, *auto]}
+    credit_auto_full_issues:                          {filter: [is_issued: 1, *auto]}
+    credit_auto_full_early_close:                     {filter: [is_early_closed: 1, *auto]}
+    credit_auto_revenue:                              {filter: [is_issued: 1, is_early_closed.isnull: true, *auto], obs: [revenue]}
+
+    credit_cash_full_renders:                         {filter: [eventtype_ext: 4496, *cash], obs: [event_count]}
+    credit_cash_full_clicks:                          {filter: [eventtype_ext: 4498, *cash], obs: [event_count]}
+    credit_cash_full_loads:                           {filter: [eventtype_ext: 5283, *cash], obs: [event_count]}
+    credit_cash_full_logo_clicks:                     {filter: [eventtype_ext: 4801, *cash], obs: [event_count]}
+    credit_cash_full_fillings:                        {filter: [eventtype_ext: 4590, *cash], obs: [event_count]}
+    credit_cash_full_requests:                        {filter: [eventtype_ext: 4502, *cash], obs: [event_count]}
+    credit_cash_full_approvals:                       {filter: [event_name_slug: broker_credit_approved, *cash]}
+    credit_cash_full_issues:                          {filter: [is_issued: 1, *cash]}
+    credit_cash_full_early_close:                     {filter: [is_early_closed: 1, *cash]}
+    credit_cash_revenue:                              {filter: [is_issued: 1, is_early_closed.isnull: true, *cash], obs: [revenue]}
+
+
+metric.uniq:
+    credit_auto_renders:                              {counter: credit_auto_full_renders,  key: [cookie_id]}
+    credit_auto_clicks:                               {counter: credit_auto_full_clicks,     key: [cookie_id]}
+    credit_auto_loads:                                {counter: credit_auto_full_loads,  key: [cookie_id]}
+    credit_auto_logo_clicks:                          {counter: credit_auto_full_logo_clicks,  key: [cookie_id]}
+    credit_auto_fillings:                             {counter: credit_auto_full_fillings,  key: [cookie_id]}
+    credit_auto_requests:                             {counter: credit_auto_full_requests,  key: [cookie_id]}
+    credit_auto_approvals:                            {counter: credit_auto_full_approvals,  key: [cookie_id]}
+    credit_auto_issues:                               {counter: credit_auto_full_issues,  key: [cookie_id]}
+
+    credit_cash_renders:                              {counter: credit_cash_full_renders,  key: [cookie_id]}
+    credit_cash_clicks:                               {counter: credit_cash_full_clicks,     key: [cookie_id]}
+    credit_cash_loads:                                {counter: credit_cash_full_loads,  key: [cookie_id]}
+    credit_cash_logo_clicks:                          {counter: credit_cash_full_logo_clicks,  key: [cookie_id]}
+    credit_cash_fillings:                             {counter: credit_cash_full_fillings,  key: [cookie_id]}
+    credit_cash_requests:                             {counter: credit_cash_full_requests,  key: [cookie_id]}
+    credit_cash_approvals:                            {counter: credit_cash_full_approvals,  key: [cookie_id]}
+    credit_cash_issues:                               {counter: credit_cash_full_issues,  key: [cookie_id]}
+
+metric.ratio:
+    credit_auto_ctr:                                  {num: credit_auto_clicks,  den: credit_auto_renders}
+    credit_auto_load_ctr:                             {num: credit_auto_loads,  den: credit_auto_renders}
+    credit_auto_logo_ctr:                             {num: credit_auto_logo_clicks,  den: credit_auto_renders}
+    credit_auto_fr:                                   {num: credit_auto_fillings,  den: credit_auto_loads}
+    credit_auto_sr:                                   {num: credit_auto_requests,  den: credit_auto_loads}
+    credit_auto_ar:                                   {num: credit_auto_approvals,  den: credit_auto_requests}
+    credit_auto_tr:                                   {num: credit_auto_issues,  den: credit_auto_approvals}
+    credit_auto_cr:                                   {num: credit_auto_issues,  den: credit_auto_requests}
+
+    credit_cash_ctr:                                  {num: credit_cash_clicks,  den: credit_cash_renders}
+    credit_cash_load_ctr:                             {num: credit_cash_loads,  den: credit_cash_renders}
+    credit_cash_logo_ctr:                             {num: credit_cash_logo_clicks,  den: credit_cash_renders}
+    credit_cash_fr:                                   {num: credit_cash_fillings,  den: credit_cash_loads}
+    credit_cash_sr:                                   {num: credit_cash_requests,  den: credit_cash_loads}
+    credit_cash_ar:                                   {num: credit_cash_approvals,  den: credit_cash_requests}
+    credit_cash_tr:                                   {num: credit_cash_issues,  den: credit_cash_approvals}
+    credit_cash_cr:                                   {num: credit_cash_issues,  den: credit_cash_requests}
+    

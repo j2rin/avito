@@ -1486,15 +1486,15 @@ clickstream_antibot:
   primary_subject: visitor
   segm: cookie_id
 
-autobroker:
-  metric_configs: [autobroker]
+credit_broker:
+  metric_configs: [credit_broker]
   database: vertica
-  table: DMA.broker_click_stream
+  table: DMA.v_broker_events_revenue
   column_map:
-      cookie: cookie_id
-  dimensions: [platform]
+    cookie: cookie_id
+  dimensions: [platform, vertical, logical_category, location]
   dtm: event_date
-  participant: {visitor: cookie_id}
+  participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
   segm: cookie_id
 
