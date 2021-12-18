@@ -1,0 +1,37 @@
+metric.counter:
+
+  contacts_on_rating_new:                  {filter: [{rating.in: [1,2,3,4,5]}], obs: [contacts], m42: True}
+  contacts_on_rating_1_new:                {filter: [{rating.=: 1}],            obs: [contacts], m42: True}
+  contacts_on_rating_2_new:                {filter: [{rating.=: 2}],            obs: [contacts], m42: True}
+  contacts_on_rating_3_new:                {filter: [{rating.=: 3}],            obs: [contacts], m42: True}
+  contacts_on_rating_4_new:                {filter: [{rating.=: 4}],            obs: [contacts], m42: True}
+  contacts_on_rating_5_new:                {filter: [{rating.=: 5}],            obs: [contacts], m42: True}
+  contacts_with_review_list_view_new:      {obs: [contacts_with_review_list_view], m42: True}
+
+  item_views_on_rating_new:                {filter: [{rating.in: [1,2,3,4,5]}], obs: [item_views], m42: True}
+  item_views_on_rating_1_new:              {filter: [{rating.=: 1}],            obs: [item_views], m42: True}
+  item_views_on_rating_2_new:              {filter: [{rating.=: 2}],            obs: [item_views], m42: True}
+  item_views_on_rating_3_new:              {filter: [{rating.=: 3}],            obs: [item_views], m42: True}
+  item_views_on_rating_4_new:              {filter: [{rating.=: 4}],            obs: [item_views], m42: True}
+  item_views_on_rating_5_new:              {filter: [{rating.=: 5}],            obs: [item_views], m42: True}
+
+
+metric.uniq:
+  
+  buyers_on_rating:                        {counter: contacts_on_rating_new,    key: [cookie], m42: True}
+  buyers_on_rating_1_new:                  {counter: contacts_on_rating_1_new,  key: [cookie], m42: True}
+  buyers_on_rating_2_new:                  {counter: contacts_on_rating_2_new,  key: [cookie], m42: True}
+  buyers_on_rating_3_new:                  {counter: contacts_on_rating_3_new,  key: [cookie], m42: True}
+  buyers_on_rating_4_new:                  {counter: contacts_on_rating_4_new,  key: [cookie], m42: True}
+  buyers_on_rating_5_new:                  {counter: contacts_on_rating_5_new,  key: [cookie], m42: True}
+
+
+metric.ratio:
+  
+  contacts_per_item_view_on_rating_new:        {num: contacts_on_rating_new,              den: item_views_on_rating_new,   m42: True}
+  contacts_per_item_view_on_rating_1_new:      {num: contacts_on_rating_1_new,            den: item_views_on_rating_1_new, m42: True}
+  contacts_per_item_view_on_rating_2_new:      {num: contacts_on_rating_2_new,            den: item_views_on_rating_2_new, m42: True}
+  contacts_per_item_view_on_rating_3_new:      {num: contacts_on_rating_3_new,            den: item_views_on_rating_3_new, m42: True}
+  contacts_per_item_view_on_rating_4_new:      {num: contacts_on_rating_4_new,            den: item_views_on_rating_4_new, m42: True}
+  contacts_per_item_view_on_rating_5_new:      {num: contacts_on_rating_5_new,            den: item_views_on_rating_5_new, m42: True}
+  contacts_with_review_list_view_per_contacts_on_rating_new: {num: contacts_with_review_list_view_new,  den: contacts_on_rating_new, m42: True}
