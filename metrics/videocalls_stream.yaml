@@ -1,0 +1,11 @@
+metric.counter:
+  videocall_iv:                             {obs: [videocalls_iv]}
+  videocall_contact:                        {obs: [videocalls_contact]}
+ 
+metric.uniq:
+  user_videocall_iv:                        {counter: videocall_iv, key: [user]}
+  user_videocall_contact:                   {counter: videocall_contact, key: [user]}
+
+metric.ratio:
+  videocall_contact_ratio:                   {num: videocall_contact, den: videocall_iv}
+  user_videocall_contact_ratio:              {num: user_videocall_contact, den: user_videocall_iv}
