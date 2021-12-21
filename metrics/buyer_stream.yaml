@@ -75,6 +75,8 @@ definitions:
   - &is_btc_wo_guessing     {$or: [{<<: *is_btc, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
   - &is_btc_ext_wo_guessing    {$or: [{<<: *is_btc_ext, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
   - &is_contact_wo_guessing    {$or: [{<<: *is_contact, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
+  
+  - &is_videocalls_contact  {eid: 5629}
 
   - &is_shop {search_flags.bit: 7}
   - &x_is_shop {search_flags.bit: 7}
@@ -980,6 +982,8 @@ metric.counter:
   c_multiloc_reg:                          {filter: [*is_multiloc, *is_serp_regions, *is_contact_wo_guessing]}
   fav_multiloc_reg:                        {filter: [*is_multiloc, *is_serp_regions, *is_fav]}
   btc_multiloc_reg:                        {filter: [*is_multiloc, *is_serp_regions, *is_btc_wo_guessing]}
+  contacts_videocalls:                     {filter: [{$or: [*is_contact, *is_videocalls_contact]}]}
+  btc_videocalls:                          {filter: [{$or: [*is_btc, *is_videocalls_contact]}]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1966,6 +1970,7 @@ metric.uniq:
   user_iv_str_flat_verified_badge_uniq:    {counter: iv_str_flat_verified_badge,         key: [cookie_item]}
   user_c_str_flat_verified_badge_uniq:     {counter: c_str_flat_verified_badge,          key: [cookie_item]}
   user_btc_str_flat_verified_badge_uniq:   {counter: btc_str_flat_verified_badge,        key: [cookie_item]}
+  buyers_videocalls:                       {counter: contacts_videocalls,                key: [cookie]}
 
 
 metric.ratio:
