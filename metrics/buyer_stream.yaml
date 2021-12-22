@@ -45,6 +45,8 @@ definitions:
   - &x_is_vertical_main_serp      {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], q.=: '', search_flags.!bit: [8,9], <<: *x_is_search}
   - &x_is_vertical_main_rec       {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], <<: *x_is_u2i}
   - &x_is_vertical_main           {$or: [*x_is_vertical_main_serp, *x_is_vertical_main_rec]}
+  - &x_is_vertical_undefined      {x_vertical_id.isnull: true}
+  - &x_is_vertical_defined        {x_vertical_id.isnull: false}
 
   - &is_sgt           {eid: 2443}
   - &is_iv            {eid: 301}
@@ -984,6 +986,18 @@ metric.counter:
   btc_multiloc_reg:                        {filter: [*is_multiloc, *is_serp_regions, *is_btc_wo_guessing]}
   contacts_videocalls:                     {filter: [{$or: [*is_contact, *is_videocalls_contact]}]}
   btc_videocalls:                          {filter: [{$or: [*is_btc, *is_videocalls_contact]}]}
+  iv_s_vertical_defined:                   {filter: [*is_iv_wo_guessing, *x_is_search, *x_is_vertical_defined], m42: False}
+  iv_s_vertical_undefined:                 {filter: [*is_iv_wo_guessing, *x_is_search, *x_is_vertical_undefined], m42: False}
+  c_s_vertical_defined:                    {filter: [*is_contact_wo_guessing, *x_is_search, *x_is_vertical_defined], m42: False}
+  c_s_vertical_undefined:                  {filter: [*is_contact_wo_guessing, *x_is_search, *x_is_vertical_undefined], m42: False}
+  iv_multiloc_vertical_defined:            {filter: [*is_multiloc, *is_iv_wo_guessing, *x_is_vertical_defined], m42: False}
+  iv_multiloc_vertical_undefined:          {filter: [*is_multiloc, *is_iv_wo_guessing, *x_is_vertical_undefined], m42: False}
+  c_multiloc_vertical_defined:             {filter: [*is_multiloc, *is_contact_wo_guessing, *x_is_vertical_defined], m42: False}
+  c_multiloc_vertical_undefined:           {filter: [*is_multiloc, *is_contact_wo_guessing, *x_is_vertical_undefined], m42: False}
+  iv_with_multilocs_vertical_defined:      {filter: [*is_item_with_multilocs, *is_iv_wo_guessing, *x_is_vertical_defined], m42: False}
+  iv_with_multilocs_vertical_undefined:    {filter: [*is_item_with_multilocs, *is_iv_wo_guessing, *x_is_vertical_undefined], m42: False}
+  c_with_multilocs_vertical_defined:       {filter: [*is_item_with_multilocs, *is_contact_wo_guessing, *x_is_vertical_defined], m42: False}
+  c_with_multilocs_vertical_undefined:     {filter: [*is_item_with_multilocs, *is_contact_wo_guessing, *x_is_vertical_undefined], m42: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1971,6 +1985,18 @@ metric.uniq:
   user_c_str_flat_verified_badge_uniq:     {counter: c_str_flat_verified_badge,          key: [cookie_item]}
   user_btc_str_flat_verified_badge_uniq:   {counter: btc_str_flat_verified_badge,        key: [cookie_item]}
   buyers_videocalls:                       {counter: contacts_videocalls,                key: [cookie]}
+  user_iv_s_vertical_defined:              {counter: iv_s_vertical_defined,              key: [cookie], m42: False}
+  user_iv_s_vertical_undefined:            {counter: iv_s_vertical_undefined,            key: [cookie], m42: False}
+  user_c_s_vertical_defined:               {counter: c_s_vertical_defined,               key: [cookie], m42: False}
+  user_c_s_vertical_undefined:             {counter: c_s_vertical_undefined,             key: [cookie], m42: False}
+  user_iv_multiloc_vertical_defined:       {counter: iv_multiloc_vertical_defined,       key: [cookie], m42: False}
+  user_iv_multiloc_vertical_undefined:     {counter: iv_multiloc_vertical_undefined,     key: [cookie], m42: False}
+  user_c_multiloc_vertical_defined:        {counter: c_multiloc_vertical_defined,        key: [cookie], m42: False}
+  user_c_multiloc_vertical_undefined:      {counter: c_multiloc_vertical_undefined,      key: [cookie], m42: False}
+  user_iv_with_multilocs_vertical_defined:        {counter: iv_with_multilocs_vertical_defined,           key: [cookie], m42: False}
+  user_iv_with_multilocs_vertical_undefined:      {counter: iv_with_multilocs_vertical_undefined,         key: [cookie], m42: False}
+  user_c_with_multilocs_vertical_defined:         {counter: c_with_multilocs_vertical_defined,            key: [cookie], m42: False}
+  user_c_with_multilocs_vertical_undefined:       {counter: c_with_multilocs_vertical_undefined,          key: [cookie], m42: False}
 
 
 metric.ratio:
