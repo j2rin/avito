@@ -1705,3 +1705,17 @@ videocalls_stream:
   dtm: event_date
   segm: event_date
 
+banned_for_msh_contacts:
+  metric_configs: [banned_for_msh_contacts]
+  database: vertica
+  table: dma.banned_contacts
+  column_map:
+    item: item_id
+    user: user_id
+  dimensions: [category, location]
+  m42_cartesian_groups:
+    - [category, location]
+  participant: {user: user_id}
+  primary_subject: user_id
+  dtm: eventdate
+  segm: item_id
