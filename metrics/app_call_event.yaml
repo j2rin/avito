@@ -1,14 +1,19 @@
 definitions:
  - &was_end_call_feedback                  {appcall_caller_end_call_rating.>: 0}
+ - &iac_only                               {is_iac_only: True}
 
 metric.counter:
   appcall_show_buttons:                    {obs: [appcall_item_gallery_show_buttons, appcall_item_show_buttons, appcall_messenger_chat_long_answer_show_buttons, appcall_messenger_chat_menu_show_buttons]}
+  appcall_show_buttons_iac_only:           {filter: [*iac_only], obs: [appcall_item_gallery_show_buttons, appcall_item_show_buttons, appcall_messenger_chat_long_answer_show_buttons, appcall_messenger_chat_menu_show_buttons]}
   appcall_click_inapp:                     {obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp, appcall_messenger_chat_long_answer_click_inapp, appcall_messenger_chat_menu_click_inapp]}
+  appcall_click_inapp_only:                {filter: [*iac_only], obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp, appcall_messenger_chat_long_answer_click_inapp, appcall_messenger_chat_menu_click_inapp]}
   appcall_click_phone:                     {obs: [appcall_item_click_phone, appcall_item_gallery_click_phone, appcall_messenger_chat_long_answer_click_phones, appcall_messenger_chat_menu_click_phone]}
   appcall_click_inapp_or_phone:            {obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp, appcall_messenger_chat_long_answer_click_inapp, appcall_messenger_chat_menu_click_inapp, appcall_item_click_phone, appcall_item_gallery_click_phone, appcall_messenger_chat_long_answer_click_phones, appcall_messenger_chat_menu_click_phone]}
   
   appcall_item_show_buttons:               {obs: [appcall_item_gallery_show_buttons, appcall_item_show_buttons]} 
+  appcall_item_show_buttons_iac_only:      {filter: [*iac_only], obs: [appcall_item_gallery_show_buttons, appcall_item_show_buttons]} 
   appcall_item_click_inapp:                {obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp]}
+  appcall_item_click_inapp_only:           {filter: [*iac_only], obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp]}
   appcall_item_click_phone:                {obs: [appcall_item_click_phone, appcall_item_gallery_click_phone]}
   appcall_item_click_inapp_or_phone:       {obs: [appcall_item_click_inapp, appcall_item_gallery_click_inapp, appcall_item_click_phone, appcall_item_gallery_click_phone]}
   
@@ -17,18 +22,24 @@ metric.counter:
 
 
 metric.uniq:
-  appcall_show_buttons_users:              {counter: appcall_show_buttons,            key: [cookie]}
-  appcall_click_inapp_users:               {counter: appcall_click_inapp,             key: [cookie]}
-  appcall_click_phone_users:               {counter: appcall_click_phone,             key: [cookie]}
-  appcall_click_inapp_or_phone_users:      {counter: appcall_item_click_inapp_or_phone,key: [cookie]}
-  
-  unq_item_appcall_item_show_buttons:      {counter: appcall_item_show_buttons,       key: [item]}
-  
+  user_appcall_show_buttons:               {counter: appcall_show_buttons,              key: [user]}
+  user_appcall_show_buttons_iac_only:      {counter: appcall_show_buttons_iac_only,     key: [user]}
+  user_appcall_click_inapp:                {counter: appcall_click_inapp,               key: [user]}
+  user_appcall_click_inapp_only:           {counter: appcall_click_inapp_only,          key: [user]}
+  user_appcall_click_phone:                {counter: appcall_click_phone,               key: [user]}
+  user_appcall_click_inapp_or_phone:       {counter: appcall_item_click_inapp_or_phone, key: [user]}
+
+  item_appcall_show_buttons:               {counter: appcall_show_buttons,              key: [item]}
+  item_appcall_show_buttons_iac_only:      {counter: appcall_show_buttons_iac_only,     key: [item]}
+
 
 metric.ratio:
   appcall_click_inapp_ratio:               {num: appcall_click_inapp,             den: appcall_show_buttons}
+  appcall_click_inapp_only_ratio:          {num: appcall_click_inapp_only,        den: appcall_show_buttons_iac_only}
   appcall_click_phone_ratio:               {num: appcall_click_phone,             den: appcall_show_buttons}
   appcall_click_inapp_or_phone_ratio:      {num: appcall_click_inapp_or_phone,    den: appcall_show_buttons}
+  
+  appcall_show_buttons_iac_only_ratio:     {num: appcall_show_buttons_iac_only,   den: appcall_show_buttons}
   
   appcall_click_inapp_proportion:          {num: appcall_click_inapp,             den: appcall_click_inapp_or_phone}
   appcall_click_phone_proportion:          {num: appcall_click_phone,             den: appcall_click_inapp_or_phone}
