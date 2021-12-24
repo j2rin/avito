@@ -366,7 +366,9 @@ metric.counter:
   btc_perfvas_x10_7:                       {filter: [*is_btc, *is_item_perfvas_x10_7], m42: False}
   btc_xl:                                  {filter: [*is_btc, *is_item_xl], m42: False}
   cnt_cities_in_s:                         {filter: [{location_level_id: [4, 5, 6]}, *is_1p, *is_search], m42: False}
+  cnt_co_delivery_any_ext_block:           {filter: [*is_delivery]}
   cnt_cs:                                  {filter: [*is_contact], m42: False}
+  cnt_cs_delivery_any_ext_block:           {filter: [eid: 4675]}
   cnt_cs_developer_from_map:               {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_map], m42: False}
   cnt_cs_developer_rec:                    {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_rec], m42: False}
   cnt_cs_developer_rec_i2i:                {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_i2i], m42: False}
@@ -1190,6 +1192,8 @@ metric.uniq:
   contacts_serp_perfvas_x10_7:             {counter: cnt_cs_serp_perfvas_x10_7,       key: [item_x]}
   contacts_perfvas_weighted:               {counter: cnt_cs_perfvas_w,                key: [item_x]}
   contacts_vip:                            {counter: cnt_cs_vip,                      key: [item_x]}
+  contact_delivery_any_ext_block eid:      {counter: cnt_cs_delivery_any_ext_block,   key: [cookie_item]}
+  create_order_delivery_any_ext_block:     {counter: cnt_co_delivery_any_ext_block,   key: [cookie_item]}
   delivery_click_all_services:             {counter: total_delivery_click_all_services,              key: [cookie_item]}
   delivery_click_all_services_serp:        {counter: total_delivery_click_all_services_serp,         key: [item_x]}
   delivery_click_all_services_rec_i2i:     {counter: total_delivery_click_all_services_rec_i2i,      key: [item_x]}
