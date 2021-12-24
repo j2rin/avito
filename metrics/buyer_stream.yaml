@@ -520,6 +520,7 @@ metric.counter:
   cnt_iv_developer_rec_u2i:                {filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_u2i], m42: False}
   cnt_iv_dlv:                              {filter: [*is_iv_wo_guessing, *is_serp_delivery, *x_is_search], m42: False}
   cnt_iv_any_ext_block:                    {filter: [*is_iv_wo_guessing, *x_is_search, {$or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]]}], m42: False}
+  cnt_iv_delivery_any_ext_block:           {filter: [*is_iv_wo_guessing, *is_delivery_active, *x_is_search, {$or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]]}], m42: False}
   cnt_iv_from_map:                         {filter: [*is_iv_wo_guessing, *x_is_map], m42: False}
   cnt_iv_from_map_s_area:                  {filter: [*is_iv_wo_guessing, {$or: [[*is_s_map, *x_is_search], [*x_is_map]]}], m42: False}
   cnt_iv_grouped:                          {filter: [*is_iv_wo_guessing, *is_serp_grouping, *x_is_search], m42: False}
@@ -1265,6 +1266,7 @@ metric.uniq:
   fav_from_witcher_new_flats:              {counter: cnt_fav_wtc_new_flats,           key: [item_x]}
   fav_from_witcher_regions:                {counter: cnt_fav_wtc_reg,                 key: [item_x]}
   item_views_any_ext_block:                {counter: cnt_iv_any_ext_block,            key: [item_x]}
+  item_views_delivery_any_ext_block:       {counter: cnt_iv_delivery_any_ext_block,   key: [item_x]}
   item_views_delivery:                     {counter: cnt_iv_dlv,                      key: [item_x]}
   item_views_cpa:                          {counter: cnt_iv_cpa,                      key: [item_x]}
   item_views_s_cpa:                        {counter: cnt_iv_s_cpa,                    key: [item_x]}
