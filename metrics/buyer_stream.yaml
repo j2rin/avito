@@ -366,10 +366,10 @@ metric.counter:
   btc_perfvas_x10_7:                       {filter: [*is_btc, *is_item_perfvas_x10_7], m42: False}
   btc_xl:                                  {filter: [*is_btc, *is_item_xl], m42: False}
   cnt_cities_in_s:                         {filter: [{location_level_id: [4, 5, 6]}, *is_1p, *is_search], m42: False}
-  cnt_create_order_delivery_any_ext_block: {filter: [*is_delivery, *is_serp_regions], m42: False}
+  cnt_create_order_delivery_any_ext_block: {filter: [*is_delivery, *x_is_search, {$or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]]}], m42: False}
   cnt_cs:                                  {filter: [*is_contact], m42: False}
-  cnt_click_delivery_any_ext_block:        {filter: [eid: 2483, *is_serp_regions], m42: False}
-  cnt_contact_delivery_any_ext_block:      {filter: [eid: 4675, *is_serp_regions], m42: False}
+  cnt_click_delivery_any_ext_block:        {filter: [eid: 2483, *x_is_search, {$or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]]}], m42: False}
+  cnt_contact_delivery_any_ext_block:      {filter: [eid: 4675, *x_is_search, {$or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]]}], m42: False}
   cnt_cs_developer_from_map:               {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_map], m42: False}
   cnt_cs_developer_rec:                    {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_rec], m42: False}
   cnt_cs_developer_rec_i2i:                {filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_i2i], m42: False}
@@ -1111,7 +1111,7 @@ metric.uniq:
   c_from_witcher_new_flats:                {counter: cnt_cs_wtc_new_flats,            key: [item_x]}
   c_from_witcher_regions:                  {counter: cnt_cs_wtc_reg,                  key: [item_x]}
   c_serp_grouped_doubles:                  {counter: cnt_cs_s_grouped_doubles,        key: [item_x]}
-  click_delivery_any_ext_block:            {counter: cnt_click_delivery_any_ext_block,  key: [cookie_item]}
+  click_delivery_any_ext_block:            {counter: cnt_click_delivery_any_ext_block,  key: [item_x]}
   contacts_any_ext_block:                  {counter: cnt_cs_any_ext_block,            key: [item_x]}
   contacts_delivery:                       {counter: cnt_cs_dlv,                      key: [item_x]}
   contacts_fav_list:                       {counter: cnt_cs_fav_list,                 key: [item_x]}
@@ -1194,8 +1194,8 @@ metric.uniq:
   contacts_serp_perfvas_x10_7:             {counter: cnt_cs_serp_perfvas_x10_7,       key: [item_x]}
   contacts_perfvas_weighted:               {counter: cnt_cs_perfvas_w,                key: [item_x]}
   contacts_vip:                            {counter: cnt_cs_vip,                      key: [item_x]}
-  contact_delivery_any_ext_block:          {counter: cnt_contact_delivery_any_ext_block,             key: [cookie_item]}
-  create_order_delivery_any_ext_block:     {counter: cnt_create_order_delivery_any_ext_block,        key: [cookie_item]}
+  contact_delivery_any_ext_block:          {counter: cnt_contact_delivery_any_ext_block,             key: [item_x]}
+  create_order_delivery_any_ext_block:     {counter: cnt_create_order_delivery_any_ext_block,        key: [item_x]}
   delivery_click_all_services:             {counter: total_delivery_click_all_services,              key: [cookie_item]}
   delivery_click_all_services_serp:        {counter: total_delivery_click_all_services_serp,         key: [item_x]}
   delivery_click_all_services_rec_i2i:     {counter: total_delivery_click_all_services_rec_i2i,      key: [item_x]}
@@ -2053,12 +2053,16 @@ metric.ratio:
   c_from_witcher_regions_per_witcher_regions: {num: c_from_witcher_regions,          den: searches_witcher_regions}
   capital_city_level_search_per_search:    {num: capital_city_level_searches,     den: searches}
   city_level_search_per_search:            {num: city_level_searches,             den: searches}
+  click_delivery_per_iv_delivery_any_ext_block: {num: click_delivery_any_ext_block,  den: item_views_delivery_any_ext_block}
   contacts_any_ext_block_per_any_ext_block: {num: contacts_any_ext_block,          den: cnt_s_extra_any_ext_block}
   contacts_delivery_per_item_views_delivery: {num: contacts_delivery,               den: item_views_delivery}
+  contact_delivery_per_iv_delivery_any_ext_block: {num: contact_delivery_any_ext_block,  den: item_views_delivery_any_ext_block}
   contacts_delivery_per_search:            {num: contacts_delivery,               den: searches_serp}
   contacts_delivery_per_search_delivery:   {num: contacts_delivery,               den: searches_serp_extra_delivery}
   contacts_from_map_area_per_map_area:     {num: contacts_serp_map_area,          den: searches_map_area}
   contacts_per_item_view:                  {num: contacts, den: item_views}
+  create_order_delivery_per_iv_delivery_any_ext_block: {num: create_order_delivery_any_ext_block,  den: item_views_delivery_any_ext_block}
+  create_order_delivery_per_click_delivery_any_ext_block: {num: create_order_delivery_any_ext_block,  den: click_delivery_any_ext_block}
   total_delivery_contacts_per_item_view_mp:    {num: total_delivery_contact_mp,       den: item_views_mp}
   delivery_contacts_per_delivery_item_view_mp: {num: delivery_contact_mp,             den: delivery_item_view_mp}
   delivery_clicks_per_delivery_item_view_mp:   {num: delivery_click_mp,               den: delivery_item_view_mp}
@@ -2129,6 +2133,7 @@ metric.ratio:
   first_mess_per_write_button_clicks:      {num: first_messages,                  den: write_button_clicks}
   item_views_any_ext_block_per_any_ext_block: {num: item_views_any_ext_block,     den: cnt_s_extra_any_ext_block}
   item_views_delivery_per_search:          {num: item_views_delivery,             den: searches_serp}
+  item_views_delivery_per_searches_any_ext_block: {num: item_views_delivery_any_ext_block,             den: searches_any_ext_block}
   item_views_delivery_per_search_delivery: {num: item_views_delivery,             den: searches_serp_extra_delivery}
   item_views_from_map_per_map_area:        {num: item_views_from_map_area,        den: searches_map_area}
   item_views_premium_per_search:           {num: item_views_premium,              den: searches_serp}
