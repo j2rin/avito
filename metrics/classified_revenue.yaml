@@ -3,6 +3,9 @@ definitions:
   - &payment   {is_payment: true, is_classified: true}
 
 metric.counter:
+  revenue_total:                             {obs: [transaction_amount],          filter: [is_revenue: true]}
+  revenue_net_total:                         {obs: [transaction_amount_net],      filter: [is_revenue: true]}
+  revenue_net_adj_total:                     {obs: [transaction_amount_net_adj],  filter: [is_revenue: true]} 
   classified_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [*revenue]}
   classified_payments_net_adj:               {obs: [transaction_amount_net_adj],  filter: [*payment]}
   classified_transactions:                   {obs: [transaction_count],           filter: [*revenue]}

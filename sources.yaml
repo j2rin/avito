@@ -1092,36 +1092,6 @@ tariff_funnel:
   dtm: event_date
   segm: user_id
 
-
-paying_user_report_by_event_date:
-  metric_configs: [paying_user_report_by_event_date]
-  database: vertica
-  table: dma.vo_revenue_metrics
-  column_map:
-    user: user_id
-  dimensions:
-    - user_segment_market
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  participant: {user: user_id}
-  primary_subject: user
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category, region]
-    - [category, subcategory]
-  dtm: event_date
-  segm: user_id
-
 support_comment:
   metric_configs: [support_comment]
   database: vertica
