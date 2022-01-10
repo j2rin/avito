@@ -45,8 +45,15 @@ definitions:
   - &x_is_vertical_main_serp      {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], q.=: '', search_flags.!bit: [8,9], <<: *x_is_search}
   - &x_is_vertical_main_rec       {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], <<: *x_is_u2i}
   - &x_is_vertical_main           {$or: [*x_is_vertical_main_serp, *x_is_vertical_main_rec]}
+
   - &x_is_vertical_undefined      {x_vertical_id.isnull: true}
   - &x_is_vertical_defined        {x_vertical_id.isnull: false}
+
+  - &is_vertical_main             {eid: 2592}
+  - &is_vertical_main_widget      {eid: 5516}
+  - &x_is_vertical_main_widget    {x_eid: 5516}
+  - &rec_widget                   {x_rec_engine_id: 320585250001}
+  - &featured_widget              {x_rec_engine_id: 320590750001}
 
   - &is_sgt           {eid: 2443}
   - &is_iv            {eid: 301}
@@ -442,7 +449,9 @@ metric.counter:
   cnt_cs_s_road:                           {filter: [*is_contact_wo_guessing, *is_s_road, *x_is_search], m42: False}
   cnt_cs_s_saved:                          {filter: [*is_contact_wo_guessing, *is_s_saved, *x_is_search], m42: False}
   cnt_cs_s_u2i:                            {filter: [*is_contact_wo_guessing, *x_is_rec_sg, *x_is_search], m42: False}
-  cnt_cs_vertical_main:                    {filter: [*is_contact_wo_guessing, *x_is_vertical_main], m42: False}
+  cnt_cs_vertical_main:                    {filter: [*is_contact_wo_guessing, $or: [*x_is_vertical_main, *x_is_vertical_main_widget]], m42: False}
+  cnt_cs_vertical_main_rec:                {filter: [*is_contact_wo_guessing, *rec_widget, *x_is_vertical_main_widget], m42: False}
+  cnt_cs_vertical_main_featured:           {filter: [*is_contact_wo_guessing, *featured_widget, *x_is_vertical_main_widget], m42: False}
   cnt_cs_shopx:                            {filter: [*is_contact_wo_guessing, *x_is_search, *x_is_shop], m42: False}
   cnt_cs_vas:                              {filter: [*is_contact_wo_guessing, *is_serp_vas, *x_is_search], m42: False}
   cnt_cs_serp_xl:                          {filter: [*is_contact_wo_guessing, *is_serp_xl, *x_is_search], m42: False}
@@ -576,7 +585,9 @@ metric.counter:
   cnt_iv_s_road:                           {filter: [*is_iv_wo_guessing, *is_s_road, *x_is_search], m42: False}
   cnt_iv_s_saved:                          {filter: [*is_iv_wo_guessing, *is_s_saved, *x_is_search], m42: False}
   cnt_iv_s_u2i:                            {filter: [*is_iv_wo_guessing, *x_is_rec_sg, *x_is_search], m42: False}
-  cnt_iv_vertical_main:                    {filter: [*is_iv, *x_is_vertical_main], m42: False}
+  cnt_iv_vertical_main:                    {filter: [*is_iv, $or: [*x_is_vertical_main_widget, *x_is_vertical_main]], m42: False}
+  cnt_iv_vertical_main_rec:                {filter: [*is_iv, *rec_widget, *x_is_vertical_main_widget], m42: False}
+  cnt_iv_vertical_main_featured:           {filter: [*is_iv, *featured_widget, *x_is_vertical_main_widget], m42: False}
   cnt_iv_shopx:                            {filter: [*is_iv_wo_guessing, *x_is_search, *x_is_shop], m42: False}
   cnt_iv_vas:                              {filter: [*is_iv_wo_guessing, *is_serp_vas, *x_is_search], m42: False}
   cnt_iv_serp_xl:                          {filter: [*is_iv_wo_guessing, *is_serp_xl, *x_is_search], m42: False}
@@ -772,7 +783,9 @@ metric.counter:
   russia_level_searches:                   {filter: [{location_level_id: 1}, *is_1p, *is_search]}
   saved_searches:                          {filter: [*is_1p, *is_s_saved, *is_search]}
   search_u2i:                              {filter: [*is_search, *x_is_rec_sg]}
-  vertical_main:                           {filter: [$or: [*is_search, *is_u2i], *x_is_vertical_main]}
+  vertical_main:                           {filter: [$or: [$or: [*is_search, *is_u2i], *x_is_vertical_main], *is_vertical_main]}
+  vertical_main_rec:                       {filter: [*is_vertical_main, *rec_widget]}
+  vertical_main_featured:                  {filter: [*is_vertical_main, *featured_widget]}
   vertical_main_first_page:                {filter: [*is_1p, *is_search, *x_is_vertical_main]}
   searches:                                {filter: [*is_1p, *is_search]}
   searches_part_qual_exists:               {filter: [*part_qual_exists ,*is_1p, *is_search]}
@@ -1155,6 +1168,7 @@ metric.uniq:
   contacts_vector:                         {counter: cnt_cs_vec,                      key: [item_x]}
   contacts_searches_u2i:                   {counter: cnt_cs_s_u2i,                    key: [item_x]}
   contacts_vertical_main:                  {counter: cnt_cs_vertical_main,            key: [item_x]}
+  contacts_vertical_main_rec:              {counter: cnt_cs_vertical_main_rec,        key: [item_x]}
   contacts_serp:                           {counter: cnt_cs_s_item_attr,              key: [item_x]}
   contacts_nox:                            {counter: cnt_cs_no_item_attr,             key: [item_x]}
   contacts_serp_mp:                        {counter: cnt_cs_s_item_attr_mp,           key: [item_x]}
@@ -1345,6 +1359,8 @@ metric.uniq:
   iv_grouped_doubles:                      {counter: cnt_iv_grouped_doubles,          key: [item_x]}
   iv_searches_u2i:                         {counter: cnt_iv_s_u2i,                    key: [item_x]}
   iv_vertical_main:                        {counter: cnt_iv_vertical_main,            key: [item_x]}
+  iv_vertical_main_rec:                    {counter: cnt_iv_vertical_main_rec,        key: [item_x]}
+  iv_vertical_main_featured:               {counter: cnt_iv_vertical_main_featured,   key: [item_x]}
   iv_seen:                                 {counter: cnt_iv_seen,                     key: [item_x]}
   unq_item_x_btc_s_distr_metro_radius_road: {counter: cnt_btc_s_distr_metro_radius_road, key: [item_x], m42: False}
   unq_item_x_btc_s_distr_metro_road:       {counter: cnt_btc_s_distr_metro_road,      key: [item_x], m42: False}
@@ -1538,6 +1554,8 @@ metric.uniq:
   users_contact_search_noquery:            {counter: cnt_s_noquery_c,                 key: [cookie]}
   users_contact_search_u2i:                {counter: cnt_cs_s_u2i,                    key: [cookie]}
   users_contact_vertical_main:             {counter: cnt_cs_vertical_main,            key: [cookie]}
+  users_contact_vertical_main_rec:         {counter: cnt_cs_vertical_main_rec,        key: [cookie]}
+  users_contact_vertical_main_featured:    {counter: cnt_cs_vertical_main_featured,   key: [cookie]}
   users_contact_serp_daily:                {counter: cnt_cs_s_item_attr,              key: [cookie]}
   users_contact_nox_daily:                 {counter: cnt_cs_no_item_attr,             key: [cookie]}
   users_contact_serp_mp:                   {counter: cnt_cs_s_item_attr_mp,           key: [cookie]}
@@ -1574,6 +1592,8 @@ metric.uniq:
   users_item_view_search_query:            {counter: cnt_s_query_iv,                  key: [cookie]}
   users_item_view_search_u2i:              {counter: cnt_iv_s_u2i,                    key: [cookie]}
   users_item_view_vertical_main:           {counter: cnt_iv_vertical_main,            key: [cookie]}
+  users_item_view_vertical_main_rec:       {counter: cnt_iv_vertical_main,            key: [cookie]}
+  users_item_view_vertical_main_featured:  {counter: cnt_iv_vertical_main,            key: [cookie]}
   users_item_view_serp_daily:              {counter: cnt_iv_s_item_attr,              key: [cookie]}
   users_item_view_nox_daily:               {counter: cnt_iv_no_item_attr,             key: [cookie]}
   users_item_views_fav_list:               {counter: cnt_fav_list_iv,                 key: [cookie]}
@@ -1625,6 +1645,8 @@ metric.uniq:
   users_transport_main_page_daily:         {counter: transport_main_pages,            key: [cookie]}
   users_vertical_main_page_daily:          {counter: vertical_main_pages,             key: [cookie]}
   users_vertical_main:                     {counter: vertical_main,                   key: [cookie]}
+  users_vertical_main_rec:                 {counter: vertical_main_rec,               key: [cookie]}
+  users_vertical_main_featured:            {counter: vertical_main_featured,          key: [cookie]}
   shortcut_users:                          {counter: shortcut_clicks,                 key: [cookie]}
   users_realty_dev_view:                   {counter: realty_dev_views,                key: [cookie]}
   user_push_land_shows:                    {counter: push_land_shows,                 key: [cookie], m42: False}
