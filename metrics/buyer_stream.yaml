@@ -631,7 +631,7 @@ metric.counter:
   cnt_s_iv_price_sort:                     {filter: [*is_iv_wo_guessing, *is_s_sort_price, *x_is_search], m42: False}
   cnt_s_noquery_c:                         {filter: [*is_contact_wo_guessing, *noq, *x_is_search], m42: False}
   cnt_s_noquery_iv:                        {filter: [*is_iv_wo_guessing, *noq, *x_is_search], m42: False}
-  search_q:                             {filter: [*is_search, *q], m42: False}
+  search_q:                                {filter: [*is_search, *q], m42: False}
   cnt_s_query_c:                           {filter: [*is_contact_wo_guessing, *q, *x_is_search], m42: False}
   cnt_s_query_iv:                          {filter: [*is_iv_wo_guessing, *q, *x_is_search], m42: False}
   cnt_s_u2i_btc:                           {filter: [*is_btc_wo_guessing, *x_is_search, *x_is_sg_rec], m42: False}
@@ -1392,7 +1392,9 @@ metric.uniq:
   map_area_users:                          {counter: searches_map_area,               key: [cookie]}
   unq_ph:                                  {counter: phone_views_total,               key: [cookie], m42: False}
   user_btc_sq:                             {counter: cnt_btc_s_query,                 key: [cookie], m42: False}
+  user_btc_noq:                            {counter: cnt_btc_s_noquery,               key: [cookie], m42: False}
   user_sq:                                 {counter: search_q,                        key: [cookie], m42: False}
+  user_noq:                                {counter: cnt_s_without_query,             key: [cookie], m42: False}
   btclicked_users:                         {counter: bt_clicks,                       key: [item_user_id], m42: False}
   btclicked_users_rec:                     {counter: cnt_btc_rec,                     key: [item_user_id], m42: False}
   btclicked_users_s:                       {counter: cnt_btc_s,                       key: [item_user_id], m42: False}
@@ -1598,6 +1600,7 @@ metric.uniq:
   users_item_view_rec_u2i_mp:              {counter: cnt_iv_rec_u2i_mp,               key: [cookie]}
   users_item_view_rec_u2i_vas:             {counter: cnt_iv_rec_u2i_vas,              key: [cookie]}
   users_item_view_search_query:            {counter: cnt_s_query_iv,                  key: [cookie]}
+  users_item_view_search_noquery:          {counter: cnt_s_noquery_iv,                key: [cookie]}
   users_item_view_search_u2i:              {counter: cnt_iv_s_u2i,                    key: [cookie]}
   users_item_view_vertical_main:           {counter: cnt_iv_vertical_main,            key: [cookie]}
   users_item_view_vertical_main_rec:       {counter: cnt_iv_vertical_main,            key: [cookie]}
@@ -2040,6 +2043,8 @@ metric.ratio:
   btc_search_filter_any_per_search_filter_any: {num: btc_from_search_filter_any,      den: searches_with_filter_any}
   btc_serp_noq_per_s_noq:                  {num: btc_serp_noquery,                den: cnt_s_without_query}
   btc_serp_q_per_s_q:                      {num: btc_serp_query,                  den: search_q}
+  search_q_per_search:                     {num: search_q,                        den: searches_serp}
+  user_search_q_per_search:                {num: user_sq,                         den: users_search}
   buyer_target_clicks_delivery_per_search: {num: buyer_target_clicks_delivery,    den: searches_serp}
   buyer_target_clicks_delivery_per_search_delivery: {num: buyer_target_clicks_delivery,    den: searches_extra_delivery}
   buyer_target_clicks_ext_block_any_per_search_ext_block_any: {num: buyer_target_clicks_any_ext_block, den: searches_any_ext_block}
