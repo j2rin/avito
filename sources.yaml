@@ -1498,6 +1498,18 @@ credit_broker:
   primary_subject: visitor
   segm: cookie_id
 
+credit_broker_revenue:
+  metric_configs: [credit_broker_revenue]
+  database: vertica
+  table: DMA.v_broker_events_revenue
+  column_map:
+    cookie: cookie_id
+  dimensions: [platform, vertical, logical_category, location]
+  dtm: issued_date
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  segm: cookie_id
+
 classified_revenue:
   metric_configs: [classified_revenue]
   database: vertica
