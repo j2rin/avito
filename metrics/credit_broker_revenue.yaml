@@ -1,0 +1,8 @@
+definitions:
+    - &auto       {$or: [x_from_page.isnull: true, x_from_page.in: [tinkoff, landing_tinkoff]]}
+    - &cash       {x_from_page: tinkoff_cash}
+
+
+metric.counter:
+    credit_auto_revenue_issue_dt:                              {filter: [is_issued: 1, is_early_closed.isnull: true, *auto], obs: [revenue]}
+    credit_cash_revenue_issue_dt:                              {filter: [is_issued: 1, is_early_closed.isnull: true, *cash], obs: [revenue]}
