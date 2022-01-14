@@ -1,0 +1,15 @@
+definitions:
+  - &classified      {is_classified: true}
+  - &paid_contact    {product_type: 'paid_contact'}
+  - &advertisement   {project_type: 'advertisement'}
+  - &autoteka        {project_type: 'autoteka'}
+  - &delivery        {project_type: 'delivery'}
+  - &domofond        {project_type: 'domofond'}
+  - &domoteka        {product_type: 'short_term_rent', transaction_subtype: 'check'}
+  - &str             {product_type: 'short_term_rent', transaction_subtype: 'buyer book'}
+
+metric.counter:
+  avito_amount_net_adj:                {obs: [amount_net_adj],  filter: [*advertisement, *classified, *paid_contact]}
+  other_projects_amount_net_adj:       {obs: [amount_net_adj],  filter: [*autoteka, *delivery, *domofond, *domoteka, *str]} 
+  total_amount_net_adj:                {obs: [amount_net_adj],  filter: [*advertisement, *classified, *paid_contact, *autoteka,
+                                                                                    *delivery, *domofond, *domoteka, *str]} 

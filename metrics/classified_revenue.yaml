@@ -35,6 +35,7 @@ metric.counter:
   bundle_transactions_p:                     {obs: [transaction_count],           filter: [*payment, product_type: 'bundle']}
   domoteka_amount_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'check']}
   str_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'buyer book']}
+  pc_w_classified_amount_net_adj:            {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, $or: [is_classified: true, product_type: 'paid_contact']], m42: False}
 
 
 metric.uniq:
@@ -47,6 +48,8 @@ metric.uniq:
   vas_users:                                 {counter: vas_amount_net_adj,                 key: [user]}
   vas_payments_users:                        {counter: vas_payments_net_adj,               key: [user]}
   cpa_users:                                 {counter: cpa_amount_net_adj,                 key: [user]}
+  paying_users:                              {counter: pc_w_classified_amount_net_adj,     key: [user]}
+
 metric.ratio:
   classified_price_net_adj:                  {num: classified_amount_net_adj,              den: classified_transactions}
   classified_price_net_adj_p:                {num: classified_payments_net_adj,            den: classified_transactions_p}
