@@ -1686,14 +1686,30 @@ videocalls_stream:
 msh_banned_contacts:
   metric_configs: [msh_banned_contacts]
   database: vertica
-  table: dma.banned_contacts
+  table: dma.vo_msh_banned_contacts
   column_map:
     item: item_id
     user: user_id
-  dimensions: [category, location]
+  dimensions:
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - logical_param1
+    - logical_param2
   m42_cartesian_groups:
-    - [category, location]
+    - [vertical, logical_category, region]
+    - [category, subcategory]
   participant: {user: user_id}
   primary_subject: user
-  dtm: eventdate
+  dtm: event_date
   segm: item_id
