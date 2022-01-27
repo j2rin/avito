@@ -1,19 +1,27 @@
 by_metric:
   users_active_daily: [[app_version], [vertical, logical_category, region]]
   buyers_canonical: [[price_group], [category, subcategory, param1], [vertical, logical_category, logical_param1, logical_param2, region]]
-  contacts_canonical: [[category, subcategory, param1], [vertical, logical_category, logical_param1, logical_param2, region]]
+  contacts_canonical: 
+    - [category, subcategory, param1]
+    - [vertical, logical_category, logical_param1, logical_param2, region]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
   active_items:
   - [category, subcategory, param1, param2, is_asd, condition]
-  - [vertical, logical_category, region, city, is_asd, condition]
+  - [vertical, logical_category, region, city, is_asd, condition, user_segment_market]
   - [is_logged_in, vertical, logical_category, logical_param1, logical_param2, is_asd, condition, region]
   items_started_net: [[category, subcategory, param1, param2, is_asd, condition], [vertical, logical_category, region, city, condition, is_asd]]
-  users_active_items: [[category, subcategory, param1, is_asd], [vertical, logical_category,logical_param1, region, condition, is_asd]]
+  users_active_items: 
+    - [category, subcategory, param1, is_asd]
+    - [vertical, logical_category,logical_param1, region, condition, is_asd]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
   users_item_started: [[category, subcategory, param1], [vertical, logical_category, region, condition]]
   sellers_with_contacts:
   - [category, subcategory, param1]
   - [vertical, logical_category, region]
   - [is_logged_in, vertical, logical_category, logical_param1, logical_param2, region]
-  classified_amount_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
+  classified_amount_net_adj: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
   classified_transactions: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   classified_price_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   classified_users: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
@@ -23,24 +31,42 @@ by_metric:
   cpa_transactions: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   extensions_amount_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   extensions_transactions: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
-  lf_transactions: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
-  lf_users: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
-  vas_amount_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
-  vas_transactions: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
-  vas_users: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
+  lf_transactions: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  lf_users: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  vas_amount_net_adj: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  vas_transactions: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  vas_users: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
   vas_price_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   vas_transactions_per_user: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   vas_arppu_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   paid_contact_amount_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   subs_amount_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   subs_transactions: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
-  subs_w_extensions_amount_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
-  subs_w_extensions_transactions: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
+  subs_w_extensions_amount_net_adj: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  subs_w_extensions_transactions: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
   subs_w_extensions_price_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
-  subs_w_extensions_users: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
+  subs_w_extensions_users: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
   subs_w_extensions_transactions_per_user: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   subs_w_extensions_arppu_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
-  lf_amount_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
+  lf_amount_net_adj: 
+    - [vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
   lf_price_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   lf_transactions_per_user: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
   lf_arppu_net_adj: [[vertical, logical_category, logical_param1, logical_param2, region, city, is_asd, user_segment_market]]
@@ -50,6 +76,7 @@ by_metric:
     - [is_logged_in, is_asd, vertical, logical_category, logical_param1, logical_param2, region, city, user_segment_market, condition]
   items_sold_onavito:
     - [is_logged_in, is_asd, vertical, logical_category, logical_param1, logical_param2, region, user_segment_market, condition]
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
   items_sold_onavito_per_items_reactivated_net:
     - [is_logged_in, is_asd, vertical, logical_category, logical_param1, logical_param2, region, user_segment_market]
   returned_buyers:
@@ -78,6 +105,22 @@ by_metric:
   revenue_total: [[category, subcategory]]
   revenue_net_total: [[category, subcategory]]
   revenue_net_adj_total: [[category, subcategory]]
+  buyers_any:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  items_closed_by_ttl:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  items_closed_by_user:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  items_reactivated:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  items_started:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  new_listers:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  reviews_added:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  reviews_stage_deal_happened:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
 by_metric_list:
   app_errors: [[app_version]]
   transport_m42: [[category, subcategory, param1, is_asd, condition],[vertical, logical_category, logical_param1, is_asd, condition]]
