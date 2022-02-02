@@ -1,0 +1,11 @@
+definitions:
+
+  - &is_transition                                   {eventtype_id: 297742000001}
+  - &is_conflict                                     {eventtype_id: 390648500001}
+
+metric.counter:
+    chatbot_transitions:                              {filter: [*is_transition]}
+    chatbot_conflicts:                                {filter: [*is_conflict]}
+
+metric.uniq:
+     messenger_chatbot_dau_tr:                        {counter: chatbot_transitions,    key: [user]}
