@@ -1,0 +1,73 @@
+metric.counter:
+    autoload_success_validation_items:          {filter: [{validation_end.isnull: False}], obs: [success_validation_items]}
+    autoload_error_validation_items:          {filter: [{validation_end.isnull: False}] ,obs: [error_items]}
+    autoload_warning_validation_items:          {filter: [{validation_end.isnull: False}], obs: [warning_items]}
+    autoload_alarm_validation_items:          {filter: [{validation_end.isnull: False}], obs: [alarm_items]}
+
+    autoload_validation_errors:          {filter: [{validation_end.isnull: False}], obs: [validation_errors]}
+    autoload_validation_warnings:          {filter: [{validation_end.isnull: False}], obs: [validation_warnings]}
+    autoload_validation_alarms:          {filter: [{validation_end.isnull: False}], obs: [validation_alarms]}
+
+    autoload_feed_validation_items_out_of_action:           {filter: [{validation_end.isnull: False}], obs: [no_touch_items]}
+
+    autoload_validation_packages_cnt:          {filter: [{validation_end.isnull: False}]}
+
+    autoload_item_update_attempt_items:          {obs: [update_attempt_items]}
+    autoload_item_reactivate_attempt_items:          {obs: [reactivate_attempt_items]}
+    autoload_item_deactivate_attempt_items:          {obs: [deactivate_attempt_items]}
+    autoload_item_add_attempt_items:          {obs: [add_attempt_items]}
+
+    autoload_item_update_success_items:          {obs: [update_success_items]}
+    autoload_item_reactivate_success_items:          {obs: [reactivate_success_items]}
+    autoload_item_deactivate_success_items:          {obs: [deactivate_success_items]}
+    autoload_item_add_success_items:          {obs: [add_success_items]}
+
+    autoload_item_update_attempts:          {obs: [update_total_attempts]}
+    autoload_item_reactivate_attempts:          {obs: [reactivate_total_attempts]}
+    autoload_item_deactivate_attempts:          {obs: [deactivate_total_attempts]}
+    autoload_item_add_attempts:          {obs: [add_total_attempts]}
+
+    autoload_item_update_success:          {obs: [update_total_success_attempts]}
+    autoload_item_reactivate_success:          {obs: [reactivate_total_success_attempts]}
+    autoload_item_deactivate_success:          {obs: [deactivate_total_success_attempts]}
+    autoload_item_add_success:          {obs: [add_total_success_attempts]}
+
+    autoload_update_total_time_sec:          {obs: [update_total_time_spent_for_success_sec]}
+    autoload_reactivate_total_time_sec:          {obs: [reactivate_total_time_spent_for_success_sec]}
+    autoload_deactivate_total_time_sec:          {obs: [deactivate_total_time_spent_for_success_sec]}
+    autoload_add_total_time_sec:          {obs: [add_time_spent_for_success_sec]}
+
+metric.uniq:
+    autoload_validation_feeds:          {counter: autoload_validation_packages_cnt,  key: [autoload_package]}
+    autoload_validation_users:          {counter: autoload_validation_packages_cnt,  key: [user_id]}
+    autoload_item_add_users:            {counter: autoload_item_add_attempts,  key: [user_id]}
+    autoload_item_reactivate_users:     {counter: autoload_item_reactivate_attempts,  key: [user_id]}
+    autoload_item_deactivate_users:     {counter: autoload_item_deactivate_attempts,  key: [user_id]}
+    autoload_item_update_users:         {counter: autoload_item_update_attempts,  key: [user_id]}
+
+metric.ratio:
+    autoload_item_add_operation_success_rate:    {num: autoload_item_add_success,                   den: autoload_item_add_attempts}
+    autoload_item_deactivate_operation_success_rate:    {num: autoload_item_deactivate_success,                   den: autoload_item_deactivate_attempts}
+    autoload_item_reactivate_operation_success_rate:    {num: autoload_item_reactivate_success,                   den: autoload_item_reactivate_attempts}
+    autoload_item_update_operation_success_rate:    {num: autoload_item_update_success,                   den: autoload_item_update_attempts}
+
+    autoload_item_add_items_success_rate:    {num: autoload_item_add_success_items,                   den: autoload_item_add_attempt_items}
+    autoload_item_deactivate_items_success_rate:    {num: autoload_item_deactivate_success_items,                   den: autoload_item_deactivate_attempt_items}
+    autoload_item_reactivate_items_success_rate:    {num: autoload_item_reactivate_success_items,                   den: autoload_item_reactivate_attempt_items}
+    autoload_item_update_items_success_rate:    {num: autoload_item_update_success_items,                   den: autoload_item_update_attempt_items}
+
+    auutoload_validations_per_user:    {num: autoload_validation_feeds,                   den: autoload_validation_users}
+
+    autoload_validation_errors_per_user:    {num: autoload_validation_errors,                   den: autoload_validation_users}
+    autoload_validation_warnings_per_user:    {num: autoload_validation_warnings,                   den: autoload_validation_users}
+    autoload_validation_alarms_per_user:    {num: autoload_validation_alarms,                   den: autoload_validation_users}
+
+    autoload_validation_success_items_per_user:    {num: autoload_success_validation_items,                   den: autoload_validation_users}
+    autoload_validation_error_items_per_user:    {num: autoload_error_validation_items,                   den: autoload_validation_users}
+    autoload_validation_warning_items_per_user:    {num: autoload_warning_validation_items,                   den: autoload_validation_users}
+    autoload_validation_alarm_items_per_user:    {num: autoload_alarm_validation_items,                   den: autoload_validation_users}
+
+    autoload_add_item_time_sec:    {num: autoload_add_total_time_sec,                   den: autoload_item_add_success_items}
+    autoload_update_item_time_sec:    {num: autoload_update_total_time_sec,                   den: autoload_item_update_success_items}
+    autoload_reactivate_item_time_sec:    {num: autoload_reactivate_total_time_sec,                   den: autoload_item_reactivate_success_items}
+    autoload_deactivate_item_time_sec:    {num: autoload_deactivate_total_time_sec,                   den: autoload_item_deactivate_success_items}

@@ -1725,3 +1725,24 @@ chatbot_events:
   participant: {user: user_id}
   primary_subject: user
   dtm: event_date
+
+autoload_package_info:
+  metric_configs: [autoload_package_info]
+  database: vertica
+  table: dma.autoload_feed_item_flow
+  column_map:
+    user: user_id
+    category: category_name
+    subcategory: subcategory_name
+  dimensions:
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+  participant: { user: user_id }
+  primary_subject: user
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  dtm: event_date
+  segm: user_id
