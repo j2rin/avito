@@ -132,6 +132,10 @@ metric.counter:
   total_item_off_delivery:                              {filter: [eid: 2703, is_delivery_available: False], obs: [event_count]}
   total_users_on_delivery:                              {filter: [eid: 2704, is_delivery_available: True],  obs: [event_count]}
   total_users_off_delivery:                             {filter: [eid: 2704, is_delivery_available: False], obs: [event_count]}
+  
+  notes_create:                                         {filter: [eid: 2582, action_type: 'create'], obs: [event_count]}
+  notes_update:                                         {filter: [eid: 2582, action_type: 'update'], obs: [event_count]}
+  notes_delete:                                         {filter: [eid: 2582, action_type: 'delete'], obs: [event_count]}
 
 metric.uniq:
   unq_geo_redirect_replace:          {counter: geo_redirect_replace,            key: [cookie]}
@@ -214,6 +218,10 @@ metric.uniq:
   item_off_delivery:                {counter: total_item_off_delivery,          key: [item_id]}
   users_on_delivery:                {counter: total_users_on_delivery,          key: [item_id]}
   users_off_delivery:               {counter: total_users_off_delivery,         key: [item_id]}
+
+  user_notes_create:                                         {counter: notes_create,           key: [cookie]}
+  user_notes_update:                                         {counter: notes_update,           key: [cookie]}
+  user_notes_delete:                                         {counter: notes_delete,           key: [cookie]}
 
 
 metric.ratio:
