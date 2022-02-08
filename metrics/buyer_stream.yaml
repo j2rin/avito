@@ -588,7 +588,7 @@ metric.counter:
   cnt_iv_vip:                              {filter: [*is_iv_wo_guessing, *is_serp_vip, *x_is_search], m42: False}
   cnt_iv_wtc_dlv:                          {filter: [*is_iv_wo_guessing, *is_serp_witcher_delivery, *x_is_search], m42: False}
   cnt_iv_wtc_dlv_new_auto_flats_reg:       {filter: [*is_iv_wo_guessing, *x_is_search, {$or: [[*is_serp_witcher_delivery], [*is_serp_witcher_new_auto], [*is_serp_witcher_new_flats], [*is_serp_witcher_regions], [*is_serp_witcher_mp]]}], m42: False}
-  cnt_iv_wtc_dlv_new_auto_flats_reg_s_from: {filter: [{$or: [[*is_fp_witcher_delivery, *is_search], [*is_fp_witcher_new_auto, *is_search], [*is_fp_witcher_new_flats, *is_search], [*is_fp_witcher_regions, *is_search], [*is_fp_witcher_marketplace, *x_is_search], [*is_iv_wo_guessing, *is_serp_witcher_delivery, *x_is_search], [*is_iv_wo_guessing, *is_serp_witcher_new_auto, *x_is_search], [*is_iv_wo_guessing, *is_serp_witcher_new_flats, *x_is_search], [*is_iv_wo_guessing, *is_serp_witcher_regions, *x_is_search], [*is_iv_wo_guessing, *is_serp_witcher_mp, *x_is_search]]}], m42: False}
+  cnt_iv_wtc_dlv_new_auto_flats_reg_s_from: {filter: [{$or: [[*is_fp_witcher_delivery, *is_search], [*is_fp_witcher_new_auto, *is_search], [*is_fp_witcher_new_flats, *is_search], [*is_fp_witcher_regions, *is_search], [*is_iv_wo_guessing, *is_serp_witcher_delivery, *x_is_search], [*is_iv_wo_guessing, *is_serp_witcher_new_auto, *x_is_search], [*is_iv_wo_guessing, *is_serp_witcher_new_flats, *x_is_search], [*is_iv_wo_guessing, *is_serp_witcher_regions, *x_is_search], [*is_iv_wo_guessing, *is_serp_witcher_mp, *x_is_search]]}], m42: False}
   cnt_iv_wtc_dlv_s_from:                   {filter: [{$or: [[*is_fp_witcher_delivery, *is_search], [*is_iv_wo_guessing, *is_serp_witcher_delivery, *x_is_search]]}], m42: False}
   cnt_iv_wtc_new_auto:                     {filter: [*is_iv_wo_guessing, *is_serp_witcher_new_auto, *x_is_search], m42: False}
   cnt_iv_wtc_new_auto_s_from:              {filter: [{$or: [[*is_fp_witcher_new_auto, *is_search], [*is_iv_wo_guessing, *is_serp_witcher_new_auto, *x_is_search]]}], m42: False}
@@ -621,7 +621,7 @@ metric.counter:
   cnt_s_u2i_iv:                            {filter: [*is_iv_wo_guessing, *x_is_search, *x_is_sg_rec], m42: False}
   cnt_s_without_query:                     {filter: [*is_search, *noq], m42: False}
   cnt_s_wtc_dlv:                           {filter: [*is_1p, *is_search, *x_is_witcher_delivery], m42: False}
-  cnt_s_wtc_dlv_new_auto_flats_reg:        {filter: [*is_1p, *is_search, {$or: [[*x_is_witcher_delivery], [*x_is_witcher_new_auto], [*x_is_witcher_new_flats], [*x_is_witcher_regions], [*x_is_witcher_marketplace]]}], m42: False}
+  cnt_s_wtc_dlv_new_auto_flats_reg:        {filter: [*is_1p, *is_search, {$or: [[*x_is_witcher_delivery], [*x_is_witcher_new_auto], [*x_is_witcher_new_flats], [*x_is_witcher_regions]]}], m42: False}
   cnt_active:                              {filter: [{$or: [[*is_1p, *is_search], [*is_iv], [*is_btc]]}], m42: False}
   cnt_used_cars_views:                     {filter: [*is_iv, *is_item_used_car]}
   contacts:                                {filter: [*is_contact]}
@@ -786,9 +786,8 @@ metric.counter:
   searches_extra_regions_any:              {filter: [*is_search, {$or: [[*x_is_extra_regions_mix],[*x_is_extra_regions]]} ]}
   searches_extra_quorum:                   {filter: [*is_search, *x_is_extra_quorum]}
   searches_extra_vector:                   {filter: [*is_search, *x_is_extra_vector]}
-  searches_from_witcher_any:               {filter: [*is_1p,*is_search, {$or: [[*is_fp_witcher_delivery], [*is_fp_witcher_new_auto], [*is_fp_witcher_new_flats], [*is_fp_witcher_regions], [*is_fp_witcher_marketplace]]}]}
+  searches_from_witcher_any:               {filter: [*is_1p,*is_search, {$or: [[*is_fp_witcher_delivery], [*is_fp_witcher_new_auto], [*is_fp_witcher_new_flats], [*is_fp_witcher_regions]]}]}
   searches_from_witcher_delivery:          {filter: [*is_1p,*is_fp_witcher_delivery, *is_search]}
-  searches_from_witcher_marketplace:       {filter: [*is_1p,*is_fp_witcher_marketplace, *is_search]}
   searches_from_witcher_new_auto:          {filter: [*is_1p,*is_fp_witcher_new_auto, *is_search]}
   searches_from_witcher_new_flats:         {filter: [*is_1p,*is_fp_witcher_new_flats, *is_search]}
   searches_from_witcher_regions:           {filter: [*is_1p,*is_fp_witcher_regions, *is_search]}
@@ -854,25 +853,21 @@ metric.counter:
   c_re_private:                            {filter: [*is_contact, *is_re_private_acc]}
   iv_witcher_funnel_any:                   {filter: [*is_x_fp_witcher_any, *is_iv_wo_guessing]}
   iv_witcher_funnel_delivery:              {filter: [*is_x_fp_witcher_delivery, *is_iv_wo_guessing]}
-  iv_witcher_funnel_marketplace:           {filter: [*is_x_fp_witcher_marketplace, *is_iv_wo_guessing]}
   iv_witcher_funnel_new_auto:              {filter: [*is_x_fp_witcher_new_auto, *is_iv_wo_guessing]}
   iv_witcher_funnel_new_flats:             {filter: [*is_x_fp_witcher_new_flats, *is_iv_wo_guessing]}
   iv_witcher_funnel_regions:               {filter: [*is_x_fp_witcher_regions, *is_iv_wo_guessing]}
   btc_witcher_funnel_any:                  {filter: [*is_x_fp_witcher_any, *is_btc_wo_guessing]}
   btc_witcher_funnel_delivery:             {filter: [*is_x_fp_witcher_delivery, *is_btc_wo_guessing]}
-  btc_witcher_funnel_marketplace:          {filter: [*is_x_fp_witcher_marketplace, *is_btc_wo_guessing]}
   btc_witcher_funnel_new_auto:             {filter: [*is_x_fp_witcher_new_auto, *is_btc_wo_guessing]}
   btc_witcher_funnel_new_flats:            {filter: [*is_x_fp_witcher_new_flats, *is_btc_wo_guessing]}
   btc_witcher_funnel_regions:              {filter: [*is_x_fp_witcher_regions, *is_btc_wo_guessing]}
   c_witcher_funnel_any:                    {filter: [*is_x_fp_witcher_any, *is_contact_wo_guessing]}
   c_witcher_funnel_delivery:               {filter: [*is_x_fp_witcher_delivery, *is_contact_wo_guessing]}
-  c_witcher_funnel_marketplace:            {filter: [*is_x_fp_witcher_marketplace, *is_contact_wo_guessing]}
   c_witcher_funnel_new_auto:               {filter: [*is_x_fp_witcher_new_auto, *is_contact_wo_guessing]}
   c_witcher_funnel_new_flats:              {filter: [*is_x_fp_witcher_new_flats, *is_contact_wo_guessing]}
   c_witcher_funnel_regions:                {filter: [*is_x_fp_witcher_regions, *is_contact_wo_guessing]}
   fav_witcher_funnel_any:                  {filter: [*is_x_fp_witcher_any, *is_fav]}
   fav_witcher_funnel_delivery:             {filter: [*is_x_fp_witcher_delivery, *is_fav]}
-  fav_witcher_funnel_marketplace:          {filter: [*is_x_fp_witcher_marketplace, *is_fav]}
   fav_witcher_funnel_new_auto:             {filter: [*is_x_fp_witcher_new_auto, *is_fav]}
   fav_witcher_funnel_new_flats:            {filter: [*is_x_fp_witcher_new_flats, *is_fav]}
   fav_witcher_funnel_regions:              {filter: [*is_x_fp_witcher_regions, *is_fav]}
@@ -1761,25 +1756,21 @@ metric.uniq:
   user_delivery_btc:                       {counter: total_delivery_btc,              key: [cookie]}
   user_iv_witcher_funnel_any:              {counter: iv_witcher_funnel_any,           key: [cookie]}
   user_iv_witcher_funnel_delivery:         {counter: iv_witcher_funnel_delivery,      key: [cookie]}
-  user_iv_witcher_funnel_marketplace:      {counter: iv_witcher_funnel_marketplace,   key: [cookie]}
   user_iv_witcher_funnel_new_auto:         {counter: iv_witcher_funnel_new_auto,      key: [cookie]}
   user_iv_witcher_funnel_new_flats:        {counter: iv_witcher_funnel_new_flats,     key: [cookie]}
   user_iv_witcher_funnel_regions:          {counter: iv_witcher_funnel_regions,       key: [cookie]}
   user_btc_witcher_funnel_any:             {counter: btc_witcher_funnel_any,          key: [cookie]}
   user_btc_witcher_funnel_delivery:        {counter: btc_witcher_funnel_delivery,     key: [cookie]}
-  user_btc_witcher_funnel_marketplace:     {counter: btc_witcher_funnel_marketplace,  key: [cookie]}
   user_btc_witcher_funnel_new_auto:        {counter: btc_witcher_funnel_new_auto,     key: [cookie]}
   user_btc_witcher_funnel_new_flats:       {counter: btc_witcher_funnel_new_flats,    key: [cookie]}
   user_btc_witcher_funnel_regions:         {counter: btc_witcher_funnel_regions,      key: [cookie]}
   user_c_witcher_funnel_any:               {counter: c_witcher_funnel_any,            key: [cookie]}
   user_c_witcher_funnel_delivery:          {counter: c_witcher_funnel_delivery,       key: [cookie]}
-  user_c_witcher_funnel_marketplace:       {counter: c_witcher_funnel_marketplace,    key: [cookie]}
   user_c_witcher_funnel_new_auto:          {counter: c_witcher_funnel_new_auto,       key: [cookie]}
   user_c_witcher_funnel_new_flats:         {counter: c_witcher_funnel_new_flats,      key: [cookie]}
   user_c_witcher_funnel_regions:           {counter: c_witcher_funnel_regions,        key: [cookie]}
   user_fav_witcher_funnel_any:             {counter: fav_witcher_funnel_any,          key: [cookie]}
   user_fav_witcher_funnel_delivery:        {counter: fav_witcher_funnel_delivery,     key: [cookie]}
-  user_fav_witcher_funnel_marketplace:     {counter: fav_witcher_funnel_marketplace,  key: [cookie]}
   user_fav_witcher_funnel_new_auto:        {counter: fav_witcher_funnel_new_auto,     key: [cookie]}
   user_fav_witcher_funnel_new_flats:       {counter: fav_witcher_funnel_new_flats,    key: [cookie]}
   user_fav_witcher_funnel_regions:         {counter: fav_witcher_funnel_regions,      key: [cookie]}
@@ -2154,7 +2145,6 @@ metric.ratio:
   searches_witcher_del_with_btc_per_witcher_del: {num: s_witcher_del_with_btc,          den: searches_witcher_delivery}
   searches_witcher_del_with_iv_per_witcher_del: {num: s_witcher_del_with_iv,           den: searches_witcher_delivery}
   searches_witcher_delivery_per_search:    {num: searches_witcher_delivery,       den: searches}
-  searches_witcher_marketplace_per_search: {num: searches_witcher_marketplace,       den: searches}
   searches_witcher_flats_with_btc_per_witcher_flats: {num: s_witcher_flats_with_btc,        den: searches_witcher_new_flats}
   searches_witcher_flats_with_iv_per_witcher_flats: {num: s_witcher_flats_with_iv,         den: searches_witcher_new_flats}
   searches_witcher_new_auto_per_search:    {num: searches_witcher_new_auto,       den: searches}
@@ -2258,7 +2248,6 @@ metric.ratio:
   write_button_clicks_per_item_views:      {num: write_button_clicks,             den: item_views}
   wtc_per_witcher_any:                     {num: wtc_from_witcher_any,            den: searches_witcher_any}
   wtc_per_witcher_delivery:                {num: wtc_from_witcher_delivery,       den: searches_witcher_delivery}
-  wtc_per_witcher_marketplace:             {num: wtc_from_witcher_marketplace,    den: searches_witcher_marketplace}
   wtc_per_witcher_new_auto:                {num: wtc_from_witcher_new_auto,       den: searches_witcher_new_auto}
   wtc_per_witcher_new_flats:               {num: wtc_from_witcher_new_flats,      den: searches_witcher_new_flats}
   wtc_per_witcher_region:                  {num: wtc_from_witcher_regions,        den: searches_witcher_regions}
