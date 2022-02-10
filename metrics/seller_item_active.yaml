@@ -126,6 +126,7 @@ metric.counter:
   seller_deliverable_iv_start_date:                {filter: [is_delivery_available: True, start_date.>=: $ab_start_date ], obs: [ item_views]}
   seller_delivery_iv:                              {filter: [is_delivery_active: True ], obs: [ item_views]}
   seller_delivery_iv_start_date:                   {filter: [is_delivery_active: True, start_date.>=: $ab_start_date ], obs: [item_views]}
+  seller_delivery_available_iv:                    {filter: [is_delivery_available: True ], obs: [ item_views]}
   seller_contacts_on_delivery_items:               {filter: [is_delivery_active: True], obs: [contacts]}
   seller_contacts_on_delivery_items_start_date:    {filter: [is_delivery_active: True, start_date.>=: $ab_start_date], obs: [contacts]}
   seller_contacts_on_deliverable_items:            {filter: [is_delivery_available: True ], obs: [contacts]}
@@ -205,8 +206,15 @@ metric.uniq:
   user_active_items_5plus_locations_microcat:       {counter: cnt_active_items,   key: [user: 0, microcat_id: 5, location_id: 0]}
   user_active_items_10plus_locations_microcat:      {counter: cnt_active_items,   key: [user: 0, microcat_id: 10, location_id: 0]}
   user_active_items_locations:                      {counter: cnt_active_items,   key: [location_id]}
-  seller_items_with_delivery_contacts:             {counter: seller_delivery_contacts,         key: [item]}
-  seller_items_with_delivery_clicks:               {counter: seller_delivery_clicks,           key: [item]}
+  seller_items_with_delivery_contacts:              {counter: seller_delivery_contacts,         key: [item]}
+  seller_items_with_delivery_clicks:                {counter: seller_delivery_clicks,           key: [item]}
+  seller_delivery_items_with_iv:                    {counter: seller_delivery_iv,               key: [item]}
+  sellers_with_delivery_item:                       {counter: items_with_delivery,              key: [user]}
+  sellers_with_delivery_available_item:             {counter: items_delivery_available,         key: [user]}
+  sellers_with_delivery_contact:                    {counter: seller_delivery_contacts,         key: [user]}
+  sellers_with_delivery_click:                      {counter: seller_delivery_clicks,           key: [user]}
+  delivery_sellers_with_contact:                    {counter: seller_contacts_on_delivery_items, key: [user]}
+  delivery_available_sellers_with_contact:          {counter: seller_contacts_on_deliverable_items, key: [user]}
   sellers_with_rating_1_new:               {counter: items_with_rating_1,             key: [user], m42: True}
   sellers_with_rating_2_new:               {counter: items_with_rating_2,             key: [user], m42: True}
   sellers_with_rating_3_new:               {counter: items_with_rating_3,             key: [user], m42: True}
