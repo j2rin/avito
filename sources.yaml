@@ -1746,3 +1746,18 @@ autoload_package_info:
     - [category, subcategory]
   dtm: event_date
   segm: user_id
+
+
+user_cohort:
+  metric_configs: [user_cohort]
+  column_map:
+    user_logcat: [user_id, logical_category_id]
+  database: vertica
+  table: dma.vo_user_cohort
+  dimensions: [vertical, logical_category, region, city, category, subcategory]
+  m42_cartesian_groups:
+    - [vertical, logical_category, region, city, category, subcategory]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: event_date
+
