@@ -93,6 +93,8 @@ metric.counter:
   items_started_wait:                      {filter: [{activation_type: Wait, is_item_start: True}]}
   lf_amount_net:                           {obs: [lf_amount_net]}
   lf_amount_net_start_date:                {filter: [{start_date.>=: $ab_start_date}], obs: [lf_amount_net]}
+  items_moderations:                       {filter: [{manual_moderation.isnull: false}]}
+  items_manual_moderations:                {filter: [{manual_moderation.=: 1}]}
 
 metric.uniq:
   items_edit_started:                      {counter: item_edit_starts,                key: [item]}
@@ -109,6 +111,8 @@ metric.uniq:
   items_edited_start_date:                 {counter: item_edits_start_date,           key: [item]}
   items_edited_title:                      {counter: item_edits_title,                key: [item]}
   items_edited_title_start_date:           {counter: item_edits_title_start_date,     key: [item]}
+  items_moderated:                         {counter: items_moderations,               key: [item]}
+  items_manual_moderated:                  {counter: items_manual_moderations,        key: [item]}
   items_reactivated_net_conversion:        {counter: items_reactivated_net,           key: [user]}
   items_sold_onavito_conversion:           {counter: items_sold_onavito,              key: [user]}
   items_started_net_conversion:            {counter: items_started_net,               key: [user]}
@@ -178,6 +182,8 @@ metric.uniq:
   users_item_started_wait:                 {counter: items_started_wait,              key: [user]}
   users_lf:                                {counter: lf_amount_net,                   key: [user]}
   users_lf_start_date:                     {counter: lf_amount_net_start_date,        key: [user]}
+  users_item_moderated:                    {counter: items_moderations,               key: [user]}
+  users_item_manual_moderated:             {counter: items_manual_moderations,          key: [user]}
 
 metric.ratio:
   item_edits_address_per_item:             {num: item_edits_address,              den: items_edited_address}
@@ -194,4 +200,5 @@ metric.ratio:
   items_sold_onavito_per_items_started_net_start_date: {num: items_sold_onavito_start_date,   den: cnt_items_started_net}
   sellers_edited_address_per_editor:       {num: sellers_edited_address,          den: users_item_edit}
   items_dead_per_started:                  {num: items_started_dead,          den: items_started}
+  items_manual_moder_per_moder:            {num: items_manual_moderated,          den: items_moderated}
 
