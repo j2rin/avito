@@ -62,8 +62,7 @@ definitions:
   - &is_sgt           {eid: 2443}
   - &is_iv            {eid: 301}
   - &is_iv_client     {eid: 2649}
-  - &is_btc           {eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813]}
-  - &is_btc_ext       {eid: [303, 308, 401, 856, 857, 2013, 2015, 2483, 2581, 2654, 2732, 3005, 3461, 4035, 4066, 4600, 4675, 4198, 4813]}
+  - &is_btc           {eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308]}
   - &is_contact       {eid: [303, 856, 857, 3005, 2581, 4066, 4675, 3461, 4198, 4813]}
   - &is_ph_btn        {eid: [2216, 2650]}
   - &is_ph            {eid: *eid_ph}
@@ -86,7 +85,6 @@ definitions:
   - &is_soc_btn       {eid: 308}
   - &is_iv_wo_guessing    {<<: *is_iv, item_x_type: 0}
   - &is_btc_wo_guessing     {$or: [{<<: *is_btc, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
-  - &is_btc_ext_wo_guessing    {$or: [{<<: *is_btc_ext, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
   - &is_contact_wo_guessing    {$or: [{<<: *is_contact, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
   
   - &is_videocalls_contact  {eid: 5629}
@@ -270,7 +268,6 @@ metric.counter:
   btc_to_order:                            {filter: [*item_to_order, *is_btc]}
   cnt_btc:                                 {filter: [*is_btc]}
   cnt_btc_new:                             {filter: [*is_btc, *is_new_btc]}
-  cnt_btc_ext:                             {filter: [*is_btc_ext]}
   cnt_btc_part_qual_exists:                {filter: [*part_qual_exists, *is_btc]}
   cnt_btc_part_qual_compab:                {filter: [*part_qual_compab, *is_btc]}
   cnt_btc_part_qual_unknown:               {filter: [*part_qual_unknown, *is_btc]}
@@ -306,7 +303,6 @@ metric.counter:
   cnt_btc_rec_i2i:                         {filter: [*is_btc_wo_guessing, *x_is_i2i], m42: False}
   cnt_btc_new_rec_i2i:                     {filter: [*is_new_btc,*is_btc_wo_guessing, *x_is_i2i], m42: False}
   cnt_btc_old_rec_i2i:                {filter: [*is_old_btc,*is_btc_wo_guessing, *x_is_i2i], m42: False}
-  cnt_btc_ext_rec_i2i:                     {filter: [*is_btc_ext_wo_guessing, *x_is_i2i], m42: False}
   cnt_btc_rec_cv2vac:                      {filter: [*is_btc_wo_guessing, *x_is_cv2vac], m42: False}
   cnt_btc_rec_u2i:                         {filter: [*is_btc_wo_guessing, *x_is_u2i], m42: False}
   cnt_btc_rec_u2i_collab:                  {filter: [*is_btc_wo_guessing, *x_is_u2i, *collab], m42: False}
@@ -314,7 +310,6 @@ metric.counter:
   cnt_btc_rec_u2i_similars:                {filter: [*is_btc_wo_guessing, *x_is_u2i, *similars], m42: False}
   cnt_btc_new_rec_u2i:                     {filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_u2i], m42: False}
   cnt_btc_old_rec_u2i:                {filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_u2i], m42: False}
-  cnt_btc_ext_rec_u2i:                     {filter: [*is_btc_ext_wo_guessing, *x_is_u2i], m42: False}
   cnt_btc_rec_vas:                         {filter: [*is_btc_wo_guessing, *is_item_vas, *x_is_rec], m42: False}
   cnt_btc_rec_perfvas_x2_1:                {filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec], m42: False}
   cnt_btc_rec_perfvas_x2_7:                {filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_7, *x_is_rec], m42: False}
@@ -334,7 +329,6 @@ metric.counter:
   cnt_btc_s_item_attr:                     {filter: [*is_btc_wo_guessing, *x_is_search], m42: False}
   cnt_btc_new_s_item_attr:                 {filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_search], m42: False}
   cnt_btc_old_s_item_attr:                 {filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_search], m42: False}
-  cnt_btc_ext_s:                           {filter: [*is_btc_ext_wo_guessing, *x_is_search], m42: False}
   cnt_btc_s_map_area:                      {filter: [*is_btc_wo_guessing, *is_s_map, *x_is_search], m42: False}
   cnt_btc_new_s_map_area:                  {filter: [*is_new_btc, *is_btc_wo_guessing, *is_s_map, *x_is_search], m42: False}
   cnt_btc_s_wo_map_area:                   {filter: [*is_btc_wo_guessing, *is_not_s_map, *x_is_search], m42: False}
@@ -1035,7 +1029,6 @@ metric.uniq:
   buyer_target_clicks_rec:                 {counter: cnt_btc_rec,                     key: [item_x]}
   buyer_target_clicks_new_rec:             {counter: cnt_btc_new_rec,                 key: [item_x]}
   buyer_target_clicks_returned_rec:        {counter: cnt_btc_old_rec,                 key: [item_x]}
-  btc_ext:                                 {counter: cnt_btc_ext,                     key: [item_x]}
   soc_btn:                                 {counter: cnt_soc_btn,                     key: [item_x]}
   buyer_target_clicks_rec_perfvas_x2_1:    {counter: cnt_btc_rec_perfvas_x2_1,        key: [item_x]}
   buyer_target_clicks_rec_perfvas_x2_7:    {counter: cnt_btc_rec_perfvas_x2_7,        key: [item_x]}
@@ -1047,7 +1040,6 @@ metric.uniq:
   buyer_target_clicks_rec_i2i:             {counter: cnt_btc_rec_i2i,                 key: [item_x]}
   buyer_target_clicks_new_rec_i2i:         {counter: cnt_btc_new_rec_i2i,             key: [item_x]}
   buyer_target_clicks_returned_rec_i2i:    {counter: cnt_btc_old_rec_i2i,             key: [item_x]}
-  btc_ext_rec_i2i:                         {counter: cnt_btc_ext_rec_i2i,             key: [item_x]}
   buyer_target_clicks_rec_cv2vac:          {counter: cnt_btc_rec_cv2vac,              key: [item_x]}
   buyer_target_clicks_rec_u2i:             {counter: cnt_btc_rec_u2i,                 key: [item_x]}
   buyer_target_clicks_rec_u2i_collab:      {counter: cnt_btc_rec_u2i_collab,          key: [item_x]}
@@ -1055,7 +1047,6 @@ metric.uniq:
   buyer_target_clicks_rec_u2i_similars:    {counter: cnt_btc_rec_u2i_similars,        key: [item_x]}
   buyer_target_clicks_new_rec_u2i:         {counter: cnt_btc_new_rec_u2i,             key: [item_x]}
   buyer_target_clicks_returned_rec_u2i:    {counter: cnt_btc_old_rec_u2i,             key: [item_x]}
-  btc_ext_rec_u2i:                         {counter: cnt_btc_ext_rec_u2i,             key: [item_x]}
   buyer_target_clicks_rec_job_ast:         {counter: cnt_btc_job_ast,                 key: [item_x]}
   buyer_target_clicks_regions:             {counter: cnt_btc_reg,                     key: [item_x]}
   buyer_target_clicks_new_regions:         {counter: cnt_btc_new_reg,                 key: [item_x]}
@@ -1068,7 +1059,6 @@ metric.uniq:
   buyer_target_clicks_new_serp:            {counter: cnt_btc_new_s_item_attr,         key: [item_x]}
   buyer_target_clicks_returned_serp:       {counter: cnt_btc_old_s_item_attr,         key: [item_x]}
   buyer_target_clicks_nox:                 {counter: cnt_btc_no,                      key: [item_x]}
-  btc_ext_serp:                            {counter: cnt_btc_ext_s,                   key: [item_x]}
   buyer_target_clicks_serp_xl:             {counter: cnt_btc_serp_xl,                 key: [item_x]}
   buyer_target_clicks_serp_perfvas_x2_1:   {counter: cnt_btc_serp_perfvas_x2_1,       key: [item_x]}
   buyer_target_clicks_serp_perfvas_x2_7:   {counter: cnt_btc_serp_perfvas_x2_7,       key: [item_x]}
@@ -1464,7 +1454,6 @@ metric.uniq:
   users_bt_click_daily:                    {counter: bt_clicks,                       key: [cookie]}
   users_bt_click_new:                      {counter: bt_clicks_new,                   key: [cookie]}
   users_bt_click_returned:                 {counter: bt_clicks_returned,                   key: [cookie]}
-  user_btc_ext:                            {counter: cnt_btc_ext,                     key: [cookie]}
   user_soc_btn:                            {counter: cnt_soc_btn,                     key: [cookie]}
   users_btc_search_filter_any:             {counter: cnt_btc_views_s_filter_price,    key: [cookie]}
   users_buyer_target_click_from_map:       {counter: cnt_btc_from_map,                key: [cookie]}
@@ -1481,7 +1470,6 @@ metric.uniq:
   users_buyer_target_click_serp_new:       {counter: cnt_btc_new_s_item_attr,             key: [cookie]}
   users_buyer_target_click_serp_returned:  {counter: cnt_btc_old_s_item_attr,             key: [cookie]}
   users_buyer_target_click_nox_daily:      {counter: cnt_btc_no,                      key: [cookie]}
-  user_btc_ext_serp:                       {counter: cnt_btc_ext_s,                   key: [cookie]}
   users_buyer_target_clicks_serp_district: {counter: cnt_btc_s_distr,                 key: [cookie]}
   users_buyer_target_clicks_serp_metro:    {counter: cnt_btc_s_metro,                 key: [cookie]}
   users_buyer_target_clicks_serp_radius:   {counter: cnt_btc_s_radius,                key: [cookie]}
@@ -1490,7 +1478,6 @@ metric.uniq:
   user_btc_rec_i2i:                        {counter: cnt_btc_rec_i2i,                 key: [cookie]}
   user_btc_new_rec_i2i:                    {counter: cnt_btc_new_rec_i2i,             key: [cookie]}
   user_btc_returned_rec_i2i:               {counter: cnt_btc_old_rec_i2i,             key: [cookie]}
-  user_btc_ext_rec_i2i:                    {counter: cnt_btc_ext_rec_i2i,             key: [cookie]}
   user_btc_rec_cv2vac:                     {counter: cnt_btc_rec_cv2vac,              key: [cookie]}
   user_btc_rec_u2i:                        {counter: cnt_btc_rec_u2i,                 key: [cookie]}
   user_btc_rec_u2i_collab:                 {counter: cnt_btc_rec_u2i_collab,          key: [cookie]}
@@ -1498,7 +1485,6 @@ metric.uniq:
   user_btc_rec_u2i_similars:               {counter: cnt_btc_rec_u2i_similars,        key: [cookie]}
   user_btc_new_rec_u2i:                    {counter: cnt_btc_new_rec_u2i,             key: [cookie]}
   user_btc_returned_rec_u2i:               {counter: cnt_btc_old_rec_u2i,             key: [cookie]}
-  user_btc_ext_rec_u2i:                    {counter: cnt_btc_ext_rec_u2i,             key: [cookie]}
   users_contact_rec_daily:                 {counter: cnt_cs_rec,                      key: [cookie]}
   users_contact_rec_job_ast:               {counter: cnt_c_rec_job_ast,               key: [cookie]}
   users_contact_rec_daily_vas:             {counter: cnt_cs_rec_vas,                  key: [cookie]}
