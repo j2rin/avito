@@ -136,6 +136,12 @@ metric.counter:
   notes_create:                                         {filter: [eid: 2582, action_type: 'create'], obs: [event_count]}
   notes_update:                                         {filter: [eid: 2582, action_type: 'update'], obs: [event_count]}
   notes_delete:                                         {filter: [eid: 2582, action_type: 'delete'], obs: [event_count]}
+  
+  icebreakers_message_template_shows:                   {filter: [eid: 4209, source.!=: 'messenger'], obs: [event_count]}
+  icebreakers_message_template_clicks:                  {filter: [eid: 4210, source.!=: 'messenger'], obs: [event_count]}
+  icebreakers_message_template_shows_msg:               {filter: [eid: 4209, source: 'messenger'], obs: [event_count]}
+  icebreakers_message_template_clicks_msg:              {filter: [eid: 4210, source: 'messenger'], obs: [event_count]}
+
 
 metric.uniq:
   unq_geo_redirect_replace:          {counter: geo_redirect_replace,            key: [cookie]}
@@ -222,6 +228,12 @@ metric.uniq:
   user_notes_create:                                         {counter: notes_create,           key: [cookie]}
   user_notes_update:                                         {counter: notes_update,           key: [cookie]}
   user_notes_delete:                                         {counter: notes_delete,           key: [cookie]}
+  
+  
+  user_icebreakers_message_template_shows:                   {counter: icebreakers_message_template_shows,          key: [cookie]}
+  user_icebreakers_message_template_clicks:                  {counter: icebreakers_message_template_clicks,         key: [cookie]}
+  user_icebreakers_message_template_shows_msg:               {counter: icebreakers_message_template_shows_msg,          key: [cookie]}
+  user_icebreakers_message_template_clicks_msg:              {counter: icebreakers_message_template_clicks_msg,         key: [cookie]}
 
 
 metric.ratio:
