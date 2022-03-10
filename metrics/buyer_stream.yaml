@@ -670,6 +670,7 @@ metric.counter:
   delivery_orders_created:                 {filter: [*is_delivery]}
   fav_added_developer:                     {filter: [*is_developer_acc, *is_fav]}
   favorites_added:                         {filter: [*is_fav]}
+  favorites_added_from_jk_card:            {filter: [*is_fav, from_page: catalog_jk_card]}
   favorites_added_part_qual_exists:        {filter: [*part_qual_exists, *is_fav]}
   favorites_added_part_qual_compab:        {filter: [*part_qual_compab, *is_fav]}
   favorites_added_part_qual_unknown:       {filter: [*part_qual_unknown, *is_fav]}
@@ -689,6 +690,7 @@ metric.counter:
   first_messages_to_order:                 {filter: [*item_to_order ,*is_msg]}
   first_messages_vas:                      {filter: [*is_item_vas, *is_msg]}
   item_views:                              {filter: [*is_iv]}
+  item_views_from_jk_card:                 {filter: [*is_iv, from_page: catalog_jk_card]}
   item_views_part_qual_exists:             {filter: [*part_qual_exists ,*is_iv]}
   item_views_part_qual_compab:             {filter: [*part_qual_compab ,*is_iv]}
   item_views_part_qual_unknown:            {filter: [*part_qual_unknown,*is_iv]}
@@ -907,6 +909,9 @@ metric.counter:
   vertical_main_pages:                     {filter: [eid: 2592]}
   shortcut_clicks:                         {filter: [eid: 2664]}
   realty_dev_views:                        {filter: [eid: 3459]}
+  realty_dev_views_rec:                    {filter: [eid: 3459], from_page: jk_card_rec}
+  realty_dev_views_item_name:              {filter: [eid: 3459], from_page: item_jk_name}
+  realty_dev_views_item_button:            {filter: [eid: 3459], from_page: item_jk_button}
   realty_development_phone_views:          {filter: [eid: 3461]}
   item_views_from_fs:                      {filter: [*is_iv, from_page: fs]}
   total_developer_contacts:                {filter: [{$or: [[*is_contact, *is_developer_acc], [*is_ph_realdev]]}]}
@@ -1407,6 +1412,7 @@ metric.uniq:
   user_favorites_list_views:               {counter: favorites_list_views,            key: [cookie]}
   user_favorites_removed:                  {counter: favorites_removed,               key: [cookie]}
   user_item_view_from_map_total:           {counter: cnt_iv_from_map_s_area,          key: [cookie]}
+  user_item_views_from_jk_card: 		   {counter: item_views_from_jk_card, 		  key: [cookie]}
   user_item_views_any_ext_block:           {counter: cnt_iv_any_ext_block,            key: [cookie]}
   user_item_views_delivery:                {counter: cnt_iv_dlv,                      key: [cookie]}
   user_item_views_regions:                 {counter: cnt_iv_reg,                      key: [cookie]}
@@ -1515,6 +1521,7 @@ metric.uniq:
   users_fav_from_map_area:                 {counter: cnt_fav_s_map_area,              key: [cookie]}
   users_fav_serp_wo_map_area:              {counter: cnt_fav_s_wo_map_area,           key: [cookie]}
   users_favorites:                         {counter: favorites_added,                 key: [cookie]}
+  user_favorites_added_from_jk_card: 	   {counter: favorites_added_from_jk_card,    key: [cookie]}
   users_first_messages:                    {counter: first_messages,                  key: [cookie]}
   users_item_view_client_daily:            {counter: item_views_client,               key: [cookie]}
   users_item_view_daily:                   {counter: item_views,                      key: [cookie]}
@@ -1592,6 +1599,9 @@ metric.uniq:
   users_vertical_main_featured:            {counter: vertical_main_featured,          key: [cookie]}
   shortcut_users:                          {counter: shortcut_clicks,                 key: [cookie]}
   users_realty_dev_view:                   {counter: realty_dev_views,                key: [cookie]}
+  user_realty_dev_views_rec:               {counter: realty_dev_views_rec, 			  key: [cookie]}
+  user_realty_dev_views_item_name:         {counter: realty_dev_views_item_name, 	  key: [cookie]}
+  user_realty_dev_views_item_button:       {counter: realty_dev_views_item_button,    key: [cookie]}
   user_push_land_shows:                    {counter: push_land_shows,                 key: [cookie], m42: False}
   user_recblock_shows:                     {counter: recblock_shows,                  key: [cookie], m42: False}
   user_recblock_shows_i2i:                 {counter: recblock_shows_i2i,              key: [cookie], m42: False}
