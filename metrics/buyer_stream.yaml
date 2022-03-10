@@ -979,6 +979,11 @@ metric.counter:
   iv_with_multilocs_vertical_undefined:    {filter: [*is_item_with_multilocs, *is_iv_wo_guessing, *x_is_vertical_undefined], m42: False}
   c_with_multilocs_vertical_defined:       {filter: [*is_item_with_multilocs, *is_contact_wo_guessing, *x_is_vertical_defined], m42: False}
   c_with_multilocs_vertical_undefined:     {filter: [*is_item_with_multilocs, *is_contact_wo_guessing, *x_is_vertical_undefined], m42: False}
+  cnt_contacts_delivery:                   {filter: [eid: 4675]}
+  cnt_contacts_delivery_serp:              {filter: [eid: 4675, *x_is_search]}
+  cnt_contacts_delivery_rec_i2i:           {filter: [eid: 4675, *x_is_i2i]}
+  cnt_contacts_delivery_rec_u2i:           {filter: [eid: 4675, *x_is_u2i]}
+  cnt_contacts_delivery_fav:               {filter: [eid: 4675, *x_is_fav_lst]}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1168,6 +1173,11 @@ metric.uniq:
   contacts_perfvas_weighted:               {counter: cnt_cs_perfvas_w,                key: [item_x]}
   contacts_vip:                            {counter: cnt_cs_vip,                      key: [item_x]}
   contact_delivery_any_ext_block:          {counter: cnt_contact_delivery_any_ext_block,             key: [item_x]}
+  contacts_delivery_grouped:               {counter: cnt_contacts_delivery,                          key: [cookie_item]}
+  contacts_delivery_serp:                  {counter: cnt_contacts_delivery_serp,                     key: [item_x]}
+  contacts_delivery_rec_i2i:               {counter: cnt_contacts_delivery_rec_i2i,                  key: [item_x]}
+  contacts_delivery_rec_u2i:               {counter: cnt_contacts_delivery_rec_u2i,                  key: [item_x]}
+  contacts_delivery_fav:                   {counter: cnt_contacts_delivery_fav,                      key: [item_x]}
   create_order_delivery_any_ext_block:     {counter: cnt_create_order_delivery_any_ext_block,        key: [item_x]}
   delivery_click_all_services:             {counter: total_delivery_click_all_services,              key: [cookie_item]}
   delivery_click_all_services_serp:        {counter: total_delivery_click_all_services_serp,         key: [item_x]}
@@ -1511,6 +1521,7 @@ metric.uniq:
   users_contacts_serp_metro:               {counter: cnt_cs_s_metro,                  key: [cookie]}
   users_contacts_serp_radius:              {counter: cnt_cs_s_radius,                 key: [cookie]}
   users_contacts_serp_road:                {counter: cnt_cs_s_road,                   key: [cookie]}
+  users_contacts_delivery:                 {counter: cnt_contacts_delivery,           key: [cookie]}
   users_fav_from_map:                      {counter: cnt_fav_from_map,                key: [cookie]}
   users_fav_from_map_area:                 {counter: cnt_fav_s_map_area,              key: [cookie]}
   users_fav_serp_wo_map_area:              {counter: cnt_fav_s_wo_map_area,           key: [cookie]}
