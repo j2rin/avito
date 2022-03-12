@@ -137,8 +137,8 @@ metric.counter:
   notes_update:                                         {filter: [eid: 2582, action_type: 'update'], obs: [event_count]}
   notes_delete:                                         {filter: [eid: 2582, action_type: 'delete'], obs: [event_count]}
   
-  icebreakers_message_template_shows:                   {filter: [eid: 4209, source.!=: 'messenger'], obs: [event_count]}
-  icebreakers_message_template_clicks:                  {filter: [eid: 4210, source.!=: 'messenger'], obs: [event_count]}
+  icebreakers_message_template_shows:                   {filter: [eid: 4209, $or: [source.!=: 'messenger', source.isnull: True]], obs: [event_count]}
+  icebreakers_message_template_clicks:                  {filter: [eid: 4210, $or: [source.!=: 'messenger', source.isnull: True]], obs: [event_count]}
   icebreakers_message_template_shows_msg:               {filter: [eid: 4209, source: 'messenger'], obs: [event_count]}
   icebreakers_message_template_clicks_msg:              {filter: [eid: 4210, source: 'messenger'], obs: [event_count]}
 
@@ -258,3 +258,5 @@ metric.ratio:
   typo_suggest_ctr_disable:                  {num: typo_suggest_disabled,                    den: typo_suggest}
   ctr_click_banner_mygarage:                 {num: click_banner_mygarage,                    den: show_banner_mygarage, m42: False}
   ext_profile_on_off_ratio:                  {num: ext_profile_on,                           den: ext_profile_off}
+  icebreaker_click_per_show:                 {num: icebreakers_message_template_clicks, den: icebreakers_message_template_shows}
+  icebreaker_messenger_click_per_show:       {num: icebreakers_message_template_clicks_msg, den: icebreakers_message_template_shows_msg}
