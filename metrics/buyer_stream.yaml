@@ -992,6 +992,7 @@ metric.counter:
   cnt_contacts_delivery_rec_i2i:           {filter: [eid: 4675, *x_is_i2i]}
   cnt_contacts_delivery_rec_u2i:           {filter: [eid: 4675, *x_is_u2i]}
   cnt_contacts_delivery_fav:               {filter: [eid: 4675, *x_is_fav_lst]}
+  cnt_contacts_s_filter_price:             {filter: [*is_contact_wo_guessing, *x_is_search, {$or: [[*x_is_filter_search], [*x_is_price_filter_search]]}], m42: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1971,7 +1972,11 @@ metric.uniq:
   user_iv_with_multilocs_vertical_undefined:      {counter: iv_with_multilocs_vertical_undefined,         key: [cookie], m42: False}
   user_c_with_multilocs_vertical_defined:         {counter: c_with_multilocs_vertical_defined,            key: [cookie], m42: False}
   user_c_with_multilocs_vertical_undefined:       {counter: c_with_multilocs_vertical_undefined,          key: [cookie], m42: False}
-
+  contacts_from_searches_with_filters:            {counter: cnt_contacts_s_filter_price,        key: [item_x]}
+  users_contacts_from_searches_with_filters:      {counter: cnt_contacts_s_filter_price,        key: [cookie]}
+  searches_with_filters_with_iv:            {counter: cnt_iv_s_filter_price,        key: [x],  m42: False}
+  searches_with_filters_with_contacts:      {counter: cnt_contacts_s_filter_price,        key: [x],  m42: False}
+  searches_with_filters_with_btc:           {counter: cnt_btc_views_s_filter_price,        key: [x],  m42: False}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
@@ -2440,3 +2445,25 @@ metric.ratio:
   delivery_item_contact_delivery_click_ratio:                                 {num: delivery_click,                       den: delivery_item_contact,    m42: true}
   delivery_contact_delivery_item_contact_ratio:                               {num: delivery_contact,                     den: delivery_item_contact,    m42: true}
   booking_per_iv_str_flat_verified_badge:                                     {num: booking_created_str_flat_verified_badge,   den: iv_str_flat_verified_badge}
+  s_with_filters_with_iv_per_s_with_filters:                    {num: searches_with_filters_with_iv, den: searches_with_filter_any, m42: False}
+  s_with_filters_with_contacts_per_s_with_filters:              {num: searches_with_filters_with_contacts, den: searches_with_filter_any, m42: False}
+  s_with_filters_with_btc_per_s_with_filters:                   {num: searches_with_filters_with_btc, den: searches_with_filter_any, m42: False}
+  users_s_noq_with_iv_per_users_s_noq:  {num: users_item_view_search_noquery, den: user_noq, m42: False}
+  users_s_noq_with_btc_per_users_s_noq: {num: user_btc_noq, den: user_noq, m42: False}
+  users_s_with_filters_with_iv_per_users_s_with_filters: {num: users_item_views_search_filter_any, den: users_search_filter_any, m42: False}
+  users_s_with_filters_with_contacts_per_users_s_with_filters: {num: users_contacts_from_searches_with_filters, den: users_search_filter_any, m42: False}
+  users_s_with_filters_with_btc_per_users_s_with_filters: {num: users_btc_search_filter_any, den: users_search_filter_any, m42: False}
+  buyer_target_clicks_serp_per_iv:     {num: buyer_target_clicks_serp,        den: item_views_serp, m42: False}
+  iv_from_s_q_per_searches_q:      {num: cnt_s_query_iv, den: search_q, m42: False}
+  contacts_from_s_with_filters_per_s_with_filters:      {num: contacts_from_searches_with_filters, den: searches_with_filter_any, m42: False}
+  iv_from_searches_noq_per_searches_noq:      {num: cnt_s_noquery_iv, den: cnt_s_without_query, m42: False}
+  contacts_from_s_q_per_s_q:      {num: cnt_s_query_c, den: search_q, m42: False}
+  contacts_from_s_noq_per_s_noq:      {num: cnt_s_noquery_c, den: cnt_s_without_query, m42: False}
+  users_iv_from_s_noq_per_users_s_noq:      {num: users_item_view_search_noquery, den: user_noq, m42: False}
+  users_iv_from_s_with_filters_per_users_s_with_filters:      {num: users_item_views_search_filter_any, den: users_search_filter_any, m42: False}
+  users_contacts_from_s_noq_per_users_s_noq:      {num: users_contact_search_noquery, den: user_noq, m42: False}
+  users_contacts_from_s_with_filters_per_users_s_with_filters:      {num: users_contacts_from_searches_with_filters, den: users_search_filter_any, m42: False}
+  users_btc_from_s_noq_per_users_s_noq:      {num: user_btc_noq, den: user_noq, m42: False}
+  users_btc_from_s_with_filters_per_users_s_with_filters:      {num: users_btc_search_filter_any, den: users_search_filter_any, m42: False}
+  users_searches_with_btc_per_users_searches:   {num: users_buyer_target_click_serp_daily, den: users_search, m42: False}
+
