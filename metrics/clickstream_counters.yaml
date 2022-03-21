@@ -137,10 +137,10 @@ metric.counter:
   notes_update:                                         {filter: [eid: 2582, action_type: 'update'], obs: [event_count]}
   notes_delete:                                         {filter: [eid: 2582, action_type: 'delete'], obs: [event_count]}
   
-  icebreakers_message_template_shows:                   {filter: [eid: 4209, $or: [source.!=: 'messenger', source.isnull: True]], obs: [event_count]}
-  icebreakers_message_template_clicks:                  {filter: [eid: 4210, $or: [source.!=: 'messenger', source.isnull: True]], obs: [event_count]}
-  icebreakers_message_template_shows_msg:               {filter: [eid: 4209, source: 'messenger'], obs: [event_count]}
-  icebreakers_message_template_clicks_msg:              {filter: [eid: 4210, source: 'messenger'], obs: [event_count]}
+  icebreakers_message_template_shows:                   {filter: [eid: 4209, $or: [source: 'item', source.isnull: True]], obs: [event_count]}
+  icebreakers_message_template_clicks:                  {filter: [eid: 4210, $or: [source: 'item', source.isnull: True]], obs: [event_count]}
+  icebreakers_message_template_shows_msg:               {filter: [eid: 4209, $or: [source: 'messenger', source: 'mini-messenger']], obs: [event_count]}
+  icebreakers_message_template_clicks_msg:              {filter: [eid: 4210, $or: [source: 'messenger', source: 'mini-messenger']], obs: [event_count]}
 
 
 metric.uniq:
