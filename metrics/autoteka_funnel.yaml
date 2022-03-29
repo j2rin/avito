@@ -1,0 +1,22 @@
+metric.counter:
+  autoteka_sessions: { obs: [ cookie_session ] }
+  autoteka_funnel_main: { filter: [ event_type: 'main', is_main_page_session: true, is_session_to_exclude: false ], obs: [ cookie_session ] }
+  autoteka_funnel_preview: { filter: [ event_type: 'preview', is_main_page_session: true, is_session_to_exclude: false ], obs: [ cookie_session ] }
+  autoteka_funnel_selection: { filter: [ event_type: 'selection', is_main_page_session: true, is_session_to_exclude: false ], obs: [ cookie_session ] }
+  autoteka_funnel_paypage: { filter: [ event_type: 'paypage', is_main_page_session: true, is_session_to_exclude: false ], obs: [ cookie_session ] }
+  autoteka_funnel_callback: { filter: [ event_type: 'callback', is_main_page_session: true, is_session_to_exclude: false ], obs: [ cookie_session ] }
+
+metric.uniq:
+  autoteka_funnel_main_session: { counter: autoteka_funnel_main, key: [ cookie_session ] }
+  autoteka_funnel_preview_session: { counter: autoteka_funnel_preview, key: [ cookie_session ] }
+  autoteka_funnel_selection_session: { counter: autoteka_funnel_selection, key: [ cookie_session ] }
+  autoteka_funnel_paypage_session: { counter: autoteka_funnel_paypage, key: [ cookie_session ] }
+  autoteka_funnel_callback_session: { counter: autoteka_funnel_callback, key: [ cookie_session ] }
+  autoteka_session_cnt: { counter: autoteka_sessions, key: [ cookie_session ] }
+
+metric.ratio:
+  autoteka_main_preview_conversion_session: { num: autoteka_funnel_preview_session, den: autoteka_funnel_main_session }
+  autoteka_preview_selection_conversion_session: { num: autoteka_funnel_selection_session, den: autoteka_funnel_preview_session }
+  autoteka_selection_paypage_conversion_session: { num: autoteka_funnel_paypage_session, den: autoteka_funnel_selection_session }
+  autoteka_paypage_callback_conversion_session: { num: autoteka_funnel_callback_session, den: autoteka_funnel_paypage_session }
+  autoteka_main_callback_conversion_session: { num: autoteka_unique_preview_visitors, den: autoteka_unique_main_page_visitors }
