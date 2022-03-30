@@ -993,6 +993,12 @@ metric.counter:
   cnt_contacts_delivery_rec_u2i:           {filter: [eid: 4675, *x_is_u2i]}
   cnt_contacts_delivery_fav:               {filter: [eid: 4675, *x_is_fav_lst]}
   cnt_contacts_s_filter_price:             {filter: [*is_contact_wo_guessing, *x_is_search, {$or: [[*x_is_filter_search], [*x_is_price_filter_search]]}], m42: False}
+  cnt_iv_delivery_serp:					   {filter: [*is_iv_wo_guessing, *is_delivery_active, *x_is_search], m42: False}
+  cnt_click_delivery_serp:				   {filter: [eid: 2483, *is_delivery_active, *x_is_search], m42: False}
+  cnt_widget_delivery_serp:				   {filter: [eid: 2013, *is_delivery_active, *x_is_search], m42: False}
+  cnt_confirm_delivery_serp:			   {filter: [eid: 2749, *is_delivery_active, *x_is_search], m42: False}
+  cnt_contact_delivery_serp:			   {filter: [eid: 4675, *is_delivery_active, *x_is_search], m42: False}
+
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1099,8 +1105,11 @@ metric.uniq:
   c_from_witcher_regions:                  {counter: cnt_cs_wtc_reg,                  key: [item_x]}
   c_serp_grouped_doubles:                  {counter: cnt_cs_s_grouped_doubles,        key: [item_x]}
   click_delivery_any_ext_block:            {counter: cnt_click_delivery_any_ext_block,  key: [item_x]}
+  click_delivery_serp:				       {counter: cnt_click_delivery_serp,         key: [item_x]}
+  confirm_delivery_serp:                   {counter: cnt_confirm_delivery_serp,       key: [item_x]}
   contacts_any_ext_block:                  {counter: cnt_cs_any_ext_block,            key: [item_x]}
   contacts_delivery:                       {counter: cnt_cs_dlv,                      key: [item_x]}
+  contact_delivery_serp:				   {counter: cnt_contact_delivery_serp,       key: [item_x]}
   contacts_fav_list:                       {counter: cnt_cs_fav_list,                 key: [item_x]}
   contacts_msg_fav_list:                   {counter: cnt_cs_msg_fav_list,             key: [item_x]}
   contacts_ph_fav_list:                    {counter: cnt_cs_ph_fav_list,              key: [item_x]}
@@ -1254,6 +1263,7 @@ metric.uniq:
   item_views_any_ext_block:                {counter: cnt_iv_any_ext_block,            key: [item_x]}
   item_views_delivery_any_ext_block:       {counter: cnt_iv_delivery_any_ext_block,   key: [item_x]}
   item_views_delivery:                     {counter: cnt_iv_dlv,                      key: [item_x]}
+  item_views_delivery_serp:                {counter: cnt_iv_delivery_serp,            key: [item_x]}
   item_views_cpa:                          {counter: cnt_iv_cpa,                      key: [item_x]}
   item_views_s_cpa:                        {counter: cnt_iv_s_cpa,                    key: [item_x]}
   item_views_rec_cpa:                      {counter: cnt_iv_rec_cpa,                  key: [item_x]}
@@ -1977,6 +1987,12 @@ metric.uniq:
   searches_with_filters_with_iv:            {counter: cnt_iv_s_filter_price,        key: [x],  m42: False}
   searches_with_filters_with_contacts:      {counter: cnt_contacts_s_filter_price,        key: [x],  m42: False}
   searches_with_filters_with_btc:           {counter: cnt_btc_views_s_filter_price,        key: [x],  m42: False}
+  users_item_views_delivery_serp:          {counter: cnt_iv_delivery_serp,      key: [cookie]}
+  users_click_delivery_serp:               {counter: cnt_click_delivery_serp,   key: [cookie]}
+  users_widget_delivery_serp:              {counter: cnt_widget_delivery_serp,  key: [cookie]}
+  users_confirm_delivery_serp:             {counter: cnt_confirm_delivery_serp, key: [cookie]}
+  users_contact_delivery_serp:             {counter: cnt_contact_delivery_serp, key: [cookie]}
+  widget_delivery_serp:				       {counter: cnt_widget_delivery_serp,  key: [item_x]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
