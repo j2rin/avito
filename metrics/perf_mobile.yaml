@@ -99,39 +99,39 @@ metric.counter:
   prepare_core_exceptions:                  {filter: [{stage_name: Prepare, is_core_content: true}], obs: [exceptions], m42: True}
   serverloading_core_exceptions:            {filter: [{stage_name: ServerLoading, is_core_content: true}], obs: [exceptions], m42: True}
 
-  draw_ok_events:                          {filter: [{stage_name.in: [Draw,ServerLoading], $or: [response: "ok", *no_data_placeholder_no_error] }], obs: [events, exceptions], m42: True}
-  draw_new_exceptions:                     {filter: [*ios, {stage_name.in: [Draw,ServerLoading], $or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error] }], obs: [exceptions], m42: True}
-  draw_new_exceptions_wo_no_data:          {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response.!in: ["no-data-placeholder","ok"]}], obs: [exceptions], m42: True}
-  draw_exceptions_somehow_else_displayed:  {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response: "somehow-else-displayed-error"}], obs: [exceptions], m42: True}
-  draw_exceptions_unknown:                 {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response: "unknown-error"}], obs: [exceptions], m42: True}
-  draw_exceptions_something_went_wrong:    {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response: "something-went-wrong-error"}], obs: [exceptions], m42: True}
-  draw_exceptions_no_internet:             {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response: "no-internet-error"}], obs: [exceptions], m42: True}
-  draw_exceptions_nothing_found:           {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response: "nothing-found-error"}], obs: [exceptions], m42: True}
-  draw_exceptions_no_data_placeholder:     {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response: "no-data-placeholder"}], obs: [exceptions], m42: True}
-  draw_exceptions_no_data_placeholder_error:     {filter: [*ios, stage_name.in: [Draw,ServerLoading], *no_data_placeholder_error], obs: [exceptions], m42: True}
-  draw_exceptions_no_data_placeholder_no_error:  {filter: [*ios, stage_name.in: [Draw,ServerLoading], *no_data_placeholder_no_error], obs: [exceptions], m42: True}
-  draw_exceptions_failed_to_load:          {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response: "failed-to-load-error"}], obs: [exceptions], m42: True}
-  draw_exceptions_failed_to_perform_action: {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response: "failed-to-perform-action-error"}], obs: [exceptions], m42: True}
-  draw_exceptions_failed_to_reload:        {filter: [*ios, {stage_name.in: [Draw,ServerLoading], response: "failed-to-reload-error"}], obs: [exceptions], m42: True}
+  draw_ok_events:                          {filter: [stage_name: Draw, $or: [response: "ok", *no_data_placeholder_no_error] ], obs: [events, exceptions], m42: True}
+  draw_new_exceptions:                     {filter: [*ios, stage_name: Draw, $or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error] ], obs: [events, exceptions], m42: True}
+  draw_new_exceptions_wo_no_data:          {filter: [*ios, stage_name: Draw, response.!in: ["no-data-placeholder","ok"]], obs: [events, exceptions], m42: True}
+  draw_exceptions_somehow_else_displayed:  {filter: [stage_name: Draw, response: "somehow-else-displayed-error"], obs: [events, exceptions], m42: True}
+  draw_exceptions_unknown:                 {filter: [stage_name: Draw, response: "unknown-error"], obs: [events, exceptions], m42: True}
+  draw_exceptions_something_went_wrong:    {filter: [stage_name: Draw, response: "something-went-wrong-error"], obs: [events, exceptions], m42: True}
+  draw_exceptions_no_internet:             {filter: [stage_name: Draw, response: "no-internet-error"], obs: [events, exceptions], m42: True}
+  draw_exceptions_nothing_found:           {filter: [stage_name: Draw, response: "nothing-found-error"], obs: [events, exceptions], m42: True}
+  draw_exceptions_no_data_placeholder:     {filter: [stage_name: Draw, response: "no-data-placeholder"], obs: [events, exceptions], m42: True}
+  draw_exceptions_no_data_placeholder_error:     {filter: [stage_name.in: [Draw,ServerLoading], *no_data_placeholder_error], obs: [events, exceptions], m42: True}
+  draw_exceptions_no_data_placeholder_no_error:  {filter: [stage_name.in: [Draw,ServerLoading], *no_data_placeholder_no_error], obs: [events, exceptions], m42: True}
+  draw_exceptions_failed_to_load:          {filter: [stage_name: Draw, response: "failed-to-load-error"], obs: [events, exceptions], m42: True}
+  draw_exceptions_failed_to_perform_action: {filter: [stage_name: Draw, response: "failed-to-perform-action-error"], obs: [events, exceptions], m42: True}
+  draw_exceptions_failed_to_reload:        {filter: [stage_name: Draw, response: "failed-to-reload-error"], obs: [events, exceptions], m42: True}
 
 
-  toast_exceptions:                        {filter: [*ios, {error_dialog_type: toast}], obs: [exceptions], m42: True}
-  toast_core_exceptions:                   {filter: [*ios, {error_dialog_type: toast, is_core_content: true}], obs: [exceptions], m42: True}
-  toast_exceptions_unknown:                {filter: [*ios, {error_dialog_type: toast, response: "unknown-error"}], obs: [exceptions], m42: True}
-  toast_exceptions_somehow_else_displayed: {filter: [*ios, {error_dialog_type: toast, response: "somehow-else-displayed-error"}], obs: [exceptions], m42: True}
-  toast_exceptions_no_internet:            {filter: [*ios, {error_dialog_type: toast, response: "no-internet-error"}], obs: [exceptions], m42: True}
-  toast_exceptions_failed_to_load:         {filter: [*ios, {error_dialog_type: toast, response: "failed-to-load-error"}], obs: [exceptions], m42: True}
-  toast_exceptions_failed_to_perform_action: {filter: [*ios, {error_dialog_type: toast, response: "failed-to-perform-action-error"}], obs: [exceptions], m42: True}
-  toast_exceptions_failed_to_reload:        {filter: [*ios, {error_dialog_type: toast, response: "failed-to-reload-error"}], obs: [exceptions], m42: True}
+  toast_exceptions:                        {filter: [stage_name: Draw,error_dialog_type: toast], obs: [exceptions], m42: True}
+  toast_core_exceptions:                   {filter: [stage_name: Draw,error_dialog_type: toast, is_core_content: true], obs: [events, exceptions], m42: True}
+  toast_exceptions_unknown:                {filter: [stage_name: Draw,error_dialog_type: toast, response: "unknown-error"], obs: [events, exceptions], m42: True}
+  toast_exceptions_somehow_else_displayed: {filter: [stage_name: Draw,error_dialog_type: toast, response: "somehow-else-displayed-error"], obs: [events, exceptions], m42: True}
+  toast_exceptions_no_internet:            {filter: [stage_name: Draw,error_dialog_type: toast, response: "no-internet-error"], obs: [events, exceptions], m42: True}
+  toast_exceptions_failed_to_load:         {filter: [stage_name: Draw,error_dialog_type: toast, response: "failed-to-load-error"], obs: [events, exceptions], m42: True}
+  toast_exceptions_failed_to_perform_action: {filter: [stage_name: Draw,error_dialog_type: toast, response: "failed-to-perform-action-error"], obs: [events, exceptions], m42: True}
+  toast_exceptions_failed_to_reload:        {filter: [stage_name: Draw,error_dialog_type: toast, response: "failed-to-reload-error"], obs: [events, exceptions], m42: True}
 
-  dialog_exceptions:                        {filter: [*ios, {error_dialog_type.isnull: false}], obs: [exceptions], m42: True}
-  dialog_core_exceptions:                   {filter: [*ios, {error_dialog_type.isnull: false, is_core_content: true}], obs: [exceptions], m42: True}
-  dialog_exceptions_unknown:                {filter: [*ios, {error_dialog_type.isnull: false, response: "unknown-error"}], obs: [exceptions], m42: True}
-  dialog_exceptions_somehow_else_displayed: {filter: [*ios, {error_dialog_type.isnull: false, response: "somehow-else-displayed-error"}], obs: [exceptions], m42: True}
-  dialog_exceptions_no_internet:            {filter: [*ios, {error_dialog_type.isnull: false, response: "no-internet-error"}], obs: [exceptions], m42: True}
-  dialog_exceptions_failed_to_load:         {filter: [*ios, {error_dialog_type.isnull: false, response: "failed-to-load-error"}], obs: [exceptions], m42: True}
-  dialog_exceptions_failed_to_perform_action: {filter: [*ios, {error_dialog_type.isnull: false, response: "failed-to-perform-action-error"}], obs: [exceptions], m42: True}
-  dialog_exceptions_failed_to_reload:        {filter: [*ios, {error_dialog_type.isnull: false, response: "failed-to-reload-error"}], obs: [exceptions], m42: True}
+  dialog_exceptions:                        {filter: [stage_name: Draw,error_dialog_type.isnull: false], obs: [events, exceptions], m42: True}
+  dialog_core_exceptions:                   {filter: [stage_name: Draw,error_dialog_type.isnull: false, is_core_content: true], obs: [events, exceptions], m42: True}
+  dialog_exceptions_unknown:                {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "unknown-error"], obs: [events, exceptions], m42: True}
+  dialog_exceptions_somehow_else_displayed: {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "somehow-else-displayed-error"], obs: [events, exceptions], m42: True}
+  dialog_exceptions_no_internet:            {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "no-internet-error"], obs: [events, exceptions], m42: True}
+  dialog_exceptions_failed_to_load:         {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "failed-to-load-error"], obs: [events, exceptions], m42: True}
+  dialog_exceptions_failed_to_perform_action: {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "failed-to-perform-action-error"], obs: [events, exceptions], m42: True}
+  dialog_exceptions_failed_to_reload:        {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "failed-to-reload-error"], obs: [events, exceptions], m42: True}
 
 metric.uniq:
   user_draw_exceptions:                    {counter: cnt_draw_exceptions, key: [cookie_id], m42: True}
