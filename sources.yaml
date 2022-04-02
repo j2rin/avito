@@ -252,6 +252,16 @@ perf_mobile:
   dtm: observation_date
   segm: cookie_id
 
+perf_content_sli:
+  metric_configs: [perf_content_sli]
+  database: vertica
+  table: dma.performance_requests_sli
+  dimensions: [platform]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id
+
 perf_mobile_apps_startup_times:
   metric_configs: [perf_mobile_apps_startup_times]
   database: vertica
@@ -1664,8 +1674,8 @@ rating_search_stream:
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
-  
-  
+
+
 videocalls_stream:
   metric_configs: [videocalls_stream]
   database: vertica
@@ -1713,7 +1723,7 @@ msh_banned_contacts:
   primary_subject: user
   dtm: event_date
   segm: item_id
-  
+
 chatbot_events:
   metric_configs: [chatbot_events]
   database: vertica
