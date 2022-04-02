@@ -27,6 +27,15 @@ metric.counter:
   cnt_draw_events_p75:                     {filter: [{stage_name: Draw}], obs: [events_p75], m42: False}
   cnt_draw_events_p95:                     {filter: [{stage_name: Draw}], obs: [events_p95], m42: False}
   cnt_draw_exceptions:                     {filter: [{stage_name: Draw}], obs: [exceptions], m42: False}
+  cnt_init_appstart_duration:                  {filter: [{stage_name: Init_appstart}], obs: [duration], m42: False}
+  init_appstart_duration_events:           {filter: [{stage_name: Init_appstart}], obs: [duration_events], m42: False}
+  init_appstart_events:                    {filter: [{stage_name: Init_appstart}], obs: [events], m42: False}
+  init_appstart_events_exceptions:         {filter: [{stage_name: Init_appstart}], obs: [events, exceptions], m42: False}
+  init_appstart_events_p25:                {filter: [{stage_name: Init_appstart}], obs: [events_p25], m42: False}
+  init_appstart_events_p50:                {filter: [{stage_name: Init_appstart}], obs: [events_p50], m42: False}
+  init_appstart_events_p75:                {filter: [{stage_name: Init_appstart}], obs: [events_p75], m42: False}
+  init_appstart_events_p95:                {filter: [{stage_name: Init_appstart}], obs: [events_p95], m42: False}
+  init_appstart_exceptions:                {filter: [{stage_name: Init_appstart}], obs: [exceptions], m42: False}
   cnt_draw_session_duration:               {filter: [{stage_name: Draw}], obs: [session_duration], m42: False}
   cnt_draw_session_duration_events:        {filter: [{stage_name: Draw}], obs: [session_duration_events], m42: False}
   cnt_draw_sessions:                       {filter: [{stage_name: Draw}], obs: [sessions], m42: False}
@@ -216,6 +225,11 @@ metric.ratio:
   init_appstart_session_percent_p50:       {num: cnt_init_appstart_sessions_p50,  den: cnt_init_appstart_sessions}
   init_appstart_session_percent_p75:       {num: cnt_init_appstart_sessions_p75,  den: cnt_init_appstart_sessions}
   init_appstart_session_percent_p95:       {num: cnt_init_appstart_sessions_p95,  den: cnt_init_appstart_sessions}
+  init_appstart_duration:                  {num: cnt_init_appstart_duration, den: init_appstart_duration_events}
+  init_appstart_percent_p25:               {num: init_appstart_events_p25,  den: init_appstart_events}
+  init_appstart_percent_p50:               {num: init_appstart_events_p50,  den: init_appstart_events}
+  init_appstart_percent_p75:               {num: init_appstart_events_p75,  den: init_appstart_events}
+  init_appstart_percent_p95:               {num: init_appstart_events_p95,  den: init_appstart_events}
   init_duration:                           {num: cnt_init_duration,               den: cnt_init_duration_events}
   init_percent_p25:                        {num: cnt_init_events_p25,             den: cnt_init_events}
   init_percent_p50:                        {num: cnt_init_events_p50,             den: cnt_init_events}
