@@ -993,6 +993,13 @@ metric.counter:
   cnt_contacts_delivery_rec_u2i:           {filter: [eid: 4675, *x_is_u2i]}
   cnt_contacts_delivery_fav:               {filter: [eid: 4675, *x_is_fav_lst]}
   cnt_contacts_s_filter_price:             {filter: [*is_contact_wo_guessing, *x_is_search, {$or: [[*x_is_filter_search], [*x_is_price_filter_search]]}], m42: False}
+  cnt_delivery_iv_serp:                    {filter: [*is_iv_wo_guessing, *is_delivery_active, *x_is_search], m42: False}
+  cnt_delivery_click_serp:                 {filter: [*is_delivery_pvz, eid: 2483, *is_delivery_active, *x_is_search], m42: False}
+  cnt_delivery_widget_serp:                {filter: [eid: 2013, *is_delivery_active, *x_is_search], m42: False}
+  cnt_delivery_confirm_serp:               {filter: [eid: 2749, *is_delivery_active, *x_is_search], m42: False}
+  cnt_delivery_order_create_serp:          {filter: [eid: 2015, *is_delivery_active, *x_is_search], m42: False}
+  cnt_contact_delivery_serp:               {filter: [eid: 4675, *is_delivery_active, *x_is_search], m42: False}
+
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1101,6 +1108,7 @@ metric.uniq:
   click_delivery_any_ext_block:            {counter: cnt_click_delivery_any_ext_block,  key: [item_x]}
   contacts_any_ext_block:                  {counter: cnt_cs_any_ext_block,            key: [item_x]}
   contacts_delivery:                       {counter: cnt_cs_dlv,                      key: [item_x]}
+  contact_delivery_serp:                   {counter: cnt_contact_delivery_serp,       key: [item_x]}
   contacts_fav_list:                       {counter: cnt_cs_fav_list,                 key: [item_x]}
   contacts_msg_fav_list:                   {counter: cnt_cs_msg_fav_list,             key: [item_x]}
   contacts_ph_fav_list:                    {counter: cnt_cs_ph_fav_list,              key: [item_x]}
@@ -1199,12 +1207,17 @@ metric.uniq:
   delivery_contact_all_services_rec_u2i:   {counter: total_delivery_contact_all_services_rec_u2i,    key: [item_x]}
   delivery_contact_all_services_fav:       {counter: total_delivery_contact_all_services_fav,        key: [item_x]}
   delivery_item_view:                      {counter: delivery_total_item_view,                       key: [cookie_item], m42: true}
+  delivery_iv_serp:                        {counter: cnt_delivery_iv_serp,                           key: [item_x]}
   delivery_click:                          {counter: total_delivery_click,                           key: [cookie_item], m42: true}  #сейчас дубль delivery_click_wo_messenger, после добавления кликов с платформенной кнопки мессенджера они разойдутся
+  delivery_click_serp:                     {counter: cnt_delivery_click_serp,                        key: [item_x]}
   delivery_click_wo_messenger:             {counter: total_delivery_click_wo_messenger,              key: [cookie_item], m42: true}
   delivery_widget:                         {counter: total_delivery_widget,                          key: [cookie_item], m42: true}
+  delivery_widget_serp:                    {counter: cnt_delivery_widget_serp,                       key: [item_x]}
   delivery_confirm:                        {counter: total_delivery_confirm,                         key: [cookie_item], m42: true}
+  delivery_confirm_serp:                   {counter: cnt_delivery_confirm_serp,                      key: [item_x]}
   delivery_contact:                        {counter: total_delivery_contact,                         key: [cookie_item], m42: true}
   delivery_item_contact:                   {counter: total_delivery_item_contact,                    key: [cookie_item], m42: true}
+  delivery_order_create_serp:              {counter: cnt_delivery_order_create_serp,                 key: [item_x]}
   fav_added_delivery:                      {counter: cnt_fav_dlv,                     key: [item_x]}
   fav_added_from_map:                      {counter: cnt_fav_from_map,                key: [item_x]}
   fav_added_premium:                       {counter: cnt_fav_premium,                 key: [item_x]}
@@ -1974,9 +1987,15 @@ metric.uniq:
   user_c_with_multilocs_vertical_undefined:       {counter: c_with_multilocs_vertical_undefined,          key: [cookie], m42: False}
   contacts_from_searches_with_filters:            {counter: cnt_contacts_s_filter_price,        key: [item_x]}
   users_contacts_from_searches_with_filters:      {counter: cnt_contacts_s_filter_price,        key: [cookie]}
-  searches_with_filters_with_iv:            {counter: cnt_iv_s_filter_price,        key: [x],  m42: False}
-  searches_with_filters_with_contacts:      {counter: cnt_contacts_s_filter_price,        key: [x],  m42: False}
-  searches_with_filters_with_btc:           {counter: cnt_btc_views_s_filter_price,        key: [x],  m42: False}
+  searches_with_filters_with_iv:           {counter: cnt_iv_s_filter_price,        key: [x],  m42: False}
+  searches_with_filters_with_contacts:     {counter: cnt_contacts_s_filter_price,        key: [x],  m42: False}
+  searches_with_filters_with_btc:          {counter: cnt_btc_views_s_filter_price,        key: [x],  m42: False}
+  users_delivery_iv_serp:                  {counter: cnt_delivery_iv_serp,               key: [cookie]}
+  users_delivery_click_serp:               {counter: cnt_delivery_click_serp,            key: [cookie]}
+  users_delivery_widget_serp:              {counter: cnt_delivery_widget_serp,           key: [cookie]}
+  users_delivery_confirm_serp:             {counter: cnt_delivery_confirm_serp,          key: [cookie]}
+  users_contact_delivery_serp:             {counter: cnt_contact_delivery_serp,          key: [cookie]}
+  user_delivery_order_create_serp:         {counter: cnt_delivery_order_create_serp,     key: [cookie]}
 
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
