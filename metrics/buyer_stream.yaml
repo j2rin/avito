@@ -86,7 +86,7 @@ definitions:
   - &is_iv_wo_guessing    {<<: *is_iv, item_x_type: 0}
   - &is_btc_wo_guessing     {$or: [{<<: *is_btc, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
   - &is_contact_wo_guessing    {$or: [{<<: *is_contact, eid.!=: 303},  {eid: *eid_ph, item_x_type: 0}]}
-  
+
   - &is_videocalls_contact  {eid: 5629}
 
   - &is_shop {search_flags.bit: 7}
@@ -248,6 +248,7 @@ definitions:
 
   - &is_new_btc {new_user_btc: true}
   - &is_old_btc {new_user_btc: false}
+
 
 
 metric.counter:
@@ -1000,6 +1001,7 @@ metric.counter:
   cnt_delivery_order_create_serp:          {filter: [eid: 2015, *is_delivery_active, *x_is_search], m42: False}
   cnt_contact_delivery_serp:               {filter: [eid: 4675, *is_delivery_active, *x_is_search], m42: False}
 
+  cnt_fatal_app_errors:                    {filter: [eid: 3456], m42: False}
 
 metric.uniq:
   booking_created_short_rent_grouped:      {counter: booking_created_short_rent,      key: [cookie_item]}
@@ -1997,6 +1999,8 @@ metric.uniq:
   users_contact_delivery_serp:             {counter: cnt_contact_delivery_serp,          key: [cookie]}
   user_delivery_order_create_serp:         {counter: cnt_delivery_order_create_serp,     key: [cookie]}
 
+  sess_fatal_app_errors:                   {counter: cnt_fatal_app_errors, key: [session]}
+
 metric.ratio:
   btc_from_map_per_map_search_area:        {num: buyer_target_clicks_from_map_area, den: searches_map_area}
   btc_from_witcher_any_per_witcher_any:    {num: btc_from_witcher_any,            den: searches_witcher_any}
@@ -2485,4 +2489,3 @@ metric.ratio:
   users_btc_from_s_noq_per_users_s_noq:      {num: user_btc_noq, den: user_noq, m42: False}
   users_btc_from_s_with_filters_per_users_s_with_filters:      {num: users_btc_search_filter_any, den: users_search_filter_any, m42: False}
   users_searches_with_btc_per_users_searches:   {num: users_buyer_target_click_serp_daily, den: users_search, m42: False}
-
