@@ -28,6 +28,9 @@ metric.counter:
   seller_delivery_items_return_delivered: {filter: [{is_return_delivered: true}], m42: false}
   seller_delivery_items_returned:         {filter: [{is_returned: true}], m42: false}
   seller_delivery_items_unconfirmed:      {filter: [{is_unconfirmed: true}], m42: false}
+  
+  seller_delivery_items_paid_start_date:       {filter: [{is_paid: true}, {create_date.>: $ab_start_date}], m42: false}
+  seller_delivery_items_performed_start_date:  {filter: [{is_performed: true}, {create_date.>: $ab_start_date}], m42: false}
 
   seller_delivery_revenue_no_vat_created:          {filter: [{is_created: true}], obs: [delivery_revenue_no_vat], m42: false}
   seller_delivery_revenue_no_vat_paid:             {filter: [{is_paid: true}], obs: [delivery_revenue_no_vat], m42: false}
@@ -137,6 +140,9 @@ metric.uniq:
   seller_delivery_orders_returned:         {counter: seller_delivery_items_returned, key: [deliveryorder_id], m42: false}
   seller_delivery_orders_unconfirmed:      {counter: seller_delivery_items_unconfirmed, key: [deliveryorder_id], m42: false}
 
+  seller_delivery_orders_paid_start_date:       {counter: seller_delivery_items_paid_start_date, key: [deliveryorder_id], m42: false}
+  seller_delivery_orders_performed_start_date:  {counter: seller_delivery_items_performed_start_date, key: [deliveryorder_id], m42: false}
+
 metric.ratio:
   seller_delivery_average_item_price_created: {num: seller_delivery_gmv_created, den: seller_delivery_items_created, m42: false}
   seller_delivery_average_item_price_paid: {num: seller_delivery_gmv_paid, den: seller_delivery_items_paid, m42: false}
@@ -167,3 +173,6 @@ metric.ratio:
   seller_delivery_average_revenue_no_vat_return_delivered: {num: seller_delivery_revenue_no_vat_return_delivered, den: seller_delivery_orders_return_delivered, m42: false}
   seller_delivery_average_revenue_no_vat_returned: {num: seller_delivery_revenue_no_vat_returned, den: seller_delivery_orders_returned, m42: false}
   seller_delivery_average_revenue_no_vat_unconfirmed: {num: seller_delivery_revenue_no_vat_unconfirmed, den: seller_delivery_orders_unconfirmed, m42: false}
+  
+  seller_delivery_items_performed_per_paid_start_date: {num: seller_delivery_items_performed_start_date, den: seller_delivery_items_paid_start_date, m42: false}
+  seller_delivery_orders_performed_per_paid_start_date: {num: seller_delivery_orders_performed_start_date, den: seller_delivery_orders_paid_start_date, m42: false}
