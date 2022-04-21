@@ -30,6 +30,7 @@ definitions:
   - &collab         {item_engines.bit: 0}
   - &user2vec       {item_engines.bit: 1}
   - &similars       {item_engines.bit: 3}
+  - &graph          {item_engines.bit: 4}
 
   - &x_is_search    {x_eid: *eid_search}
   - &x_is_rec       {$or: [{x_eid: *eid_rec}, {search_features.bit: 0}]}
@@ -303,14 +304,15 @@ metric.counter:
   cnt_btc_push_land:                       {filter: [*is_btc_wo_guessing, *x_is_push_land], m42: False}
   cnt_btc_rec_i2i:                         {filter: [*is_btc_wo_guessing, *x_is_i2i], m42: False}
   cnt_btc_new_rec_i2i:                     {filter: [*is_new_btc,*is_btc_wo_guessing, *x_is_i2i], m42: False}
-  cnt_btc_old_rec_i2i:                {filter: [*is_old_btc,*is_btc_wo_guessing, *x_is_i2i], m42: False}
+  cnt_btc_old_rec_i2i:                     {filter: [*is_old_btc,*is_btc_wo_guessing, *x_is_i2i], m42: False}
   cnt_btc_rec_cv2vac:                      {filter: [*is_btc_wo_guessing, *x_is_cv2vac], m42: False}
   cnt_btc_rec_u2i:                         {filter: [*is_btc_wo_guessing, *x_is_u2i], m42: False}
   cnt_btc_rec_u2i_collab:                  {filter: [*is_btc_wo_guessing, *x_is_u2i, *collab], m42: False}
   cnt_btc_rec_u2i_user2vec:                {filter: [*is_btc_wo_guessing, *x_is_u2i, *user2vec], m42: False}
   cnt_btc_rec_u2i_similars:                {filter: [*is_btc_wo_guessing, *x_is_u2i, *similars], m42: False}
+  cnt_btc_rec_u2i_graph:                   {filter: [*is_btc_wo_guessing, *x_is_u2i, *graph], m42: False}
   cnt_btc_new_rec_u2i:                     {filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_u2i], m42: False}
-  cnt_btc_old_rec_u2i:                {filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_u2i], m42: False}
+  cnt_btc_old_rec_u2i:                     {filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_u2i], m42: False}
   cnt_btc_rec_vas:                         {filter: [*is_btc_wo_guessing, *is_item_vas, *x_is_rec], m42: False}
   cnt_btc_rec_perfvas_x2_1:                {filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec], m42: False}
   cnt_btc_rec_perfvas_x2_7:                {filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_7, *x_is_rec], m42: False}
@@ -406,6 +408,7 @@ metric.counter:
   cnt_cs_rec_u2i_collab:                   {filter: [*is_contact_wo_guessing, *x_is_u2i, *collab], m42: False}
   cnt_cs_rec_u2i_user2vec:                 {filter: [*is_contact_wo_guessing, *x_is_u2i, *user2vec], m42: False}
   cnt_cs_rec_u2i_similars:                 {filter: [*is_contact_wo_guessing, *x_is_u2i, *similars], m42: False}
+  cnt_cs_rec_u2i_graph:                    {filter: [*is_contact_wo_guessing, *x_is_u2i, *graph], m42: False}
   cnt_cs_msg_rec_u2i:                      {filter: [*is_msg, *x_is_u2i], m42: False}
   cnt_cs_perfvas_w:                        {filter: [*is_contact_wo_guessing, *x_is_search, *is_item_perfvas], obs: [vas_power], m42: False}
   cnt_cs_ph_rec_u2i:                       {filter: [*is_ph, *x_is_u2i], m42: False}
@@ -490,6 +493,7 @@ metric.counter:
   cnt_fav_rec_u2i_collab:                  {filter: [*is_fav, *x_is_u2i, *collab], m42: False}
   cnt_fav_rec_u2i_user2vec:                {filter: [*is_fav, *x_is_u2i, *user2vec], m42: False}
   cnt_fav_rec_u2i_similars:                {filter: [*is_fav, *x_is_u2i, *similars], m42: False}
+  cnt_fav_rec_u2i_graph:                   {filter: [*is_fav, *x_is_u2i, *graph], m42: False}
   cnt_fav_rec_u2i_premium:                 {filter: [*is_fav, *is_item_premium, *x_is_u2i], m42: False}
   cnt_fav_rec_u2i_push:                    {filter: [*is_fav, *is_item_push, *x_is_u2i], m42: False}
   cnt_fav_rec_u2i_vas:                     {filter: [*is_fav, *is_item_vas, *x_is_u2i], m42: False}
@@ -1069,6 +1073,7 @@ metric.uniq:
   buyer_target_clicks_rec_u2i_collab:      {counter: cnt_btc_rec_u2i_collab,          key: [item_x]}
   buyer_target_clicks_rec_u2i_user2vec:    {counter: cnt_btc_rec_u2i_user2vec,        key: [item_x]}
   buyer_target_clicks_rec_u2i_similars:    {counter: cnt_btc_rec_u2i_similars,        key: [item_x]}
+  buyer_target_clicks_rec_u2i_graph:       {counter: cnt_btc_rec_u2i_graph,           key: [item_x]}
   buyer_target_clicks_new_rec_u2i:         {counter: cnt_btc_new_rec_u2i,             key: [item_x]}
   buyer_target_clicks_returned_rec_u2i:    {counter: cnt_btc_old_rec_u2i,             key: [item_x]}
   buyer_target_clicks_rec_job_ast:         {counter: cnt_btc_job_ast,                 key: [item_x]}
@@ -1137,6 +1142,7 @@ metric.uniq:
   contacts_rec_u2i_collab:                 {counter: cnt_cs_rec_u2i_collab,           key: [item_x]}
   contacts_rec_u2i_user2vec:               {counter: cnt_cs_rec_u2i_user2vec,         key: [item_x]}
   contacts_rec_u2i_similars:               {counter: cnt_cs_rec_u2i_similars,         key: [item_x]}
+  contacts_rec_u2i_graph:                  {counter: cnt_cs_rec_u2i_graph,            key: [item_x]}
   contacts_rec_u2i_premium:                {counter: cnt_cs_rec_u2i_premium,          key: [item_x]}
   contacts_rec_u2i_push:                   {counter: cnt_cs_rec_u2i_push,             key: [item_x]}
   contacts_rec_u2i_vas:                    {counter: cnt_cs_rec_u2i_vas,              key: [item_x]}
@@ -1240,6 +1246,7 @@ metric.uniq:
   fav_added_rec_u2i_collab:                {counter: cnt_fav_rec_u2i_collab,          key: [item_x]}
   fav_added_rec_u2i_user2vec:              {counter: cnt_fav_rec_u2i_user2vec,        key: [item_x]}
   fav_added_rec_u2i_similars:              {counter: cnt_fav_rec_u2i_similars,        key: [item_x]}
+  fav_added_rec_u2i_graph:                 {counter: cnt_fav_rec_u2i_graph,           key: [item_x]}
   fav_added_rec_u2i_premium:               {counter: cnt_fav_rec_u2i_premium,         key: [item_x]}
   fav_added_rec_u2i_push:                  {counter: cnt_fav_rec_u2i_push,            key: [item_x]}
   fav_added_rec_u2i_vas:                   {counter: cnt_fav_rec_u2i_vas,             key: [item_x]}
@@ -1296,6 +1303,7 @@ metric.uniq:
   item_views_rec_u2i_collab:               {counter: cnt_iv_rec_u2i_collab,           key: [item_x]}
   item_views_rec_u2i_user2vec:             {counter: cnt_iv_rec_u2i_user2vec,         key: [item_x]}
   item_views_rec_u2i_similars:             {counter: cnt_iv_rec_u2i_similars,         key: [item_x]}
+  item_views_rec_u2i_graph:                {counter: cnt_iv_rec_u2i_graph,         key: [item_x]}
   item_views_rec_u2i_premium:              {counter: cnt_iv_rec_u2i_premium,          key: [item_x]}
   item_views_rec_u2i_push:                 {counter: cnt_iv_rec_u2i_push,             key: [item_x]}
   item_views_rec_u2i_vas:                  {counter: cnt_iv_rec_u2i_vas,              key: [item_x]}
@@ -1437,6 +1445,7 @@ metric.uniq:
   user_fav_added_rec_u2i_collab:           {counter: cnt_fav_rec_u2i_collab,          key: [cookie]}
   user_fav_added_rec_u2i_user2vec:         {counter: cnt_fav_rec_u2i_user2vec,        key: [cookie]}
   user_fav_added_rec_u2i_similars:         {counter: cnt_fav_rec_u2i_similars,        key: [cookie]}
+  user_fav_added_rec_u2i_graph:            {counter: cnt_fav_rec_u2i_graph,           key: [cookie]}
   user_fav_added_rec_job_ast:              {counter: cnt_fav_rec_job_ast,             key: [cookie]}
   user_fav_from_map_total:                 {counter: cnt_fav_from_map_s_area,         key: [cookie]}
   user_favorites_list_views:               {counter: favorites_list_views,            key: [cookie]}
@@ -1520,6 +1529,7 @@ metric.uniq:
   user_btc_rec_u2i_collab:                 {counter: cnt_btc_rec_u2i_collab,          key: [cookie]}
   user_btc_rec_u2i_user2vec:               {counter: cnt_btc_rec_u2i_user2vec,        key: [cookie]}
   user_btc_rec_u2i_similars:               {counter: cnt_btc_rec_u2i_similars,        key: [cookie]}
+  user_btc_rec_u2i_graph:                  {counter: cnt_btc_rec_u2i_graph,           key: [cookie]}
   user_btc_new_rec_u2i:                    {counter: cnt_btc_new_rec_u2i,             key: [cookie]}
   user_btc_returned_rec_u2i:               {counter: cnt_btc_old_rec_u2i,             key: [cookie]}
   users_contact_rec_daily:                 {counter: cnt_cs_rec,                      key: [cookie]}
@@ -1532,6 +1542,7 @@ metric.uniq:
   users_contact_rec_u2i:                   {counter: cnt_cs_rec_u2i,                  key: [cookie]}
   users_contact_rec_u2i_collab:            {counter: cnt_cs_rec_u2i_collab,           key: [cookie]}
   users_contact_rec_u2i_user2vec:          {counter: cnt_cs_rec_u2i_user2vec,         key: [cookie]}
+  users_contact_rec_u2i_graph:             {counter: cnt_cs_rec_u2i_graph,            key: [cookie]}
   users_contact_rec_u2i_similars:          {counter: cnt_cs_rec_u2i_similars,         key: [cookie]}
   users_contact_rec_u2i_vas:               {counter: cnt_cs_rec_u2i_vas,              key: [cookie]}
   users_contact_search_query:              {counter: cnt_s_query_c,                   key: [cookie]}
@@ -1571,6 +1582,7 @@ metric.uniq:
   users_item_view_rec_u2i_collab:          {counter: cnt_iv_rec_u2i_collab,           key: [cookie]}
   users_item_view_rec_u2i_user2vec:        {counter: cnt_iv_rec_u2i_user2vec,         key: [cookie]}
   users_item_view_rec_u2i_similars:        {counter: cnt_iv_rec_u2i_similars,         key: [cookie]}
+  users_item_view_rec_u2i_graph:           {counter: cnt_iv_rec_u2i_graph,            key: [cookie]}
   users_item_view_rec_u2i_vas:             {counter: cnt_iv_rec_u2i_vas,              key: [cookie]}
   users_item_view_search_query:            {counter: cnt_s_query_iv,                  key: [cookie]}
   users_item_view_search_noquery:          {counter: cnt_s_noquery_iv,                key: [cookie]}
