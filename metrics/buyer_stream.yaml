@@ -634,6 +634,7 @@ metric.counter:
   cnt_s_wtc_dlv:                           {filter: [*is_1p, *is_search, *x_is_witcher_delivery], m42: False}
   cnt_s_wtc_dlv_new_auto_flats_reg:        {filter: [*is_1p, *is_search, {$or: [[*x_is_witcher_delivery], [*x_is_witcher_new_auto], [*x_is_witcher_new_flats], [*x_is_witcher_regions]]}], m42: False}
   cnt_active:                              {filter: [{$or: [[*is_1p, *is_search], [*is_iv], [*is_btc]]}], m42: False}
+  cnt_any_action:                          {}
   cnt_used_cars_views:                     {filter: [*is_iv, *is_item_used_car]}
   contacts:                                {filter: [*is_contact]}
   contact_part_qual_exists:                {filter: [*part_qual_exists, *is_contact], m42: False}
@@ -1660,6 +1661,7 @@ metric.uniq:
   sess_searches_radius:                    {counter: searches_radius,                 key: [session]}
   sess_searches_road:                      {counter: searches_road,                   key: [session]}
   sessions_active:                         {counter: cnt_active,                      key: [session]}
+  sess_any_action:                         {counter: cnt_any_action,                  key: [session]}
   sessions_btc:                            {counter: bt_clicks,                       key: [session]}
   sessions_btc_r:                          {counter: cnt_btc_rec,                     key: [session]}
   sessions_btc_r_job_ast:                  {counter: cnt_btc_job_ast,                 key: [session]}
