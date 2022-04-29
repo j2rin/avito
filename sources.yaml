@@ -1788,3 +1788,59 @@ autoteka_reports:
     participant: {visitor: cookie_id, user: user_id}
     primary_subject: visitor
     dtm: autoteka_package_history_created_at
+
+buyer_confirmation_deals:
+  metric_configs: [buyer_confirmation_deals]
+  database: vertica
+  table: dma.vo_confirmation_deals
+  column_map:
+    item: item_id
+    user: buyer_id
+    chat: chat_id
+  dimensions:
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  m42_cartesian_groups:
+    - [logical_category, vertical, region]
+  participant: {user: buyer_id}
+  primary_subject: user
+  dtm: event_time
+
+seller_confirmation_deals:
+  metric_configs: [seller_confirmation_deals]
+  database: vertica
+  table: dma.vo_confirmation_deals
+  column_map:
+    item: item_id
+    user: seller_id
+    chat: chat_id
+  dimensions:
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  m42_cartesian_groups:
+    - [logical_category, vertical, region]
+  participant: {user: seller_id}
+  primary_subject: user
+  dtm: event_time

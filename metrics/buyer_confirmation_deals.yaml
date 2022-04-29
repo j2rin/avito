@@ -1,0 +1,49 @@
+metric.counter:
+  buyer_deals_confirmed_buyer:                      {filter: [dealconfirmationstate: buyer_confirmed_deal]}
+  buyer_deals_rejected_buyer:                       {filter: [dealconfirmationstate: buyer_rejected_deal]}
+  buyer_deals_answered_buyer:                       {filter: [dealconfirmationstate: ['buyer_confirmed_deal', 'buyer_rejected_deal']]}
+  buyer_deals_postponed_buyer:                      {filter: [dealconfirmationstate: ['buyer_deal_postponed', 'buyer_deal_postponed_2']]}
+
+  buyer_deals_confirmed_seller:                     {filter: [dealconfirmationstate: seller_confirmed_deal]}
+  buyer_deals_rejected_seller:                      {filter: [dealconfirmationstate: seller_rejected_deal]}
+  buyer_deals_answered_seller:                      {filter: [dealconfirmationstate: ['seller_confirmed_deal', 'seller_rejected_deal']]}
+  buyer_deals_is_working:                           {filter: [dealconfirmationstate: seller_is_working]}
+
+  buyer_works_confirmed_seller:                     {filter: [dealconfirmationstate: seller_confirmed_work]}
+  buyer_works_rejected_seller:                      {filter: [dealconfirmationstate: seller_rejected_work]}
+  buyer_works_answered_seller:                      {filter: [dealconfirmationstate: ['seller_confirmed_work', 'seller_rejected_work']]}
+
+metric.uniq:
+  buyers_confirmed_deal:                            {counter: buyer_deals_confirmed_buyer, key: [user]}
+  buyers_rejected_deal:                             {counter: buyer_deals_rejected_buyer, key: [user]}
+  buyers_answered_deal:                             {counter: buyer_deals_answered_buyer, key: [user]}
+  buyers_deal_postponed:                            {counter: buyer_deals_postponed_buyer, key: [user]}
+
+  buyers_with_sellers_confirmed_deal:               {counter: buyer_deals_confirmed_seller, key: [user]}
+  buyers_with_sellers_rejected_deal:                {counter: buyer_deals_rejected_seller, key: [user]}
+  buyers_with_sellers_answered_deal:                {counter: buyer_deals_answered_seller, key: [user]}
+  buyers_with_sellers_is_working:                   {counter: buyer_deals_is_working, key: [user]}
+
+  buyers_with_sellers_confirmed_work:               {counter: buyer_works_confirmed_seller, key: [user]}
+  buyers_with_sellers_rejected_work:                {counter: buyer_works_rejected_seller, key: [user]}
+  buyers_with_sellers_answered_work:                {counter: buyer_works_answered_seller, key: [user]}
+
+metric.ratio:
+  buyer_deals_confirmed_buyer_ratio:                {num: buyer_deals_confirmed_buyer,    den: buyer_deals_answered_buyer}
+  buyer_deals_confirmed_seller_buyer_ratio:         {num: buyer_deals_confirmed_seller,    den: buyer_deals_answered_seller}
+  buyer_works_confirmed_seller_ratio:               {num: buyer_works_confirmed_seller,    den: buyer_works_answered_seller}
+
+  buyer_deals_confirmed_seller_per_buyer_deals_confirmed_buyer:               {num: buyer_deals_confirmed_seller,    den: buyer_deals_confirmed_buyer}
+  buyer_deals_answered_seller_per_buyer_deals_confirmed_buyer:                {num: buyer_deals_answered_seller,    den: buyer_deals_confirmed_buyer}
+  buyer_works_confirmed_seller_per_buyer_deals_confirmed_seller:              {num: buyer_works_confirmed_seller,    den: buyer_deals_confirmed_seller}
+  buyer_works_answered_seller_per_buyer_deals_confirmed_seller:               {num: buyer_works_answered_seller,    den: buyer_deals_confirmed_seller}
+
+  buyers_confirmed_deal_ratio:                      {num: buyers_confirmed_deal,    den: buyers_answered_deal}
+  buyers_with_sellers_confirmed_deal_ratio:         {num: buyers_with_sellers_confirmed_deal,    den: buyers_with_sellers_answered_deal}
+  buyers_with_sellers_confirmed_work_ration:        {num: buyers_with_sellers_confirmed_work,    den: buyers_with_sellers_answered_work}
+
+  buyers_with_sellers_confirmed_deal_per_buyers_confirmed_deal:               {num: buyers_with_sellers_confirmed_deal,    den: buyers_confirmed_deal}
+  buyers_with_sellers_answered_deal_per_buyers_confirmed_deal:                {num: buyers_with_sellers_answered_deal,    den: buyers_confirmed_deal}
+  b_with_sellers_confirmed_work_per_b_with_sellers_confirmed_deal:  {num: buyers_with_sellers_confirmed_work,    den: buyers_with_sellers_confirmed_deal}
+  b_with_sellers_answered_work_per_b_with_sellers_confirmed_deal:   {num: buyers_with_sellers_answered_work,    den: buyers_with_sellers_confirmed_deal}
+
