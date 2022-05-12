@@ -1,5 +1,6 @@
 create fact autoload_package_info as
 select
+    t.event_date as __date__,
     t.add_attempt_items,
     t.add_success_items,
     t.add_time_spent_for_success_sec,

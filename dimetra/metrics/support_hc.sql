@@ -1,5 +1,6 @@
 create fact support_hc as
 select
+    t.event_date as __date__,
     t.article_views,
     t.cookie_id,
     t.end_on_article_sessions,

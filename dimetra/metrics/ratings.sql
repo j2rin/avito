@@ -1,5 +1,6 @@
 create fact ratings as
 select
+    t.event_date as __date__,
     t.cookie_id,
     t.event_date,
     t.observation_name,

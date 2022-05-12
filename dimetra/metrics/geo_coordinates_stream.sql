@@ -1,5 +1,6 @@
 create fact geo_coordinates_stream as
 select
+    t.event_date as __date__,
     t.accuracy,
     t.cookie_id as cookie,
     t.cookie_id,

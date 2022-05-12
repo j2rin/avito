@@ -1,5 +1,6 @@
 create fact msh_banned_contacts as
 select
+    t.event_date as __date__,
     t.contacts,
     t.event_date,
     t.user_id

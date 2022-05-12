@@ -1,5 +1,6 @@
 create fact other_projects_revenue as
 select
+    t.observation_date as __date__,
     t.amount_net_adj,
     t.observation_date,
     t.project_type,

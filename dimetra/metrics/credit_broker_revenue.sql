@@ -1,5 +1,6 @@
 create fact credit_broker_revenue as
 select
+    t.issued_date as __date__,
     t.cookie_id,
     t.is_early_closed,
     t.is_issued,

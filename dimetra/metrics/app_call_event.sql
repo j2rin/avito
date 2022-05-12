@@ -1,5 +1,6 @@
 create fact app_call_event as
 select
+    t.event_date as __date__,
     t.appcall_caller_end_call_rating,
     t.appcall_item_click_inapp,
     t.appcall_item_click_phone,

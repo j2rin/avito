@@ -1,5 +1,6 @@
 create fact rating_stream as
 select
+    t.event_date as __date__,
     t.contacts,
     t.contacts_with_review_list_view,
     t.cookie_id as cookie,

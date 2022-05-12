@@ -1,5 +1,6 @@
 create fact support_chat as
 select
+    t.create_date as __date__,
     t.create_date,
     t.user_id
 from dma.vo_support_chat t

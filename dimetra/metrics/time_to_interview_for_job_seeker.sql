@@ -1,5 +1,6 @@
 create fact time_to_interview_for_job_seeker as
 select
+    t.event_time as __date__,
     t.cohort,
     t.event_time,
     t.job_seeker_user_id,

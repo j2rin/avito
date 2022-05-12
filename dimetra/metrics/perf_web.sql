@@ -1,5 +1,6 @@
 create fact perf_web as
 select
+    t.observation_date as __date__,
     t.cookie_id as cookie,
     t.cookie_id,
     t.duration,

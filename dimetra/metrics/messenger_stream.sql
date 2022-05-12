@@ -1,5 +1,6 @@
 create fact messenger_stream as
 select
+    t.event_date as __date__,
     t.action_type_id,
     t.cookie_id,
     t.eid,

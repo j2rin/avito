@@ -1,5 +1,6 @@
 create fact credit_broker as
 select
+    t.event_date as __date__,
     t.cookie_id,
     t.event_count,
     t.event_date,

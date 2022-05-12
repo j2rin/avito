@@ -1,5 +1,6 @@
 create fact messenger_answered_inbox_messages as
 select
+    t.first_message_event_date as __date__,
     t.chat_subtype,
     t.chat_type,
     t.first_message_event_date,
