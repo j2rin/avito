@@ -1,5 +1,6 @@
 create fact perf_mobile_apps_startup_times as
 select
+    t.event_date as __date__,
     t.cookie_id,
     t.event_date,
     t.startup_time_count,

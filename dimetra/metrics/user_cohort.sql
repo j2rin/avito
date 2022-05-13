@@ -1,5 +1,6 @@
 create fact user_cohort as
 select
+    t.event_date as __date__,
     t.event_date,
     t.user_id,
     hash(t.user_id, t.logical_category_id) as user_logcat

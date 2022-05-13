@@ -1,5 +1,6 @@
 create fact support_ticket as
 select
+    t.create_date as __date__,
     t.by_amuser,
     t.create_date,
     t.helpdesk_seller_tickets,

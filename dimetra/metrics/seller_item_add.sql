@@ -1,5 +1,6 @@
 create fact seller_item_add as
 select
+    t.event_date as __date__,
     t.chain_item_confirm_time,
     t.chain_item_create_time,
     t.chain_last_form_input_time,

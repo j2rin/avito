@@ -1,5 +1,6 @@
 create fact classified_revenue as
 select
+    t.event_date as __date__,
     t.event_date,
     t.is_classified,
     t.is_payment,

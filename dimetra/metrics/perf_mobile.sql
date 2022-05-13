@@ -1,5 +1,6 @@
 create fact perf_mobile as
 select
+    t.observation_date as __date__,
     t.api_exceptions,
     t.cookie_id,
     t.duration,

@@ -1,5 +1,6 @@
 create fact autoteka_stream as
 select
+    t.event_date as __date__,
     t.additionalcookie_id,
     t.amount,
     t.autotekaorder_id,

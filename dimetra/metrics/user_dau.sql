@@ -1,5 +1,6 @@
 create fact user_dau as
 select
+    t.event_date as __date__,
     t.event_date,
     t.events_count,
     t.user_id as user,

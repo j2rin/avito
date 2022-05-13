@@ -1,5 +1,6 @@
 create fact production_errors as
 select
+    t.event_date as __date__,
     t.cookie_id as cookie,
     t.cookie_id,
     t.eid,

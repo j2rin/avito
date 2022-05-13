@@ -1,5 +1,6 @@
 create fact buyer_stream as
 select
+    t.event_date as __date__,
     t.SFAccount_Type,
     t.base_item_count,
     t.cookie_id as cookie,

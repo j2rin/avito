@@ -1,5 +1,6 @@
 create fact delivery_orders_funnel as
 select
+    t.create_date as __date__,
     t.buyer_id,
     t.create_date,
     t.deliveryorder_id,

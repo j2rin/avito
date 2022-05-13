@@ -1,5 +1,6 @@
 create fact callcenter_calls as
 select
+    t.enter_date as __date__,
     t.call_answered,
     t.enter_date,
     t.feedbackmark,

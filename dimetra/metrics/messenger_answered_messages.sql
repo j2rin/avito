@@ -1,5 +1,6 @@
 create fact messenger_answered_messages as
 select
+    t.first_message_event_date as __date__,
     t.chat_subtype,
     t.first_message_cookie_id,
     t.first_message_event_date,

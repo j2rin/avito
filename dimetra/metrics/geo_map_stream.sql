@@ -1,5 +1,6 @@
 create fact geo_map_stream as
 select
+    t.event_date as __date__,
     t.clusters,
     t.contacts,
     t.cookie_id as cookie,

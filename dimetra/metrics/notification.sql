@@ -1,5 +1,6 @@
 create fact notification as
 select
+    t.event_date as __date__,
     t.app_pushes_no_data,
     t.app_pushes_open,
     t.app_pushes_prepared,

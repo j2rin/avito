@@ -1,5 +1,6 @@
 create fact chatbot_metrics_start as
 select
+    t.start_flow_time as __date__,
     t.chat_id as chat,
     t.chat_type,
     t.is_support_chat,

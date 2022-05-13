@@ -1,5 +1,6 @@
 create fact messenger_blocks as
 select
+    t.event_date as __date__,
     t.chat_Id as chat,
     t.event_date,
     t.is_first_block,

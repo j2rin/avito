@@ -1,5 +1,6 @@
 create fact billing as
 select
+    t.event_date as __date__,
     t.event_date,
     t.payment_method_choice,
     t.payment_method_choice_account_pay,

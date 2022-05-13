@@ -1,5 +1,6 @@
 create fact app_call_seller_event as
 select
+    t.event_date as __date__,
     t.appcall_item_add_iac_popup_accepted,
     t.appcall_item_add_iac_popup_show,
     t.appcall_receiver_end_call_rating,

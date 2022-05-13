@@ -1,5 +1,6 @@
 create fact buyer_items_distance as
 select
+    t.event_date as __date__,
     t.city_id,
     t.cookie_id as cookie,
     t.cookie_id,

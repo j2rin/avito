@@ -1,5 +1,6 @@
 create fact core_c2c as
 select
+    t.event_date as __date__,
     t.cookie_id,
     t.deactivated_listers,
     t.deactivated_listers_changed_segment,

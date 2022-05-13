@@ -1,5 +1,6 @@
 create fact express_cv as
 select
+    t.event_date as __date__,
     t.contacts_paid_amount_express_cv,
     t.contacts_paid_express_cv,
     t.event_date,

@@ -1,5 +1,6 @@
 create fact seller_matched_call as
 select
+    t.event_date as __date__,
     t.event_date,
     t.observation_name,
     t.observation_value,
