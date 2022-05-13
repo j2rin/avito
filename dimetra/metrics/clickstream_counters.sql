@@ -41,7 +41,7 @@ select
     sum(case when eid = 2909 and source = 'subscribers_list' then event_count end) as buyer_favouriteseller_delete_from_subscribers_list,
     sum(case when eid = 2909 and source = 'subscriptions_list' then event_count end) as buyer_favouriteseller_delete_from_subscriptions_list,
     sum(case when eid = 3381 and from_block is null then event_count end) as call_phone_screen_views_client,
-    sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id = 'child' and action_type = 'click-positive' then event_count end) as click_banner_download_app,
+    sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id = 'phone' and action_type = 'click-positive' then event_count end) as click_banner_download_app,
     sum(case when eid = 3207 and banner_id ilike '%mygarage%' then event_count end) as click_banner_mygarage,
     sum(case when eid = 4921 and from_page = 'vertical_category' then event_count end) as click_category_widget,
     sum(case when eid = 4921 and from_page = 'featured' then event_count end) as click_featured_widget,
