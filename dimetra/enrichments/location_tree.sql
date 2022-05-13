@@ -6,7 +6,7 @@ select
     cl.City_Population_Group                                  as population_group,
     cl.Logical_Level                                          as location_level_id
 from :fact_table                t
-left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = ss.location_id
+left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = t.location_id
 hierarchy (
     (region_id, city_id)
 );
