@@ -951,7 +951,7 @@ autoteka_stream:
   metric_configs: [autoteka_stream]
   database: vertica
   table: dma.autoteka_stream
-  dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user]
+  dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user, is_pro]
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
   dtm: event_date
@@ -1525,7 +1525,7 @@ autoteka_stream_autoteka_participant:
   table: dma.autoteka_stream
   column_map:
     platform_id: autoteka_platform_id
-  dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user]
+  dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user, is_pro]
   participant: {autoteka_visitor: autoteka_cookie_id, autoteka_user: autotekauser_id}
   primary_subject: autoteka_visitor
   dtm: event_date
@@ -1784,7 +1784,7 @@ autoteka_reports:
     metric_configs: [ autoteka_reports ]
     database: vertica
     table: dma.v_autoteka_reports
-    dimensions: [ autoteka_car_age_group, autoteka_car_price_group, autoteka_mileage_group, logical_category, region, city, platform, reports_count, searchtype, is_new_user, is_pro]
+    dimensions: [ autoteka_car_age_group, autoteka_car_price_group, autoteka_mileage_group, vertical, logical_category, region, city, platform, reports_count, searchtype, is_new_user, is_pro]
     participant: {visitor: cookie_id, user: user_id}
     primary_subject: visitor
     dtm: autoteka_package_history_created_at
