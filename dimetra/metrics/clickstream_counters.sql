@@ -1,6 +1,6 @@
 create fact clickstream_counters as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.action_type,
     t.app_call_mic_access,
     t.banner_id,

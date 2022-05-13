@@ -1,6 +1,6 @@
 create fact seller_item_active as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.activations_count,
     t.address_length,
     t.city_id,

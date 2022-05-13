@@ -1,6 +1,6 @@
 create fact chatbot_events as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.event_date,
     t.eventtype_id,
     t.user_id as user,

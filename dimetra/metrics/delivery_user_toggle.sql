@@ -1,6 +1,6 @@
 create fact delivery_user_toggle as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.event_date,
     t.isDeliveryActive,
     t.user_id

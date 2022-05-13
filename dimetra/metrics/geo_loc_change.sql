@@ -1,6 +1,6 @@
 create fact geo_loc_change as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.category_id,
     t.changing_geo_type,
     t.changing_quality_type,

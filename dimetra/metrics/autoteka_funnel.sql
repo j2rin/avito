@@ -1,6 +1,6 @@
 create fact autoteka_funnel as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.autoteka_cookie_id,
     t.cookie_session,
     t.event_date,

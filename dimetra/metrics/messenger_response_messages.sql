@@ -1,6 +1,6 @@
 create fact messenger_response_messages as
 select
-    t.reply_time as __date__,
+    t.reply_time::date as __date__,
     t.chat_subtype,
     t.chat_type,
     t.item_id,

@@ -1,6 +1,6 @@
 create fact support as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.call_anonnumber_nodes,
     t.call_calltracking_nodes,
     t.callcenter_calls,

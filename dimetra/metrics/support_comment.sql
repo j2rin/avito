@@ -1,6 +1,6 @@
 create fact support_comment as
 select
-    t.comment_create_date as __date__,
+    t.comment_create_date::date as __date__,
     t.SatisfactionScore,
     t.comment_create_date,
     t.comment_id

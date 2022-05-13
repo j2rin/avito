@@ -1,6 +1,6 @@
 create fact autoteka_stream_autoteka_participant as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.additionalcookie_id,
     t.amount,
     t.autoteka_cookie_id,

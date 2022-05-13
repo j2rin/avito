@@ -1,6 +1,6 @@
 create fact geo_loc_suggest as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.FromBlock,
     t.LocationInputLength,
     t.cookie_id as cookie,

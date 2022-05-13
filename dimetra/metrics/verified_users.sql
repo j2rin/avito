@@ -1,6 +1,6 @@
 create fact verified_users as
 select
-    t.event_time as __date__,
+    t.event_time::date as __date__,
     t.event_time,
     t.status,
     t.user_id as user,

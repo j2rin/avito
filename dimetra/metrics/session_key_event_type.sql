@@ -1,6 +1,6 @@
 create fact session_key_event_type as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.cookie_id as cookie,
     t.cookie_id,
     t.event_date,

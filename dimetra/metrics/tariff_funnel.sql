@@ -1,6 +1,6 @@
 create fact tariff_funnel as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.configurator_source,
     t.event_date,
     t.step,

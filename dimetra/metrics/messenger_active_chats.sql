@@ -1,6 +1,6 @@
 create fact messenger_active_chats as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.IsTest,
     t.chat_id as chat,
     t.chat_subtype,

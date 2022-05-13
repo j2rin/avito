@@ -1,6 +1,6 @@
 create fact tariff_transactions as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.amount,
     t.event_date,
     t.tariff_source,

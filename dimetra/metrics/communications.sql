@@ -1,6 +1,6 @@
 create fact communications as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.anonnumber_calls,
     t.anonnumber_calls_duration,
     t.anonnumber_long_talks,

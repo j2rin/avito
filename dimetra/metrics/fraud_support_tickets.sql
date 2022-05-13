@@ -1,6 +1,6 @@
 create fact fraud_support_tickets as
 select
-    t.create_date as __date__,
+    t.create_date::date as __date__,
     t.cookie_id as cookie,
     t.cookie_id,
     t.create_date,

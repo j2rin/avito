@@ -1,6 +1,6 @@
 create fact chatbot_metrics_end as
 select
-    t.end_flow_time as __date__,
+    t.end_flow_time::date as __date__,
     t.end_flow_time,
     t.group_name,
     t.is_support_chat,

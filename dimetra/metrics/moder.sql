@@ -1,6 +1,6 @@
 create fact moder as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.agent_items_day,
     t.agent_line_time_h,
     t.backlog_hours,

@@ -1,6 +1,6 @@
 create fact seller_confirmation_deals as
 select
-    t.event_time as __date__,
+    t.event_time::date as __date__,
     t.dealconfirmationstate,
     t.event_time,
     t.seller_id,

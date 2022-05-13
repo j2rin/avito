@@ -1,6 +1,6 @@
 create fact cookie_account_enter as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.auth_errors,
     t.auth_success,
     t.cookie_id as cookie,
