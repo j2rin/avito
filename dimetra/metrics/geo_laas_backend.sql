@@ -1,6 +1,6 @@
 create fact geo_laas_backend as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.client_location_id,
     t.cookie_id as cookie,
     t.cookie_id,

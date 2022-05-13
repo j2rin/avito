@@ -1,6 +1,6 @@
 create fact mnz_bundle as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.amount_net_adj,
     t.event_date,
     t.exposure,

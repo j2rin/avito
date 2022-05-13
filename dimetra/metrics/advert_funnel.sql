@@ -1,6 +1,6 @@
 create fact advert_funnel as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.alid_id,
     t.banner_code,
     t.cdtm,

@@ -1,6 +1,6 @@
 create fact mnz_vas as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.amount,
     t.amount_net,
     t.event_date,

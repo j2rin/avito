@@ -1,6 +1,6 @@
 create fact search_items as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.cookie_id,
     t.event_date,
     t.eventtype_id,

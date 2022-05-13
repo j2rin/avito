@@ -1,6 +1,6 @@
 create fact seller_item_add_finish as
 select
-    t.item_create_date as __date__,
+    t.item_create_date::date as __date__,
     t.cookie_id as cookie,
     t.cookie_id,
     t.duration_sec,

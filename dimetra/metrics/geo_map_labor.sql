@@ -1,6 +1,6 @@
 create fact geo_map_labor as
 select
-    t.event_Date as __date__,
+    t.event_Date::date as __date__,
     t.cookie_id,
     t.event_Date,
     t.observation_name,

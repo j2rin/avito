@@ -1,6 +1,6 @@
 create fact favourite_sellers_totals as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.cnt_subscriptions_total,
     t.event_date,
     t.is_active,

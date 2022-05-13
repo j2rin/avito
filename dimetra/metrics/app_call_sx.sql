@@ -1,6 +1,6 @@
 create fact app_call_sx as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.AppCallScenario,
     t.CallType,
     t.Reciever_MicAccess,

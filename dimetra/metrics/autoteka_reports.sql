@@ -1,6 +1,6 @@
 create fact autoteka_reports as
 select
-    t.autoteka_package_history_created_at as __date__,
+    t.autoteka_package_history_created_at::date as __date__,
     t.autoteka_package_history_created_at,
     t.autoteka_package_history_id,
     t.autoteka_user_id,

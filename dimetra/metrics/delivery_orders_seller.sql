@@ -1,6 +1,6 @@
 create fact delivery_orders_seller as
 select
-    t.status_date as __date__,
+    t.status_date::date as __date__,
     t.approximate_delivery_margin,
     t.approximate_delivery_provider_cost_no_vat,
     t.delivery_comission_no_vat,

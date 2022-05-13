@@ -1,6 +1,6 @@
 create fact seller_item_event as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.activation_type,
     t.close_reason_id,
     t.close_status_id,

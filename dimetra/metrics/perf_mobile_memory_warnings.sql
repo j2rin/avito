@@ -1,6 +1,6 @@
 create fact perf_mobile_memory_warnings as
 select
-    t.event_date as __date__,
+    t.event_date::date as __date__,
     t.app_state,
     t.cookie_id as cookie,
     t.cookie_id,
