@@ -240,8 +240,8 @@ definitions:
   - &item_to_order {item_flags.bit: 23}
 
   - &is_public_profile                   {from_page: 'public_profile'}
-  - &is_extended_profile                 {from_page: ['profile_services']}
-  - &is_extended_profile_services        {from_page: 'profile_services'}
+  - &is_extended_profile                 {from_page: ['profile_services','ps']}
+  - &is_extended_profile_services        {from_page: ['profile_services','ps']}
   - &x_is_public_profile                   {x_eid: 2017, x_from_page: 'public_profile'}
   - &x_is_extended_profile                 {x_eid: 2017, x_from_page: ['profile_services']}
   - &x_is_extended_profile_services        {x_eid: 2017, x_from_page: 'profile_services'}
@@ -967,7 +967,7 @@ metric.counter:
   cnt_iv_extended_profile:                 {filter: [*is_iv_wo_guessing, {$or: [[*x_is_extended_profile],[*is_extended_profile]]}], m42: False}
   cnt_iv_extended_profile_services:        {filter: [*is_iv_wo_guessing, {$or: [[*x_is_extended_profile_services],[*is_extended_profile_services]]}], m42: False}
   cnt_iv_profile_shop:                     {filter: [*is_iv_wo_guessing, {$or: [[*x_is_public_profile],[*is_public_profile],[*x_is_extended_profile],[*is_extended_profile],[*x_is_search, *x_is_shop]]}], m42: False}
-  cnt_cs_public_profile:                   {filter: [*is_contact_wo_guessing, {$or: [[*x_is_public_profile],[*is_public_profile]]}], m42: False}
+  cnt_cs_public_profile:                   {filter: [*is_contact_wo_guessing, *x_is_public_profile], m42: False}
   cnt_cs_extended_profile:                 {filter: [*is_contact_wo_guessing, {$or: [[*x_is_extended_profile],[*is_extended_profile]]}], m42: False}
   cnt_cs_extended_profile_services:        {filter: [*is_contact_wo_guessing, {$or: [[*x_is_extended_profile_services],[*is_extended_profile_services]]}], m42: False}
   cnt_cs_profile_shop:                     {filter: [*is_contact_wo_guessing, {$or: [[*x_is_public_profile],[*is_public_profile],[*x_is_extended_profile],[*is_extended_profile],[*x_is_search, *x_is_shop]]}], m42: False}
