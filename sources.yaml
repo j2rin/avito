@@ -1785,6 +1785,8 @@ autoteka_reports:
     database: vertica
     table: dma.v_autoteka_reports
     dimensions: [ autoteka_car_age_group, autoteka_car_price_group, autoteka_mileage_group, vertical, logical_category, region, city, platform, reports_count, searchtype, is_new_user, is_pro]
+    m42_cartesian_groups:
+      - [ vertical, logical_category ]
     participant: {visitor: cookie_id, user: user_id}
     primary_subject: visitor
     dtm: autoteka_package_history_created_at
@@ -1852,6 +1854,8 @@ autoteka_reports_autoteka_participant:
   column_map:
     platform_id: autoteka_platform_id
   dimensions: [ autoteka_car_age_group, autoteka_car_price_group, autoteka_mileage_group, vertical, logical_category, region, city, platform, reports_count, searchtype, is_new_user, is_pro ]
+  m42_cartesian_groups:
+    - [ vertical, logical_category ]
   participant: { autoteka_visitor: autoteka_cookie_id, autoteka_user: autoteka_user_id }
   primary_subject: autoteka_visitor
   dtm: autoteka_package_history_created_at
