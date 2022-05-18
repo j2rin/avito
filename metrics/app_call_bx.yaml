@@ -8,10 +8,13 @@ definitions:
   - &is_direct_c        {AppCallScenario: *direct_scenario}
   - &is_item_c          {AppCallScenario: *item_scenario}
   - &is_c               {AppCallScenario: *any_scenario}
+  - &is_messenger_chat_menu  {AppCallScenario: messenger_chat_menu}
+  - &is_deeplink_call_back   {AppCallScenario: deeplink_call_back}
   - &is_outgoing        {CallType: outgoing}
   - &is_incoming        {CallType: incoming}
   - &is_answered        {TalkDuration.>: 0}
   - &is_success         {TalkDuration.>: 30}
+  - &is_less5           {TalkDuration.<: 5}
   - &is_less15          {TalkDuration.<: 15}
   - &is_less60          {TalkDuration.<: 60}
   - &is_less120         {TalkDuration.<: 120}
@@ -44,7 +47,15 @@ metric.counter:
   appcall_bx_outgoing_item:                {filter: [*is_outgoing, *is_item_c], m42: False}
   appcall_bx_outgoing_item_answered:       {filter: [*is_outgoing, *is_item_c, *is_answered], m42: False}
   appcall_bx_outgoing_item_success:        {filter: [*is_outgoing, *is_item_c, *is_success], m42: False}
-   
+  
+  appcall_bx_msg_chat_menu:                {filter: [*is_outgoing, *is_messenger_chat_menu], m42: False}
+  appcall_bx_msg_chat_menu_success:        {filter: [*is_outgoing, *is_messenger_chat_menu, *is_success], m42: False}
+  appcall_bx_msg_chat_menu_talkseconds:    {filter: [*is_outgoing, *is_messenger_chat_menu, *is_answered], obs: [TalkDuration], m42: False}
+  
+  appcall_bx_msg_callback:                {filter: [*is_outgoing, *is_deeplink_call_back], m42: False}
+  appcall_bx_msg_callback_success:        {filter: [*is_outgoing, *is_deeplink_call_back, *is_success], m42: False}
+  appcall_bx_msg_callback_talkseconds:    {filter: [*is_outgoing, *is_deeplink_call_back, *is_answered], obs: [TalkDuration], m42: False}
+
   appcall_bx_any_calls:                    {filter: [*is_c]}
   appcall_bx_any_calls_answered:           {filter: [*is_c, *is_answered]}
   appcall_bx_any_calls_success:            {filter: [*is_c, *is_success]}
@@ -63,10 +74,14 @@ metric.ratio:
   appcall_bx_outgoing_direct_success_answered_ratio:    {num: appcall_bx_outgoing_direct_success, den: appcall_bx_outgoing_direct_answered}
   appcall_bx_outgoing_direct_success_ratio:             {num: appcall_bx_outgoing_direct_success, den: appcall_bx_outgoing_direct}
   
+  appcall_bx_msg_chat_menu_success_ratio:               {num: appcall_bx_msg_chat_menu_success, den: appcall_bx_msg_chat_menu_success}
+  appcall_bx_msg_callback_success_ratio:                {num: appcall_bx_msg_callback_success, den: appcall_bx_msg_callback}
+  
   appcall_bx_outgoing_talkseconds_avg:                  {num: appcall_bx_outgoing_talkseconds, den: appcall_bx_outgoing_answered}
   appcall_bx_incoming_talkseconds_avg:                  {num: appcall_bx_incoming_talkseconds, den: appcall_bx_incoming_answered}
   appcall_bx_any_talkseconds_avg:                       {num: appcall_bx_any_talkseconds, den: appcall_bx_any_calls_answered}
   
+  appcall_bx_any_less5seconds_ratio:                    {num: appcall_bx_any_less5seconds, den: appcall_bx_any_calls_answered}
   appcall_bx_any_less15seconds_ratio:                   {num: appcall_bx_any_less15seconds, den: appcall_bx_any_calls_answered}
   appcall_bx_any_less60seconds_ratio:                   {num: appcall_bx_any_less60seconds, den: appcall_bx_any_calls_answered}
   appcall_bx_any_less120seconds_ratio:                  {num: appcall_bx_any_less120seconds, den: appcall_bx_any_calls_answered}
