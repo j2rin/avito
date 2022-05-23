@@ -1,39 +1,39 @@
 definitions:
-  - &internal       {location: "internal"}
-  - &external       {location: "external"}
-  - &img            {resource_type: "img"}
-  - &beacon         {resource_type: "beacon"}
-  - &xmlhttprequest {resource_type: "xmlhttprequest"}
-  - &script         {resource_type: "script"}
-  - &link           {resource_type: "link"}
-  - &fetch          {resource_type: "fetch"}
-  - &iframe         {resource_type: "iframe"}
-  - &css            {resource_type: "css"}
-  - &events         {resource_type: "events"}
-  - &other          {resource_type: "other"}
+  - &internal {location: internal}
+  - &external {location: external}
+  - &img {resource_type: img}
+  - &beacon {resource_type: beacon}
+  - &xmlhttprequest {resource_type: xmlhttprequest}
+  - &script {resource_type: script}
+  - &link {resource_type: link}
+  - &fetch {resource_type: fetch}
+  - &iframe {resource_type: iframe}
+  - &css {resource_type: css}
+  - &events {resource_type: events}
+  - &other {resource_type: other}
 
 
 metric.counter:
-  perf_resource_events:                         {filter: [{events}], obs: [value], m42: False}
-  perf_resource_img_internal_sum:               {filter: [{img, internal}], obs: [value], m42: False}
-  perf_resource_beacon_internal_sum:            {filter: [{beacon, internal}], obs: [value], m42: False}
-  perf_resource_xmlhttprequest_internal_sum:    {filter: [{xmlhttprequest, internal}], obs: [value], m42: False}
-  perf_resource_script_internal_sum:            {filter: [{script, internal}], obs: [value], m42: False}
-  perf_resource_link_internal_sum:              {filter: [{link, internal}], obs: [value], m42: False}
-  perf_resource_fetch_internal_sum:             {filter: [{fetch, internal}], obs: [value], m42: False}
-  perf_resource_iframe_internal_sum:            {filter: [{iframe, internal}], obs: [value], m42: False}
-  perf_resource_css_internal_sum:               {filter: [{css, internal}], obs: [value], m42: False}
-  perf_resource_other_internal_sum:             {filter: [{other, internal}], obs: [value], m42: False}
+  perf_resource_events:                         {filter: [*events], obs: [value], m42: False}
+  perf_resource_img_internal_sum:               {filter: [*img, *internal], obs: [value], m42: False}
+  perf_resource_beacon_internal_sum:            {filter: [*beacon, *internal], obs: [value], m42: False}
+  perf_resource_xmlhttprequest_internal_sum:    {filter: [*xmlhttprequest, *internal], obs: [value], m42: False}
+  perf_resource_script_internal_sum:            {filter: [*script, *internal], obs: [value], m42: False}
+  perf_resource_link_internal_sum:              {filter: [*link, *internal], obs: [value], m42: False}
+  perf_resource_fetch_internal_sum:             {filter: [*fetch, *internal], obs: [value], m42: False}
+  perf_resource_iframe_internal_sum:            {filter: [*iframe, *internal], obs: [value], m42: False}
+  perf_resource_css_internal_sum:               {filter: [*css, *internal], obs: [value], m42: False}
+  perf_resource_other_internal_sum:             {filter: [*other, *internal], obs: [value], m42: False}
 
-  perf_resource_img_external_sum:               {filter: [{img, external}], obs: [value], m42: False}
-  perf_resource_beacon_external_sum:            {filter: [{beacon, external}], obs: [value], m42: False}
-  perf_resource_xmlhttprequest_external_sum:    {filter: [{xmlhttprequest, external}], obs: [value], m42: False}
-  perf_resource_script_external_sum:            {filter: [{script, external}], obs: [value], m42: False}
-  perf_resource_link_external_sum:              {filter: [{link, external}], obs: [value], m42: False}
-  perf_resource_fetch_external_sum:             {filter: [{fetch, external}], obs: [value], m42: False}
-  perf_resource_iframe_external_sum:            {filter: [{iframe, external}], obs: [value], m42: False}
-  perf_resource_css_external_sum:               {filter: [{css, external}], obs: [value], m42: False}
-  perf_resource_other_external_sum:             {filter: [{other, external}], obs: [value], m42: False}
+  perf_resource_img_external_sum:               {filter: [*img, *external], obs: [value], m42: False}
+  perf_resource_beacon_external_sum:            {filter: [*beacon, *external], obs: [value], m42: False}
+  perf_resource_xmlhttprequest_external_sum:    {filter: [*xmlhttprequest, *external], obs: [value], m42: False}
+  perf_resource_script_external_sum:            {filter: [*script, *external], obs: [value], m42: False}
+  perf_resource_link_external_sum:              {filter: [*link, *external], obs: [value], m42: False}
+  perf_resource_fetch_external_sum:             {filter: [*fetch, *external], obs: [value], m42: False}
+  perf_resource_iframe_external_sum:            {filter: [*iframe, *external], obs: [value], m42: False}
+  perf_resource_css_external_sum:               {filter: [*css, *external], obs: [value], m42: False}
+  perf_resource_other_external_sum:             {filter: [*other, *external], obs: [value], m42: False}
 
 
 metric.ratio:
