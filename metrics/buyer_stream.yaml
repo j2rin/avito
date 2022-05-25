@@ -166,6 +166,12 @@ definitions:
   - &is_x_fp_witcher_marketplace    {x_from_page: witcher-marketplace}
   - &is_x_fp_witcher_any            {x_from_page: [witcher-extra-regions, witcher-extra-delivery, witcher-new-auto, witcher-new-flats, witcher-marketplace]}
 
+  - &x_is_searchwidget        {x_from_page: searchFormWidget}
+  - &x_is_rubricatorwidget    {x_from_page: rubricatorWidget}  
+  - &x_is_recentsearch        {x_from_page: recentSearch}
+  - &x_is_inline              {x_from_page: inline}  
+  - &x_is_shortcut            {x_from_page: shortcut}  
+
   - &is_serp_vas            {item_serp_flags.bit: [0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14]}
   - &is_serp_xl             {item_serp_flags.bit: [8]}
   - &is_serp_perfvas_x2_1   {item_serp_flags.bit: [9]}
@@ -339,9 +345,15 @@ metric.counter:
   cnt_btc_new_s_map_area:                  {filter: [*is_new_btc, *is_btc_wo_guessing, *is_s_map, *x_is_search], m42: False}
   cnt_btc_s_wo_map_area:                   {filter: [*is_btc_wo_guessing, *is_not_s_map, *x_is_search], m42: False}
   cnt_btc_s_metro:                         {filter: [*is_btc_wo_guessing, *is_s_metro, *x_is_search], m42: False}
+  cnt_btc_s_suggest:                       {filter: [*is_btc_wo_guessing, *x_is_suggest_click, *x_is_search], m42: False}
   cnt_btc_s_noquery:                       {filter: [*is_btc_wo_guessing, *noq, *x_is_search], m42: False}
   cnt_btc_s_query:                         {filter: [*is_btc_wo_guessing, *q, *x_is_search], m42: False}
   cnt_btc_s:                               {filter: [*is_btc_wo_guessing, *x_is_search], m42: False}
+  cnt_btc_searchwidget:                    {filter: [*is_btc_wo_guessing, *x_is_searchwidget], m42: False}
+  cnt_btc_rubricatorwidget:                {filter: [*is_btc_wo_guessing, *x_is_rubricatorwidget], m42: False}
+  cnt_btc_recentsearch:                    {filter: [*is_btc_wo_guessing, *x_is_recentsearch], m42: False}
+  cnt_btc_inline:                          {filter: [*is_btc_wo_guessing, *x_is_inline], m42: False}
+  cnt_btc_shortcut:                        {filter: [*is_btc_wo_guessing, *x_is_shortcut], m42: False}
   cnt_btc_no:                              {filter: [*is_btc_wo_guessing, *x_no], m42: False}
   cnt_btc_s_radius:                        {filter: [*is_btc_wo_guessing, *is_s_radius, *x_is_search], m42: False}
   cnt_btc_s_road:                          {filter: [*is_btc_wo_guessing, *is_s_road, *x_is_search], m42: False}
@@ -630,8 +642,19 @@ metric.counter:
   cnt_s_iv_date_sort:                      {filter: [*is_iv_wo_guessing, *is_s_sort_date, *x_is_search], m42: False}
   cnt_s_iv_default_sort:                   {filter: [*is_iv_wo_guessing, *is_s_sort_dft, *x_is_search], m42: False}
   cnt_s_iv_price_sort:                     {filter: [*is_iv_wo_guessing, *is_s_sort_price, *x_is_search], m42: False}
+  cnt_s_filter_price_c:                    {filter: [*is_contact_wo_guessing, *x_is_search, {$or: [[*x_is_filter_search], [*x_is_price_filter_search]]}], m42: False}
   cnt_s_noquery_c:                         {filter: [*is_contact_wo_guessing, *noq, *x_is_search], m42: False}
+  cnt_s_searchwidget_c:                    {filter: [*is_contact_wo_guessing, *x_is_searchwidget, *x_is_search], m42: False}
+  cnt_s_rubricatorwidget_c:                {filter: [*is_contact_wo_guessing, *x_is_rubricatorwidget, *x_is_search], m42: False}
+  cnt_s_recentsearch_c:                    {filter: [*is_contact_wo_guessing, *x_is_recentsearch, *x_is_search], m42: False}
+  cnt_s_inline_c:                          {filter: [*is_contact_wo_guessing, *x_is_inline, *x_is_search], m42: False}
+  cnt_s_shortcut_c:                        {filter: [*is_contact_wo_guessing, *x_is_shortcut, *x_is_search], m42: False}
   cnt_s_noquery_iv:                        {filter: [*is_iv_wo_guessing, *noq, *x_is_search], m42: False}
+  cnt_s_searchwidget_iv:                   {filter: [*is_iv_wo_guessing, *x_is_searchwidget, *x_is_search], m42: False}
+  cnt_s_rubricatorwidget_iv:               {filter: [*is_iv_wo_guessing, *x_is_rubricatorwidget, *x_is_search], m42: False}
+  cnt_s_recentsearch_iv:                   {filter: [*is_iv_wo_guessing, *x_is_recentsearch, *x_is_search], m42: False}
+  cnt_s_inline_iv:                         {filter: [*is_iv_wo_guessing, *x_is_inline, *x_is_search], m42: False}
+  cnt_s_shortcut_iv:                       {filter: [*is_iv_wo_guessing, *x_is_shortcut, *x_is_search], m42: False}
   search_q:                                {filter: [*is_search, *q], m42: False}
   cnt_s_query_c:                           {filter: [*is_contact_wo_guessing, *q, *x_is_search], m42: False}
   cnt_s_query_iv:                          {filter: [*is_iv_wo_guessing, *q, *x_is_search], m42: False}
@@ -841,6 +864,11 @@ metric.counter:
   searches_with_query:                     {filter: [*is_1p, *is_search, *q]}
   searches_with_query_date_sort:           {filter: [*is_1p, *is_s_sort_date, *is_search, *q]}
   searches_without_query:                  {filter: [*is_1p, *is_search, *noq]}
+  sercheas_from_searchwidget:              {filter: [*is_1p, *is_search, *x_is_searchwidget]}
+  sercheas_from_rubricatorwidget:          {filter: [*is_1p, *is_search, *x_is_rubricatorwidget]}
+  sercheas_from_recentsearch:              {filter: [*is_1p, *is_search, *x_is_recentsearch]}
+  sercheas_from_inline:                    {filter: [*is_1p, *is_search, *x_is_inline]}
+  sercheas_from_shortcut:                  {filter: [*is_1p, *is_search, *x_is_shortcut]}
   serp_empty:                              {filter: [*is_1p, *is_search, *is_serp_empty]}
   serp_small:                              {filter: [*is_1p, *is_search, *is_serp_small]}
   serp_with_query_empty:                   {filter: [*is_1p, *is_search, *is_serp_empty, *q]}
@@ -1041,8 +1069,14 @@ metric.uniq:
   btc_from_witcher_new_auto:               {counter: cnt_btc_wtc_new_auto,            key: [item_x]}
   btc_from_witcher_new_flats:              {counter: cnt_btc_wtc_new_flats,           key: [item_x]}
   btc_from_witcher_regions:                {counter: cnt_btc_wtc_reg,                 key: [item_x]}
+  btc_suggest:                             {counter: cnt_btc_s_suggest,               key: [item_x]}
   btc_serp_noquery:                        {counter: cnt_btc_s_noquery,               key: [item_x]}
   btc_serp_query:                          {counter: cnt_btc_s_query,                 key: [item_x]}
+  btc_searchwidget:                        {counter: cnt_btc_searchwidget,            key: [item_x]}
+  btc_rubricatorwidget:                    {counter: cnt_btc_rubricatorwidget,        key: [item_x]}
+  btc_recentsearch:                        {counter: cnt_btc_recentsearch,            key: [item_x]}
+  btc_inline:                              {counter: cnt_btc_inline,                  key: [item_x]}
+  btc_shortcut:                            {counter: cnt_btc_shortcut,                key: [item_x]}
   buyer_target_clicks_any_ext_block:       {counter: cnt_btc_any_ext_block,           key: [item_x]}
   buyer_target_clicks_new_any_ext_block:   {counter: cnt_btc_new_any_ext_block,           key: [item_x]}
   buyer_target_clicks_returned_any_ext_block:   {counter: cnt_btc_old_any_ext_block,           key: [item_x]}
@@ -1384,10 +1418,16 @@ metric.uniq:
   buyers_vas:                              {counter: contacts_total_vas,              key: [cookie]}
   map_area_users:                          {counter: searches_map_area,               key: [cookie]}
   unq_ph:                                  {counter: phone_views_total,               key: [cookie], m42: False}
+  user_btc_suggest:                        {counter: cnt_btc_s_suggest,               key: [cookie], m42: False}
   user_btc_sq:                             {counter: cnt_btc_s_query,                 key: [cookie], m42: False}
   user_btc_noq:                            {counter: cnt_btc_s_noquery,               key: [cookie], m42: False}
   user_sq:                                 {counter: search_q,                        key: [cookie], m42: False}
   user_noq:                                {counter: cnt_s_without_query,             key: [cookie], m42: False}
+  user_btc_searchwidget:                   {counter: cnt_btc_searchwidget,            key: [cookie], m42: False}
+  user_btc_rubricatorwidget:               {counter: cnt_btc_rubricatorwidget,        key: [cookie], m42: False}
+  user_btc_recentsearch:                   {counter: cnt_btc_recentsearch,            key: [cookie], m42: False}
+  user_btc_inline:                         {counter: cnt_btc_inline,                  key: [cookie], m42: False}
+  user_btc_shortcut:                       {counter: cnt_btc_shortcut,                key: [cookie], m42: False}
   btclicked_users:                         {counter: bt_clicks,                       key: [item_user_id], m42: False}
   btclicked_users_rec:                     {counter: cnt_btc_rec,                     key: [item_user_id], m42: False}
   btclicked_users_s:                       {counter: cnt_btc_s,                       key: [item_user_id], m42: False}
@@ -1554,6 +1594,11 @@ metric.uniq:
   users_contact_rec_u2i_vas:               {counter: cnt_cs_rec_u2i_vas,              key: [cookie]}
   users_contact_search_query:              {counter: cnt_s_query_c,                   key: [cookie]}
   users_contact_search_noquery:            {counter: cnt_s_noquery_c,                 key: [cookie]}
+  users_contact_searchwidget:              {counter: cnt_s_searchwidget_c,            key: [cookie]}
+  users_contact_rubricatorwidget:          {counter: cnt_s_rubricatorwidget_c,        key: [cookie]}
+  users_contact_recentsearch:              {counter: cnt_s_recentsearch_c,            key: [cookie]}
+  users_contact_inline:                    {counter: cnt_s_inline_c,                  key: [cookie]}
+  users_contact_shortcut:                  {counter: cnt_s_shortcut_c,                key: [cookie]}
   users_contact_search_u2i:                {counter: cnt_cs_s_u2i,                    key: [cookie]}
   users_contact_vertical_main:             {counter: cnt_cs_vertical_main,            key: [cookie]}
   users_contact_vertical_main_rec:         {counter: cnt_cs_vertical_main_rec,        key: [cookie]}
@@ -1593,6 +1638,11 @@ metric.uniq:
   users_item_view_rec_u2i_vas:             {counter: cnt_iv_rec_u2i_vas,              key: [cookie]}
   users_item_view_search_query:            {counter: cnt_s_query_iv,                  key: [cookie]}
   users_item_view_search_noquery:          {counter: cnt_s_noquery_iv,                key: [cookie]}
+  users_item_view_searchwidget:            {counter: cnt_s_searchwidget_iv,           key: [cookie]}
+  users_item_view_rubricatorwidget:        {counter: cnt_s_rubricatorwidget_iv,       key: [cookie]}
+  users_item_view_recentsearch:            {counter: cnt_s_recentsearch_iv,           key: [cookie]}
+  users_item_view_inline:                  {counter: cnt_s_inline_iv,                 key: [cookie]}
+  users_item_view_shortcut:                {counter: cnt_s_shortcut_iv,               key: [cookie]}
   users_item_view_search_u2i:              {counter: cnt_iv_s_u2i,                    key: [cookie]}
   users_item_view_vertical_main:           {counter: cnt_iv_vertical_main,            key: [cookie]}
   users_item_view_vertical_main_rec:       {counter: cnt_iv_vertical_main,            key: [cookie]}
@@ -1637,6 +1687,11 @@ metric.uniq:
   users_searches_metro:                    {counter: searches_metro,                  key: [cookie]}
   users_searches_radius:                   {counter: searches_radius,                 key: [cookie]}
   users_searches_road:                     {counter: searches_road,                   key: [cookie]}
+  users_searches_searchwidget:             {counter: sercheas_from_searchwidget,      key: [cookie]}
+  users_searches_rubricatorwidget:         {counter: sercheas_from_rubricatorwidget,  key: [cookie]}
+  users_searches_recentsearch:             {counter: sercheas_from_recentsearch,      key: [cookie]}
+  users_searches_inline:                   {counter: sercheas_from_inline,            key: [cookie]}
+  users_searches_shortcut:                 {counter: sercheas_from_shortcut,          key: [cookie]}
   users_write_button_clicks:               {counter: write_button_clicks,             key: [cookie]}
   users_saved_searches_added:              {counter: saved_searches_added,            key: [cookie]}
   users_head_main_page_daily:              {counter: head_main_pages,                 key: [cookie]}
@@ -1703,6 +1758,11 @@ metric.uniq:
   sessions_c_s:                            {counter: cnt_cs_s_item_attr,              key: [session]}
   sessions_c_s_noq:                        {counter: cnt_s_noquery_c,                 key: [session]}
   sessions_c_s_q:                          {counter: cnt_s_query_c,                   key: [session]}
+  sessions_c_searchwidget:                 {counter: cnt_s_searchwidget_c,            key: [session]}
+  sessions_c_rubricatorwidget:             {counter: cnt_s_rubricatorwidget_c,        key: [session]}
+  sessions_c_recentsearch:                 {counter: cnt_s_recentsearch_c,            key: [session]}
+  sessions_c_inline:                       {counter: cnt_s_inline_c,                  key: [session]}
+  sessions_c_shortcut:                     {counter: cnt_s_shortcut_c,                key: [session]}
   sessions_iv:                             {counter: item_views,                      key: [session]}
   sessions_iv_r:                           {counter: cnt_iv_rec,                      key: [session]}
   sessions_iv_r_job_ast:                   {counter: cnt_iv_rec_job_ast,              key: [session]}
