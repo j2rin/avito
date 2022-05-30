@@ -45,11 +45,7 @@ definitions:
   - &x_is_map       {x_eid: *eid_map}
   - &x_no           {x_eid.isnull: true}
 
-  - &x_is_vertical_main_all       {x_category_id.isnull: false, x_subcategory_id.isnull: true}
-  - &x_is_vertical_main_services  {x_category_id: 250002, x_subcategory_id: 250005, x_param1_id.isnull: true}
-  - &x_is_vertical_main_serp      {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], q.=: '', search_flags.!bit: [8,9], <<: *x_is_search}
-  - &x_is_vertical_main_rec       {$or: [*x_is_vertical_main_all, *x_is_vertical_main_services], <<: *x_is_u2i}
-  - &x_is_vertical_main           {$or: [*x_is_vertical_main_serp, *x_is_vertical_main_rec]}
+  - &x_is_vertical_main           {$or: [{x_category_id: [1,12,17,28,39,55], x_subcategory_id.isnull: true},{x_subcategory_id: [250005,250006,34]}], q.=: '', search_flags.!bit: [8,9], x_eid: [300]}
 
   - &x_is_vertical_undefined      {x_vertical_id.isnull: true}
   - &x_is_vertical_defined        {x_vertical_id.isnull: false}
