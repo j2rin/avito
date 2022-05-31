@@ -63,7 +63,15 @@ definitions:
   - &is_iv            {eid: 301}
   - &is_iv_client     {eid: 2649}
   - &is_btc           {eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451]}
-  - &is_contact       {eid: [303, 856, 857, 3005, 2581, 4066, 4675, 3461, 4198, 4813]}
+
+  - &is_ph_realdev          {eid: *eid_ph_realdev}
+  - &is_back_call_item      {eid: 4198, item.isnull: false}
+  - &is_back_call_jk        {eid: 4198, item.isnull: true}
+  - &is_back_call           {$or: [*is_back_call_item, *is_back_call_jk]}
+  - &is_contact_item        {$or: [eid: [303, 856, 857, 3005, 2581, 4066, 4675, 4813], *is_back_call_item]}
+  - &is_contact_jk          {$or: [*is_ph_realdev, *is_back_call_jk]}
+  - &is_contact             {$or: [*is_contact_item, *is_contact_jk]}
+
   - &is_ph_btn        {eid: [2216, 2650]}
   - &is_ph            {eid: *eid_ph}
   - &is_ph_realdev    {eid: *eid_ph_realdev}
@@ -105,6 +113,8 @@ definitions:
   - &is_s_map       {search_flags.bit: 4}
   - &is_s_delivery  {search_flags.bit: 5}
   - &is_s_saved     {search_flags.bit: 6}
+  - &is_s_jk_catalog     {search_flags.bit: 35}
+  - &is_s_jk_card        {search_flags.bit: 36}
 
   - &x_is_filter_search       {search_flags.bit: 8}
   - &x_is_price_filter_search {search_flags.bit: 9}
@@ -679,6 +689,8 @@ metric.counter:
   comparison_list_views:                   {filter: [*is_comp_lst]}
   comparison_removed:                      {filter: [*is_comp_rmv]}
   contacts:                                {filter: [*is_contact]}
+  contacts_items:                          {filter: [*is_contact_item]}
+  contacts_jk:                             {filter: [*is_contact_jk]}
   contact_part_qual_exists:                {filter: [*part_qual_exists, *is_contact], m42: False}
   contact_part_qual_compab:                {filter: [*part_qual_compab, *is_contact], m42: False}
   contact_part_qual_unknown:               {filter: [*part_qual_unknown, *is_contact], m42: False}
@@ -813,6 +825,9 @@ metric.counter:
   radius_big_searches:                     {filter: [*is_1p, *is_search, {$or: [[{search_radius: '100'}], [{search_radius: '1000'}], [{search_radius: '200'}], [{search_radius: '300'}], [{search_radius: '400'}], [{search_radius: '500'}], [{search_radius: '2000'}], [{search_radius: '3000'}]]}]}
   radius_short_searches:                   {filter: [*is_1p, *is_search, {$or: [[{search_radius: '1'}], [{search_radius: '10'}], [{search_radius: '100'}], [{search_radius: '25'}], [{search_radius: '5'}], [{search_radius: '50'}], [{search_radius: '3'}], [{search_radius: '15'}], [{search_radius: '150'}]]}]}
   realty_dev_phone_views:                  {filter: [*is_ph_realdev]}
+  realty_dev_phone_views_serp:             {filter: [*is_ph_realdev, from_page: serp_snippet]}
+  realty_dev_phone_views_contact_block:    {filter: [*is_ph_realdev, from_page: card_docs]}
+  realty_dev_phone_views_gallery:          {filter: [*is_ph_realdev, from_page: card_gallery]}
   recblock_shows:                          {filter: [*is_rec]}
   job_ast_shows:                           {filter: [*is_job_ast]}
   push_land_shows:                         {filter: [*is_push_land]}
@@ -876,6 +891,10 @@ metric.counter:
   searches_with_query:                     {filter: [*is_1p, *is_search, *q]}
   searches_with_query_date_sort:           {filter: [*is_1p, *is_s_sort_date, *is_search, *q]}
   searches_without_query:                  {filter: [*is_1p, *is_search, *noq]}
+  searches_jk_catalog:                     {filter: [*is_1p, *is_search, *is_s_jk_catalog]}
+  searches_jk_card:                        {filter: [*is_1p, *is_search, *is_s_jk_card]}
+  searches_jk_any:                         {filter: [*is_1p, *is_search, {$or: [[*is_s_jk_catalog], [*is_s_jk_card]]}]}
+  searches_items:                          {filter: [*is_1p, *is_search, search_flags.!bit: [35,36]]}
   sercheas_from_searchwidget:              {filter: [*is_1p, *is_search, *x_is_searchwidget]}
   sercheas_from_rubricatorwidget:          {filter: [*is_1p, *is_search, *x_is_rubricatorwidget]}
   sercheas_from_recentsearch:              {filter: [*is_1p, *is_search, *x_is_recentsearch]}
@@ -1431,6 +1450,8 @@ metric.uniq:
   uniq_locations_in_search:                {counter: searches,                        key: [location_id]}
   regions_in_search:                       {counter: cnt_reg_in_s,                    key: [location_session_microcat]}
   buyers:                                  {counter: contacts,                        key: [cookie]}
+  buyers_items:                            {counter: contacts_items,                  key: [cookie]}
+  buyers_jk:                               {counter: contacts_jk,                     key: [cookie]}
   buyers_from_map:                         {counter: cnt_cs_from_map,                 key: [cookie]}
   buyers_from_map_area:                    {counter: cnt_cs_s_map_area,               key: [cookie]}
   buyers_from_serp_wo_map_area:            {counter: cnt_cs_s_wo_map_area,            key: [cookie]}
@@ -1699,8 +1720,15 @@ metric.uniq:
   users_phone_views_in_chat:               {counter: phone_views_in_chat,             key: [cookie]}
   users_pv_button_clicks:                  {counter: phone_view_button_clicks,        key: [cookie]}
   users_realty_dev_phone_view:             {counter: realty_dev_phone_views,          key: [cookie]}
+  users_realty_dev_phone_view_serp:             {counter: realty_dev_phone_views_serp,              key: [cookie]}
+  users_realty_dev_phone_view_contact_block:    {counter: realty_dev_phone_views_contact_block,     key: [cookie]}
+  users_realty_dev_phone_view_gallery:          {counter: realty_dev_phone_views_gallery,           key: [cookie]}
   users_saved_searches:                    {counter: saved_searches,                  key: [cookie]}
   users_search:                            {counter: searches,                        key: [cookie]}
+  users_search_items:                      {counter: searches_items,                  key: [cookie]}
+  users_search_jk_any:                     {counter: searches_jk_any,                 key: [cookie]}
+  users_search_jk_catalog:                 {counter: searches_jk_catalog,             key: [cookie]}
+  users_search_jk_card:                    {counter: searches_jk_card,                key: [cookie]}
   users_search_filter_any:                 {counter: searches_with_filter_any,        key: [cookie]}
   users_search_query:                      {counter: searches_with_query,             key: [cookie]}
   users_searches_any_ext_block:            {counter: searches_any_ext_block,          key: [cookie]}
@@ -2586,6 +2614,19 @@ metric.ratio:
   s_with_filters_with_iv_per_s_with_filters:                    {num: searches_with_filters_with_iv, den: searches_with_filter_any, m42: False}
   s_with_filters_with_contacts_per_s_with_filters:              {num: searches_with_filters_with_contacts, den: searches_with_filter_any, m42: False}
   s_with_filters_with_btc_per_s_with_filters:                   {num: searches_with_filters_with_btc, den: searches_with_filter_any, m42: False}
+  item_views_serp_per_searches_items:                                         {num: item_views_serp,                      den: searches_items,          m42: False}
+  users_item_view_serp_daily_per_users_search_items:                          {num: users_item_view_serp_daily,           den: users_search_items,      m42: False}
+  contacts_serp_per_searches_items:                                           {num: contacts_serp,                        den: searches_items,          m42: False}
+  users_contact_serp_daily_per_users_search_items:                            {num: users_contact_serp_daily,             den: users_search_items,      m42: False}
+  contacts_items_per_buyers_items:                                            {num: contacts_items,                       den: buyers_items,            m42: False}
+  realty_dev_views_cat_jk_serp_per_searches_jk_catalog:                       {num: realty_dev_views_cat_jk_serp,         den: searches_jk_catalog,     m42: False}
+  user_realty_dev_views_cat_jk_serp_per_users_search_jk_catalog:              {num: user_realty_dev_views_cat_jk_serp,    den: users_search_jk_catalog, m42: False}
+  contacts_jk_per_searches_jk_catalog:                                        {num: contacts_jk,                          den: searches_jk_catalog,     m42: False}
+  contacts_jk_per_realty_dev_views:                                           {num: contacts_jk,                          den: realty_dev_views,        m42: False}
+  buyers_jk_per_users_realty_dev_view:                                        {num: buyers_jk,                            den: users_realty_dev_view,   m42: False}
+  searches_jk_card_per_realty_dev_views:                                      {num: searches_jk_card,                     den: realty_dev_views,        m42: False}
+  item_views_from_jk_card_per_realty_dev_views:                               {num: item_views_from_jk_card,              den: realty_dev_views,        m42: False}
+  favorites_added_from_jk_card_per_realty_dev_views:                          {num: favorites_added_from_jk_card,         den: realty_dev_views,        m42: False}
   users_s_noq_with_iv_per_users_s_noq:  {num: users_item_view_search_noquery, den: user_noq, m42: False}
   users_s_noq_with_btc_per_users_s_noq: {num: user_btc_noq, den: user_noq, m42: False}
   users_s_with_filters_with_iv_per_users_s_with_filters: {num: users_item_views_search_filter_any, den: users_search_filter_any, m42: False}
