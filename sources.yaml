@@ -1857,3 +1857,15 @@ autoteka_reports_autoteka_participant:
   participant: { autoteka_visitor: autoteka_cookie_id, autoteka_user: autoteka_user_id }
   primary_subject: autoteka_visitor
   dtm: autoteka_package_history_created_at
+
+buyer_comp:
+  metric_configs: [buyer_comp]
+  database: vertica
+  table: public.vo_buyer_comp
+  dimensions: [platform, vertical, logical_category]
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id_event_date
