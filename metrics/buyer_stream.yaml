@@ -838,10 +838,10 @@ metric.counter:
   russia_level_searches:                   {filter: [{location_level_id: 1}, *is_1p, *is_search]}
   saved_searches:                          {filter: [*is_1p, *is_s_saved, *is_search]}
   search_u2i:                              {filter: [*is_search, *x_is_rec_sg]}
-  vertical_main:                           {filter: [$or: [$or: [*is_search, *is_u2i], *x_is_vertical_main], *is_vertical_main]}
+  vertical_main:                           {filter: [$or: [[*is_search, *x_is_vertical_main], *is_vertical_main]]}
   vertical_main_rec:                       {filter: [*is_vertical_main, *rec_widget]}
   vertical_main_featured:                  {filter: [*is_vertical_main, *featured_widget]}
-  vertical_main_first_page:                {filter: [*is_1p, *is_search, *x_is_vertical_main]}
+  vertical_main_first_page:                {filter: [$or: [[*is_search, *x_is_vertical_main, *is_1p], *is_vertical_main]]}
   searches:                                {filter: [*is_1p, *is_search]}
   searches_part_qual_exists:               {filter: [*part_qual_exists ,*is_1p, *is_search]}
   searches_part_qual_compab:               {filter: [*part_qual_compab ,*is_1p, *is_search]}
