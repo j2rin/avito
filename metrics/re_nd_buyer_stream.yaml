@@ -1,0 +1,253 @@
+definitions:
+  - &eid_serp_jk   [3131]
+  - &eid_jk_view   [3459]
+  - &eid_ph        [3461]
+  - &eid_back_call [4198]
+
+  - &is_serp_jk       {eid: *eid_serp_jk}
+  - &is_jk_view       {eid: *eid_jk_view}
+  - &is_ph_realdev    {eid: *eid_ph}
+  - &is_back_call     {eid: *eid_back_call}
+  - &is_c             {$or: [[eid: *eid_ph], [eid: *eid_back_call, from_page: catalog_jk_card]]}
+
+  - &jk_cpa {realty_development_flags.bit: 0}
+  - &jk_not_cpa {realty_development_flags.!bit: 0}
+
+  - &jk_auction {realty_development_flags.bit: 1}
+  - &jk_not_auction {realty_development_flags.!bit: 1}
+
+metric.counter:
+  realty_dev_c:                           {filter: [*is_c] }
+  realty_dev_phone_views_nd:              {filter: [*is_ph_realdev] }
+  realty_dev_phone_views_serp:            {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet] }
+  realty_dev_phone_views_card:            {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0] }
+  realty_dev_phone_views_item:            {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 1] }
+  realty_dev_back_call:                   {filter: [*is_back_call] }
+
+  realty_dev_catalog_jk_vertical_main:    {filter: [*is_serp_jk, from_page: vertical_main]}
+  realty_dev_catalog_jk_serp:             {filter: [*is_serp_jk, from_page: serp]}
+  realty_dev_catalog_jk_banner:           {filter: [*is_serp_jk, from_page: banner]}
+  realty_dev_catalog_jk_catalog_jk:       {filter: [*is_serp_jk, node_type: catalog_jk]}
+  realty_dev_catalog_jk_seo_links_click:  {filter: [*is_serp_jk, node_type: seo_links_click]}
+
+  realty_dev_galleria_views_serp:         {filter: [eid: 5235, catalog_jk_source: serp_snippet]}
+  realty_dev_galleria_views_jk:           {filter: [eid: 5235, catalog_jk_source.!=: serp_snippet]}
+
+  realty_dev_click_private_item:          {filter: [eid: 3460, catalog_jk_attribute: -100]}
+  realty_dev_click_developer_item:        {filter: [eid: 3460, catalog_jk_attribute.!=: -100]}
+
+  map_click_card_jk:                      {filter: [eid: 5237, catalog_jk_source: card]}
+
+
+  realty_dev_c_cpa:                     {filter: [*is_c, *jk_cpa]}
+  realty_dev_phone_views_cpa:           {filter: [*is_ph_realdev, *jk_cpa]}
+  realty_dev_phone_views_serp_cpa:      {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet, *jk_cpa]}
+  realty_dev_phone_views_card_cpa:      {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0, *jk_cpa]}
+  realty_dev_phone_views_item_cpa:      {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 1, *jk_cpa] }
+  realty_dev_back_call_cpa:             {filter: [*is_back_call, *jk_cpa]}
+
+  realty_dev_views_cpa:                 {filter: [*is_jk_view, *jk_cpa]}
+  realty_dev_views_rec_cpa:             {filter: [*is_jk_view, from_page: jk_card_rec, *jk_cpa]}
+  realty_dev_views_item_cpa:            {filter: [*is_jk_view, from_page: [item_jk_name, item_jk_button], *jk_cpa]}
+  realty_dev_views_item_name_cpa:       {filter: [*is_jk_view, from_page: item_jk_name, *jk_cpa]}
+  realty_dev_views_item_button_cpa:     {filter: [*is_jk_view, from_page: item_jk_button, *jk_cpa]}
+  realty_dev_views_map_cpa:             {filter: [*is_jk_view, from_page: map, *jk_cpa]}
+  realty_dev_views_cat_jk_serp_cpa:     {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_cpa]}
+
+  realty_dev_galleria_views_serp_cpa:   {filter: [eid: 5235, catalog_jk_source: serp_snippet, *jk_cpa]}
+  realty_dev_galleria_views_jk_cpa:     {filter: [eid: 5235, catalog_jk_source.!=: serp_snippet, *jk_cpa]}
+
+  realty_dev_click_private_item_cpa:    {filter: [eid: 3460, catalog_jk_attribute: -100, *jk_cpa]}
+  realty_dev_click_developer_item_cpa:  {filter: [eid: 3460, catalog_jk_attribute.!=: -100, *jk_cpa]}
+
+  map_click_card_jk_cpa:                {filter: [eid: 5237, catalog_jk_source: card, *jk_cpa]}
+
+
+  realty_dev_c_not_cpa:                     {filter: [*is_c, *jk_not_cpa]}
+  realty_dev_phone_views_not_cpa:           {filter: [*is_ph_realdev, *jk_not_cpa]}
+  realty_dev_phone_views_serp_not_cpa:      {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet, *jk_not_cpa]}
+  realty_dev_phone_views_card_not_cpa:      {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0, *jk_not_cpa]}
+  realty_dev_phone_views_item_not_cpa:      {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 1, *jk_not_cpa] }
+  realty_dev_back_call_not_cpa:             {filter: [*is_back_call, *jk_not_cpa]}
+
+  realty_dev_views_not_cpa:                 {filter: [*is_jk_view, *jk_not_cpa]}
+  realty_dev_views_rec_not_cpa:             {filter: [*is_jk_view, from_page: jk_card_rec, *jk_not_cpa]}
+  realty_dev_views_item_not_cpa:            {filter: [*is_jk_view, from_page: [item_jk_name, item_jk_button], *jk_not_cpa]}
+  realty_dev_views_item_name_not_cpa:       {filter: [*is_jk_view, from_page: item_jk_name, *jk_not_cpa]}
+  realty_dev_views_item_button_not_cpa:     {filter: [*is_jk_view, from_page: item_jk_button, *jk_not_cpa]}
+  realty_dev_views_map_not_cpa:             {filter: [*is_jk_view, from_page: map, *jk_not_cpa]}
+  realty_dev_views_cat_jk_serp_not_cpa:     {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_not_cpa]}
+
+  realty_dev_galleria_views_serp_not_cpa:   {filter: [eid: 5235, catalog_jk_source: serp_snippet, *jk_not_cpa]}
+  realty_dev_galleria_views_jk_not_cpa:     {filter: [eid: 5235, catalog_jk_source.!=: serp_snippet, *jk_not_cpa]}
+
+  realty_dev_click_private_item_not_cpa:    {filter: [eid: 3460, catalog_jk_attribute: -100, *jk_not_cpa]}
+  realty_dev_click_developer_item_not_cpa:  {filter: [eid: 3460, catalog_jk_attribute.!=: -100, *jk_not_cpa]}
+
+  map_click_card_jk_not_cpa:                {filter: [eid: 5237, catalog_jk_source: card, *jk_not_cpa]}
+
+
+  realty_dev_c_auction:                     {filter: [*is_c, *jk_auction]}
+  realty_dev_phone_views_auction:           {filter: [*is_ph_realdev, *jk_auction]}
+  realty_dev_phone_views_serp_auction:      {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet, *jk_auction]}
+  realty_dev_phone_views_card_auction:      {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0, *jk_auction]}
+  realty_dev_phone_views_item_auction:      {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 1, *jk_auction] }
+  realty_dev_back_call_auction:             {filter: [*is_back_call, *jk_auction]}
+
+  realty_dev_views_auction:                  {filter: [*is_jk_view, *jk_auction]}
+  realty_dev_views_rec_auction:              {filter: [*is_jk_view, from_page: jk_card_rec, *jk_auction]}
+  realty_dev_views_item_auction:             {filter: [*is_jk_view, from_page: [item_jk_name, item_jk_button], *jk_auction]}
+  realty_dev_views_item_name_auction:        {filter: [*is_jk_view, from_page: item_jk_name, *jk_auction]}
+  realty_dev_views_item_button_auction:      {filter: [*is_jk_view, from_page: item_jk_button, *jk_auction]}
+  realty_dev_views_map_auction:              {filter: [*is_jk_view, from_page: map, *jk_auction]}
+  realty_dev_views_cat_jk_serp_auction:      {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_auction]}
+
+  realty_dev_galleria_views_serp_auction:     {filter: [eid: 5235, catalog_jk_source: serp_snippet, *jk_auction]}
+  realty_dev_galleria_views_jk_auction:       {filter: [eid: 5235, catalog_jk_source.!=: serp_snippet, *jk_auction]}
+
+  realty_dev_click_private_item_auction:      {filter: [eid: 3460, catalog_jk_attribute: -100, *jk_auction]}
+  realty_dev_click_developer_item_auction:    {filter: [eid: 3460, catalog_jk_attribute.!=: -100, *jk_auction]}
+
+  map_click_card_jk_auction:                  {filter: [eid: 5237, catalog_jk_source: card, *jk_auction]}
+
+
+  realty_dev_c_cpa_not_auction:                     {filter: [*is_c, *jk_not_auction]}
+  realty_dev_phone_views_cpa_not_auction:           {filter: [*is_ph_realdev, *jk_not_auction]}
+  realty_dev_phone_views_serp_cpa_not_auction:      {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet, *jk_not_auction]}
+  realty_dev_phone_views_card_cpa_not_auction:      {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0, *jk_not_auction]}
+  realty_dev_phone_views_item_cpa_not_auction:      {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 1, *jk_not_auction] }
+  realty_dev_back_call_cpa_not_auction:             {filter: [*is_back_call, *jk_not_auction]}
+
+  realty_dev_views_cpa_not_auction:                  {filter: [*is_jk_view, *jk_not_auction]}
+  realty_dev_views_rec_cpa_not_auction:              {filter: [*is_jk_view, from_page: jk_card_rec, *jk_not_auction]}
+  realty_dev_views_item_cpa_not_auction:             {filter: [*is_jk_view, from_page: [item_jk_name, item_jk_button], *jk_not_auction]}
+  realty_dev_views_item_name_cpa_not_auction:        {filter: [*is_jk_view, from_page: item_jk_name, *jk_not_auction]}
+  realty_dev_views_item_button_cpa_not_auction:      {filter: [*is_jk_view, from_page: item_jk_button, *jk_not_auction]}
+  realty_dev_views_map_cpa_not_auction:              {filter: [*is_jk_view, from_page: map, *jk_not_auction]}
+  realty_dev_views_cat_jk_serp_cpa_not_auction:      {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_not_auction]}
+
+  realty_dev_galleria_views_serp_cpa_not_auction:    {filter: [eid: 5235, catalog_jk_source: serp_snippet, *jk_not_auction]}
+  realty_dev_galleria_views_jk_cpa_not_auction:      {filter: [eid: 5235, catalog_jk_source.!=: serp_snippet, *jk_not_auction]}
+
+  realty_dev_click_private_item_cpa_not_auction:     {filter: [eid: 3460, catalog_jk_attribute: -100, *jk_not_auction]}
+  realty_dev_click_developer_item_cpa_not_auction:   {filter: [eid: 3460, catalog_jk_attribute.!=: -100, *jk_not_auction]}
+
+  map_click_card_jk_cpa_not_auction:                 {filter: [eid: 5237, catalog_jk_source: card, *jk_not_auction]}
+
+metric.uniq:
+  users_realty_dev_c:                                {counter: realty_dev_c,                              key: [cookie]}
+  users_realty_dev_phone_views_nd:                   {counter: realty_dev_phone_views_nd,                 key: [cookie]}
+  users_realty_dev_phone_views_serp:                 {counter: realty_dev_phone_views_serp,               key: [cookie]}
+  users_realty_dev_phone_views_card:                 {counter: realty_dev_phone_views_card,               key: [cookie]}
+  users_realty_dev_phone_views_item:                 {counter: realty_dev_phone_views_item,               key: [cookie]}
+  users_realty_dev_back_call:                        {counter: realty_dev_back_call,                      key: [cookie]}
+                                                                                                    
+  users_realty_dev_catalog_jk_vertical_main:         {counter: realty_dev_catalog_jk_vertical_main,       key: [cookie]}
+  users_realty_dev_catalog_jk_serp:                  {counter: realty_dev_catalog_jk_serp,                key: [cookie]}
+  users_realty_dev_catalog_jk_banner:                {counter: realty_dev_catalog_jk_banner,              key: [cookie]}
+  users_realty_dev_catalog_jk_catalog_jk:            {counter: realty_dev_catalog_jk_catalog_jk,          key: [cookie]}
+  users_realty_dev_catalog_jk_seo_links_click:       {counter: realty_dev_catalog_jk_seo_links_click,     key: [cookie]}
+
+  users_realty_dev_galleria_views_serp:              {counter: realty_dev_galleria_views_serp,            key: [cookie]}
+  users_realty_dev_galleria_views_jk:                {counter: realty_dev_galleria_views_jk,              key: [cookie]}
+
+  users_realty_dev_click_private_item:               {counter: realty_dev_click_private_item,             key: [cookie]}
+  users_realty_dev_click_developer_item:             {counter: realty_dev_click_developer_item,           key: [cookie]}
+
+  users_map_click_card_jk:                           {counter: map_click_card_jk,                         key: [cookie]}
+
+
+  users_realty_dev_c_cpa:                           {counter: realty_dev_c_cpa,                           key: [cookie]}
+  users_realty_dev_phone_views_cpa:                 {counter: realty_dev_phone_views_cpa,                 key: [cookie]}
+  users_realty_dev_phone_views_serp_cpa:            {counter: realty_dev_phone_views_serp_cpa,            key: [cookie]}
+  users_realty_dev_phone_views_card_cpa:            {counter: realty_dev_phone_views_card_cpa,            key: [cookie]}
+  users_realty_dev_phone_views_item_cpa:            {counter: realty_dev_phone_views_item_cpa,            key: [cookie]}
+  users_realty_dev_back_call_cpa:                   {counter: realty_dev_back_call_cpa,                   key: [cookie]}
+
+  users_realty_dev_views_cpa:                       {counter: realty_dev_views_cpa,                       key: [cookie]}
+  users_realty_dev_views_rec_cpa:                   {counter: realty_dev_views_rec_cpa,                   key: [cookie]}
+  users_realty_dev_views_item_cpa:                  {counter: realty_dev_views_item_cpa,                  key: [cookie]}
+  users_realty_dev_views_item_name_cpa:             {counter: realty_dev_views_item_name_cpa,             key: [cookie]}
+  users_realty_dev_views_item_button_cpa:           {counter: realty_dev_views_item_button_cpa,           key: [cookie]}
+  users_realty_dev_views_map_cpa:                   {counter: realty_dev_views_map_cpa,                   key: [cookie]}
+  users_realty_dev_views_cat_jk_serp_cpa:           {counter: realty_dev_views_cat_jk_serp_cpa,           key: [cookie]}
+
+  users_realty_dev_galleria_views_serp_cpa:         {counter: realty_dev_galleria_views_serp_cpa,         key: [cookie]}
+  users_realty_dev_galleria_views_jk_cpa:           {counter: realty_dev_galleria_views_jk_cpa,           key: [cookie]}
+
+  users_realty_dev_click_private_item_cpa:          {counter: realty_dev_click_private_item_cpa,          key: [cookie]}
+  users_realty_dev_click_developer_item_cpa:        {counter: realty_dev_click_developer_item_cpa,        key: [cookie]}
+
+  users_map_click_card_jk_cpa:                      {counter: map_click_card_jk_cpa,                      key: [cookie]}
+
+
+  users_realty_dev_c_not_cpa:                      {counter: realty_dev_c_not_cpa,                       key: [cookie]}
+  users_realty_dev_phone_views_not_cpa:            {counter: realty_dev_phone_views_not_cpa,             key: [cookie]}
+  users_realty_dev_phone_views_serp_not_cpa:       {counter: realty_dev_phone_views_serp_not_cpa,        key: [cookie]}
+  users_realty_dev_phone_views_card_not_cpa:       {counter: realty_dev_phone_views_card_not_cpa,        key: [cookie]}
+  users_realty_dev_phone_views_item_not_cpa:       {counter: realty_dev_phone_views_item_not_cpa,        key: [cookie]}
+  users_realty_dev_back_call_not_cpa:              {counter: realty_dev_back_call_not_cpa,               key: [cookie]}
+
+  users_realty_dev_views_not_cpa:                  {counter: realty_dev_views_not_cpa,                   key: [cookie]}
+  users_realty_dev_views_rec_not_cpa:              {counter: realty_dev_views_rec_not_cpa,               key: [cookie]}
+  users_realty_dev_views_item_not_cpa:             {counter: realty_dev_views_item_not_cpa,              key: [cookie]}
+  users_realty_dev_views_item_name_not_cpa:        {counter: realty_dev_views_item_name_not_cpa,         key: [cookie]}
+  users_realty_dev_views_item_button_not_cpa:      {counter: realty_dev_views_item_button_not_cpa,       key: [cookie]}
+  users_realty_dev_views_map_not_cpa:              {counter: realty_dev_views_map_not_cpa,               key: [cookie]}
+  users_realty_dev_views_cat_jk_serp_not_cpa:      {counter: realty_dev_views_cat_jk_serp_not_cpa,       key: [cookie]}
+
+  users_realty_dev_galleria_views_serp_not_cpa:    {counter: realty_dev_galleria_views_serp_not_cpa,     key: [cookie]}
+  users_realty_dev_galleria_views_jk_not_cpa:      {counter: realty_dev_galleria_views_jk_not_cpa,       key: [cookie]}
+
+  users_realty_dev_click_private_item_not_cpa:     {counter: realty_dev_click_private_item_not_cpa,      key: [cookie]}
+  users_realty_dev_click_developer_item_not_cpa:   {counter: realty_dev_click_developer_item_not_cpa,    key: [cookie]}
+
+  users_map_click_card_jk_not_cpa:                 {counter: map_click_card_jk_not_cpa,                  key: [cookie]}
+
+
+  users_realty_dev_c_auction:                       {counter: realty_dev_c_auction,                      key: [cookie]}
+  users_realty_dev_phone_views_auction:             {counter: realty_dev_phone_views_auction,            key: [cookie]}
+  users_realty_dev_phone_views_serp_auction:        {counter: realty_dev_phone_views_serp_auction,       key: [cookie]}
+  users_realty_dev_phone_views_card_auction:        {counter: realty_dev_phone_views_card_auction,       key: [cookie]}
+  users_realty_dev_phone_views_item_auction:        {counter: realty_dev_phone_views_item_auction,       key: [cookie]}
+  users_realty_dev_back_call_auction:               {counter: realty_dev_back_call_auction,              key: [cookie]}
+
+  users_realty_dev_views_auction:                   {counter: realty_dev_views_auction,                  key: [cookie]}
+  users_realty_dev_views_rec_auction:               {counter: realty_dev_views_rec_auction,              key: [cookie]}
+  users_realty_dev_views_item_auction:              {counter: realty_dev_views_item_auction,             key: [cookie]}
+  users_realty_dev_views_item_name_auction:         {counter: realty_dev_views_item_name_auction,        key: [cookie]}
+  users_realty_dev_views_item_button_auction:       {counter: realty_dev_views_item_button_auction,      key: [cookie]}
+  users_realty_dev_views_map_auction:               {counter: realty_dev_views_map_auction,              key: [cookie]}
+  users_realty_dev_views_cat_jk_serp_auction:       {counter: realty_dev_views_cat_jk_serp_auction,      key: [cookie]}
+
+  users_realty_dev_galleria_views_serp_auction:     {counter: realty_dev_galleria_views_serp_auction,    key: [cookie]}
+  users_realty_dev_galleria_views_jk_auction:       {counter: realty_dev_galleria_views_jk_auction,      key: [cookie]}
+
+  users_realty_dev_click_private_item_auction:      {counter: realty_dev_click_private_item_auction,     key: [cookie]}
+  users_realty_dev_click_developer_item_auction:    {counter: realty_dev_click_developer_item_auction,   key: [cookie]}
+
+  users_map_click_card_jk_auction:                  {counter: map_click_card_jk_auction,                 key: [cookie]}
+
+
+  users_realty_dev_c_cpa_not_auction:                          {counter: realty_dev_c_cpa_not_auction,                    key: [cookie]} 
+  users_realty_dev_phone_views_cpa_not_auction:                {counter: realty_dev_phone_views_cpa_not_auction,          key: [cookie]} 
+  users_realty_dev_phone_views_serp_cpa_not_auction:           {counter: realty_dev_phone_views_serp_cpa_not_auction,     key: [cookie]} 
+  users_realty_dev_phone_views_card_cpa_not_auction:           {counter: realty_dev_phone_views_card_cpa_not_auction,     key: [cookie]}
+  users_realty_dev_phone_views_item_cpa_not_auction:           {counter: realty_dev_phone_views_item_cpa_not_auction,     key: [cookie]}
+  users_realty_dev_back_call_cpa_not_auction:                  {counter: realty_dev_back_call_cpa_not_auction,            key: [cookie]} 
+                                                                                                                                         
+  users_realty_dev_views_cpa_not_auction:                      {counter: realty_dev_views_cpa_not_auction,                key: [cookie]} 
+  users_realty_dev_views_rec_cpa_not_auction:                  {counter: realty_dev_views_rec_cpa_not_auction,            key: [cookie]} 
+  users_realty_dev_views_item_cpa_not_auction:                 {counter: realty_dev_views_item_cpa_not_auction,           key: [cookie]} 
+  users_realty_dev_views_item_name_cpa_not_auction:            {counter: realty_dev_views_item_name_cpa_not_auction,      key: [cookie]} 
+  users_realty_dev_views_item_button_cpa_not_auction:          {counter: realty_dev_views_item_button_cpa_not_auction,    key: [cookie]}   
+  users_realty_dev_views_map_cpa_not_auction:                  {counter: realty_dev_views_map_cpa_not_auction,            key: [cookie]} 
+  users_realty_dev_views_cat_jk_serp_cpa_not_auction:          {counter: realty_dev_views_cat_jk_serp_cpa_not_auction,    key: [cookie]}   
+                                                                                                                                         
+  users_realty_dev_galleria_views_serp_cpa_not_auction:        {counter: realty_dev_galleria_views_serp_cpa_not_auction,  key: [cookie]} 
+  users_realty_dev_galleria_views_jk_cpa_not_auction:          {counter: realty_dev_galleria_views_jk_cpa_not_auction,    key: [cookie]} 
+                                                                                                                                         
+  users_realty_dev_click_private_item_cpa_not_auction:         {counter: realty_dev_click_private_item_cpa_not_auction,   key: [cookie]} 
+  users_realty_dev_click_developer_item_cpa_not_auction:       {counter: realty_dev_click_developer_item_cpa_not_auction, key: [cookie]}  
+                                                                                                                                         
+  users_map_click_card_jk_cpa_not_auction:                     {counter: map_click_card_jk_cpa_not_auction,               key: [cookie]} 
