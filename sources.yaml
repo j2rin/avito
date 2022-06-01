@@ -858,18 +858,6 @@ calltracking:
   dtm: event_date
   segm: user_id
 
-buyer_weighted:
-  metric_configs: [buyer_weighted]
-  database: vertica
-  table: dma.vo_buyer_weighted
-  dimensions: [platform, vertical, logical_category, logical_region, price_group]
-  m42_cartesian_groups:
-    - [is_logged_in, vertical, logical_category]
-  participant: {visitor: cookie_id, user: user_id}
-  primary_subject: visitor
-  dtm: event_date
-  segm: cookie_id_event_date
-
 app_call_bx:
   metric_configs: [app_call_bx]
   database: vertica
