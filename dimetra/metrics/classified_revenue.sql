@@ -13,7 +13,10 @@ select
     t.transaction_count,
     t.transaction_subtype,
     t.user_id as user,
-    t.user_id
+    t.user_id,
+    t.location_id,
+    t.microcat_id,
+    t.is_asd
 from dma.v_paying_user_report_full t
 ;
 

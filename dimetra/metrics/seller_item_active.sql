@@ -1,40 +1,39 @@
 create fact seller_item_active as
 select
     t.event_date::date as __date__,
-    t.activations_count,
-    t.address_length,
-    t.city_id,
-    t.contacts,
-    t.contacts_msg,
-    t.contacts_ph,
-    t.delivery_clicks,
-    t.delivery_contacts,
-    t.description_word_count,
-    t.event_date,
-    t.favs_added,
-    t.favs_removed,
-    t.has_address,
-    t.has_address_id,
+    t.user_id,
+    t.item_id,
+    t.platform_id,
+    t.start_time,
+    t.start_date,
+    t.last_activation_time,
+    t.last_activation_date,
     t.is_active,
-    t.is_delivery_active,
-    t.is_delivery_available,
     t.is_marketplace,
     t.is_message_forbidden,
-    t.item_id as item,
-    t.item_views,
-    t.last_activation_date,
-    t.location_distance,
-    t.location_id,
     t.microcat_id,
-    t.min_kind_level,
+    t.status_id,
     t.photo_count,
+    t.description_word_count,
+    t.contacts,
+	t.contacts_msg,
+	t.contacts_ph,
+    t.favs_added,
+    t.favs_removed,
+    t.activations_count,
+    t.activations_after_ttl_count,
+    t.item_views,
+    t.vas_mask,
+    t.is_delivery_available,
+	t.is_delivery_active,
+	t.delivery_clicks,
+	t.delivery_contacts,
     t.seller_rating,
-    t.start_date,
+    t.infmquery_id,
+    t.location_id,
     t.user_id as user,
-    t.user_id,
-    hash(t.user_id, t.logical_category_id) as user_logcat,
-    t.vas_mask
-from dma.vo_seller_item_active t
+    t.item_id as item
+from dma.seller_item_active_dimetra t
 ;
 
 create metrics seller_item_active_item as
@@ -235,7 +234,7 @@ select
     sum(case when items_with_rating_5 > 0 then 1 end) as listers_with_rating_5
 from (
     select
-        user_id, user_logcat,
+        user_id, hash(t.user_id, t.logical_category_id) as user_logcat,
         sum(case when is_active = True then 1 end) as cnt_active_items,
         sum(case when is_active = True and seller_rating = 1 then 1 end) as items_with_rating_1,
         sum(case when is_active = True and seller_rating = 2 then 1 end) as items_with_rating_2,
@@ -244,7 +243,7 @@ from (
         sum(case when is_active = True and seller_rating = 5 then 1 end) as items_with_rating_5,
         sum(case when is_active = True and seller_rating in (1, 2, 3, 4, 5) then 1 end) as items_with_rating_new
     from seller_item_active t
-    group by user_id, user_logcat
+    group by user_id, hash(t.user_id, t.logical_category_id)
 ) _
 ;
 
