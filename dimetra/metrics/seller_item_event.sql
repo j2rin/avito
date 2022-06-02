@@ -1,6 +1,7 @@
 create fact seller_item_event as
 select
     t.event_date::date as __date__,
+    t.location_id,
     t.activation_type,
     t.close_reason_id,
     t.close_status_id,
@@ -24,7 +25,10 @@ select
     t.manual_moderation,
     t.moder_flags,
     t.user_id as user,
-    t.user_id
+    t.user_id,
+    t.microcat_id,
+    t.is_asd,
+    t.platform_id
 from dma.vo_seller_item_event t
 ;
 

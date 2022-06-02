@@ -6,7 +6,11 @@ select
     hash(t.cookie_id, t.logical_category_id) as cookie_logcat,
     t.event_date,
     t.is_buyer_new,
-    hash(t.item_id, t.logical_category_id) as logcat_item
+    hash(t.item_id, t.logical_category_id) as logcat_item,
+    t.location_id,
+    t.microcat_id,
+    t.is_asd,
+    t.platform_id
 from dma.vo_core_contacts t
 ;
 
