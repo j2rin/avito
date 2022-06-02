@@ -19,7 +19,7 @@ definitions:
 metric.counter:
   realty_dev_c:                           {filter: [*is_c] }
   realty_dev_phone_views_nd:              {filter: [*is_ph_realdev] }
-  realty_dev_phone_views_serp:            {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet] }
+  realty_dev_phone_views_serp_nd:            {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet] }
   realty_dev_phone_views_card:            {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0] }
   realty_dev_phone_views_item:            {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 1] }
   realty_dev_back_call:                   {filter: [*is_back_call] }
@@ -137,7 +137,7 @@ metric.counter:
 metric.uniq:
   users_realty_dev_c:                                {counter: realty_dev_c,                              key: [cookie]}
   users_realty_dev_phone_views_nd:                   {counter: realty_dev_phone_views_nd,                 key: [cookie]}
-  users_realty_dev_phone_views_serp:                 {counter: realty_dev_phone_views_serp,               key: [cookie]}
+  users_realty_dev_phone_views_serp_nd:              {counter: realty_dev_phone_views_serp_nd,            key: [cookie]}
   users_realty_dev_phone_views_card:                 {counter: realty_dev_phone_views_card,               key: [cookie]}
   users_realty_dev_phone_views_item:                 {counter: realty_dev_phone_views_item,               key: [cookie]}
   users_realty_dev_back_call:                        {counter: realty_dev_back_call,                      key: [cookie]}
@@ -231,7 +231,7 @@ metric.uniq:
 
   users_realty_dev_c_cpa_not_auction:                          {counter: realty_dev_c_cpa_not_auction,                    key: [cookie]} 
   users_realty_dev_phone_views_cpa_not_auction:                {counter: realty_dev_phone_views_cpa_not_auction,          key: [cookie]} 
-  users_realty_dev_phone_views_serp_cpa_not_auction:           {counter: realty_dev_phone_views_serp_cpa_not_auction,     key: [cookie]} 
+  users_realty_dev_phone_views_serp_cpa_not_auction:           {counter: realty_dev_phone_views_serp_cpa_not_auction,     key: [cookie]}
   users_realty_dev_phone_views_card_cpa_not_auction:           {counter: realty_dev_phone_views_card_cpa_not_auction,     key: [cookie]}
   users_realty_dev_phone_views_item_cpa_not_auction:           {counter: realty_dev_phone_views_item_cpa_not_auction,     key: [cookie]}
   users_realty_dev_back_call_cpa_not_auction:                  {counter: realty_dev_back_call_cpa_not_auction,            key: [cookie]} 
