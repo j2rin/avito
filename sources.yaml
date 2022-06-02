@@ -1858,6 +1858,36 @@ autoteka_reports_autoteka_participant:
   primary_subject: autoteka_visitor
   dtm: autoteka_package_history_created_at
 
+re_nd_buyer_stream:
+  metric_configs: [re_nd_buyer_stream]
+  database: vertica
+  table: dma.vo_re_nd_buyer_stream
+  column_map:
+    item: item_id
+    cookie: cookie_id
+    user: user_id
+    cookie_item: [cookie_id, item_id]
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - location
+    - microcat
+    - is_human
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  m42_cartesian_groups:
+    - [vertical, logical_category, region]
+    - [category, subcategory]
+  dtm: event_date
+
 buyer_comp:
   metric_configs: [buyer_comp]
   database: vertica
@@ -1869,3 +1899,4 @@ buyer_comp:
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id_event_date
+
