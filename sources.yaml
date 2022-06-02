@@ -1858,6 +1858,7 @@ autoteka_reports_autoteka_participant:
   primary_subject: autoteka_visitor
   dtm: autoteka_package_history_created_at
 
+<<<<<<< HEAD
 re_nd_buyer_stream:
   metric_configs: [re_nd_buyer_stream]
   database: vertica
@@ -1887,3 +1888,16 @@ re_nd_buyer_stream:
     - [vertical, logical_category, region]
     - [category, subcategory]
   dtm: event_date
+=======
+buyer_comp:
+  metric_configs: [buyer_comp]
+  database: vertica
+  table: public.vo_buyer_comp
+  dimensions: [platform, vertical, logical_category]
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id_event_date
+>>>>>>> 
