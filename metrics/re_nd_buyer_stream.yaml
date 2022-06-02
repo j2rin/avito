@@ -14,7 +14,7 @@ definitions:
   - &is_back_call                        {eid: *eid_back_call}
   - &is_back_call_card                   {eid: *eid_back_call, item_id_not_null: 0}
   - &is_back_call_item                   {eid: *eid_back_call, item_id_not_null: 1}
-  - &is_c                                {$or: [[eid: *eid_ph], [eid: *eid_back_call, item_id_not_null: 0]]}
+  - &is_c_jk                             {$or: [[eid: *eid_ph], [eid: *eid_back_call, item_id_not_null: 0]]}
   - &is_newdev_catalog_photos            {eid: *eid_newdev_catalog_photos}
   - &is_click_serp_from_realty_dev       {eid: *eid_click_serp_from_realty_dev}
   - &is_newdev_catalog_map_open          {eid: *eid_newdev_catalog_map_open}
@@ -30,11 +30,11 @@ metric.counter:
   catalog_jk_vertical_main:                          {filter: [*is_entry_point, from_page: vertical_main]}
   catalog_jk_serp:                                   {filter: [*is_entry_point, from_page: serp]}
   catalog_jk_banner:                                 {filter: [*is_entry_point, from_page: banner]}
-  catalog_jk_catalog_jk:                             {filter: [*is_entry_point, node_type: catalog_jk]}
+  catalog_jk_rubricator:                             {filter: [*is_entry_point, node_type: catalog_jk]}
   catalog_jk_seo_links_click:                        {filter: [*is_entry_point, node_type: seo_links_click]}
 
   catalog_jk_gallery_view_serp:                      {filter: [*is_newdev_catalog_photos, catalog_jk_source: serp_snippet]}
-  catalog_jk_gallery_view_card:                      {filter: [*is_newdev_catalog_photos, catalog_jk_source.!=: serp_snippet]}
+  catalog_jk_gallery_view_card:                      {filter: [*is_newdev_catalog_photos, catalog_jk_source: card_gallery]}
 
   realty_dev_click_private_item_serp:                {filter: [*is_click_serp_from_realty_dev,  {$or: [[catalog_jk_attribute: -100], [catalog_jk_source: private_flats]]}]}
   realty_dev_click_developer_item_serp:              {filter: [{$or: [[*is_click_serp_from_realty_dev, catalog_jk_attribute.!=: -100, catalog_jk_attribute.isnull: false], [*is_newdev_catalog_add_info, catalog_jk_source: catalogNDSource, catalog_jk_action: add_items]]}]}
@@ -42,23 +42,23 @@ metric.counter:
   realty_dev_card_map_click:                         {filter: [*is_newdev_catalog_map_open, catalog_jk_source: card]}
 
 
-  realty_dev_c_cpa:                                  {filter: [*is_c, *jk_cpa]}
+  realty_dev_c_cpa:                                  {filter: [*is_c_jk, *jk_cpa]}
   realty_dev_ph_cpa:                                 {filter: [*is_ph_realdev, *jk_cpa]}
   realty_dev_ph_serp_cpa:                            {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet, *jk_cpa]}
-  realty_dev_ph_card_cpa:                            {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0, *jk_cpa]}
+  realty_dev_ph_card_cpa:                            {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, *jk_cpa]}
   realty_dev_back_call_card_cpa:                     {filter: [*is_back_call_card, *jk_cpa]}
-  realty_dev_back_call_item_cpa:                     {filter: [*is_back_call_item, item_id_not_null: 1, *jk_cpa]}
+  realty_dev_back_call_item_cpa:                     {filter: [*is_back_call_item, *jk_cpa]}
 
   realty_dev_views_cpa:                              {filter: [*is_jk_view, *jk_cpa]}
   realty_dev_views_rec_cpa:                          {filter: [*is_jk_view, from_page: jk_card_rec, *jk_cpa]}
-  realty_dev_views_item_cpa:                         {filter: [*is_jk_view, from_page: [item_jk_name, item_jk_button], *jk_cpa]}
+  realty_dev_views_item_cpa:                         {filter: [*is_jk_view, {$or: [[from_page: item_jk_name],[from_page: item_jk_button]]}, *jk_cpa]}
   realty_dev_views_item_name_cpa:                    {filter: [*is_jk_view, from_page: item_jk_name, *jk_cpa]}
   realty_dev_views_item_button_cpa:                  {filter: [*is_jk_view, from_page: item_jk_button, *jk_cpa]}
   realty_dev_views_map_cpa:                          {filter: [*is_jk_view, from_page: map, *jk_cpa]}
   realty_dev_views_cat_jk_serp_cpa:                  {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_cpa]}
 
 
-  realty_dev_c_not_cpa:                              {filter: [*is_c, *jk_not_cpa]}
+  realty_dev_c_not_cpa:                              {filter: [*is_c_jk, *jk_not_cpa]}
   realty_dev_ph_not_cpa:                             {filter: [*is_ph_realdev, *jk_not_cpa]}
   realty_dev_ph_serp_not_cpa:                        {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet, *jk_not_cpa]}
   realty_dev_ph_card_not_cpa:                        {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0, *jk_not_cpa]}
@@ -74,7 +74,7 @@ metric.counter:
   realty_dev_views_cat_jk_serp_not_cpa:              {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_not_cpa]}
 
 
-  realty_dev_c_auction:                              {filter: [*is_c, *jk_auction]}
+  realty_dev_c_auction:                              {filter: [*is_c_jk, *jk_auction]}
   realty_dev_ph_auction:                             {filter: [*is_ph_realdev, *jk_auction]}
   realty_dev_ph_serp_auction:                        {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet, *jk_auction]}
   realty_dev_ph_card_auction:                        {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0, *jk_auction]}
@@ -90,7 +90,7 @@ metric.counter:
   realty_dev_views_cat_jk_serp_auction:              {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_auction]}
 
 
-  realty_dev_c_cpa_not_auction:                      {filter: [*is_c, *jk_not_auction]}
+  realty_dev_c_cpa_not_auction:                      {filter: [*is_c_jk, *jk_not_auction]}
   realty_dev_ph_cpa_not_auction:                     {filter: [*is_ph_realdev, *jk_not_auction]}
   realty_dev_ph_serp_cpa_not_auction:                {filter: [*is_ph_realdev, catalog_jk_source: serp_snippet, *jk_not_auction]}
   realty_dev_ph_card_cpa_not_auction:                {filter: [*is_ph_realdev, catalog_jk_source.!=: serp_snippet, item_id_not_null: 0, *jk_not_auction]}
@@ -110,7 +110,7 @@ metric.uniq:
   users_catalog_jk_vertical_main:                    {counter: catalog_jk_vertical_main,                   key: [cookie]}
   users_catalog_jk_serp:                             {counter: catalog_jk_serp,                            key: [cookie]}
   users_catalog_jk_banner:                           {counter: catalog_jk_banner,                          key: [cookie]}
-  users_catalog_jk_catalog_jk:                       {counter: catalog_jk_catalog_jk,                      key: [cookie]}
+  users_catalog_jk_rubricator:                       {counter: catalog_jk_rubricator,                      key: [cookie]}
   users_catalog_jk_seo_links_click:                  {counter: catalog_jk_seo_links_click,                 key: [cookie]}
 
   users_catalog_jk_gallery_view_serp:                {counter: catalog_jk_gallery_view_serp,               key: [cookie]}
