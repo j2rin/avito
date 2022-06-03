@@ -1867,7 +1867,7 @@ re_nd_buyer_stream:
     cookie: cookie_id
     user: user_id
     cookie_item: [cookie_id, item_id]
-  dimensions:
+  dimensionsdimensions:
     - platform
     - vertical
     - logical_category
@@ -1901,10 +1901,10 @@ buyer_comp:
   segm: cookie_id_event_date
 
 autoteka_new_buyer_expected_revenue_ap:
-  metric_config: [autoteka_new_buyer_expected_revenue_ap]
+  metric_configs: [autoteka_new_buyer_expected_revenue_ap]
   database: vertica
   table: dma.v_autoteka_new_buyers_expected_revenue
-  dimension:  [platform, searchtype]
+  dimensions:  [platform, searchtype]
   column_map:
     platform_id: autoteka_platform_id
   participant: { autoteka_visitor: autoteka_cookie_id, autoteka_user: autotekauser_Id }
@@ -1912,10 +1912,10 @@ autoteka_new_buyer_expected_revenue_ap:
   dtm: event_date
 
 autoteka_new_buyer_expected_revenue:
- metric_config: [autoteka_new_buyer_expected_revenue]
+ metric_configs: [autoteka_new_buyer_expected_revenue]
  database: vertica
  table: dma.v_autoteka_new_buyers_expected_revenue
- dimension:  [platform, searchtype]
+ dimensions:  [platform, searchtype]
  column_map:
    platform_id: autoteka_platform_id
  participant: { visitor: cookie_id, user: user_id }
