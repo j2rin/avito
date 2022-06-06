@@ -141,6 +141,17 @@ metric.counter:
   icebreakers_message_template_clicks:                  {filter: [eid: 4210, $or: [source: 'item', source.isnull: True]], obs: [event_count]}
   icebreakers_message_template_shows_msg:               {filter: [eid: 4209, $or: [source: 'messenger', source: 'mini-messenger']], obs: [event_count]}
   icebreakers_message_template_clicks_msg:              {filter: [eid: 4210, $or: [source: 'messenger', source: 'mini-messenger']], obs: [event_count]}
+  
+  total_osp_open:                                       {filter: [{ eid: 5762}], obs: [event_count]}
+  total_osp_write_seller:                               {filter: [{ eid: 5784}], obs: [event_count]}
+  total_osp_close:                                      {filter: [{ eid: 5783}], obs: [event_count]}
+  total_osp_order_details:                              {filter: [{ eid: 5785}], obs: [event_count]}
+  total_osp_back_to_item:                               {filter: [{ eid: 6071}], obs: [event_count]}
+  
+  cnt_order_page_views_from_my_orders:                  {filter: [eid: 4760, source_click_page: orders_list]}
+  cnt_order_page_views_from_success_page:               {filter: [eid: 4760, source_click_page: order_success]}
+  cnt_order_page_views_from_messenger:                  {filter: [eid: 4760, source_click_page: messenger]}
+  cnt_order_page_views_users:                           {filter: [eid: 4760]}
 
 
 metric.uniq:
@@ -234,6 +245,17 @@ metric.uniq:
   user_icebreakers_message_template_clicks:                  {counter: icebreakers_message_template_clicks,         key: [cookie]}
   user_icebreakers_message_template_shows_msg:               {counter: icebreakers_message_template_shows_msg,          key: [cookie]}
   user_icebreakers_message_template_clicks_msg:              {counter: icebreakers_message_template_clicks_msg,         key: [cookie]}
+  
+  osp_open:                                                  {counter: total_osp_open, key: [orderid_string]}
+  osp_write_seller:                                          {counter: total_osp_write_seller, key: [orderid_string]}
+  osp_close:                                                 {counter: total_osp_close, key: [orderid_string]}
+  osp_order_details:                                         {counter: total_osp_order_details, key: [orderid_string]}
+  osp_back_to_item:                                          {counter: total_osp_back_to_item, key: [orderid_string]}
+  
+  order_page_views_from_my_orders:                           {counter: cnt_order_page_views_from_my_orders,    key: [cookie]}
+  order_page_views_from_success_page:                        {counter: cnt_order_page_views_from_success_page, key: [cookie]}
+  order_page_views_from_messenger:                           {counter: cnt_order_page_views_from_messenger,    key: [cookie]}
+  order_page_views_users:                                    {counter: cnt_order_page_views_users,             key: [cookie]}
 
 
 metric.ratio:
