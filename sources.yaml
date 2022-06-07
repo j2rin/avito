@@ -352,21 +352,6 @@ mnz_bundle:
   dtm: event_date
   segm: user_id
 
-core_c2c:
-  metric_configs: [core_c2c]
-  database: vertica
-  table: dma.vo_core_c2c
-  column_map:
-    user: user_id
-    participant: participant_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
-  m42_cartesian_groups:
-    - [is_logged_in, is_asd, vertical, logical_category, region, user_segment_market]
-    - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
-  primary_subject: visitor
-  dtm: event_date
-  segm: cookie_id
 
 user_rating:
   metric_configs: [user_rating]
