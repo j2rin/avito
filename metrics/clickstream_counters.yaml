@@ -63,9 +63,9 @@ metric.counter:
   sqp_wordbreaker_suggest_disabled:                     {filter: [eid: 3020, search_correction_method: 'sqp_wordbreaker_suggest'], obs: [event_count]}
   sqp_wordbreaker_digit_disabled:                       {filter: [eid: 3020, search_correction_method: 'sqp_wordbreaker_digit'], obs: [event_count]}
   sqp_wordbreaker_digit_suggest_disabled:               {filter: [eid: 3020, search_correction_method: 'sqp_wordbreaker_digit_suggest'], obs: [event_count]}
-  show_banner_download_app:                             {filter: [eid: 3180, placement: 'splash.banner', page_type: 'main', banner_id: 'child'], obs: [event_count]}
-  click_banner_download_app:                            {filter: [eid: 3207, placement: 'splash.banner', page_type: 'main', banner_id: 'child', action_type: 'click-positive'], obs: [event_count]}
-  reject_banner_download_app:                           {filter: [eid: 3207, placement: 'splash.banner', page_type: 'main', banner_id: 'child', action_type: 'click-negative'], obs: [event_count]}
+  show_banner_download_app:                             {filter: [eid: 3180, placement: 'splash.banner', page_type: 'main', banner_id: 'phone'], obs: [event_count]}
+  click_banner_download_app:                            {filter: [eid: 3207, placement: 'splash.banner', page_type: 'main', banner_id: 'phone', action_type: 'click-positive'], obs: [event_count]}
+  reject_banner_download_app:                           {filter: [eid: 3207, placement: 'splash.banner', page_type: 'main', banner_id: 'phone', action_type.ilike: 'click-negative%'], obs: [event_count]}
 
   mic_access_granted:                                   {filter: [eid: 4100, app_call_mic_access: true], obs: [event_count]}
   mic_access_denied:                                    {filter: [eid: 4100, app_call_mic_access: false], obs: [event_count]}
@@ -110,6 +110,8 @@ metric.counter:
   click_recent_search_widget:                           {filter: [eid: 4921, from_page: 'recentSearch'], obs: [event_count]}
   show_recommendations_widget:                          {filter: [eid: 4920, from_page: 'vertical_recommendations'], obs: [event_count]}
   click_recommendations_widget:                         {filter: [eid: 4921, from_page: 'vertical_recommendations'], obs: [event_count]}
+  show_shortcuts_widget:                                {filter: [eid: 4920, from_page: 'shortcuts_widget'], obs: [event_count]}
+  click_shortcuts_widget:                               {filter: [eid: 4921, from_page: 'shortcuts_widget'], obs: [event_count]}
 
   network_error:                                        {filter: [eid: 4599], obs: [event_count]}
   network_api_error:                                    {filter: [eid: 4599, network_error_type: 'api error'], obs: [event_count]}
@@ -203,6 +205,8 @@ metric.uniq:
   user_click_recent_search_widget:   {counter: click_recent_search_widget,            key: [cookie]}
   user_show_recommendations_widget:  {counter: show_recommendations_widget,           key: [cookie]}
   user_click_recommendations_widget: {counter: click_recommendations_widget,          key: [cookie]}
+  user_show_shortcuts_widget:        {counter: show_shortcuts_widget,                 key: [cookie]}
+  user_click_shortcuts_widget:       {counter: click_shortcuts_widget,                key: [cookie]}
 
   user_network_error:                                        {counter: network_error,           key: [cookie]}
   user_network_api_error:                                    {counter: network_api_error,           key: [cookie]}
