@@ -914,6 +914,7 @@ metric.counter:
   searches_metageo:                        {filter: [*is_metageo]}
   total_courier_click:                     {filter: [*is_delivery_courier, eid: 2483]}
   total_courier_widget:                    {filter: [eid: 4033]}
+  total_courier_confirm:                   {filter: [eid: 5827]}
   total_courier_contact:                   {filter: [eid: 4035]}
   total_courier_btc:                       {filter: [$or: [[*is_delivery_courier, eid: 2483], [eid: [4033, 4035]]]], m42: False}
   total_delivery_btc:                      {filter: [$or: [[*is_delivery_pvz, eid: 2483], [eid: [2013, 2015, 2749]]]],  m42: False}
@@ -923,6 +924,7 @@ metric.counter:
   total_delivery_click_all_services_rec_u2i:      {filter: [*x_is_u2i, eid: 2483]}
   total_delivery_click_all_services_fav:          {filter: [*x_is_fav_lst, eid: 2483]}
   total_delivery_widget_all_services:             {filter: [eid: [4033, 2013]]}
+  total_delivery_confirm_all_services:            {filter: [eid: [2749, 5827]]}
   total_delivery_contact_all_services:            {filter: [*is_delivery_tot]}
   total_delivery_contact_all_services_serp:       {filter: [*x_is_search, *is_delivery_tot]}
   total_delivery_contact_all_services_rec_i2i:    {filter: [*x_is_i2i, *is_delivery_tot]}
@@ -1284,6 +1286,7 @@ metric.uniq:
   delivery_click_all_services_rec_u2i:     {counter: total_delivery_click_all_services_rec_u2i,      key: [item_x]}
   delivery_click_all_services_fav:         {counter: total_delivery_click_all_services_fav,          key: [item_x]}
   delivery_widget_all_services:            {counter: total_delivery_widget_all_services,             key: [cookie_item]}
+  delivery_confirm_all_services:           {counter: total_delivery_confirm_all_services,            key: [cookie_item]}
   delivery_contact_all_services:           {counter: total_delivery_contact_all_services,            key: [cookie_item]}
   delivery_contact_all_services_serp:      {counter: total_delivery_contact_all_services_serp,       key: [item_x]}
   delivery_contact_all_services_rec_i2i:   {counter: total_delivery_contact_all_services_rec_i2i,    key: [item_x]}
@@ -1954,6 +1957,7 @@ metric.uniq:
   searches_iv_metageo:                     {counter: item_views_metageo,              key: [x]}
   courier_click:                           {counter: total_courier_click,             key: [cookie_item]}
   courier_widget:                          {counter: total_courier_widget,            key: [cookie_item]}
+  courier_confirm:                         {counter: total_courier_confirm,           key: [cookie_item]}
   courier_contact:                         {counter: total_courier_contact,           key: [cookie_item]}
   user_courier_btc:                        {counter: total_courier_btc,               key: [cookie]}
   user_delivery_btc:                       {counter: total_delivery_btc,              key: [cookie]}
@@ -2479,7 +2483,10 @@ metric.ratio:
   searches_iv_metageo_per_searches_metageo:           {num: searches_iv_metageo,          den: searches_metageo}
   courier_click_contact_ratio:             {num: courier_contact,                 den: courier_click}
   courier_click_widget_ratio:              {num: courier_widget,                  den: courier_click}
+  courier_click_confirm_ratio:             {num: courier_confirm,                 den: courier_click}
   courier_widget_contact_ratio:            {num: courier_contact,                 den: courier_widget}
+  courier_widget_confirm_ratio:            {num: courier_confirm,                 den: courier_widget}
+  courier_confirm_contact_ratio:           {num: courier_contact,                  den: courier_confirm}
   developer_buyers_per_buyers:                     {num: user_c_developer,                 den: buyers}
   developer_c_per_contacts:                        {num: c_developer,                      den: contacts}
   re_agency_c_per_contacts:                        {num: c_re_agency,                      den: contacts}
