@@ -7,7 +7,6 @@ definitions:
   - &eid_u2i        [2012, 2309]
   - &eid_i2i        [2437]
   - &eid_cv2vac     [4386]
-  - &eid_job_ast    [4126]
   - &eid_fav_lst    [400]
   - &eid_comp_lst  [450]
   - &eid_push_land  [5354]
@@ -23,7 +22,6 @@ definitions:
   - &is_i2i         {eid: *eid_i2i}
   - &is_push_land   {eid: *eid_push_land}
   - &is_cv2vac      {eid: *eid_cv2vac}
-  - &is_job_ast     {eid: *eid_job_ast, from_page: assistant}
   - &is_fav_lst     {eid: *eid_fav_lst}
   - &is_comp_lst    {eid: *eid_comp_lst}
   - &is_map         {eid: *eid_map}
@@ -41,7 +39,6 @@ definitions:
   - &x_is_i2i       {x_eid: *eid_i2i}
   - &x_is_push_land {x_eid: *eid_push_land}
   - &x_is_cv2vac    {x_eid: *eid_cv2vac}
-  - &x_is_job_ast   {x_eid: *eid_job_ast, from_page: assistant}
   - &x_is_rec_msg   {x_from_page: msg_recommendations}
   - &x_is_fav_lst   {x_eid: *eid_fav_lst}
   - &x_is_comp_lst  {x_eid: *eid_comp_lst}
@@ -320,7 +317,6 @@ metric.counter:
   cnt_btc_rec:                             {filter: [*is_btc_wo_guessing, *x_is_rec], m42: False}
   cnt_btc_new_rec:                         {filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_rec], m42: False}
   cnt_btc_old_rec:                    {filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_rec], m42: False}
-  cnt_btc_job_ast:                         {filter: [*is_btc_wo_guessing, *x_is_job_ast], m42: False}
   cnt_btc_push_land:                       {filter: [*is_btc_wo_guessing, *x_is_push_land], m42: False}
   cnt_btc_rec_i2i:                         {filter: [*is_btc_wo_guessing, *x_is_i2i], m42: False}
   cnt_btc_new_rec_i2i:                     {filter: [*is_new_btc,*is_btc_wo_guessing, *x_is_i2i], m42: False}
@@ -418,7 +414,6 @@ metric.counter:
   cnt_cs_premium:                          {filter: [*is_contact_wo_guessing, *is_serp_premium, *x_is_search], m42: False}
   cnt_cs_push:                             {filter: [*is_contact_wo_guessing, *is_serp_push, *x_is_search], m42: False}
   cnt_cs_rec:                              {filter: [*is_contact_wo_guessing, *x_is_rec], m42: False}
-  cnt_c_rec_job_ast:                       {filter: [*is_contact_wo_guessing, *x_is_job_ast], m42: False}
   cnt_cs_push_land:                        {filter: [*is_contact_wo_guessing, *x_is_push_land], m42: False}
   cnt_cs_rec_i2i:                          {filter: [*is_contact_wo_guessing, *x_is_i2i], m42: False}
   cnt_cs_rec_cv2vac:                       {filter: [*is_contact_wo_guessing, *x_is_cv2vac], m42: False}
@@ -510,7 +505,6 @@ metric.counter:
   cnt_fav_push:                            {filter: [*is_fav, *is_serp_push, *x_is_search], m42: False}
   cnt_fav_rec:                             {filter: [*is_fav, *x_is_rec], m42: False}
   cnt_comp_rec:                            {filter: [*is_comp, *x_is_rec], m42: False}
-  cnt_fav_rec_job_ast:                     {filter: [*is_fav, *x_is_job_ast], m42: False}
   cnt_fav_push_land:                       {filter: [*is_fav, *x_is_push_land], m42: False}
   cnt_fav_rec_i2i:                         {filter: [*is_fav, *x_is_i2i], m42: False}
   cnt_comp_rec_i2i:                        {filter: [*is_comp, *x_is_i2i], m42: False}
@@ -573,7 +567,6 @@ metric.counter:
   cnt_iv_premium:                          {filter: [*is_iv_wo_guessing, *is_serp_premium, *x_is_search], m42: False}
   cnt_iv_push:                             {filter: [*is_iv_wo_guessing, *is_serp_push, *x_is_search], m42: False}
   cnt_iv_rec:                              {filter: [*is_iv_wo_guessing, *x_is_rec], m42: False}
-  cnt_iv_rec_job_ast:                      {filter: [*is_iv_wo_guessing, *x_is_job_ast], m42: False}
   cnt_iv_push_land:                        {filter: [*is_iv_wo_guessing, *x_is_push_land], m42: False}
   cnt_iv_rec_i2i:                          {filter: [*is_iv_wo_guessing, *x_is_i2i], m42: False}
   cnt_iv_rec_cv2vac:                       {filter: [*is_iv_wo_guessing, *x_is_cv2vac], m42: False}
@@ -832,7 +825,8 @@ metric.counter:
   realty_dev_phone_views_contact_block:    {filter: [*is_ph_realdev, from_page: card_docs]}
   realty_dev_phone_views_gallery:          {filter: [*is_ph_realdev, from_page: card_gallery]}
   recblock_shows:                          {filter: [*is_rec]}
-  job_ast_shows:                           {filter: [*is_job_ast]}
+  job_ast_shows:                           {filter: [eid: 4126]}
+  job_ast_contacts:                        {filter: [eid: 6059]}
   push_land_shows:                         {filter: [*is_push_land]}
   recblock_shows_i2i:                      {filter: [*is_i2i]}
   recblock_shows_cv2vac:                   {filter: [*is_cv2vac]}
@@ -1151,7 +1145,6 @@ metric.uniq:
   buyer_target_clicks_rec_u2i_graph:       {counter: cnt_btc_rec_u2i_graph,           key: [item_x]}
   buyer_target_clicks_new_rec_u2i:         {counter: cnt_btc_new_rec_u2i,             key: [item_x]}
   buyer_target_clicks_returned_rec_u2i:    {counter: cnt_btc_old_rec_u2i,             key: [item_x]}
-  buyer_target_clicks_rec_job_ast:         {counter: cnt_btc_job_ast,                 key: [item_x]}
   buyer_target_clicks_regions:             {counter: cnt_btc_reg,                     key: [item_x]}
   buyer_target_clicks_new_regions:         {counter: cnt_btc_new_reg,                 key: [item_x]}
   buyer_target_clicks_regions_mix:         {counter: cnt_btc_reg_mix,                 key: [item_x]}
@@ -1202,7 +1195,6 @@ metric.uniq:
   contacts_premium:                        {counter: cnt_cs_premium,                  key: [item_x]}
   contacts_push:                           {counter: cnt_cs_push,                     key: [item_x]}
   contacts_rec:                            {counter: cnt_cs_rec,                      key: [item_x]}
-  contacts_rec_job_ast:                    {counter: cnt_c_rec_job_ast,               key: [item_x]}
   contacts_push_land:                      {counter: cnt_cs_push_land,                key: [item_x]}
   contacts_rec_i2i:                        {counter: cnt_cs_rec_i2i,                  key: [item_x]}
   contacts_rec_cv2vac:                     {counter: cnt_cs_rec_cv2vac,               key: [item_x]}
@@ -1312,7 +1304,6 @@ metric.uniq:
   fav_added_push:                          {counter: cnt_fav_push,                    key: [item_x]}
   fav_added_rec:                           {counter: cnt_fav_rec,                     key: [item_x]}
   comp_added_rec:                          {counter: cnt_comp_rec,                    key: [item_x]}
-  fav_added_rec_job_ast:                   {counter: cnt_fav_rec_job_ast,             key: [item_x]}
   fav_added_push_land:                     {counter: cnt_fav_push_land,               key: [item_x]}
   fav_added_rec_i2i:                       {counter: cnt_fav_rec_i2i,                 key: [item_x]}
   comp_added_rec_i2i:                      {counter: cnt_comp_rec_i2i,                key: [item_x]}
@@ -1372,7 +1363,6 @@ metric.uniq:
   item_views_premium:                      {counter: cnt_iv_premium,                  key: [item_x]}
   item_views_push:                         {counter: cnt_iv_push,                     key: [item_x]}
   item_views_rec:                          {counter: cnt_iv_rec,                      key: [item_x]}
-  item_views_rec_job_ast:                  {counter: cnt_iv_rec_job_ast,              key: [item_x]}
   item_views_push_land:                    {counter: cnt_iv_push_land,                key: [item_x]}
   item_views_rec_i2i:                      {counter: cnt_iv_rec_i2i,                  key: [item_x]}
   item_views_rec_cv2vac:                   {counter: cnt_iv_rec_cv2vac,               key: [item_x]}
@@ -1537,7 +1527,6 @@ metric.uniq:
   user_fav_added_rec_u2i_user2vec:         {counter: cnt_fav_rec_u2i_user2vec,        key: [cookie]}
   user_fav_added_rec_u2i_similars:         {counter: cnt_fav_rec_u2i_similars,        key: [cookie]}
   user_fav_added_rec_u2i_graph:            {counter: cnt_fav_rec_u2i_graph,           key: [cookie]}
-  user_fav_added_rec_job_ast:              {counter: cnt_fav_rec_job_ast,             key: [cookie]}
   user_fav_from_map_total:                 {counter: cnt_fav_from_map_s_area,         key: [cookie]}
   user_favorites_list_views:               {counter: favorites_list_views,            key: [cookie]}
   user_favorites_removed:                  {counter: favorites_removed,               key: [cookie]}
@@ -1604,7 +1593,6 @@ metric.uniq:
   users_buyer_target_click_rec_daily:      {counter: cnt_btc_rec,                     key: [cookie]}
   users_buyer_target_click_new_rec:        {counter: cnt_btc_new_rec,                     key: [cookie]}
   users_buyer_target_click_returned_rec:   {counter: cnt_btc_old_rec,                     key: [cookie]}
-  users_buyer_target_click_rec_job_ast:    {counter: cnt_btc_job_ast,                 key: [cookie]}
   users_buyer_target_click_rec_daily_vas:  {counter: cnt_btc_rec_vas,                 key: [cookie]}
   users_buyer_target_click_serp_daily:     {counter: cnt_btc_s_item_attr,             key: [cookie]}
   users_buyer_target_click_serp_new:       {counter: cnt_btc_new_s_item_attr,             key: [cookie]}
@@ -1627,7 +1615,8 @@ metric.uniq:
   user_btc_new_rec_u2i:                    {counter: cnt_btc_new_rec_u2i,             key: [cookie]}
   user_btc_returned_rec_u2i:               {counter: cnt_btc_old_rec_u2i,             key: [cookie]}
   users_contact_rec_daily:                 {counter: cnt_cs_rec,                      key: [cookie]}
-  users_contact_rec_job_ast:               {counter: cnt_c_rec_job_ast,               key: [cookie]}
+  users_job_ast_shows:                     {counter: job_ast_shows,                   key: [cookie], m42: True}
+  users_job_ast_contacts:                  {counter: job_ast_contacts,                key: [cookie], m42: True}
   users_contact_rec_daily_vas:             {counter: cnt_cs_rec_vas,                  key: [cookie]}
   users_contact_push_land:                 {counter: cnt_cs_push_land,                key: [cookie]}
   users_contact_rec_i2i:                   {counter: cnt_cs_rec_i2i,                  key: [cookie]}
@@ -1673,7 +1662,6 @@ metric.uniq:
   users_item_view_8plus:                   {counter: item_views,                      key: [{cookie: 7}]}
   users_item_view_16plus:                  {counter: item_views,                      key: [{cookie: 15}]}
   users_item_view_rec_daily:               {counter: cnt_iv_rec,                      key: [cookie]}
-  users_item_view_rec_job_ast:             {counter: cnt_iv_rec_job_ast,              key: [cookie]}
   users_item_view_rec_daily_vas:           {counter: cnt_iv_rec_vas,                  key: [cookie]}
   users_item_view_push_land:               {counter: cnt_iv_push_land,                key: [cookie]}
   users_item_view_rec_i2i:                 {counter: cnt_iv_rec_i2i,                  key: [cookie]}
@@ -1799,7 +1787,6 @@ metric.uniq:
   sess_any_action:                         {counter: cnt_any_action,                  key: [session]}
   sessions_btc:                            {counter: bt_clicks,                       key: [session]}
   sessions_btc_r:                          {counter: cnt_btc_rec,                     key: [session]}
-  sessions_btc_r_job_ast:                  {counter: cnt_btc_job_ast,                 key: [session]}
   sessions_btc_push_land:                  {counter: cnt_btc_push_land,               key: [session]}
   sessions_btc_r_i2i:                      {counter: cnt_btc_rec_i2i,                 key: [session]}
   sessions_btc_r_cv2vac:                   {counter: cnt_btc_rec_cv2vac,              key: [session]}
@@ -1809,7 +1796,6 @@ metric.uniq:
   sessions_btc_s_q:                        {counter: cnt_btc_s_query,                 key: [session]}
   sessions_c:                              {counter: contacts,                        key: [session]}
   sessions_c_r:                            {counter: cnt_cs_rec,                      key: [session]}
-  sessions_c_r_job_ast:                    {counter: cnt_c_rec_job_ast,               key: [session]}
   sessions_c_push_land:                    {counter: cnt_cs_push_land,                key: [session]}
   sessions_c_r_i2i:                        {counter: cnt_cs_rec_i2i,                  key: [session]}
   sessions_c_r_cv2vac:                     {counter: cnt_cs_rec_cv2vac,               key: [session]}
@@ -1824,7 +1810,6 @@ metric.uniq:
   sessions_c_shortcut:                     {counter: cnt_s_shortcut_c,                key: [session]}
   sessions_iv:                             {counter: item_views,                      key: [session]}
   sessions_iv_r:                           {counter: cnt_iv_rec,                      key: [session]}
-  sessions_iv_r_job_ast:                   {counter: cnt_iv_rec_job_ast,              key: [session]}
   sessions_iv_push_land:                   {counter: cnt_iv_push_land,                key: [session]}
   sessions_iv_r_i2i:                       {counter: cnt_iv_rec_i2i,                  key: [session]}
   sessions_iv_r_cv2vac:                    {counter: cnt_iv_rec_cv2vac,               key: [session]}
