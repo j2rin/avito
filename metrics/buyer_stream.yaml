@@ -175,10 +175,10 @@ definitions:
   - &is_x_fp_witcher_any            {x_from_page: [witcher-extra-regions, witcher-extra-delivery, witcher-new-auto, witcher-new-flats, witcher-marketplace]}
 
   - &x_is_searchwidget        {x_from_page: searchFormWidget}
-  - &x_is_rubricatorwidget    {x_from_page: rubricatorWidget}  
+  - &x_is_rubricatorwidget    {x_from_page: rubricatorWidget}
   - &x_is_recentsearch        {x_from_page: recentSearch}
-  - &x_is_inline              {x_from_page: inline}  
-  - &x_is_shortcut            {x_from_page: shortcut}  
+  - &x_is_inline              {x_from_page: inline}
+  - &x_is_shortcut            {x_from_page: shortcut}
 
   - &is_serp_vas            {item_serp_flags.bit: [0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14]}
   - &is_serp_xl             {item_serp_flags.bit: [8]}
@@ -677,6 +677,7 @@ metric.counter:
   cnt_s_wtc_dlv:                           {filter: [*is_1p, *is_search, *x_is_witcher_delivery], m42: False}
   cnt_s_wtc_dlv_new_auto_flats_reg:        {filter: [*is_1p, *is_search, {$or: [[*x_is_witcher_delivery], [*x_is_witcher_new_auto], [*x_is_witcher_new_flats], [*x_is_witcher_regions]]}], m42: False}
   cnt_active:                              {filter: [{$or: [[*is_1p, *is_search], [*is_vertical_main], [*is_iv], [*is_btc]]}], m42: False}
+  cnt_active_with_shortcuts:               {filter: [{$or: [[*is_1p, *is_search], [*is_vertical_main], [*is_iv], [*is_btc], [eid: 2664, from_page: MAIN]]}], m42: False}
   cnt_any_action:                          {}
   cnt_used_cars_views:                     {filter: [*is_iv, *is_item_used_car]}
   comparison_added:                        {filter: [*is_comp]}
@@ -1581,6 +1582,7 @@ metric.uniq:
   user_wtc_from_witcher_flats:             {counter: cnt_iv_wtc_new_flats_s_from,     key: [cookie]}
   user_wtc_from_witcher_reg:               {counter: cnt_iv_wtc_reg_s_from,           key: [cookie]}
   users_active_daily:                      {counter: cnt_active,                      key: [cookie]}
+  users_active_with_shortcuts_daily:       {counter: cnt_active_with_shortcuts,       key: [cookie]}
   users_any_action_daily:                  {counter: cnt_any_action,                  key: [cookie]}
   users_bt_click_daily:                    {counter: bt_clicks,                       key: [cookie]}
   users_bt_click_new:                      {counter: bt_clicks_new,                   key: [cookie]}
@@ -1786,6 +1788,7 @@ metric.uniq:
   sess_searches_radius:                    {counter: searches_radius,                 key: [session]}
   sess_searches_road:                      {counter: searches_road,                   key: [session]}
   sessions_active:                         {counter: cnt_active,                      key: [session]}
+  sessions_active_with_shortcuts:          {counter: cnt_active_with_shortcuts,       key: [session]}
   sess_any_action:                         {counter: cnt_any_action,                  key: [session]}
   sessions_btc:                            {counter: bt_clicks,                       key: [session]}
   sessions_btc_r:                          {counter: cnt_btc_rec,                     key: [session]}
