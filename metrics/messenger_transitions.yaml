@@ -1,0 +1,36 @@
+definitions:
+  - &is_messenger                 {trigger: 'messenger'}
+  - &is_link                      {trigger: 'link'}
+  - &is_phone                     {trigger: 'phone'}
+  - &is_email                     {trigger: 'email'}
+  - &seller                       {chat_role: 'seller'}
+  - &buyer                        {chat_role: 'buyer'}
+  - &is_first_msg                 {is_first_messages: True}
+  - &is_abandoned_chat            {is_abandoned_chat: True}
+  - &is_copy_after_trigger        {is_copy_after_trigger: True} 
+
+metric.counter:
+  messenger_transitions:                                   {}
+  messenger_transitions_buyer:                             {filter: [*buyer]}
+  messenger_transitions_seller:                            {filter: [*seller]}
+  messenger_transitions_another_messenger:                 {filter: [*is_messenger]}
+  messenger_transitions_link:                              {filter: [*is_link]}
+  messenger_transitions_phone:                             {filter: [*is_phone]}
+  messenger_transitions_email:                             {filter: [*is_email]}
+  messenger_transitions_another_messenger_buyer:           {filter: [*is_messenger, *buyer]}
+  messenger_transitions_another_messenger_seller:          {filter: [*is_messenger, *seller]}
+  messenger_transitions_first_msg:                         {filter: [*is_first_msg]}
+  messenger_transitions_another_messenger_abandoned_chat:  {filter: [*is_messenger, *is_abandoned_chat]}
+  messenger_transitions_phone_abandoned_chat:              {filter: [*is_phone, *is_abandoned_chat]}
+  messenger_transitions_copy:                              {filter: [*is_copy_after_trigger]}
+
+metric.uniq:
+  user_messenger_transitions:                              {counter: messenger_transitions, key: [user]}
+  user_messenger_transitions_buyer:                        {counter: messenger_transitions_buyer, key: [user]}
+  user_messenger_transitions_seller:                       {counter: messenger_transitions_seller, key: [user]}
+  user_messenger_transitions_another_messenger:            {counter: messenger_transitions_another_messenger, key: [user]}
+  user_messenger_transitions_link:                         {counter: messenger_transitions_link, key: [user]}
+  user_messenger_transitions_phone:                        {counter: messenger_transitions_phone, key: [user]}
+  user_messenger_transitions_email:                        {counter: messenger_transitions_email, key: [user]}
+  user_messenger_transitions_another_messenger_buyer:      {counter: messenger_transitions_another_messenger_buyer, key: [user]}
+  user_messenger_transitions_another_messenger_seller:     {counter: messenger_transitions_another_messenger_seller, key: [user]}
