@@ -900,6 +900,10 @@ metric.counter:
   sercheas_from_inline:                    {filter: [*is_1p, *is_search, *x_is_inline]}
   sercheas_from_shortcut:                  {filter: [*is_1p, *is_search, *x_is_shortcut]}
   serp_empty:                              {filter: [*is_1p, *is_search, *is_serp_empty]}
+  serp_empty_items:                        {filter: [*is_1p, *is_search, search_flags.!bit: [35,36], *is_serp_empty]}
+  serp_empty_jk_any:                       {filter: [*is_1p, *is_search, {$or: [[*is_s_jk_catalog], [*is_s_jk_card]]}, *is_serp_empty]}
+  serp_empty_jk_catalog:                   {filter: [*is_1p, *is_search, *is_s_jk_catalog, *is_serp_empty]}
+  serp_empty_jk_card:                      {filter: [*is_1p, *is_search, *is_s_jk_card, *is_serp_empty]}
   serp_small:                              {filter: [*is_1p, *is_search, *is_serp_small]}
   serp_with_query_empty:                   {filter: [*is_1p, *is_search, *is_serp_empty, *q]}
   serp_with_query_small:                   {filter: [*is_1p, *is_search, *is_serp_small, *q]}
