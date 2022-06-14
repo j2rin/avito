@@ -1902,3 +1902,18 @@ autoteka_new_buyer_expected_revenue:
  participant: { visitor: cookie_id, user: user_id }
  primary_subject: visitor
  dtm: event_date
+ 
+messenger_transitions:
+ metric_configs: [messenger_transitions]
+ database: vertica
+ table: dma.vo_messenger_transitions
+ column_map:
+   user: user_id
+ dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, is_asd, user_segment_market]
+ m42_cartesian_groups:
+   - [is_asd, vertical, logical_category, user_segment_market]
+   - [category, subcategory]
+ participant: {user: user_id}
+ primary_subject: user
+ dtm: trigger_date
+ segm: user_id 
