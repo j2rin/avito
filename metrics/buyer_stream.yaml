@@ -822,6 +822,7 @@ metric.counter:
   radius_3_searches:                       {filter: [{search_radius: '3'}, *is_1p, *is_search]}
   radius_big_searches:                     {filter: [*is_1p, *is_search, {$or: [[{search_radius: '100'}], [{search_radius: '1000'}], [{search_radius: '200'}], [{search_radius: '300'}], [{search_radius: '400'}], [{search_radius: '500'}], [{search_radius: '2000'}], [{search_radius: '3000'}]]}]}
   radius_short_searches:                   {filter: [*is_1p, *is_search, {$or: [[{search_radius: '1'}], [{search_radius: '10'}], [{search_radius: '100'}], [{search_radius: '25'}], [{search_radius: '5'}], [{search_radius: '50'}], [{search_radius: '3'}], [{search_radius: '15'}], [{search_radius: '150'}]]}]}
+  radius_5_or_less_searches:               {filter: [*is_1p, *is_search, {$or: [[{search_radius: '1'}], [{search_radius: '2'}], [{search_radius: '3'}], [{search_radius: '4'}], [{search_radius: '5'}] ]}]}
   realty_dev_phone_views:                  {filter: [*is_ph_realdev]}
   realty_dev_phone_views_serp:             {filter: [*is_ph_realdev, from_page: serp_snippet]}
   realty_dev_phone_views_contact_block:    {filter: [*is_ph_realdev, from_page: card_docs]}
@@ -1744,6 +1745,9 @@ metric.uniq:
   users_searches_local_geo:                {counter: searches_local_geo,              key: [cookie]}
   users_searches_metro:                    {counter: searches_metro,                  key: [cookie]}
   users_searches_radius:                   {counter: searches_radius,                 key: [cookie]}
+  users_searches_radius_big:               {counter: radius_big_searches,             key: [cookie]}
+  users_searches_radius_short:             {counter: radius_short_searches,           key: [cookie]}
+  users_searches_radius_5_or_less:         {counter: radius_5_or_less_searches,       key: [cookie]}
   users_searches_road:                     {counter: searches_road,                   key: [cookie]}
   users_searches_searchwidget:             {counter: sercheas_from_searchwidget,      key: [cookie]}
   users_searches_rubricatorwidget:         {counter: sercheas_from_rubricatorwidget,  key: [cookie]}
