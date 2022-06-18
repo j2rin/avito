@@ -112,6 +112,8 @@ definitions:
   - &is_s_saved     {search_flags.bit: 6}
   - &is_s_jk_catalog     {search_flags.bit: 35}
   - &is_s_jk_card        {search_flags.bit: 36}
+  - &is_s_items_saved_filters_non_modified     {search_flags.bit: 37}
+  - &is_s_items_saved_filters_modified         {search_flags.bit: 38}
 
   - &x_is_filter_search       {search_flags.bit: 8}
   - &x_is_price_filter_search {search_flags.bit: 9}
@@ -895,6 +897,10 @@ metric.counter:
   searches_jk_card:                        {filter: [*is_1p, *is_search, *is_s_jk_card]}
   searches_jk_any:                         {filter: [*is_1p, *is_search, {$or: [[*is_s_jk_catalog], [*is_s_jk_card]]}]}
   searches_items:                          {filter: [*is_1p, *is_search, search_flags.!bit: [35,36]]}
+  searches_items_not_saved_filters:              {filter: [*is_1p, *is_search, search_flags.!bit: [35,36,37,38]]}
+  searches_items_saved_filters:                  {filter: [*is_1p, *is_search, {$or: [[*is_s_items_saved_filters_non_modified], [*is_s_items_saved_filters_modified]], search_flags.!bit: [35,36]]}
+  searches_items_saved_filters_non_modified:     {filter: [*is_1p, *is_search, *is_s_items_saved_filters_non_modified, search_flags.!bit: [35,36]]}
+  searches_items_saved_filters_modified:         {filter: [*is_1p, *is_search, *is_s_items_saved_filters_modified, search_flags.!bit: [35,36]]}
   sercheas_from_searchwidget:              {filter: [*is_1p, *is_search, *x_is_searchwidget]}
   sercheas_from_rubricatorwidget:          {filter: [*is_1p, *is_search, *x_is_rubricatorwidget]}
   sercheas_from_recentsearch:              {filter: [*is_1p, *is_search, *x_is_recentsearch]}
@@ -1729,6 +1735,10 @@ metric.uniq:
   users_saved_searches:                    {counter: saved_searches,                  key: [cookie]}
   users_search:                            {counter: searches,                        key: [cookie]}
   users_search_items:                      {counter: searches_items,                  key: [cookie]}
+  users_search_items_not_saved_filters:              {counter: searches_items_not_saved_filters,                  key: [cookie]}
+  users_search_items_saved_filters:                  {counter: searches_items_saved_filters,                  	  key: [cookie]}
+  users_search_items_saved_filters_non_modified:     {counter: searches_items_saved_filters_non_modified,         key: [cookie]}
+  users_search_items_saved_filters_modified:         {counter: searches_items_saved_filters_modified,             key: [cookie]}
   users_search_jk_any:                     {counter: searches_jk_any,                 key: [cookie]}
   users_search_jk_catalog:                 {counter: searches_jk_catalog,             key: [cookie]}
   users_search_jk_card:                    {counter: searches_jk_card,                key: [cookie]}
