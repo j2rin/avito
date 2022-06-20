@@ -27,8 +27,6 @@ definitions:
   - &jk_not_auction                      {realty_development_flags.!bit: 1}
 
 metric.counter:
-  user_catalog_jk_entry_point:                       {counter: catalog_jk_entry_point,                     key: [cookie]}
-
   catalog_jk_entry_point:                            {filter: [*is_entry_point]}
 
   catalog_jk_vertical_main:                          {filter: [*is_entry_point, node_type: vertical_main]}
@@ -111,6 +109,8 @@ metric.counter:
 
 
 metric.uniq:
+  user_catalog_jk_entry_point:                       {counter: catalog_jk_entry_point,                     key: [cookie]}
+
   users_catalog_jk_vertical_main:                    {counter: catalog_jk_vertical_main,                   key: [cookie]}
   users_catalog_jk_serp:                             {counter: catalog_jk_serp,                            key: [cookie]}
   users_catalog_jk_banner:                           {counter: catalog_jk_banner,                          key: [cookie]}
