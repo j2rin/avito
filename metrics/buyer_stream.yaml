@@ -919,7 +919,10 @@ metric.counter:
     comparison_list_views: { filter: [*is_comp_lst] }
     comparison_removed: { filter: [*is_comp_rmv] }
     contacts: { filter: [*is_contact] }
-    contacts_items: { filter: [*is_contact_item] }
+    contacts_items: { filter: [*is_contact_item], m42: True}
+    contacts_items_wo_direct: {filter: [*is_contact_item, item_x_type.isnull: false], m42: True}
+    contacts_items_cpa: {filter: [*is_contact_item, *is_item_cpa], m42: True}
+    contacts_items_wo_direct_cpa: {filter: [*is_contact_item, *is_item_cpa, item_x_type.isnull: false], m42: True}
     contacts_jk: { filter: [*is_contact_jk] }
     contact_part_qual_exists: { filter: [*part_qual_exists, *is_contact], m42: False }
     contact_part_qual_compab: { filter: [*part_qual_compab, *is_contact], m42: False }
