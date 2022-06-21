@@ -150,10 +150,10 @@ metric.counter:
   total_osp_order_details:                              {filter: [{ eid: 5785}], obs: [event_count]}
   total_osp_back_to_item:                               {filter: [{ eid: 6071}], obs: [event_count]}
   
-  cnt_order_page_views_from_my_orders:                  {filter: [eid: 4760, source_click_page: orders_list]}
-  cnt_order_page_views_from_success_page:               {filter: [eid: 4760, source_click_page: order_success]}
-  cnt_order_page_views_from_messenger:                  {filter: [eid: 4760, source_click_page: messenger]}
-  cnt_order_page_views_users:                           {filter: [eid: 4760]}
+  cnt_order_page_views_from_my_orders:                  {filter: [eid: 4760, source_click_page: 'orders_list']}
+  cnt_order_page_views_from_success_page:               {filter: [eid: 4760, source_click_page: 'order_success']}
+  cnt_order_page_views_from_messenger:                  {filter: [eid: 4760, source_click_page: 'messenger']}
+  cnt_order_page_views_total:                           {filter: [eid: 4760]}
 
 
 metric.uniq:
@@ -256,10 +256,11 @@ metric.uniq:
   osp_order_details:                                         {counter: total_osp_order_details, key: [orderid_string]}
   osp_back_to_item:                                          {counter: total_osp_back_to_item, key: [orderid_string]}
   
-  order_page_views_from_my_orders:                           {counter: cnt_order_page_views_from_my_orders,    key: [cookie]}
-  order_page_views_from_success_page:                        {counter: cnt_order_page_views_from_success_page, key: [cookie]}
-  order_page_views_from_messenger:                           {counter: cnt_order_page_views_from_messenger,    key: [cookie]}
-  order_page_views_users:                                    {counter: cnt_order_page_views_users,             key: [cookie]}
+  order_page_views_from_my_orders:                           {counter: cnt_order_page_views_from_my_orders,    key: [cookie_order]}
+  order_page_views_from_success_page:                        {counter: cnt_order_page_views_from_success_page, key: [cookie_order]}
+  order_page_views_from_messenger:                           {counter: cnt_order_page_views_from_messenger,    key: [cookie_order]}
+  order_page_views_total:                                    {counter: cnt_order_page_views_total,             key: [cookie_order]}
+  user_order_page_views:                                     {counter: cnt_order_page_views_total,             key: [cookie]}
 
 
 metric.ratio:
