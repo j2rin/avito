@@ -1,0 +1,15 @@
+definitions:
+
+  - &is_prob055            {sum_probability.>=: 0.55}
+  - &is_prob035            {sum_probability.>=: 0.35}
+  - &is_lead_class         {class.in: [0.5, 0.75, 1.0]}
+
+metric.counter:
+    msg_chat_leads_prob055:                            {filter: [*is_prob055]}
+    msg_chat_leads_prob035:                            {filter: [*is_prob035]}
+    msg_chat_leads_class:                              {filter: [*is_lead_class]}
+
+metric.uniq: 
+  user_msg_chat_leads_prob055:                        {counter: msg_chat_leads_prob055,            key: [user]}
+  user_msg_chat_leads_prob035:                        {counter: msg_chat_leads_prob035,            key: [user]}
+  user_msg_chat_leads_class:                          {counter: msg_chat_leads_class,              key: [user]}
