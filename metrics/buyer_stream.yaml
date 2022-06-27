@@ -37,6 +37,7 @@ definitions:
     - &x_is_rec_sg { search_flags.bit: 10 }
     - &x_is_u2i { x_eid: *eid_u2i }
     - &x_is_i2i { x_eid: *eid_i2i }
+    - &x_is_i2i_delivery { x_eid: *eid_i2i, rec_engine_id: 188387500001}
     - &x_is_push_land { x_eid: *eid_push_land }
     - &x_is_cv2vac { x_eid: *eid_cv2vac }
     - &x_is_rec_msg { x_from_page: msg_recommendations }
@@ -267,7 +268,7 @@ definitions:
     - &x_is_public_profile { x_eid: 2017, x_from_page: "public_profile" }
     - &x_is_extended_profile { x_eid: 2017, x_from_page: ["profile_services"] }
     - &x_is_extended_profile_services { x_eid: 2017, x_from_page: "profile_services" }
-
+    
     - &is_item_str_flat_verified_badge { item_flags.bit: 24 }
 
     - &is_item_with_multilocs { item_flags.bit: 25 }
@@ -1272,6 +1273,11 @@ metric.counter:
     buyer_target_clicks_metageo: { filter: [*is_btc_wo_guessing, *x_is_metageo] }
     item_views_metageo: { filter: [*is_iv_wo_guessing, *x_is_metageo] }
     searches_metageo: { filter: [*is_metageo] }
+    cnt_delivery_iv_rec_i2i: { filter: [*is_delivery_active, *is_iv, *x_is_i2i] }
+    cnt_delivery_iv_rec_i2i_delivery: { filter: [*is_delivery_active, *is_iv, *x_is_i2i_delivery] }
+    cnt_delivery_iv_rec_u2i: { filter: [*is_delivery_active, *is_iv, *x_is_u2i] }
+    cnt_delivery_iv_rec_fav: { filter: [*is_delivery_active, *is_iv, *x_is_fav] }
+    cnt_delivery_iv_rec_public_profile: { filter: [*is_delivery_active, *is_iv, *x_is_public_profile }
     total_courier_click: { filter: [*is_delivery_courier, eid: 2483] }
     total_courier_widget: { filter: [eid: 4033] }
     total_courier_confirm: { filter: [eid: 5827] }
@@ -1281,15 +1287,19 @@ metric.counter:
     total_delivery_click_all_services: { filter: [eid: 2483] }
     total_delivery_click_all_services_serp: { filter: [*x_is_search, eid: 2483] }
     total_delivery_click_all_services_rec_i2i: { filter: [*x_is_i2i, eid: 2483] }
+    total_delivery_click_all_services_rec_i2i_delivery: { filter: [*x_is_i2i_delivery, eid: 2483] }
     total_delivery_click_all_services_rec_u2i: { filter: [*x_is_u2i, eid: 2483] }
     total_delivery_click_all_services_fav: { filter: [*x_is_fav_lst, eid: 2483] }
+    total_delivery_click_all_services_public_profile: { filter: [*x_is_public_profile, eid: 2483] }
     total_delivery_widget_all_services: { filter: [eid: [4033, 2013]] }
     total_delivery_confirm_all_services: { filter: [eid: [2749, 5827]] }
     total_delivery_contact_all_services: { filter: [*is_delivery_tot] }
     total_delivery_contact_all_services_serp: { filter: [*x_is_search, *is_delivery_tot] }
     total_delivery_contact_all_services_rec_i2i: { filter: [*x_is_i2i, *is_delivery_tot] }
+    total_delivery_contact_all_services_rec_i2i_delivery: { filter: [*x_is_i2i_delivery, *is_delivery_tot] }
     total_delivery_contact_all_services_rec_u2i: { filter: [*x_is_u2i, *is_delivery_tot] }
     total_delivery_contact_all_services_fav: { filter: [*x_is_fav_lst, *is_delivery_tot] }
+    total_delivery_contact_all_services_public_profile: { filter: [*x_is_public_profile, *is_delivery_tot] }
     iv_re_agency: { filter: [*is_re_agency_acc, *is_iv] }
     iv_re_private: { filter: [*is_re_private_acc, *is_iv] }
     c_re_agency: { filter: [*is_contact, *is_re_agency_acc] }
@@ -1459,6 +1469,7 @@ metric.counter:
     cnt_contacts_delivery: { filter: [eid: 4675] }
     cnt_contacts_delivery_serp: { filter: [eid: 4675, *x_is_search] }
     cnt_contacts_delivery_rec_i2i: { filter: [eid: 4675, *x_is_i2i] }
+    cnt_contacts_delivery_rec_i2i_delivery: { filter: [eid: 4675, *x_is_i2i_delivery] }
     cnt_contacts_delivery_rec_u2i: { filter: [eid: 4675, *x_is_u2i] }
     cnt_contacts_delivery_fav: { filter: [eid: 4675, *x_is_fav_lst] }
     cnt_contacts_s_filter_price:
@@ -1675,23 +1686,33 @@ metric.uniq:
     contacts_delivery_grouped: { counter: cnt_contacts_delivery, key: [cookie_item] }
     contacts_delivery_serp: { counter: cnt_contacts_delivery_serp, key: [item_x] }
     contacts_delivery_rec_i2i: { counter: cnt_contacts_delivery_rec_i2i, key: [item_x] }
+    contacts_delivery_rec_i2i_delivery: { counter: cnt_contacts_delivery_rec_i2i_delivery, key: [item_x] }
     contacts_delivery_rec_u2i: { counter: cnt_contacts_delivery_rec_u2i, key: [item_x] }
     contacts_delivery_fav: { counter: cnt_contacts_delivery_fav, key: [item_x] }
     create_order_delivery_any_ext_block: { counter: cnt_create_order_delivery_any_ext_block, key: [item_x] }
     delivery_click_all_services: { counter: total_delivery_click_all_services, key: [cookie_item] }
     delivery_click_all_services_serp: { counter: total_delivery_click_all_services_serp, key: [item_x] }
     delivery_click_all_services_rec_i2i: { counter: total_delivery_click_all_services_rec_i2i, key: [item_x] }
+    delivery_click_all_services_rec_i2i_delivery: { counter: total_delivery_click_all_services_rec_i2i_delivery, key: [item_x] }
     delivery_click_all_services_rec_u2i: { counter: total_delivery_click_all_services_rec_u2i, key: [item_x] }
     delivery_click_all_services_fav: { counter: total_delivery_click_all_services_fav, key: [item_x] }
+    delivery_click_all_services_public_profile: { counter: total_delivery_click_all_services_public_profile, key: [item_x] }
     delivery_widget_all_services: { counter: total_delivery_widget_all_services, key: [cookie_item] }
     delivery_confirm_all_services: { counter: total_delivery_confirm_all_services, key: [cookie_item] }
     delivery_contact_all_services: { counter: total_delivery_contact_all_services, key: [cookie_item] }
     delivery_contact_all_services_serp: { counter: total_delivery_contact_all_services_serp, key: [item_x] }
     delivery_contact_all_services_rec_i2i: { counter: total_delivery_contact_all_services_rec_i2i, key: [item_x] }
+    delivery_contact_all_services_rec_i2i_delivery: { counter: total_delivery_contact_all_services_rec_i2i_delivery, key: [item_x] }
     delivery_contact_all_services_rec_u2i: { counter: total_delivery_contact_all_services_rec_u2i, key: [item_x] }
     delivery_contact_all_services_fav: { counter: total_delivery_contact_all_services_fav, key: [item_x] }
+    delivery_contact_all_services_public_profile: { counter: total_delivery_contact_all_services_public_profile, key: [item_x] }
     delivery_item_view: { counter: delivery_total_item_view, key: [cookie_item], m42: true }
     delivery_iv_serp: { counter: cnt_delivery_iv_serp, key: [item_x] }
+    delivery_iv_rec_i2i: { counter: cnt_delivery_iv_rec_i2i, key: [item_x] }
+    delivery_iv_rec_i2i: { counter: cnt_delivery_iv_rec_i2i_delivery, key: [item_x] }
+    delivery_iv_rec_u2i: { counter: cnt_delivery_iv_rec_u2i, key: [item_x] }
+    delivery_iv_rec_fav: { counter: cnt_delivery_iv_rec_fav, key: [item_x] }
+    delivery_iv_rec_public_profile: { counter: cnt_delivery_iv_rec_public_profile, key: [item_x] }
     delivery_click: { counter: total_delivery_click, key: [cookie_item], m42: true } #сейчас дубль delivery_click_wo_messenger, после добавления кликов с платформенной кнопки мессенджера они разойдутся
     delivery_click_serp: { counter: cnt_delivery_click_serp, key: [item_x] }
     delivery_click_wo_messenger: { counter: total_delivery_click_wo_messenger, key: [cookie_item], m42: true }
