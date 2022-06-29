@@ -33,11 +33,11 @@ definitions:
     - &graph { item_engines.bit: 4 }
 
     - &x_is_search { x_eid: *eid_search }
-    - &x_is_rec { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }] }
+    - &x_is_rec { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
     - &x_is_rec_sg { search_flags.bit: 10 }
-    - &x_is_u2i { x_eid: *eid_u2i }
+    - &x_is_u2i { $or: [{x_eid: *eid_u2i}, {x_eid: *eid_map, engine: personal_geo_map}] }
     - &x_is_i2i { x_eid: *eid_i2i }
-    - &x_is_i2i_delivery { x_eid: *eid_i2i, rec_engine_id: 188387500001}
+    - &x_is_i2i_delivery { x_eid: *eid_i2i, engine: delivery}
     - &x_is_push_land { x_eid: *eid_push_land }
     - &x_is_cv2vac { x_eid: *eid_cv2vac }
     - &x_is_rec_msg { x_from_page: msg_recommendations }
