@@ -1918,3 +1918,36 @@ messenger_transitions:
  primary_subject: user
  dtm: trigger_date
  segm: user_id 
+ 
+ 
+ 
+messenger_chat_leads:
+  metric_configs: [chat_leads]
+  database: vertica
+  table: dma.vo_chat_scores
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  m42_cartesian_groups:
+    - [vertical, logical_category, region]
+    - [category, subcategory]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: user
+  dtm: first_message_event_date
+  segm: cookie_id
+  
+messenger_inbox_chat_leads:
+  metric_configs: [inbox_chat_leads]
+  database: vertica
+  table: dma.vo_chat_scores
+  column_map:
+    user: seller_id
+  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  m42_cartesian_groups:
+    - [vertical, logical_category, region, is_asd, user_segment_market]
+    - [category, subcategory]
+  participant: {user: seller_id}
+  primary_subject: user
+  dtm: first_message_event_date
+  segm: seller_id
