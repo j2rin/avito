@@ -1,0 +1,68 @@
+definitions:
+    - &image_draw_appstart {event_type: first_image, image_draw_type: from_appstart}
+    - &image_draw {event_type: first_image, image_draw_type: from_touch}
+    - &image_load {event_type: image, image_draw_type.isnull: true}
+
+metric.counter:
+  cnt_image_draw_appstart_duration_tmp:        {filter: [*image_draw_appstart], obs: [duration], m42: False}
+  cnt_image_draw_appstart_duration_events_tmp: {filter: [*image_draw_appstart], obs: [duration_events], m42: False}
+  cnt_image_draw_appstart_events_tmp:          {filter: [*image_draw_appstart], obs: [events], m42: False}
+  cnt_image_draw_appstart_events_exceptions_tmp: {filter: [*image_draw_appstart], obs: [events, exceptions], m42: False}
+  cnt_image_draw_appstart_events_p25_tmp:      {filter: [*image_draw_appstart], obs: [events_p25], m42: False}
+  cnt_image_draw_appstart_events_p50_tmp:      {filter: [*image_draw_appstart], obs: [events_p50], m42: False}
+  cnt_image_draw_appstart_events_p75_tmp:      {filter: [*image_draw_appstart], obs: [events_p75], m42: False}
+  cnt_image_draw_appstart_events_p95_tmp:      {filter: [*image_draw_appstart], obs: [events_p95], m42: False}
+
+  cnt_image_draw_duration_tmp:                 {filter: [*image_draw], obs: [duration], m42: False}
+  cnt_image_draw_duration_events_tmp:          {filter: [*image_draw], obs: [duration_events], m42: False}
+  cnt_image_draw_events_tmp:                   {filter: [*image_draw], obs: [events], m42: False}
+  cnt_image_draw_events_exceptions_tmp:        {filter: [*image_draw], obs: [events, exceptions], m42: False}
+  cnt_image_draw_events_p25_tmp:               {filter: [*image_draw], obs: [events_p25], m42: False}
+  cnt_image_draw_events_p50_tmp:               {filter: [*image_draw], obs: [events_p50], m42: False}
+  cnt_image_draw_events_p75_tmp:               {filter: [*image_draw], obs: [events_p75], m42: False}
+  cnt_image_draw_events_p95_tmp:               {filter: [*image_draw], obs: [events_p95], m42: False}
+
+  cnt_image_load_duration_tmp:                 {filter: [*image_load], obs: [duration], m42: False}
+  cnt_image_load_duration_events_tmp:          {filter: [*image_load], obs: [duration_events], m42: False}
+  cnt_image_load_events_tmp:                   {filter: [*image_load], obs: [events], m42: False}
+  cnt_image_load_events_exceptions_tmp:        {filter: [*image_load], obs: [events, exceptions], m42: False}
+  cnt_image_load_events_p25_tmp:               {filter: [*image_load], obs: [events_p25], m42: False}
+  cnt_image_load_events_p50_tmp:               {filter: [*image_load], obs: [events_p50], m42: False}
+  cnt_image_load_events_p75_tmp:               {filter: [*image_load], obs: [events_p75], m42: False}
+  cnt_image_load_events_p95_tmp:               {filter: [*image_load], obs: [events_p95], m42: False}
+
+  image_draw_appstart_exceptions_tmp:          {filter: [*image_draw_appstart], obs: [exceptions], m42: False}
+  image_draw_exceptions_tmp:                   {filter: [*image_draw], obs: [exceptions], m42: False}
+  image_load_exceptions_tmp:                   {filter: [*image_load], obs: [exceptions], m42: False}
+  image_any_exceptions_tmp:                    {obs: [exceptions], m42: False}
+  image_any_core_exceptions_tmp:               {obs: [core_content_exceptions], m42: False}
+  image_draw_appstart_core_exceptions_tmp:     {filter: [*image_draw_appstart], obs: [core_content_exceptions], m42: False}
+  image_draw_core_exceptions_tmp:              {filter: [*image_draw], obs: [core_content_exceptions], m42: False}
+  image_load_core_exceptions_tmp:              {filter: [*image_load], obs: [core_content_exceptions], m42: False}
+
+metric.ratio:
+  image_draw_appstart_duration_tmp:            {num: cnt_image_draw_appstart_duration_tmp, den: cnt_image_draw_appstart_duration_events_tmp}
+  image_draw_appstart_exceptions_percent_tmp:  {num: image_draw_appstart_exceptions_tmp,  den: cnt_image_draw_appstart_events_exceptions_tmp}
+  image_draw_appstart_p25_tmp:                 {num: cnt_image_draw_appstart_events_p25_tmp, den: cnt_image_draw_appstart_events_tmp}
+  image_draw_appstart_p50_tmp:                 {num: cnt_image_draw_appstart_events_p50_tmp, den: cnt_image_draw_appstart_events_tmp}
+  image_draw_appstart_p75_tmp:                 {num: cnt_image_draw_appstart_events_p75_tmp, den: cnt_image_draw_appstart_events_tmp}
+  image_draw_appstart_p95_tmp:                 {num: cnt_image_draw_appstart_events_p95_tmp, den: cnt_image_draw_appstart_events_tmp}
+  image_draw_duration_tmp:                     {num: cnt_image_draw_duration_tmp,         den: cnt_image_draw_duration_events_tmp}
+  image_draw_exceptions_percent_tmp:           {num: image_draw_exceptions_tmp,           den: cnt_image_draw_events_exceptions_tmp}
+  image_draw_p25_tmp:                          {num: cnt_image_draw_events_p25_tmp,       den: cnt_image_draw_events_tmp}
+  image_draw_p50_tmp:                          {num: cnt_image_draw_events_p50_tmp,       den: cnt_image_draw_events_tmp}
+  image_draw_p75_tmp:                          {num: cnt_image_draw_events_p75_tmp,       den: cnt_image_draw_events_tmp}
+  image_draw_p95_tmp:                          {num: cnt_image_draw_events_p95_tmp,       den: cnt_image_draw_events_tmp}
+  image_load_duration_tmp:                     {num: cnt_image_load_duration_tmp,         den: cnt_image_load_duration_events_tmp}
+  image_load_exceptions_percent_tmp:           {num: image_load_exceptions_tmp,           den: cnt_image_load_events_exceptions_tmp}
+  image_load_p25_tmp:                          {num: cnt_image_load_events_p25_tmp,       den: cnt_image_load_events_tmp}
+  image_load_p50_tmp:                          {num: cnt_image_load_events_p50_tmp,       den: cnt_image_load_events_tmp}
+  image_load_p75_tmp:                          {num: cnt_image_load_events_p75_tmp,       den: cnt_image_load_events_tmp}
+  image_load_p95_tmp:                          {num: cnt_image_load_events_p95_tmp,       den: cnt_image_load_events_tmp}
+
+metric.uniq:
+  user_image_draw_appstart_exceptions_tmp:     {counter: image_draw_appstart_exceptions_tmp, key: [cookie_id], m42: True}
+  user_image_draw_exceptions_tmp:              {counter: image_draw_exceptions_tmp, key: [cookie_id], m42: True}
+  user_image_load_exceptions_tmp:              {counter: image_load_exceptions_tmp, key: [cookie_id], m42: True}
+  user_image_exceptions_tmp:                   {counter: image_any_exceptions_tmp, key: [cookie_id], m42: True}
+  user_image_core_exceptions_tmp:              {counter: image_any_core_exceptions_tmp, key: [cookie_id], m42: True}

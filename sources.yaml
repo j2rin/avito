@@ -694,6 +694,18 @@ image:
   dtm: event_date
   segm: cookie_id
 
+image_metrics:
+  metric_configs: [image_metrics]
+  database: vertica
+  table: dma.o_image_mobile
+  column_map:
+    participant: cookie_id
+  dimensions: [platform, network_type, screen_name]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: observation_date
+  segm: cookie_id
+
 buyer_suggest:
   metric_configs: [buyer_suggest]
   database: vertica
@@ -1904,7 +1916,7 @@ autoteka_new_buyer_expected_revenue:
  participant: { visitor: cookie_id, user: user_id }
  primary_subject: visitor
  dtm: event_date
- 
+
 messenger_transitions:
  metric_configs: [messenger_transitions]
  database: vertica
@@ -1918,10 +1930,10 @@ messenger_transitions:
  participant: {user: user_id}
  primary_subject: user
  dtm: trigger_date
- segm: user_id 
- 
- 
- 
+ segm: user_id
+
+
+
 messenger_chat_leads:
   metric_configs: [chat_leads]
   database: vertica
@@ -1937,7 +1949,7 @@ messenger_chat_leads:
   primary_subject: user
   dtm: first_message_event_date
   segm: cookie_id
-  
+
 messenger_inbox_chat_leads:
   metric_configs: [inbox_chat_leads]
   database: vertica
