@@ -188,7 +188,7 @@ def read_yamls(dir_path):
     result = {}
 
     for fn in os.listdir(dir_path):
-        if fn.endswith('.yaml') and not fn.startswith('_'):
+        if fn.endswith('.yaml') or fn.endswith('.yml') and not fn.startswith('_'):
             full_path = os.path.join(dir_path, fn)
             short_name = get_short_name(fn)
             result[short_name] = read_file(full_path)
