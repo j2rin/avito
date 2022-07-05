@@ -10,6 +10,7 @@ metric.counter:
   active_items_classified:                 {filter: [{is_active: True}, {is_marketplace: False}]}
   active_items_with_msg:                   {filter: [{is_active: True}, {is_message_forbidden: False}]}
   active_items_with_msg_contacts:          {filter: [{is_active: True}, {is_message_forbidden: False}, contacts.!=: 0]}
+  active_items_vas:                        {filter: [{is_active: True}, {vas_mask.>: 0}]}
   cnt_active_items:                        {filter: [{is_active: True}]}
   cnt_active_items_0_photo:                {filter: [{photo_count: 0}], m42: False}
   cnt_active_items_more_10_description_word: {filter: [{description_word_count.>=: 10}], m42: False}
@@ -140,7 +141,7 @@ metric.counter:
   items_with_rating_3:                     {filter: [{is_active: True}, {seller_rating: 3}], m42: True}
   items_with_rating_4:                     {filter: [{is_active: True}, {seller_rating: 4}], m42: True}
   items_with_rating_5:                     {filter: [{is_active: True}, {seller_rating: 5}], m42: True}
-  items_with_rating_new:                   {filter: [{is_active: True}, {seller_rating.in: [1,2,3,4,5]}], m42: True}  
+  items_with_rating_new:                   {filter: [{is_active: True}, {seller_rating.in: [1,2,3,4,5]}], m42: True}
 
 
 metric.uniq:
@@ -154,6 +155,7 @@ metric.uniq:
   active_items_more_5_description_word:    {counter: cnt_active_items_more_5_description_word, key: [item]}
   active_items_more_5_photo:               {counter: cnt_active_items_more_5_photo,   key: [item]}
   active_listers:                          {counter: cnt_active_items,                    key: [user_logcat]}
+  active_listers_vas:                      {counter: active_items_vas,                key: [user_logcat]}
   new_items_0_photo:                       {counter: cnt_new_items_0_photo,           key: [item]}
   new_items_more_10_description_word:      {counter: cnt_new_items_more_10_description_word, key: [item]}
   new_items_more_10_photo:                 {counter: cnt_new_items_more_10_photo,     key: [item]}
@@ -189,6 +191,7 @@ metric.uniq:
   users_active_item_more_5_description_word: {counter: cnt_active_items_more_5_description_word, key: [user]}
   users_active_item_more_5_photo:          {counter: cnt_active_items_more_5_photo,   key: [user]}
   users_active_items:                      {counter: cnt_active_items,                    key: [user]}
+  users_active_items_vas:                  {counter: active_items_vas,                    key: [user]}
   users_new_item_0_photo:                  {counter: cnt_new_items_0_photo,           key: [user]}
   users_new_item_more_10_description_word: {counter: cnt_new_items_more_10_description_word, key: [user]}
   users_new_item_more_10_photo:            {counter: cnt_new_items_more_10_photo,     key: [user]}
