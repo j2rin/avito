@@ -3,67 +3,136 @@ definitions:
   - &payment   {is_payment: true, is_classified: true}
 
 metric.counter:
-  revenue_total:                             {obs: [transaction_amount],          filter: [is_revenue: true]}
-  revenue_net_total:                         {obs: [transaction_amount_net],      filter: [is_revenue: true]}
-  revenue_net_adj_total:                     {obs: [transaction_amount_net_adj],  filter: [is_revenue: true]} 
-  classified_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [*revenue]}
-  classified_payments_net_adj:               {obs: [transaction_amount_net_adj],  filter: [*payment]}
-  classified_transactions:                   {obs: [transaction_count],           filter: [*revenue]}
-  classified_transactions_p:                 {obs: [transaction_count],           filter: [*payment]}
-  lf_amount_net_adj:                         {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'lf']}
-  lf_payments_net_adj:                       {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'lf']}
-  lf_transactions:                           {obs: [transaction_count],           filter: [*revenue, product_type: 'lf']}
-  lf_transactions_p:                         {obs: [transaction_count],           filter: [*payment, product_type: 'lf']}
-  subs_amount_net_adj:                       {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
-  subs_transactions:                         {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
-  extensions_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', product_subtype: 'extension']}
-  extensions_transactions:                   {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', product_subtype: 'extension']}
-  subs_w_extensions_amount_net_adj:          {obs: [transaction_amount_net_adj ], filter: [*revenue, product_type: 'subscription']}
-  subs_w_extensions_payments_net_adj:        {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'subscription']}
-  subs_w_extensions_transactions:            {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription']}
-  subs_w_extensions_transactions_p:          {obs: [transaction_count],           filter: [*payment, product_type: 'subscription']}
-  vas_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'vas']}
-  vas_payments_net_adj:                      {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'vas']}
-  vas_transactions:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'vas']}
-  vas_transactions_p:                        {obs: [transaction_count],           filter: [*payment, product_type: 'vas']}
-  paid_contact_amount_net_adj:               {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'paid_contact']}
-  cpa_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa']}
-  cpa_transactions:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'cpa']}
-  bundle_amount_net_adj:                     {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'bundle']}
-  bundle_payments_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'bundle']}
-  bundle_transactions:                       {obs: [transaction_count],           filter: [*revenue, product_type: 'bundle']}
-  bundle_transactions_p:                     {obs: [transaction_count],           filter: [*payment, product_type: 'bundle']}
-  domoteka_amount_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'check']}
-  str_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'buyer book']}
-  pc_w_classified_amount_net_adj:            {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, $or: [is_classified: true, product_type: 'paid_contact']], m42: False}
+  revenue_total:                                      {obs: [transaction_amount],          filter: [is_revenue: true]}
+  revenue_net_total:                                  {obs: [transaction_amount_net],      filter: [is_revenue: true]}
+  revenue_net_adj_total:                              {obs: [transaction_amount_net_adj],  filter: [is_revenue: true]} 
+  classified_amount_net_adj:                          {obs: [transaction_amount_net_adj],  filter: [*revenue]}
+  classified_amount_net_adj_cpa_user:                 {obs: [transaction_amount_net_adj],  filter: [*revenue, is_user_cpa: true]}
+  classified_payments_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [*payment]}
+  classified_transactions:                            {obs: [transaction_count],           filter: [*revenue]}
+  classified_transactions_p:                          {obs: [transaction_count],           filter: [*payment]}
+  lf_amount_net_adj:                                  {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'lf']}
+  lf_amount_net_adj_cpa_user:                         {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'lf', is_user_cpa: true]}
+  lf_payments_net_adj:                                {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'lf']}
+  lf_transactions:                                    {obs: [transaction_count],           filter: [*revenue, product_type: 'lf']}
+  lf_transactions_cpa_user:                           {obs: [transaction_count],           filter: [*revenue, product_type: 'lf', is_user_cpa: true]}
+  lf_transactions_p:                                  {obs: [transaction_count],           filter: [*payment, product_type: 'lf']}
+  subs_amount_net_adj:                                {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
+  subs_transactions:                                  {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
+  extensions_amount_net_adj:                          {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', product_subtype: 'extension']}
+  extensions_transactions:                            {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', product_subtype: 'extension']}
+  subs_w_extensions_amount_net_adj:                   {obs: [transaction_amount_net_adj], filter: [*revenue, product_type: 'subscription']}
+  subs_w_extensions_amount_net_adj_cpa_user:          {obs: [transaction_amount_net_adj], filter: [*revenue, product_type: 'subscription', is_user_cpa: true]}
+  subs_w_extensions_payments_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'subscription']}
+  subs_w_extensions_transactions:                     {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription']}
+  subs_w_extensions_transactions_cpa_user:            {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', is_user_cpa: true]}
+  subs_w_extensions_transactions_p:                   {obs: [transaction_count],           filter: [*payment, product_type: 'subscription']}
+  vas_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'vas']}
+  vas_amount_net_adj_cpa_user:                        {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'vas', is_user_cpa: true]}
+  vas_payments_net_adj:                               {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'vas']}
+  vas_transactions:                                   {obs: [transaction_count],           filter: [*revenue, product_type: 'vas']}
+  vas_transactions_cpa_user:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'vas', is_user_cpa: true]}
+  vas_transactions_p:                                 {obs: [transaction_count],           filter: [*payment, product_type: 'vas']}
+  paid_contact_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'paid_contact']}
+  cpa_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa']}
+  cpa_amount:                                         {obs: [transaction_amount],          filter: [*revenue, product_type: 'cpa']} 
+  cpa_amount_net_adj_calls:                           {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'calls']} 
+  cpa_amount_net_adj_contacts:                        {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'contacts']}
+  cpa_amount_net_adj_clicks:                          {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'clicks']}
+  cpa_amount_net_adj_prevalidations:                  {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'prevalidations']}
+  cpa_amount_net_adj_target_calls:                    {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'calls', transaction_subtype: 'target actions']} 
+  cpa_amount_net_adj_target_contacts:                 {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'contacts', transaction_subtype: 'target actions']}
+  cpa_amount_net_adj_target_clicks:                   {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'clicks', transaction_subtype: 'target actions']}
+  cpa_amount_net_adj_target_prevalidations:           {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'prevalidations', transaction_subtype: 'target actions']}
+  cpa_amount_net_adj_protested_open_calls:            {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'calls', transaction_subtype: 'protested in open period']} 
+  cpa_amount_net_adj_protested_open_contacts:         {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'contacts', transaction_subtype: 'protested in open period']}
+  cpa_amount_net_adj_protested_open_clicks:           {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'clicks', transaction_subtype: 'protested in open period']}
+  cpa_amount_net_adj_protested_open_prevalidations:   {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa', product_subtype: 'prevalidations', transaction_subtype: 'protested in open period']}
+  cpa_amount_net_adj_protested_closed_calls:          {obs: [transaction_amount_net_adj],  filter: [is_revenue: false, product_type: 'cpa', product_subtype: 'calls', transaction_subtype: 'protested in closed period']} 
+  cpa_amount_net_adj_protested_closed_contacts:       {obs: [transaction_amount_net_adj],  filter: [is_revenue: false, product_type: 'cpa', product_subtype: 'contacts', transaction_subtype: 'protested in closed period']}
+  cpa_amount_net_adj_protested_closed_clicks:         {obs: [transaction_amount_net_adj],  filter: [is_revenue: false, product_type: 'cpa', product_subtype: 'clicks', transaction_subtype: 'protested in closed period']}
+  cpa_amount_net_adj_protested_closed_prevalidations: {obs: [transaction_amount_net_adj],  filter: [is_revenue: false, product_type: 'cpa', product_subtype: 'prevalidations', transaction_subtype: 'protested in closed period']}
+  cpa_action_count:                                   {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa']} 
+  cpa_action_count_calls:                             {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'calls']} 
+  cpa_action_count_contacts:                          {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'contacts']}
+  cpa_action_count_clicks:                            {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'clicks']}
+  cpa_action_count_prevalidations:                    {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'prevalidations']}
+  cpa_action_count_target_calls:                      {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'calls', transaction_subtype: 'target actions']} 
+  cpa_action_count_target_contacts:                   {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'contacts', transaction_subtype: 'target actions']}
+  cpa_action_count_target_clicks:                     {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'clicks', transaction_subtype: 'target actions']}
+  cpa_action_count_target_prevalidations:             {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'prevalidations', transaction_subtype: 'target actions']}
+  cpa_action_count_protested_open_calls:              {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'calls', transaction_subtype: 'protested in open period']} 
+  cpa_action_count_protested_open_contacts:           {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'contacts', transaction_subtype: 'protested in open period']}
+  cpa_action_count_protested_open_clicks:             {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'clicks', transaction_subtype: 'protested in open period']}
+  cpa_action_count_protested_open_prevalidations:     {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'prevalidations', transaction_subtype: 'protested in open period']}
+  cpa_action_count_protested_closed_calls:            {obs: [cpa_target_action_count],     filter: [is_revenue: false, product_type: 'cpa', product_subtype: 'calls', transaction_subtype: 'protested in closed period']} 
+  cpa_action_count_protested_closed_contacts:         {obs: [cpa_target_action_count],     filter: [is_revenue: false, product_type: 'cpa', product_subtype: 'contacts', transaction_subtype: 'protested in closed period']}
+  cpa_action_count_protested_closed_clicks:           {obs: [cpa_target_action_count],     filter: [is_revenue: false, product_type: 'cpa', product_subtype: 'clicks', transaction_subtype: 'protested in closed period']}
+  cpa_action_count_protested_closed_prevalidations:   {obs: [cpa_target_action_count],     filter: [is_revenue: false, product_type: 'cpa', product_subtype: 'prevalidations', transaction_subtype: 'protested in closed period']}  
+  cpa_transactions:                                   {obs: [transaction_count],           filter: [*revenue, product_type: 'cpa']}
+  bundle_amount_net_adj:                              {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'bundle']}
+  bundle_payments_net_adj:                            {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'bundle']}
+  bundle_transactions:                                {obs: [transaction_count],           filter: [*revenue, product_type: 'bundle']}
+  bundle_transactions_p:                              {obs: [transaction_count],           filter: [*payment, product_type: 'bundle']}
+  domoteka_amount_net_adj:                            {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'check']}
+  str_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'buyer book']}
+  pc_w_classified_amount_net_adj:                     {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, $or: [is_classified: true, product_type: 'paid_contact']], m42: False}
+  vas_amount_net_adj_visual_cpa_user:                 {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'vas', product_subtype: 'visual', is_user_cpa: true]}
+  vas_amount_net_adj_performance_cpa_user:            {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'vas', product_subtype: 'performance', is_user_cpa: true]}
+
 
 
 metric.uniq:
-  classified_users:                          {counter: classified_amount_net_adj,          key: [user]}
-  classified_payments_users:                 {counter: classified_payments_net_adj,        key: [user]}
-  lf_users:                                  {counter: lf_amount_net_adj,                  key: [user]}
-  lf_payments_users:                         {counter: lf_payments_net_adj,                key: [user]}
-  subs_w_extensions_users:                   {counter: subs_w_extensions_amount_net_adj,   key: [user]}
-  subs_extensions_payments_users:            {counter: subs_w_extensions_payments_net_adj, key: [user]}
-  vas_users:                                 {counter: vas_amount_net_adj,                 key: [user]}
-  vas_payments_users:                        {counter: vas_payments_net_adj,               key: [user]}
-  cpa_users:                                 {counter: cpa_amount_net_adj,                 key: [user]}
-  paying_users:                              {counter: pc_w_classified_amount_net_adj,     key: [user]}
+  classified_users:                          {counter: classified_amount_net_adj,                 key: [user]}
+  classified_payments_users:                 {counter: classified_payments_net_adj,               key: [user]}
+  lf_users:                                  {counter: lf_amount_net_adj,                         key: [user]}
+  lf_users_cpa_users:                        {counter: lf_amount_net_adj_cpa_user,                key: [user]}
+  lf_payments_users:                         {counter: lf_payments_net_adj,                       key: [user]}
+  subs_w_extensions_users:                   {counter: subs_w_extensions_amount_net_adj,          key: [user]}
+  subs_w_extensions_users_cpa_users:         {counter: subs_w_extensions_amount_net_adj_cpa_user, key: [user]}
+  subs_extensions_payments_users:            {counter: subs_w_extensions_payments_net_adj,        key: [user]}
+  vas_users:                                 {counter: vas_amount_net_adj,                        key: [user]}
+  vas_users_cpa_users:                       {counter: vas_amount_net_adj_cpa_user,               key: [user]}
+  vas_visual_users_cpa_users:                {counter: vas_amount_net_adj_visual_cpa_user,        key: [user]}
+  vas_performance_users_cpa_users:           {counter: vas_amount_net_adj_performance_cpa_user,   key: [user]}
+  vas_payments_users:                        {counter: vas_payments_net_adj,                      key: [user]}
+  cpa_users:                                 {counter: cpa_amount_net_adj,                        key: [user]}
+  cpa_users_calls:                           {counter: cpa_amount_net_adj_calls,                  key: [user]}
+  cpa_users_contacts:                        {counter: cpa_amount_net_adj_contacts,               key: [user]}
+  cpa_users_clicks:                          {counter: cpa_amount_net_adj_clicks,                 key: [user]}
+  cpa_users_prevalidations:                  {counter: cpa_amount_net_adj_prevalidations,         key: [user]}
+  paying_users:                              {counter: pc_w_classified_amount_net_adj,            key: [user]}
+
 
 metric.ratio:
-  classified_price_net_adj:                  {num: classified_amount_net_adj,              den: classified_transactions}
-  classified_price_net_adj_p:                {num: classified_payments_net_adj,            den: classified_transactions_p}
-  lf_price_net_adj:                          {num: lf_amount_net_adj,                      den: lf_transactions}
-  lf_price_net_adj_p:                        {num: lf_payments_net_adj,                    den: lf_transactions_p}
-  subs_w_extensions_price_net_adj:           {num: subs_w_extensions_amount_net_adj,       den: subs_w_extensions_transactions}
-  subs_w_extensions_price_net_adj_p:         {num: subs_w_extensions_payments_net_adj,     den: subs_w_extensions_transactions_p}
-  vas_transactions_per_user:                 {num: vas_transactions,                       den: vas_users}
-  vas_transactions_per_user_p:               {num: vas_transactions_p,                     den: vas_payments_users}
-  subs_w_extensions_transactions_per_user:   {num: subs_w_extensions_transactions,         den: subs_w_extensions_users}
-  subs_w_extensions_transactions_per_user_p: {num: subs_w_extensions_transactions_p,       den: subs_extensions_payments_users}
-  lf_transactions_per_user:                  {num: lf_transactions,                        den: lf_users}
-  lf_transactions_per_user_p:                {num: lf_transactions_p,                      den: lf_payments_users}
-  classified_transactions_per_user:          {num: classified_transactions,                den: classified_users}
-  classified_transactions_per_user_p:        {num: classified_transactions_p,              den: classified_payments_users}
-  vas_price_net_adj:                         {num: vas_amount_net_adj,                     den: vas_transactions}
-  vas_price_net_adj_p:                       {num: vas_payments_net_adj,                   den: vas_transactions_p}
+  classified_price_net_adj:                   {num: classified_amount_net_adj,              den: classified_transactions}
+  classified_price_net_adj_p:                 {num: classified_payments_net_adj,            den: classified_transactions_p}
+  lf_price_net_adj:                           {num: lf_amount_net_adj,                      den: lf_transactions}
+  lf_price_net_adj_p:                         {num: lf_payments_net_adj,                    den: lf_transactions_p}
+  subs_w_extensions_price_net_adj:            {num: subs_w_extensions_amount_net_adj,       den: subs_w_extensions_transactions}
+  subs_w_extensions_price_net_adj_p:          {num: subs_w_extensions_payments_net_adj,     den: subs_w_extensions_transactions_p}
+  vas_transactions_per_user:                  {num: vas_transactions,                       den: vas_users}
+  vas_transactions_per_user_p:                {num: vas_transactions_p,                     den: vas_payments_users}
+  subs_w_extensions_transactions_per_user:    {num: subs_w_extensions_transactions,         den: subs_w_extensions_users}
+  subs_w_extensions_transactions_per_user_p:  {num: subs_w_extensions_transactions_p,       den: subs_extensions_payments_users}
+  lf_transactions_per_user:                   {num: lf_transactions,                        den: lf_users}
+  lf_transactions_per_user_p:                 {num: lf_transactions_p,                      den: lf_payments_users}
+  classified_transactions_per_user:           {num: classified_transactions,                den: classified_users}
+  classified_transactions_per_user_p:         {num: classified_transactions_p,              den: classified_payments_users}
+  vas_price_net_adj:                          {num: vas_amount_net_adj,                     den: vas_transactions}
+  vas_price_net_adj_p:                        {num: vas_payments_net_adj,                   den: vas_transactions_p}
+  cpa_price_net_adj:                          {num: cpa_amount_net_adj,                     den: cpa_action_count}
+  cpa_price_net_adj_calls:                    {num: cpa_amount_net_adj_calls,               den: cpa_action_count_calls}
+  cpa_price_net_adj_contacts:                 {num: cpa_amount_net_adj_contacts,            den: cpa_action_count_contacts}
+  cpa_price_net_adj_clicks:                   {num: cpa_amount_net_adj_clicks,              den: cpa_action_count_clicks}
+  cpa_price_net_adj_prevalidations:           {num: cpa_amount_net_adj_prevalidations,      den: cpa_action_count_prevalidations}
+  cpa_amount_net_adj_per_user:                {num: cpa_amount_net_adj,                     den: cpa_users}
+  cpa_amount_net_adj_per_user_calls:          {num: cpa_amount_net_adj_calls,               den: cpa_users_calls}
+  cpa_amount_net_adj_per_user_contacts:       {num: cpa_amount_net_adj_contacts,            den: cpa_users_contacts}
+  cpa_amount_net_adj_per_user_clicks:         {num: cpa_amount_net_adj_clicks,              den: cpa_users_clicks}
+  cpa_amount_net_adj_per_user_prevalidations: {num: cpa_amount_net_adj_prevalidations,      den: cpa_users_prevalidations}
+  cpa_actions_per_user:                       {num: cpa_action_count,                       den: cpa_users}
+  cpa_actions_per_user_calls:                 {num: cpa_action_count_calls,                 den: cpa_users_calls}
+  cpa_actions_per_user_contacts:              {num: cpa_action_count_contacts,              den: cpa_users_contacts}
+  cpa_actions_per_user_clicks:                {num: cpa_action_count_clicks,                den: cpa_users_clicks}
+  cpa_actions_per_user_prevalidations:        {num: cpa_action_count_prevalidations,        den: cpa_users_prevalidations}
