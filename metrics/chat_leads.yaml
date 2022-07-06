@@ -3,9 +3,9 @@ definitions:
   - &is_prob050            {sum_probability.>=: 0.50}
   - &is_prob035            {sum_probability.>=: 0.35}
   - &is_lead_class         {class.in: [0.5, 0.75, 1.0]}
-  - &is_first_class        {class.in: [0.0]}
+  - &is_first_class        {class.in: [0]}
   - &is_second_class        {class.in: [0.25]}
-  - &is_notlead_sumprobabilty  {1-sum_probability.>=: 0.50}
+  - &is_notlead_sumprobabilty  {sum_probability.<=: 0.15}
 
 
 metric.counter:
@@ -21,6 +21,6 @@ metric.counter:
     
 
 metric.uniq: 
-  user_target_contact_chat:                        {counter: target_contact_chat,            key: [user]}
+  user_target_contact_chat:                               {counter: target_contact_chat,            key: [user]}
   user_target_contact_chat_prob35:                        {counter: target_contact_chat_prob35,     key: [user]}
   user_target_contact_chat_class:                          {counter: target_contact_chat_class,      key: [user]}
