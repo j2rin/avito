@@ -2,17 +2,26 @@ metric.counter:
   calltracking_calls:                      {obs: [calls_total]}
   calltracking_fraud_calls:                {obs: [fraud_calls]}
   calltracking_not_fraud_calls:            {obs: [not_fraud_calls]}
+  calltracking_not_fraud_calls_cpa_items:  {filter: [{is_item_cpa: True}], obs: [not_fraud_calls]}
+  calltracking_not_fraud_calls_cpa_users:  {filter: [{is_user_cpa: True}], obs: [not_fraud_calls]}
   calltracking_received_calls:             {obs: [received_calls]}
+  calltracking_received_calls_cpa_items:   {filter: [{is_item_cpa: True}], obs: [received_calls]}
+  calltracking_received_calls_cpa_users:   {filter: [{is_user_cpa: True}], obs: [received_calls]}
   calltracking_active:                     {obs: [calltracking_active], m42: False}
 
 metric.uniq:
-  users_calltracking_active:               {counter: calltracking_active,           key: [user]}
-  users_calltracking_calls:                {counter: calltracking_calls,            key: [user]}
-  users_calltracking_fraud_calls:          {counter: calltracking_fraud_calls,      key: [user]}
-  users_calltracking_not_fraud_calls:      {counter: calltracking_not_fraud_calls,  key: [user]}
-  users_calltracking_received_calls:       {counter: calltracking_received_calls,   key: [user]}
+  users_calltracking_active:                    {counter: calltracking_active,                    key: [user]}
+  users_calltracking_calls:                     {counter: calltracking_calls,                     key: [user]}
+  users_calltracking_fraud_calls:               {counter: calltracking_fraud_calls,               key: [user]}
+  users_calltracking_not_fraud_calls:           {counter: calltracking_not_fraud_calls,           key: [user]}
+  users_calltracking_not_fraud_calls_cpa_items: {counter: calltracking_not_fraud_calls_cpa_items, key: [user]}
+  users_calltracking_not_fraud_calls_cpa_users: {counter: calltracking_not_fraud_calls_cpa_users, key: [user]}
+  users_calltracking_received_calls:            {counter: calltracking_received_calls,            key: [user]}
+  users_calltracking_received_calls_cpa_items:  {counter: calltracking_received_calls_cpa_items,  key: [user]}
+  users_calltracking_received_calls_cpa_users:  {counter: calltracking_received_calls_cpa_users,  key: [user]}
 
 metric.ratio:
-  calltracking_fraud_calls_ratio:          {num: calltracking_fraud_calls,      den: calltracking_calls}
-  calltracking_not_fraud_calls_ratio:      {num: calltracking_not_fraud_calls,  den: calltracking_calls}
-  calltracking_received_calls_per_not_fraud: {num: calltracking_received_calls, den: calltracking_not_fraud_calls}
+  calltracking_fraud_calls_ratio:             {num: calltracking_fraud_calls,               den: calltracking_calls}
+  calltracking_not_fraud_calls_ratio:         {num: calltracking_not_fraud_calls,           den: calltracking_calls}
+  calltracking_received_calls_per_not_fraud:  {num: calltracking_received_calls,            den: calltracking_not_fraud_calls}
+  calltracking_not_fraud_calls_per_cpa_users: {num: calltracking_not_fraud_calls_cpa_users, den: users_calltracking_not_fraud_calls} 
