@@ -3,11 +3,22 @@ definitions:
   - &is_prob050            {sum_probability.>=: 0.50}
   - &is_prob035            {sum_probability.>=: 0.35}
   - &is_lead_class         {class.in: [0.5, 0.75, 1.0]}
+  - &is_first_class        {class.in: [0.0]}
+  - &is_second_class        {class.in: [0.25]}
+  - &is_notlead_sumprobabilty  {1-sum_probability.>=: 0.50}
+
 
 metric.counter:
     target_contact_chat:                            {filter: [*is_prob050]}
     target_contact_chat_prob35:                     {filter: [*is_prob035]}
     target_contact_chat_class:                      {filter: [*is_lead_class]}
+
+    chat_first_class:                               {filter: [*is_first_class]}
+    chat_second_class:                              {filter: [*is_second_class]}
+    no_target_chat:                                 {filter: [*is_notlead_sumprobabilty]}
+
+    
+    
 
 metric.uniq: 
   user_target_contact_chat:                        {counter: target_contact_chat,            key: [user]}
