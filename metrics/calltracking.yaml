@@ -2,11 +2,11 @@ metric.counter:
   calltracking_calls:                      {obs: [calls_total]}
   calltracking_fraud_calls:                {obs: [fraud_calls]}
   calltracking_not_fraud_calls:            {obs: [not_fraud_calls]}
-  calltracking_not_fraud_calls_cpa_items:  {obs: [not_fraud_calls], {is_item_cpa: True}}
-  calltracking_not_fraud_calls_cpa_users:  {obs: [not_fraud_calls], {is_user_cpa: True}}
+  calltracking_not_fraud_calls_cpa_items:  {filter: [{is_item_cpa: True}], obs: [not_fraud_calls]}
+  calltracking_not_fraud_calls_cpa_users:  {filter: [{is_user_cpa: True}], obs: [not_fraud_calls]}
   calltracking_received_calls:             {obs: [received_calls]}
-  calltracking_received_calls_cpa_items:   {obs: [received_calls], {is_item_cpa: True}}
-  calltracking_received_calls_cpa_users:   {obs: [received_calls], {is_user_cpa: True}}
+  calltracking_received_calls_cpa_items:   {filter: [{is_item_cpa: True}], obs: [received_calls]}
+  calltracking_received_calls_cpa_users:   {filter: [{is_user_cpa: True}], obs: [received_calls]}
   calltracking_active:                     {obs: [calltracking_active], m42: False}
 
 metric.uniq:
