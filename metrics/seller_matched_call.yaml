@@ -7,12 +7,25 @@ metric.counter:
   seller_matched_ancalls_by_time:           {filter: [{observation_name: anon_calls_matched_by_time}], obs: [observation_value]}
   
   seller_proxy_calls:                      {filter: [{$or: [[{observation_name: answered_proxy_calls}], [{observation_name: call_phone_screen_views_client}], [{observation_name: missed_proxy_calls}]]}], obs: [observation_value]}
+  seller_proxy_calls_cpa_items:            {filter: [{$or: [[{observation_name: answered_proxy_calls}], [{observation_name: call_phone_screen_views_client}], [{observation_name: missed_proxy_calls}]]}, {is_item_cpa: True}], obs: [observation_value]}
+  seller_proxy_calls_cpa_users:            {filter: [{$or: [[{observation_name: answered_proxy_calls}], [{observation_name: call_phone_screen_views_client}], [{observation_name: missed_proxy_calls}]]}, {is_user_cpa: True}], obs: [observation_value]}
   seller_answered_proxy_calls:             {filter: [{observation_name: answered_proxy_calls}], obs: [observation_value]}
+  seller_answered_proxy_calls_cpa_items:   {filter: [{observation_name: answered_proxy_calls}, {is_item_cpa: True}], obs: [observation_value]}
+  seller_answered_proxy_calls_cpa_users:   {filter: [{observation_name: answered_proxy_calls}, {is_user_cpa: True}], obs: [observation_value]}
   seller_missed_proxy_calls:               {filter: [{observation_name: missed_proxy_calls}], obs: [observation_value]}
+  seller_missed_proxy_calls_cpa_items:     {filter: [{observation_name: missed_proxy_calls}, {is_item_cpa: True}], obs: [observation_value]}
+  seller_missed_proxy_calls_cpa_users:     {filter: [{observation_name: missed_proxy_calls}, {is_user_cpa: True}], obs: [observation_value]}
+
+
+metric.uniq:
+  seller_cpa_uniq_proxy_calls:             {counter: seller_proxy_calls_cpa_users,         key: [user]}
+  item_cpa_uniq_proxy_calls:               {counter: seller_proxy_calls_cpa_items,         key: [item]}
 
 
 metric.ratio:
   seller_ancalls_answered_share:           {num: seller_matched_ancalls_answered_any_type, den: seller_matched_ancalls_any_type}
   seller_ancalls_success_share:            {num: seller_matched_ancalls_success_any_type,  den: seller_matched_ancalls_any_type}
   
-  seller_answered_proxy_calls_share:       {num: seller_answered_proxy_calls,         den: seller_proxy_calls}
+  seller_answered_proxy_calls_share:           {num: seller_answered_proxy_calls,           den: seller_proxy_calls}
+  seller_answered_proxy_calls_cpa_users_share: {num: seller_answered_proxy_calls_cpa_users, den: seller_proxy_calls_cpa_users}
+  seller_missed_proxy_calls_cpa_users_share:   {num: seller_missed_proxy_calls_cpa_users,   den: seller_proxy_calls_cpa_users}
