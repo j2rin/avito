@@ -10,15 +10,16 @@ metric.counter:
   active_items_classified:                 {filter: [{is_active: True}, {is_marketplace: False}]}
   active_items_with_msg:                   {filter: [{is_active: True}, {is_message_forbidden: False}]}
   active_items_with_msg_contacts:          {filter: [{is_active: True}, {is_message_forbidden: False}, contacts.!=: 0]}
+  active_items_vas:                        {filter: [{is_active: True}, {vas_mask.>: 0}]}
   cnt_active_items:                        {filter: [{is_active: True}]}
   cnt_active_items_cpa:                    {filter: [{is_active: True}, {is_item_cpa: True}]}
   cnt_active_items_cpa_lf:                 {filter: [{is_active: True}, {is_item_cpa: False}, {is_user_cpa: True}]}
-  cnt_active_items_cpa_prevalidation:      {filter: [{is_active: True}, {is_item_cpa: True}, {cpaaction_type: 4}]}  
-  cnt_active_items_cpa_cpc_contact:        {filter: [{is_active: True}, {is_item_cpa: True}, {cpaaction_type: 6}]}  
+  cnt_active_items_cpa_prevalidation:      {filter: [{is_active: True}, {is_item_cpa: True}, {cpaaction_type: 4}]}
+  cnt_active_items_cpa_cpc_contact:        {filter: [{is_active: True}, {is_item_cpa: True}, {cpaaction_type: 6}]}
   cnt_active_items_with_vas_cpa:           {filter: [{vas_mask.>: 0}, {is_active: True}, {is_item_cpa: True}]}
-  cnt_active_items_with_vas_cpa_lf:        {filter: [{vas_mask.>: 0}, {is_active: True}, {is_item_cpa: False}, {is_user_cpa: True}]}  
+  cnt_active_items_with_vas_cpa_lf:        {filter: [{vas_mask.>: 0}, {is_active: True}, {is_item_cpa: False}, {is_user_cpa: True}]}
   cnt_active_items_with_vas_cpa_prevalidation: {filter: [{vas_mask.>: 0}, {is_active: True}, {is_item_cpa: True}, {cpaaction_type: 4}]}
-  cnt_active_items_with_vas_cpa_cpc_contact: {filter: [{vas_mask.>: 0}, {is_active: True}, {is_item_cpa: True}, {cpaaction_type: 6}]}   
+  cnt_active_items_with_vas_cpa_cpc_contact: {filter: [{vas_mask.>: 0}, {is_active: True}, {is_item_cpa: True}, {cpaaction_type: 6}]}
   cnt_active_items_0_photo:                {filter: [{photo_count: 0}], m42: False}
   cnt_active_items_more_10_description_word: {filter: [{description_word_count.>=: 10}], m42: False}
   cnt_active_items_more_10_photo:          {filter: [{photo_count.>=: 10}], m42: False}
@@ -109,7 +110,7 @@ metric.counter:
   items_with_street_reactivated:           {filter: [{activations_count.>: 1}, {is_active: True}, {last_activation_date: $event_date}, {min_kind_level: 50}]}
   seller_item_views:                       {obs: [item_views]}
   seller_item_views_cpa:                   {filter: [{is_item_cpa: True}], obs: [item_views]}
-  seller_item_views_cpa_lf:                {filter: [{is_item_cpa: False}, {is_user_cpa: True}], obs: [item_views]}  
+  seller_item_views_cpa_lf:                {filter: [{is_item_cpa: False}, {is_user_cpa: True}], obs: [item_views]}
   seller_item_views_cpa_prevalidation:     {filter: [{is_item_cpa: True}, {cpaaction_type: 4}], obs: [item_views]}
   seller_item_views_cpa_cpc_contact:       {filter: [{is_item_cpa: True}, {cpaaction_type: 6}], obs: [item_views]}
   seller_item_views_vas:                   {filter: [{vas_mask.>: 0}], obs: [item_views]}
@@ -131,12 +132,12 @@ metric.counter:
   seller_contacts_messenger_start_date:    {filter: [{start_date.>=: $ab_start_date}],obs: [contacts_msg]}
   seller_contacts_messenger_cpa_start_date: {filter: [{start_date.>=: $ab_start_date}, {is_item_cpa: True}], obs: [contacts_msg]}
   seller_contacts_phone_views:             {obs: [contacts_ph]}
-  seller_contacts_phone_views_cpa:         {filter: [{is_item_cpa: True}], obs: [contacts_ph]} 
+  seller_contacts_phone_views_cpa:         {filter: [{is_item_cpa: True}], obs: [contacts_ph]}
   seller_contacts_phone_views_cpa_lf:      {filter: [{is_item_cpa: False}, {is_user_cpa: True}], obs: [contacts_ph]}
   seller_contacts_phone_views_cpa_prevalidation: {filter: [{is_item_cpa: True}, {cpaaction_type: 4}], obs: [contacts_ph]}
   seller_contacts_phone_views_cpa_cpc_contact: {filter: [{is_item_cpa: True}, {cpaaction_type: 6}], obs: [contacts_ph]}
   seller_contacts_phone_views_start_date:  {filter: [{start_date.>=: $ab_start_date}],obs: [contacts_ph]}
-  seller_contacts_phone_views_cpa_start_date: {filter: [{start_date.>=: $ab_start_date}, {is_item_cpa: True}], obs: [contacts_ph]}  
+  seller_contacts_phone_views_cpa_start_date: {filter: [{start_date.>=: $ab_start_date}, {is_item_cpa: True}], obs: [contacts_ph]}
   seller_contacts_vas:                     {filter: [{vas_mask.>: 0}], obs: [contacts]}
   seller_contacts_vas_cpa:                 {filter: [{vas_mask.>: 0}, {is_item_cpa: True}], obs: [contacts]}
   seller_contacts_vas_cpa_lf:              {filter: [{vas_mask.>: 0}, {is_item_cpa: False}, {is_user_cpa: True}], obs: [contacts]}
@@ -153,7 +154,7 @@ metric.counter:
   seller_btc_vas_cpa_prevalidation:        {filter: [{vas_mask.>: 0}, {is_item_cpa: True}, {cpaaction_type: 4}], obs: [favs_added, contacts]}
   seller_btc_vas_cpa_cpc_contact:          {filter: [{vas_mask.>: 0}, {is_item_cpa: True}, {cpaaction_type: 6}], obs: [favs_added, contacts]}
   seller_contacts_start_date:              {filter: [{start_date.>=: $ab_start_date}], obs: [contacts]}
-  seller_contacts_cpa_start_date:          {filter: [{start_date.>=: $ab_start_date}, {is_item_cpa: True}], obs: [contacts]}  
+  seller_contacts_cpa_start_date:          {filter: [{start_date.>=: $ab_start_date}, {is_item_cpa: True}], obs: [contacts]}
   seller_favorites_added:                  {obs: [favs_added]}
   seller_favorites_added_start_date:       {filter: [{start_date.>=: $ab_start_date}], obs: [favs_added]}
   seller_favorites_removed:                {obs: [favs_removed]}
@@ -183,19 +184,19 @@ metric.counter:
   items_with_rating_3:                     {filter: [{is_active: True}, {seller_rating: 3}], m42: True}
   items_with_rating_4:                     {filter: [{is_active: True}, {seller_rating: 4}], m42: True}
   items_with_rating_5:                     {filter: [{is_active: True}, {seller_rating: 5}], m42: True}
-  items_with_rating_new:                   {filter: [{is_active: True}, {seller_rating.in: [1,2,3,4,5]}], m42: True}  
+  items_with_rating_new:                   {filter: [{is_active: True}, {seller_rating.in: [1,2,3,4,5]}], m42: True}
 
 
 metric.uniq:
   active_items:                            {counter: cnt_active_items,                key: [item]}
-  active_items_cpa:                        {counter: cnt_active_items_cpa,            key: [item]}  
-  active_items_cpa_lf:                     {counter: cnt_active_items_cpa_lf,         key: [item]}    
-  active_items_cpa_prevalidation:          {counter: cnt_active_items_cpa_prevalidation, key: [item]}  
-  active_items_cpa_cpc_contact:            {counter: cnt_active_items_cpa_cpc_contact, key: [item]}  
-  active_items_with_vas_cpa:               {counter: cnt_active_items_with_vas_cpa,   key: [item]}  
-  active_items_with_vas_cpa_lf:            {counter: cnt_active_items_with_vas_cpa_lf, key: [item]}  
-  active_items_with_vas_cpa_prevalidation: {counter: cnt_active_items_with_vas_cpa_prevalidation, key: [item]}  
-  active_items_with_vas_cpa_cpc_contact:   {counter: cnt_active_items_with_vas_cpa_cpc_contact, key: [item]}  
+  active_items_cpa:                        {counter: cnt_active_items_cpa,            key: [item]}
+  active_items_cpa_lf:                     {counter: cnt_active_items_cpa_lf,         key: [item]}
+  active_items_cpa_prevalidation:          {counter: cnt_active_items_cpa_prevalidation, key: [item]}
+  active_items_cpa_cpc_contact:            {counter: cnt_active_items_cpa_cpc_contact, key: [item]}
+  active_items_with_vas_cpa:               {counter: cnt_active_items_with_vas_cpa,   key: [item]}
+  active_items_with_vas_cpa_lf:            {counter: cnt_active_items_with_vas_cpa_lf, key: [item]}
+  active_items_with_vas_cpa_prevalidation: {counter: cnt_active_items_with_vas_cpa_prevalidation, key: [item]}
+  active_items_with_vas_cpa_cpc_contact:   {counter: cnt_active_items_with_vas_cpa_cpc_contact, key: [item]}
   active_items_0_photo:                    {counter: cnt_active_items_0_photo,        key: [item]}
   active_items_more_10_description_word:   {counter: cnt_active_items_more_10_description_word, key: [item]}
   active_items_more_10_photo:              {counter: cnt_active_items_more_10_photo,  key: [item]}
@@ -206,12 +207,13 @@ metric.uniq:
   active_items_more_5_photo:               {counter: cnt_active_items_more_5_photo,   key: [item]}
   active_listers:                          {counter: cnt_active_items,                    key: [user_logcat]}
   active_listers_cpa:                      {counter: cnt_active_items_cpa,            key: [user_logcat]}
-  active_listers_cpa_lf:                   {counter: cnt_active_items_cpa_lf,         key: [user_logcat]}  
+  active_listers_cpa_lf:                   {counter: cnt_active_items_cpa_lf,         key: [user_logcat]}
   active_listers_cpa_prevalidation:        {counter: cnt_active_items_cpa_prevalidation, key: [user_logcat]}
   active_listers_cpa_cpc_contact:          {counter: cnt_active_items_cpa_cpc_contact, key: [user_logcat]}
   active_listers_with_vas_cpa:             {counter: cnt_active_items_with_vas_cpa,   key: [user_logcat]}
   active_listers_with_vas_cpa_prevalidation: {counter: cnt_active_items_with_vas_cpa_prevalidation, key: [user_logcat]}
   active_listers_with_vas_cpa_cpc_contact: {counter: cnt_active_items_with_vas_cpa_cpc_contact, key: [user_logcat]}
+  active_listers_vas:                      {counter: active_items_vas,                key: [user_logcat]}
   new_items_0_photo:                       {counter: cnt_new_items_0_photo,           key: [item]}
   new_items_more_10_description_word:      {counter: cnt_new_items_more_10_description_word, key: [item]}
   new_items_more_10_photo:                 {counter: cnt_new_items_more_10_photo,     key: [item]}
@@ -276,6 +278,7 @@ metric.uniq:
   users_active_item_more_5_description_word: {counter: cnt_active_items_more_5_description_word, key: [user]}
   users_active_item_more_5_photo:          {counter: cnt_active_items_more_5_photo,   key: [user]}
   users_active_items:                      {counter: cnt_active_items,                    key: [user]}
+  users_active_items_vas:                  {counter: active_items_vas,                    key: [user]}
   users_cpa_active_items:                  {counter: cnt_active_items_cpa,            key: [user]}
   users_cpa_lf_active_items:               {counter: cnt_active_items_cpa_lf,         key: [user]}
   users_cpa_active_items_with_vas:         {counter: cnt_active_items_with_vas_cpa,   key: [user]}
