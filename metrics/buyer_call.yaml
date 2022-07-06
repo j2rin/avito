@@ -27,20 +27,51 @@ metric.counter:
   ancalls_by_time_rec:                     {filter: [{observation_name: anon_calls_matched_by_time_rec}], obs: [observation_value]}
   ancalls_by_time_serp:                    {filter: [{observation_name: anon_calls_matched_by_time_serp}], obs: [observation_value]}
   answered_proxy_calls:                    {filter: [{observation_name: answered_proxy_calls}], obs: [observation_value]}
+  answered_proxy_calls_cpa_items:          {filter: [{observation_name: answered_proxy_calls}, {is_item_cpa: True}], obs: [observation_value]}  
+  answered_proxy_calls_cpa_users:          {filter: [{observation_name: answered_proxy_calls}, {is_user_cpa: True}], obs: [observation_value]}  
   answered_proxy_calls_fav:                {filter: [{observation_name: answered_proxy_calls_fav}], obs: [observation_value]}
+  answered_proxy_calls_fav_cpa_items:      {filter: [{observation_name: answered_proxy_calls_fav}, {is_item_cpa: True}], obs: [observation_value]}
+  answered_proxy_calls_fav_cpa_users:      {filter: [{observation_name: answered_proxy_calls_fav}, {is_user_cpa: True}], obs: [observation_value]}
   answered_proxy_calls_map:                {filter: [{observation_name: answered_proxy_calls_map}], obs: [observation_value]}
+  answered_proxy_calls_map_cpa_items:      {filter: [{observation_name: answered_proxy_calls_map}, {is_item_cpa: True}], obs: [observation_value]}
+  answered_proxy_calls_map_cpa_users:      {filter: [{observation_name: answered_proxy_calls_map}, {is_user_cpa: True}], obs: [observation_value]}
   answered_proxy_calls_rec:                {filter: [{observation_name: answered_proxy_calls_rec}], obs: [observation_value]}
+  answered_proxy_calls_rec_cpa_items:      {filter: [{observation_name: answered_proxy_calls_rec}, {is_item_cpa: True}], obs: [observation_value]}
+  answered_proxy_calls_rec_cpa_users:      {filter: [{observation_name: answered_proxy_calls_rec}, {is_user_cpa: True}], obs: [observation_value]}
   answered_proxy_calls_serp:               {filter: [{observation_name: answered_proxy_calls_serp}], obs: [observation_value]}
+  answered_proxy_calls_serp_cpa_items:     {filter: [{observation_name: answered_proxy_calls_serp}, {is_item_cpa: True}], obs: [observation_value]}
+  answered_proxy_calls_serp_cpa_users:     {filter: [{observation_name: answered_proxy_calls_serp}, {is_user_cpa: True}], obs: [observation_value]}
   calls:                                   {filter: [{$or: [[{observation_name: answered_proxy_calls}], [{observation_name: call_phone_screen_views_client}], [{observation_name: missed_proxy_calls}]]}], obs: [observation_value]}
+  calls_cpa_items:                         {filter: [{$or: [[{observation_name: answered_proxy_calls}], [{observation_name: call_phone_screen_views_client}], [{observation_name: missed_proxy_calls}]]}, {is_item_cpa: True}], obs: [observation_value]}
+  calls_cpa_users:                         {filter: [{$or: [[{observation_name: answered_proxy_calls}], [{observation_name: call_phone_screen_views_client}], [{observation_name: missed_proxy_calls}]]}, {is_user_cpa: True}], obs: [observation_value]}
   calls_fav:                               {filter: [{$or: [[{observation_name: answered_proxy_calls_fav}], [{observation_name: missed_proxy_calls_fav}]]}], obs: [observation_value]}
+  calls_fav_cpa_items:                     {filter: [{$or: [[{observation_name: answered_proxy_calls_fav}], [{observation_name: missed_proxy_calls_fav}]]}, {is_item_cpa: True}], obs: [observation_value]}
+  calls_fav_cpa_users:                     {filter: [{$or: [[{observation_name: answered_proxy_calls_fav}], [{observation_name: missed_proxy_calls_fav}]]}, {is_user_cpa: True}], obs: [observation_value]}
   calls_map:                               {filter: [{$or: [[{observation_name: answered_proxy_calls_map}], [{observation_name: missed_proxy_calls_map}]]}], obs: [observation_value]}
+  calls_map_cpa_items:                     {filter: [{$or: [[{observation_name: answered_proxy_calls_map}], [{observation_name: missed_proxy_calls_map}]]}, {is_item_cpa: True}], obs: [observation_value]}
+  calls_map_cpa_users:                     {filter: [{$or: [[{observation_name: answered_proxy_calls_map}], [{observation_name: missed_proxy_calls_map}]]}, {is_user_cpa: True}], obs: [observation_value]}
   calls_rec:                               {filter: [{$or: [[{observation_name: answered_proxy_calls_rec}], [{observation_name: missed_proxy_calls_rec}]]}], obs: [observation_value]}
+  calls_rec_cpa_items:                     {filter: [{$or: [[{observation_name: answered_proxy_calls_rec}], [{observation_name: missed_proxy_calls_rec}]]}, {is_item_cpa: True}], obs: [observation_value]}
+  calls_rec_cpa_users:                     {filter: [{$or: [[{observation_name: answered_proxy_calls_rec}], [{observation_name: missed_proxy_calls_rec}]]}, {is_user_cpa: True}], obs: [observation_value]}
   calls_serp:                              {filter: [{$or: [[{observation_name: answered_proxy_calls_serp}], [{observation_name: missed_proxy_calls_serp}]]}], obs: [observation_value]}
+  calls_serp_cpa_items:                    {filter: [{$or: [[{observation_name: answered_proxy_calls_serp}], [{observation_name: missed_proxy_calls_serp}]]}, {is_item_cpa: True}], obs: [observation_value]}
+  calls_serp_cpa_users:                    {filter: [{$or: [[{observation_name: answered_proxy_calls_serp}], [{observation_name: missed_proxy_calls_serp}]]}, {is_user_cpa: True}], obs: [observation_value]}
   missed_proxy_calls:                      {filter: [{observation_name: missed_proxy_calls}], obs: [observation_value]}
+  missed_proxy_calls_cpa_items:            {filter: [{observation_name: missed_proxy_calls}, {is_item_cpa: True}], obs: [observation_value]}
+  missed_proxy_calls_cpa_users:            {filter: [{observation_name: missed_proxy_calls}, {is_user_cpa: True}], obs: [observation_value]}
   missed_proxy_calls_fav:                  {filter: [{observation_name: missed_proxy_calls_fav}], obs: [observation_value]}
+  missed_proxy_calls_fav_cpa_items:        {filter: [{observation_name: missed_proxy_calls_fav}, {is_item_cpa: True}], obs: [observation_value]}
+  missed_proxy_calls_fav_cpa_users:        {filter: [{observation_name: missed_proxy_calls_fav}, {is_user_cpa: True}], obs: [observation_value]}
   missed_proxy_calls_map:                  {filter: [{observation_name: missed_proxy_calls_map}], obs: [observation_value]}
+  missed_proxy_calls_map_cpa_items:        {filter: [{observation_name: missed_proxy_calls_map}, {is_item_cpa: True}], obs: [observation_value]}
+  missed_proxy_calls_map_cpa_users:        {filter: [{observation_name: missed_proxy_calls_map}, {is_user_cpa: True}], obs: [observation_value]}
   missed_proxy_calls_rec:                  {filter: [{observation_name: missed_proxy_calls_rec}], obs: [observation_value]}
+  missed_proxy_calls_rec_cpa_items:        {filter: [{observation_name: missed_proxy_calls_rec}, {is_item_cpa: True}], obs: [observation_value]}
+  missed_proxy_calls_rec_cpa_users:        {filter: [{observation_name: missed_proxy_calls_rec}, {is_user_cpa: True}], obs: [observation_value]}
   missed_proxy_calls_serp:                 {filter: [{observation_name: missed_proxy_calls_serp}], obs: [observation_value]}
+  missed_proxy_calls_serp_cpa_items:       {filter: [{observation_name: missed_proxy_calls_serp}, {is_item_cpa: True}], obs: [observation_value]}
+  missed_proxy_calls_serp_cpa_users:       {filter: [{observation_name: missed_proxy_calls_serp}], {is_user_cpa: True}, obs: [observation_value]}
+
 
 metric.uniq:
   users_ancalls_any_type:                  {counter: ancalls_any_type,                key: [participant]}
@@ -50,10 +81,25 @@ metric.uniq:
   users_ancalls_by_time:                   {counter: ancalls_by_time,                 key: [participant]}
   users_ancalls_success_any_type:          {counter: ancalls_success_any_type,        key: [participant]}
   users_phone_calls_client:                {counter: calls,                           key: [participant]}
+  users_phone_calls_client_cpa_items:      {counter: calls_cpa_items,                 key: [participant]}
+  users_phone_calls_client_cpa_users:      {counter: calls_cpa_users,                 key: [participant]}
   users_phone_calls_client_fav:            {counter: calls_fav,                       key: [participant]}
+  users_phone_calls_client_fav_cpa_items:  {counter: calls_fav_cpa_items,             key: [participant]}
+  users_phone_calls_client_fav_cpa_users:  {counter: calls_fav_cpa_users,             key: [participant]}
   users_phone_calls_client_map:            {counter: calls_map,                       key: [participant]}
+  users_phone_calls_client_map_cpa_items:  {counter: calls_map_cpa_items,             key: [participant]}
+  users_phone_calls_client_map_cpa_users:  {counter: calls_map_cpa_users,             key: [participant]}
   users_phone_calls_client_serp:           {counter: calls_serp,                      key: [participant]}
+  users_phone_calls_client_serp_cpa_items: {counter: calls_serp_cpa_items,            key: [participant]}
+  users_phone_calls_client_serp_cpa_users: {counter: calls_serp_cpa_users,            key: [participant]}
+  items_cpa_phone_calls:                   {counter: calls_cpa_items,                 key: [item]}
+  items_cpa_phone_calls_fav:               {counter: calls_fav_cpa_items,             key: [item]}
+  items_cpa_phone_calls_map:               {counter: calls_map_cpa_items,             key: [item]}
+  items_cpa_phone_calls_serp:              {counter: calls_serp_cpa_items,            key: [item]}  
+
   
 metric.ratio:
   ancalls_answered_share:                  {num: ancalls_answered_any_type,        den: ancalls_any_type}
   ancalls_success_share:                   {num: ancalls_success_any_type,         den: ancalls_any_type}
+  answered_proxy_calls_cpa_users_share:    {num: answered_proxy_calls_cpa_users,   den: calls_cpa_users}
+  missed_proxy_calls_cpa_users_share:      {num: missed_proxy_calls_cpa_users,     den: calls_cpa_users}
