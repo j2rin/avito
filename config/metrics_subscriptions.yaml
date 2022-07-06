@@ -269,16 +269,6 @@ subscriptions:
         - c_developer
         - contacts_cpa
 
-  - subscribers: ['#goods-infomodel-green-light']
-    metrics_by_breakdowns:
-      breakdown_general_subcategory_platform:
-        - items_reactivated_net
-        - items_reactivated_net_conversion
-        - items_started_net
-        - items_started_net_conversion
-        - item_started_net_per_items_add_started
-        - items_added_per_items_add_started
-
   - owner: ryabudylin
     subscribers: []
     metrics:
@@ -342,6 +332,18 @@ subscriptions:
         - active_items
         - active_listers
         - items_reactivated_net
+
+  - owner: advelnikovskaya
+    subscribers: ['#goods-infomodel-green-light']
+    metrics_by_breakdowns:
+      breakdown_general_subcategory_platform:
+        - items_reactivated_net
+        - items_reactivated_net_conversion
+        - items_started_net
+        - items_started_net_conversion
+        - item_started_net_per_items_add_started
+        - items_added_per_items_add_started
+        
 
   - owner: avdenisova
     subscribers: ['#general-green-light']
@@ -473,23 +475,8 @@ subscriptions:
         - not_found_errors
         - user_not_found_errors
 
-  - owner: tyusipov
-    subscribers: ['#perf-ab-monitoring']
-    metrics_by_breakdowns:
-      breakdown_total:
-        - draw_session_duration
-        - draw_session_percent_p25
-        - draw_session_percent_p50
-        - draw_session_percent_p75
-        - draw_session_percent_p95
-        - session_duration
-        - session_percent_p25
-        - session_percent_p50
-        - session_percent_p75
-        - session_percent_p95
-        
   - owner: gvfandeev
-    subscribers: [kmbelenya, gvfandeev, '#performance-alerting']
+    subscribers: [kmbelenya, gvfandeev, '#perf-mobile-dwh-alerts']
     metrics_config:
       app_performance: [perf_total]
       exceptions: [perf_total]

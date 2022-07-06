@@ -78,17 +78,6 @@ metric.counter:
   cnt_localloading_events_p95:             {filter: [{stage_name: LocalLoading}], obs: [events_p95], m42: False}
   cnt_localloading_session_duration:       {filter: [{stage_name: LocalLoading}], obs: [session_duration], m42: False}
   cnt_localloading_session_duration_events: {filter: [{stage_name: LocalLoading}], obs: [session_duration_events], m42: False}
-  cnt_prepare_duration:                    {filter: [{stage_name: Prepare}], obs: [duration], m42: False}
-  cnt_prepare_duration_events:             {filter: [{stage_name: Prepare}], obs: [duration_events], m42: False}
-  cnt_prepare_events:                      {filter: [{stage_name: Prepare}], obs: [events], m42: False}
-  cnt_prepare_events_exceptions:           {filter: [{stage_name: Prepare}], obs: [events, exceptions], m42: False}
-  cnt_prepare_events_p25:                  {filter: [{stage_name: Prepare}], obs: [events_p25], m42: False}
-  cnt_prepare_events_p50:                  {filter: [{stage_name: Prepare}], obs: [events_p50], m42: False}
-  cnt_prepare_events_p75:                  {filter: [{stage_name: Prepare}], obs: [events_p75], m42: False}
-  cnt_prepare_events_p95:                  {filter: [{stage_name: Prepare}], obs: [events_p95], m42: False}
-  cnt_prepare_exceptions:                  {filter: [{stage_name: Prepare}], obs: [exceptions], m42: False}
-  cnt_prepare_session_duration:            {filter: [{stage_name: Prepare}], obs: [session_duration], m42: False}
-  cnt_prepare_session_duration_events:     {filter: [{stage_name: Prepare}], obs: [session_duration_events], m42: False}
   cnt_serverloading_duration:              {filter: [{stage_name: ServerLoading}], obs: [duration], m42: False}
   cnt_serverloading_duration_events:       {filter: [{stage_name: ServerLoading}], obs: [duration_events], m42: False}
   cnt_serverloading_events:                {filter: [{stage_name: ServerLoading}], obs: [events], m42: False}
@@ -148,7 +137,6 @@ metric.counter:
 
 metric.uniq:
   user_draw_exceptions:                    {counter: cnt_draw_exceptions, key: [cookie_id], m42: True}
-  user_prepare_exceptions:                 {counter: cnt_prepare_exceptions, key: [cookie_id], m42: True}
   user_serverloading_exceptions:           {counter: cnt_serverloading_exceptions, key: [cookie_id], m42: True}
 
   user_draw_core_exceptions:               {counter: draw_core_exceptions, key: [cookie_id], m42: True}
@@ -254,13 +242,6 @@ metric.ratio:
   localloading_percent_p75:                {num: cnt_localloading_events_p75,     den: cnt_localloading_events}
   localloading_percent_p95:                {num: cnt_localloading_events_p95,     den: cnt_localloading_events}
   localloading_session_duration:           {num: cnt_localloading_session_duration, den: cnt_localloading_session_duration_events}
-  prepare_duration:                        {num: cnt_prepare_duration,            den: cnt_prepare_duration_events}
-  prepare_percent_exceptions:              {num: cnt_prepare_exceptions,          den: cnt_prepare_events_exceptions}
-  prepare_percent_p25:                     {num: cnt_prepare_events_p25,          den: cnt_prepare_events}
-  prepare_percent_p50:                     {num: cnt_prepare_events_p50,          den: cnt_prepare_events}
-  prepare_percent_p75:                     {num: cnt_prepare_events_p75,          den: cnt_prepare_events}
-  prepare_percent_p95:                     {num: cnt_prepare_events_p95,          den: cnt_prepare_events}
-  prepare_session_duration:                {num: cnt_prepare_session_duration,    den: cnt_prepare_session_duration_events}
   serverloading_duration:                  {num: cnt_serverloading_duration,      den: cnt_serverloading_duration_events}
   serverloading_percent_exceptions:        {num: cnt_serverloading_exceptions,    den: cnt_serverloading_events_exceptions}
   serverloading_percent_p25:               {num: cnt_serverloading_events_p25,    den: cnt_serverloading_events}
