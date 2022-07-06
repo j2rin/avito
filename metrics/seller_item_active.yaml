@@ -132,7 +132,7 @@ metric.counter:
   seller_contacts_messenger_cpa_start_date: {filter: [{start_date.>=: $ab_start_date}, {is_item_cpa: True}], obs: [contacts_msg]}
   seller_contacts_phone_views:             {obs: [contacts_ph]}
   seller_contacts_phone_views_cpa:         {filter: [{is_item_cpa: True}], obs: [contacts_ph]} 
-  seller_contacts_phone_views_cpa_lf:  	   {filter: [{is_item_cpa: False}, {is_user_cpa: True}], obs: [contacts_ph]}
+  seller_contacts_phone_views_cpa_lf:      {filter: [{is_item_cpa: False}, {is_user_cpa: True}], obs: [contacts_ph]}
   seller_contacts_phone_views_cpa_prevalidation: {filter: [{is_item_cpa: True}, {cpaaction_type: 4}{cpaaction_type: 4}], obs: [contacts_ph]}
   seller_contacts_phone_views_cpa_cpc_contact: {filter: [{is_item_cpa: True}, {cpaaction_type: 6}], obs: [contacts_ph]}
   seller_contacts_phone_views_start_date:  {filter: [{start_date.>=: $ab_start_date}],obs: [contacts_ph]}
@@ -185,7 +185,6 @@ metric.counter:
   items_with_rating_5:                     {filter: [{is_active: True}, {seller_rating: 5}], m42: True}
   items_with_rating_new:                   {filter: [{is_active: True}, {seller_rating.in: [1,2,3,4,5]}], m42: True}  
 
- _prevalidation _cpc_contact  
 
 metric.uniq:
   active_items:                            {counter: cnt_active_items,                key: [item]}
@@ -320,6 +319,7 @@ metric.uniq:
   listers_with_rating_4:                   {counter: items_with_rating_4,             key: [user_logcat], m42: True}
   listers_with_rating_5:                   {counter: items_with_rating_5,             key: [user_logcat], m42: True}
   listers_with_rating:                     {counter: items_with_rating_new,           key: [user_logcat], m42: True}
+
 
 metric.ratio:
   avg_item_address_length:                        {num: cnt_item_address_length,         den: items_with_address_string}
