@@ -1,0 +1,77 @@
+metric.counter:    
+  cpa_calls_total:                                          {obs: [calls]}    
+  cpa_calls_received:                                       {obs: [calls],  filter: [is_received: true]} 
+  cpa_calls_missed:                                         {obs: [calls],  filter: [is_received: false]}
+  cpa_calls_received_target:                                {obs: [calls],  filter: [is_received: true, is_target: true, is_protested: false]} 
+  cpa_calls_missed_target:                                  {obs: [calls],  filter: [is_received: false, is_target: true, is_protested: false]}
+  cpa_calls_callbacks:                                      {obs: [calls],  filter: [is_callback: true]}
+  cpa_calls_callbacks_received:                             {obs: [calls],  filter: [is_callback: true, is_received: true]}  
+  cpa_calls_callbacks_missed:                               {obs: [calls],  filter: [is_callback: true, is_received: false]}  
+  cpa_calls_callbacks_target:                               {obs: [calls],  filter: [is_callback: true, is_target: true, is_protested: false]}
+  cpa_calls_callbacks_received_target:                      {obs: [calls],  filter: [is_callback: true, is_received: true, is_target: true, is_protested: false]}  
+  cpa_calls_callbacks_missed_target:                        {obs: [calls],  filter: [is_callback: true, is_received: false, is_target: true, is_protested: false]}  
+  cpa_calls_from_profile:                                   {obs: [calls],  filter: [is_from_profile: true]}
+  cpa_calls_from_profile_received:                          {obs: [calls],  filter: [is_from_profile: true, is_received: true]}
+  cpa_calls_from_profile_missed:                            {obs: [calls],  filter: [is_from_profile: true, is_received: false]}
+  cpa_calls_from_profile_target:                            {obs: [calls],  filter: [is_from_profile: true, is_target: true]}
+  cpa_calls_from_profile_received_target:                   {obs: [calls],  filter: [is_from_profile: true, is_received: true, is_target: true, is_protested: false]}
+  cpa_calls_from_profile_missed_target:                     {obs: [calls],  filter: [is_from_profile: true, is_received: false, is_target: true, is_protested: false]}
+  cpa_calls_no_action:                                      {obs: [calls],  filter: [cpaaction_id_is_known: false]}
+  cpa_calls_known_item:                                     {obs: [calls],  filter: [item_is_knowm: true]}
+  cpa_calls_target_unknown_item:                            {obs: [calls],  filter: [is_target: true, is_protested: false, item_is_knowm: false]}
+  cpa_calls_target:                                         {obs: [calls],  filter: [is_target: true, is_protested: false]}
+  cpa_calls_target_w_protested:                             {obs: [calls],  filter: [is_target: true]}
+  cpa_calls_protested:                                      {obs: [calls],  filter: [is_protested: true]}
+  cpa_calls_rejected_repeated:                              {obs: [calls],  filter: [rejected_repeated: true]}
+  cpa_calls_rejected_not_target:                            {obs: [calls],  filter: [rejected_not_target: true]}
+  cpa_calls_rejected_no_price:                              {obs: [calls],  filter: [rejected_no_price: true]}
+  cpa_calls_rejected_non_cpa_item:                          {obs: [calls],  filter: [rejected_non_cpa_item: true]}  
+  cpa_calls_rejected_removed_content:                       {obs: [calls],  filter: [rejected_removed_content: true]}  
+  cpa_calls_rejected_non_working_hours:                     {obs: [calls],  filter: [rejected_non_working_hours: true]}
+  cpa_calls_from_profile_rejected_removed_content:          {obs: [calls],  filter: [is_from_profile: true, rejected_removed_content: true]}  
+  cpa_calls_missed_uptime_0:                                {obs: [calls],  filter: [is_received: false, uptime_bin: '0']}
+  cpa_calls_missed_uptime_1_10:                             {obs: [calls],  filter: [is_received: false, uptime_bin: '1-10']}
+  cpa_calls_missed_uptime_11_20:                            {obs: [calls],  filter: [is_received: false, uptime_bin: '11-20']}
+  cpa_calls_missed_uptime_21_30:                            {obs: [calls],  filter: [is_received: false, uptime_bin: '21-30']}
+  cpa_calls_missed_uptime_31_40:                            {obs: [calls],  filter: [is_received: false, uptime_bin: '31-40']}
+  cpa_calls_missed_uptime_41_50:                            {obs: [calls],  filter: [is_received: false, uptime_bin: '41-50']}
+  cpa_calls_missed_uptime_51_60:                            {obs: [calls],  filter: [is_received: false, uptime_bin: '51-60']}
+  cpa_calls_missed_uptime_61_inf:                           {obs: [calls],  filter: [is_received: false, uptime_bin: '>60']}
+  cpa_calls_received_duration_0:                            {obs: [calls],  filter: [is_received: true, duration_bin: '0']}
+  cpa_calls_received_duration_1_10:                         {obs: [calls],  filter: [is_received: true, duration_bin: '1-10']}
+  cpa_calls_received_duration_11_20:                        {obs: [calls],  filter: [is_received: true, duration_bin: '11-20']}
+  cpa_calls_received_duration_21_30:                        {obs: [calls],  filter: [is_received: true, duration_bin: '21-30']}
+  cpa_calls_received_duration_31_40:                        {obs: [calls],  filter: [is_received: true, duration_bin: '31-40']}
+  cpa_calls_received_duration_41_50:                        {obs: [calls],  filter: [is_received: true, duration_bin: '41-50']}
+  cpa_calls_received_duration_51_60:                        {obs: [calls],  filter: [is_received: true, duration_bin: '51-60']}
+  cpa_calls_received_duration_61_inf:                       {obs: [calls],  filter: [is_received: true, duration_bin: '>60']}
+
+
+metric.uniq:
+  user_cpa_calls_total:                                     {counter: cpa_calls_total,                         key: [user]}  
+  user_cpa_calls_received:                                  {counter: cpa_calls_received,                      key: [user]}
+  user_cpa_calls_missed:                                    {counter: cpa_calls_missed,                        key: [user]}
+  user_cpa_calls_received_target:                           {counter: cpa_calls_received_target,               key: [user]}
+  user_cpa_calls_missed_target:                             {counter: cpa_calls_missed_target,                 key: [user]}
+  user_cpa_calls_callbacks:                                 {counter: cpa_calls_callbacks,                     key: [user]}
+  user_cpa_calls_callbacks_received:                        {counter: cpa_calls_callbacks_received,            key: [user]}
+  user_cpa_calls_callbacks_missed:                          {counter: cpa_calls_callbacks_missed,              key: [user]}
+  user_cpa_calls_callbacks_target:                          {counter: cpa_calls_callbacks_target,              key: [user]}
+  user_cpa_calls_from_profile:                              {counter: cpa_calls_from_profile,                  key: [user]}
+  user_cpa_calls_from_profile_target:                       {counter: cpa_calls_from_profile_target,           key: [user]}
+  user_cpa_calls_no_action:                                 {counter: cpa_calls_no_action,                     key: [user]}
+  user_cpa_calls_known_item:                                {counter: cpa_calls_known_item,                    key: [user]}
+  user_cpa_calls_target_unknown_item:                       {counter: cpa_calls_target_unknown_item,           key: [user]}
+  user_cpa_calls_target:                                    {counter: cpa_calls_target,                        key: [user]}
+  user_cpa_calls_protested:                                 {counter: cpa_calls_protested,                     key: [user]}
+  user_cpa_calls_rejected_non_cpa_item:                     {counter: cpa_calls_rejected_non_cpa_item,         key: [user]}
+  user_cpa_calls_rejected_removed_content:                  {counter: cpa_calls_rejected_removed_content,      key: [user]}  
+  user_cpa_calls_rejected_non_working_hours:                {counter: cpa_calls_rejected_non_working_hours,    key: [user]}
+
+
+metric.ratio:
+  cpa_calls_total_per_user_w_calls:                         {num: cpa_calls_total,                             den: user_cpa_calls_total}
+  cpa_calls_received_per_user_w_calls:                      {num: cpa_calls_received,                          den: user_cpa_calls_total}
+  cpa_calls_missed_per_user_w_calls:                        {num: user_cpa_calls_missed,                       den: user_cpa_calls_total}
+  cpa_calls_target_per_user_w_calls:                        {num: cpa_calls_target,                            den: user_cpa_calls_total}
+  cpa_calls_target_per_user_w_target_calls:                 {num: cpa_calls_target,                            den: user_cpa_calls_target}

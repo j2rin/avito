@@ -1969,4 +1969,17 @@ contact_deal:
   dtm: event_date
   segm: cookie_id
 
-
+cpa_calls_metrics:
+  metric_configs: [cpa_calls_metrics]
+  database: vertica
+  table: dma.vo_cpa_calls_metrics
+  column_map:
+    user: user_id
+    user_logcat: [user_id, logical_category_id]
+  dimensions: [vertical, logical_category, logical_param1, logical_param2, location, region, city, location_group, location_level, is_asd, user_segment_market]
+  m42_cartesian_groups:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+  dtm: event_date
+  participant: {user: user_id}
+  primary_subject: user
+  segm: user_id
