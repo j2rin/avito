@@ -13,6 +13,7 @@ definitions:
     - &eid_map [2743]
     - &sort_date [1, 2]
     - &sort_price [3, 4]
+    - &sort_distance [6]
     - &sort_dft 5
 
     - &is_search { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0] }
@@ -212,6 +213,7 @@ definitions:
 
     - &is_s_sort_date { search_sort: *sort_date }
     - &is_s_sort_price { search_sort: *sort_price }
+    - &is_s_sort_distance { search_sort: *sort_distance }
     - &is_s_sort_dft { search_sort: *sort_dft }
 
     - &q { q.>: "" }
@@ -825,6 +827,7 @@ metric.counter:
     cnt_s_btc_date_sort: { filter: [*is_btc_wo_guessing, *is_s_sort_date, *x_is_search], m42: False }
     cnt_s_btc_default_sort: { filter: [*is_btc_wo_guessing, *is_s_sort_dft, *x_is_search], m42: False }
     cnt_s_btc_price_sort: { filter: [*is_btc_wo_guessing, *is_s_sort_price, *x_is_search], m42: False }
+    cnt_s_btc_distance_sort: { filter: [*is_btc_wo_guessing, *is_s_sort_distance, *x_is_search], m42: False }
     cnt_s_distr_with_iv_metro_road:
         { filter: [*is_iv_wo_guessing, *x_is_search, { $or: [[*is_s_district], [*is_s_metro], [*is_s_road]] }], m42: False }
     cnt_s_extra_any_ext_block:
@@ -848,6 +851,7 @@ metric.counter:
     cnt_s_iv_date_sort: { filter: [*is_iv_wo_guessing, *is_s_sort_date, *x_is_search], m42: False }
     cnt_s_iv_default_sort: { filter: [*is_iv_wo_guessing, *is_s_sort_dft, *x_is_search], m42: False }
     cnt_s_iv_price_sort: { filter: [*is_iv_wo_guessing, *is_s_sort_price, *x_is_search], m42: False }
+    cnt_s_iv_distance_sort: { filter: [*is_iv_wo_guessing, *is_s_sort_distance, *x_is_search], m42: False }
     cnt_s_filter_price_c:
         { filter: [*is_contact_wo_guessing, *x_is_search, { $or: [[*x_is_filter_search], [*x_is_price_filter_search]] }], m42: False }
     cnt_s_noquery_c: { filter: [*is_contact_wo_guessing, *noq, *x_is_search], m42: False }
@@ -1149,6 +1153,8 @@ metric.counter:
         }
     searches_date_sort: { filter: [*is_1p, *is_s_sort_date, *is_search] }
     searches_default_sort: { filter: [*is_1p, *is_s_sort_dft, *is_search] }
+    searches_price_sort: { filter: [*is_1p, *is_s_sort_price, *is_search] }
+    searches_distance_sort: { filter: [*is_1p, *is_s_sort_distance, *is_search] }
     searches_district: { filter: [*is_1p, *is_s_district, *is_search] }
     searches_extra_delivery: { filter: [*is_search, *x_is_extra_delivery] }
     searches_extra_regions: { filter: [*is_search, *x_is_extra_regions] }
@@ -1175,7 +1181,6 @@ metric.counter:
     searches_local_geo: { filter: [*is_1p, *is_search, { $or: [[*is_s_district], [*is_s_metro], [*is_s_road]] }] }
     searches_map_area: { filter: [*is_1p, *is_s_map, *is_search] }
     searches_metro: { filter: [*is_1p, *is_s_metro, *is_search] }
-    searches_price_sort: { filter: [*is_1p, *is_s_sort_price, *is_search] }
     searches_radius: { filter: [*is_1p, *is_s_radius, *is_search] }
     searches_road: { filter: [*is_1p, *is_s_road, *is_search] }
     searches_serp: { filter: [*is_search] }
@@ -2302,6 +2307,7 @@ metric.uniq:
     shows_item_view_recblock: { counter: cnt_iv_rec, key: [x] }
     unq_x_s_btc_date_sort: { counter: cnt_s_btc_date_sort, key: [x], m42: False }
     unq_x_s_btc_default_sort: { counter: cnt_s_btc_default_sort, key: [x], m42: False }
+    unq_x_s_btc_distance_sort: { counter: cnt_s_btc_distance_sort, key: [x], m42: False }
     unq_x_s_btc_noquery: { counter: cnt_btc_s_noquery, key: [x], m42: False }
     unq_x_s_btc_price_sort: { counter: cnt_s_btc_price_sort, key: [x], m42: False }
     s_btc_q: { counter: cnt_btc_s_query, key: [x], m42: False }
@@ -2309,6 +2315,7 @@ metric.uniq:
     unq_x_s_iv_date_sort: { counter: cnt_s_iv_date_sort, key: [x], m42: False }
     unq_x_s_iv_default_sort: { counter: cnt_s_iv_default_sort, key: [x], m42: False }
     unq_x_s_iv_price_sort: { counter: cnt_s_iv_price_sort, key: [x], m42: False }
+    unq_x_s_iv_distance_sort: { counter: cnt_s_iv_distance_sort, key: [x], m42: False }
     unq_x_s_noquery_c: { counter: cnt_s_noquery_c, key: [x], m42: False }
     unq_x_s_noquery_iv: { counter: cnt_s_noquery_iv, key: [x], m42: False }
     sq_c: { counter: cnt_s_query_c, key: [x], m42: False }
@@ -2704,12 +2711,15 @@ metric.ratio:
     s_btc_per_s: { num: search_btc, den: searches }
     s_btc_per_s_date_sort: { num: unq_x_s_btc_date_sort, den: searches_date_sort }
     s_btc_per_s_default_sort: { num: unq_x_s_btc_default_sort, den: searches_default_sort }
+    s_btc_per_s_distance_sort: { num: unq_x_s_btc_distance_sort, den: searches_distance_sort }
     s_btc_per_s_noquery: { num: unq_x_s_btc_noquery, den: cnt_s_without_query }
     s_btc_per_s_price_sort: { num: unq_x_s_btc_price_sort, den: searches_price_sort }
     s_btc_per_s_query: { num: s_btc_q, den: search_q }
     s_date_sort_per_s: { num: searches_date_sort, den: searches }
     s_default_sort_per_s: { num: searches_default_sort, den: searches }
+    s_distance_sort_per_s: { num: searches_distance_sort, den: searches }
     s_iv_per_s_date_sort: { num: unq_x_s_iv_date_sort, den: searches_date_sort }
+    s_iv_per_s_distance_sort: { num: unq_x_s_iv_distance_sort, den: searches_distance_sort }
     s_iv_per_s_default_sort: { num: unq_x_s_iv_default_sort, den: searches_default_sort }
     s_iv_per_s_noquery: { num: unq_x_s_noquery_iv, den: cnt_s_without_query }
     s_iv_per_s_price_sort: { num: unq_x_s_iv_price_sort, den: searches_price_sort }
