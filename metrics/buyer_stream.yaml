@@ -913,9 +913,7 @@ metric.counter:
     contacts_perfvas: { filter: [*is_contact, *is_item_perfvas], m42: False }
     contacts_xl: { filter: [*is_contact, *is_item_xl], m42: False }
     contacts_item_pessimized: { filter: [*is_contact, *is_item_pessimized] }
-    contacts_item_pessimized_cpa: { filter: [*is_contact, *is_item_pessimized, *is_item_cpa]}
     contacts_seller_pessimized: { filter: [*is_contact, *is_seller_pessimized] }
-    contacts_seller_pessimized_cpa: { filter: [*is_contact, *is_seller_pessimized, *is_item_cpa] }
     contacts_item_pessimized_rec: { filter: [*is_contact_wo_guessing, *x_is_rec, *is_item_pessimized], m42: True }
     contacts_seller_pessimized_rec: { filter: [*is_contact_wo_guessing, *x_is_rec, *is_seller_pessimized], m42: True }
     contacts_item_pessimized_serp: { filter: [*is_contact_wo_guessing, *x_is_search, *is_item_pessimized], m42: True }
@@ -929,7 +927,6 @@ metric.counter:
     contacts_seller_pessimized_map_total:
         { filter: [*is_contact_wo_guessing, { $or: [[*is_s_map, *x_is_search], [*x_is_map]] }, *is_seller_pessimized], m42: True }
     contacts_pessimized: { filter: [*is_contact, { $or: [*is_item_pessimized, *is_seller_pessimized] }] }
-    contacts_pessimized_cpa: { filter: [*is_contact, { $or: [*is_item_pessimized, *is_seller_pessimized] }, *is_item_cpa]}
     contacts_pessimized_rec: { filter: [*is_contact_wo_guessing, *x_is_rec, { $or: [*is_item_pessimized, *is_seller_pessimized] }] }
     contacts_pessimized_serp: { filter: [*is_contact_wo_guessing, *x_is_search, { $or: [*is_item_pessimized, *is_seller_pessimized] }] }
     contacts_pessimized_map: { filter: [*is_contact_wo_guessing, *x_is_map, { $or: [*is_item_pessimized, *is_seller_pessimized] }] }
@@ -993,9 +990,7 @@ metric.counter:
     iv_developer: { filter: [*is_developer_acc, *is_iv] }
     iv_developer_search: { filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_search] }
     item_views_item_pessimized: { filter: [*is_item_pessimized, *is_iv] }
-    item_views_item_pessimized_cpa: { filter: [*is_item_pessimized, *is_iv, *is_item_cpa] }
     item_views_seller_pessimized: { filter: [*is_seller_pessimized, *is_iv] }
-    item_views_seller_pessimized_cpa: { filter: [*is_seller_pessimized, *is_iv, *is_item_cpa] }
     item_views_item_pessimized_rec: { filter: [*is_iv_wo_guessing, *x_is_rec, *is_item_pessimized], m42: True }
     item_views_seller_pessimized_rec: { filter: [*is_iv_wo_guessing, *x_is_rec, *is_seller_pessimized], m42: True }
     item_views_item_pessimized_serp: { filter: [*is_iv_wo_guessing, *x_is_search, *is_item_pessimized], m42: True }
@@ -1009,7 +1004,6 @@ metric.counter:
     item_views_seller_pessimized_map_total:
         { filter: [*is_iv_wo_guessing, { $or: [[*is_s_map, *x_is_search], [*x_is_map]] }, *is_seller_pessimized], m42: True }
     item_views_pessimized: { filter: [*is_iv, { $or: [*is_item_pessimized, *is_seller_pessimized] }] }
-    item_views_pessimized_cpa: { filter: [*is_iv, { $or: [*is_item_pessimized, *is_seller_pessimized] }, *is_item_cpa] }
     item_views_pessimized_rec: { filter: [*is_iv_wo_guessing, *x_is_rec, { $or: [*is_item_pessimized, *is_seller_pessimized] }] }
     item_views_pessimized_serp: { filter: [*is_iv_wo_guessing, *x_is_search, { $or: [*is_item_pessimized, *is_seller_pessimized] }] }
     item_views_pessimized_map: { filter: [*is_iv_wo_guessing, *x_is_map, { $or: [*is_item_pessimized, *is_seller_pessimized] }] }
