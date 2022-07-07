@@ -408,6 +408,7 @@ metric.counter:
     cnt_btc_s_u2i: { filter: [*is_btc_wo_guessing, *x_is_rec_sg, *x_is_search], m42: False }
     cnt_btc_shopx: { filter: [*is_btc_wo_guessing, *x_is_search, *x_is_shop], m42: False }
     cnt_btc_vas: { filter: [*is_btc_wo_guessing, *is_serp_vas, *x_is_search], m42: False }
+    cnt_btc_vas_cpa: { filter: [*is_btc_wo_guessing, *is_serp_vas, *x_is_search, *is_item_cpa], m42: False }
     cnt_btc_serp_xl: { filter: [*is_btc_wo_guessing, *is_serp_xl, *x_is_search], m42: False }
     cnt_btc_serp_perfvas_x2_1: { filter: [*is_btc_wo_guessing, *is_serp_perfvas_x2_1, *x_is_search], m42: False }
     cnt_btc_serp_perfvas_x2_7: { filter: [*is_btc_wo_guessing, *is_serp_perfvas_x2_7, *x_is_search], m42: False }
@@ -440,7 +441,7 @@ metric.counter:
     cnt_btc_wtc_new_auto: { filter: [*is_btc_wo_guessing, *is_serp_witcher_new_auto, *x_is_search], m42: False }
     cnt_btc_wtc_new_flats: { filter: [*is_btc_wo_guessing, *is_serp_witcher_new_flats, *x_is_search], m42: False }
     cnt_btc_wtc_reg: { filter: [*is_btc_wo_guessing, *is_serp_witcher_regions, *x_is_search], m42: False }
-    cnt_btc_cpa: { filter: [*is_btc_wo_guessing, *is_item_cpa], m42: False }
+    cnt_btc_cpa: { filter: [*is_btc, *is_item_cpa], m42: False }
     cnt_btc_s_cpa: { filter: [*is_btc_wo_guessing, *x_is_search, *is_item_cpa], m42: False }
     cnt_btc_rec_cpa: { filter: [*is_btc_wo_guessing, *x_is_rec, *is_item_cpa], m42: False }
     btc_perfvas_x2_1: { filter: [*is_btc, *is_item_perfvas_x2_1], m42: False }
@@ -527,6 +528,7 @@ metric.counter:
     cnt_cs_ph_rec_u2i: { filter: [*is_ph, *x_is_u2i], m42: False }
     cnt_cs_rec_u2i_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_u2i], m42: False }
     cnt_cs_rec_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_rec], m42: False }
+    cnt_cs_rec_vas_cpa: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_rec, *is_item_cpa], m42: False }
     cnt_cs_rec_perfvas_x2_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec], m42: False }
     cnt_cs_rec_perfvas_x2_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_7, *x_is_rec], m42: False }
     cnt_cs_rec_perfvas_x5_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_1, *x_is_rec], m42: False }
@@ -596,7 +598,7 @@ metric.counter:
     cnt_cs_wtc_new_auto: { filter: [*is_contact_wo_guessing, *is_serp_witcher_new_auto, *x_is_search], m42: False }
     cnt_cs_wtc_new_flats: { filter: [*is_contact_wo_guessing, *is_serp_witcher_new_flats, *x_is_search], m42: False }
     cnt_cs_wtc_reg: { filter: [*is_contact_wo_guessing, *is_serp_witcher_regions, *x_is_search], m42: False }
-    cnt_cs_cpa: { filter: [*is_contact_wo_guessing, *is_item_cpa], m42: False }
+    cnt_cs_cpa: { filter: [*is_contact, *is_item_cpa], m42: False }
     cnt_cs_s_cpa: { filter: [*is_contact_wo_guessing, *x_is_search, *is_item_cpa], m42: False }
     cnt_cs_rec_cpa: { filter: [*is_contact_wo_guessing, *x_is_rec, *is_item_cpa], m42: False }
     cnt_dlv_flow_beginings: { filter: [*is_delivery_btn], m42: False }
@@ -816,7 +818,7 @@ metric.counter:
             filter: [{ $or: [[*is_fp_witcher_regions, *is_search], [*is_iv_wo_guessing, *is_serp_witcher_regions, *x_is_search]] }],
             m42: False,
         }
-    cnt_iv_cpa: { filter: [*is_iv_wo_guessing, *is_item_cpa], m42: False }
+    cnt_iv_cpa: { filter: [*is_iv, *is_item_cpa], m42: False }
     cnt_iv_s_cpa: { filter: [*is_iv_wo_guessing, *x_is_search, *is_item_cpa], m42: False }
     cnt_iv_rec_cpa: { filter: [*is_iv_wo_guessing, *x_is_rec, *is_item_cpa], m42: False }
     cnt_iv_seen: { filter: [*is_iv, *is_seen_item], m42: False }
@@ -904,6 +906,7 @@ metric.counter:
     contact_in_stock: { filter: [*item_in_stock, *is_contact], m42: False }
     contact_to_order: { filter: [*item_to_order, *is_contact], m42: False }
     contacts_total_vas: { filter: [*is_item_vas, *is_contact] }
+    contacts_total_vas_cpa: { filter: [*is_item_vas, *is_contact, *is_item_cpa]}
     contacts_perfvas_x2_1: { filter: [*is_contact, *is_item_perfvas_x2_1], m42: False }
     contacts_perfvas_x2_7: { filter: [*is_contact, *is_item_perfvas_x2_7], m42: False }
     contacts_perfvas_x5_1: { filter: [*is_contact, *is_item_perfvas_x5_1], m42: False }
@@ -959,12 +962,14 @@ metric.counter:
     filters_price_searches: { filter: [*is_search, *x_is_price_filter_search] }
     filters_rubricator_searches: { filter: [*is_search, *x_is_filter_search] }
     first_messages: { filter: [*is_msg] }
+    first_messages_cpa: { filter: [*is_msg, *is_item_cpa] }
     first_messages_part_qual_exists: { filter: [*part_qual_exists, *is_msg] }
     first_messages_part_qual_compab: { filter: [*part_qual_compab, *is_msg] }
     first_messages_part_qual_unknown: { filter: [*part_qual_unknown, *is_msg] }
     first_messages_in_stock: { filter: [*item_in_stock, *is_msg] }
     first_messages_to_order: { filter: [*item_to_order, *is_msg] }
     first_messages_vas: { filter: [*is_item_vas, *is_msg] }
+    first_messages_vas_cpa: { filter: [*is_item_vas, *is_msg, *is_item_cpa] }
     item_views: { filter: [*is_iv] }
     item_views_from_jk_card: { filter: [*is_iv, from_page: catalog_jk_card] }
     item_views_part_qual_exists: { filter: [*part_qual_exists, *is_iv] }
@@ -975,6 +980,7 @@ metric.counter:
     item_views_client: { filter: [*is_iv_client] }
     item_views_client_rec_from_msg: { filter: [*is_iv_client, *x_is_rec_msg] }
     item_views_total_vas: { filter: [*is_item_vas, *is_iv] }
+    item_views_total_vas_cpa: { filter: [*is_item_vas, *is_iv, *is_item_cpa] }
     item_views_perfvas_x2_1: { filter: [*is_iv, *is_item_perfvas_x2_1], m42: False }
     item_views_perfvas_x2_7: { filter: [*is_iv, *is_item_perfvas_x2_7], m42: False }
     item_views_perfvas_x5_1: { filter: [*is_iv, *is_item_perfvas_x5_1], m42: False }
@@ -1029,7 +1035,9 @@ metric.counter:
     phone_views_in_chat: { filter: [*is_ph_chat] }
     phone_views_snippet: { filter: [*is_ph, { $or: [[*is_ph_snip], [*is_ph_xlvas]] }] }
     phone_views_total: { filter: [*is_ph_tot] }
+    phone_views_total_cpa: { filter: [*is_ph_tot, *is_item_cpa] }
     phone_views_total_vas: { filter: [*is_item_vas, *is_ph_tot] }
+    phone_views_total_vas_cpa: { filter: [*is_item_vas, *is_ph_tot, *is_item_cpa] }
     radius_0_searches: { filter: [{ search_radius: "0" }, *is_1p, *is_search] }
     radius_1000_searches: { filter: [{ search_radius: "1000" }, *is_1p, *is_search] }
     radius_100_searches: { filter: [{ search_radius: "100" }, *is_1p, *is_search] }
@@ -1566,6 +1574,7 @@ metric.uniq:
     buyer_target_clicks_serp_saved: { counter: cnt_btc_s_saved, key: [item_x] }
     buyer_target_clicks_shop: { counter: cnt_btc_shopx, key: [item_x] }
     buyer_target_clicks_vas: { counter: cnt_btc_vas, key: [item_x] }
+    buyer_target_clicks_vas_cpa: { counter: cnt_btc_vas_cpa, key: [item_x] }
     buyer_target_clicks_vip: { counter: cnt_btc_vip, key: [item_x] }
     c_developer_map: { counter: cnt_cs_developer_from_map, key: [item_x] }
     c_developer_rec: { counter: cnt_cs_developer_rec, key: [item_x] }
@@ -1606,6 +1615,7 @@ metric.uniq:
     contacts_rec_u2i_graph: { counter: cnt_cs_rec_u2i_graph, key: [item_x] }
     contacts_rec_u2i_vas: { counter: cnt_cs_rec_u2i_vas, key: [item_x] }
     contacts_rec_vas: { counter: cnt_cs_rec_vas, key: [item_x] }
+    contacts_rec_vas_cpa: { counter: cnt_cs_rec_vas_cpa, key: [item_x] }
     contacts_rec_perfvas_x2_1: { counter: cnt_cs_rec_perfvas_x2_1, key: [item_x] }
     contacts_rec_perfvas_x2_7: { counter: cnt_cs_rec_perfvas_x2_7, key: [item_x] }
     contacts_rec_perfvas_x5_1: { counter: cnt_cs_rec_perfvas_x5_1, key: [item_x] }
@@ -1878,6 +1888,7 @@ metric.uniq:
     user_iv_cpa: { counter: cnt_iv_cpa, key: [cookie] }
     user_iv_s_cpa: { counter: cnt_iv_s_cpa, key: [cookie] }
     user_iv_rec_cpa: { counter: cnt_iv_rec_cpa, key: [cookie] }
+    user_iv_vas_cpa: { counter: item_views_total_vas_cpa, key: [cookie] }
     user_c_developer: { counter: c_developer, key: [cookie] }
     user_c_developer_map: { counter: cnt_cs_developer_from_map, key: [cookie] }
     user_c_developer_rec: { counter: cnt_cs_developer_rec, key: [cookie] }
@@ -1891,6 +1902,7 @@ metric.uniq:
     user_contacts_cpa: { counter: cnt_cs_cpa, key: [cookie] }
     user_contacts_s_cpa: { counter: cnt_cs_s_cpa, key: [cookie] }
     user_contacts_rec_cpa: { counter: cnt_cs_rec_cpa, key: [cookie] }
+    user_contacts_vas_cpa: { counter: contacts_total_vas_cpa, key: [cookie] }
     user_contacts_delivery: { counter: cnt_cs_dlv, key: [cookie] }
     user_contacts_regions: { counter: cnt_cs_reg, key: [cookie] }
     user_contacts_regions_mix: { counter: cnt_cs_reg_mix, key: [cookie] }
