@@ -1,0 +1,12 @@
+metric.counter:
+  search_sess_filter:              {obs: [search]}
+  iv_sess_filter:                  {obs: [iv_s]}
+  contact_sess_filter:             {obs: [contact_s]}
+  btc_sess_filter:                 {obs: [btc_s]}
+
+metric.uniq:
+  user_search_sess_filter:         {counter: search_sess_filter,     key: [cookie]}
+  user_iv_sess_filter:             {counter: iv_sess_filter,         key: [cookie]}
+  user_contact_sess_filter:        {counter: contact_sess_filter,    key: [cookie]}
+  user_btc_sess_filter:            {counter: btc_sess_filter,        key: [cookie]}
+
