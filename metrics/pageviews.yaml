@@ -1,10 +1,14 @@
 metric.counter:
   authorized_page_views:                   {filter: [user_id.isnull: false],  obs: [events_count]}
   page_views:                              {                                  obs: [events_count]}
+  item_views_count:                        {                                  obs: [itemviews_count]}
 
 metric.uniq:
   daily_active_authorized_users:           {counter: authorized_page_views,   key: [user]}
   daily_active_users:                      {counter: page_views,              key: [cookie]}
+  user_day_iv:                             {counter: item_views_count,        key: [cookie_day_hash]}
+  user_month_iv:                           {counter: item_views_count,        key: [cookie_month_hash]}
 
 metric.ratio:
   authorized_visitors_share:               {num: daily_active_authorized_users,   den: daily_active_users}
+  user_day_iv_per_month:                   {num: user_day_iv,                     den: user_month_iv}
