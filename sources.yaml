@@ -709,6 +709,37 @@ buyer_suggest:
   dtm: event_date
   segm: cookie_id
 
+buyer_shortcut:
+  metric_configs: [buyer_shortcut]
+  database: vertica
+  table: dma.o_buyer_shortcut
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - category
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  m42_cartesian_groups:
+    - [is_logged_in]
+  dtm: event_date
+  segm: cookie_id
+
+buyer_filter:
+  metric_configs: [buyer_filter]
+  database: vertica
+  table: dma.o_buyer_filter
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  m42_cartesian_groups:
+    - [is_logged_in]
+  dtm: event_date
+  segm: cookie_id
+
 seller_item_add:
   metric_configs: [seller_item_add]
   database: vertica
