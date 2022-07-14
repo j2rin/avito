@@ -910,6 +910,10 @@ metric.counter:
     cnt_s_iv_default_sort: { filter: [*is_iv_wo_guessing, *is_s_sort_dft, *x_is_search], m42: False }
     cnt_s_iv_price_sort: { filter: [*is_iv_wo_guessing, *is_s_sort_price, *x_is_search], m42: False }
     cnt_s_iv_distance_sort: { filter: [*is_iv_wo_guessing, *is_s_sort_distance, *x_is_search], m42: False }
+    cnt_s_c_date_sort: { filter: [*is_contact_wo_guessing, *is_s_sort_date, *x_is_search], m42: False }
+    cnt_s_c_default_sort: { filter: [*is_contact_wo_guessing, *is_s_sort_dft, *x_is_search], m42: False }
+    cnt_s_c_price_sort: { filter: [*is_contact_wo_guessing, *is_s_sort_price, *x_is_search], m42: False }
+    cnt_s_c_distance_sort: { filter: [*is_contact_wo_guessing, *is_s_sort_distance, *x_is_search], m42: False }
     cnt_s_filter_price_c:
         { filter: [*is_contact_wo_guessing, *x_is_search, { $or: [[*x_is_filter_search], [*x_is_price_filter_search]] }], m42: False }
     cnt_s_noquery_c: { filter: [*is_contact_wo_guessing, *noq, *x_is_search], m42: False }
@@ -1937,6 +1941,22 @@ metric.uniq:
     user_btc_noq: { counter: cnt_btc_s_noquery, key: [cookie], m42: False }
     user_sq: { counter: search_q, key: [cookie], m42: False }
     user_noq: { counter: cnt_s_without_query, key: [cookie], m42: False }
+    user_search_date_sort: { counter: searches_date_sort, key: [cookie]}
+    user_search_default_sort: { counter: searches_default_sort, key: [cookie]}
+    user_search_price_sort: { counter: searches_price_sort, key: [cookie]}
+    user_search_distance_sort: { counter: searches_distance_sort, key: [cookie]}
+    user_btc_date_sort: { counter: cnt_s_btc_date_sort, key: [cookie]}
+    user_btc_default_sort: { counter: cnt_s_btc_default_sort, key: [cookie]}
+    user_btc_price_sort: { counter: cnt_s_btc_price_sort, key: [cookie]}
+    user_btc_distance_sort: { counter: cnt_s_btc_distance_sort, key: [cookie]}
+    user_iv_date_sort: { counter: cnt_s_iv_date_sort, key: [cookie]}
+    user_iv_default_sort: { counter: cnt_s_iv_default_sort, key: [cookie]}
+    user_iv_price_sort: { counter: cnt_s_iv_price_sort, key: [cookie]}
+    user_iv_distance_sort: { counter: cnt_s_iv_distance_sort, key: [cookie]}
+    user_c_date_sort: { counter: cnt_s_c_date_sort, key: [cookie]}
+    user_c_default_sort: { counter: cnt_s_c_default_sort, key: [cookie]}
+    user_c_price_sort: { counter: cnt_s_c_price_sort, key: [cookie]}
+    user_c_distance_sort: { counter: cnt_s_c_distance_sort, key: [cookie]}
     user_btc_searchwidget: { counter: cnt_btc_searchwidget, key: [cookie], m42: False }
     user_btc_rubricatorwidget: { counter: cnt_btc_rubricatorwidget, key: [cookie], m42: False }
     user_btc_recentsearch: { counter: cnt_btc_recentsearch, key: [cookie], m42: False }
