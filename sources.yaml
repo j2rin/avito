@@ -2045,3 +2045,18 @@ new_pro_listers:
     dtm: event_date
     segm: user_id
 
+gmv_deals_proxy:
+    metric_configs: [gmv_deals_proxy]
+    database: vertica
+    table: dma.vo_gmv_deals_proxy
+    column_map:
+        user: user_id
+    dimensions: [vertical, logical_category, region, city, category, subcategory, is_asd, user_segment_market]
+    m42_cartesian_groups:
+    - [vertical, logical_category, region, city, is_asd, user_segment_market]
+    - [category, subcategory]
+    participant: {user: user_id}
+    primary_subject: user
+    dtm: event_date
+    segm: user_id
+
