@@ -2,3 +2,8 @@ metric.counter:
   new_pro_listers_total:                            {}
   new_pro_listers_less_1_month:                     {filter: [less_1_month: True]}
   new_pro_listers_over_1_month:                     {filter: [less_1_month: False]}
+
+metric.uniq:
+  new_pro_listers_uniq:       {counter: new_pro_listers_total, key: [user_logcat]}
+  new_pro_listers_less_1_month_uniq:       {counter: new_pro_listers_less_1_month, key: [user_logcat]}
+  new_pro_listers_over_1_month_uniq:       {counter: new_pro_listers_over_1_month, key: [user_logcat]}
