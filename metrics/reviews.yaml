@@ -1,7 +1,7 @@
 metric.counter:
   all_reviews_added:                       {m42: True}
   rating_reviews_added:                    {filter: [{stage.in: [1,2]}], m42: True}
-  reviews_stage_deal_happened_new:         {filter: [{stage.=: 1}],      m42: True}
+  reviews_stage_deal_happened:         {filter: [{stage.=: 1}],      m42: True}
   reviews_stage_deal_canceled:             {filter: [{stage.=: 2}],      m42: True}
   reviews_stage_no_agreement:              {filter: [{stage.=: 3}],      m42: True}
   reviews_stage_no_communication:          {filter: [{stage.=: 4}],      m42: True}
@@ -12,7 +12,7 @@ metric.counter:
 metric.uniq:
   user_rating_reviews_added:               {counter: rating_reviews_added,            key: [user], m42: True}
   user_all_reviews_added:                  {counter: all_reviews_added,               key: [user], m42: True}
-  user_reviews_stage_deal_happened_new:    {counter: reviews_stage_deal_happened_new, key: [user], m42: True}
+  user_reviews_stage_deal_happened:    {counter: reviews_stage_deal_happened, key: [user], m42: True}
   user_reviews_stage_deal_canceled:        {counter: reviews_stage_deal_canceled,     key: [user], m42: True}
   user_reviews_stage_no_agreement:         {counter: reviews_stage_no_agreement,      key: [user], m42: True}
   user_reviews_stage_no_communication:     {counter: reviews_stage_no_communication,  key: [user], m42: True}
