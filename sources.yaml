@@ -2000,6 +2000,21 @@ contact_deal:
   dtm: event_date
   segm: cookie_id
 
+contact_deal_weight:
+  metric_configs: [contact_deal_weight]
+  database: vertica
+  table: dma.vo_contact_deal_weight
+  column_map:
+    cookie: cookie_id
+  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city]
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category, region]
+    - [category, subcategory]
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id
+
 contact_deal_user:
   metric_configs: [contact_deal_user]
   database: vertica
