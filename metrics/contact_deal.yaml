@@ -5,10 +5,19 @@ definitions:
                         anon_calls_matched_answered,
                         answered_proxy_calls,
                         answered_first_messages
+                ] }
+    - &all { observation_name: [
+                        anon_calls_matched_any_type,
+                        answered_first_messages,
+                        answered_proxy_calls,
+                        appcall_bx_outgoing_item,
+                        call_phone_screen_views_client,
+                        delivery_contact,
+                        missed_proxy_calls
                 ] } 
 
 metric.counter:
-  contact_deal:                           {obs: [observation_value]}
+  contact_deal:                           {filter: [*all], obs: [observation_value]}
   contact_deal_answered:                  {filter: [*answered], obs: [observation_value]}
 
 metric.uniq:
