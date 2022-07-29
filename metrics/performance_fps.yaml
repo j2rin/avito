@@ -1,0 +1,16 @@
+definitions:
+  - &not_outlier {is_outlier: false}
+
+
+metric.counter:
+  in_time_frames:                         {filter: [*not_outlier], obs: [in_time_frames_count], m42: False}
+  jank_frames:                            {filter: [*not_outlier], obs: [jank_frames_count], m42: False}
+  all_frames:                             {filter: [*not_outlier], obs: [in_time_frames_count, jank_frames_count], m42: False}
+
+metric.uniq:
+  user_jank_frames:                       {counter: jank_frames, key: [cookie], m42: True}
+  user_all_frames:                        {counter: all_frames, key: [cookie], m42: True}
+
+
+metric.ratio:
+  jank_frames_per_all_frames:               {num: jank_frames, den: all_frames}

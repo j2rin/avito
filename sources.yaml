@@ -2077,3 +2077,15 @@ gmv_deals_proxy:
     dtm: event_date
     segm: user_id
 
+performance_fps:
+  metric_configs: [performance_fps]
+  database: vertica
+  table: dma.performance_fps
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - screen_name
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
