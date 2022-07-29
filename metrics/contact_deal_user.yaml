@@ -1,6 +1,18 @@
+definitions:
+    - &answered { observation_name: [
+                        appcall_bx_outgoing_item,
+                        delivery_contact,
+                        anon_calls_matched_any_type,
+                        anon_calls_matched_answered,
+                        answered_proxy_calls,
+                        answered_first_messages
+                ] } 
+
 metric.counter:
   cnt_contact_deal:                       {obs: [observation_value]}
+  cnt_contact_deal_answered:              {filter: [*answered], obs: [observation_value]}
 
 metric.uniq:
   user_contact_deal_auth:                 {counter: cnt_contact_deal,   key: [user]}
+  user_contact_deal_answered_auth:        {counter: cnt_contact_deal_answered,   key: [user]}
 
