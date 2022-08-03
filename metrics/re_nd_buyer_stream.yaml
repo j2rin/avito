@@ -37,19 +37,28 @@ definitions:
 
   - &jk_auction                          {realty_development_flags.bit: 1}
   - &jk_not_auction                      {realty_development_flags.!bit: 1}
-  -
+
   - &discount                            {item_flags.bit: 2}
   - &not_discount                        {item_flags.!bit: 2}
+
+  - &featured                            {item_flags.bit: 2}
+  - &not_featured                        {item_flags.!bit: 2}
 
 metric.counter:
   catalog_jk_entry_point:                            {filter: [*is_entry_point]}
 
   realty_dev_item_iv:                                {filter: [*is_item_iv]}
   realty_dev_item_c:                                 {filter: [*is_item_c]}
+
   realty_dev_discount_item_iv:                       {filter: [*is_item_iv, *discount]}
   realty_dev_discount_item_c:                        {filter: [*is_item_c, *discount]}
   realty_dev_not_discount_item_iv:                   {filter: [*is_item_iv, *not_discount]}
   realty_dev_not_discount_item_c:                    {filter: [*is_item_c, *not_discount]}
+
+  realty_dev_featured_item_iv:                       {filter: [*is_item_iv, *featured]}
+  realty_dev_featured_item_c:                        {filter: [*is_item_c, *featured]}
+  realty_dev_not_featured_item_iv:                   {filter: [*is_item_iv, *not_featured]}
+  realty_dev_not_featured_item_c:                    {filter: [*is_item_c, *not_featured]}
 
   realty_dev_item_c_discount:                        {filter: [*is_item_c, { $or: [[{ view_phone_source: item_button }], [{ view_phone_source: item_karusel }]] } ]}
   realty_dev_item_c_discount_button:                 {filter: [*is_item_c, view_phone_source: item_button]}
@@ -148,10 +157,16 @@ metric.uniq:
 
   user_realty_dev_item_iv:                           {counter: realty_dev_item_iv,                         key: [cookie]}
   user_realty_dev_item_c:                            {counter: realty_dev_item_c,                          key: [cookie]}
+
   user_realty_dev_discount_item_iv:                  {counter: realty_dev_discount_item_iv,                key: [cookie]}
   user_realty_dev_discount_item_c:                   {counter: realty_dev_discount_item_c,                 key: [cookie]}
   user_realty_dev_not_discount_item_iv:              {counter: realty_dev_not_discount_item_iv,            key: [cookie]}
   user_realty_dev_not_discount_item_c:               {counter: realty_dev_not_discount_item_c,             key: [cookie]}
+
+  user_realty_dev_featured_item_iv:                  {counter: realty_dev_featured_item_iv,                key: [cookie]}
+  user_realty_dev_featured_item_c:                   {counter: realty_dev_featured_item_c,                 key: [cookie]}
+  user_realty_dev_not_featured_item_iv:              {counter: realty_dev_not_featured_item_iv,            key: [cookie]}
+  user_realty_dev_not_featured_item_c:               {counter: realty_dev_not_featured_item_c,             key: [cookie]}
 
   user_realty_dev_item_c_discount:                   {counter: realty_dev_item_c_discount,                 key: [cookie]}
   user_realty_dev_item_c_discount_button:            {counter: realty_dev_item_c_discount_button,          key: [cookie]}
