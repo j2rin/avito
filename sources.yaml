@@ -2088,3 +2088,15 @@ performance_fps:
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
   dtm: event_date
+
+sphinx_cputime:
+  metric_configs: [sphinx_cputime]
+  database: vertica
+  table: dma.perf_sphinx_cputime_cleared
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
