@@ -1,5 +1,7 @@
 definitions:
   - &eid_entry_point                [3131]
+  - &eid_item_c                     [303]
+  - &eid_item_iv                    [301]
   - &eid_jk_view                    [3459]
   - &eid_ph                         [3461]
   - &eid_back_call                  [4198]
@@ -7,8 +9,14 @@ definitions:
   - &eid_click_serp_from_realty_dev [3460]
   - &eid_newdev_catalog_map_open    [5237]
   - &eid_newdev_catalog_add_info    [5236]
+  - &eid_newdev_discount            [5281]
+  - &eid_newdev_discount_viewport   [6532]
+  - &eid_newdev_discount_swipe      [6546]
+  - &eid_badge                      [4476]
 
   - &is_entry_point                      {eid: *eid_entry_point}
+  - &is_item_iv                          {eid: *eid_item_iv}
+  - &is_item_c                           {eid: *eid_item_c}
   - &is_jk_view                          {eid: *eid_jk_view}
   - &is_ph_realdev                       {eid: *eid_ph}
   - &is_back_call                        {eid: *eid_back_call}
@@ -19,15 +27,45 @@ definitions:
   - &is_click_serp_from_realty_dev       {eid: *eid_click_serp_from_realty_dev}
   - &is_newdev_catalog_map_open          {eid: *eid_newdev_catalog_map_open}
   - &is_newdev_catalog_add_info          {eid: *eid_newdev_catalog_add_info}
+  - &is_newdev_discount                  {eid: *eid_newdev_discount}
+  - &is_newdev_discount_viewport         {eid: *eid_newdev_discount_viewport}
+  - &is_newdev_discount_swipe            {eid: *eid_newdev_discount_swipe}
+  - &is_newdev_badge                     {eid: *eid_badge}
 
   - &jk_cpa                              {realty_development_flags.bit: 0}
   - &jk_not_cpa                          {realty_development_flags.!bit: 0}
-                                         
+
   - &jk_auction                          {realty_development_flags.bit: 1}
   - &jk_not_auction                      {realty_development_flags.!bit: 1}
 
+  - &discount                            {item_flags.bit: 2}
+  - &not_discount                        {item_flags.!bit: 2}
+
+  - &featured                            {item_flags.bit: 2}
+  - &not_featured                        {item_flags.!bit: 2}
+
 metric.counter:
   catalog_jk_entry_point:                            {filter: [*is_entry_point]}
+
+  realty_dev_item_iv:                                {filter: [*is_item_iv]}
+  realty_dev_item_c:                                 {filter: [*is_item_c]}
+
+  realty_dev_discount_item_iv:                       {filter: [*is_item_iv, *discount]}
+  realty_dev_discount_item_c:                        {filter: [*is_item_c, *discount]}
+  realty_dev_not_discount_item_iv:                   {filter: [*is_item_iv, *not_discount]}
+  realty_dev_not_discount_item_c:                    {filter: [*is_item_c, *not_discount]}
+
+  realty_dev_featured_item_iv:                       {filter: [*is_item_iv, *featured]}
+  realty_dev_featured_item_c:                        {filter: [*is_item_c, *featured]}
+  realty_dev_not_featured_item_iv:                   {filter: [*is_item_iv, *not_featured]}
+  realty_dev_not_featured_item_c:                    {filter: [*is_item_c, *not_featured]}
+
+  realty_dev_item_c_discount:                        {filter: [*is_item_c, { $or: [[{ phone_view_source: item_button }], [{ phone_view_source: item_karusel }]] } ]}
+  realty_dev_item_c_discount_button:                 {filter: [*is_item_c, phone_view_source: item_button]}
+  realty_dev_item_c_discount_carusel:                {filter: [*is_item_c, phone_view_source: item_karusel]}
+  realty_dev_item_back_call:                         {filter: [*is_back_call, from_page: item_contact_block]}
+  realty_dev_item_back_call_discount:                {filter: [*is_back_call, from_page: item_discounts]}
+  realty_dev_item_back_call_consultation_form:       {filter: [*is_back_call, from_page: item_consultation_form]}
 
   catalog_jk_vertical_main:                          {filter: [*is_entry_point, node_type: vertical_main]}
   catalog_jk_serp:                                   {filter: [*is_entry_point, node_type: serp]}
@@ -43,6 +81,12 @@ metric.counter:
 
   realty_dev_card_map_click:                         {filter: [*is_newdev_catalog_map_open, catalog_jk_source: card]}
 
+  realty_dev_discount:                               {filter: [*is_newdev_discount]}
+  realty_dev_discount_link:                          {filter: [*is_newdev_discount, catalog_jk_attribute: 1 ]}
+  realty_dev_discount_link2:                         {filter: [*is_newdev_discount, catalog_jk_attribute: 130 ]}
+  realty_dev_discount_viewport:                      {filter: [*is_newdev_discount_viewport]}
+  realty_dev_discount_swipe:                         {filter: [*is_newdev_discount_swipe]}
+  realty_dev_badge:                                  {filter: [*is_newdev_badge]}
 
   realty_dev_c_cpa:                                  {filter: [*is_c_jk, *jk_cpa]}
   realty_dev_ph_cpa:                                 {filter: [*is_ph_realdev, *jk_cpa]}
@@ -111,6 +155,26 @@ metric.counter:
 metric.uniq:
   user_catalog_jk_entry_point:                       {counter: catalog_jk_entry_point,                     key: [cookie]}
 
+  user_realty_dev_item_iv:                           {counter: realty_dev_item_iv,                         key: [cookie]}
+  user_realty_dev_item_c:                            {counter: realty_dev_item_c,                          key: [cookie]}
+
+  user_realty_dev_discount_item_iv:                  {counter: realty_dev_discount_item_iv,                key: [cookie]}
+  user_realty_dev_discount_item_c:                   {counter: realty_dev_discount_item_c,                 key: [cookie]}
+  user_realty_dev_not_discount_item_iv:              {counter: realty_dev_not_discount_item_iv,            key: [cookie]}
+  user_realty_dev_not_discount_item_c:               {counter: realty_dev_not_discount_item_c,             key: [cookie]}
+
+  user_realty_dev_featured_item_iv:                  {counter: realty_dev_featured_item_iv,                key: [cookie]}
+  user_realty_dev_featured_item_c:                   {counter: realty_dev_featured_item_c,                 key: [cookie]}
+  user_realty_dev_not_featured_item_iv:              {counter: realty_dev_not_featured_item_iv,            key: [cookie]}
+  user_realty_dev_not_featured_item_c:               {counter: realty_dev_not_featured_item_c,             key: [cookie]}
+
+  user_realty_dev_item_c_discount:                   {counter: realty_dev_item_c_discount,                 key: [cookie]}
+  user_realty_dev_item_c_discount_button:            {counter: realty_dev_item_c_discount_button,          key: [cookie]}
+  user_realty_dev_item_c_discount_carusel:           {counter: realty_dev_item_c_discount_carusel,         key: [cookie]}
+  user_realty_dev_item_back_call:                    {counter: realty_dev_item_back_call,                  key: [cookie]}
+  user_realty_dev_item_back_call_discount:           {counter: realty_dev_item_back_call_discount,         key: [cookie]}
+  user_realty_dev_item_back_call_consultation_form:  {counter: realty_dev_item_back_call_consultation_form,key: [cookie]}
+
   users_catalog_jk_vertical_main:                    {counter: catalog_jk_vertical_main,                   key: [cookie]}
   users_catalog_jk_serp:                             {counter: catalog_jk_serp,                            key: [cookie]}
   users_catalog_jk_banner:                           {counter: catalog_jk_banner,                          key: [cookie]}
@@ -125,6 +189,10 @@ metric.uniq:
 
   users_realty_dev_card_map_click:                   {counter: realty_dev_card_map_click,                  key: [cookie]}
 
+  users_realty_dev_discount:                         {counter: realty_dev_discount,                        key: [cookie]}
+  users_realty_dev_discount_viewport:                {counter: realty_dev_discount_viewport,               key: [cookie]}
+  users_realty_dev_discount_swipe:                   {counter: realty_dev_discount_swipe,                  key: [cookie]}
+  users_realty_dev_badge:                            {counter: realty_dev_badge,                           key: [cookie]}
 
   users_realty_dev_c_cpa:                            {counter: realty_dev_c_cpa,                           key: [cookie]}
   users_realty_dev_ph_cpa:                           {counter: realty_dev_ph_cpa,                          key: [cookie]}
