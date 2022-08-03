@@ -175,6 +175,9 @@ definitions:
     - &is_fp_witcher_new_flats { from_page: witcher-new-flats }
     - &is_fp_witcher_marketplace { from_page: witcher-marketplace }
     - &is_seen_item { from_page: witcher-seen-items }
+    
+    - &is_comp_fp_fav { from_page: favorite }
+    - &is_comp_fp_item { from_page: item }
 
     - &is_x_fp_witcher_regions { x_from_page: witcher-extra-regions }
     - &is_x_fp_witcher_delivery { x_from_page: witcher-extra-delivery }
@@ -999,6 +1002,8 @@ metric.counter:
     comparison_added: { filter: [*is_comp] }
     comparison_list_views: { filter: [*is_comp_lst] }
     comparison_removed: { filter: [*is_comp_rmv] }
+    comparison_list_views_from_item: { filter: [*is_comp_lst, *is_comp_fp_item] }
+    comparison_list_views_from_favorite: { filter: [*is_comp_lst, *is_comp_fp_fav] }
     contacts: { filter: [*is_contact] }
     contacts_items: { filter: [*is_contact_item], m42: True}
     contacts_items_wo_direct: {filter: [*is_contact_item, item_x_type.isnull: false], m42: True}
@@ -2144,6 +2149,8 @@ metric.uniq:
     user_favorites_removed: { counter: favorites_removed, key: [cookie] }
     user_comp_added_serp: { counter: cnt_comp_s, key: [cookie] }
     user_comp_list_views: { counter: comparison_list_views, key: [cookie] }
+    user_comp_list_views_from_item: { counter: comparison_list_views_from_item, key: [cookie] }
+    user_comp_list_views_from_favorite: { counter: comparison_list_views_from_favorite, key: [cookie] }
     user_comp_removed: { counter: comparison_removed, key: [cookie] }
     user_item_view_from_map_total: { counter: cnt_iv_from_map_s_area, key: [cookie] }
     user_item_views_from_jk_card: { counter: item_views_from_jk_card, key: [cookie] }
