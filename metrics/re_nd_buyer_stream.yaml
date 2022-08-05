@@ -15,7 +15,7 @@ definitions:
   - &eid_badge                      [4476]
 
   - &is_entry_point                      {eid: *eid_entry_point}
-  - &is_item_iv                          {eid: *eid_item_iv}
+  - &is_item_view                        {eid: *eid_item_iv}
   - &is_item_c                           {eid: *eid_item_c}
   - &is_jk_view                          {eid: *eid_jk_view}
   - &is_ph_realdev                       {eid: *eid_ph}
@@ -38,6 +38,12 @@ definitions:
   - &jk_auction                          {realty_development_flags.bit: 1}
   - &jk_not_auction                      {realty_development_flags.!bit: 1}
 
+  - &item_cpa                              {item_flags.bit: 0}
+  - &item_not_cpa                          {item_flags.!bit: 0}
+
+  - &item_auction                          {item_flags.bit: 1}
+  - &item_not_auction                      {item_flags.!bit: 1}
+
   - &discount                            {item_flags.bit: 2}
   - &not_discount                        {item_flags.!bit: 2}
 
@@ -47,17 +53,17 @@ definitions:
 metric.counter:
   catalog_jk_entry_point:                            {filter: [*is_entry_point]}
 
-  realty_dev_item_iv:                                {filter: [*is_item_iv]}
+  realty_dev_item_iv:                                {filter: [*is_item_view]}
   realty_dev_item_c:                                 {filter: [*is_item_c]}
 
-  realty_dev_discount_item_iv:                       {filter: [*is_item_iv, *discount]}
+  realty_dev_discount_item_iv:                       {filter: [*is_item_view, *discount]}
   realty_dev_discount_item_c:                        {filter: [*is_item_c, *discount]}
-  realty_dev_not_discount_item_iv:                   {filter: [*is_item_iv, *not_discount]}
+  realty_dev_not_discount_item_iv:                   {filter: [*is_item_view, *not_discount]}
   realty_dev_not_discount_item_c:                    {filter: [*is_item_c, *not_discount]}
 
-  realty_dev_featured_item_iv:                       {filter: [*is_item_iv, *featured]}
+  realty_dev_featured_item_iv:                       {filter: [*is_item_view, *featured]}
   realty_dev_featured_item_c:                        {filter: [*is_item_c, *featured]}
-  realty_dev_not_featured_item_iv:                   {filter: [*is_item_iv, *not_featured]}
+  realty_dev_not_featured_item_iv:                   {filter: [*is_item_view, *not_featured]}
   realty_dev_not_featured_item_c:                    {filter: [*is_item_c, *not_featured]}
 
   realty_dev_item_c_discount:                        {filter: [*is_item_c, { $or: [[{ phone_view_source: item_button }], [{ phone_view_source: item_karusel }]] } ]}
@@ -150,6 +156,11 @@ metric.counter:
   realty_dev_views_item_button_cpa_not_auction:      {filter: [*is_jk_view, from_page: item_jk_button, *jk_not_auction]}
   realty_dev_views_map_cpa_not_auction:              {filter: [*is_jk_view, from_page: map, *jk_not_auction]}
   realty_dev_views_cat_jk_serp_cpa_not_auction:      {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_not_auction]}
+
+  realty_item_c_auction:                             {filter: [ *is_item_c, *item_auction ] }
+  realty_item_views_auction:                         {filter: [ *is_item_view, *item_auction ] }
+  realty_item_c_cpa_not_auction:                     {filter: [ *is_item_c, *item_not_auction ] }
+  realty_item_views_cpa_not_auction:                 {filter: [ *is_item_view, *item_not_auction ] }
 
 
 metric.uniq:
@@ -257,3 +268,7 @@ metric.uniq:
   users_realty_dev_views_map_cpa_not_auction:         {counter: realty_dev_views_map_cpa_not_auction,         key: [cookie]}
   users_realty_dev_views_cat_jk_serp_cpa_not_auction: {counter: realty_dev_views_cat_jk_serp_cpa_not_auction, key: [cookie]}
 
+  users_realty_item_c_auction:                        {counter: realty_item_c_auction,                        key: [cookie]}
+  users_realty_item_views_auction:                    {counter: realty_item_views_auction,                    key: [cookie]}
+  users_realty_item_c_cpa_not_auction:                {counter: realty_item_c_cpa_not_auction,                key: [cookie]}
+  users_realty_item_views_cpa_not_auction:            {counter: realty_item_views_cpa_not_auction,            key: [cookie]}
