@@ -995,6 +995,18 @@ metric.counter:
             m42: False,
         }
     cnt_active: { filter: [{ $or: [[*is_1p, *is_search], [*is_vertical_main], [*is_iv], [*is_btc]] }], m42: False }
+    cnt_active_search: 
+        {filter: 
+            [
+                  {$or:[ 
+                               [*is_vertical_main], 
+                               [*x_is_search, 
+                                        { $or: [[*is_1p, *is_search], [*is_iv], [*is_btc]] }
+                               ]
+                       ]
+                  }
+            ] 
+        }
     cnt_active_with_shortcuts:
         { filter: [{ $or: [[*is_1p, *is_search], [*is_vertical_main], [*is_iv], [*is_btc], [eid: 2664, from_page: MAIN]] }], m42: False }
     cnt_any_action: {}
@@ -2205,6 +2217,7 @@ metric.uniq:
     user_wtc_from_witcher_flats: { counter: cnt_iv_wtc_new_flats_s_from, key: [cookie] }
     user_wtc_from_witcher_reg: { counter: cnt_iv_wtc_reg_s_from, key: [cookie] }
     users_active_daily: { counter: cnt_active, key: [cookie] }
+    users_active_daily_search: { counter: cnt_active_search, key: [cookie] }
     users_active_with_shortcuts_daily: { counter: cnt_active_with_shortcuts, key: [cookie] }
     users_any_action_daily: { counter: cnt_any_action, key: [cookie] }
     users_bt_click_daily: { counter: bt_clicks, key: [cookie] }
@@ -2454,6 +2467,7 @@ metric.uniq:
     sess_searches_radius: { counter: searches_radius, key: [session] }
     sess_searches_road: { counter: searches_road, key: [session] }
     sessions_active: { counter: cnt_active, key: [session] }
+    sessions_active_search: { counter: cnt_active_search, key: [session] }
     sessions_active_with_shortcuts: { counter: cnt_active_with_shortcuts, key: [session] }
     sess_any_action: { counter: cnt_any_action, key: [session] }
     sessions_btc: { counter: bt_clicks, key: [session] }
