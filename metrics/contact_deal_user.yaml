@@ -18,11 +18,14 @@ definitions:
                 ] } 
 
 metric.counter:
-  cnt_contact_deal:                       {filter: [*all], obs: [observation_value]}
-  cnt_contact_deal_delivery:              {filter: observation_name: [delivery_contact], obs: [observation_value]}
-  cnt_contact_deal_answered:              {filter: [*answered], obs: [observation_value]}
+  cnt_contact_deal:                                          {filter: [*all], obs: [observation_value]}
+  cnt_contact_deal_delivery:                                 {filter: observation_name: [delivery_contact], obs: [observation_value]}
+  cnt_contact_deal_answered:                                 {filter: [*answered], obs: [observation_value]}
 
 metric.uniq:
-  user_contact_deal_auth:                 {counter: cnt_contact_deal,   key: [user]}
-  user_contact_deal_answered_auth:        {counter: cnt_contact_deal_answered,   key: [user]}
-  user_contact_deal_delivery:             {counter: cnt_contact_deal_delivery, key: [user]}
+  user_contact_deal_auth:                                    {counter: cnt_contact_deal,   key: [user]}
+  user_contact_deal_answered_auth:                           {counter: cnt_contact_deal_answered,   key: [user]}
+  user_contact_deal_delivery_auth:                           {counter: cnt_contact_deal_delivery, key: [user]}
+  
+metric.ration:
+  user_contact_deal_delivery_per_user_contact_deal_auth:     {num: user_contact_deal_delivery_auth, den: user_contact_deal_auth}
