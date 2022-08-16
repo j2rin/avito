@@ -274,6 +274,8 @@ definitions:
 
     - &is_item_with_multilocs { item_flags.bit: 25 }
 
+    - &is_item_with_video { item_flags.bit: 28 }
+
     - &is_new_btc { new_user_btc: true }
     - &is_old_btc { new_user_btc: false }
 
@@ -1594,6 +1596,14 @@ metric.counter:
     iv_from_feed_cold: {filter: [*is_iv, x_eid: 6221, x_from_page: news_feed_recom]}
     c_from_feed_cold: {filter: [*is_contact, x_eid: 6221, x_from_page: news_feed_recom]}
     btc_from_feed_cold: {filter: [*is_btc, x_eid: 6221, x_from_page: news_feed_recom]}
+    iv_video: { filter: [*is_item_with_video, *is_iv_wo_guessing] }
+    c_video: { filter: [*is_item_with_video, *is_contact_wo_guessing] }
+    fav_video: { filter: [*is_item_with_video, *is_fav] }
+    btc_video: { filter: [*is_item_with_video, *is_btc_wo_guessing] }
+    iv_video_s: { filter: [*is_item_with_video, *is_iv_wo_guessing, *x_is_search] }
+    c_video_s: { filter: [*is_item_with_video, *is_contact_wo_guessing, *x_is_search] }
+    fav_video_s: { filter: [*is_item_with_video, *is_fav, *x_is_search] }
+    btc_video_s: { filter: [*is_item_with_video, *is_btc_wo_guessing, *x_is_search] }
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -2831,6 +2841,15 @@ metric.uniq:
     user_c_from_feed_cold: { counter: c_from_feed_cold, key: [cookie] }
     user_btc_from_feed_cold: { counter: btc_from_feed_cold, key: [cookie] }
 
+    user_iv_video: { counter: iv_video, key: [cookie] }
+    user_c_video: { counter: c_video, key: [cookie] }
+    user_fav_video: { counter: fav_video, key: [cookie] }
+    user_btc_video: { counter: btc_video, key: [cookie] }
+    user_iv_video_s: { counter: iv_video_s, key: [cookie] }
+    user_c_video_s: { counter: c_video_s, key: [cookie] }
+    user_fav_video_s: { counter: fav_video_s, key: [cookie] }
+    user_btc_video_s: { counter: btc_video_s, key: [cookie] }
+
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
     btc_from_witcher_any_per_witcher_any: { num: btc_from_witcher_any, den: searches_witcher_any }
@@ -3388,4 +3407,20 @@ metric.ratio:
     avg_btc_pos_s: { num: cnt_btc_s_item_attr_sum_rnk, den: cnt_btc_s_rnk, m42: False }
     avg_btc_pos_sq: { num: cnt_btc_sq_item_attr_sum_rnk, den: cnt_btc_sq_rnk, m42: False }
     avg_btc_pos_noq: { num: cnt_btc_noq_item_attr_sum_rnk, den: cnt_btc_noq_rnk, m42: False }
+    iv_video_s_per_s: { num: iv_video_s, den: users_search }
+    c_video_s_per_s: { num: c_video_s, den: searches }
+    fav_video_s_per_s: { num: fav_video_s, den: searches }
+    btc_video_s_per_s: { num: btc_video_s, den: searches }
+    c_video_per_iv_video: { num: c_video, den: iv_video }
+    c_video_s_per_iv_video_s: { num: c_video_s, den: iv_video_s }
+    btc_video_per_iv_video: { num: btc_video, den: iv_video }
+    btc_video_s_per_iv_video_s: { num: btc_video_s, den: iv_video_s }
+    user_iv_video_s_per_user_s: { num: user_iv_video_s, den: users_search }
+    user_c_video_s_per_user_s: { num: user_c_video_s, den: users_search }
+    user_fav_video_s_per_user_s: { num: user_fav_video_s, den: users_search }
+    user_btc_video_s_per_user_s: { num: user_btc_video_s, den: users_search }
+    user_c_video_per_user_iv_video: { num: user_c_video, den: user_iv_video }
+    user_c_video_s_per_user_iv_video_s: { num: user_c_video_s, den: user_iv_video_s }
+    user_btc_video_per_user_iv_video: { num: user_btc_video, den: user_iv_video }
+    user_btc_video_s_per_user_iv_video_s: { num: user_btc_video_s, den: user_iv_video_s }
 
