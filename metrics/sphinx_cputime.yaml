@@ -5,6 +5,7 @@ metric.counter:
   cnt_sphinx_cputime_50_perc: {obs: [less_50_perc_count]}
   cnt_sphinx_cputime_75_perc: {obs: [less_75_perc_count]}
   cnt_sphinx_cputime_95_perc: {obs: [less_95_perc_count]}
+  cnt_searches_sphinx:        {obs: [x_count]}
 
 metric.ratio:
   sphinx_cputime:            {num: cnt_sphinx_cputime, den: cnt_sphinx_cputime_events}
@@ -12,3 +13,4 @@ metric.ratio:
   sphinx_cputime_50_perc:    {num: cnt_sphinx_cputime_50_perc, den: cnt_sphinx_cputime_events}
   sphinx_cputime_75_perc:    {num: cnt_sphinx_cputime_75_perc, den: cnt_sphinx_cputime_events}
   sphinx_cputime_95_perc:    {num: cnt_sphinx_cputime_95_perc, den: cnt_sphinx_cputime_events}
+  sphinx_cputime_per_search: {num: sphinx_cputime, den: cnt_searches_sphinx}
