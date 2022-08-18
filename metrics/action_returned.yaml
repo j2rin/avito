@@ -1,0 +1,24 @@
+definitions:
+  - &is_user_active              {action_type: user_active}
+  - &is_item_view                {action_type: item_view}
+  - &is_realty_dev_view          {action_type: realty_dev_view}
+
+  - &is_old                      {birthday: 0}
+  - &is_new                      {birthday: 1}
+
+metric.counter:
+  active_old:                   {filter: [*is_user_active, *is_old]}
+  active_new:                   {filter: [*is_user_active, *is_new]}
+  iv_old:                       {filter: [*is_item_view, *is_old]}
+  iv_new:                       {filter: [*is_item_view, *is_new]}
+  realty_dev_view_old:          {filter: [*is_realty_dev_view, *is_old]}
+  realty_dev_view_new:          {filter: [*is_realty_dev_view, *is_new]}
+
+
+metric.uniq:
+  user_active_old:             {counter: active_old,          key: [cookie]}
+  user_active_new:             {counter: active_new,          key: [cookie]}
+  user_iv_old:                 {counter: iv_old,              key: [cookie]}
+  user_iv_new:                 {counter: iv_new,              key: [cookie]}
+  user_realty_dev_view_old:    {counter: realty_dev_view_old, key: [cookie]}
+  user_realty_dev_view_new:    {counter: realty_dev_view_new, key: [cookie]}

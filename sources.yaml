@@ -2089,3 +2089,26 @@ sphinx_cputime:
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
   dtm: event_date
+
+action_returned:
+  metric_configs: [action_returned]
+  database: vertica
+  table: dma.vo_action_returned
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - location
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  m42_cartesian_groups:
+    - [vertical, logical_category, region]
+  dtm: event_date
