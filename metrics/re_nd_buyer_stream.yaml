@@ -1,5 +1,5 @@
 definitions:
-  - &eid_entry_point                [3131]
+  - &eid_entry_point                [3131, 6601]
   - &eid_item_c                     [303]
   - &eid_item_iv                    [301]
   - &eid_jk_view                    [3459]
@@ -79,7 +79,7 @@ metric.counter:
   realty_dev_item_back_call_discount:                {filter: [*is_back_call, from_page: item_discounts]}
   realty_dev_item_back_call_consultation_form:       {filter: [*is_back_call, from_page: item_consultation_form]}
 
-  catalog_jk_vertical_main:                          {filter: [*is_entry_point, node_type: vertical_main]}
+  catalog_jk_vertical_main:                          {filter: [*is_entry_point, { $or: [[{ node_type: vertical_main }], [{ node_type: vertical_main_services }], [{ node_type: vertical_main_featured }]] }]}
   catalog_jk_serp:                                   {filter: [*is_entry_point, node_type: serp]}
   catalog_jk_banner:                                 {filter: [*is_entry_point, node_type: banner]}
   catalog_jk_rubricator:                             {filter: [*is_entry_point, node_type: catalog_jk]}
