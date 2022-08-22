@@ -1,0 +1,117 @@
+create fact cpa_calls_metrics as
+select
+    t.event_date::date as __date__,
+    *
+from dma.vo_cpa_calls_metrics t
+;
+
+create metrics cpa_calls_metrics as
+select
+    sum(case when is_callback = True then calls end) as cpa_calls_callbacks,
+    sum(case when is_callback = True and is_received = False then calls end) as cpa_calls_callbacks_missed,
+    sum(case when is_callback = True and is_received = False and is_target = True and is_protested = False then calls end) as cpa_calls_callbacks_missed_target,
+    sum(case when is_callback = True and is_received = True then calls end) as cpa_calls_callbacks_received,
+    sum(case when is_callback = True and is_received = True and is_target = True and is_protested = False then calls end) as cpa_calls_callbacks_received_target,
+    sum(case when is_callback = True and is_target = True and is_protested = False then calls end) as cpa_calls_callbacks_target,
+    sum(case when is_from_profile = True then calls end) as cpa_calls_from_profile,
+    sum(case when is_from_profile = True and is_received = False then calls end) as cpa_calls_from_profile_missed,
+    sum(case when is_from_profile = True and is_received = False and is_target = True and is_protested = False then calls end) as cpa_calls_from_profile_missed_target,
+    sum(case when is_from_profile = True and is_received = True then calls end) as cpa_calls_from_profile_received,
+    sum(case when is_from_profile = True and is_received = True and is_target = True and is_protested = False then calls end) as cpa_calls_from_profile_received_target,
+    sum(case when is_from_profile = True and rejected_removed_content = True then calls end) as cpa_calls_from_profile_rejected_removed_content,
+    sum(case when is_from_profile = True and is_target = True then calls end) as cpa_calls_from_profile_target,
+    sum(case when item_is_knowm = True then calls end) as cpa_calls_known_item,
+    sum(case when is_received = False then calls end) as cpa_calls_missed,
+    sum(case when is_received = True and duration_bin = '0' then calls end) as cpa_calls_missed_duration_0,
+    sum(case when is_received = True and duration_bin = '10-15' then calls end) as cpa_calls_missed_duration_11_15,
+    sum(case when is_received = True and duration_bin = '15-20' then calls end) as cpa_calls_missed_duration_16_20,
+    sum(case when is_received = True and duration_bin = '1-5' then calls end) as cpa_calls_missed_duration_1_5,
+    sum(case when is_received = True and duration_bin = '20-25' then calls end) as cpa_calls_missed_duration_21_25,
+    sum(case when is_received = True and duration_bin = '25-30' then calls end) as cpa_calls_missed_duration_26_30,
+    sum(case when is_received = True and duration_bin = '30-35' then calls end) as cpa_calls_missed_duration_31_35,
+    sum(case when is_received = True and duration_bin = '35-40' then calls end) as cpa_calls_missed_duration_36_40,
+    sum(case when is_received = True and duration_bin = '40-45' then calls end) as cpa_calls_missed_duration_41_45,
+    sum(case when is_received = True and duration_bin = '45-50' then calls end) as cpa_calls_missed_duration_46_50,
+    sum(case when is_received = True and duration_bin = '50-55' then calls end) as cpa_calls_missed_duration_51_55,
+    sum(case when is_received = True and duration_bin = '55-60' then calls end) as cpa_calls_missed_duration_56_60,
+    sum(case when is_received = True and duration_bin = '>60' then calls end) as cpa_calls_missed_duration_61_inf,
+    sum(case when is_received = True and duration_bin = '5-10' then calls end) as cpa_calls_missed_duration_6_10,
+    sum(case when is_received = False and is_target = True and is_protested = False then calls end) as cpa_calls_missed_target,
+    sum(case when is_received = False and uptime_bin = '0' then calls end) as cpa_calls_missed_uptime_0,
+    sum(case when is_received = False and uptime_bin = '10-15' then calls end) as cpa_calls_missed_uptime_11_15,
+    sum(case when is_received = False and uptime_bin = '15-20' then calls end) as cpa_calls_missed_uptime_16_20,
+    sum(case when is_received = False and uptime_bin = '1-5' then calls end) as cpa_calls_missed_uptime_1_5,
+    sum(case when is_received = False and uptime_bin = '20-25' then calls end) as cpa_calls_missed_uptime_21_25,
+    sum(case when is_received = False and uptime_bin = '25-30' then calls end) as cpa_calls_missed_uptime_26_30,
+    sum(case when is_received = False and uptime_bin = '30-35' then calls end) as cpa_calls_missed_uptime_31_35,
+    sum(case when is_received = False and uptime_bin = '35-40' then calls end) as cpa_calls_missed_uptime_36_40,
+    sum(case when is_received = False and uptime_bin = '40-45' then calls end) as cpa_calls_missed_uptime_41_45,
+    sum(case when is_received = False and uptime_bin = '45-50' then calls end) as cpa_calls_missed_uptime_46_50,
+    sum(case when is_received = False and uptime_bin = '50-55' then calls end) as cpa_calls_missed_uptime_51_55,
+    sum(case when is_received = False and uptime_bin = '55-60' then calls end) as cpa_calls_missed_uptime_56_60,
+    sum(case when is_received = False and uptime_bin = '>60' then calls end) as cpa_calls_missed_uptime_61_inf,
+    sum(case when is_received = False and uptime_bin = '5-10' then calls end) as cpa_calls_missed_uptime_6_10,
+    sum(case when cpaaction_id_is_known = False then calls end) as cpa_calls_no_action,
+    sum(case when is_protested = True then calls end) as cpa_calls_protested,
+    sum(case when is_received = True then calls end) as cpa_calls_received,
+    sum(case when is_received = True and is_target = True and is_protested = False then calls end) as cpa_calls_received_target,
+    sum(case when rejected_no_price = True then calls end) as cpa_calls_rejected_no_price,
+    sum(case when rejected_non_cpa_item = True then calls end) as cpa_calls_rejected_non_cpa_item,
+    sum(case when rejected_non_working_hours = True then calls end) as cpa_calls_rejected_non_working_hours,
+    sum(case when rejected_not_target = True then calls end) as cpa_calls_rejected_not_target,
+    sum(case when rejected_removed_content = True then calls end) as cpa_calls_rejected_removed_content,
+    sum(case when rejected_repeated = True then calls end) as cpa_calls_rejected_repeated,
+    sum(case when is_target = True and is_protested = False then calls end) as cpa_calls_target,
+    sum(case when is_target = True and is_protested = False and item_is_knowm = False then calls end) as cpa_calls_target_unknown_item,
+    sum(case when is_target = True then calls end) as cpa_calls_target_w_protested,
+    sum(calls) as cpa_calls_total
+from cpa_calls_metrics t
+;
+
+create metrics cpa_calls_metrics_user as
+select
+    sum(case when cpa_calls_callbacks > 0 then 1 end) as user_cpa_calls_callbacks,
+    sum(case when cpa_calls_callbacks_missed > 0 then 1 end) as user_cpa_calls_callbacks_missed,
+    sum(case when cpa_calls_callbacks_received > 0 then 1 end) as user_cpa_calls_callbacks_received,
+    sum(case when cpa_calls_callbacks_target > 0 then 1 end) as user_cpa_calls_callbacks_target,
+    sum(case when cpa_calls_from_profile > 0 then 1 end) as user_cpa_calls_from_profile,
+    sum(case when cpa_calls_from_profile_target > 0 then 1 end) as user_cpa_calls_from_profile_target,
+    sum(case when cpa_calls_known_item > 0 then 1 end) as user_cpa_calls_known_item,
+    sum(case when cpa_calls_missed > 0 then 1 end) as user_cpa_calls_missed,
+    sum(case when cpa_calls_missed_target > 0 then 1 end) as user_cpa_calls_missed_target,
+    sum(case when cpa_calls_no_action > 0 then 1 end) as user_cpa_calls_no_action,
+    sum(case when cpa_calls_protested > 0 then 1 end) as user_cpa_calls_protested,
+    sum(case when cpa_calls_received > 0 then 1 end) as user_cpa_calls_received,
+    sum(case when cpa_calls_received_target > 0 then 1 end) as user_cpa_calls_received_target,
+    sum(case when cpa_calls_rejected_non_cpa_item > 0 then 1 end) as user_cpa_calls_rejected_non_cpa_item,
+    sum(case when cpa_calls_rejected_non_working_hours > 0 then 1 end) as user_cpa_calls_rejected_non_working_hours,
+    sum(case when cpa_calls_rejected_removed_content > 0 then 1 end) as user_cpa_calls_rejected_removed_content,
+    sum(case when cpa_calls_target > 0 then 1 end) as user_cpa_calls_target,
+    sum(case when cpa_calls_target_unknown_item > 0 then 1 end) as user_cpa_calls_target_unknown_item,
+    sum(case when cpa_calls_total > 0 then 1 end) as user_cpa_calls_total
+from (
+    select
+        user_id,
+        sum(case when is_callback = True then calls end) as cpa_calls_callbacks,
+        sum(case when is_callback = True and is_received = False then calls end) as cpa_calls_callbacks_missed,
+        sum(case when is_callback = True and is_received = True then calls end) as cpa_calls_callbacks_received,
+        sum(case when is_callback = True and is_target = True and is_protested = False then calls end) as cpa_calls_callbacks_target,
+        sum(case when is_from_profile = True then calls end) as cpa_calls_from_profile,
+        sum(case when is_from_profile = True and is_target = True then calls end) as cpa_calls_from_profile_target,
+        sum(case when item_is_knowm = True then calls end) as cpa_calls_known_item,
+        sum(case when is_received = False then calls end) as cpa_calls_missed,
+        sum(case when is_received = False and is_target = True and is_protested = False then calls end) as cpa_calls_missed_target,
+        sum(case when cpaaction_id_is_known = False then calls end) as cpa_calls_no_action,
+        sum(case when is_protested = True then calls end) as cpa_calls_protested,
+        sum(case when is_received = True then calls end) as cpa_calls_received,
+        sum(case when is_received = True and is_target = True and is_protested = False then calls end) as cpa_calls_received_target,
+        sum(case when rejected_non_cpa_item = True then calls end) as cpa_calls_rejected_non_cpa_item,
+        sum(case when rejected_non_working_hours = True then calls end) as cpa_calls_rejected_non_working_hours,
+        sum(case when rejected_removed_content = True then calls end) as cpa_calls_rejected_removed_content,
+        sum(case when is_target = True and is_protested = False then calls end) as cpa_calls_target,
+        sum(case when is_target = True and is_protested = False and item_is_knowm = False then calls end) as cpa_calls_target_unknown_item,
+        sum(calls) as cpa_calls_total
+    from cpa_calls_metrics t
+    group by user_id
+) _
+;
