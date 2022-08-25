@@ -4,6 +4,8 @@ definitions:
   - &ios {platform_id: 4, mobile_app_version.>=: 114}
   - &android {platform_id: 3, mobile_app_version.>=: 124.5}
   - &correct_platforms {$or: [*ios,*android]}
+  - &ok_event {$or: [response: "ok", *no_data_placeholder_no_error]}
+  - &visible_error {$or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error]}
 
 metric.counter:
   cnt_di_events:                           {filter: [{stage_name: DI}], obs: [events], m42: False}
@@ -100,9 +102,9 @@ metric.counter:
   prepare_core_exceptions:                  {filter: [{stage_name: Prepare, is_core_content: true}], obs: [exceptions], m42: True}
   serverloading_core_exceptions:            {filter: [{stage_name: ServerLoading, is_core_content: true}], obs: [exceptions], m42: True}
 
-  draw_ok_events:                          {filter: [stage_name: Draw, $or: [response: "ok", *no_data_placeholder_no_error] ], obs: [events, exceptions], m42: True}
-  draw_new_exceptions:                     {filter: [stage_name: Draw, $or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error] ], obs: [events, exceptions], m42: True}
-  draw_new_exceptions_fr_screens_on:       {filter: [frequent_screens_enabled: true, stage_name: Draw, $or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error] ], obs: [events, exceptions], m42: True}
+  draw_ok_events:                          {filter: [stage_name: Draw, *ok_event], obs: [events, exceptions], m42: True}
+  draw_new_exceptions:                     {filter: [stage_name: Draw, *visible_error], obs: [events, exceptions], m42: True}
+  draw_new_exceptions_fr_screens_on:       {filter: [frequent_screens_enabled: true, stage_name: Draw, *visible_error ], obs: [events, exceptions], m42: True}
   draw_new_exceptions_wo_no_data:          {filter: [stage_name: Draw, response.!in: ["no-data-placeholder","ok"]], obs: [events, exceptions], m42: True}
   draw_exceptions_somehow_else_displayed:  {filter: [stage_name: Draw, response: "somehow-else-displayed-error"], obs: [events, exceptions], m42: True}
   draw_exceptions_unknown:                 {filter: [stage_name: Draw, response: "unknown-error"], obs: [events, exceptions], m42: True}
@@ -117,8 +119,8 @@ metric.counter:
   draw_exceptions_failed_to_reload:        {filter: [stage_name: Draw, response: "failed-to-reload-error"], obs: [events, exceptions], m42: True}
 
 
-  toast_exceptions:                        {filter: [stage_name: Draw,error_dialog_type: toast], obs: [exceptions], m42: True}
-  toast_core_exceptions:                   {filter: [stage_name: Draw,error_dialog_type: toast, is_core_content: true], obs: [events, exceptions], m42: True}
+  toast_exceptions:                        {filter: [stage_name: Draw, *visible_error, error_dialog_type: toast], obs: [events, exceptions], m42: True}
+  toast_core_exceptions:                   {filter: [stage_name: Draw, *visible_error, error_dialog_type: toast, is_core_content: true], obs: [events, exceptions], m42: True}
   toast_exceptions_unknown:                {filter: [stage_name: Draw,error_dialog_type: toast, response: "unknown-error"], obs: [events, exceptions], m42: True}
   toast_exceptions_somehow_else_displayed: {filter: [stage_name: Draw,error_dialog_type: toast, response: "somehow-else-displayed-error"], obs: [events, exceptions], m42: True}
   toast_exceptions_no_internet:            {filter: [stage_name: Draw,error_dialog_type: toast, response: "no-internet-error"], obs: [events, exceptions], m42: True}
@@ -126,12 +128,12 @@ metric.counter:
   toast_exceptions_failed_to_perform_action: {filter: [stage_name: Draw,error_dialog_type: toast, response: "failed-to-perform-action-error"], obs: [events, exceptions], m42: True}
   toast_exceptions_failed_to_reload:        {filter: [stage_name: Draw,error_dialog_type: toast, response: "failed-to-reload-error"], obs: [events, exceptions], m42: True}
 
-  dialog_exceptions:                        {filter: [stage_name: Draw,error_dialog_type.isnull: false], obs: [events, exceptions], m42: True}
-  dialog_core_exceptions:                   {filter: [stage_name: Draw,error_dialog_type.isnull: false, is_core_content: true], obs: [events, exceptions], m42: True}
-  dialog_exceptions_unknown:                {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "unknown-error"], obs: [events, exceptions], m42: True}
-  dialog_exceptions_somehow_else_displayed: {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "somehow-else-displayed-error"], obs: [events, exceptions], m42: True}
-  dialog_exceptions_no_internet:            {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "no-internet-error"], obs: [events, exceptions], m42: True}
-  dialog_exceptions_failed_to_load:         {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "failed-to-load-error"], obs: [events, exceptions], m42: True}
+  dialog_exceptions:                        {filter: [stage_name: Draw, *visible_error, error_dialog_type.!=: "ordinary error"], obs: [events, exceptions], m42: True}
+  dialog_core_exceptions:                   {filter: [stage_name: Draw, *visible_error, error_dialog_type.!=: "ordinary error", is_core_content: true], obs: [events, exceptions], m42: True}
+  dialog_exceptions_unknown:                {filter: [stage_name: Draw,error_dialog_type.!=: "ordinary error", response: "unknown-error"], obs: [events, exceptions], m42: True}
+  dialog_exceptions_somehow_else_displayed: {filter: [stage_name: Draw,error_dialog_type.!=: "ordinary error", response: "somehow-else-displayed-error"], obs: [events, exceptions], m42: True}
+  dialog_exceptions_no_internet:            {filter: [stage_name: Draw,error_dialog_type.!=: "ordinary error", response: "no-internet-error"], obs: [events, exceptions], m42: True}
+  dialog_exceptions_failed_to_load:         {filter: [stage_name: Draw,error_dialog_type.!=: "ordinary error", response: "failed-to-load-error"], obs: [events, exceptions], m42: True}
   dialog_exceptions_failed_to_perform_action: {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "failed-to-perform-action-error"], obs: [events, exceptions], m42: True}
   dialog_exceptions_failed_to_reload:        {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "failed-to-reload-error"], obs: [events, exceptions], m42: True}
 
@@ -150,6 +152,7 @@ metric.uniq:
   user_exceptions:                         {counter: any_exceptions, key: [cookie_id], m42: True}
   user_core_exceptions:                    {counter: any_core_exceptions, key: [cookie_id], m42: True}
 
+  user_draw_all_events:                    {counter: cnt_draw_events_exceptions, key: [cookie_id], m42: True}
   user_draw_ok_events:                     {counter: draw_ok_events, key: [cookie_id], m42: True}
   user_draw_new_exceptions:                {counter: draw_new_exceptions, key: [cookie_id], m42: True}
   user_draw_new_exceptions_2plus:          {counter: draw_new_exceptions, key: [cookie_id: 1], m42: True}
@@ -250,3 +253,4 @@ metric.ratio:
   serverloading_percent_p95:               {num: cnt_serverloading_events_p95,    den: cnt_serverloading_events}
   serverloading_session_duration:          {num: cnt_serverloading_session_duration, den: cnt_serverloading_session_duration_events}
   draw_new_exceptions_percent:             {num: draw_new_exceptions,             den: cnt_draw_events_exceptions}
+  user_draw_new_exceptions_per_user:       {num: user_draw_new_exceptions,        den: user_draw_all_events}
