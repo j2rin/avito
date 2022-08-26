@@ -2019,6 +2019,20 @@ contact_deal_user:
   dtm: event_date
   segm: user_id
 
+bs_first_click:
+  metric_configs: [bs_first_click]
+  database: vertica
+  table: dma.bs_first_click
+  column_map:
+    cookie: cookie_id
+  dimensions: [platform, vertical, logical_category]
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category]
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id
+
 cpa_calls_metrics:
   metric_configs: [cpa_calls_metrics]
   database: vertica
