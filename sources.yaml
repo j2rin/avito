@@ -2094,15 +2094,15 @@ performance_fps:
 sphinx_cputime:
   metric_configs: [sphinx_cputime]
   database: vertica
-  table: dma.perf_sphinx_cputime_cleared
+  table: dma.vo_sphinx_cpu
   column_map:
     cookie: cookie_id
   dimensions:
     - platform
-    - context
+    - sphinx_context
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
-  dtm: event_date
+  dtm: date
 
 action_returned:
   metric_configs: [action_returned]
