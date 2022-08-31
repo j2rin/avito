@@ -184,7 +184,9 @@ metric.counter:
   items_with_rating_3:                     {filter: [{is_active: True}, {seller_rating: 3}], m42: True}
   items_with_rating_4:                     {filter: [{is_active: True}, {seller_rating: 4}], m42: True}
   items_with_rating_5:                     {filter: [{is_active: True}, {seller_rating: 5}], m42: True}
-  items_with_rating:                   {filter: [{is_active: True}, {seller_rating.in: [1,2,3,4,5]}], m42: True}
+  items_with_rating:                       {filter: [{is_active: True}, {seller_rating.in: [1,2,3,4,5]}], m42: True}
+  item_video:                              {filter: [{has_short_video: True}, {is_active: True}]}
+  item_video_new:                          {filter: [{has_short_video: True}, {is_active: True}, {start_date: $event_date}]}
 
 
 metric.uniq:
@@ -321,7 +323,9 @@ metric.uniq:
   listers_with_rating_3:                   {counter: items_with_rating_3,             key: [user_logcat], m42: True}
   listers_with_rating_4:                   {counter: items_with_rating_4,             key: [user_logcat], m42: True}
   listers_with_rating_5:                   {counter: items_with_rating_5,             key: [user_logcat], m42: True}
-  listers_with_rating:                     {counter: items_with_rating,           key: [user_logcat], m42: True}
+  listers_with_rating:                     {counter: items_with_rating,               key: [user_logcat], m42: True}
+  user_item_video:                         {counter: item_video,                      key: [user]}
+  user_item_video_new:                     {counter: item_video_new,                  key: [user]}
 
 
 metric.ratio:
