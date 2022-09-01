@@ -194,6 +194,7 @@ definitions:
     - &x_is_recentsearch { x_from_page: recentSearch }
     - &x_is_inline { x_from_page: inline }
     - &x_is_shortcut { x_from_page: shortcut }
+    - &x_is_catalog  { x_from_page: catalog}
 
     - &is_serp_vas { item_serp_flags.bit: [0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 16] }
     - &is_serp_xl { item_serp_flags.bit: [8] }
@@ -407,6 +408,7 @@ metric.counter:
     cnt_btc_recentsearch: { filter: [*is_btc_wo_guessing, *x_is_recentsearch], m42: False }
     cnt_btc_inline: { filter: [*is_btc_wo_guessing, *x_is_inline], m42: False }
     cnt_btc_shortcut: { filter: [*is_btc_wo_guessing, *x_is_shortcut], m42: False }
+    cnt_btc_catalog:  {filter: [*is_btc_wo_guessing, *x_is_catalog], m42: False}
     cnt_btc_no: { filter: [*is_btc_wo_guessing, *x_no], m42: False }
     cnt_btc_s_radius: { filter: [*is_btc_wo_guessing, *is_s_radius, *x_is_search], m42: False }
     cnt_btc_s_road: { filter: [*is_btc_wo_guessing, *is_s_road, *x_is_search], m42: False }
@@ -973,12 +975,14 @@ metric.counter:
     cnt_s_recentsearch_c: { filter: [*is_contact_wo_guessing, *x_is_recentsearch, *x_is_search], m42: False }
     cnt_s_inline_c: { filter: [*is_contact_wo_guessing, *x_is_inline, *x_is_search], m42: False }
     cnt_s_shortcut_c: { filter: [*is_contact_wo_guessing, *x_is_shortcut, *x_is_search], m42: False }
+    cnt_s_catalog_c:  { filter: [*is_contact_wo_guessing, *x_is_catalog, *x_is_search], m42: False}
     cnt_s_noquery_iv: { filter: [*is_iv_wo_guessing, *noq, *x_is_search], m42: False }
     cnt_s_searchwidget_iv: { filter: [*is_iv_wo_guessing, *x_is_searchwidget, *x_is_search], m42: False }
     cnt_s_rubricatorwidget_iv: { filter: [*is_iv_wo_guessing, *x_is_rubricatorwidget, *x_is_search], m42: False }
     cnt_s_recentsearch_iv: { filter: [*is_iv_wo_guessing, *x_is_recentsearch, *x_is_search], m42: False }
     cnt_s_inline_iv: { filter: [*is_iv_wo_guessing, *x_is_inline, *x_is_search], m42: False }
     cnt_s_shortcut_iv: { filter: [*is_iv_wo_guessing, *x_is_shortcut, *x_is_search], m42: False }
+    cnt_s_catalog_iv:  { filter: [*is_iv_wo_guessing, *x_is_catalog, *x_is_search], m42: False}
     search_q: { filter: [*is_search, *q], m42: False }
     cnt_s_query_c: { filter: [*is_contact_wo_guessing, *q, *x_is_search], m42: False }
     cnt_s_query_iv: { filter: [*is_iv_wo_guessing, *q, *x_is_search], m42: False }
@@ -1357,6 +1361,7 @@ metric.counter:
     sercheas_from_recentsearch: { filter: [*is_1p, *is_search, *x_is_recentsearch] }
     sercheas_from_inline: { filter: [*is_1p, *is_search, *x_is_inline] }
     sercheas_from_shortcut: { filter: [*is_1p, *is_search, *x_is_shortcut] }
+    searches_from_catalog:  { filter: [*is_1p, *is_search, *x_is_catalog]}
     serp_empty: { filter: [*is_1p, *is_search, *is_serp_empty] }
     serp_empty_items: { filter: [*is_1p, *is_search, search_flags.!bit: [35, 36], *is_serp_empty] }
     serp_empty_jk_any: { filter: [*is_1p, *is_search, { $or: [[*is_s_jk_catalog], [*is_s_jk_card]] }, *is_serp_empty] }
@@ -1647,6 +1652,7 @@ metric.uniq:
     btc_recentsearch: { counter: cnt_btc_recentsearch, key: [item_x] }
     btc_inline: { counter: cnt_btc_inline, key: [item_x] }
     btc_shortcut: { counter: cnt_btc_shortcut, key: [item_x] }
+    btc_catalog:  { counter: cnt_btc_catalog,  key: [item_x]}
     iv_s_rnk3: { counter: cnt_iv_s_item_attr_rnk3, key: [item_x] }
     iv_s_rnk5: { counter: cnt_iv_s_item_attr_rnk5, key: [item_x] }
     iv_s_rnk10: { counter: cnt_iv_s_item_attr_rnk10, key: [item_x] }
@@ -2084,6 +2090,7 @@ metric.uniq:
     user_btc_recentsearch: { counter: cnt_btc_recentsearch, key: [cookie], m42: False }
     user_btc_inline: { counter: cnt_btc_inline, key: [cookie], m42: False }
     user_btc_shortcut: { counter: cnt_btc_shortcut, key: [cookie], m42: False }
+    user_btc_catalog:  { counter: cnt_btc_catalog,  key: [cookie], m42: False}
     btclicked_users: { counter: bt_clicks, key: [item_user_id], m42: False }
     btclicked_users_rec: { counter: cnt_btc_rec, key: [item_user_id], m42: False }
     btclicked_users_s: { counter: cnt_btc_s, key: [item_user_id], m42: False }
@@ -2290,6 +2297,7 @@ metric.uniq:
     users_contact_recentsearch: { counter: cnt_s_recentsearch_c, key: [cookie] }
     users_contact_inline: { counter: cnt_s_inline_c, key: [cookie] }
     users_contact_shortcut: { counter: cnt_s_shortcut_c, key: [cookie] }
+    users_contact_catalog:  { counter: cnt_s_catalog_c,  key: [cookie]}
     users_contact_search_u2i: { counter: cnt_cs_s_u2i, key: [cookie] }
     users_contact_vertical_main: { counter: cnt_cs_vertical_main, key: [cookie] }
     users_contact_vertical_main_rec: { counter: cnt_cs_vertical_main_rec, key: [cookie] }
@@ -2335,6 +2343,7 @@ metric.uniq:
     users_item_view_recentsearch: { counter: cnt_s_recentsearch_iv, key: [cookie] }
     users_item_view_inline: { counter: cnt_s_inline_iv, key: [cookie] }
     users_item_view_shortcut: { counter: cnt_s_shortcut_iv, key: [cookie] }
+    users_item_view_catalog:  { counter: cnt_s_catalog_iv,  key: [cookie]}
     users_item_view_search_u2i: { counter: cnt_iv_s_u2i, key: [cookie] }
     users_item_view_vertical_main: { counter: cnt_iv_vertical_main, key: [cookie] }
     users_item_view_vertical_main_rec: { counter: cnt_iv_vertical_main_rec, key: [cookie] }
@@ -2401,6 +2410,7 @@ metric.uniq:
     users_searches_recentsearch: { counter: sercheas_from_recentsearch, key: [cookie] }
     users_searches_inline: { counter: sercheas_from_inline, key: [cookie] }
     users_searches_shortcut: { counter: sercheas_from_shortcut, key: [cookie] }
+    users_searches_catalog:  { counter: searches_from_catalog,  key: [cookie]}
     users_write_button_clicks: { counter: write_button_clicks, key: [cookie] }
     users_saved_searches_added: { counter: saved_searches_added, key: [cookie] }
     users_head_main_page_daily: { counter: head_main_pages, key: [cookie] }
