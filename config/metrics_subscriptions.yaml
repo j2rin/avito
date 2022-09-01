@@ -239,6 +239,41 @@ breakdowns:
       - {vertical: [General], category: [Электроника], subcategory: [Фототехника], platform: [iOS]}
       - {vertical: [General], category: [Электроника], subcategory: [Фототехника], platform: [Avito.ru]}
       - {vertical: [General], category: [Электроника], subcategory: [Фототехника], platform: [Android]}
+      - {vertical: [SpareParts], category: [Транспорт], subcategory: [Запчасти и аксессуары], platform: [m.Avito.ru]}
+      - {vertical: [SpareParts], category: [Транспорт], subcategory: [Запчасти и аксессуары], platform: [iOS]}
+      - {vertical: [SpareParts], category: [Транспорт], subcategory: [Запчасти и аксессуары], platform: [Avito.ru]}
+      - {vertical: [SpareParts], category: [Транспорт], subcategory: [Запчасти и аксессуары], platform: [Android]}
+      - {vertical: [General], category: [Личные вещи], subcategory: [Детская одежда и обувь]}
+      - {vertical: [General], category: [Личные вещи], subcategory: ['Одежда, обувь, аксессуары']}
+      - {vertical: [General], category: [Личные вещи], subcategory: [Красота и здоровье]}
+      - {vertical: [General], category: [Личные вещи], subcategory: [Товары для детей и игрушки]}
+      - {vertical: [General], category: [Личные вещи], subcategory: [Часы и украшения]}
+      - {vertical: [General], category: [Для дома и дачи], subcategory: [Посуда и товары для кухни]}
+      - {vertical: [General], category: [Для дома и дачи], subcategory: [Мебель и интерьер]}
+      - {vertical: [General], category: [Для дома и дачи], subcategory: [Растения]}
+      - {vertical: [General], category: [Для дома и дачи], subcategory: [Ремонт и строительство]}
+      - {vertical: [General], category: [Для дома и дачи], subcategory: [Продукты питания]}
+      - {vertical: [General], category: [Для дома и дачи], subcategory: [Бытовая техника]}
+      - {vertical: [General], category: [Готовый бизнес и оборудование], subcategory: [Оборудование для бизнеса]}
+      - {vertical: [General], category: [Готовый бизнес и оборудование], subcategory: [Готовый бизнес]}
+      - {vertical: [General], category: [Хобби и отдых], subcategory: [Велосипеды]}
+      - {vertical: [General], category: [Хобби и отдых], subcategory: [Охота и рыбалка]}
+      - {vertical: [General], category: [Хобби и отдых], subcategory: [Спорт и отдых]}
+      - {vertical: [General], category: [Хобби и отдых], subcategory: [Коллекционирование]}
+      - {vertical: [General], category: [Хобби и отдых], subcategory: [Книги и журналы]}
+      - {vertical: [General], category: [Хобби и отдых], subcategory: [Билеты и путешествия]}
+      - {vertical: [General], category: [Хобби и отдых], subcategory: [Музыкальные инструменты]}
+      - {vertical: [General], category: [Электроника], subcategory: [Настольные компьютеры]}
+      - {vertical: [General], category: [Электроника], subcategory: [Ноутбуки]}
+      - {vertical: [General], category: [Электроника], subcategory: [Планшеты и электронные книги]}
+      - {vertical: [General], category: [Электроника], subcategory: ['Игры, приставки и программы']}
+      - {vertical: [General], category: [Электроника], subcategory: [Аудио и видео]}
+      - {vertical: [General], category: [Электроника], subcategory: [Оргтехника и расходники]}
+      - {vertical: [General], category: [Электроника], subcategory: [Товары для компьютера]}
+      - {vertical: [General], category: [Электроника], subcategory: [Телефоны]}
+      - {vertical: [General], category: [Электроника], subcategory: [Телефоны], param1: [Мобильные телефоны]}
+      - {vertical: [General], category: [Электроника], subcategory: [Фототехника]}
+      - {vertical: [SpareParts], category: [Транспорт], subcategory: [Запчасти и аксессуары]}
     is_cookie_new:
       - {}
       - {is_cookie_new: ['true']}
@@ -443,7 +478,7 @@ subscriptions:
   - owner: dasergeev
     subscribers: ['#general-green-light']
     metrics_config:
-      delivery_buyer: [breakdown_general_subcategory_platform]
+      delivery_buyer: [delivery_breakdowns]
 
   - owner: eibesedin
     subscribers: [arostrovskiy]
@@ -821,6 +856,13 @@ subscriptions:
         - clean_false_positive_cookies
         - clickstream_clean_cookies_percent
         - antibot_fpr
+
+  - owner: esantonov
+    subscribers: [esantonov, dyuperov, asmirnov]
+    metrics_by_breakdowns:
+      breakdown_total:
+        - 'sphinx_cputime_per_user_sphinx'
+        - 'cnt_sphinx_cputime'
 
   - subscribers: [epchumachenko, avmoskalenko, adasharin, dvseverov, aseklimenko, '#crm-analytics']
     metrics_by_breakdowns:
