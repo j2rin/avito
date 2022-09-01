@@ -2126,3 +2126,19 @@ action_returned:
   m42_cartesian_groups:
     - [vertical, logical_category, region]
   dtm: event_date
+
+callback_calls:
+  metric_configs: [callback_calls]
+  database: vertica
+  table: dma.vo_recallme_calls
+  column_map:
+    item: item_id
+    cookie: cookie_id
+    user: user_id
+  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category, region]
+    - [category, subcategory]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
