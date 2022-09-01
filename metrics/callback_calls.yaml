@@ -1,0 +1,21 @@
+definitions:
+  - &is_answered_by_seller                  {talk_duration_a.>: 0}
+  - &is_answered_by_seller_and_buyer        {talk_duration_b.>: 0}
+  - &is_success                             {talk_duration_b.>: 30}
+
+metric.counter:
+  callback_call_total:                      {filter: [*is_answered_by_seller]}
+  callback_call_answered:                   {filter: [*is_answered_by_seller_and_buyer]}
+  callback_call_success:                    {filter: [*is_success]}
+ 
+metric.uniq:
+  user_callback_call_total:                 {counter: callback_call_total, key: [cookie]}
+  user_callback_call_answered:              {counter: callback_call_answered, key: [cookie]}
+  user_callback_call_success:               {counter: callback_call_success, key: [cookie]}
+  
+
+metric.ratio:
+  callback_answered_ratio:                   {num: callback_call_answered, den: callback_call_total}
+  callback_success_ratio:                    {num: callback_call_success, den: callback_call_total}
+  user_callback_answered_ratio:              {num: user_callback_call_answered, den: user_callback_call_total}
+  user_callback_success_ratio:               {num: user_callback_call_success, den: user_callback_call_total}
