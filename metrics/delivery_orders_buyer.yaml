@@ -138,6 +138,10 @@ metric.uniq:
   buyer_delivery_orders_unconfirmed:      {counter: buyer_delivery_items_unconfirmed, key: [deliveryorder_id]}
   buyer_delivery_clustered_items_created: {counter: buyer_delivery_items_created, key: [buyer_item]}
   buyer_delivery_clustered_items_paid:    {counter: buyer_delivery_items_paid, key: [buyer_item]}
+  
+  buyer_delivery_purchases_created:       {counter: buyer_delivery_items_created, key: [purchase_id]} # созданные покупки
+  buyer_delivery_purchases_paid:          {counter: buyer_delivery_items_paid, key: [purchase_id]} # оплаченные покупки
+  buyer_delivery_purchases_canceled:      {counter: buyer_delivery_items_canceled, key: [purchase_id]} # отмененные покупки
 
 metric.ratio:
   buyer_delivery_average_item_price_created: {num: buyer_delivery_gmv_created, den: buyer_delivery_items_created}
@@ -173,3 +177,9 @@ metric.ratio:
   buyer_delivery_create_paid_orders_ratio: {num: buyer_delivery_orders_paid, den: buyer_delivery_orders_created}
   buyer_delivery_create_paid_items_ratio: {num: buyer_delivery_items_paid, den: buyer_delivery_items_created}
   buyer_delivery_clustered_create_paid_items_ratio: {num: buyer_delivery_clustered_items_paid, den: buyer_delivery_clustered_items_created}
+  
+  buyer_delivery_create_paid_purchases_ratio:       {num: buyer_delivery_purchases_paid, den: buyer_delivery_purchases_created} # доля оплат среди созданных
+  buyer_delivery_paid_canceled_purchases_ratio:     {num: buyer_delivery_purchases_canceled, den: buyer_delivery_purchases_paid} # доля отмен среди оплат
+ 
+  buyer_delivery_average_purchase_price_paid:       {num: buyer_delivery_gmv_paid, den: buyer_delivery_purchases_paid} # средняя стоимость покупки
+  
