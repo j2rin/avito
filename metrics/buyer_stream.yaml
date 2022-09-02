@@ -87,6 +87,9 @@ definitions:
     - &is_ph_chat { eid: 3005 }
     - &is_ph_tot { eid: [303, 3005, 3461] }
     - &is_msg_btn { eid: 2654 }
+    - &is_btn_snip { phone_view_source: s }
+    - &is_btn_xlvas { phone_view_source: xl }
+    - &is_btn_item { $or: [{ phone_view_source: item }, { phone_view_source: item_photo }, { phone_view_source.isnull: true }]}
     - &is_msg { eid: [856, 857, 4066] }
     - &is_fav { eid: [401, 2574, 2732] }
     - &is_fav_rmv { eid: 402 }
@@ -1163,6 +1166,7 @@ metric.counter:
     phone_views_to_order: { filter: [*item_to_order, *is_ph, { $or: [[*is_ph_right], [*is_ph_top]] }] }
     phone_views_in_chat: { filter: [*is_ph_chat] }
     phone_views_snippet: { filter: [*is_ph, { $or: [[*is_ph_snip], [*is_ph_xlvas]] }] }
+    phone_views_item: { filter: [*is_ph, { $or: [[*is_ph_right], [*is_ph_top]] }] }
     phone_views_total: { filter: [*is_ph_tot] }
     phone_views_total_cpa: { filter: [*is_ph_tot, *is_item_cpa] }
     phone_views_total_vas: { filter: [*is_item_vas, *is_ph_tot] }
@@ -1375,6 +1379,8 @@ metric.counter:
     total_districts_in_searches: { filter: [*is_1p, *is_search], obs: [district_count] }
     total_metros_in_searches: { filter: [*is_1p, *is_search], obs: [metro_count] }
     write_button_clicks: { filter: [*is_msg_btn] }
+    write_button_clicks_snippet: { filter: [*is_msg_btn, { $or: [[*is_btn_snip], [*is_btn_xlvas]] }] }
+    write_button_clicks_item: { filter: [*is_msg_btn, *is_btn_item] }
     contacts_metageo: { filter: [*is_contact_wo_guessing, *x_is_metageo] }
     buyer_target_clicks_metageo: { filter: [*is_btc_wo_guessing, *x_is_metageo] }
     item_views_metageo: { filter: [*is_iv_wo_guessing, *x_is_metageo] }
