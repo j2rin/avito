@@ -1,0 +1,23 @@
+metric.counter:
+  video_startup_events: {filter: [{eid: 6588}]}
+  time_to_prepare_video_sum:  {obs: [time_to_prepare_video]}
+  time_to_display_video_sum:  {obs: [time_to_display_video]}
+  video_playback_events: {filter: [{eid: 6590}]}
+  skipped_frames_count: {obs: [skipped_frames_count]}
+  skipped_frames_events:  {filter: [{skipped_frames_count.isnull: false}]}
+  playback_stalls_count:  {obs: [playback_stalls_count]}
+  playback_stalls_events: {filter: [{playback_stalls_count.isnull: false}]}
+  video_playback_error_events: {filter: [{eid: 6591}]}
+
+metric.uniq:
+  skipped_frames_users: {counter: skipped_frames_events, key: [cookie]}
+  playback_stalls_users:  {counter: playback_stalls_events, key: [cookie]}
+  video_playback_error_users:  {counter: video_playback_error_events, key: [cookie]}
+
+metric.ratio:
+  time_to_prepare_video:  {num: time_to_prepare_video_sum, den: video_startup_events}
+  time_to_display_video:  {num: time_to_display_video_sum, den: video_startup_events}
+  playback_events_per_startup: {num: video_playback_events, den: video_startup_events}
+  playback_with_skipped_frames_per_playback:  {num: skipped_frames_events, den: video_playback_events}
+  playback_with_stalls_per_playback:  {num: playback_stalls_events, den: video_playback_events}
+  errors_per_startup: {num: video_playback_error_events, den: video_startup_events}

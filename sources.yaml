@@ -2140,3 +2140,16 @@ callback_calls:
   participant: {visitor: cookie_id}
   primary_subject: visitor
   dtm: event_date
+
+perf_video_metrics:
+  metric_configs: [perf_video_metrics]
+  database: vertica
+  table: dma.perf_video_metrics
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
