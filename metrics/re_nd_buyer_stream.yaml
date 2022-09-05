@@ -13,6 +13,7 @@ definitions:
   - &eid_newdev_discount_viewport   [6532]
   - &eid_newdev_discount_swipe      [6546]
   - &eid_badge                      [4476]
+  - &eid_c_notification             [6710]
 
   - &is_entry_point                      {eid: *eid_entry_point}
   - &is_item_view                        {eid: *eid_item_iv}
@@ -31,6 +32,9 @@ definitions:
   - &is_newdev_discount_viewport         {eid: *eid_newdev_discount_viewport}
   - &is_newdev_discount_swipe            {eid: *eid_newdev_discount_swipe}
   - &is_newdev_badge                     {eid: *eid_badge}
+  - &is_c_notification                   {eid: *eid_c_notification}
+  - &is_c_notification_card              {eid: *eid_c_notification, item_id_not_null: 0}
+  - &is_c_notification_item              {eid: *eid_c_notification, item_id_not_null: 1}
 
   - &jk_cpa                              {realty_development_flags.bit: 0}
   - &jk_not_cpa                          {realty_development_flags.!bit: 0}
@@ -179,6 +183,9 @@ metric.counter:
   realty_item_c_cpa_not_auction:                     {filter: [ *is_item_c, *item_not_auction ] }
   realty_item_views_cpa_not_auction:                 {filter: [ *is_item_view, *item_not_auction ] }
 
+  realty_dev_c_notification:                         {filter: [*is_c_notification]}
+  realty_dev_c_notification_card:                    {filter: [*is_c_notification_card]}
+  realty_item_c_notification_item:                   {filter: [*is_c_notification_item]}
 
 metric.uniq:
   user_catalog_jk_entry_point:                       {counter: catalog_jk_entry_point,                     key: [cookie]}
@@ -298,3 +305,7 @@ metric.uniq:
   users_realty_item_views_auction:                    {counter: realty_item_views_auction,                    key: [cookie]}
   users_realty_item_c_cpa_not_auction:                {counter: realty_item_c_cpa_not_auction,                key: [cookie]}
   users_realty_item_views_cpa_not_auction:            {counter: realty_item_views_cpa_not_auction,            key: [cookie]}
+
+  users_realty_realty_dev_c_notification:             {counter: realty_dev_c_notification,                    key: [cookie]}
+  users_realty_realty_dev_c_notification_card:        {counter: realty_dev_c_notification_card,               key: [cookie]}
+  users_realty_realty_item_c_notification_item:       {counter: realty_item_c_notification_item,              key: [cookie]}
