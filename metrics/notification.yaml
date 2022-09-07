@@ -47,56 +47,107 @@ metric.counter:
   push_price_all_to_provider:              {obs: [app_pushes_price_all_to_provider]}
   push_price_all_to_receiver:              {obs: [app_pushes_price_all_to_receiver]}
   push_price_all_open:                     {obs: [app_pushes_price_all_open]}
+  push_marketing_to_receiver:              {obs: [app_pushes_marketing_to_receiver]}
+  browser_pushes_marketing_to_receiver:    {obs: [browser_pushes_marketing_to_receiver]}
+  sms_marketing_to_receiver:               {obs: [sms_marketing_to_receiver]}
+  nc_marketing_to_receiver:                {obs: [notification_center_marketing_to_receiver]}
+  email_marketing_to_receiver:             {obs: [email_marketing_to_receiver]}
+  push_rec_to_receiver:                    {obs: [app_pushes_rec_to_receiver]}
+  push_crm_to_receiver:                    {obs: [app_pushes_crm_to_receiver]}
+  notification_marketing_prepared:         {obs: [notification_marketing_prepared]}
+  notification_marketing_no_data:          {obs: [notification_marketing_no_data]}
+  notification_marketing_to_provider:      {obs: [notification_marketing_to_provider]}
+  notification_marketing_to_receiver:      {obs: [notification_marketing_to_receiver]}
+  notification_marketing_open:             {obs: [notification_marketing_open]}
+  notification_marketing_action:           {obs: [notification_marketing_action]}
+  notification_rec_prepared:               {obs: [notification_rec_prepared]}
+  notification_rec_no_data:                {obs: [notification_rec_no_data]}
+  notification_rec_to_provider:            {obs: [notification_rec_to_provider]}
+  notification_rec_to_receiver:            {obs: [notification_rec_to_receiver]}
+  notification_rec_open:                   {obs: [notification_rec_open]}
+  notification_rec_action:                 {obs: [notification_rec_action]}
+  notification_crm_prepared:               {obs: [notification_crm_prepared]}
+  notification_crm_no_data:                {obs: [notification_crm_no_data]}
+  notification_crm_to_provider:            {obs: [notification_crm_to_provider]}
+  notification_crm_to_receiver:            {obs: [notification_crm_to_receiver]}
+  notification_crm_open:                   {obs: [notification_crm_open]}
+  notification_crm_action:                 {obs: [notification_crm_action]}
+  
 
 metric.uniq:
-  user_push_no_data:                       {counter: push_no_data,                    key: [participant]}
-  user_browser_push_no_data:               {counter: browser_push_no_data,            key: [participant]}
-  user_sms_no_data:                        {counter: sms_no_data,                     key: [participant]}
-  user_nc_no_data:                         {counter: nc_no_data,                      key: [participant]}
-  user_email_no_data:                      {counter: email_no_data,                   key: [participant]}
-  user_push_no_data_sav:                   {counter: push_sav_search_no_data,         key: [participant]}
-  user_push_prepared:                      {counter: push_prepared,                   key: [participant]}
-  user_browser_push_prepared:              {counter: browser_push_prepared,           key: [participant]}
-  user_sms_prepared:                       {counter: sms_prepared,                    key: [participant]}
-  user_nc_prepared:                        {counter: nc_prepared,                     key: [participant]}
-  user_email_prepared:                     {counter: email_prepared,                  key: [participant]}
-  user_push_prepared_sav:                  {counter: push_sav_search_prepared,        key: [participant]}
-  user_push_to_provider:                   {counter: push_to_provider,                key: [participant]}
-  user_browser_push_to_provider:           {counter: browser_push_to_provider,        key: [participant]}
-  user_sms_to_provider:                    {counter: sms_to_provider,                 key: [participant]}
-  user_nc_to_provider:                     {counter: nc_to_provider,                  key: [participant]}
-  user_email_to_provider:                  {counter: email_to_provider,               key: [participant]}
-  user_push_to_provider_sav:               {counter: push_sav_search_to_provider,     key: [participant]}
-  user_push_to_receiver:                   {counter: push_to_receiver,                key: [participant]}
-  user_browser_push_to_receiver:           {counter: browser_push_to_receiver,        key: [participant]}
-  user_sms_to_receiver:                    {counter: sms_to_receiver,                 key: [participant]}
-  user_nc_to_receiver:                     {counter: nc_to_receiver,                  key: [participant]}
-  user_email_to_receiver:                  {counter: email_to_receiver,               key: [participant]}
-  user_push_to_receiver_sav:               {counter: push_sav_search_to_receiver,     key: [participant]}
-  user_push_open:                          {counter: push_open,                       key: [participant]}
-  user_browser_push_open:                  {counter: browser_push_open,               key: [participant]}
-  user_sms_open:                           {counter: sms_open,                        key: [participant]}
-  user_nc_open:                            {counter: nc_open,                         key: [participant]}
-  user_email_open:                         {counter: email_open,                      key: [participant]}
-  user_push_open_sav:                      {counter: push_sav_search_open,            key: [participant]}
-  user_sms_action:                         {counter: sms_action,                      key: [participant]}
-  user_nc_action:                          {counter: nc_action,                       key: [participant]}
-  user_email_action:                       {counter: email_action,                    key: [participant]}
-  user_push_no_data_price:                 {counter: push_price_no_data,              key: [participant]}
-  user_push_prepared_price:                {counter: push_price_prepared,             key: [participant]}
-  user_push_to_provider_price:             {counter: push_price_to_provider,          key: [participant]}
-  user_push_to_receiver_price:             {counter: push_price_to_receiver,          key: [participant]}
-  user_push_open_price:                    {counter: push_price_open,                 key: [participant]}
-  user_push_no_data_rec_marketing:         {counter: push_rec_marketing_no_data,      key: [participant]}
-  user_push_prepared_rec_marketing:        {counter: push_rec_marketing_prepared,     key: [participant]}
-  user_push_to_provider_rec_marketing:     {counter: push_rec_marketing_to_provider,  key: [participant]}
-  user_push_to_receiver_rec_marketing:     {counter: push_rec_marketing_to_receiver,  key: [participant]}
-  user_push_open_rec_marketing:            {counter: push_rec_marketing_open,         key: [participant]}
-  user_push_no_data_price_all:             {counter: push_price_all_no_data,          key: [participant]}
-  user_push_prepared_price_all:            {counter: push_price_all_prepared,         key: [participant]}
-  user_push_to_provider_price_all:         {counter: push_price_all_to_provider,      key: [participant]}
-  user_push_to_receiver_price_all:         {counter: push_price_all_to_receiver,      key: [participant]}
-  user_push_open_price_all:                {counter: push_price_all_open,             key: [participant]}
+  user_push_no_data:                            {counter: push_no_data,                                 key: [participant]}
+  user_browser_push_no_data:                    {counter: browser_push_no_data,                         key: [participant]}
+  user_sms_no_data:                             {counter: sms_no_data,                                  key: [participant]}
+  user_nc_no_data:                              {counter: nc_no_data,                                   key: [participant]}
+  user_email_no_data:                           {counter: email_no_data,                                key: [participant]}
+  user_push_no_data_sav:                        {counter: push_sav_search_no_data,                      key: [participant]}
+  user_push_prepared:                           {counter: push_prepared,                                key: [participant]}
+  user_browser_push_prepared:                   {counter: browser_push_prepared,                        key: [participant]}
+  user_sms_prepared:                            {counter: sms_prepared,                                 key: [participant]}
+  user_nc_prepared:                             {counter: nc_prepared,                                  key: [participant]}
+  user_email_prepared:                          {counter: email_prepared,                               key: [participant]}
+  user_push_prepared_sav:                       {counter: push_sav_search_prepared,                     key: [participant]}
+  user_push_to_provider:                        {counter: push_to_provider,                             key: [participant]}
+  user_browser_push_to_provider:                {counter: browser_push_to_provider,                     key: [participant]}
+  user_sms_to_provider:                         {counter: sms_to_provider,                              key: [participant]}
+  user_nc_to_provider:                          {counter: nc_to_provider,                               key: [participant]}
+  user_email_to_provider:                       {counter: email_to_provider,                            key: [participant]}
+  user_push_to_provider_sav:                    {counter: push_sav_search_to_provider,                  key: [participant]}
+  user_push_to_receiver:                        {counter: push_to_receiver,                             key: [participant]}
+  user_browser_push_to_receiver:                {counter: browser_push_to_receiver,                     key: [participant]}
+  user_sms_to_receiver:                         {counter: sms_to_receiver,                              key: [participant]}
+  user_nc_to_receiver:                          {counter: nc_to_receiver,                               key: [participant]}
+  user_email_to_receiver:                       {counter: email_to_receiver,                            key: [participant]}
+  user_push_to_receiver_sav:                    {counter: push_sav_search_to_receiver,                  key: [participant]}
+  user_push_open:                               {counter: push_open,                                    key: [participant]}
+  user_browser_push_open:                       {counter: browser_push_open,                            key: [participant]}
+  user_sms_open:                                {counter: sms_open,                                     key: [participant]}
+  user_nc_open:                                 {counter: nc_open,                                      key: [participant]}
+  user_email_open:                              {counter: email_open,                                   key: [participant]}
+  user_push_open_sav:                           {counter: push_sav_search_open,                         key: [participant]}
+  user_sms_action:                              {counter: sms_action,                                   key: [participant]}
+  user_nc_action:                               {counter: nc_action,                                    key: [participant]}
+  user_email_action:                            {counter: email_action,                                 key: [participant]}
+  user_push_no_data_price:                      {counter: push_price_no_data,                           key: [participant]}
+  user_push_prepared_price:                     {counter: push_price_prepared,                          key: [participant]}
+  user_push_to_provider_price:                  {counter: push_price_to_provider,                       key: [participant]}
+  user_push_to_receiver_price:                  {counter: push_price_to_receiver,                       key: [participant]}
+  user_push_open_price:                         {counter: push_price_open,                              key: [participant]}
+  user_push_no_data_rec_marketing:              {counter: push_rec_marketing_no_data,                   key: [participant]}
+  user_push_prepared_rec_marketing:             {counter: push_rec_marketing_prepared,                  key: [participant]}
+  user_push_to_provider_rec_marketing:          {counter: push_rec_marketing_to_provider,               key: [participant]}
+  user_push_to_receiver_rec_marketing:          {counter: push_rec_marketing_to_receiver,               key: [participant]}
+  user_push_open_rec_marketing:                 {counter: push_rec_marketing_open,                      key: [participant]}
+  user_push_no_data_price_all:                  {counter: push_price_all_no_data,                       key: [participant]}
+  user_push_prepared_price_all:                 {counter: push_price_all_prepared,                      key: [participant]}
+  user_push_to_provider_price_all:              {counter: push_price_all_to_provider,                   key: [participant]}
+  user_push_to_receiver_price_all:              {counter: push_price_all_to_receiver,                   key: [participant]}
+  user_push_open_price_all:                     {counter: push_price_all_open,                          key: [participant]}
+  user_push_marketing_to_receiver:              {counter: [push_marketing_to_receiver],                 key: [participant]}
+  user_browser_pushes_marketing_to_receiver:    {counter: [browser_pushes_marketing_to_receiver],       key: [participant]}
+  user_sms_marketing_to_receiver:               {counter: [sms_marketing_to_receiver],                  key: [participant]}
+  user_nc_marketing_to_receiver:                {counter: [nc_marketing_to_receiver],                   key: [participant]}
+  user_email_marketing_to_receiver:             {counter: [email_marketing_to_receiver],                key: [participant]}
+  user_push_rec_to_receiver:                    {counter: [push_rec_to_receiver],                       key: [participant]}
+  user_push_crm_to_receiver:                    {counter: [push_crm_to_receiver],                       key: [participant]}
+  user_notification_marketing_prepared:         {counter: [notification_marketing_prepared],            key: [participant]}
+  user_notification_marketing_no_data:          {counter: [notification_marketing_no_data],             key: [participant]}
+  user_notification_marketing_to_provider:      {counter: [notification_marketing_to_provider],         key: [participant]}
+  user_notification_marketing_to_receiver:      {counter: [notification_marketing_to_receiver],         key: [participant]}
+  user_notification_marketing_open:             {counter: [notification_marketing_open],                key: [participant]}
+  user_notification_marketing_action:           {counter: [notification_marketing_action],              key: [participant]}
+  user_notification_rec_prepared:               {counter: [notification_rec_prepared],                  key: [participant]}
+  user_notification_rec_no_data:                {counter: [notification_rec_no_data],                   key: [participant]}
+  user_notification_rec_to_provider:            {counter: [notification_rec_to_provider],               key: [participant]}
+  user_notification_rec_to_receiver:            {counter: [notification_rec_to_receiver],               key: [participant]}
+  user_notification_rec_open:                   {counter: [notification_rec_open],                      key: [participant]}
+  user_notification_rec_action:                 {counter: [notification_rec_action],                    key: [participant]}
+  user_notification_crm_prepared:               {counter: [notification_crm_prepared],                  key: [participant]}
+  user_notification_crm_no_data:                {counter: [notification_crm_no_data],                   key: [participant]}
+  user_notification_crm_to_provider:            {counter: [notification_crm_to_provider],               key: [participant]}
+  user_notification_crm_to_receiver:            {counter: [notification_crm_to_receiver],               key: [participant]}
+  user_notification_crm_open:                   {counter: [notification_crm_open],                      key: [participant]}
+  user_notification_crm_action:                 {counter: [notification_crm_action],                    key: [participant]}
 
 metric.ratio:
   app_pushes_open_per_push_to_receiver:                 {num: push_open,                       den: push_to_receiver}
