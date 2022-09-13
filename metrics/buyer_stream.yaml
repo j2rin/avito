@@ -66,14 +66,14 @@ definitions:
     - &is_sgt { eid: 2443 }
     - &is_iv { eid: 301 }
     - &is_iv_client { eid: 2649 }
-    - &is_btc { eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451, 6608, 6154] }
+    - &is_btc { eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451, 6608, 6154, 5942] }
 
     - &is_ph_realdev { eid: *eid_ph_realdev }
     - &is_back_call_item { eid: 4198, item.isnull: false }
     - &is_back_call_jk { eid: 4198, item.isnull: true }
     - &is_back_call_recallme { eid: 6608 }
     - &is_back_call { $or: [*is_back_call_item, *is_back_call_jk, *is_back_call_recallme] }
-    - &is_contact_item { $or: [eid: [303, 856, 857, 3005, 2581, 4066, 4675, 4813, 6154], *is_back_call_item, *is_back_call_recallme] }
+    - &is_contact_item { $or: [eid: [303, 856, 857, 3005, 2581, 4066, 4675, 4813, 6154, 5942], *is_back_call_item, *is_back_call_recallme] }
     - &is_contact_jk { $or: [*is_ph_realdev, *is_back_call_jk] }
     - &is_contact { $or: [*is_contact_item, *is_contact_jk] }
 
