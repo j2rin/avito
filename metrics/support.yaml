@@ -1,27 +1,40 @@
 metric.counter:
 # TICKETS
 # ---- BASE CHANNELS ---
-  support_wizard_tickets_created:          {obs: [ticket_wizard_created]}
-  support_agent_tickets_created:           {obs: [ticket_agent_created]}
-  support_call_tickets_created:            {obs: [ticket_call_created]}
-  support_email_tickets_created:           {obs: [ticket_email_created]}
-  support_chats_created:                   {obs: [chats_created]}
-  support_callcenter_calls:                {obs: [callcenter_calls]}
-  support_tickets_automated:               {obs: [ticket_automated]}
-  support_tickets_partly_automated:        {obs: [ticket_partly_automated]}
-  support_tickets_flow:                    {obs: [ticket_flow]}
-  support_chats_automated:                 {obs: [chats_automated]}
-  support_chats_partly_automated:          {obs: [chats_partly_automated]}
-  support_chats_flow:                      {obs: [chats_flow]}
+  support_wizard_tickets_created:                  {obs: [ticket_wizard_created]}
+  support_agent_tickets_created:                   {obs: [ticket_agent_created]}
+  support_call_tickets_created:                    {obs: [ticket_call_created]}
+  support_email_tickets_created:                   {obs: [ticket_email_created]}
+  support_chats_created:                           {obs: [chats_created]}
+  support_callcenter_calls:                        {obs: [callcenter_calls]}
+  support_tickets_automated:                       {obs: [ticket_automated]}
+  support_tickets_partly_automated:                {obs: [ticket_partly_automated]}
+  support_tickets_flow:                            {obs: [ticket_flow]}
+  support_chats_automated:                         {obs: [chats_automated]}
+  support_chats_partly_automated:                  {obs: [chats_partly_automated]}
+  support_chats_flow:                              {obs: [chats_flow]}
+  support_tickets_fully_automated:                 {obs: [ticket_fully_automated]}
+  support_chats_fully_automated:                   {obs: [chat_fully_automated]} 
+  support_fully_automated:                         {obs: [ticket_fully_automated, chat_fully_automated]}
+  support_automated:                               {obs: [ticket_automated, chats_automated]}
+  support_tickets_with_ht:                         {obs: [tickets_with_ht]} 
+  support_ticket_ht:                               {obs: [ticket_ht]} 
+  support_chats_with_ht:                           {obs: [chats_with_ht]}
+  support_chat_ht:                                 {obs: [chat_ht]} 
+  support_ticket_information_request:              {obs: [ticket_information_request]}
+  support_ticket_platform_fraud_templates:         {obs: [ticket_platform_fraud_templates]}
+  support_ticket_platform_fraud_nodes:             {obs: [ticket_platform_fraud_nodes]}
+  support_ticket_platform_fraud_templates_nodes:   {obs: [ticket_platform_fraud_templates_nodes]}
+  support_tickets_problem_changed:                 {obs: [tickets_problem_changed]}
 # --- COMBINING TOTAL ---
   support_email_wizard_tickets_created:    {obs: [ticket_email_created, ticket_wizard_created]}
   support_ticket_chat_platform:            {obs: [ticket_wizard_created, chats_created]}
   support_total_flow:                      {obs: [ticket_wizard_created, ticket_email_created, chats_created, callcenter_calls]}
 # --- MODERATION ---
-  support_ticket_reviews:           {obs: [ticket_reviews]}
-  support_call_reviews:           {obs: [ticket_call_reviews]}
+  support_ticket_reviews:                  {obs: [ticket_reviews]}
+  support_call_reviews:                    {obs: [ticket_call_reviews]}
   support_chats_reviews:                   {obs: [chats_reviews]}
-  support_flow_reviews:                  {obs: [ticket_reviews, ticket_call_reviews, chats_reviews]}
+  support_flow_reviews:                    {obs: [ticket_reviews, ticket_call_reviews, chats_reviews]}
 # --- EXTRA INFO ---
   cnt_tickets_problem_changed:             {obs: [tickets_problem_changed], m42: False}
 # --- Anonymous Number and Calltracking --- 
@@ -30,16 +43,24 @@ metric.counter:
   support_flow_calltracking_templates:       {obs: [ticket_calltracking_templates, call_calltracking_nodes]}
   support_flow_calltracking_nodes:           {obs: [ticket_calltracking_nodes, call_calltracking_nodes, chat_calltracking_nodes]}
 # --- CSAT ---
-  support_ticket_satisfaction_scores:       {obs: [ticket_satisfaction_scores]}
-  support_ticket_csat_scores:               {obs: [ticket_csat_scores]}
-  support_chat_satisfaction_scores:         {obs: [chat_satisfaction_scores]}
-  support_chat_csat_scores:                 {obs: [chat_csat_scores]}
+  support_ticket_satisfaction_scores:        {obs: [ticket_satisfaction_scores]}
+  support_ticket_csat_scores:                {obs: [ticket_csat_scores]}
+  support_chat_satisfaction_scores:          {obs: [chat_satisfaction_scores]}
+  support_chat_csat_scores:                  {obs: [chat_csat_scores]}
 
 metric.uniq:
-  support_contacters:                      {counter: support_total_flow,   key: [participant]}
+  support_contacters:                        {counter: support_total_flow,   key: [participant]}
 
 metric.ratio:
-  support_ticket_with_changed_problem_rate: {num: cnt_tickets_problem_changed,     den: support_email_wizard_tickets_created}
-  support_chat_from_flow_share:        {num: support_chats_created, den: support_total_flow}
-  support_ticket_csat:                 {num: support_ticket_csat_scores, den: support_ticket_satisfaction_scores}
-  support_chat_csat:                   {num: support_chat_csat_scores, den: support_chat_satisfaction_scores}
+  support_ticket_with_changed_problem_rate: {num: cnt_tickets_problem_changed, den: support_email_wizard_tickets_created}
+  support_chat_from_flow_share:             {num: support_chats_created, den: support_total_flow}
+  support_ticket_csat:                      {num: support_ticket_csat_scores, den: support_ticket_satisfaction_scores}
+  support_chat_csat:                        {num: support_chat_csat_scores, den: support_chat_satisfaction_scores}
+  support_ticket_aht:                       {num: support_ticket_ht, den: support_tickets_with_ht}
+  support_chat_aht:                         {num: support_chat_ht, den: support_chats_with_ht}
+  support_chat_full_automation_rate:        {num: support_chats_fully_automated, den: support_chats_created}
+  support_ticket_full_automation_rate:      {num: support_tickets_fully_automated, den: support_email_wizard_tickets_created}
+  support_full_automation_rate:             {num: support_fully_automated, den: support_total_flow}
+  support_automation_rate:                  {num: support_automated, den: support_total_flow}
+  support_chat_automation_rate:             {num: support_chats_automated, den: support_chats_created}
+  support_ticket_automation_rate:           {num: support_tickets_automated, den: support_email_wizard_tickets_created}
