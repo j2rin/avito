@@ -1,0 +1,21 @@
+metric.counter:
+  nc_tech_available:                 {filter: [is_nc_tech_available: true]}
+  app_push_tech_available:           {filter: [is_app_push_tech_available: true]}
+  email_tech_available:              {filter: [is_email_tech_available: true]}
+  messenger_tech_available:          {filter: [is_messenger_tech_available: true]}
+  nc_settings_available:             {filter: [is_any_nc_setting_available: true]}
+  app_push_settings_available:       {filter: [is_any_app_push_setting_available: true]}
+  email_settings_available:          {filter: [is_any_email_setting_available: true]}
+  messenger_settings_available:      {filter: [is_any_messenger_setting_available: true]}
+  any_channel_settings_available:    {filter: [$or: [is_any_nc_setting_available: true, is_any_app_push_setting_available: true, is_any_email_setting_available: true, is_any_messenger_setting_available: true]]}
+
+metric.uniq:
+  user_nc_tech_available:                    {counter: nc_tech_available,              key: [participant]}
+  user_app_push_tech_available:              {counter: app_push_tech_available,        key: [participant]}
+  user_email_tech_available:                 {counter: email_tech_available,           key: [participant]}
+  user_messenger_tech_available:             {counter: messenger_tech_available,       key: [participant]}
+  user_nc_any_setting_available:             {counter: nc_settings_available,          key: [participant]}
+  user_app_push_any_setting_available:       {counter: app_push_settings_available,    key: [participant]}
+  user_email_any_setting_available:          {counter: email_settings_available,       key: [participant]}
+  user_messenger_any_setting_available:      {counter: messenger_settings_available,   key: [participant]}
+  user_any_setting_available:                {counter: any_channel_settings_available, key: [participant]}

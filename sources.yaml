@@ -842,6 +842,18 @@ notification:
   primary_subject: user
   dtm: event_date
 
+notification_availability:
+  metric_configs: [notification_availability]
+  database: vertica
+  table: dma.crm_notification_settings_by_user
+  column_map:
+    participant: user_id
+  dimensions:
+    - vertical
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: event_date
+
 calltracking:
   metric_configs: [calltracking]
   database: vertica
