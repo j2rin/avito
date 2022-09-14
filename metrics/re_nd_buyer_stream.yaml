@@ -14,6 +14,8 @@ definitions:
   - &eid_newdev_discount_swipe      [6546]
   - &eid_badge                      [4476]
   - &eid_c_notification             [6710]
+  - &eid_open_back_call             [4219]
+  - &eid_send_back_call             [4197]
 
   - &is_entry_point                      {eid: *eid_entry_point}
   - &is_item_view                        {eid: *eid_item_iv}
@@ -35,6 +37,8 @@ definitions:
   - &is_c_notification                   {eid: *eid_c_notification}
   - &is_c_notification_card              {eid: *eid_c_notification, item_id_not_null: 0}
   - &is_c_notification_item              {eid: *eid_c_notification, item_id_not_null: 1}
+  - &is_open_back_call                   {eid: *eid_open_back_call}
+  - &is_send_back_call                   {eid: *eid_send_back_call}
 
   - &jk_cpa                              {realty_development_flags.bit: 0}
   - &jk_not_cpa                          {realty_development_flags.!bit: 0}
@@ -187,6 +191,9 @@ metric.counter:
   realty_dev_c_notification_card:                    {filter: [*is_c_notification_card]}
   realty_item_c_notification_item:                   {filter: [*is_c_notification_item]}
 
+  realty_open_back_call:                             {filter: [*eid_open_back_call]}
+  realty_send_back_call:                             {filter: [*eid_send_back_call]}
+
 metric.uniq:
   user_catalog_jk_entry_point:                       {counter: catalog_jk_entry_point,                     key: [cookie]}
 
@@ -309,3 +316,10 @@ metric.uniq:
   users_realty_realty_dev_c_notification:             {counter: realty_dev_c_notification,                    key: [cookie]}
   users_realty_realty_dev_c_notification_card:        {counter: realty_dev_c_notification_card,               key: [cookie]}
   users_realty_realty_item_c_notification_item:       {counter: realty_item_c_notification_item,              key: [cookie]}
+
+  users_realty_open_back_call:                        {counter: realty_open_back_call,                        key: [cookie]}
+  users_realty_send_back_call:                        {counter: realty_send_back_call,                        key: [cookie]}
+
+metric.ratio:
+    realty_send_back_call_per_realty_open_back_call:                 { num: realty_send_back_call, den: realty_open_back_call }
+    users_realty_send_back_call_per_users_realty_open_back_call:     { num: users_realty_send_back_call, den: users_realty_open_back_call }
