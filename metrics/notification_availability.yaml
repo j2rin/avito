@@ -1,9 +1,21 @@
 metric.counter:
-  nc_tech_available_users:                 {filter: [is_nc_tech_available: true]}
-  app_push_tech_available_users:           {filter: [is_app_push_tech_available: true]}
-  email_tech_available_users:              {filter: [is_email_tech_available: true]}
-  messenger_tech_available_users:          {filter: [is_messenger_tech_available: true]}
-  nc_settings_available_users:             {filter: [is_any_nc_setting_available: true]}
-  app_push_settings_available_users:       {filter: [is_any_app_push_setting_available: true]}
-  email_settings_available_users:          {filter: [is_any_email_setting_available: true]}
-  messenger_settings_available_users:      {filter: [is_any_messenger_setting_available: true]}
+  nc_tech_available:                 {filter: [is_nc_tech_available: true]}
+  app_push_tech_available:           {filter: [is_app_push_tech_available: true]}
+  email_tech_available:              {filter: [is_email_tech_available: true]}
+  messenger_tech_available:          {filter: [is_messenger_tech_available: true]}
+  nc_settings_available:             {filter: [is_any_nc_setting_available: true]}
+  app_push_settings_available:       {filter: [is_any_app_push_setting_available: true]}
+  email_settings_available:          {filter: [is_any_email_setting_available: true]}
+  messenger_settings_available:      {filter: [is_any_messenger_setting_available: true]}
+  any_channel_settings_available:    {filter: [$or: [is_any_nc_setting_available: true, is_any_app_push_setting_available: true, is_any_email_setting_available: true, is_any_messenger_setting_available: true]]}
+
+metric.uniq:
+  nc_tech_available_users:                    {counter: nc_tech_available,              key: [participant]}
+  app_push_tech_available_users:              {counter: app_push_tech_available,        key: [participant]}
+  email_tech_available_users:                 {counter: email_tech_available,           key: [participant]}
+  messenger_tech_available_users:             {counter: messenger_tech_available,       key: [participant]}
+  nc_any_setting_available_users:             {counter: nc_settings_available,          key: [participant]}
+  app_push_any_setting_available_users:       {counter: app_push_settings_available,    key: [participant]}
+  email_any_setting_available_users:          {counter: email_settings_available,       key: [participant]}
+  messenger_any_setting_available_users:      {counter: messenger_settings_available,   key: [participant]}
+  any_setting_available_users:                {counter: any_channel_settings_available, key: [participant]}
