@@ -66,14 +66,14 @@ definitions:
     - &is_sgt { eid: 2443 }
     - &is_iv { eid: 301 }
     - &is_iv_client { eid: 2649 }
-    - &is_btc { eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451, 6608, 6154] }
+    - &is_btc { eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451, 6608, 6154, 5942] }
 
     - &is_ph_realdev { eid: *eid_ph_realdev }
     - &is_back_call_item { eid: 4198, item.isnull: false }
     - &is_back_call_jk { eid: 4198, item.isnull: true }
     - &is_back_call_recallme { eid: 6608 }
     - &is_back_call { $or: [*is_back_call_item, *is_back_call_jk, *is_back_call_recallme] }
-    - &is_contact_item { $or: [eid: [303, 856, 857, 3005, 2581, 4066, 4675, 4813, 6154], *is_back_call_item, *is_back_call_recallme] }
+    - &is_contact_item { $or: [eid: [303, 856, 857, 3005, 2581, 4066, 4675, 4813, 6154, 5942], *is_back_call_item, *is_back_call_recallme] }
     - &is_contact_jk { $or: [*is_ph_realdev, *is_back_call_jk] }
     - &is_contact { $or: [*is_contact_item, *is_contact_jk] }
 
@@ -509,7 +509,7 @@ metric.counter:
         {
             filter:
                 [
-                    eid: 4675,
+                    eid: [4675, 5942],
                     *x_is_search,
                     { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] },
                 ],
@@ -1579,13 +1579,13 @@ metric.counter:
     c_with_multilocs_vertical_defined: { filter: [*is_item_with_multilocs, *is_contact_wo_guessing, *x_is_vertical_defined], m42: False }
     c_with_multilocs_vertical_undefined:
         { filter: [*is_item_with_multilocs, *is_contact_wo_guessing, *x_is_vertical_undefined], m42: False }
-    cnt_contacts_delivery: { filter: [eid: 4675] }
-    cnt_contacts_delivery_serp: { filter: [eid: 4675, *x_is_search] }
-    cnt_contacts_delivery_rec_i2i: { filter: [eid: 4675, *x_is_i2i] }
-    cnt_contacts_delivery_rec_i2i_delivery: { filter: [eid: 4675, *x_is_i2i_delivery] }
-    cnt_contacts_delivery_rec_u2i: { filter: [eid: 4675, *x_is_u2i] }
-    cnt_contacts_delivery_fav: { filter: [eid: 4675, *x_is_fav_lst] }
-    cnt_contacts_delivery_public_profile: { filter: [eid: 4675, *x_is_public_profile] }
+    cnt_contacts_delivery: { filter: [eid: [4675, 5942]] }
+    cnt_contacts_delivery_serp: { filter: [eid: [4675, 5942], *x_is_search] }
+    cnt_contacts_delivery_rec_i2i: { filter: [eid: [4675, 5942], *x_is_i2i] }
+    cnt_contacts_delivery_rec_i2i_delivery: { filter: [eid: [4675, 5942], *x_is_i2i_delivery] }
+    cnt_contacts_delivery_rec_u2i: { filter: [eid: [4675, 5942], *x_is_u2i] }
+    cnt_contacts_delivery_fav: { filter: [eid: [4675, 5942], *x_is_fav_lst] }
+    cnt_contacts_delivery_public_profile: { filter: [eid: [4675, 5942], *x_is_public_profile] }
     cnt_contacts_s_filter_price:
         { filter: [*is_contact_wo_guessing, *x_is_search, { $or: [[*x_is_filter_search], [*x_is_price_filter_search]] }], m42: False }
     cnt_delivery_iv_serp: { filter: [*is_iv_wo_guessing, *is_delivery_active, *x_is_search], m42: False }
@@ -1593,7 +1593,7 @@ metric.counter:
     cnt_delivery_widget_serp: { filter: [eid: 2013, *is_delivery_active, *x_is_search], m42: False }
     cnt_delivery_confirm_serp: { filter: [eid: 2749, *is_delivery_active, *x_is_search], m42: False }
     cnt_delivery_order_create_serp: { filter: [eid: 2015, *is_delivery_active, *x_is_search], m42: False }
-    cnt_contact_delivery_serp: { filter: [eid: 4675, *is_delivery_active, *x_is_search], m42: False }
+    cnt_contact_delivery_serp: { filter: [eid: [4675, 5942], *is_delivery_active, *x_is_search], m42: False }
 
     cnt_fatal_app_errors: { filter: [eid: 3456], m42: False }
     
