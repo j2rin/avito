@@ -98,6 +98,7 @@ metric.counter:
   fps_falls_below_90pct:                                {filter: [eid: 5243, fps_threshold.=: 90], obs: [event_count]}
   fps_falls_below_95pct:                                {filter: [eid: 5243, fps_threshold.=: 95], obs: [event_count]}
 
+  click_widget:                                         {filter: [eid.in: [4921, 4954]], obs: [event_count]}
   show_search_widget:                                   {filter: [eid: 4920, from_page: 'vertical_filter'], obs: [event_count]}
   click_search_widget:                                  {filter: [eid: 4954], obs: [event_count]}
   show_category_widget:                                 {filter: [eid: 4920, from_page: 'vertical_category'], obs: [event_count]}
@@ -205,6 +206,7 @@ metric.uniq:
   users_fps_falls_below_90pct:       {counter: fps_falls_below_90pct,                 key: [cookie]}
   users_fps_falls_below_95pct:       {counter: fps_falls_below_95pct,                 key: [cookie]}
 
+  user_click_widget:                 {counter: click_widget,                          key: [cookie]}
   user_show_search_widget:           {counter: show_search_widget,                    key: [cookie]}
   user_click_search_widget:          {counter: click_search_widget,                   key: [cookie]}
   user_show_category_widget:         {counter: show_category_widget,                  key: [cookie]}
