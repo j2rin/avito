@@ -2068,6 +2068,7 @@ metric.uniq:
     buyers_from_map_area: { counter: cnt_cs_s_map_area, key: [cookie] }
     buyers_from_serp_wo_map_area: { counter: cnt_cs_s_wo_map_area, key: [cookie] }
     buyers_from_map_total: { counter: cnt_cs_from_map_s_area, key: [cookie] }
+    buyers_logcat: { counter: contacts, key: [cookie, logical_category_id]}
     buyers_vas: { counter: contacts_total_vas, key: [cookie] }
     map_area_users: { counter: searches_map_area, key: [cookie] }
     unq_ph: { counter: phone_views_total, key: [cookie], m42: False }
@@ -2252,6 +2253,7 @@ metric.uniq:
     users_bt_click_daily: { counter: bt_clicks, key: [cookie] }
     users_bt_click_new: { counter: bt_clicks_new, key: [cookie] }
     users_bt_click_returned: { counter: bt_clicks_returned, key: [cookie] }
+    users_btc_logcat: {counter: bt_clicks, key:[cookie, logical_category_id]}
     user_soc_btn: { counter: cnt_soc_btn, key: [cookie] }
     users_btc_search_filter_any: { counter: cnt_btc_views_s_filter_price, key: [cookie] }
     users_buyer_target_click_from_map: { counter: cnt_btc_from_map, key: [cookie] }
@@ -2367,6 +2369,7 @@ metric.uniq:
     users_item_views_serp_metro: { counter: cnt_iv_s_metro, key: [cookie] }
     users_item_views_serp_radius: { counter: cnt_iv_s_radius, key: [cookie] }
     users_item_views_serp_road: { counter: cnt_iv_s_road, key: [cookie] }
+    users_item_views_logcat: { counter: users_item_view_daily, key:[cookie, logical_category_id]}
     users_ph_nox: { counter: cnt_cs_ph_no_item_attr, key: [cookie] }
     users_ph_serp: { counter: cnt_cs_ph_s_item_attr, key: [cookie] }
     users_ph_rec_u2i: { counter: cnt_cs_ph_rec_i2i, key: [cookie] }
@@ -2928,8 +2931,10 @@ metric.ratio:
         }
     buyer_target_clicks_vas_per_search: { num: buyer_target_clicks_vas, den: searches_serp }
     buyer_target_clicks_vip_per_search: { num: buyer_target_clicks_vip, den: searches_serp }
+    buyers_per_user_c: { num: buyers_logcat, den: buyers}
+    buyers_per_user_iv: { num: buyers_logcat, den: users_item_view_daily}
     buyers_per_users: { num: buyers, den: users_active_daily }
-    buyers_per_users_favorites: { num: buyers, den: users_favorites }
+    buyers_per_users_favorites: { num: buyers, den: users_favorites } 
     c_from_witcher_any_per_witcher_any: { num: c_from_witcher_any, den: searches_witcher_any }
     c_from_witcher_delivery_per_witcher_delivery: { num: c_from_witcher_delivery, den: searches_witcher_delivery }
     c_from_witcher_new_auto_per_witcher_new_auto: { num: c_from_witcher_new_auto, den: searches_witcher_new_auto }
@@ -3203,6 +3208,8 @@ metric.ratio:
     users_btc_serp_metro_per_users_metro: { num: users_buyer_target_clicks_serp_metro, den: users_searches_metro }
     users_btc_serp_radius_per_users_radius: { num: users_buyer_target_clicks_serp_radius, den: users_searches_radius }
     users_btc_serp_road_per_users_road: { num: users_buyer_target_clicks_serp_road, den: users_searches_road }
+    users_btc_logcat_per_users_iv: { num: users_btc_logcat, den: users_item_view_daily}
+    users_btc_logcat_per_users_btc: { num: users_btc_logcat, den: users_bt_click_daily}
     users_contact_per_item_view_search: { num: users_contact_serp_daily, den: users_item_view_serp_daily }
     users_contact_per_search: { num: users_contact_serp_daily, den: users_search }
     users_contact_per_search_query: { num: users_contact_search_query, den: user_sq }
@@ -3223,6 +3230,7 @@ metric.ratio:
     users_item_views_serp_metro_per_users_metro: { num: users_item_views_serp_metro, den: users_searches_metro }
     users_item_views_serp_radius_per_users_radius: { num: users_item_views_serp_radius, den: users_searches_radius }
     users_item_views_serp_road_per_users_road: { num: users_item_views_serp_road, den: users_searches_road }
+    users_iv_logcat_per_user_iv: { num: users_item_view_logcat, den: users_item_view_daily}
     users_s_btc_per_s: { num: users_buyer_target_click_serp_daily, den: users_search }
     users_s_btc_per_s_query: { num: user_btc_sq, den: user_sq }
     users_searches_district_per_users_search: { num: users_searches_district, den: users_search }
