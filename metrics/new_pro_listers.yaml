@@ -1,9 +1,25 @@
 metric.counter:
-  new_pro_listers_total:                            {}
-  new_pro_listers_less_1_month:                     {filter: [less_1_month: True]}
-  new_pro_listers_over_1_month:                     {filter: [less_1_month: False]}
+  new_pro_listers_total:                            {filter: [vertical_id.!=: -1, logical_category_id.!=: -1]}
+  new_pro_listers_less_1_month:                     {filter: [less_1_month: True, vertical_id.!=: -1, logical_category_id.!=: -1]}
+  new_pro_listers_over_1_month:                     {filter: [less_1_month: False, vertical_id.!=: -1, logical_category_id.!=: -1]}
+
+  new_pro_sellers_total:                            {filter: [vertical_id: -1]}
+  new_pro_sellers_less_1_month:                     {filter: [less_1_month: True, vertical_id: -1]}
+  new_pro_sellers_over_1_month:                     {filter: [less_1_month: False, vertical_id: -1]}
+
+  new_pro_sellers_vertical_total:                    {filter: [vertical_id.!=: -1, logical_category_id: -1]}
+  new_pro_sellers_vertical_less_1_month:             {filter: [less_1_month: True, vertical_id.!=: -1, logical_category_id: -1]}
+  new_pro_sellers_vertical_over_1_month:             {filter: [less_1_month: False, vertical_id.!=: -1, logical_category_id: -1]}
 
 metric.uniq:
   new_pro_listers_uniq:       {counter: new_pro_listers_total, key: [user_logcat]}
   new_pro_listers_less_1_month_uniq:       {counter: new_pro_listers_less_1_month, key: [user_logcat]}
   new_pro_listers_over_1_month_uniq:       {counter: new_pro_listers_over_1_month, key: [user_logcat]}
+
+  new_pro_sellers_uniq:       {counter: new_pro_sellers_total, key: [user_logcat]}
+  new_pro_sellers_less_1_month_uniq:       {counter: new_pro_sellers_less_1_month, key: [user_logcat]}
+  new_pro_sellers_over_1_month_uniq:       {counter: new_pro_sellers_over_1_month, key: [user_logcat]}
+
+  new_pro_sellers_vertical_uniq:       {counter: new_pro_sellers_vertical_total, key: [user_logcat]}
+  new_pro_sellers_vertical_less_1_month_uniq:       {counter: new_pro_sellers_vertical_less_1_month, key: [user_logcat]}
+  new_pro_sellers_vertical_over_1_month_uniq:       {counter: new_pro_sellers_vertical_over_1_month, key: [user_logcat]}
