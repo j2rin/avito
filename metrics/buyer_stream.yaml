@@ -15,6 +15,8 @@ definitions:
     - &sort_price [3, 4]
     - &sort_distance [6]
     - &sort_dft 5
+    - &c_front [2216, 2650, 3461, 857, 4198]
+    - &c_all [303, 3461, 857, 4198]
 
     - &is_search { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0] }
     - &is_rec { $or: [{ eid: *eid_rec }, { search_flags.bit: 10 }] }
@@ -284,6 +286,10 @@ definitions:
 
     - &is_new_btc { new_user_btc: true }
     - &is_old_btc { new_user_btc: false }
+
+    - &is_contacts_front {$or: [[platform_id: 1, eid: *c_front], [platform_id.!=: 1, eid: *c_all]] }
+    - &is_contacts_front_cpa {*is_item_cpa, $or: [[platform_id: 1, eid: *c_front], [platform_id.!=: 1, eid: *c_all]] }
+
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
@@ -1620,6 +1626,9 @@ metric.counter:
     
     c_callback: { filter: [*is_back_call] }
     c_callback_recallme: { filter: [*is_back_call_recallme] }
+
+    contacts_front: { filter: [*is_contacts_front] }
+    contacts_front_cpa: { filter: [*is_contacts_front_cpa] }
     
 
 metric.uniq:
@@ -2876,8 +2885,9 @@ metric.uniq:
     user_btc_video: { counter: btc_video, key: [cookie] }
     user_iv_video_s: { counter: iv_video_s, key: [cookie] }
     user_c_video_s: { counter: c_video_s, key: [cookie] }
-    user_fav_video_s: { counter: fav_video_s, key: [cookie] }
-    user_btc_video_s: { counter: btc_video_s, key: [cookie] }
+
+    user_contacts_front: { counter: contacts_front, key: [cookie] }
+    user_contacts_front_cpa: { counter: contacts_front_cpa, key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
