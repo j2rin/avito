@@ -288,7 +288,6 @@ definitions:
     - &is_old_btc { new_user_btc: false }
 
     - &is_contacts_front {$or: [[platform_id: 1, eid: *c_front], [platform_id.!=: 1, eid: *c_all]] }
-    - &is_contacts_front_cpa {*is_item_cpa, $or: [[platform_id: 1, eid: *c_front], [platform_id.!=: 1, eid: *c_all]] }
 
 
 metric.counter:
@@ -1628,7 +1627,7 @@ metric.counter:
     c_callback_recallme: { filter: [*is_back_call_recallme] }
 
     contacts_front: { filter: [*is_contacts_front] }
-    contacts_front_cpa: { filter: [*is_contacts_front_cpa] }
+    contacts_front_cpa: { filter: [*is_contacts_front, *is_item_cpa]  }
     
 
 metric.uniq:
