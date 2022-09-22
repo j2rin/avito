@@ -11,6 +11,7 @@ buyer_stream:
     cookie_item: [cookie_id, item_id]
     item_x: [item_id, x]
     x: [cookie_id, x]
+    cookie_logcat: [cookie_id, logical_category_id]
   dimensions:
     - platform
     - vertical
@@ -850,6 +851,8 @@ notification_availability:
     participant: user_id
   dimensions:
     - vertical
+  m42_cartesian_groups:
+    - [vertical]
   participant: {user: user_id}
   primary_subject: user
   dtm: event_date
@@ -1894,18 +1897,6 @@ re_nd_buyer_stream:
     - [vertical, logical_category, region]
     - [category, subcategory]
   dtm: event_date
-
-buyer_comp:
-  metric_configs: [buyer_comp]
-  database: vertica
-  table: public.vo_buyer_comp
-  dimensions: [platform, vertical, logical_category]
-  m42_cartesian_groups:
-    - [vertical, logical_category]
-  participant: {visitor: cookie_id, user: user_id}
-  primary_subject: visitor
-  dtm: event_date
-  segm: cookie_id_event_date
 
 autoteka_new_buyer_expected_revenue_ap:
   metric_configs: [autoteka_new_buyer_expected_revenue_ap]

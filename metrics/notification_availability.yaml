@@ -8,6 +8,15 @@ metric.counter:
   email_settings_available:          {filter: [is_any_email_setting_available: true]}
   messenger_settings_available:      {filter: [is_any_messenger_setting_available: true]}
   any_channel_settings_available:    {filter: [$or: [is_any_nc_setting_available: true, is_any_app_push_setting_available: true, is_any_email_setting_available: true, is_any_messenger_setting_available: true]]}
+  nc_available:                      {filter: [is_any_nc_setting_available: true, is_nc_tech_available: true]}
+  app_push_available:                {filter: [is_any_app_push_setting_available: true, is_app_push_tech_available: true]}
+  email_available:                   {filter: [is_any_email_setting_available: true, is_email_tech_available: true]}
+  messenger_available:               {filter: [is_any_messenger_setting_available: true, is_messenger_tech_available: true]}
+  nc_received:                       {filter: [nc_received.>: 0]}
+  app_push_received:                 {filter: [app_push_received.>: 0]}
+  email_received:                    {filter: [email_received.>: 0]}
+  messenger_received:                {filter: [messenger_received.>: 0]}
+  any_channel_received:              {filter: [$or: [nc_received.>: 0, app_push_received.>: 0, email_received.>: 0, messenger_received.>: 0]]}
 
 metric.uniq:
   user_nc_tech_available:                    {counter: nc_tech_available,              key: [participant]}
@@ -19,3 +28,12 @@ metric.uniq:
   user_email_any_setting_available:          {counter: email_settings_available,       key: [participant]}
   user_messenger_any_setting_available:      {counter: messenger_settings_available,   key: [participant]}
   user_any_setting_available:                {counter: any_channel_settings_available, key: [participant]}
+  user_nc_available:                         {counter: nc_available,                   key: [participant]}
+  user_app_push_available:                   {counter: app_push_available,             key: [participant]}
+  user_email_available:                      {counter: email_available,                key: [participant]}
+  user_messenger_available:                  {counter: messenger_available,            key: [participant]}
+  user_nc_crm_covered:                       {counter: nc_received,                    key: [participant]}
+  user_app_push_crm_covered:                 {counter: app_push_received,              key: [participant]}
+  user_email_crm_covered:                    {counter: email_received,                 key: [participant]}
+  user_messenger_crm_covered:                {counter: messenger_received,             key: [participant]}
+  user_crm_covered:                          {counter: any_channel_received,           key: [participant]}
