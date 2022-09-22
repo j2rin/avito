@@ -22,14 +22,12 @@ metric.counter:
     cnt_serp_freshness:         {filter: [*is_serp],            obs: [freshness],   m42: False}
     cnt_serp_items:             {filter: [*is_serp],            obs: [items_count], m42: False}
     items_count:                { obs: [ items_count ], m42: False }
+    seller_buyer_pair_with_impression:  {                       obs: [ sellers_count ], m42: True }
+    seller_buyer_pair_with_search:      {filter: [*is_serp],    obs: [ sellers_count ], m42: True }
+    seller_buyer_pair_with_rec_u2i:     {filter: [*is_u2i],     obs: [ sellers_count ], m42: True }
 
 
 metric.ratio:
     rec_score_u2i:              {num: cnt_rec_score_u2i,        den: cnt_rec_items_u2i}
     rec_score_i2i:              {num: cnt_rec_score_i2i,        den: cnt_rec_items_i2i}
     serp_freshness:             {num: cnt_serp_freshness,       den: cnt_serp_items}
-
-metric.uniq:
-    seller_buyer_pair_with_impression: { counter: items_count, key: [ item_user_id ], m42: True }
-    seller_buyer_pair_with_search: { counter: cnt_serp_items, key: [ item_user_id ], m42: True }
-    seller_buyer_pair_with_rec_u2i: { counter: cnt_rec_items_u2i, key: [ item_user_id ], m42: True }
