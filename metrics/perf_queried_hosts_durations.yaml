@@ -1,0 +1,17 @@
+metric.counter:
+  queried_hosts_events: {obs: [events_count]}
+  queried_hosts_durations_sum: {obs: [duration_sum]}
+  queried_hosts_events_avito: {obs: [events_count], filter: [{host: www.avito.ru}]}
+  queried_hosts_durations_sum_avito: {obs: [duration_sum], filter: [{host: www.avito.ru}]}
+  queried_hosts_events_img: {obs: [events_count], filter: [{host: img.avito.st}]}
+  queried_hosts_durations_sum_img: {obs: [duration_sum], filter: [{host: img.avito.st}]}
+  queried_hosts_events_stats: {obs: [events_count], filter: [{host: stats.avito.ru}]}
+  queried_hosts_durations_sum_stats: {obs: [duration_sum], filter: [{host: stats.avito.ru}]}
+  queried_hosts_events_other: {obs: [events_count], filter: [{host: other}]}
+  queried_hosts_durations_sum_other: {obs: [duration_sum], filter: [{host: other}]}
+
+metric.ratio:
+  queried_hosts_duration: {num: queried_hosts_durations_sum, den: queried_hosts_events}
+  queried_hosts_duration_avito: {num: queried_hosts_durations_sum_avito, den: queried_hosts_events_avito}
+  queried_hosts_duration_stats: {num: queried_hosts_durations_sum_stats, den: queried_hosts_events_stats}
+  queried_hosts_duration_other: {num: queried_hosts_durations_sum_other, den: queried_hosts_events_other}
