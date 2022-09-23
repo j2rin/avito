@@ -2158,3 +2158,28 @@ perf_queried_hosts_durations:
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
   dtm: event_date
+
+short_rent_item_trx:
+  metric_configs: [short_rent_item_trx]
+  database: vertica
+  table: dma.vo_short_rent_item_trx
+  column_map:
+    item: item_id
+    user: user_id
+    user_logcat: [user_id, logical_category_id]
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - region
+    - is_asd
+    - user_segment_market
+  m42_cartesian_groups:
+    - [is_logged_in, is_asd, vertical, logical_category, region, user_segment_market]
+    - [category, subcategory]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
