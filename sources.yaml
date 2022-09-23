@@ -42,8 +42,6 @@ buyer_stream:
     - x_population_group
     - x_location_level
     - condition
-    - user_segment_market
-    - is_asd
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
   m42_cartesian_groups:
@@ -2139,6 +2137,19 @@ perf_video_metrics:
   metric_configs: [perf_video_metrics]
   database: vertica
   table: dma.perf_video_metrics
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
+
+perf_queried_hosts_durations:
+  metric_configs: [perf_queried_hosts_durations]
+  database: vertica
+  table: dma.perf_queried_hosts_durations
   column_map:
     cookie: cookie_id
     user: user_id
