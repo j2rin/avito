@@ -29,6 +29,7 @@ definitions:
     - &is_comp_lst { eid: *eid_comp_lst }
     - &is_map { eid: *eid_map }
     - &adv_page { $or: [{ eid: [300, 2592] }, { platform_id: [1, 2], eid: [2572] }, { platform_id: [1], eid: [301] }] }
+    - &is_story { $or: [ {x_from_page.ilike: '%story_%' }, { from_page.ilike: '%stories%' } ] }
 
     - &collab { item_engines.bit: 0 }
     - &user2vec { item_engines.bit: 1 }
@@ -1033,6 +1034,7 @@ metric.counter:
     comparison_list_views_from_item: { filter: [*is_comp_lst, *is_comp_fp_item] }
     comparison_list_views_from_favorite: { filter: [*is_comp_lst, *is_comp_fp_fav] }
     contacts: { filter: [*is_contact] }
+    contacts_story: { filter: [*is_contact, *is_story] }
     contacts_items: { filter: [*is_contact_item], m42: True}
     contacts_items_wo_direct: {filter: [*is_contact_item, item_x_type.isnull: false], m42: True}
     contacts_items_cpa: {filter: [*is_contact_item, *is_item_cpa], m42: True}
@@ -1109,6 +1111,7 @@ metric.counter:
     first_messages_vas: { filter: [*is_item_vas, *is_msg] }
     first_messages_vas_cpa: { filter: [*is_item_vas, *is_msg, *is_item_cpa] }
     item_views: { filter: [*is_iv] }
+    item_views_story: { filter: [*is_iv, *is_story] }
     item_views_from_jk_card: { filter: [*is_iv, from_page: catalog_jk_card] }
     item_views_part_qual_exists: { filter: [*part_qual_exists, *is_iv] }
     item_views_part_qual_compab: { filter: [*part_qual_compab, *is_iv] }
@@ -2151,6 +2154,8 @@ metric.uniq:
             key: [cookie]
         }
     user_buyer_target_clicks_shop: { counter: cnt_btc_shopx, key: [cookie] }
+    user_item_views_story: { counter:  item_views_story, key: [cookie] }
+    user_contacts_story: { counter:  contacts_story, key: [cookie] }
     user_iv_cpa: { counter: cnt_iv_cpa, key: [cookie] }
     user_iv_s_cpa: { counter: cnt_iv_s_cpa, key: [cookie] }
     user_iv_rec_cpa: { counter: cnt_iv_rec_cpa, key: [cookie] }
