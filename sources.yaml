@@ -1685,6 +1685,23 @@ rating_search_stream:
   segm: cookie_id
 
 
+model_rating_stream:
+  metric_configs: [model_rating_stream]
+  database: vertica
+  table: dma.vo_model_rating_stream
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category, region]
+    - [category, subcategory]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id
+
+
 videocalls_stream:
   metric_configs: [videocalls_stream]
   database: vertica
