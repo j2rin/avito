@@ -2240,6 +2240,66 @@ deal_confirmed:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
   participant: {user: user_id}
+  
+target_call_bx:
+  metric_configs: [target_call_bx]
+  database: vertica
+  table: dma.vo_target_call
+  column_map:
+    cookie: buyer_cookie_id
+    user: buyer_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  participant: {visitor: buyer_cookie_id, user: buyer_id}
+  primary_subject: visitor
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category, region]
+    - [category, subcategory]
+  dtm: event_date
+  segm: buyer_id
+  
+target_call_sx:
+  metric_configs: [target_call_sx]
+  database: vertica
+  table: dma.vo_target_call
+  column_map:
+    user: seller_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  participant: {user: seller_id}
+  primary_subject: user
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category, region]
+    - [category, subcategory]
+  dtm: event_date
+  segm: seller_id
+  
   primary_subject: user
   dtm: event_date
   segm: user_id
