@@ -1413,7 +1413,9 @@ metric.counter:
     total_delivery_click_all_services_fav: { filter: [*x_is_fav_lst, eid: 2483] }
     total_delivery_click_all_services_public_profile: { filter: [*x_is_public_profile, eid: 2483] }
     total_delivery_widget_all_services: { filter: [eid: [4033, 2013]] }
+    total_delivery_widget_all_services_public_profile: { filter: [*x_is_public_profile, eid: [4033, 2013]] }
     total_delivery_confirm_all_services: { filter: [eid: [2749, 5827]] }
+    total_delivery_confirm_all_services_public_profile: { filter: [*x_is_public_profile, eid: [2749, 5827]] }
     total_delivery_contact_all_services: { filter: [*is_delivery_tot] }
     total_delivery_contact_all_services_serp: { filter: [*x_is_search, *is_delivery_tot] }
     total_delivery_contact_all_services_rec_i2i: { filter: [*x_is_i2i, *is_delivery_tot] }
@@ -1511,10 +1513,14 @@ metric.counter:
     btc_s_multiloc: { filter: [*is_s_multiloc, *is_btc_wo_guessing] }
     delivery_total_item_view: { filter: [*is_delivery_active, *is_iv], m42: true }
     total_delivery_click: { filter: [*is_delivery_pvz, *is_not_item_marketplace, eid: 2483], m42: true } #сейчас дубль total_delivery_click_wo_messenger, после добавления кликов с платформенной кнопки мессенджера они разойдутся
+    total_delivery_click_public_profile: { filter: [*x_is_public_profile, *is_delivery_pvz, *is_not_item_marketplace, eid: 2483] }
     total_delivery_click_wo_messenger: { filter: [*is_delivery_pvz, *is_not_item_marketplace, eid: 2483], m42: true }
     total_delivery_widget: { filter: [*is_not_item_marketplace, eid: 2013], m42: true }
+    total_delivery_widget_public_profile: { filter: [*x_is_public_profile, *is_not_item_marketplace, eid: 2013] }
     total_delivery_confirm: { filter: [*is_not_item_marketplace, eid: 2749], m42: true }
+    total_delivery_confirm_public_profile: { filter: [*x_is_public_profile, *is_not_item_marketplace, eid: 2749] }
     total_delivery_contact: { filter: [*is_not_item_marketplace, *is_delivery], m42: true }
+    total_delivery_contact_public_profile: { filter: [*x_is_public_profile, *is_not_item_marketplace, *is_delivery] }
     total_delivery_item_contact: { filter: [*is_not_item_marketplace, *is_contact, *is_delivery_active], m42: true }
     cnt_iv_public_profile: { filter: [*is_iv_wo_guessing, { $or: [[*x_is_public_profile], [*is_public_profile]] }], m42: False }
     cnt_iv_extended_profile: { filter: [*is_iv_wo_guessing, { $or: [[*x_is_extended_profile], [*is_extended_profile]] }], m42: False }
@@ -1908,7 +1914,9 @@ metric.uniq:
     delivery_click_all_services_fav: { counter: total_delivery_click_all_services_fav, key: [item_x] }
     delivery_click_all_services_public_profile: { counter: total_delivery_click_all_services_public_profile, key: [item_x] }
     delivery_widget_all_services: { counter: total_delivery_widget_all_services, key: [cookie_item] }
+    delivery_widget_all_services_public_profile: { counter: total_delivery_widget_all_services_public_profile, key: [cookie_item] }
     delivery_confirm_all_services: { counter: total_delivery_confirm_all_services, key: [cookie_item] }
+    delivery_confirm_all_services_public_profile: { counter: total_delivery_confirm_all_services_public_profile, key: [cookie_item] }
     delivery_contact_all_services: { counter: total_delivery_contact_all_services, key: [cookie_item] }
     delivery_contact_all_services_serp: { counter: total_delivery_contact_all_services_serp, key: [item_x] }
     delivery_contact_all_services_rec_i2i: { counter: total_delivery_contact_all_services_rec_i2i, key: [item_x] }
@@ -1925,14 +1933,18 @@ metric.uniq:
     delivery_iv_rec_public_profile: { counter: cnt_delivery_iv_rec_public_profile, key: [item_x] }
     delivery_click: { counter: total_delivery_click, key: [cookie_item], m42: true } #сейчас дубль delivery_click_wo_messenger, после добавления кликов с платформенной кнопки мессенджера они разойдутся
     delivery_click_serp: { counter: cnt_delivery_click_serp, key: [item_x] }
+    delivery_click_public_profile: { counter: total_delivery_click_public_profile, key: [cookie_item] }
     delivery_click_wo_messenger: { counter: total_delivery_click_wo_messenger, key: [cookie_item], m42: true }
     delivery_widget: { counter: total_delivery_widget, key: [cookie_item], m42: true }
     delivery_widget_serp: { counter: cnt_delivery_widget_serp, key: [item_x] }
+    delivery_widget_public_profile: { counter: total_delivery_widget_public_profile, key: [cookie_item] }
     delivery_confirm: { counter: total_delivery_confirm, key: [cookie_item], m42: true }
     delivery_confirm_serp: { counter: cnt_delivery_confirm_serp, key: [item_x] }
+    delivery_confirm_public_profile: { counter: total_delivery_confirm_public_profile, key: [cookie_item] }
     delivery_contact: { counter: total_delivery_contact, key: [cookie_item], m42: true }
     delivery_item_contact: { counter: total_delivery_item_contact, key: [cookie_item], m42: true }
     delivery_order_create_serp: { counter: cnt_delivery_order_create_serp, key: [item_x] }
+    delivery_contact_public_profile: { counter: total_delivery_contact_public_profile, key: [cookie_item] }
     fav_added_delivery: { counter: cnt_fav_dlv, key: [item_x] }
     fav_added_from_map: { counter: cnt_fav_from_map, key: [item_x] }
     fav_added_premium: { counter: cnt_fav_premium, key: [item_x] }
