@@ -230,7 +230,7 @@ definitions:
 
     - &q { q.>: "" }
     - &noq { q.=: "" }
-    - &is_1p { page_no: 0 }
+    - &is_1p { $or: [{x_eid.!=: 2012, page_no: 0}, {x_eid: 2012, rec_pos: 0}]}
 
     - &is_serp_empty { item_count: 0 }
     - &is_serp_small { item_count.>=: 1, item_count.<=: 9 }
