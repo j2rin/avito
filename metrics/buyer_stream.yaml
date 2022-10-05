@@ -1,54 +1,54 @@
 definitions:
-    - &eid_x [300, 2437, 2012, 2309, 400, 2743, 4126, 4386, 5354, 450, 6221]
-    - &eid_search [300]
-    - &eid_rec [2437, 2012, 2309, 4126, 4386]
-    - &eid_ph [303]
+    - &eid_x        [300, 2437, 2012, 2309, 400, 2743, 4126, 4386, 5354, 450, 6221]
+    - &eid_search   [300]
+    - &eid_rec      [2437, 2012, 2309, 4126, 4386]
+    - &eid_ph       [303]
     - &eid_ph_realdev [3461, 4600]
-    - &eid_u2i [2012, 2309]
-    - &eid_i2i [2437]
-    - &eid_cv2vac [4386]
-    - &eid_fav_lst [400]
+    - &eid_u2i      [2012, 2309]
+    - &eid_i2i      [2437]
+    - &eid_cv2vac   [4386]
+    - &eid_fav_lst  [400]
     - &eid_comp_lst [450]
     - &eid_push_land [5354]
-    - &eid_map [2743]
-    - &sort_date [1, 2]
-    - &sort_price [3, 4]
+    - &eid_map      [2743]
+    - &sort_date    [1, 2]
+    - &sort_price   [3, 4]
     - &sort_distance [6]
-    - &sort_dft 5
-    - &c_front [2216, 2650, 3461, 857, 4198]
-    - &c_all [303, 3461, 857, 4198]
+    - &sort_dft     [5]
+    - &c_front      [2216, 2650, 3461, 857, 4198]
+    - &c_all        [303, 3461, 857, 4198]
 
-    - &is_search { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0] }
-    - &is_rec { $or: [{ eid: *eid_rec }, { search_flags.bit: 10 }] }
-    - &is_rec_sg { search_flags.bit: 10 }
-    - &is_u2i { eid: *eid_u2i }
-    - &is_i2i { eid: *eid_i2i }
+    - &is_search    { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0] }
+    - &is_rec       { $or: [{ eid: *eid_rec }, { search_flags.bit: 10 }] }
+    - &is_rec_sg    { search_flags.bit: 10 }
+    - &is_u2i       { eid: *eid_u2i }
+    - &is_i2i       { eid: *eid_i2i }
     - &is_push_land { eid: *eid_push_land }
-    - &is_cv2vac { eid: *eid_cv2vac }
-    - &is_fav_lst { eid: *eid_fav_lst }
-    - &is_comp_lst { eid: *eid_comp_lst }
-    - &is_map { eid: *eid_map }
-    - &adv_page { $or: [{ eid: [300, 2592] }, { platform_id: [1, 2], eid: [2572] }, { platform_id: [1], eid: [301] }] }
-    - &is_story { $or: [ {x_from_page.ilike: '%story_%' }, { from_page.ilike: '%stories%' } ] }
+    - &is_cv2vac    { eid: *eid_cv2vac }
+    - &is_fav_lst   { eid: *eid_fav_lst }
+    - &is_comp_lst  { eid: *eid_comp_lst }
+    - &is_map       { eid: *eid_map }
+    - &adv_page     { $or: [{ eid: [300, 2592] }, { platform_id: [1, 2], eid: [2572] }, { platform_id: [1], eid: [301] }] }
+    - &is_story     { $or: [ {x_from_page.ilike: '%story_%' }, { from_page.ilike: '%stories%' } ] }
 
-    - &collab { item_engines.bit: 0 }
-    - &user2vec { item_engines.bit: 1 }
-    - &similars { item_engines.bit: 3 }
-    - &graph { item_engines.bit: 4 }
+    - &collab       { item_engines.bit: 0 }
+    - &user2vec     { item_engines.bit: 1 }
+    - &similars     { item_engines.bit: 3 }
+    - &graph        { item_engines.bit: 4 }
 
-    - &x_is_search { x_eid: *eid_search }
-    - &x_is_rec { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
-    - &x_is_rec_sg { search_flags.bit: 10 }
-    - &x_is_u2i { $or: [{x_eid: *eid_u2i}, {x_eid: *eid_map, engine: personal_geo_map}] }
-    - &x_is_i2i { x_eid: *eid_i2i }
+    - &x_is_search  { x_eid: *eid_search }
+    - &x_is_rec     { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
+    - &x_is_rec_sg  { search_flags.bit: 10 }
+    - &x_is_u2i     { $or: [{x_eid: *eid_u2i}, {x_eid: *eid_map, engine: personal_geo_map}] }
+    - &x_is_i2i     { x_eid: *eid_i2i }
     - &x_is_i2i_delivery { x_eid: *eid_i2i, engine: delivery}
     - &x_is_push_land { x_eid: *eid_push_land }
-    - &x_is_cv2vac { x_eid: *eid_cv2vac }
+    - &x_is_cv2vac  { x_eid: *eid_cv2vac }
     - &x_is_rec_msg { x_from_page: msg_recommendations }
     - &x_is_fav_lst { x_eid: *eid_fav_lst }
     - &x_is_comp_lst { x_eid: *eid_comp_lst }
-    - &x_is_map { x_eid: *eid_map }
-    - &x_no { x_eid.isnull: true }
+    - &x_is_map     { x_eid: *eid_map }
+    - &x_no         { x_eid.isnull: true }
 
     - &x_is_vertical_main {
           $or: [{ x_category_id: [1, 12, 17, 28, 39, 55], x_subcategory_id.isnull: true }, { x_subcategory_id: [250005, 250006, 34] }],
