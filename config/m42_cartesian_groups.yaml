@@ -117,7 +117,18 @@ by_metric:
     - [vertical]
   buyer_delivery_orders_paid:
     - [vertical, logical_category, region, city, category, subcategory]
+
+
 by_metric_list:
   app_errors: [[app_version]]
   transport_m42: [[category, subcategory, param1, is_asd, condition],[vertical, logical_category, logical_param1, is_asd, condition]]
   classified_revenue: [[vertical, logical_category, region, is_asd, user_segment_market, condition]]
+
+  cube__is_logged_in__region__vertical: [[is_logged_in, region, vertical]]
+  cube__logical_category__region__vertical: [[logical_category, region, vertical]]
+  cube__city__logical_category__region__vertical: [[city, logical_category, region, vertical]]
+  cube__is_logged_in__logical_category__region__vertical: [[is_logged_in, logical_category, region, vertical]]
+  cube__city__is_asd__logical_category__region__user_segment_market__vertical: [[city, is_asd, logical_category, region, user_segment_market, vertical]]
+  cube__is_asd__is_logged_in__logical_category__region__user_segment_market__vertical: [[is_asd, is_logged_in, logical_category, region, user_segment_market, vertical]]
+  cube__city__is_asd__logical_category__platform__region__user_segment_market__vertical: [[city, is_asd, logical_category, platform, region, user_segment_market, vertical]]
+  cube__category__city__is_asd__param1__platform__region__subcategory__user_segment_market: [[category, city, is_asd, param1, platform, region, subcategory, user_segment_market]]
