@@ -1,83 +1,84 @@
 definitions:
-    - &eid_x [300, 2437, 2012, 2309, 400, 2743, 4126, 4386, 5354, 450, 6221]
-    - &eid_search [300]
-    - &eid_rec [2437, 2012, 2309, 4126, 4386]
-    - &eid_ph [303]
+    - &eid_x        [300, 2437, 2012, 2309, 400, 2743, 4126, 4386, 5354, 450, 6221]
+    - &eid_search   [300]
+    - &eid_rec      [2437, 2012, 2309, 4126, 4386]
+    - &eid_ph       [303]
     - &eid_ph_realdev [3461, 4600]
-    - &eid_u2i [2012, 2309]
-    - &eid_i2i [2437]
-    - &eid_cv2vac [4386]
-    - &eid_fav_lst [400]
+    - &eid_u2i      [2012, 2309]
+    - &eid_i2i      [2437]
+    - &eid_cv2vac   [4386]
+    - &eid_fav_lst  [400]
     - &eid_comp_lst [450]
     - &eid_push_land [5354]
-    - &eid_map [2743]
-    - &sort_date [1, 2]
-    - &sort_price [3, 4]
+    - &eid_map      [2743]
+    - &sort_date    [1, 2]
+    - &sort_price   [3, 4]
     - &sort_distance [6]
-    - &sort_dft 5
-    - &c_front [2216, 2650, 3461, 857, 4198]
-    - &c_all [303, 3461, 857, 4198]
+    - &sort_dft     [5]
+    - &c_front      [2216, 2650, 3461, 857, 4198]
+    - &c_all        [303, 3461, 857, 4198]
 
-    - &is_search { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0] }
-    - &is_rec { $or: [{ eid: *eid_rec }, { search_flags.bit: 10 }] }
-    - &is_rec_sg { search_flags.bit: 10 }
-    - &is_u2i { eid: *eid_u2i }
-    - &is_i2i { eid: *eid_i2i }
+    - &is_search    { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0] }
+    - &is_rec       { $or: [{ eid: *eid_rec }, { search_flags.bit: 10 }] }
+    - &is_rec_sg    { search_flags.bit: 10 }
+    - &is_u2i       { eid: *eid_u2i }
+    - &is_i2i       { eid: *eid_i2i }
     - &is_push_land { eid: *eid_push_land }
-    - &is_cv2vac { eid: *eid_cv2vac }
-    - &is_fav_lst { eid: *eid_fav_lst }
-    - &is_comp_lst { eid: *eid_comp_lst }
-    - &is_map { eid: *eid_map }
-    - &adv_page { $or: [{ eid: [300, 2592] }, { platform_id: [1, 2], eid: [2572] }, { platform_id: [1], eid: [301] }] }
+    - &is_cv2vac    { eid: *eid_cv2vac }
+    - &is_fav_lst   { eid: *eid_fav_lst }
+    - &is_comp_lst  { eid: *eid_comp_lst }
+    - &is_map       { eid: *eid_map }
+    - &adv_page     { $or: [{ eid: [300, 2592] }, { platform_id: [1, 2], eid: [2572] }, { platform_id: [1], eid: [301] }] }
+    - &is_story     { $or: [ {x_from_page.ilike: '%story_%' }, { from_page.ilike: '%stories%' } ] }
 
-    - &collab { item_engines.bit: 0 }
-    - &user2vec { item_engines.bit: 1 }
-    - &similars { item_engines.bit: 3 }
-    - &graph { item_engines.bit: 4 }
+    - &collab       { item_engines.bit: 0 }
+    - &user2vec     { item_engines.bit: 1 }
+    - &similars     { item_engines.bit: 3 }
+    - &graph        { item_engines.bit: 4 }
 
-    - &x_is_search { x_eid: *eid_search }
-    - &x_is_rec { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
-    - &x_is_rec_sg { search_flags.bit: 10 }
-    - &x_is_u2i { $or: [{x_eid: *eid_u2i}, {x_eid: *eid_map, engine: personal_geo_map}] }
-    - &x_is_i2i { x_eid: *eid_i2i }
+    - &x_is_search  { x_eid: *eid_search }
+    - &x_is_rec     { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
+    - &x_is_rec_sg  { search_flags.bit: 10 }
+    - &x_is_u2i     { $or: [{x_eid: *eid_u2i}, {x_eid: *eid_map, engine: personal_geo_map}] }
+    - &x_is_i2i     { x_eid: *eid_i2i }
     - &x_is_i2i_delivery { x_eid: *eid_i2i, engine: delivery}
     - &x_is_push_land { x_eid: *eid_push_land }
-    - &x_is_cv2vac { x_eid: *eid_cv2vac }
+    - &x_is_cv2vac  { x_eid: *eid_cv2vac }
     - &x_is_rec_msg { x_from_page: msg_recommendations }
     - &x_is_fav_lst { x_eid: *eid_fav_lst }
     - &x_is_comp_lst { x_eid: *eid_comp_lst }
-    - &x_is_map { x_eid: *eid_map }
-    - &x_no { x_eid.isnull: true }
+    - &x_is_map     { x_eid: *eid_map }
+    - &x_no         { x_eid.isnull: true }
 
     - &x_is_vertical_main {
-          $or: [{ x_category_id: [1, 12, 17, 28, 39, 55], x_subcategory_id.isnull: true }, { x_subcategory_id: [250005, 250006, 34] }],
+          $or: [{ x_category_id: [1, 12, 17, 28, 39, 55], x_subcategory_id.isnull: true }, { x_subcategory_id: [250005, 250006, 34], x_param1_id.isnull: true }],
           q.=: "",
           search_flags.!bit: [8, 9],
           x_eid: [300],
       }
 
-    - &x_is_vertical_undefined { x_vertical_id.isnull: true }
-    - &x_is_vertical_defined { x_vertical_id.isnull: false }
+    - &x_is_vertical_undefined  { x_vertical_id.isnull: true }
+    - &x_is_vertical_defined    { x_vertical_id.isnull: false }
 
-    - &is_vertical_main { eid: 2592 }
-    - &is_vertical_main_widget { eid: 5516 }
+    - &is_vertical_main         { eid: 2592 }
+    - &is_vertical_main_widget  { eid: 5516 }
     - &x_is_vertical_main_widget { x_eid: 5516 }
-    - &rec_widget { engine: itemsRecWidget }
-    - &featured_widget { engine: itemsWidget }
+    - &rec_widget               { engine: itemsRecWidget }
+    - &featured_widget          { engine: itemsWidget }
 
-    - &is_sgt { eid: 2443 }
-    - &is_iv { eid: 301 }
+    - &is_sgt       { eid: 2443 }
+    - &is_iv        { eid: 301 }
     - &is_iv_client { eid: 2649 }
-    - &is_btc { eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451, 6608, 6154, 5942] }
+    - &is_btc       { eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451, 6608, 6154, 5942] }
 
-    - &is_ph_realdev { eid: *eid_ph_realdev }
-    - &is_back_call_item { eid: 4198, item.isnull: false }
-    - &is_back_call_jk { eid: 4198, item.isnull: true }
+    - &is_ph_realdev        { eid: *eid_ph_realdev }
+    - &is_back_call_item    { eid: 4198, item.isnull: false }
+    - &is_back_call_jk      { eid: 4198, item.isnull: true }
     - &is_back_call_recallme { eid: 6608 }
-    - &is_back_call { $or: [*is_back_call_item, *is_back_call_jk, *is_back_call_recallme] }
-    - &is_contact_item { $or: [eid: [303, 856, 857, 3005, 2581, 4066, 4675, 4813, 6154, 5942], *is_back_call_item, *is_back_call_recallme] }
-    - &is_contact_jk { $or: [*is_ph_realdev, *is_back_call_jk] }
-    - &is_contact { $or: [*is_contact_item, *is_contact_jk] }
+    - &is_back_call         { $or: [*is_back_call_item, *is_back_call_jk, *is_back_call_recallme] }
+    - &is_contact_item      { $or: [eid: [303, 856, 857, 3005, 2581, 4066, 4675, 4813, 6154, 5942], *is_back_call_item, *is_back_call_recallme] }
+    - &is_contact_jk        { $or: [*is_ph_realdev, *is_back_call_jk] }
+    - &is_contact           { $or: [*is_contact_item, *is_contact_jk] }
 
     - &is_ph_btn { eid: [2216, 2650] }
     - &is_ph { eid: *eid_ph }
@@ -229,7 +230,7 @@ definitions:
 
     - &q { q.>: "" }
     - &noq { q.=: "" }
-    - &is_1p { page_no: 0 }
+    - &is_1p { $or: [{x_eid.!=: 2012, page_no: 0}, {x_eid: 2012, rec_position: 0}]}
 
     - &is_serp_empty { item_count: 0 }
     - &is_serp_small { item_count.>=: 1, item_count.<=: 9 }
@@ -1033,6 +1034,7 @@ metric.counter:
     comparison_list_views_from_item: { filter: [*is_comp_lst, *is_comp_fp_item] }
     comparison_list_views_from_favorite: { filter: [*is_comp_lst, *is_comp_fp_fav] }
     contacts: { filter: [*is_contact] }
+    contacts_story: { filter: [*is_contact, *is_story] }
     contacts_items: { filter: [*is_contact_item], m42: True}
     contacts_items_wo_direct: {filter: [*is_contact_item, item_x_type.isnull: false], m42: True}
     contacts_items_cpa: {filter: [*is_contact_item, *is_item_cpa], m42: True}
@@ -1109,6 +1111,7 @@ metric.counter:
     first_messages_vas: { filter: [*is_item_vas, *is_msg] }
     first_messages_vas_cpa: { filter: [*is_item_vas, *is_msg, *is_item_cpa] }
     item_views: { filter: [*is_iv] }
+    item_views_story: { filter: [*is_iv, *is_story] }
     item_views_from_jk_card: { filter: [*is_iv, from_page: catalog_jk_card] }
     item_views_part_qual_exists: { filter: [*part_qual_exists, *is_iv] }
     item_views_part_qual_compab: { filter: [*part_qual_compab, *is_iv] }
@@ -1410,7 +1413,9 @@ metric.counter:
     total_delivery_click_all_services_fav: { filter: [*x_is_fav_lst, eid: 2483] }
     total_delivery_click_all_services_public_profile: { filter: [*x_is_public_profile, eid: 2483] }
     total_delivery_widget_all_services: { filter: [eid: [4033, 2013]] }
+    total_delivery_widget_all_services_public_profile: { filter: [*x_is_public_profile, eid: [4033, 2013]] }
     total_delivery_confirm_all_services: { filter: [eid: [2749, 5827]] }
+    total_delivery_confirm_all_services_public_profile: { filter: [*x_is_public_profile, eid: [2749, 5827]] }
     total_delivery_contact_all_services: { filter: [*is_delivery_tot] }
     total_delivery_contact_all_services_serp: { filter: [*x_is_search, *is_delivery_tot] }
     total_delivery_contact_all_services_rec_i2i: { filter: [*x_is_i2i, *is_delivery_tot] }
@@ -1508,10 +1513,14 @@ metric.counter:
     btc_s_multiloc: { filter: [*is_s_multiloc, *is_btc_wo_guessing] }
     delivery_total_item_view: { filter: [*is_delivery_active, *is_iv], m42: true }
     total_delivery_click: { filter: [*is_delivery_pvz, *is_not_item_marketplace, eid: 2483], m42: true } #сейчас дубль total_delivery_click_wo_messenger, после добавления кликов с платформенной кнопки мессенджера они разойдутся
+    total_delivery_click_public_profile: { filter: [*x_is_public_profile, *is_delivery_pvz, *is_not_item_marketplace, eid: 2483] }
     total_delivery_click_wo_messenger: { filter: [*is_delivery_pvz, *is_not_item_marketplace, eid: 2483], m42: true }
     total_delivery_widget: { filter: [*is_not_item_marketplace, eid: 2013], m42: true }
+    total_delivery_widget_public_profile: { filter: [*x_is_public_profile, *is_not_item_marketplace, eid: 2013] }
     total_delivery_confirm: { filter: [*is_not_item_marketplace, eid: 2749], m42: true }
+    total_delivery_confirm_public_profile: { filter: [*x_is_public_profile, *is_not_item_marketplace, eid: 2749] }
     total_delivery_contact: { filter: [*is_not_item_marketplace, *is_delivery], m42: true }
+    total_delivery_contact_public_profile: { filter: [*x_is_public_profile, *is_not_item_marketplace, *is_delivery] }
     total_delivery_item_contact: { filter: [*is_not_item_marketplace, *is_contact, *is_delivery_active], m42: true }
     cnt_iv_public_profile: { filter: [*is_iv_wo_guessing, { $or: [[*x_is_public_profile], [*is_public_profile]] }], m42: False }
     cnt_iv_extended_profile: { filter: [*is_iv_wo_guessing, { $or: [[*x_is_extended_profile], [*is_extended_profile]] }], m42: False }
@@ -1905,7 +1914,9 @@ metric.uniq:
     delivery_click_all_services_fav: { counter: total_delivery_click_all_services_fav, key: [item_x] }
     delivery_click_all_services_public_profile: { counter: total_delivery_click_all_services_public_profile, key: [item_x] }
     delivery_widget_all_services: { counter: total_delivery_widget_all_services, key: [cookie_item] }
+    delivery_widget_all_services_public_profile: { counter: total_delivery_widget_all_services_public_profile, key: [cookie_item] }
     delivery_confirm_all_services: { counter: total_delivery_confirm_all_services, key: [cookie_item] }
+    delivery_confirm_all_services_public_profile: { counter: total_delivery_confirm_all_services_public_profile, key: [cookie_item] }
     delivery_contact_all_services: { counter: total_delivery_contact_all_services, key: [cookie_item] }
     delivery_contact_all_services_serp: { counter: total_delivery_contact_all_services_serp, key: [item_x] }
     delivery_contact_all_services_rec_i2i: { counter: total_delivery_contact_all_services_rec_i2i, key: [item_x] }
@@ -1922,14 +1933,18 @@ metric.uniq:
     delivery_iv_rec_public_profile: { counter: cnt_delivery_iv_rec_public_profile, key: [item_x] }
     delivery_click: { counter: total_delivery_click, key: [cookie_item], m42: true } #сейчас дубль delivery_click_wo_messenger, после добавления кликов с платформенной кнопки мессенджера они разойдутся
     delivery_click_serp: { counter: cnt_delivery_click_serp, key: [item_x] }
+    delivery_click_public_profile: { counter: total_delivery_click_public_profile, key: [cookie_item] }
     delivery_click_wo_messenger: { counter: total_delivery_click_wo_messenger, key: [cookie_item], m42: true }
     delivery_widget: { counter: total_delivery_widget, key: [cookie_item], m42: true }
     delivery_widget_serp: { counter: cnt_delivery_widget_serp, key: [item_x] }
+    delivery_widget_public_profile: { counter: total_delivery_widget_public_profile, key: [cookie_item] }
     delivery_confirm: { counter: total_delivery_confirm, key: [cookie_item], m42: true }
     delivery_confirm_serp: { counter: cnt_delivery_confirm_serp, key: [item_x] }
+    delivery_confirm_public_profile: { counter: total_delivery_confirm_public_profile, key: [cookie_item] }
     delivery_contact: { counter: total_delivery_contact, key: [cookie_item], m42: true }
     delivery_item_contact: { counter: total_delivery_item_contact, key: [cookie_item], m42: true }
     delivery_order_create_serp: { counter: cnt_delivery_order_create_serp, key: [item_x] }
+    delivery_contact_public_profile: { counter: total_delivery_contact_public_profile, key: [cookie_item] }
     fav_added_delivery: { counter: cnt_fav_dlv, key: [item_x] }
     fav_added_from_map: { counter: cnt_fav_from_map, key: [item_x] }
     fav_added_premium: { counter: cnt_fav_premium, key: [item_x] }
@@ -2107,11 +2122,16 @@ metric.uniq:
     user_btc_inline: { counter: cnt_btc_inline, key: [cookie], m42: False }
     user_btc_shortcut: { counter: cnt_btc_shortcut, key: [cookie], m42: False }
     user_btc_catalog:  { counter: cnt_btc_catalog,  key: [cookie], m42: False}
-    btclicked_users: { counter: bt_clicks, key: [item_user_id], m42: False }
-    btclicked_users_rec: { counter: cnt_btc_rec, key: [item_user_id], m42: False }
-    btclicked_users_s: { counter: cnt_btc_s, key: [item_user_id], m42: False }
-    btclicked_users_s_q: { counter: cnt_btc_s_query, key: [item_user_id], m42: False }
-    btclicked_users_s_noq: { counter: cnt_btc_s_noquery, key: [item_user_id], m42: False }
+    seller_buyer_pair_with_btc: { counter: bt_clicks, key: [item_user_id], m42: True }
+    seller_buyer_pair_with_btc_rec: { counter: cnt_btc_rec, key: [item_user_id], m42: True }
+    seller_buyer_pair_with_btc_s: { counter: cnt_btc_s, key: [item_user_id], m42: True }
+    seller_buyer_pair_with_btc_s_q: { counter: cnt_btc_s_query, key: [item_user_id], m42: True }
+    seller_buyer_pair_with_btc_s_noq: { counter: cnt_btc_s_noquery, key: [item_user_id], m42: True }
+    seller_buyer_pair_with_iv: { counter: item_views, key: [ item_user_id ], m42: True }
+    seller_buyer_pair_with_iv_rec: { counter: cnt_iv_rec, key: [ item_user_id ], m42: True }
+    seller_buyer_pair_with_iv_s: { counter: cnt_iv_s_item_attr, key: [ item_user_id ], m42: True }
+    seller_buyer_pair_with_iv_s_q: { counter: cnt_s_query_iv, key: [ item_user_id ], m42: True }
+    seller_buyer_pair_with_iv_s_noq: { counter: cnt_s_noquery_iv, key: [ item_user_id ], m42: True }
     user_btc_developer: { counter: btc_developer, key: [cookie] }
     user_btc_from_map_total: { counter: cnt_btc_from_map_s_area, key: [cookie] }
     user_btc_new_from_map_total: { counter: cnt_btc_new_from_map_s_area, key: [cookie] }
@@ -2146,6 +2166,8 @@ metric.uniq:
             key: [cookie]
         }
     user_buyer_target_clicks_shop: { counter: cnt_btc_shopx, key: [cookie] }
+    user_item_views_story: { counter:  item_views_story, key: [cookie] }
+    user_contacts_story: { counter:  contacts_story, key: [cookie] }
     user_iv_cpa: { counter: cnt_iv_cpa, key: [cookie] }
     user_iv_s_cpa: { counter: cnt_iv_s_cpa, key: [cookie] }
     user_iv_rec_cpa: { counter: cnt_iv_rec_cpa, key: [cookie] }

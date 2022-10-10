@@ -19,6 +19,9 @@ metric.counter:
   autoteka_revenue_nonpro_users_ap: {filter: [funnel_stage_id: 4,is_pro: false], obs: [amount]}
   autoteka_cnt_reports_pro_users_ap: { filter: [ funnel_stage_id: 4,is_pro: true ], obs: [ reports_count ] }
   autoteka_cnt_reports_nonpro_users_ap: { filter: [ funnel_stage_id: 4,is_pro: false ], obs: [ reports_count ] }
+  autoteka_revenue_search_item_ap: {filter: [funnel_stage_id: 4, searchtype: 1], obs: [amount]}
+  autoteka_cnt_reports_search_item_ap: {filter: [funnel_stage_id: 4, searchtype: 1], obs: [reports_count]}
+  autoteka_cnt_previews_search_item_ap: {filter: [funnel_stage_id: 1, searchtype: 1]}
 
 metric.uniq:
   autoteka_unique_report_buyers_ap: {counter: autoteka_cnt_reports_ap, key: [autotekauser_id]}
@@ -40,6 +43,8 @@ metric.uniq:
   autoteka_unique_report_new_buyers_ap: {counter: autoteka_cnt_reports_new_users_ap, key: [autotekauser_id]}
   autoteka_unique_report_pro_buyers_ap: {counter: autoteka_cnt_reports_pro_users_ap, key: [autotekauser_id]}
   autoteka_unique_report_nonpro_buyers_ap: {counter: autoteka_cnt_reports_nonpro_users_ap, key: [autotekauser_id]}
+  autoteka_unique_report_buyers_search_item_ap: {counter: autoteka_cnt_reports_search_item_ap, key: [autotekauser_id]}
+  autoteka_unique_preview_visitors_search_item_ap: {counter: autoteka_cnt_previews_search_item_ap, key: [additionalcookie_id]}
 
 metric.ratio:
   autoteka_report_price_ap: {num: autoteka_revenue_ap, den: autoteka_cnt_reports_ap}
@@ -52,3 +57,4 @@ metric.ratio:
   autoteka_selection_paypage_conversion_unique_ap: {num: autoteka_unique_paypage_visitors_ap, den: autoteka_unique_product_selection_visitors_ap}
   autoteka_preview_callback_conversion_ap: {num: autoteka_cnt_reports_ap, den: autoteka_cnt_previews_ap}
   autoteka_preview_callback_conversion_unique_ap: {num: autoteka_unique_report_buyers_ap, den: autoteka_unique_preview_visitors_ap}
+  autoteka_preview_callback_conversion_unique_search_item_ap: {num: autoteka_unique_report_buyers_search_item_ap, den: autoteka_unique_preview_visitors_search_item_ap}
