@@ -2219,3 +2219,26 @@ short_rent_item_trx:
   primary_subject: user
   dtm: event_date
   segm: user_id
+
+deal_confirmed:
+  metric_configs: [deal_confirmed]
+  database: vertica
+  table: dma.vo_confirmed_deals
+  column_map:
+    item: item_id
+    user: user_id
+    user_logcat: [user_id, logical_category_id]
+  dimensions:
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - is_asd
+    - user_segment_market
+  m42_cartesian_groups:
+    - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
+    - [category, subcategory]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
