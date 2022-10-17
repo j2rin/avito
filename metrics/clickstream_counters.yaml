@@ -157,6 +157,9 @@ metric.counter:
   cnt_order_page_views_total:                           {filter: [eid: 4760]}
   count_navig_eids:                                     {filter: [eid.in: [2443, 2664, 3232, 4159]], obs: [event_count]}
 
+  cnt_competition_widget_shows_total:                   {filter: [eid: 6265]}
+  cnt_competition_widget_shows_from_delivery_widgets:   {filter: [eid: 6265, source_click_page: 'delivery_widget']}
+  cnt_competition_widget_shows_from_checkout:           {filter: [eid: 6265, source_click_page: 'checkout_cheaper']}
 
 metric.uniq:
   unq_geo_redirect_replace:          {counter: geo_redirect_replace,            key: [cookie]}
@@ -264,6 +267,11 @@ metric.uniq:
   order_page_views_from_messenger:                           {counter: cnt_order_page_views_from_messenger,    key: [cookie_order]}
   order_page_views_total:                                    {counter: cnt_order_page_views_total,             key: [cookie_order]}
   user_order_page_views:                                     {counter: cnt_order_page_views_total,             key: [cookie]}
+
+  competition_widget_shows_total:                            {counter: cnt_competition_widget_shows_total,                 key: [cookie_item]}
+  competition_widget_shows_from_delivery_widgets:            {counter: cnt_competition_widget_shows_from_delivery_widgets, key: [cookie_item]}
+  competition_widget_shows_from_checkout:                    {counter: cnt_competition_widget_shows_from_checkout,         key: [cookie_item]}
+  user_competition_widget_shows:                             {counter: cnt_competition_widget_shows_total,                 key: [cookie]}
 
 
 metric.ratio:
