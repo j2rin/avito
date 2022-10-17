@@ -3,20 +3,20 @@ definitions:
   - &is_success_call      {talk_duration.>: 30}
   - &is_answered_call     {talk_duration.>: 0}
 
-metrics.counter:
+metric.counter:
 
   target_call_bx:         {filter: [*is_target_call]} # количество целевых звонков
   target_call_bx_success: {filter: [*is_target_call, *is_success_call]} # количество целевых звонков длительностью более 30 секунд
   answered_call_bx:       {filter: [*is_answered_call]} # количество отвеченных звонков
   target_call_bx_talkseconds:     {filter: [*is_target_call], obs: [talk_duration]} # количество целевых секунд
 
-metrics.uniq:
+metric.uniq:
 
   user_target_call_bx:    {counter: target_call_bx, key: [user]}
   user_target_call_bx_success:    {counter: target_success_call_bx, key: [user]}
   user_answered_call_bx:  {counter: answered_call_sx, key: [user]}
 
-metrics.ratio:
+metric.ratio:
   target_call_bx_ratio:   {num: target_call_bx, den: answered_call_bx} # доля целевых звонков от всех отвеченных
   user_target_call_bx_ratio:   {num: user_target_call_bx, den: user_answered_call_bx} # доля юзеров с целевыми звонками от всех
 
