@@ -19,4 +19,5 @@ hierarchy (
     (vertical_id, logical_category_id, logical_param1_id, logical_param2_id),
     (category_id, subcategory_id, param1_id, param2_id, param3_id, param4_id)
 )
-primary_key (infmquery_id, microcat_id);
+primary_key (infmquery_id, microcat_id)
+;

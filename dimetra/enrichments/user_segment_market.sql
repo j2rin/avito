@@ -16,3 +16,4 @@ left join (
 
 LEFT JOIN dict.segmentation_ranks ls on ls.logical_category_id = t.logcat_id and ls.is_default
 primary_key(user_id, logical_category_id, logcat_id, __date__)
+;

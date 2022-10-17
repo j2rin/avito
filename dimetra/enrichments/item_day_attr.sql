@@ -15,3 +15,4 @@ left join DMA.o_seller_item_active sia on sia.item_id = t.item_id
 left join DMA.o_seller_item_event sie on sie.item_id = t.item_id
                                         and sie.event_date = t.__date__
 primary_key(__date__, item_id)
+;

@@ -29,7 +29,8 @@ select
     CASE WHEN eid in (401, 2574, 2732) then 1 WHEN eid = 402 then -1 end as                                                 favorites_net,
     rec_engine_id                                             as                                                            x_rec_engine_id,
     *
-from dma.buyer_stream t;
+from dma.buyer_stream t
+;
 
 create metrics buyer_stream as
 select
