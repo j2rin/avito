@@ -3493,5 +3493,24 @@ metric.ratio:
     user_c_delivery_per_user_c_on_delivery_items: {num: user_c_delivery, den: user_c_on_delivery_items }
     user_btc_video_per_user_iv_video: { num: user_btc_video, den: user_iv_video }
     user_btc_video_s_per_user_iv_video_s: { num: user_btc_video_s, den: user_iv_video_s }
-
+    s_contact_imv_good: { filter: [*imv_re_good, *is_contact, *x_is_search], m42: False }
+    s_contact_imv_low: { filter: [*imv_re_low, *is_contact, *x_is_search], m42: False }
+    s_contact_imv_high: { filter: [*imv_re_high, *is_contact, *x_is_search], m42: False }
+    s_contact_imv_no_label: { filter: [*imv_re_no_label, *is_contact, *x_is_search], m42: False }
+    s_iv_imv_good: { filter: [*imv_re_good, *is_iv, *x_is_search], m42: False }
+    s_iv_imv_low: { filter: [*imv_re_low, *is_iv, *x_is_search], m42: False }
+    s_iv_imv_high: { filter: [*imv_re_high, *is_iv, *x_is_search], m42: False }
+    s_iv_imv_no_label: { filter: [*imv_re_no_label, *is_iv, *x_is_search], m42: False }
+    s_buyers_imv_good: { counter: contact_imv_re_good, key: [cookie], m42: False }
+    s_buyers_imv_low: { counter: contact_imv_re_low, key: [cookie], m42: False }
+    s_buyers_imv_high: { counter: contact_imv_re_high, key: [cookie], m42: False }
+    s_buyers_imv_no_label: { counter: contact_imv_re_no_label, key: [cookie], m42: False }
+    user_s_iv_imv_good: { counter: iv_imv_re_good, key: [cookie], m42: False }
+    user_s_iv_imv_low: { counter: iv_imv_re_low, key: [cookie], m42: False }
+    user_s_iv_imv_high: { counter: iv_imv_re_high, key: [cookie], m42: False }
+    user_s_iv_imv_no_label: { counter: iv_imv_no_label, key: [cookie], m42: False }
+    s_conv_to_cont_imv_good: { num: s_contact_imv_good, den: s_iv_imv_good, m42: False }
+    s_conv_to_cont_imv_low: { num: s_contact_imv_low, den: s_iv_imv_low, m42: False }
+    s_conv_to_cont_imv_high: { num: s_contact_imv_high, den: s_iv_imv_high, m42: False }
+    s_conv_to_cont_imv_no_label: { num: s_contact_imv_no_label, den: s_iv_imv_no_label, m42: False }
 
