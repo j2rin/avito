@@ -1505,6 +1505,14 @@ metric.counter:
     iv_imv_re_low: { filter: [*imv_re_low, *is_iv], m42: False }
     iv_imv_re_high: { filter: [*imv_re_high, *is_iv], m42: False }
     iv_imv_re_no_label: { filter: [*imv_re_no_label, *is_iv], m42: False }
+    s_contact_imv_good: { filter: [*imv_re_good, *is_contact, *x_is_search], m42: False }
+    s_contact_imv_low: { filter: [*imv_re_low, *is_contact, *x_is_search], m42: False }
+    s_contact_imv_high: { filter: [*imv_re_high, *is_contact, *x_is_search], m42: False }
+    s_contact_imv_no_label: { filter: [*imv_re_no_label, *is_contact, *x_is_search], m42: False }
+    s_iv_imv_good: { filter: [*imv_re_good, *is_iv, *x_is_search], m42: False }
+    s_iv_imv_low: { filter: [*imv_re_low, *is_iv, *x_is_search], m42: False }
+    s_iv_imv_high: { filter: [*imv_re_high, *is_iv, *x_is_search], m42: False }
+    s_iv_imv_no_label: { filter: [*imv_re_no_label, *is_iv, *x_is_search], m42: False }
     s_localpriority: { filter: [*is_search, *is_s_localpriority] }
     s_multiloc: { filter: [*is_search, *is_s_multiloc] }
     iv_s_multiloc: { filter: [*is_s_multiloc, *is_iv_wo_guessing] }
@@ -2776,6 +2784,14 @@ metric.uniq:
     user_iv_imv_re_low: { counter: iv_imv_re_low, key: [cookie], m42: False }
     user_iv_imv_re_high: { counter: iv_imv_re_high, key: [cookie], m42: False }
     user_iv_imv_re_no_label: { counter: iv_imv_re_no_label, key: [cookie], m42: False }
+    s_buyers_imv_good: { counter: s_contact_imv_good, key: [cookie], m42: False }
+    s_buyers_imv_low: { counter: s_contact_imv_low, key: [cookie], m42: False }
+    s_buyers_imv_high: { counter: s_contact_imv_high, key: [cookie], m42: False }
+    s_buyers_imv_no_label: { counter: s_contact_imv_no_label, key: [cookie], m42: False }
+    user_s_iv_imv_good: { counter: s_iv_imv_good, key: [cookie], m42: False }
+    user_s_iv_imv_low: { counter: s_iv_imv_low, key: [cookie], m42: False }
+    user_s_iv_imv_high: { counter: s_iv_imv_high, key: [cookie], m42: False }
+    user_s_iv_imv_no_label: { counter: s_iv_imv_no_label, key: [cookie], m42: False }
     buyers_part_qual_exists: { counter: contact_part_qual_exists, key: [cookie], m42: False }
     buyers_part_qual_compab: { counter: contact_part_qual_compab, key: [cookie], m42: False }
     buyers_part_qual_unknown: { counter: contact_part_qual_unknown, key: [cookie], m42: False }
@@ -3108,7 +3124,7 @@ metric.ratio:
     phone_views_per_item_view: { num: phone_views, den: item_views }
     regions_level_searches_per_search: { num: regions_level_searches, den: searches }
     russia_level_searches_per_search: { num: russia_level_searches, den: searches }
-    s_btc_per_s: { num: search_btc, den: searches }
+    s_btc_per_s: { num: search_btc, den: searches_serp }
     s_btc_per_s_date_sort: { num: unq_x_s_btc_date_sort, den: searches_date_sort }
     s_btc_per_s_default_sort: { num: unq_x_s_btc_default_sort, den: searches_default_sort }
     s_btc_per_s_distance_sort: { num: unq_x_s_btc_distance_sort, den: searches_distance_sort }
@@ -3127,7 +3143,7 @@ metric.ratio:
     s_pages_per_s: { num: searches_serp, den: searches }
     s_price_sort_per_s: { num: searches_price_sort, den: searches }
     s_query_per_s: { num: searches_with_query, den: searches }
-    searches_contact_per_search: { num: searches_contact_serp, den: searches }
+    searches_contact_per_search: { num: searches_contact_serp, den: searches_serp }
     searches_district_per_search: { num: searches_district, den: searches }
     searches_district_with_btc_per_search_district: { num: searches_district_with_btc, den: searches_district }
     searches_district_with_contact_per_search_district: { num: searches_district_with_contact, den: searches_district }
@@ -3139,7 +3155,7 @@ metric.ratio:
     searches_from_witcher_new_flats_per_witcher_new_flats: { num: searches_from_witcher_new_flats, den: searches_witcher_new_flats }
     searches_from_witcher_regions_per_witcher_region: { num: searches_from_witcher_regions, den: searches_witcher_regions }
     searches_geo_per_search: { num: searches_geo, den: searches }
-    searches_item_view_serp_per_searches_serp: { num: searches_item_view_serp, den: searches }
+    searches_item_view_serp_per_searches_serp: { num: searches_item_view_serp, den: searches_serp }
     searches_local_geo_per_search: { num: searches_local_geo, den: searches }
     searches_local_geo_with_item_view_per_search_local_geo: { num: unq_x_s_distr_with_iv_metro_road, den: searches_local_geo }
     searches_metro_per_search: { num: searches_metro, den: searches }
@@ -3493,5 +3509,8 @@ metric.ratio:
     user_c_delivery_per_user_c_on_delivery_items: {num: user_c_delivery, den: user_c_on_delivery_items }
     user_btc_video_per_user_iv_video: { num: user_btc_video, den: user_iv_video }
     user_btc_video_s_per_user_iv_video_s: { num: user_btc_video_s, den: user_iv_video_s }
-
+    s_conv_to_cont_imv_good: { num: s_contact_imv_good, den: s_iv_imv_good, m42: False }
+    s_conv_to_cont_imv_low: { num: s_contact_imv_low, den: s_iv_imv_low, m42: False }
+    s_conv_to_cont_imv_high: { num: s_contact_imv_high, den: s_iv_imv_high, m42: False }
+    s_conv_to_cont_imv_no_label: { num: s_contact_imv_no_label, den: s_iv_imv_no_label, m42: False }
 

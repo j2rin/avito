@@ -125,6 +125,9 @@ attendance_segment:       {level: buyer_segment}
 quantity_c:               {level: buyer_segment}
 quantity_iv:              {level: buyer_segment}
 buyer_order_group:        {level: buyer_orders}
+traffic_source_paid_free: {level: marketing_traffic_source, has_id: true}
+traffic_source_agg:       {level: marketing_traffic_source, has_id: true, parent: traffic_source_paid_free}
+traffic_source:           {level: marketing_traffic_source, has_id: true, parent: traffic_source_agg}
 
 # Специфичные для M42 --------------------------------------------------------------------------------------------------
 #m42_platform:             {level: participant, has_id: true,                alias: platform, m42_cartesian_default: true}
