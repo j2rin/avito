@@ -2341,15 +2341,15 @@ sbc_inbox_special_offers:
   database: vertica
   table: dma.vo_seller_buyer_communication
   column_map:
-    user: to_user_id
+    user: buyer_id
   dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {user: to_user_id}
+  participant: {user: buyer_id}
   primary_subject: user
   dtm: discount_send_date
-  segm: to_user_id
+  segm: buyer_id
   
   
 sbc_answered_inbox_special_offers:
@@ -2357,14 +2357,14 @@ sbc_answered_inbox_special_offers:
   database: vertica
   table: dma.vo_seller_buyer_communication
   column_map:
-    user: to_user_id
+    user: buyer_id
     platform_id: answer_platform
   dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant:  {user: to_user_id}
+  participant:  {user: buyer_id}
   primary_subject: user
   dtm: answer_time
-  segm: to_user_id
+  segm: buyer_id
 
