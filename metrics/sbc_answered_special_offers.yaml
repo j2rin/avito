@@ -1,0 +1,14 @@
+definitions:
+
+  - &is_accepted           {answer: accept_discount}
+  - &is_first_message      {first_message: True}
+
+
+metric.counter:
+    answered_special_offers:                                 {filter: [*is_answer], obs: [special_offers]}
+    accepted_special_offers:                                 {filter: [*is_accepted], obs: [special_offers}
+    fm_special_offers:                                       {filter: [*is_first_message], obs: [special_offers}
+
+
+metric.uniq:
+    user_accepted_special_offers:                            {counter: accepted_special_offers, key: [user_id]}

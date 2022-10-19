@@ -2301,4 +2301,70 @@ target_call_sx:
     - [category, subcategory]
   dtm: event_date
   segm: seller_id
+  
+  
+sbc_special_offers:
+  metric_configs: [sbc_special_offers]
+  database: vertica
+  table: dma.vo_seller_buyer_communication
+  column_map:
+    user: user_id
+    platform_id: platform_id
+  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, is_asd, user_segment_market]
+  m42_cartesian_groups:
+    - [is_asd, vertical, logical_category, user_segment_market]
+    - [category, subcategory]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: discount_send_date
+  segm: user_id
+  
+  
+sbc_answered_special_offers:
+  metric_configs: [sbc_answered_special_offers]
+  database: vertica
+  table: dma.vo_seller_buyer_communication
+  column_map:
+    user: user_id
+  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, is_asd, user_segment_market]
+  m42_cartesian_groups:
+    - [is_asd, vertical, logical_category, user_segment_market]
+    - [category, subcategory]
+  participant:  {user: user_id}
+  primary_subject: user
+  dtm: discount_send_date
+  segm: user_id
+    
+  
+sbc_inbox_special_offers:
+  metric_configs: [sbc_inbox_special_offers]
+  database: vertica
+  table: dma.vo_seller_buyer_communication
+  column_map:
+    user: to_user_id
+  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4]
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  participant: {user: to_user_id}
+  primary_subject: user
+  dtm: discount_send_date
+  segm: to_user_id
+  
+  
+sbc_answered_inbox_special_offers:
+  metric_configs: [sbc_answered_inbox_special_offers]
+  database: vertica
+  table: dma.vo_seller_buyer_communication
+  column_map:
+    user: to_user_id
+    platform_id: answer_platform
+  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4]
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  participant:  {user: to_user_id}
+  primary_subject: user
+  dtm: answer_time
+  segm: to_user_id
 
