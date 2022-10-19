@@ -8,7 +8,7 @@ left join (
          user_segment as user_segment_market,
          logical_category_id
   from dma.user_segment_market us
-  where user_id in (select user_id from :fact_table where event_date = '2022-01-01')
+  where user_id in (select user_id from :fact_table where event_date between :first_date and :last_date)
 ) us
   on us.user_id = t.user_id
   and us.logical_category_id = t.logical_category_id
