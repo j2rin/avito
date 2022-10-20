@@ -1,0 +1,13 @@
+definitions:
+
+  - &source_vas            {source: 2}
+  - &source_tariff         {source: 1} 
+
+
+metric.counter:
+    sbc_special_offers:                         {obs: [special_offers]}
+    sbc_special_offers_vas:                     {filter: [*source_vas], obs: [special_offers]}
+    sbc_special_offers_tariff:                  {filter: [*source_tariff], obs: [special_offers]} 
+
+metric.uniq:
+    user_sbc_special_offers:                   {counter: sbc_special_offers, key: [user_id]}
