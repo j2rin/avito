@@ -1,0 +1,19 @@
+metric.counter:
+  support_interaction_created:                  {obs: [interaction_created]}
+  support_interaction_flow:                     {obs: [interaction_flow]}
+  support_interaction_automated:                {obs: [interaction_automated]}
+  support_interaction_fully_automated:          {obs: [interaction_fully_automated]}
+  support_interaction_partly_automated:         {obs: [interaction_partly_automated]}
+  support_interaction_resolved:                 {obs: [interaction_resolved]}
+  support_interaction_resolved_fcr:             {obs: [interaction_resolved_fcr]}
+  support_interaction_resolved_not_fcr:         {obs: [interaction_resolved_not_fcr]}
+# --- COMBINING TOTAL ---
+  support_interaction_total_flow:               {obs: [interaction_flow, interaction_fully_automated]}
+
+metric.uniq:
+  support_interaction_contacters:               {counter: support_interaction_created,   key: [participant]}
+
+metric.ratio:
+  support_interaction_automation_rate:          {num: support_interaction_automated, den: support_interaction_total_flow}
+  support_interaction_fully_automation_rate:    {num: support_interaction_fully_automated, den: support_interaction_total_flow}
+  support_interaction_fcr:                      {num: support_interaction_resolved_fcr, den: support_interaction_total_flow}
