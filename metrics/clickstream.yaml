@@ -48,6 +48,7 @@ metric.counter:
   story_shows:                                 {filter: [eid: 4233], obs: [event_count]}
   story_clicks:                                {filter: [eid: 4297], obs: [event_count]}
   stories_list_shows:                          {filter: [eid: 4310], obs: [event_count]}
+  story_page_open:                             {filter: [eid: 4298], obs: [event_count]}
   password_restore_request_attempts:           {filter: [eid: 212],  obs: [event_count]}
   password_restore_request_errors:             {filter: [eid: 212, has_error: true],  obs: [event_count]}
   password_restore_requests:                   {filter: [eid: 212, has_error: false], obs: [event_count]}
@@ -132,6 +133,7 @@ metric.uniq:
   user_stories_list_clicks:                         {counter: stories_list_clicks,                         key: [cookie]}
   user_story_shows:                                 {counter: story_shows,                                 key: [cookie]}
   user_story_clicks:                                {counter: story_clicks,                                key: [cookie]}
+  user_story_page_open:                             {counter: story_page_open,                             key: [cookie]}
   user_stories_list_shows:                          {counter: stories_list_shows,                          key: [cookie]}
   user_password_restore_request:                    {counter: password_restore_requests,                   key: [cookie]}
   user_password_restore_request_attempt:            {counter: password_restore_request_attempts,           key: [cookie]}
@@ -181,6 +183,8 @@ metric.ratio:
   user_story_ctr:                          {num: user_stories_list_clicks,            den: user_stories_list_shows}
   story_btn_ctr:                           {num: story_clicks,                        den: stories_list_clicks}
   user_story_btn_ctr:                      {num: user_story_clicks,                   den: user_stories_list_clicks}
+  story_depth:                             {num: story_page_open,                     den: story_clicks}
+  user_story_depth:                        {num: user_story_page_open,                den: user_story_clicks}
   nd_banner_successful_dispatch_per_click_request_back_call: {num: nd_banner_successful_dispatch_for_back_call, den: nd_click_request_call}
   callback_button_click_per_show:          {num: callback_button_click,               den: callback_button_show}
   callback_request_sent_per_click:         {num: callback_request_sent,               den: callback_button_click}
