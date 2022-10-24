@@ -758,6 +758,23 @@ buyer_filter:
   dtm: event_date
   segm: cookie_id
 
+weighted_buyer:
+  metric_configs: [weighted_buyer]
+  database: vertica
+  table: dma.weighted_buyer_metric
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - region
+    - logical_category
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  m42_cartesian_groups:
+    - [is_logged_in]
+  dtm: event_date
+  segm: cookie_id
+
 seller_item_add:
   metric_configs: [seller_item_add]
   database: vertica
