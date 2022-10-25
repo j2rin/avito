@@ -2396,3 +2396,14 @@ sbc_answered_inbox_special_offers:
   dtm: answer_time
   segm: buyer_id
 
+perf_queried_hosts_durations:
+  metric_configs: [perf_screen_memory_consumption]
+  database: vertica
+  table: dma.perf_screen_memory_consumption
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions: [platform, screen_name]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
