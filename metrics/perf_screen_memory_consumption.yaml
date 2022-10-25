@@ -1,0 +1,9 @@
+metric.counter:
+  screen_presented_events: {filter: [{metric_name: presented}]}
+  screen_deinited_events: {filter: [{metric_name: deinited}]}
+  screen_presented_memory_consumption_sum: {filter: [{metric_name: presented}], obs: [bytes_consumed]}
+  screen_deinited_memory_consumption_sum: {filter: [{metric_name: deinited}], obs: [bytes_consumed]}
+
+metric.ratio:
+  screen_presented_memory_consumption: {num: screen_presented_memory_consumption_sum, den: screen_presented_events}
+  screen_deinited_memory_consumption: {num: screen_deinited_memory_consumption_sum, den: screen_deinited_events}
