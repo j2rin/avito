@@ -1,5 +1,5 @@
 create enrichment user_segment_market as select
-first(us.user_segment_market, ls.segment) as user_segment_market
+us.user_segment_market as user_segment_market
 from :fact_table t
 left join (
   select user_id,
@@ -14,6 +14,5 @@ left join (
   and us.logical_category_id = t.logical_category_id
   and t.__date__ between us.first_date and us.last_date
 
-LEFT JOIN dict.segmentation_ranks ls on ls.logical_category_id = t.logcat_id and ls.is_default
-primary_key(user_id, logical_category_id, logcat_id, __date__)
+primary_key(user_id, logical_category_id, __date__)
 ;

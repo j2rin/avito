@@ -2,8 +2,8 @@ create enrichment microcat_tree as
 select
     first(lc.vertical_id, cm.vertical_id)                              as vertical_id,
     first(lc.logical_category_id, cm.logical_category_id)              as logical_category_id,
-    lc.logical_param1_id),
-    lc.logical_param2_id),
+    lc.logical_param1_id,
+    lc.logical_param2_id,
     lc.logcat_id,
     first(cm.category_id, cm_legacy.category_id)                       as category_id,
     first(cm.subcategory_id, cm_legacy.subcategory_id)                 as subcategory_id,
