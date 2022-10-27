@@ -80,153 +80,153 @@ definitions:
     - &is_contact_jk        { $or: [*is_ph_realdev, *is_back_call_jk] }
     - &is_contact           { $or: [*is_contact_item, *is_contact_jk] }
 
-    - &is_ph_btn { eid: [2216, 2650] }
-    - &is_ph { eid: *eid_ph }
+    - &is_ph_btn    { eid: [2216, 2650] }
+    - &is_ph        { eid: *eid_ph }
     - &is_ph_realdev { eid: *eid_ph_realdev }
-    - &is_ph_snip { phone_view_source: s }
-    - &is_ph_right { $or: [{ phone_view_source: r }, { phone_view_source.isnull: true }] }
-    - &is_ph_xlvas { phone_view_source: xs }
-    - &is_ph_top { phone_view_source: t }
-    - &is_ph_chat { eid: 3005 }
-    - &is_ph_tot { eid: [303, 3005, 3461] }
-    - &is_msg_btn { eid: 2654 }
-    - &is_btn_snip { phone_view_source: s }
+    - &is_ph_snip   { phone_view_source: s }
+    - &is_ph_right  { $or: [{ phone_view_source: r }, { phone_view_source.isnull: true }] }
+    - &is_ph_xlvas  { phone_view_source: xs }
+    - &is_ph_top    { phone_view_source: t }
+    - &is_ph_chat   { eid: 3005 }
+    - &is_ph_tot    { eid: [303, 3005, 3461] }
+    - &is_msg_btn   { eid: 2654 }
+    - &is_btn_snip  { phone_view_source: s }
     - &is_btn_xlvas { phone_view_source: xl }
-    - &is_btn_item { $or: [{ phone_view_source: item }, { phone_view_source: item_photo }, { phone_view_source.isnull: true }] }
-    - &is_msg { eid: [856, 857, 4066] }
-    - &is_fav { eid: [401, 2574, 2732] }
-    - &is_fav_rmv { eid: 402 }
-    - &is_comp { eid: 451 }
-    - &is_comp_rmv { eid: 452 }
+    - &is_btn_item  { $or: [{ phone_view_source: item }, { phone_view_source: item_photo }, { phone_view_source.isnull: true }] }
+    - &is_msg       { eid: [856, 857, 4066] }
+    - &is_fav       { eid: [401, 2574, 2732] }
+    - &is_fav_rmv   { eid: 402 }
+    - &is_comp      { eid: 451 }
+    - &is_comp_rmv  { eid: 452 }
     - &is_delivery_btn { eid: 2013 }
-    - &is_delivery { eid: 2015 }
-    - &is_courier { eid: 4035 }
+    - &is_delivery  { eid: 2015 }
+    - &is_courier   { eid: 4035 }
     - &is_delivery_tot { eid: [2015, 4035] }
-    - &is_booking { eid: 2581 }
-    - &is_soc_btn { eid: 308 }
-    - &is_calendar { eid: 6154 }
+    - &is_booking   { eid: 2581 }
+    - &is_soc_btn   { eid: 308 }
+    - &is_calendar  { eid: 6154 }
     - &is_iv_wo_guessing { <<: *is_iv, item_x_type: 0 }
     - &is_btc_wo_guessing { $or: [{ <<: *is_btc, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
     - &is_contact_wo_guessing { $or: [{ <<: *is_contact, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
 
     - &is_videocalls_contact { eid: 5629 }
 
-    - &is_shop { search_flags.bit: 7 }
-    - &x_is_shop { search_flags.bit: 7 }
+    - &is_shop      { search_flags.bit: 7 }
+    - &x_is_shop    { search_flags.bit: 7 }
 
-    - &is_s_geo { search_flags.bit: [0, 1, 2, 3] }
-    - &is_s_local_geo { search_flags.bit: [0, 1, 2] }
-    - &is_s_metro { search_flags.bit: 0 }
-    - &is_s_district { search_flags.bit: 1 }
-    - &is_s_road { search_flags.bit: 2 }
-    - &is_s_radius { search_flags.bit: 3 }
+    - &is_s_geo         { search_flags.bit: [0, 1, 2, 3] }
+    - &is_s_local_geo   { search_flags.bit: [0, 1, 2] }
+    - &is_s_metro       { search_flags.bit: 0 }
+    - &is_s_district    { search_flags.bit: 1 }
+    - &is_s_road        { search_flags.bit: 2 }
+    - &is_s_radius      { search_flags.bit: 3 }
     - &is_default_radius { search_flags.bit: 30 }
     - &is_not_default_radius { $or: [search_flags.!bit: 30, search_radius.isnull: false] }
-    - &is_s_map { search_flags.bit: 4 }
-    - &is_s_delivery { search_flags.bit: 5 }
-    - &is_s_saved { search_flags.bit: 6 }
-    - &is_s_jk_catalog { search_flags.bit: 35 }
-    - &is_s_jk_card { search_flags.bit: 36 }
+    - &is_s_map         { search_flags.bit: 4 }
+    - &is_s_delivery    { search_flags.bit: 5 }
+    - &is_s_saved       { search_flags.bit: 6 }
+    - &is_s_jk_catalog  { search_flags.bit: 35 }
+    - &is_s_jk_card     { search_flags.bit: 36 }
     - &is_s_items_saved_filters_non_modified { search_flags.bit: 37 }
     - &is_s_items_saved_filters_modified { search_flags.bit: 38 }
 
-    - &x_is_filter_search { search_flags.bit: 8 }
+    - &x_is_filter_search       { search_flags.bit: 8 }
     - &x_is_price_filter_search { search_flags.bit: 9 }
-    - &x_is_sg_rec { search_flags.bit: 10 }
-    - &x_is_extra_regions { search_flags.bit: 11 }
-    - &x_is_extra_delivery { search_flags.bit: 12 }
-    - &x_is_witcher_regions { search_flags.bit: 13 }
-    - &x_is_witcher_delivery { search_flags.bit: 14 }
-    - &x_is_witcher_new_auto { search_flags.bit: 15 }
-    - &x_is_witcher_new_flats { search_flags.bit: 16 }
+    - &x_is_sg_rec              { search_flags.bit: 10 }
+    - &x_is_extra_regions       { search_flags.bit: 11 }
+    - &x_is_extra_delivery      { search_flags.bit: 12 }
+    - &x_is_witcher_regions     { search_flags.bit: 13 }
+    - &x_is_witcher_delivery    { search_flags.bit: 14 }
+    - &x_is_witcher_new_auto    { search_flags.bit: 15 }
+    - &x_is_witcher_new_flats   { search_flags.bit: 16 }
     - &x_is_witcher_marketplace { search_flags.bit: 17 }
-    - &x_is_extra_quorum { search_flags.bit: 18 }
-    - &x_is_extra_vector { search_flags.bit: 19 }
-    - &x_is_suggest_click { search_flags.bit: 21 }
-    - &x_is_extra_regions_mix { search_flags.bit: 22 }
+    - &x_is_extra_quorum        { search_flags.bit: 18 }
+    - &x_is_extra_vector        { search_flags.bit: 19 }
+    - &x_is_suggest_click       { search_flags.bit: 21 }
+    - &x_is_extra_regions_mix   { search_flags.bit: 22 }
 
-    - &is_delivery_pvz { other_flags.bit: 0 }
-    - &is_safedeal { other_flags.bit: 1 }
-    - &is_delivery_courier { other_flags.bit: 2 }
-    - &is_delivery_active { item_flags.bit: 16 }
+    - &is_delivery_pvz      { other_flags.bit: 0 }
+    - &is_safedeal          { other_flags.bit: 1 }
+    - &is_delivery_courier  { other_flags.bit: 2 }
+    - &is_delivery_active   { item_flags.bit: 16 }
 
-    - &is_item_marketplace { item_flags.bit: 2 }
-    - &is_not_item_marketplace { item_flags.!bit: 2 }
-    - &is_search_marketplace { search_flags.bit: 31 }
-    - &is_search_w_mp_item { search_flags.bit: 32 }
+    - &is_item_marketplace      { item_flags.bit: 2 }
+    - &is_not_item_marketplace  { item_flags.!bit: 2 }
+    - &is_search_marketplace    { search_flags.bit: 31 }
+    - &is_search_w_mp_item      { search_flags.bit: 32 }
 
-    - &is_s_localpriority { search_flags.bit: 33 }
-    - &is_s_multiloc { search_flags.bit: 34 }
+    - &is_s_localpriority   { search_flags.bit: 33 }
+    - &is_s_multiloc        { search_flags.bit: 34 }
 
     - &is_map_tot { $or: [*is_s_map, *x_is_map] }
 
     - &is_msg_available { item_flags.!bit: 3 }
 
-    - &is_serp_delivery { search_query_type: 10 }
-    - &is_serp_regions { search_query_type: 9 }
-    - &is_serp_regions_mix { search_query_type: 20 }
-    - &is_serp_vip { search_query_type: 3 }
-    - &is_serp_premium { search_query_type: 2 }
+    - &is_serp_delivery     { search_query_type: 10 }
+    - &is_serp_regions      { search_query_type: 9 }
+    - &is_serp_regions_mix  { search_query_type: 20 }
+    - &is_serp_vip          { search_query_type: 3 }
+    - &is_serp_premium      { search_query_type: 2 }
     - &is_serp_witcher_regions { search_query_type: 11 }
     - &is_serp_witcher_delivery { search_query_type: 12 }
     - &is_serp_witcher_new_auto { search_query_type: 13 }
     - &is_serp_witcher_new_flats { search_query_type: 14 }
-    - &is_serp_push { search_query_type: 1, item_serp_flags.bit: 2 }
-    - &is_serp_grouping { x_from_page: items_ungrouped }
-    - &is_serp_quorum { search_query_type: 15 }
-    - &is_serp_vector { search_query_type: 18 }
-    - &is_serp_witcher_mp { search_query_type: 16 }
+    - &is_serp_push         { search_query_type: 1, item_serp_flags.bit: 2 }
+    - &is_serp_grouping     { x_from_page: items_ungrouped }
+    - &is_serp_quorum       { search_query_type: 15 }
+    - &is_serp_vector       { search_query_type: 18 }
+    - &is_serp_witcher_mp   { search_query_type: 16 }
 
-    - &is_fp_witcher_regions { from_page: witcher-extra-regions }
-    - &is_fp_witcher_delivery { from_page: witcher-extra-delivery }
-    - &is_fp_witcher_new_auto { from_page: witcher-new-auto }
-    - &is_fp_witcher_new_flats { from_page: witcher-new-flats }
+    - &is_fp_witcher_regions    { from_page: witcher-extra-regions }
+    - &is_fp_witcher_delivery   { from_page: witcher-extra-delivery }
+    - &is_fp_witcher_new_auto   { from_page: witcher-new-auto }
+    - &is_fp_witcher_new_flats  { from_page: witcher-new-flats }
     - &is_fp_witcher_marketplace { from_page: witcher-marketplace }
-    - &is_seen_item { from_page: witcher-seen-items }
+    - &is_seen_item             { from_page: witcher-seen-items }
     
-    - &is_comp_fp_fav { from_page: favorite }
-    - &is_comp_fp_item { from_page: item }
+    - &is_comp_fp_fav   { from_page: favorite }
+    - &is_comp_fp_item  { from_page: item }
 
-    - &is_x_fp_witcher_regions { x_from_page: witcher-extra-regions }
-    - &is_x_fp_witcher_delivery { x_from_page: witcher-extra-delivery }
-    - &is_x_fp_witcher_new_auto { x_from_page: witcher-new-auto }
-    - &is_x_fp_witcher_new_flats { x_from_page: witcher-new-flats }
-    - &is_x_fp_witcher_marketplace { x_from_page: witcher-marketplace }
+    - &is_x_fp_witcher_regions      { x_from_page: witcher-extra-regions }
+    - &is_x_fp_witcher_delivery     { x_from_page: witcher-extra-delivery }
+    - &is_x_fp_witcher_new_auto     { x_from_page: witcher-new-auto }
+    - &is_x_fp_witcher_new_flats    { x_from_page: witcher-new-flats }
+    - &is_x_fp_witcher_marketplace  { x_from_page: witcher-marketplace }
     - &is_x_fp_witcher_any {
           x_from_page: [witcher-extra-regions, witcher-extra-delivery, witcher-new-auto, witcher-new-flats, witcher-marketplace],
       }
 
-    - &x_is_searchwidget { x_from_page: searchFormWidget }
+    - &x_is_searchwidget    { x_from_page: searchFormWidget }
     - &x_is_rubricatorwidget { x_from_page: rubricatorWidget }
-    - &x_is_recentsearch { x_from_page: recentSearch }
-    - &x_is_inline { x_from_page: inline }
-    - &x_is_shortcut { x_from_page: shortcut }
-    - &x_is_catalog  { x_from_page: catalog}
+    - &x_is_recentsearch    { x_from_page: recentSearch }
+    - &x_is_inline          { x_from_page: inline }
+    - &x_is_shortcut        { x_from_page: shortcut }
+    - &x_is_catalog         { x_from_page: catalog}
 
-    - &is_serp_vas { item_serp_flags.bit: [0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 16] }
-    - &is_serp_xl { item_serp_flags.bit: [8] }
+    - &is_serp_vas          { item_serp_flags.bit: [0, 1, 2, 3, 8, 9, 10, 11, 12, 13, 14, 16] }
+    - &is_serp_xl           { item_serp_flags.bit: [8] }
     - &is_serp_perfvas_x2_1 { item_serp_flags.bit: [9] }
     - &is_serp_perfvas_x2_7 { item_serp_flags.bit: [10] }
     - &is_serp_perfvas_x5_1 { item_serp_flags.bit: [11] }
     - &is_serp_perfvas_x5_7 { item_serp_flags.bit: [12] }
     - &is_serp_perfvas_x10_1 { item_serp_flags.bit: [13] }
     - &is_serp_perfvas_x10_7 { item_serp_flags.bit: [14] }
-    - &is_multiloc { item_serp_flags.bit: [15] }
-    - &is_not_multiloc { item_serp_flags.!bit: [15] }
-    - &is_item_vas { item_vas_flags.bit: [0, 1, 2, 3, 5, 6, 10, 11, 12, 13, 14, 15, 16, 17] } 
-    - &is_item_xl { item_vas_flags.bit: 6 }
+    - &is_multiloc          { item_serp_flags.bit: [15] }
+    - &is_not_multiloc      { item_serp_flags.!bit: [15] }
+    - &is_item_vas          { item_vas_flags.bit: [0, 1, 2, 3, 5, 6, 10, 11, 12, 13, 14, 15, 16, 17] } 
+    - &is_item_xl           { item_vas_flags.bit: 6 }
     - &is_item_perfvas_x2_1 { item_vas_flags.bit: [12] }
     - &is_item_perfvas_x2_7 { item_vas_flags.bit: [13] }
     - &is_item_perfvas_x5_1 { item_vas_flags.bit: [14] }
     - &is_item_perfvas_x5_7 { item_vas_flags.bit: [15] }
     - &is_item_perfvas_x10_1 { item_vas_flags.bit: [16] }
     - &is_item_perfvas_x10_7 { item_vas_flags.bit: [17] }
-    - &is_item_perfvas { item_vas_flags.bit: [12, 13, 14, 15, 16, 17] }
+    - &is_item_perfvas      { item_vas_flags.bit: [12, 13, 14, 15, 16, 17] }
 
-    - &is_s_sort_date { search_sort: *sort_date }
-    - &is_s_sort_price { search_sort: *sort_price }
-    - &is_s_sort_distance { search_sort: *sort_distance }
-    - &is_s_sort_dft { search_sort: *sort_dft }
+    - &is_s_sort_date       { search_sort: *sort_date }
+    - &is_s_sort_price      { search_sort: *sort_price }
+    - &is_s_sort_distance   { search_sort: *sort_distance }
+    - &is_s_sort_dft        { search_sort: *sort_dft }
 
     - &q { q.>: "" }
     - &noq { q.=: "" }
@@ -1271,9 +1271,6 @@ metric.counter:
     recblock_shows_cv2vac:      { filter: [*is_cv2vac] }
     recblock_shows_u2i:         { filter: [*is_u2i] }
     recblock_shows_u2i_1p:      { filter: [*is_u2i, *is_1p] }
-    recblock_shows_u2i_1p_x3:   { filter: [*is_u2i, *is_1p], obs: ['3'] }
-    recblock_shows_u2i_1p_x5:   { filter: [*is_u2i, *is_1p], obs: ['5'] }
-    recblock_shows_u2i_1p_x10:  { filter: [*is_u2i, *is_1p], obs: ['10'] }
     regions_level_searches: { filter: [{ location_level_id: 3 }, *is_1p, *is_search] }
     russia_level_searches: { filter: [{ location_level_id: 1 }, *is_1p, *is_search] }
     saved_searches: { filter: [*is_1p, *is_s_saved, *is_search] }
@@ -3517,12 +3514,12 @@ metric.ratio:
     s_conv_to_cont_imv_low:     { num: s_contact_imv_low,   den: s_iv_imv_low, m42: False }
     s_conv_to_cont_imv_high:    { num: s_contact_imv_high,  den: s_iv_imv_high, m42: False }
     s_conv_to_cont_imv_no_label: { num: s_contact_imv_no_label, den: s_iv_imv_no_label, m42: False }
-    prec_iv_u2i_rnk3:   { num: iv_u2i_rnk3,     den: recblock_shows_u2i_1p_x3}
-    prec_iv_u2i_rnk5:   { num: iv_u2i_rnk5,     den: recblock_shows_u2i_1p_x5}
-    prec_iv_u2i_rnk10:  { num: iv_u2i_rnk10,    den: recblock_shows_u2i_1p_x10}
-    prec_btc_u2i_rnk3:  { num: btc_u2i_rnk3,    den: recblock_shows_u2i_1p_x3}
-    prec_btc_u2i_rnk5:  { num: btc_u2i_rnk5,    den: recblock_shows_u2i_1p_x5}
-    prec_btc_u2i_rnk10: { num: btc_u2i_rnk10,   den: recblock_shows_u2i_1p_x10}
-    prec_c_u2i_rnk3:    { num: c_u2i_rnk3,      den: recblock_shows_u2i_1p_x3}
-    prec_c_u2i_rnk5:    { num: c_u2i_rnk5,      den: recblock_shows_u2i_1p_x5}
-    prec_c_u2i_rnk10:   { num: c_u2i_rnk10,     den: recblock_shows_u2i_1p_x10}
+    prec_iv_u2i_rnk3:   { num: iv_u2i_rnk3,     den: recblock_shows_u2i_1p}
+    prec_iv_u2i_rnk5:   { num: iv_u2i_rnk5,     den: recblock_shows_u2i_1p}
+    prec_iv_u2i_rnk10:  { num: iv_u2i_rnk10,    den: recblock_shows_u2i_1p}
+    prec_btc_u2i_rnk3:  { num: btc_u2i_rnk3,    den: recblock_shows_u2i_1p}
+    prec_btc_u2i_rnk5:  { num: btc_u2i_rnk5,    den: recblock_shows_u2i_1p}
+    prec_btc_u2i_rnk10: { num: btc_u2i_rnk10,   den: recblock_shows_u2i_1p}
+    prec_c_u2i_rnk3:    { num: c_u2i_rnk3,      den: recblock_shows_u2i_1p}
+    prec_c_u2i_rnk5:    { num: c_u2i_rnk5,      den: recblock_shows_u2i_1p}
+    prec_c_u2i_rnk10:   { num: c_u2i_rnk10,     den: recblock_shows_u2i_1p}
