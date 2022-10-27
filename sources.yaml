@@ -758,6 +758,23 @@ buyer_filter:
   dtm: event_date
   segm: cookie_id
 
+weighted_buyer:
+  metric_configs: [weighted_buyer]
+  database: vertica
+  table: dma.vo_weighted_buyer_metric
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category]
+  dtm: event_date
+  segm: cookie_id
+
 seller_item_add:
   metric_configs: [seller_item_add]
   database: vertica
@@ -2379,3 +2396,14 @@ sbc_answered_inbox_special_offers:
   dtm: answer_time
   segm: buyer_id
 
+perf_screen_memory_consumption:
+  metric_configs: [perf_screen_memory_consumption]
+  database: vertica
+  table: dma.perf_screen_memory_consumption
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions: [platform, screen_name]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
