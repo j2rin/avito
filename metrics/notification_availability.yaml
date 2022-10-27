@@ -33,8 +33,8 @@ metric.counter:
   messenger_marketing_received:      {filter: [marketing_messenger_received.>: 0]}
   messenger_rec_received:            {filter: [rec_messenger_received.>: 0]}
   any_channel_received:              {filter: [$or: [nc_received.>: 0, app_push_received.>: 0, email_received.>: 0, messenger_received.>: 0]]}
-  any_channel_marketing_received:    {filter: [$or: [nc_received.>: 0, marketing_app_push_received.>: 0, email_received.>: 0, messenger_received.>: 0]]}
-  any_channel_rec_received:          {filter: [$or: [nc_received.>: 0, rec_app_push_received.>: 0, email_received.>: 0, messenger_received.>: 0]]}
+  any_channel_marketing_received:    {filter: [$or: [marketing_nc_received.>: 0, marketing_app_push_received.>: 0, marketing_email_received.>: 0, marketing_messenger_received.>: 0]]}
+  any_channel_rec_received:          {filter: [$or: [rec_nc_received.>: 0, rec_app_push_received.>: 0, rec_email_received.>: 0, rec_messenger_received.>: 0]]}
 
 metric.uniq:
   user_nc_tech_available:                    {counter: nc_tech_available,              key: [participant]}
