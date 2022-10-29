@@ -32,7 +32,8 @@ CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 # Конфиги, которые необходимо отправить в конфигуратор.
 # Формат: (<имя поля в json>, <путь к файлу/директории>, <является ли путь директорией>)
 CONFIGS = [
-    ('sources', os.path.join(CUR_DIR_PATH, 'sources.yaml'), False),
+    ('sources', os.path.join(CUR_DIR_PATH, 'sources/sources.yaml'), False),
+    ('sources_sql', os.path.join(CUR_DIR_PATH, 'sources/sql'), True),
     ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions.yaml'), False),
     ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
@@ -186,8 +187,16 @@ def read_yamls(dir_path):
     file_name_map = {}
     result = {}
 
+    def is_file_appropriate(fn):
+        return (
+            fn.endswith('.yaml')
+            or fn.endswith('.yml')
+            or fn.endswith('.sql')
+            and not fn.startswith('_')
+        )
+
     for fn in os.listdir(dir_path):
-        if fn.endswith('.yaml') or fn.endswith('.yml') and not fn.startswith('_'):
+        if is_file_appropriate(fn):
             full_path = os.path.join(dir_path, fn)
             short_name = get_short_name(fn)
             result[short_name] = read_file(full_path)
