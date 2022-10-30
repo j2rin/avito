@@ -160,5 +160,4 @@ left join /*+jtype(h),distrib(l,b)*/ (
     group by user_id
 ) acc on acc.User_id = ss.item_user_id
 
-where hash(ss.cookie_id, 123) % 10 = 7
-    and ss.event_date::date between :first_date and :last_date
+where ss.event_date::date between :first_date and :last_date
