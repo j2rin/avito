@@ -1,65 +1,9 @@
 with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
-items as (
-    select distinct item_id
-    from dma.click_stream_contacts
-    where eventdate::date between :first_date and :last_date
-        and item_id is not null
-),
 users as (
     select distinct item_user_id as user_id
     from dma.click_stream_contacts
     where eventdate::date between :first_date and :last_date
         and item_user_id is not null
-),
-cookies as (
-    select distinct cookie_id
-    from dma.click_stream_contacts
-    where eventdate::date between :first_date and :last_date
-        and cookie_id is not null
-),
-infmqueries as (
-    select distinct infmquery_id
-    from dma.click_stream_contacts
-    where eventdate::date between :first_date and :last_date
-        and infmquery_id is not null
-),
-am_client_day as (
-    select user_id,
-           active_from_date,
-           active_to_date,
-           (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
-           user_group_id
-    from DMA.am_client_day_versioned
-    where user_id in (select user_id from users)
-),
-S_Item_Price as (
-    select item_id, price, actual_date from (
-        select
-            item_id, price, actual_date,
-            row_number() over (partition by item_id order by actual_date desc) as rn
-        from dds.S_Item_Price
-        where item_id in (select item_id from items)
-    )t
-    where rn = 1
-),
-usm as (
-    select
-        user_id,
-        logical_category_id, user_segment,
-        timestampadd('s', 0, converting_date::timestamp(0)) as converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
-    where user_id in (select user_id from users)
-),
-current_infmquery_category as (
-    select infmquery_id, logcat_id
-    from infomodel.current_infmquery_category
-    where infmquery_id in (select infmquery_id from infmqueries)
-),
-buyer_birthday as (
-    select cookie_id, logical_category_id, first_contact_event_date
-    from dma.buyer_birthday
-    where cookie_id in (select cookie_id from cookies)
 )
 select /*+syntactic_join*/
     csc.item_id,
@@ -105,7 +49,16 @@ join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm
 left join /*+jtype(h),distrib(l,a)*/ dma.current_locations cl
     ON  csc.Location_id = cl.location_id
 
-left join /*+jtype(h),distrib(l,a)*/ current_infmquery_category ic
+left join /*+jtype(h),distrib(l,a)*/ (
+    select infmquery_id, logcat_id
+    from infomodel.current_infmquery_category
+    where infmquery_id in (
+        select distinct infmquery_id
+        from dma.click_stream_contacts
+        where eventdate::date between :first_date and :last_date
+            and infmquery_id is not null
+    )
+) ic
     on ic.infmquery_id = csc.infmquery_id
 left join /*+jtype(h),distrib(l,a)*/ dma.current_logical_categories lc
     on lc.logcat_id = ic.logcat_id
@@ -113,20 +66,60 @@ left join /*+jtype(h),distrib(l,a)*/ dict.segmentation_ranks ls
     on   ls.logical_category_id = lc.logical_category_id
     and  ls.is_default
 
-left join /*+jtype(h),distrib(l,a)*/ buyer_birthday bb
+left join /*+jtype(h),distrib(l,a)*/ (
+    select cookie_id, logical_category_id, first_contact_event_date
+    from dma.buyer_birthday
+    where cookie_id in (
+        select distinct cookie_id
+        from dma.click_stream_contacts
+        where eventdate::date between :first_date and :last_date
+            and cookie_id is not null
+    )
+) bb
     on   csc.cookie_id = bb.cookie_id
     and  lc.logical_category_id = bb.logical_category_id
 
-left join /*+jtype(h),distrib(l,a)*/ usm
+left join /*+jtype(h),distrib(l,a)*/ (
+    select
+        user_id,
+        logical_category_id, user_segment,
+        timestampadd('s', 0, converting_date::timestamp(0)) as converting_date,
+        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+    from DMA.user_segment_market
+    where user_id in (select user_id from users)
+) usm
     on  csc.item_user_id = usm.user_id
     and lc.logical_category_id = usm.logical_category_id
     and csc.eventdate >= usm.converting_date
     and csc.eventdate < usm.next_converting_date
-left join /*+jtype(h),distrib(l,a)*/ am_client_day acd
+
+left join /*+jtype(h),distrib(l,a)*/ (
+    select user_id,
+           active_from_date,
+           active_to_date,
+           (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
+           user_group_id
+    from DMA.am_client_day_versioned
+    where user_id in (select user_id from users)
+) acd
     on   acd.user_id = csc.item_user_id
     and  csc.eventdate::date between acd.active_from_date and acd.active_to_date
 
-left join /*+jtype(h),distrib(l,a)*/ S_Item_Price cif
+left join /*+jtype(h),distrib(l,a)*/ (
+    select item_id, price, actual_date from (
+        select
+            item_id, price, actual_date,
+            row_number() over (partition by item_id order by actual_date desc) as rn
+        from dds.S_Item_Price
+        where item_id in (
+            select distinct item_id
+            from dma.click_stream_contacts
+            where eventdate::date between :first_date and :last_date
+                and item_id is not null
+        )
+    )t
+    where rn = 1
+) cif
     on csc.item_id = cif.item_id
 
 left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups cpg
