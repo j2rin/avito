@@ -159,12 +159,14 @@ metric.counter:
   seller_delivery_c2c_seller_discount_accepted:                        {filter: [{is_accepted: true}], obs: [c2c_seller_discount]}
   seller_delivery_c2c_seller_discount_returned:                        {filter: [{is_returned: true}], obs: [c2c_seller_discount]}
   seller_delivery_c2c_seller_discount_accepted_and_returned:           {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [c2c_seller_discount]}
+#для расчета среднего чека в заказе с субсидией на доставку
+  seller_delivery_gmv_c2c_seller_discount_paid:                        {filter: [{is_paid: true}, {is_c2c_seller_discount: true}], obs: [item_price], m42: false}
 
 #minimal pack
-  seller_delivery_items_c2c_seller_discount_paid_start_date:       {filter: [{is_paid: true}, {create_date.>: $ab_start_date}, {is_c2c_seller_discount: true}]}
-  seller_delivery_items_c2c_seller_discount_performed_start_date:  {filter: [{is_performed: true}, {create_date.>: $ab_start_date}, {is_c2c_seller_discount: true}]}
-  seller_delivery_items_delivery_discount_paid_start_date:         {filter: [{is_paid: true}, {create_date.>: $ab_start_date}, {is_delivery_discount: true}]}
-  seller_delivery_items_delivery_discount_performed_start_date:    {filter: [{is_performed: true}, {create_date.>: $ab_start_date}, {is_delivery_discount: true}]}
+  seller_delivery_items_c2c_seller_discount_paid_start_date:           {filter: [{is_paid: true}, {create_date.>: $ab_start_date}, {is_c2c_seller_discount: true}]}
+  seller_delivery_items_c2c_seller_discount_performed_start_date:      {filter: [{is_performed: true}, {create_date.>: $ab_start_date}, {is_c2c_seller_discount: true}]}
+  seller_delivery_items_delivery_discount_paid_start_date:             {filter: [{is_paid: true}, {create_date.>: $ab_start_date}, {is_delivery_discount: true}]}
+  seller_delivery_items_delivery_discount_performed_start_date:        {filter: [{is_performed: true}, {create_date.>: $ab_start_date}, {is_delivery_discount: true}]}
 
 metric.uniq:  
   seller_delivery_orders_created:          {counter: seller_delivery_items_created, key: [deliveryorder_id], m42: false}
@@ -185,8 +187,9 @@ metric.uniq:
   seller_delivery_orders_paid_start_date:       {counter: seller_delivery_items_paid_start_date, key: [deliveryorder_id], m42: false}
   seller_delivery_orders_performed_start_date:  {counter: seller_delivery_items_performed_start_date, key: [deliveryorder_id], m42: false}
 
-  seller_delivery_orders_delivery_discount_paid_start_date:       {counter: seller_delivery_items_delivery_discount_paid_start_date, key: [deliveryorder_id], m42: false}
-  seller_delivery_orders_delivery_discount_performed_start_date:  {counter: seller_delivery_items_delivery_discount_performed_start_date, key: [deliveryorder_id], m42: false}
+  seller_delivery_orders_c2c_seller_discount_paid:     {counter: seller_delivery_items_c2c_seller_discount_paid, key: [deliveryorder_id], m42: false}
+  seller_delivery_orders_delivery_discount_paid:       {counter: seller_delivery_items_delivery_discount_paid, key: [deliveryorder_id], m42: false}
+
   seller_delivery_orders_c2c_seller_discount_paid_start_date:       {counter: seller_delivery_items_c2c_seller_discount_paid_start_date, key: [deliveryorder_id], m42: false}
   seller_delivery_orders_c2c_seller_discount_performed_start_date:  {counter: seller_delivery_items_c2c_seller_discount_performed_start_date, key: [deliveryorder_id], m42: false}
 
@@ -226,3 +229,10 @@ metric.ratio:
 
   seller_delivery_items_c2c_seller_discount_performed_per_paid_sd: {num: seller_delivery_items_c2c_seller_discount_performed_start_date, den: seller_delivery_items_c2c_seller_discount_paid_start_date, m42: false}
   seller_delivery_orders_c2c_seller_discount_performed_per_paid_sd: {num: seller_delivery_orders_c2c_seller_discount_performed_start_date, den: seller_delivery_orders_c2c_seller_discount_paid_start_date, m42: false}
+
+  seller_delivery_orders_c2c_seller_discount_share_paid: {num: seller_delivery_orders_c2c_seller_discount_paid, den: seller_delivery_orders_paid}
+  seller_delivery_items_c2c_seller_discount_share_paid: {num: seller_delivery_items_c2c_seller_discount_paid, den: seller_delivery_items_paid}
+  seller_delivery_orders_c2c_seller_share_in_discounts_paid:   {num: seller_delivery_orders_c2c_seller_discount_paid, den: seller_delivery_orders_delivery_discount_paid}
+  seller_delivery_items_c2c_seller_share_in_discounts_paid: {num: seller_delivery_items_c2c_seller_discount_paid, den: seller_delivery_items_delivery_discount_paid}
+
+  seller_delivery_average_item_price_c2c_seller_discount_paid: {num: seller_delivery_gmv_c2c_seller_discount_paid, den: seller_delivery_items_c2c_seller_discount_paid, m42: false}
