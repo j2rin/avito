@@ -28,6 +28,8 @@ select
     sum(case when realty_development_flags & 1 > 0 and (eid = 3461 or eid = 4198 and item_id_not_null = 0) then 1 end) as realty_dev_c_cpa,
     sum(case when realty_development_flags & 2 = 0 and (eid = 3461 or eid = 4198 and item_id_not_null = 0) then 1 end) as realty_dev_c_cpa_not_auction,
     sum(case when realty_development_flags & 1 = 0 and (eid = 3461 or eid = 4198 and item_id_not_null = 0) then 1 end) as realty_dev_c_not_cpa,
+    sum(case when eid = 6710 then 1 end) as realty_dev_c_notification,
+    sum(case when eid = 6710 and item_id_not_null = 0 then 1 end) as realty_dev_c_notification_card,
     sum(case when eid = 5237 and catalog_jk_source = 'card' then 1 end) as realty_dev_card_map_click,
     sum(case when (eid = 5236 and catalog_jk_source = 'catalogNDSource' and catalog_jk_action = 'add_items' or eid = 3460 and catalog_jk_attribute != -100 and catalog_jk_attribute is not null) then 1 end) as realty_dev_click_developer_item_serp,
     sum(case when eid = 3460 and (catalog_jk_attribute = -100 or catalog_jk_source = 'private_flats') then 1 end) as realty_dev_click_private_item_serp,
@@ -102,8 +104,11 @@ select
     sum(case when eid = 3459 and from_page = 'jk_card_rec' and realty_development_flags & 1 = 0 then 1 end) as realty_dev_views_rec_not_cpa,
     sum(case when eid = 303 and item_flags & 2 > 0 then 1 end) as realty_item_c_auction,
     sum(case when eid = 303 and item_flags & 2 = 0 then 1 end) as realty_item_c_cpa_not_auction,
+    sum(case when eid = 6710 and item_id_not_null = 1 then 1 end) as realty_item_c_notification_item,
     sum(case when eid = 301 and item_flags & 2 > 0 then 1 end) as realty_item_views_auction,
-    sum(case when eid = 301 and item_flags & 2 = 0 then 1 end) as realty_item_views_cpa_not_auction
+    sum(case when eid = 301 and item_flags & 2 = 0 then 1 end) as realty_item_views_cpa_not_auction,
+    sum(case when eid = 4219 then 1 end) as realty_open_back_call,
+    sum(case when eid = 4197 then 1 end) as realty_send_back_call
 from re_nd_buyer_stream t
 ;
 
@@ -203,7 +208,12 @@ select
     sum(case when realty_item_c_auction > 0 then 1 end) as users_realty_item_c_auction,
     sum(case when realty_item_c_cpa_not_auction > 0 then 1 end) as users_realty_item_c_cpa_not_auction,
     sum(case when realty_item_views_auction > 0 then 1 end) as users_realty_item_views_auction,
-    sum(case when realty_item_views_cpa_not_auction > 0 then 1 end) as users_realty_item_views_cpa_not_auction
+    sum(case when realty_item_views_cpa_not_auction > 0 then 1 end) as users_realty_item_views_cpa_not_auction,
+    sum(case when realty_open_back_call > 0 then 1 end) as users_realty_open_back_call,
+    sum(case when realty_dev_c_notification > 0 then 1 end) as users_realty_realty_dev_c_notification,
+    sum(case when realty_dev_c_notification_card > 0 then 1 end) as users_realty_realty_dev_c_notification_card,
+    sum(case when realty_item_c_notification_item > 0 then 1 end) as users_realty_realty_item_c_notification_item,
+    sum(case when realty_send_back_call > 0 then 1 end) as users_realty_send_back_call
 from (
     select
         cookie_id,
@@ -228,6 +238,8 @@ from (
         sum(case when realty_development_flags & 1 > 0 and (eid = 3461 or eid = 4198 and item_id_not_null = 0) then 1 end) as realty_dev_c_cpa,
         sum(case when realty_development_flags & 2 = 0 and (eid = 3461 or eid = 4198 and item_id_not_null = 0) then 1 end) as realty_dev_c_cpa_not_auction,
         sum(case when realty_development_flags & 1 = 0 and (eid = 3461 or eid = 4198 and item_id_not_null = 0) then 1 end) as realty_dev_c_not_cpa,
+        sum(case when eid = 6710 then 1 end) as realty_dev_c_notification,
+        sum(case when eid = 6710 and item_id_not_null = 0 then 1 end) as realty_dev_c_notification_card,
         sum(case when eid = 5237 and catalog_jk_source = 'card' then 1 end) as realty_dev_card_map_click,
         sum(case when (eid = 5236 and catalog_jk_source = 'catalogNDSource' and catalog_jk_action = 'add_items' or eid = 3460 and catalog_jk_attribute != -100 and catalog_jk_attribute is not null) then 1 end) as realty_dev_click_developer_item_serp,
         sum(case when eid = 3460 and (catalog_jk_attribute = -100 or catalog_jk_source = 'private_flats') then 1 end) as realty_dev_click_private_item_serp,
@@ -300,8 +312,11 @@ from (
         sum(case when eid = 3459 and from_page = 'jk_card_rec' and realty_development_flags & 1 = 0 then 1 end) as realty_dev_views_rec_not_cpa,
         sum(case when eid = 303 and item_flags & 2 > 0 then 1 end) as realty_item_c_auction,
         sum(case when eid = 303 and item_flags & 2 = 0 then 1 end) as realty_item_c_cpa_not_auction,
+        sum(case when eid = 6710 and item_id_not_null = 1 then 1 end) as realty_item_c_notification_item,
         sum(case when eid = 301 and item_flags & 2 > 0 then 1 end) as realty_item_views_auction,
-        sum(case when eid = 301 and item_flags & 2 = 0 then 1 end) as realty_item_views_cpa_not_auction
+        sum(case when eid = 301 and item_flags & 2 = 0 then 1 end) as realty_item_views_cpa_not_auction,
+        sum(case when eid = 4219 then 1 end) as realty_open_back_call,
+        sum(case when eid = 4197 then 1 end) as realty_send_back_call
     from re_nd_buyer_stream t
     group by cookie_id
 ) _

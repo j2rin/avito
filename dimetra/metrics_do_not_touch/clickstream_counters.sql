@@ -18,7 +18,7 @@ select
     sum(case when eid = 2909 and source = 'subscribers_list' then event_count end) as buyer_favouriteseller_delete_from_subscribers_list,
     sum(case when eid = 2909 and source = 'subscriptions_list' then event_count end) as buyer_favouriteseller_delete_from_subscriptions_list,
     sum(case when eid = 3381 and from_block is null then event_count end) as call_phone_screen_views_client,
-    sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id = 'phone' and action_type = 'click-positive' then event_count end) as click_banner_download_app,
+    sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id ilike 'phone%' and action_type = 'click-positive' then event_count end) as click_banner_download_app,
     sum(case when eid = 3207 and banner_id ilike '%mygarage%' then event_count end) as click_banner_mygarage,
     sum(case when eid = 4921 and from_page = 'vertical_category' then event_count end) as click_category_widget,
     sum(case when eid = 4921 and from_page = 'featured' then event_count end) as click_featured_widget,
@@ -27,10 +27,15 @@ select
     sum(case when eid = 4921 and from_page = 'vertical_recommendations' then event_count end) as click_recommendations_widget,
     sum(case when eid = 4954 then event_count end) as click_search_widget,
     sum(case when eid = 4921 and from_page = 'shortcuts_widget' then event_count end) as click_shortcuts_widget,
+    sum(case when eid in (4921, 4954) then event_count end) as click_widget,
+    sum(case when eid = 6265 and source_click_page = 'checkout_cheaper' then 1 end) as cnt_competition_widget_shows_from_checkout,
+    sum(case when eid = 6265 and source_click_page = 'delivery_widget' then 1 end) as cnt_competition_widget_shows_from_delivery_widgets,
+    sum(case when eid = 6265 then 1 end) as cnt_competition_widget_shows_total,
     sum(case when eid = 4760 and source_click_page = 'messenger' then 1 end) as cnt_order_page_views_from_messenger,
     sum(case when eid = 4760 and source_click_page = 'orders_list' then 1 end) as cnt_order_page_views_from_my_orders,
     sum(case when eid = 4760 and source_click_page = 'order_success' then 1 end) as cnt_order_page_views_from_success_page,
     sum(case when eid = 4760 then 1 end) as cnt_order_page_views_total,
+    sum(case when eid in (2443, 2664, 3232, 4159) then event_count end) as count_navig_eids,
     sum(case when eid = 5070 and ext_profile_is_using is null then event_count end) as ext_profile_off,
     sum(case when eid = 5070 and ext_profile_is_using = True then event_count end) as ext_profile_on,
     sum(case when eid = 3187 and source = 'favourites' then event_count end) as fav_add_from_fav,
@@ -97,7 +102,7 @@ select
     sum(case when eid = 2016 and source = 'subscriptions_list' then event_count end) as public_profile_visit_from_subscriptions_list,
     sum(case when eid = 2016 and source = 'ratings' then event_count end) as public_profile_visit_from_subscriptions_ratings,
     sum(case when eid = 2016 and source = 'sharing' then event_count end) as public_profile_visit_from_subscriptions_sharing,
-    sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id = 'phone' and action_type ilike 'click-negative%' then event_count end) as reject_banner_download_app,
+    sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id ilike 'phone%' and action_type ilike 'click-negative%' then event_count end) as reject_banner_download_app,
     sum(case when eid = 3020 then event_count end) as search_corrections_disabled,
     sum(case when eid = 3019 then event_count end) as search_query_corrections,
     sum(case when eid = 3020 and search_correction_method = 'search_redirect' then event_count end) as search_redirect_disabled,
@@ -105,7 +110,7 @@ select
     sum(case when eid = 3019 and search_correction_method = 'search_redirect' and search_correction_action = 'suggest' then event_count end) as search_redirect_suggest,
     sum(case when eid = 3020 and search_correction_method = 'search_redirect_suggest' then event_count end) as search_redirect_suggest_disabled,
     sum(case when eid = 3060 then event_count end) as shop_views,
-    sum(case when eid = 3180 and placement = 'splash.banner' and page_type = 'main' and banner_id = 'phone' then event_count end) as show_banner_download_app,
+    sum(case when eid = 3180 and placement = 'splash.banner' and page_type = 'main' and banner_id ilike 'phone%' then event_count end) as show_banner_download_app,
     sum(case when eid = 3180 and banner_id ilike '%mygarage%' then event_count end) as show_banner_mygarage,
     sum(case when eid = 4920 and from_page = 'vertical_category' then event_count end) as show_category_widget,
     sum(case when eid = 4920 and from_page = 'featured' then event_count end) as show_featured_widget,
@@ -154,6 +159,22 @@ select
 from clickstream_counters t
 ;
 
+create metrics clickstream_counters_cookie_item as
+select
+    sum(case when cnt_competition_widget_shows_from_checkout > 0 then 1 end) as competition_widget_shows_from_checkout,
+    sum(case when cnt_competition_widget_shows_from_delivery_widgets > 0 then 1 end) as competition_widget_shows_from_delivery_widgets,
+    sum(case when cnt_competition_widget_shows_total > 0 then 1 end) as competition_widget_shows_total
+from (
+    select
+        cookie_id, item_id,
+        sum(case when eid = 6265 and source_click_page = 'checkout_cheaper' then 1 end) as cnt_competition_widget_shows_from_checkout,
+        sum(case when eid = 6265 and source_click_page = 'delivery_widget' then 1 end) as cnt_competition_widget_shows_from_delivery_widgets,
+        sum(case when eid = 6265 then 1 end) as cnt_competition_widget_shows_total
+    from clickstream_counters t
+    group by cookie_id, item_id
+) _
+;
+
 create metrics clickstream_counters_cookie as
 select
     sum(case when ext_profile_off > 0 then 1 end) as ext_profile_off_uniq,
@@ -188,6 +209,8 @@ select
     sum(case when click_recommendations_widget > 0 then 1 end) as user_click_recommendations_widget,
     sum(case when click_search_widget > 0 then 1 end) as user_click_search_widget,
     sum(case when click_shortcuts_widget > 0 then 1 end) as user_click_shortcuts_widget,
+    sum(case when click_widget > 0 then 1 end) as user_click_widget,
+    sum(case when cnt_competition_widget_shows_total > 0 then 1 end) as user_competition_widget_shows,
     sum(case when icebreakers_message_template_clicks > 0 then 1 end) as user_icebreakers_message_template_clicks,
     sum(case when icebreakers_message_template_clicks_msg > 0 then 1 end) as user_icebreakers_message_template_clicks_msg,
     sum(case when icebreakers_message_template_shows > 0 then 1 end) as user_icebreakers_message_template_shows,
@@ -240,7 +263,7 @@ select
 from (
     select
         cookie_id,
-        sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id = 'phone' and action_type = 'click-positive' then event_count end) as click_banner_download_app,
+        sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id ilike 'phone%' and action_type = 'click-positive' then event_count end) as click_banner_download_app,
         sum(case when eid = 3207 and banner_id ilike '%mygarage%' then event_count end) as click_banner_mygarage,
         sum(case when eid = 4921 and from_page = 'vertical_category' then event_count end) as click_category_widget,
         sum(case when eid = 4921 and from_page = 'featured' then event_count end) as click_featured_widget,
@@ -249,6 +272,8 @@ from (
         sum(case when eid = 4921 and from_page = 'vertical_recommendations' then event_count end) as click_recommendations_widget,
         sum(case when eid = 4954 then event_count end) as click_search_widget,
         sum(case when eid = 4921 and from_page = 'shortcuts_widget' then event_count end) as click_shortcuts_widget,
+        sum(case when eid in (4921, 4954) then event_count end) as click_widget,
+        sum(case when eid = 6265 then 1 end) as cnt_competition_widget_shows_total,
         sum(case when eid = 4760 then 1 end) as cnt_order_page_views_total,
         sum(case when eid = 5070 and ext_profile_is_using is null then event_count end) as ext_profile_off,
         sum(case when eid = 5070 and ext_profile_is_using = True then event_count end) as ext_profile_on,
@@ -298,11 +323,11 @@ from (
         sum(case when eid = 2016 then event_count end) as profile_views_any,
         sum(case when eid = 2016 and profile_type = 'extended_profile' then event_count end) as profile_views_extended,
         sum(case when eid = 2016 and profile_type = 'public_profile' then event_count end) as profile_views_public,
-        sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id = 'phone' and action_type ilike 'click-negative%' then event_count end) as reject_banner_download_app,
+        sum(case when eid = 3207 and placement = 'splash.banner' and page_type = 'main' and banner_id ilike 'phone%' and action_type ilike 'click-negative%' then event_count end) as reject_banner_download_app,
         sum(case when eid = 3019 and search_correction_method = 'search_redirect' and search_correction_action = 'replace' then event_count end) as search_redirect_replace,
         sum(case when eid = 3019 and search_correction_method = 'search_redirect' and search_correction_action = 'suggest' then event_count end) as search_redirect_suggest,
         sum(case when eid = 3060 then event_count end) as shop_views,
-        sum(case when eid = 3180 and placement = 'splash.banner' and page_type = 'main' and banner_id = 'phone' then event_count end) as show_banner_download_app,
+        sum(case when eid = 3180 and placement = 'splash.banner' and page_type = 'main' and banner_id ilike 'phone%' then event_count end) as show_banner_download_app,
         sum(case when eid = 3180 and banner_id ilike '%mygarage%' then event_count end) as show_banner_mygarage,
         sum(case when eid = 4920 and from_page = 'vertical_category' then event_count end) as show_category_widget,
         sum(case when eid = 4920 and from_page = 'featured' then event_count end) as show_featured_widget,

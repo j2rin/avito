@@ -26,6 +26,7 @@ select
     sum(1) as map_searches,
     sum(zooms) as map_zooms,
     sum(pins) as pin_clicks,
+    sum(pin_interesting_colored_in_green) as pin_interesting_colored_in_green,
     sum(pins_to_contact) as pins_to_c,
     sum(pins_to_item_view) as pins_to_iv
 from geo_map_stream t

@@ -2,7 +2,7 @@ create fact sphinx_cputime as
 select
     t.event_date::date as __date__,
     *
-from dma.perf_sphinx_cputime_cleared t
+from dma.vo_sphinx_cpu t
 ;
 
 create metrics sphinx_cputime as
@@ -16,4 +16,16 @@ select
     sum(events_count) as cnt_sphinx_cputime_events,
     sum(over_sec_count) as cnt_sphinx_cputime_over_sec
 from sphinx_cputime t
+;
+
+create metrics sphinx_cputime_cookie as
+select
+    sum(case when cnt_sphinx_cputime_events > 0 then 1 end) as user_sphinx
+from (
+    select
+        cookie_id,
+        sum(events_count) as cnt_sphinx_cputime_events
+    from sphinx_cputime t
+    group by cookie_id
+) _
 ;
