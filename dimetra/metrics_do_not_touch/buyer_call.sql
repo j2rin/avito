@@ -9,7 +9,11 @@ create metrics buyer_call as
 select
     sum(case when observation_name = 'anon_calls_matched_answered' then observation_value end) as ancalls_answered_any_type,
     sum(case when observation_name = 'anon_calls_matched_any_type' then observation_value end) as ancalls_any_type,
+    sum(case when observation_name = 'anon_calls_matched_any_type_cpa_billed' then observation_value end) as ancalls_any_type_cpa_billed,
+    sum(case when observation_name = 'anon_calls_matched_any_type' and is_item_cpa = True then observation_value end) as ancalls_any_type_cpa_items,
+    sum(case when observation_name = 'anon_calls_matched_any_type' and is_user_cpa = True then observation_value end) as ancalls_any_type_cpa_users,
     sum(case when observation_name = 'anon_calls_matched_any_type_fav' then observation_value end) as ancalls_any_type_fav,
+    sum(case when observation_name = 'anon_calls_matched_any_type_itemview_cpa_billed' then observation_value end) as ancalls_any_type_itemview_cpa_billed,
     sum(case when observation_name = 'anon_calls_matched_any_type_map' then observation_value end) as ancalls_any_type_map,
     sum(case when observation_name = 'anon_calls_matched_any_type_rec' then observation_value end) as ancalls_any_type_rec,
     sum(case when observation_name = 'anon_calls_matched_any_type_serp' then observation_value end) as ancalls_any_type_serp,
