@@ -2411,3 +2411,14 @@ perf_screen_memory_consumption:
   primary_subject: visitor
   dtm: event_date
 
+sx_jobs_crm:
+  metric_configs: [sx_jobs_crm]
+  database: vertica
+  table: dma.jobs_employers_crm_events
+  column_map:
+    user: user_id
+    user_segment_market: market_segment
+  dimensions: [is_asd, user_segment_market]
+  participant: {user: user_id}
+  primary_subject: user 
+
