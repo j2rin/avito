@@ -28,7 +28,7 @@ select
     hash(location_id, session_no, microcat_id)         as                                                                   location_session_microcat,
     CASE WHEN eid in (401, 2574, 2732) then 1 WHEN eid = 402 then -1 end as                                                 favorites_net,
     rec_engine_id                                             as                                                            x_rec_engine_id,
-    ((case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end & 16) > 0)::int as                               onmap,
+    ((case when x_eid is not null then coalesce(search_flags, 0) end & 16) > 0)::int as                               onmap,
     *
 from dma.buyer_stream t
 ;
