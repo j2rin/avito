@@ -1,0 +1,26 @@
+metric.counter:
+  jobs_crm_opens:                       {filter: [eid: 5962]}
+  jobs_crm_searches:                    {filter: [eid: 5960]}
+  jobs_crm_status_changes:              {filter: [eid: 5967]}
+  jobs_crm_expands:                     {filter: [eid: 5972]}
+  jobs_crm_onboarding_begins:           {filter: [eid: 6007]}
+  jobs_crm_onboarding_finishes:         {filter: [eid: 6008]}
+  jobs_crm_chat_opens:                  {filter: [eid: 6257]}
+  jobs_crm_cv_opens:                    {filter: [eid: 5964]}
+
+metric.uniq:
+  jobs_crm_user_opens:                  {counter: jobs_crm_opens, key: [user]}
+  jobs_crm_user_searches:               {counter: jobs_crm_searches, key: [user]}
+  jobs_crm_user_status_changes:         {counter: jobs_crm_status_changes, key: [user]}
+  jobs_crm_user_expands:                {counter: jobs_crm_expands, key: [user]}
+  jobs_crm_user_onboarding_begins:      {counter: jobs_crm_onboarding_begins, key: [user]}
+  jobs_crm_user_onboarding_finishes:    {counter: jobs_crm_onboarding_finishes, key: [user]}
+  jobs_crm_user_chat_opens:             {counter: jobs_crm_chat_opens, key: [user]}
+  jobs_crm_user_cv_opens:               {counter: jobs_crm_cv_opens, key: [user]}
+
+metric.ratio:
+  jobs_crm_user_cr_to_expand:           {num: jobs_crm_user_expands, den: jobs_crm_user_opens}
+  jobs_crm_user_cr_to_status_change:    {num: jobs_crm_user_status_changes, den: jobs_crm_user_opens}
+  jobs_crm_user_cr_to_chat_open:        {num: jobs_crm_user_chat_opens, den: jobs_crm_user_opens}
+  jobs_crm_user_cr_to_cv_open:          {num: jobs_crm_user_cv_opens, den: jobs_crm_user_opens}
+  jobs_crm_user_cr_to_onboarding:       {num: jobs_crm_user_onboarding_finishes, den: jobs_crm_user_onboarding_begins}
