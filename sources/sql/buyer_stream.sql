@@ -132,7 +132,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
             and converting_date <= :last_date::date
     ) usm
     join dict.calendar c on c.event_date between :first_date::date and :last_date::date
-    where c.event_date between usm.from_date and usm.to_date
+    where c.event_date >= usm.from_date and c.event_date < usm.to_date
         and usm.to_date >= :first_date::date
 ) usm on ss.item_user_id = usm.user_id and cm.logical_category_id = usm.logical_category_id and ss.event_date::date = usm.event_date
 
