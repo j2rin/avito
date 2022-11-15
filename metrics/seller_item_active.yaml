@@ -188,6 +188,17 @@ metric.counter:
   item_video:                              {filter: [{has_short_video: True}, {is_active: True}]}
   item_video_new:                          {filter: [{has_short_video: True}, {is_active: True}, {start_date: $event_date}]}
 
+  items_with_delivery_seller_discount:                     {filter: [is_active: True, is_delivery_active: True, subsidy_index.>: 0]}
+  active_items_delivery_on_seller_discount_start_date:     {filter: [is_active: True, is_delivery_active: True, start_date.>=: $ab_start_date, subsidy_index.>: 0]}
+  seller_delivery_iv_seller_discount:                      {filter: [is_delivery_active: True, subsidy_index.>: 0], obs: [ item_views]}
+  seller_delivery_iv_seller_discount_start_date:           {filter: [is_delivery_active: True, start_date.>=: $ab_start_date, subsidy_index.>: 0], obs: [item_views]}
+  seller_contacts_on_delivery_items_seller_discount:               {filter: [is_delivery_active: True, subsidy_index.>: 0], obs: [contacts]}
+  seller_contacts_on_delivery_items_seller_discount_start_date:    {filter: [is_delivery_active: True, start_date.>=: $ab_start_date, subsidy_index.>: 0], obs: [contacts]}
+  seller_delivery_contacts_seller_discount:                        {filter: [subsidy_index.>: 0], obs: [delivery_contacts]}
+  seller_delivery_contacts_seller_discount_start_date:             {filter: [start_date.>=: $ab_start_date, subsidy_index.>: 0], obs: [delivery_contacts]}
+  seller_delivery_clicks_seller_discount:                          {filter: [subsidy_index.>: 0], obs: [delivery_clicks]}
+  seller_delivery_clicks_seller_discount_start_date:               {filter: [subsidy_index.>: 0, start_date.>=: $ab_start_date], obs: [delivery_clicks]}
+
 
 metric.uniq:
   active_items:                            {counter: cnt_active_items,                key: [item]}
@@ -326,6 +337,13 @@ metric.uniq:
   listers_with_rating:                     {counter: items_with_rating,               key: [user_logcat], m42: True}
   user_item_video:                         {counter: item_video,                      key: [user]}
   user_item_video_new:                     {counter: item_video_new,                  key: [user]}
+  seller_items_with_delivery_contacts_seller_discount:    {counter: seller_delivery_contacts_seller_discount,         key: [item]}
+  seller_items_with_delivery_clicks_seller_discount:      {counter: seller_delivery_clicks_seller_discount,           key: [item]}
+  seller_delivery_items_with_iv_seller_discount:          {counter: seller_delivery_iv_seller_discount,               key: [item]}
+  sellers_with_delivery_item_seller_discount:             {counter: items_with_delivery_seller_discount,              key: [user]}
+  sellers_with_delivery_contact_seller_discount:          {counter: seller_delivery_contacts_seller_discount,         key: [user]}
+  sellers_with_delivery_click_seller_discount:            {counter: seller_delivery_clicks_seller_discount,           key: [user]}
+  delivery_sellers_with_contact_seller_discount:          {counter: seller_contacts_on_delivery_items_seller_discount, key: [user]}
 
 
 metric.ratio:
@@ -362,3 +380,5 @@ metric.ratio:
   items_rating_coverage:                          {num: items_with_rating,            den: active_items,             m42: True}
   sellers_rating_coverage:                        {num: sellers_with_rating_new,          den: users_active_items,       m42: True}
   items_delivery_ratio_start_date:                {num: active_items_delivery_on_start_date, den: active_items_deliverable_start_date}
+  items_delivery_seller_discount_ratio:           {num: items_with_delivery_seller_discount,              den: items_with_delivery, m42: true}
+  items_delivery_seller_discount_ratio_start_date: {num: active_items_delivery_on_seller_discount_start_date, den: active_items_delivery_on_start_date}
