@@ -20,16 +20,17 @@ crm_notifications:
     - user_notifications_off_profile_per_user_push_to_receiver
     - user_notifications_off_any_per_user_push_to_receiver
 
-    - user_app_push_tech_available 
-    - user_app_push_any_setting_available
-    - user_app_push_any_default_setting_available
-    - user_app_push_any_nondefault_setting_available
-    - user_app_push_available
-    - user_email_tech_available
-    - user_email_any_setting_available
-    - user_email_any_default_setting_available
-    - user_email_any_nondefault_setting_available
-    - user_email_available
+    #эти метрики, считаются от дау, поэтому тестовая группа должна быт ьвсегад выше
+    #- user_app_push_tech_available 
+    #- user_app_push_any_setting_available
+    #- user_app_push_any_default_setting_available
+    #- user_app_push_any_nondefault_setting_available
+    #- user_app_push_available
+    #- user_email_tech_available
+    #- user_email_any_setting_available
+    #- user_email_any_default_setting_available
+    #- user_email_any_nondefault_setting_available
+    #- user_email_available
 
 
 ##  воронка по всем срм нотификациям
@@ -49,7 +50,7 @@ crm_notifications:
     - user_notification_crm_action
 
 
-##  воронка по всем маркетинговым (без рекомендаций) нотификациям
+##  воронка по всем маркетинговым нотификациям (ns_owner = Marketing)
     - notification_marketing_prepared
     - notification_marketing_no_data
     - notification_marketing_to_provider
@@ -65,7 +66,7 @@ crm_notifications:
     - user_notification_marketing_action
 
 
-##  воронка по рекомендательной кампании
+##  воронка по рекомендательной рт кампании (ns_owner = Recommendations)
     - notification_rec_prepared
     - notification_rec_no_data
     - notification_rec_to_provider
@@ -81,9 +82,9 @@ crm_notifications:
     - user_notification_rec_action
 
 
-#  доставка до пользователя с разбивкой на маркетинг и рекомендации
-    - user_browser_pushes_marketing_to_receiver
-    - user_sms_marketing_to_receiver
+#   доставка до пользователя с разбивкой на маркетинг и рекомендации
+    #- user_browser_pushes_marketing_to_receiver  - браузер пуши не отправляют
+    #- user_sms_marketing_to_receiver  - смс не отправляют
     - user_nc_marketing_to_receiver
     - user_email_marketing_to_receiver
     - user_push_marketing_to_receiver
@@ -113,7 +114,7 @@ crm_notifications:
     - push_to_receiver_per_user
 
 
-##  воронка пуш по NotificationType='recommendation'
+##  воронка пуш по NotificationType = 'Recommendation' (не путать с ns_owner)
     - push_rec_marketing_prepared
     - push_rec_marketing_no_data
     - push_rec_marketing_to_provider
@@ -181,26 +182,26 @@ crm_notifications:
     - email_to_receiver_per_user
 
 
-##  воронка browser push 
-    - browser_push_prepared
-    - browser_push_no_data
-    - browser_push_to_provider
-    - browser_push_to_receiver
-    - browser_push_open
+##  воронка browser push - не отправляют, поэтому закоменчу
+    #- browser_push_prepared
+    #- browser_push_no_data
+    #- browser_push_to_provider
+    #- browser_push_to_receiver
+    #- browser_push_open
 
-    - browser_push_to_receiver_per_browser_push_prepared
-    - browser_push_open_per_browser_push_to_receiver
+    #- browser_push_to_receiver_per_browser_push_prepared
+    #- browser_push_open_per_browser_push_to_receiver
 
-    - user_browser_push_prepared
-    - user_browser_push_no_data
-    - user_browser_push_to_provider
-    - user_browser_push_to_receiver
-    - user_browser_push_open
+    #- user_browser_push_prepared
+    #- user_browser_push_no_data
+    #- user_browser_push_to_provider
+    #- user_browser_push_to_receiver
+    #- user_browser_push_open
 
-    - user_browser_push_to_receiver_per_user_browser_push_prepared
-    - user_browser_push_open_per_user_browser_push_to_receiver
+    #- user_browser_push_to_receiver_per_user_browser_push_prepared
+    #- user_browser_push_open_per_user_browser_push_to_receiver
 
-    - browser_push_to_receiver_per_user
+    #- browser_push_to_receiver_per_user
 
 
 ##  продуктовые метрики с лэндинга из пуша 
