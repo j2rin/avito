@@ -95,6 +95,10 @@ metric.counter:
   lf_amount_net_start_date:                {filter: [{start_date.>=: $ab_start_date}], obs: [lf_amount_net]}
   items_moderations:                       {filter: [{manual_moderation.isnull: false}]}
   items_manual_moderations:                {filter: [{manual_moderation.=: 1}]}
+  items_with_smartphone_buyout_request_completed:  {filter: [{smartphone_buyout_request_completed_cd: True}]}
+  items_with_smartphone_buyout_request_screen:     {filter: [{smartphone_buyout_request_screen_cd: True}]}
+  items_with_smartphone_buyout_entered_flow:       {filter: [{smartphone_buyout_entered_flow_cd: True}]}
+  items_with_smartphone_buyout_seen_bottomsheet:   {filter: [{smartphone_buyout_seen_invitation_cd: True}]}
 
 metric.uniq:
   items_edit_started:                      {counter: item_edit_starts,                key: [item]}
@@ -201,4 +205,6 @@ metric.ratio:
   sellers_edited_address_per_editor:       {num: sellers_edited_address,          den: users_item_edit}
   items_dead_per_started:                  {num: items_started_dead,          den: items_started}
   items_manual_moder_per_moder:            {num: items_manual_moderated,          den: items_moderated}
-
+  items_with_smartphone_buyout_requests_per_seen_invitation:     {num: items_with_smartphone_buyout_request_completed,   den: items_with_smartphone_buyout_seen_bottomsheet}
+  items_with_smartphone_buyout_entered_flow_per_seen_invitation: {num: items_with_smartphone_buyout_entered_flow,        den: items_with_smartphone_buyout_seen_bottomsheet}
+  items_with_smartphone_buyout_requests_per_seen_request_screen: {num: items_with_smartphone_buyout_request_completed,   den: items_with_smartphone_buyout_request_screen}
