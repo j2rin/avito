@@ -198,6 +198,12 @@ metric.counter:
   seller_delivery_contacts_seller_discount_start_date:             {filter: [start_date.>=: $ab_start_date, subsidy_index.>: 0], obs: [delivery_contacts]}
   seller_delivery_clicks_seller_discount:                          {filter: [subsidy_index.>: 0], obs: [delivery_clicks]}
   seller_delivery_clicks_seller_discount_start_date:               {filter: [subsidy_index.>: 0, start_date.>=: $ab_start_date], obs: [delivery_clicks]}
+  cnt_active_items_deduplicated:            {filter: [{is_active: True}, {is_original: True}], m42: False}
+  cnt_active_items_duplicates_groups:       {filter: [{is_active: True}, {is_original: True}, {duplicates_count.>: 0}], m42: False}
+  cnt_active_items_have_duplicate:          {filter: [{is_active: True}, {duplicates_count.>: 0}], m42: False}
+  cnt_active_items_vas_have_duplicate:      {filter: [{is_active: True}, {duplicates_count.>: 0}, {vas_mask.>: 0}], m42: False}
+  seller_contacts_on_duplicates:            {filter: [duplicates_count.>: 0], obs: [contacts]}
+  seller_contacts_on_duplicates_vas:        {filter: [{duplicates_count.>: 0}, {vas_mask.>: 0}], obs: [contacts]}
 
 
 metric.uniq:
@@ -344,6 +350,12 @@ metric.uniq:
   sellers_with_delivery_contact_seller_discount:          {counter: seller_delivery_contacts_seller_discount,         key: [user]}
   sellers_with_delivery_click_seller_discount:            {counter: seller_delivery_clicks_seller_discount,           key: [user]}
   delivery_sellers_with_contact_seller_discount:          {counter: seller_contacts_on_delivery_items_seller_discount, key: [user]}
+  active_items_deduplicated:               {counter: cnt_active_items_deduplicated,          key: [item]}
+  active_items_duplicates_groups:          {counter: cnt_active_items_duplicates_groups,     key: [item]}
+  active_items_have_duplicate:             {counter: cnt_active_items_have_duplicate,        key: [item]}
+  active_items_vas_have_duplicate:         {counter: cnt_active_items_vas_have_duplicate,    key: [item]}
+  users_active_items_have_duplicate:       {counter: cnt_active_items_have_duplicate,        key: [user]}
+  users_active_items_vas_have_duplicate:   {counter: cnt_active_items_vas_have_duplicate,    key: [user]}
 
 
 metric.ratio:
