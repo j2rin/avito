@@ -290,6 +290,8 @@ definitions:
 
     - &is_contacts_front {$or: [[platform_id: 1, eid: *c_front], [platform_id.!=: 1, eid: *c_all]] }
 
+    - &is_guarantee { item_flags.bit: 29 }
+
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
@@ -314,6 +316,7 @@ metric.counter:
     cnt_btc_part_qual_unknown: { filter: [*part_qual_unknown, *is_btc] }
     cnt_btc_in_stock: { filter: [*item_in_stock, *is_btc] }
     cnt_btc_to_order: { filter: [*item_to_order, *is_btc] }
+    cnt_btc_guarantee: { filter: [*is_btc, *is_guarantee] }
     cnt_soc_btn: { filter: [*is_soc_btn] }
     btc_developer: { filter: [*is_btc, *is_developer_acc] }
     btc_developer_search: { filter: [*is_btc_wo_guessing, *is_developer_acc, *x_is_search] }
@@ -403,6 +406,7 @@ metric.counter:
     cnt_btc_s_distr_metro_road:
         { filter: [*is_btc_wo_guessing, *x_is_search, { $or: [[*is_s_district], [*is_s_metro], [*is_s_road]] }], m42: False }
     cnt_btc_s_item_attr: { filter: [*is_btc_wo_guessing, *x_is_search], m42: False }
+    cnt_btc_s_item_attr_guarantee: { filter: [*is_btc_wo_guessing, *x_is_search, *is_guarantee], m42: False }
     cnt_btc_new_s_item_attr: { filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_search], m42: False }
     cnt_btc_old_s_item_attr: { filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_search], m42: False }
     cnt_btc_s_map_area: { filter: [*is_btc_wo_guessing, *is_s_map, *x_is_search], m42: False }
@@ -549,6 +553,7 @@ metric.counter:
     cnt_cs_rec: { filter: [*is_contact_wo_guessing, *x_is_rec], m42: False }
     cnt_cs_push_land: { filter: [*is_contact_wo_guessing, *x_is_push_land], m42: False }
     cnt_cs_rec_i2i: { filter: [*is_contact_wo_guessing, *x_is_i2i], m42: False }
+    cnt_cs_rec_i2i_guarantee: { filter: [*is_contact_wo_guessing, *x_is_i2i, *is_guarantee], m42: False }
     cnt_cs_rec_cv2vac: { filter: [*is_contact_wo_guessing, *x_is_cv2vac], m42: False }
     cnt_cs_msg_rec_i2i: { filter: [*is_msg, *x_is_i2i], m42: False }
     cnt_cs_ph_rec_i2i: { filter: [*is_ph, *x_is_i2i], m42: False }
@@ -759,6 +764,7 @@ metric.counter:
     cnt_iv_rec: { filter: [*is_iv_wo_guessing, *x_is_rec], m42: False }
     cnt_iv_push_land: { filter: [*is_iv_wo_guessing, *x_is_push_land], m42: False }
     cnt_iv_rec_i2i: { filter: [*is_iv_wo_guessing, *x_is_i2i], m42: False }
+    cnt_iv_rec_i2i_guarantee: { filter: [*is_iv_wo_guessing, *x_is_i2i, *is_guarantee], m42: False }
     cnt_iv_rec_cv2vac: { filter: [*is_iv_wo_guessing, *x_is_cv2vac], m42: False }
     cnt_iv_rec_i2i_vas: { filter: [*is_item_vas, *is_iv_wo_guessing, *x_is_i2i], m42: False }
     cnt_iv_rec_s: { filter: [*is_iv_wo_guessing, { $or: [[*x_is_rec], [*x_is_search]] }], m42: False }
@@ -784,6 +790,7 @@ metric.counter:
     cnt_iv_s_filter_price:
         { filter: [*is_iv_wo_guessing, *x_is_search, { $or: [[*x_is_filter_search], [*x_is_price_filter_search]] }], m42: False }
     cnt_iv_s_item_attr: { filter: [*is_iv_wo_guessing, *x_is_search], m42: False }
+    cnt_iv_s_item_attr_guarantee: { filter: [*is_iv_wo_guessing, *x_is_search, *is_guarantee], m42: False }
     cnt_iv_s_item_attr_sum_rnk: { filter: [*is_iv_wo_guessing, *x_is_search, *is_1p], obs: [item_rnk] }
     cnt_iv_s_item_attr_rnk3: { filter: [*is_iv_wo_guessing, *x_is_search, *is_1p, item_rnk.<=: 3], m42: False }
     cnt_iv_s_item_attr_rnk5: { filter: [*is_iv_wo_guessing, *x_is_search, *is_1p, item_rnk.<=: 5], m42: False }
@@ -1040,6 +1047,7 @@ metric.counter:
     contacts_items_cpa: {filter: [*is_contact_item, *is_item_cpa], m42: True}
     contacts_items_wo_direct_cpa: {filter: [*is_contact_item, *is_item_cpa, item_x_type.isnull: false], m42: True}
     contacts_jk: { filter: [*is_contact_jk] }
+    contacts_guarantee: { filter: [*is_contact, *is_guarantee] }
     contact_part_qual_exists: { filter: [*part_qual_exists, *is_contact], m42: False }
     contact_part_qual_compab: { filter: [*part_qual_compab, *is_contact], m42: False }
     contact_part_qual_unknown: { filter: [*part_qual_unknown, *is_contact], m42: False }
@@ -1132,6 +1140,7 @@ metric.counter:
     item_views_perfvas_map: { filter: [*is_iv, *is_item_perfvas, *x_is_map], m42: False }
     item_views_xl: { filter: [*is_iv, *is_item_xl], m42: False }
     item_views_with_available_msg: { filter: [*is_msg_available, *is_iv] }
+    item_views_guarantee: { filter: [*is_iv, *is_guarantee] }
     iv_developer: { filter: [*is_developer_acc, *is_iv] }
     iv_developer_search: { filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_search] }
     item_views_item_pessimized: { filter: [*is_item_pessimized, *is_iv] }
@@ -1781,6 +1790,7 @@ metric.uniq:
     buyer_target_clicks_vector: { counter: cnt_btc_vec, key: [item_x] }
     buyer_target_clicks_searches_u2i: { counter: cnt_btc_s_u2i, key: [item_x] }
     buyer_target_clicks_serp: { counter: cnt_btc_s_item_attr, key: [item_x] }
+    buyer_target_clicks_serp_guarantee: { counter: cnt_btc_s_item_attr_guarantee, key: [item_x] }
     buyer_target_clicks_new_serp: { counter: cnt_btc_new_s_item_attr, key: [item_x] }
     buyer_target_clicks_returned_serp: { counter: cnt_btc_old_s_item_attr, key: [item_x] }
     buyer_target_clicks_nox: { counter: cnt_btc_no, key: [item_x] }
@@ -1836,6 +1846,7 @@ metric.uniq:
     contacts_rec: { counter: cnt_cs_rec, key: [item_x] }
     contacts_push_land: { counter: cnt_cs_push_land, key: [item_x] }
     contacts_rec_i2i: { counter: cnt_cs_rec_i2i, key: [item_x] }
+    contacts_rec_i2i_guarantee: { counter: cnt_cs_rec_i2i_guarantee, key: [item_x] }
     contacts_rec_cv2vac: { counter: cnt_cs_rec_cv2vac, key: [item_x] }
     contacts_rec_i2i_vas: { counter: cnt_cs_rec_i2i_vas, key: [item_x] }
     contacts_msg_rec_i2i: { counter: cnt_cs_msg_rec_i2i, key: [item_x] }
@@ -2015,6 +2026,7 @@ metric.uniq:
     item_views_rec: { counter: cnt_iv_rec, key: [item_x] }
     item_views_push_land: { counter: cnt_iv_push_land, key: [item_x] }
     item_views_rec_i2i: { counter: cnt_iv_rec_i2i, key: [item_x] }
+    item_views_rec_i2i_guarantee: { counter: cnt_iv_rec_i2i_guarantee, key: [item_x] }
     item_views_rec_cv2vac: { counter: cnt_iv_rec_cv2vac, key: [item_x] }
     item_views_rec_i2i_vas: { counter: cnt_iv_rec_i2i_vas, key: [item_x] }
     item_views_rec_u2i: { counter: cnt_iv_rec_u2i, key: [item_x] }
@@ -2036,6 +2048,7 @@ metric.uniq:
     item_views_quorum: { counter: cnt_iv_qrm, key: [item_x] }
     item_views_vector: { counter: cnt_iv_vec, key: [item_x] }
     item_views_serp: { counter: cnt_iv_s_item_attr, key: [item_x] }
+    item_views_serp_guarantee: { counter: cnt_iv_s_item_attr_guarantee, key: [item_x] }
     item_views_nox: { counter: cnt_iv_no_item_attr, key: [item_x] }
     item_views_serp_district: { counter: cnt_iv_s_distr, key: [item_x] }
     item_views_serp_metro: { counter: cnt_iv_s_metro, key: [item_x] }
@@ -2105,6 +2118,7 @@ metric.uniq:
     buyers_from_map_total: { counter: cnt_cs_from_map_s_area, key: [cookie] }
     buyers_logcat: { counter: contacts, key: [cookie_logcat] }
     buyers_vas: { counter: contacts_total_vas, key: [cookie] }
+    buyers_guarantee: { counter: contacts_guarantee, key: [cookie] }
     map_area_users: { counter: searches_map_area, key: [cookie] }
     unq_ph: { counter: phone_views_total, key: [cookie], m42: False }
     user_btc_suggest: { counter: cnt_btc_s_suggest, key: [cookie], m42: False }
@@ -2412,6 +2426,7 @@ metric.uniq:
     users_item_views_serp_radius: { counter: cnt_iv_s_radius, key: [cookie] }
     users_item_views_serp_road: { counter: cnt_iv_s_road, key: [cookie] }
     users_item_views_logcat: { counter: item_views, key: [cookie_logcat] }
+    users_item_view_daily_guarantee: { counter: item_views_guarantee, key: [cookie] }
     users_ph_nox: { counter: cnt_cs_ph_no_item_attr, key: [cookie] }
     users_ph_serp: { counter: cnt_cs_ph_s_item_attr, key: [cookie] }
     users_ph_rec_u2i: { counter: cnt_cs_ph_rec_i2i, key: [cookie] }
@@ -2622,6 +2637,7 @@ metric.uniq:
     s_witcher_reg_with_c: { counter: cnt_cs_wtc_reg, key: [x] }
     s_witcher_reg_with_iv: { counter: cnt_iv_wtc_reg, key: [x] }
     search_btc: { counter: cnt_btc_s_item_attr, key: [x] }
+    search_btc_guarantee: { counter: cnt_btc_s_item_attr_guarantee, key: [x] }
     search_u2i_contact: { counter: cnt_s_u2i_c, key: [x] }
     search_u2i_iv: { counter: cnt_s_u2i_iv, key: [x] }
     searches_contact_any_ext_block: { counter: cnt_cs_any_ext_block, key: [x] }
@@ -2652,6 +2668,7 @@ metric.uniq:
     searches_item_view_quorum: { counter: cnt_iv_qrm, key: [x] }
     searches_item_view_vector: { counter: cnt_iv_vec, key: [x] }
     searches_item_view_serp: { counter: cnt_iv_s_item_attr, key: [x] }
+    searches_item_view_serp_guarantee: { counter: cnt_iv_s_item_attr_guarantee, key: [x] }
     searches_item_view_vas: { counter: cnt_iv_vas, key: [x] }
     searches_item_view_cpa: { counter: cnt_iv_cpa, key: [x] }
     searches_item_view_s_cpa: { counter: cnt_iv_s_cpa, key: [x] }
@@ -3003,6 +3020,7 @@ metric.ratio:
     contacts_delivery_per_search_delivery: { num: contacts_delivery, den: searches_serp_extra_delivery }
     contacts_from_map_area_per_map_area: { num: contacts_serp_map_area, den: searches_map_area }
     contacts_per_item_view: { num: contacts, den: item_views }
+    contacts_per_item_view_guarantee: { num: contacts_guarantee, den: item_views_guarantee }
     create_order_delivery_per_iv_delivery_any_ext_block:
         { num: create_order_delivery_any_ext_block, den: item_views_delivery_any_ext_block }
     create_order_delivery_per_click_delivery_any_ext_block: { num: create_order_delivery_any_ext_block, den: click_delivery_any_ext_block }
