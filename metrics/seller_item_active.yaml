@@ -187,6 +187,16 @@ metric.counter:
   items_with_rating:                       {filter: [{is_active: True}, {seller_rating.in: [1,2,3,4,5]}], m42: True}
   item_video:                              {filter: [{has_short_video: True}, {is_active: True}]}
   item_video_new:                          {filter: [{has_short_video: True}, {is_active: True}, {start_date: $event_date}]}
+  active_items_calendar:                   {filter: [{is_active: True}, {is_item_calendar: True}]}
+  active_items_calendar_new:               {filter: [{is_active: True}, {is_item_calendar: True}, {start_date: $event_date}]}
+  active_items_price_list:                 {filter: [{is_active: True}, {count_services_price_list.>=: 1}]}
+  active_items_price_list_new:             {filter: [{is_active: True}, {count_services_price_list.>=: 1}, {start_date: $event_date}]}
+  active_items_price_list_more_2_services:                 {filter: [{is_active: True}, {count_services_price_list.>=: 2}]}
+  active_items_price_list_more_2_services_new:             {filter: [{is_active: True}, {count_services_price_list.>=: 2}, {start_date: $event_date}]}
+  active_items_price_list_more_3_services:                 {filter: [{is_active: True}, {count_services_price_list.>=: 3}]}
+  active_items_price_list_more_3_services_new:             {filter: [{is_active: True}, {count_services_price_list.>=: 3}, {start_date: $event_date}]}
+  active_items_price_list_more_5_services:                 {filter: [{is_active: True}, {count_services_price_list.>=: 5}]}
+  active_items_price_list_more_5_services_new:             {filter: [{is_active: True}, {count_services_price_list.>=: 5}, {start_date: $event_date}]}
 
   items_with_delivery_seller_discount:                     {filter: [is_active: True, is_delivery_active: True, subsidy_index.>: 0]}
   active_items_delivery_on_seller_discount_start_date:     {filter: [is_active: True, is_delivery_active: True, start_date.>=: $ab_start_date, subsidy_index.>: 0]}
@@ -343,6 +353,11 @@ metric.uniq:
   listers_with_rating:                     {counter: items_with_rating,               key: [user_logcat], m42: True}
   user_item_video:                         {counter: item_video,                      key: [user]}
   user_item_video_new:                     {counter: item_video_new,                  key: [user]}
+  seller_calendar:                         {counter: active_items_calendar,           key: [user]}
+  seller_price_list:                       {counter: active_items_price_list,         key: [user]}
+  seller_price_list_more_2_services:       {counter: active_items_price_list_more_2_services,         key: [user]}
+  seller_price_list_more_3_services:       {counter: active_items_price_list_more_3_services,         key: [user]}
+  seller_price_list_more_5_services:       {counter: active_items_price_list_more_5_services,         key: [user]}
   seller_items_with_delivery_contacts_seller_discount:    {counter: seller_delivery_contacts_seller_discount,         key: [item]}
   seller_items_with_delivery_clicks_seller_discount:      {counter: seller_delivery_clicks_seller_discount,           key: [item]}
   seller_delivery_items_with_iv_seller_discount:          {counter: seller_delivery_iv_seller_discount,               key: [item]}
