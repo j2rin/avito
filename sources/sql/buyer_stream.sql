@@ -92,7 +92,8 @@ select
     (case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end >> 10) & 0xFFFFF as search_features,
     ubb.track_id is not null as new_user_btc,
     asd.is_asd,
-    asd.asd_user_group_id,
+    -- По дефолту ставим SS сегмент - 8383
+    nvl(asd.asd_user_group_id,8383) as asd_user_group_id,
     coalesce(usm.user_segment_market, ls.segment) as user_segment_market,
     ss.item_rnk,
     ss.boost_class_id,
