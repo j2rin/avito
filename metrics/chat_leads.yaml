@@ -4,7 +4,8 @@ definitions:
   - &is_prob035            {sum_probability.>=: 0.35}
   - &is_lead_class         {class.in: [3, 4, 5]}
   - &is_first_class        {class.in: [1]}
-  - &is_second_class        {class.in: [2]}
+  - &is_second_class       {class.in: [2]}
+  - &is_fifth_class        {class.in: [5]}
   - &is_notlead_sumprobabilty  {sum_probability.<=: 0.15}
 
 
@@ -15,6 +16,7 @@ metric.counter:
 
     chat_first_class:                               {filter: [*is_first_class]}
     chat_second_class:                              {filter: [*is_second_class]}
+    chat_fifth_class:                               {filter: [* is_fifth_class]}
     no_target_chat:                                 {filter: [*is_notlead_sumprobabilty]}
 
     
