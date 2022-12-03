@@ -1,0 +1,20 @@
+metric.uniq:
+  qd_participants: {counter: user_id,       key: [user], m42: False}
+  qd_requests:     {counter: mp_request_id, key: [user], m42: False}
+  qd_lots:         {counter: mp_lot_id,     key: [user], m42: False}
+
+
+metric.counter:
+  lots_w_seller_choice_of_winner:              {obs: [is_seller_choice_of_winner], m42: False}
+  lots_w_any_choice_of_winner:                 {obs: [is_any_choice_of_winner],    m42: False}
+  lots_w_declined_offers:                      {obs: [is_declined_offers],         m42: False}
+  lots_w_offer:                                {obs: [has_offer],                  m42: False}
+  lots_w_buyout:                               {obs: [has_buyout],                 m42: False}
+  buyout_amount:                               {obs: [buyout_amount],              m42: False}
+  count_dealers_w_bid:                         {obs: [count_bid],                  m42: False}
+
+metric.ratio:
+  bids_per_lot:                                {num: count_dealers_w_bid, den: qd_lots,         m42: False}
+  lots_per_participant:                        {num: qd_lots,             den: qd_participants, m42: False}
+  requests_per_participant:                    {num: qd_requests,         den: qd_participants, m42: False}
+  buyout_amount_to_buyouts:                    {num: buyout_amount,       den: lots_w_buyout,   m42: False}
