@@ -1,7 +1,7 @@
 metric.uniq:
-  qd_participants: {counter: user_id,       key: [user], m42: False}
-  qd_requests:     {counter: mp_request_id, key: [user], m42: False}
-  qd_lots:         {counter: mp_lot_id,     key: [user], m42: False}
+  qd_participants: {counter: qd_user,       key: [user_id], m42: False}
+  qd_requests:     {counter: qd_mp_request, key: [mp_request_id], m42: False}
+  qd_lots:         {counter: qd_mp_lot,     key: [mp_lot_id], m42: False}
 
 
 metric.counter:
@@ -12,9 +12,10 @@ metric.counter:
   lots_w_buyout:                               {obs: [has_buyout],                 m42: False}
   buyout_amount:                               {obs: [buyout_amount],              m42: False}
   count_dealers_w_bid:                         {obs: [count_bid],                  m42: False}
-  user_id:                                     {user_id,                         m42: False}
-  mp_request_id:                               {mp_request_id,                   m42: False}
-  mp_lot_id:                                   {mp_lot_id,                       m42: False}
+  qd_user:                                     {m42: False}
+  qd_mp_request:                               {m42: False}
+  qd_mp_lot:                                   {m42: False}
+
 
 metric.ratio:
   bids_per_lot:                                {num: count_dealers_w_bid, den: qd_lots,         m42: False}
