@@ -3,6 +3,7 @@ definitions:
     - &eid_search   [300]
     - &eid_rec      [2437, 2012, 2309, 4126, 4386]
     - &eid_ph       [303]
+    - &eid_ph_iac   [303, 4813, 3005, 3461]
     - &eid_ph_realdev [3461, 4600]
     - &eid_u2i      [2012, 2309, 6221]
     - &eid_i2i      [2437]
@@ -82,7 +83,7 @@ definitions:
 
     - &is_ph_btn    { eid: [2216, 2650] }
     - &is_ph        { eid: *eid_ph }
-#    - &is_ph_realdev { eid: *eid_ph_realdev }
+    - &is_ph_iac    { eid: *eid_ph_iac }
     - &is_ph_snip   { phone_view_source: s }
     - &is_ph_right  { $or: [{ phone_view_source: r }, { phone_view_source.isnull: true }] }
     - &is_ph_xlvas  { phone_view_source: xs }
@@ -1186,6 +1187,7 @@ metric.counter:
     phone_views_snippet: { filter: [*is_ph, { $or: [[*is_ph_snip], [*is_ph_xlvas]] }] }
     phone_views_item: { filter: [*is_ph, { $or: [[*is_ph_right], [*is_ph_top]] }] }
     phone_views_total: { filter: [*is_ph_tot] }
+    phone_and_iac:     { filter: [*is_ph_iac] }
     phone_views_total_cpa: { filter: [*is_ph_tot, *is_item_cpa] }
     phone_views_total_vas: { filter: [*is_item_vas, *is_ph_tot] }
     phone_views_total_vas_cpa: { filter: [*is_item_vas, *is_ph_tot, *is_item_cpa] }
@@ -2284,6 +2286,7 @@ metric.uniq:
     user_iv_from_witcher_reg: { counter: cnt_iv_wtc_reg, key: [cookie] }
     user_iv_seen: { counter: cnt_iv_seen, key: [cookie] }
     user_pv: { counter: cnt_ph_realty_development, key: [cookie] }
+    user_ph_and_iac: { counter: phone_and_iac, key: [cookie] }
     user_s_from_witcher_any: { counter: searches_from_witcher_any, key: [cookie] }
     user_s_from_witcher_auto: { counter: searches_from_witcher_new_auto, key: [cookie] }
     user_s_from_witcher_del: { counter: searches_from_witcher_delivery, key: [cookie] }
