@@ -5,6 +5,7 @@ metric.counter:
   item_add_chains_form_input:              {filter: [{chain_last_form_input_time.isnull: False}]}
   item_chains_started:                     {}
   items_created:                           {filter: [{chain_item_create_time.isnull: False}]}
+  items_created_click:                     {filter: [{chain_wizard_last_click_time.isnull: False}, {chain_item_create_time.isnull: False}]}
   title_suggest_clicks:                    {obs: [chain_title_suggest_click_count]}
   title_suggest_shows:                     {obs: [chain_title_suggest_show_count]}
 
@@ -13,6 +14,7 @@ metric.uniq:
   users_item_add_category_last_click:      {counter: item_add_category_last_clicks,   key: [cookie]}
   users_item_add_confirm:                  {counter: item_add_chains_confirm,         key: [cookie]}
   users_item_add_created:                  {counter: items_created,                   key: [cookie]}
+  users_item_add_created_click:            {counter: items_created_click,             key: [cookie]}
   users_item_add_form_input:               {counter: item_add_chains_form_input,      key: [cookie]}
   users_item_chain_started:                {counter: item_chains_started,             key: [cookie]}
   users_title_suggest_click:               {counter: title_suggest_clicks,            key: [cookie]}
@@ -22,12 +24,12 @@ metric.ratio:
   item_add_category_last_click_per_item_add_category_first_click: {num: item_add_category_last_clicks,   den: item_add_category_first_clicks}
   item_add_form_input_per_item_chains_started: {num: item_add_chains_form_input,      den: item_chains_started}
   item_create_per_item_add_first_click:    {num: items_created,                   den: item_add_category_first_clicks}
-  item_create_per_item_add_last_click:     {num: items_created,                   den: item_add_category_last_clicks}
+  item_create_per_item_add_last_click:     {num: items_created_click,             den: item_add_category_last_clicks}
   item_create_per_item_chains_started:     {num: items_created,                   den: item_chains_started}
   users_item_add_form_input_per_users_item_chain_started: {num: users_item_add_form_input,       den: users_item_chain_started}
   users_item_add_last_click_per_users_item_add_first_click: {num: users_item_add_category_last_click, den: users_item_add_category_first_click}
   users_item_create_per_users_item_add_first_click: {num: users_item_add_created,          den: users_item_add_category_first_click}
-  users_item_create_per_users_item_add_last_click: {num: users_item_add_created,          den: users_item_add_category_last_click}
+  users_item_create_per_users_item_add_last_click: {num: users_item_add_created_click,     den: users_item_add_category_last_click}
   users_item_create_per_users_item_chain_started: {num: users_item_add_created,          den: users_item_chain_started}
   title_suggest_clicks_per_shows:     {num: title_suggest_clicks, den: title_suggest_shows}
   users_title_suggest_click_per_show: {num: users_title_suggest_click, den: users_title_suggest_show}
