@@ -7,9 +7,11 @@ definitions:
   - &domofond        {project_type: 'domofond'}
   - &domoteka        {product_type: 'short_term_rent', transaction_subtype: 'check'}
   - &str             {product_type: 'short_term_rent', transaction_subtype: 'buyer book'}
+  - &cpt             {product_type: 'cpt', transaction_subtype: 'c2c commission'}
+  - &chatbot         {product_type: 'JOB ChatBot'}
 
 metric.counter:
   avito_amount_net_adj:                {obs: [amount_net_adj],  filter: [$or: [*advertisement, *classified, *paid_contact]]}
-  other_projects_amount_net_adj:       {obs: [amount_net_adj],  filter: [$or: [*autoteka, *delivery, *domofond, *domoteka, *str]]} 
+  other_projects_amount_net_adj:       {obs: [amount_net_adj],  filter: [$or: [*autoteka, *delivery, *domofond, *domoteka, *str, *chatbot, *cpt]]}
   total_amount_net_adj:                {obs: [amount_net_adj],  filter: [$or: [*advertisement, *classified, *paid_contact, *autoteka,
-                                                                                    *delivery, *domofond, *domoteka, *str]]} 
+                                                                                    *delivery, *domofond, *domoteka, *str, *chatbot, *cpt]]}
