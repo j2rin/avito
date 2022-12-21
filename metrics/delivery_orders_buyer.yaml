@@ -28,7 +28,7 @@ metric.counter:
   buyer_delivery_items_return_delivered: {filter: [{is_return_delivered: true}]}
   buyer_delivery_items_returned:         {filter: [{is_returned: true}]}
   buyer_delivery_items_unconfirmed:      {filter: [{is_unconfirmed: true}]}
-  
+
   buyer_delivery_items_delivery_discount_created:                     {filter: [{is_created: true}, {is_delivery_discount: true}]}
   buyer_delivery_items_delivery_discount_paid:                        {filter: [{is_paid: true}, {is_delivery_discount: true}]}
   buyer_delivery_items_delivery_discount_accepted:                    {filter: [{is_accepted: true}, {is_delivery_discount: true}]}
@@ -70,7 +70,7 @@ metric.counter:
   buyer_delivery_items_bonus_cashback_accepted:                       {filter: [{is_accepted: true}, {is_bonus_cashback: true}]}
   buyer_delivery_items_bonus_cashback_returned:                       {filter: [{is_returned: true}, {is_bonus_cashback: true}]}
   buyer_delivery_items_bonus_cashback_accepted_and_returned:          {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}, {is_bonus_cashback: true}]}
-  
+
   buyer_delivery_items_promocode_discount_created:                    {filter: [{is_created: true}, {is_promocode_discount: true}]}
   buyer_delivery_items_promocode_discount_paid:                       {filter: [{is_paid: true}, {is_promocode_discount: true}]}
   buyer_delivery_items_promocode_discount_accepted:                   {filter: [{is_accepted: true}, {is_promocode_discount: true}]}
@@ -88,55 +88,109 @@ metric.counter:
   buyer_delivery_items_c2c_seller_discount_accepted:                  {filter: [{is_accepted: true}, {is_c2c_seller_discount: true}]}
   buyer_delivery_items_c2c_seller_discount_returned:                  {filter: [{is_returned: true}, {is_c2c_seller_discount: true}]}
   buyer_delivery_items_c2c_seller_discount_accepted_and_returned:     {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}, {is_c2c_seller_discount: true}]}
-  
+
   buyer_delivery_items_exmail_discount_created:                       {filter: [{is_created: true}, {is_exmail_discount: true}]}
   buyer_delivery_items_exmail_discount_paid:                          {filter: [{is_paid: true}, {is_exmail_discount: true}]}
   buyer_delivery_items_exmail_discount_accepted:                      {filter: [{is_accepted: true}, {is_exmail_discount: true}]}
   buyer_delivery_items_exmail_discount_returned:                      {filter: [{is_returned: true}, {is_exmail_discount: true}]}
   buyer_delivery_items_exmail_discount_accepted_and_returned:         {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}, {is_exmail_discount: true}]}
 
-  buyer_delivery_items_exmail_subsidies_created:                       { filter: [ { is_created: true }, {exmail_subsidies.>: 0} ] }
-  buyer_delivery_items_exmail_subsidies_paid:                          { filter: [ { is_paid: true }, {exmail_subsidies.>: 0} ] }
-  buyer_delivery_items_exmail_subsidies_accepted:                      { filter: [ { is_accepted: true }, {exmail_subsidies.>: 0} ] }
-  buyer_delivery_items_exmail_subsidies_returned:                      { filter: [ { is_returned: true }, {exmail_subsidies.>: 0} ] }
-  buyer_delivery_items_exmail_subsidies_accepted_and_returned:         { filter: [ { $or: [ { is_returned: true }, { is_accepted: true } ] }, {exmail_subsidies.>: 0} ] }
+  buyer_delivery_items_exmail_subsidies_created:                      {filter: [ { is_created: true }, {exmail_subsidies.>: 0} ] }
+  buyer_delivery_items_exmail_subsidies_paid:                         {filter: [ { is_paid: true }, {exmail_subsidies.>: 0} ] }
+  buyer_delivery_items_exmail_subsidies_accepted:                     {filter: [ { is_accepted: true }, {exmail_subsidies.>: 0} ] }
+  buyer_delivery_items_exmail_subsidies_returned:                     {filter: [ { is_returned: true }, {exmail_subsidies.>: 0} ] }
+  buyer_delivery_items_exmail_subsidies_accepted_and_returned:        {filter: [ { $or: [ { is_returned: true }, { is_accepted: true } ] }, {exmail_subsidies.>: 0} ] }
 
   buyer_delivery_subsidies_created:                         {filter: [{is_created: true}], obs: [total_subsidies]}
   buyer_delivery_subsidies_paid:                            {filter: [{is_paid: true}], obs: [total_subsidies]}
   buyer_delivery_subsidies_accepted:                        {filter: [{is_accepted: true}], obs: [total_subsidies]}
   buyer_delivery_subsidies_returned:                        {filter: [{is_returned: true}], obs: [total_subsidies]}
   buyer_delivery_subsidies_accepted_and_returned:           {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [total_subsidies]}
-  
+
   buyer_threefirst_subsidies_created:                       {filter: [{is_created: true}], obs: [threefirst_subsidies]}
   buyer_threefirst_subsidies_paid:                          {filter: [{is_paid: true}], obs: [threefirst_subsidies]}
   buyer_threefirst_subsidies_accepted:                      {filter: [{is_accepted: true}], obs: [threefirst_subsidies]}
   buyer_threefirst_subsidies_returned:                      {filter: [{is_returned: true}], obs: [threefirst_subsidies]}
   buyer_threefirst_subsidies_accepted_and_returned:         {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [threefirst_subsidies]}
-  
+
+  buyer_total_threefirst_subsidies_created:                 {filter: [{is_created: true}], obs: [total_threefirst_subsidies]}
+  buyer_total_threefirst_subsidies_paid:                    {filter: [{is_paid: true}], obs: [total_threefirst_subsidies]}
+  buyer_total_threefirst_subsidies_accepted:                {filter: [{is_accepted: true}], obs: [total_threefirst_subsidies]}
+  buyer_total_threefirst_subsidies_returned:                {filter: [{is_returned: true}], obs: [total_threefirst_subsidies]}
+  buyer_total_threefirst_subsidies_accepted_and_returned:   {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [total_threefirst_subsidies]}
+
   buyer_bonus_subsidies_created:                            {filter: [{is_created: true}], obs: [bonus_subsidies]}
   buyer_bonus_subsidies_paid:                               {filter: [{is_paid: true}], obs: [bonus_subsidies]}
   buyer_bonus_subsidies_accepted:                           {filter: [{is_accepted: true}], obs: [bonus_subsidies]}
   buyer_bonus_subsidies_returned:                           {filter: [{is_returned: true}], obs: [bonus_subsidies]}
   buyer_bonus_subsidies_accepted_and_returned:              {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [bonus_subsidies]}
-  
+
   buyer_promocode_subsidies_wo_tax_created:                 {filter: [{is_created: true}], obs: [promocode_subsidies_wo_tax]}
   buyer_promocode_subsidies_wo_tax_paid:                    {filter: [{is_paid: true}], obs: [promocode_subsidies_wo_tax]}
   buyer_promocode_subsidies_wo_tax_accepted:                {filter: [{is_accepted: true}], obs: [promocode_subsidies_wo_tax]}
   buyer_promocode_subsidies_wo_tax_returned:                {filter: [{is_returned: true}], obs: [promocode_subsidies_wo_tax]}
   buyer_promocode_subsidies_wo_tax_accepted_and_returned:   {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [promocode_subsidies_wo_tax]}
-  
+
+  buyer_total_promocode_subsidies_wo_tax_created:                 {filter: [{is_created: true}], obs: [total_promocode_subsidies_wo_tax]}
+  buyer_total_promocode_subsidies_wo_tax_paid:                    {filter: [{is_paid: true}], obs: [total_promocode_subsidies_wo_tax]}
+  buyer_total_promocode_subsidies_wo_tax_accepted:                {filter: [{is_accepted: true}], obs: [total_promocode_subsidies_wo_tax]}
+  buyer_total_promocode_subsidies_wo_tax_returned:                {filter: [{is_returned: true}], obs: [total_promocode_subsidies_wo_tax]}
+  buyer_total_promocode_subsidies_wo_tax_accepted_and_returned:   {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [total_promocode_subsidies_wo_tax]}
+
   buyer_promocode_subsidies_created:                        {filter: [{is_created: true}], obs: [promocode_subsidies]}
   buyer_promocode_subsidies_paid:                           {filter: [{is_paid: true}], obs: [promocode_subsidies]}
   buyer_promocode_subsidies_accepted:                       {filter: [{is_accepted: true}], obs: [promocode_subsidies]}
   buyer_promocode_subsidies_returned:                       {filter: [{is_returned: true}], obs: [promocode_subsidies]}
   buyer_promocode_subsidies_accepted_and_returned:          {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [promocode_subsidies]}
-  
+
+  buyer_total_promocode_subsidies_created:                  {filter: [{is_created: true}], obs: [total_promocode_subsidies]}
+  buyer_total_promocode_subsidies_paid:                     {filter: [{is_paid: true}], obs: [total_promocode_subsidies]}
+  buyer_total_promocode_subsidies_accepted:                 {filter: [{is_accepted: true}], obs: [total_promocode_subsidies]}
+  buyer_total_promocode_subsidies_returned:                 {filter: [{is_returned: true}], obs: [total_promocode_subsidies]}
+  buyer_total_promocode_subsidies_accepted_and_returned:    {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [total_promocode_subsidies]}
+
   buyer_exmail_subsidies_created:                           {filter: [{is_created: true}], obs: [exmail_subsidies]}
   buyer_exmail_subsidies_paid:                              {filter: [{is_paid: true}], obs: [exmail_subsidies]}
   buyer_exmail_subsidies_accepted:                          {filter: [{is_accepted: true}], obs: [exmail_subsidies]}
   buyer_exmail_subsidies_returned:                          {filter: [{is_returned: true}], obs: [exmail_subsidies]}
   buyer_exmail_subsidies_accepted_and_returned:             {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [exmail_subsidies]}
-  
+
+  buyer_total_exmail_subsidies_created:                     {filter: [{is_created: true}], obs: [total_exmail_subsidies]}
+  buyer_total_exmail_subsidies_paid:                        {filter: [{is_paid: true}], obs: [total_exmail_subsidies]}
+  buyer_total_exmail_subsidies_accepted:                    {filter: [{is_accepted: true}], obs: [total_exmail_subsidies]}
+  buyer_total_exmail_subsidies_returned:                    {filter: [{is_returned: true}], obs: [total_exmail_subsidies]}
+  buyer_total_exmail_subsidies_accepted_and_returned:       {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [total_exmail_subsidies]}
+
+  buyer_threefirst_subsidies_saved_created:                 {filter: [{is_created: true}], obs: [threefirst_subsidies_saved]}
+  buyer_threefirst_subsidies_saved_paid:                    {filter: [{is_paid: true}], obs: [threefirst_subsidies_saved]}
+  buyer_threefirst_subsidies_saved_accepted:                {filter: [{is_accepted: true}], obs: [threefirst_subsidies_saved]}
+  buyer_threefirst_subsidies_saved_returned:                {filter: [{is_returned: true}], obs: [threefirst_subsidies_saved]}
+  buyer_threefirst_subsidies_saved_accepted_and_returned:   {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [threefirst_subsidies_saved]}
+
+  buyer_exmail_subsidies_saved_created:                     {filter: [{is_created: true}], obs: [exmail_subsidies_saved]}
+  buyer_exmail_subsidies_saved_paid:                        {filter: [{is_paid: true}], obs: [exmail_subsidies_saved]}
+  buyer_exmail_subsidies_saved_accepted:                    {filter: [{is_accepted: true}], obs: [exmail_subsidies_saved]}
+  buyer_exmail_subsidies_saved_returned:                    {filter: [{is_returned: true}], obs: [exmail_subsidies_saved]}
+  buyer_exmail_subsidies_saved_accepted_and_returned:       {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [exmail_subsidies_saved]}
+
+  buyer_promocode_subsidies_saved_created:                  {filter: [{is_created: true}], obs: [promocode_subsidies_saved]}
+  buyer_promocode_subsidies_saved_paid:                     {filter: [{is_paid: true}], obs: [promocode_subsidies_saved]}
+  buyer_promocode_subsidies_saved_accepted:                 {filter: [{is_accepted: true}], obs: [promocode_subsidies_saved]}
+  buyer_promocode_subsidies_saved_returned:                 {filter: [{is_returned: true}], obs: [promocode_subsidies_saved]}
+  buyer_promocode_subsidies_saved_accepted_and_returned:    {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [promocode_subsidies_saved]}
+
+  buyer_delivery_subsidies_saved_created:                   {filter: [{is_created: true}], obs: [threefirst_subsidies_saved, exmail_subsidies_saved promocode_subsidies_saved]}
+  buyer_delivery_subsidies_saved_paid:                      {filter: [{is_paid: true}], obs: [threefirst_subsidies_saved, exmail_subsidies_saved promocode_subsidies_saved]}
+  buyer_delivery_subsidies_saved_accepted:                  {filter: [{is_accepted: true}], obs: [threefirst_subsidies_saved, exmail_subsidies_saved promocode_subsidies_saved]}
+  buyer_delivery_subsidies_saved_returned:                  {filter: [{is_returned: true}], obs: [threefirst_subsidies_saved, exmail_subsidies_saved promocode_subsidies_saved]}
+  buyer_delivery_subsidies_saved_accepted_and_returned:     {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [threefirst_subsidies_saved, exmail_subsidies_saved promocode_subsidies_saved]}
+
+  buyer_delivery_subsidies_saving_available_created:                   {filter: [{is_created: true}], obs: [total_threefirst_subsidies, total_exmail_subsidies, total_promocode_subsidies_wo_tax]}
+  buyer_delivery_subsidies_saving_available_paid:                      {filter: [{is_paid: true}], obs: [total_threefirst_subsidies, total_exmail_subsidies, total_promocode_subsidies_wo_tax]}
+  buyer_delivery_subsidies_saving_available_accepted:                  {filter: [{is_accepted: true}], obs: [total_threefirst_subsidies, total_exmail_subsidies, total_promocode_subsidies_wo_tax]}
+  buyer_delivery_subsidies_saving_available_returned:                  {filter: [{is_returned: true}], obs: [total_threefirst_subsidies, total_exmail_subsidies, total_promocode_subsidies_wo_tax]}
+  buyer_delivery_subsidies_saving_available_accepted_and_returned:     {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [total_threefirst_subsidies, total_exmail_subsidies, total_promocode_subsidies_wo_tax]}
+
   buyer_bonus_cashback_created:                             {filter: [{is_created: true}], obs: [bonus_cashback]}
   buyer_bonus_cashback_paid:                                {filter: [{is_paid: true}], obs: [bonus_cashback]}
   buyer_bonus_cashback_accepted:                            {filter: [{is_accepted: true}], obs: [bonus_cashback]}
@@ -390,7 +444,31 @@ metric.ratio:
   buyer_delivery_avg_exmail_subsidies_accepted: {num: buyer_exmail_subsidies_accepted, den: buyer_delivery_orders_exmail_subsidies_accepted}
   buyer_delivery_avg_exmail_subsidies_returned: {num: buyer_exmail_subsidies_returned, den: buyer_delivery_orders_exmail_subsidies_returned}
   buyer_delivery_avg_exmail_subsidies_accepted_and_returned: {num: buyer_exmail_subsidies_accepted_and_returned, den: buyer_delivery_orders_exmail_subsidies_accepted_and_returned}
-    
+
+  buyer_delivery_threefirst_subs_saved_ratio_created: { num: buyer_threefirst_subsidies_saved_created, den: buyer_total_threefirst_subsidies_created }
+  buyer_delivery_threefirst_subs_saved_ratio_paid: { num: buyer_threefirst_subsidies_saved_paid, den: buyer_total_threefirst_subsidies_paid }
+  buyer_delivery_threefirst_subs_saved_ratio_accepted: { num: buyer_threefirst_subsidies_saved_accepted, den: buyer_total_threefirst_subsidies_accepted }
+  buyer_delivery_threefirst_subs_saved_ratio_returned: { num: buyer_threefirst_subsidies_saved_returned, den: buyer_total_threefirst_subsidies_returned }
+  buyer_delivery_threefirst_subs_saved_ratio_accepted_and_returned: { num: buyer_threefirst_subsidies_saved_accepted_and_returned, den: buyer_total_threefirst_subsidies_accepted_and_returned }
+
+  buyer_delivery_exmail_subs_saved_ratio_created: { num: buyer_exmail_subsidies_saved_created, den: buyer_total_exmail_subsidies_created }
+  buyer_delivery_exmail_subs_saved_ratio_paid: { num: buyer_exmail_subsidies_saved_paid, den: buyer_total_exmail_subsidies_paid }
+  buyer_delivery_exmail_subs_saved_ratio_accepted: { num: buyer_exmail_subsidies_saved_accepted, den: buyer_total_exmail_subsidies_accepted }
+  buyer_delivery_exmail_subs_saved_ratio_returned: { num: buyer_exmail_subsidies_saved_returned, den: buyer_total_exmail_subsidies_returned }
+  buyer_delivery_exmail_subs_saved_ratio_accepted_and_returned: { num: buyer_exmail_subsidies_saved_accepted_and_returned, den: buyer_total_exmail_subsidies_accepted_and_returned }
+
+  buyer_delivery_promocode_subs_saved_ratio_created: { num: buyer_promocode_subsidies_saved_created, den: buyer_total_promocode_subsidies_wo_tax_created }
+  buyer_delivery_promocode_subs_saved_ratio_paid: { num: buyer_promocode_subsidies_saved_paid, den: buyer_total_promocode_subsidies_wo_tax_paid }
+  buyer_delivery_promocode_subs_saved_ratio_accepted: { num: buyer_promocode_subsidies_saved_accepted, den: buyer_total_promocode_subsidies_wo_tax_accepted }
+  buyer_delivery_promocode_subs_saved_ratio_returned: { num: buyer_promocode_subsidies_saved_returned, den: buyer_total_promocode_subsidies_wo_tax_returned }
+  buyer_delivery_promocode_subs_saved_ratio_accepted_and_returned: { num: buyer_promocode_subsidies_saved_accepted_and_returned, den: buyer_total_promocode_subsidies_wo_tax_accepted_and_returned }
+
+  buyer_delivery_subs_saved_ratio_created: { num: buyer_delivery_subsidies_saved_created, den: buyer_delivery_subsidies_saving_available_created }
+  buyer_delivery_subs_saved_ratio_paid: { num: buyer_delivery_subsidies_saved_paid, den: buyer_delivery_subsidies_saving_available_paid }
+  buyer_delivery_subs_saved_ratio_accepted: { num: buyer_delivery_subsidies_saved_accepted, den: buyer_delivery_subsidies_saving_available_accepted }
+  buyer_delivery_subs_saved_ratio_returned: { num: buyer_delivery_subsidies_saved_returned, den: buyer_delivery_subsidies_saving_available_returned }
+  buyer_delivery_subs_saved_ratio_accepted_and_returned: { num: buyer_delivery_subsidies_saved_accepted_and_returned, den: buyer_delivery_subsidies_saving_available_accepted_and_returned }
+
   buyer_delivery_create_paid_orders_ratio: {num: buyer_delivery_orders_paid, den: buyer_delivery_orders_created}
   buyer_delivery_create_paid_items_ratio: {num: buyer_delivery_items_paid, den: buyer_delivery_items_created}
   buyer_delivery_clustered_create_paid_items_ratio: {num: buyer_delivery_clustered_items_paid, den: buyer_delivery_clustered_items_created}
