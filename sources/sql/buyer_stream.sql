@@ -99,7 +99,8 @@ select
     ss.boost_class_id,
     3 AS multiplier_3,
     5 AS multiplier_5,
-    10 AS multiplier_10
+    10 AS multiplier_10,
+    ir.reputation_class
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -160,5 +161,11 @@ left join /*+jtype(h),distrib(l,b)*/ (
         and user_id in (select user_id from bs_users)
     group by user_id
 ) acc on acc.User_id = ss.item_user_id
+
+left join /*+jtype(h),distrib(l,a)*/ (
+    select item_id, reputation_class, event_timestamp as converting_date,
+        lead(event_timestamp, 1, '20990101') over(partition by item_id order by event_timestamp) as next_converting_date
+    from DMA.click_stream_item_reputation
+) ir on ss.item_id = ir.item_id and ss.event_date >= ir.converting_date and ss.event_date < ir.next_converting_date
 
 where ss.event_date::date between :first_date and :last_date
