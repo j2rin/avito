@@ -2477,3 +2477,15 @@ qd_lots_create_date:
   primary_subject: user
   dtm: created_at
   segm: user_id
+
+perf_clickstream_counters:
+  metric_configs: [perf_clickstream_counters]
+  database: vertica
+  table: dma.perf_click_stream_counters
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions: [platform, screen_name]
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
