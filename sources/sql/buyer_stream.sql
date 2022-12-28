@@ -167,7 +167,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         lead(event_timestamp, 1, '20990101') over(partition by item_id order by event_timestamp) as next_converting_date
     from DMA.click_stream_item_reputation
     where user_id in (select user_id from bs_users)
-        and converting_date <= :last_date::date
+        and event_timestamp::date <= :last_date::date
 ) ir on ss.item_id = ir.item_id and ss.event_date >= ir.converting_date and ss.event_date < ir.next_converting_date
 
 where ss.event_date::date between :first_date and :last_date
