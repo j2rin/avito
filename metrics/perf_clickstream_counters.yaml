@@ -1,0 +1,25 @@
+metric.counter:
+  cnt_warm_start_events:                             {filter: [eid: 6978], obs: [events_count]}
+  cnt_warm_start_duration:                           {filter: [eid: 6978], obs: [performance_metric_event_duration_sum]}
+  cnt_app_memory_metric_events:                      {filter: [eid: 4274], obs: [events_count]}
+  cnt_native_heap_size:                              {filter: [eid: 4274], obs: [native_heap_size_sum]}
+  cnt_java_heap_size:                                {filter: [eid: 4274], obs: [java_heap_size_sum]}
+  cnt_code_size:                                     {filter: [eid: 4274], obs: [code_size_sum]}
+  cnt_stack_size:                                    {filter: [eid: 4274], obs: [stack_size_sum]}
+  cnt_graphics_size:                                 {filter: [eid: 4274], obs: [graphics_size_sum]}
+  cnt_private_other_size:                            {filter: [eid: 4274], obs: [private_other_size_sum]}
+  cnt_blocking_gc_events:                            {filter: [eid: 4274], obs: [blocking_gc_count]}  
+  cnt_blocking_gc_time:                              {filter: [eid: 4274], obs: [blocking_gc_time_sum]}
+  cnt_gc_events:                                     {filter: [eid: 4274], obs: [gc_count]}
+  cnt_gc_time:                                       {filter: [eid: 4274], obs: [gc_time_sum]}
+
+metric.ratio:
+  warm_start_duration:                               {num: cnt_warm_start_duration,  den: cnt_warm_start_events}
+  native_heap_size:                                  {num: cnt_native_heap_size,  den: cnt_app_memory_metric_events}
+  java_heap_size:                                    {num: cnt_java_heap_size,  den: cnt_app_memory_metric_events}
+  code_size:                                         {num: cnt_code_size,  den: cnt_app_memory_metric_events}
+  stack_size:                                        {num: cnt_stack_size,  den: cnt_app_memory_metric_events}
+  graphics_size:                                     {num: cnt_graphics_size,  den: cnt_app_memory_metric_events}
+  private_other_size:                                {num: cnt_private_other_size,  den: cnt_app_memory_metric_events}
+  blocking_gc_time:                                  {num: cnt_blocking_gc_time,  den: cnt_blocking_gc_events}
+  gc_time:                                           {num: cnt_gc_time,  den: cnt_gc_events}
