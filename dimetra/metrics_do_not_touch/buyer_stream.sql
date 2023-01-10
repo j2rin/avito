@@ -3343,7 +3343,35 @@ from (
                 sum(case when location_level_id in (4, 5, 6) and page_no = 0 and eid = 300 and (onmap = 0 or platform_id != 1) then 1 end) as cnt_cities_in_s,
                 sum(case when location_level_id in (2, 3) and page_no = 0 and eid = 300 and (onmap = 0 or platform_id != 1) then 1 end) as cnt_reg_in_s,
                 sum(case when page_no = 0 and eid = 300 and (onmap = 0 or platform_id != 1) then 1 end) as searches
+            from buyer_s    sum(case when cnt_cities_in_s > 0 then 1 end) as sess_search_1_plus_cities,
+    sum(case when searches > 0 then 1 end) as sess_search_1_plus_locations,
+    sum(case when cnt_reg_in_s > 0 then 1 end) as sess_search_1_plus_regions
+from (
+    select
+        cookie_id, session_no,
+        sum(case when cnt_cities_in_s > 2 then 1 end) as cnt_cities_in_s,
+        sum(case when cnt_reg_in_s > 2 then 1 end) as cnt_reg_in_s,
+        sum(case when searches > 2 then 1 end) as searches
+    from (
+        select
+            cookie_id, session_no, microcat_id,
+            sum(case when cnt_cities_in_s > 0 then 1 end) as cnt_cities_in_s,
+            sum(case when cnt_reg_in_s > 0 then 1 end) as cnt_reg_in_s,
+            sum(case when searches > 0 then 1 end) as searches
+        from (
+            select
+                cookie_id, session_no, microcat_id, location_id,
+                sum(case when location_level_id in (4, 5, 6) and page_no = 0 and eid = 300 and (onmap = 0 or platform_id != 1) then 1 end) as cnt_cities_in_s,
+                sum(case when location_level_id in (2, 3) and page_no = 0 and eid = 300 and (onmap = 0 or platform_id != 1) then 1 end) as cnt_reg_in_s,
+                sum(case when page_no = 0 and eid = 300 and (onmap = 0 or platform_id != 1) then 1 end) as searches
             from buyer_stream t
+            group by cookie_id, session_no, microcat_id, location_id
+        ) _
+        group by cookie_id, session_no, microcat_id
+    ) _
+    group by cookie_id, session_no
+) _
+;tream t
             group by cookie_id, session_no, microcat_id, location_id
         ) _
         group by cookie_id, session_no, microcat_id
