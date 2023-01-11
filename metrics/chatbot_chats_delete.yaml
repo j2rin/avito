@@ -1,12 +1,10 @@
-
 definitions:
-
   - &is_a2u                                            {chat_type: a2u}
 
 metric.counter:
-    chatbot_a2u_chats_delete:                          {filter: [*is_a2u], obs:[cnt_deletes]}
-    chatbot_chats_delete:                              {obs:[cnt_deletes]}
+  chatbot_chats_delete: { obs: [ cnt_deletes ] }
+  chatbot_a2u_chats_delete: { filter: [*is_a2u] , obs: [ cnt_deletes ] }
 
 metric.uniq:
-     user_chatbot_chats_delete:                        {counter: chatbot_chats_delete,    key: [user]}
-     user_chatbot_a2u_chats_delete:                    {counter: chatbot_a2u_chats_delete,    key: [user]}
+  user_chatbot_chats_delete:                {counter: chatbot_chats_delete,    key: [user]}
+  user_chatbot_a2u_chats_delete:            {counter: chatbot_a2u_chats_delete,    key: [user]}
