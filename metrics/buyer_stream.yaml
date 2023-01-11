@@ -563,6 +563,9 @@ metric.counter:
     cnt_cs_rec_i2i_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_i2i], m42: False }
     cnt_cs_rec_s: { filter: [*is_contact_wo_guessing, { $or: [[*x_is_rec], [*x_is_search]] }], m42: False }
     cnt_cs_rec_u2i: { filter: [*is_contact_wo_guessing, *x_is_u2i], m42: False }
+    cnt_cs_rec_u2i_reputation_high: { filter: [{reputation_class: "high"}, *is_contact_wo_guessing, *x_is_u2i], m42: False }
+    cnt_cs_rec_u2i_reputation_medium: { filter: [{reputation_class: "medium"}, *is_contact_wo_guessing, *x_is_u2i], m42: False }
+    cnt_cs_rec_u2i_reputation_low: { filter: [{reputation_class: "low"}, *is_contact_wo_guessing, *x_is_u2i], m42: False }
     cnt_cs_rec_u2i_collab: { filter: [*is_contact_wo_guessing, *x_is_u2i, *collab], m42: False }
     cnt_cs_rec_u2i_user2vec: { filter: [*is_contact_wo_guessing, *x_is_u2i, *user2vec], m42: False }
     cnt_cs_rec_u2i_similars: { filter: [*is_contact_wo_guessing, *x_is_u2i, *similars], m42: False }
@@ -1042,6 +1045,9 @@ metric.counter:
     comparison_list_views_from_item: { filter: [*is_comp_lst, *is_comp_fp_item] }
     comparison_list_views_from_favorite: { filter: [*is_comp_lst, *is_comp_fp_fav] }
     contacts: { filter: [*is_contact] }
+    contacts_reputation_high: { filter: [{reputation_class: "high"}, *is_contact], m42: True }
+    contacts_reputation_medium: { filter: [{reputation_class: "medium"}, *is_contact], m42: True }
+    contacts_reputation_low: { filter: [{reputation_class: "low"}, *is_contact], m42: True }
     contacts_story: { filter: [*is_contact, *is_story] }
     contacts_items: { filter: [*is_contact_item], m42: True}
     contacts_items_wo_direct: {filter: [*is_contact_item, item_x_type.isnull: false], m42: True}
@@ -1856,6 +1862,9 @@ metric.uniq:
     contacts_msg_rec_cv2vac: { counter: cnt_cs_msg_rec_cv2vac, key: [item_x] }
     contacts_ph_rec_cv2vac: { counter: cnt_cs_ph_rec_cv2vac, key: [item_x] }
     contacts_rec_u2i: { counter: cnt_cs_rec_u2i, key: [item_x] }
+    contacts_rec_u2i_reputation_high: { counter: cnt_cs_rec_u2i_reputation_high, key: [item_x], m42: True }
+    contacts_rec_u2i_reputation_medium: { counter: cnt_cs_rec_u2i_reputation_medium, key: [item_x], m42: True }
+    contacts_rec_u2i_reputation_low: { counter: cnt_cs_rec_u2i_reputation_low, key: [item_x], m42: True }
     contacts_rec_u2i_collab: { counter: cnt_cs_rec_u2i_collab, key: [item_x] }
     contacts_rec_u2i_user2vec: { counter: cnt_cs_rec_u2i_user2vec, key: [item_x] }
     contacts_rec_u2i_similars: { counter: cnt_cs_rec_u2i_similars, key: [item_x] }
