@@ -4,6 +4,9 @@ definitions:
   - &bad_level          {min_kind_level.!in: [40, 50, 55, 60, 70]}
   - &bad_distance       {location_distance.<=: 0.1}
   - &bad_address        {$or: [*no_coordinates, *no_address_id, *bad_level, *bad_distance]}
+  - &is_reputation_high {reputation_class: "high"}
+  - &is_reputation_medium {reputation_class: "medium"}
+  - &is_reputation_low {reputation_class: "low"}
 
 metric.counter:
   active_items_marketplace:                {filter: [is_active: True, is_marketplace: True]}
@@ -28,6 +31,9 @@ metric.counter:
   cnt_active_items_more_40_description_word: {filter: [{description_word_count.>=: 40}], m42: False}
   cnt_active_items_more_5_description_word: {filter: [{description_word_count.>=: 5}], m42: False}
   cnt_active_items_more_5_photo:           {filter: [{photo_count.>=: 5}], m42: False}
+  cnt_active_items_reputation_high:        {filter: [{is_active: True}, *is_reputation_high], m42: False}
+  cnt_active_items_reputation_medium:      {filter: [{is_active: True}, *is_reputation_medium], m42: False}
+  cnt_active_items_reputation_low:         {filter: [{is_active: True}, *is_reputation_low], m42: False}
   cnt_item_address_length:                 {filter: [{is_active: True}], obs: [address_length], m42: False}
   cnt_item_address_length_new:             {filter: [{is_active: True}, {start_date: $event_date}], obs: [address_length], m42: False}
   cnt_item_address_length_reactivated:     {filter: [{activations_count.>: 1}, {is_active: True}, {last_activation_date: $event_date}], obs: [address_length], m42: False}
@@ -234,6 +240,9 @@ metric.uniq:
   active_items_more_40_description_word:   {counter: cnt_active_items_more_40_description_word, key: [item]}
   active_items_more_5_description_word:    {counter: cnt_active_items_more_5_description_word, key: [item]}
   active_items_more_5_photo:               {counter: cnt_active_items_more_5_photo,   key: [item]}
+  active_items_reputation_high:            {counter: cnt_active_items_reputation_high,   key: [item], m42: true}
+  active_items_reputation_medium:          {counter: cnt_active_items_reputation_medium, key: [item], m42: true}
+  active_items_reputation_low:             {counter: cnt_active_items_reputation_low,    key: [item], m42: true}
   active_listers:                          {counter: cnt_active_items,                    key: [user_logcat]}
   active_listers_cpa:                      {counter: cnt_active_items_cpa,            key: [user_logcat]}
   active_listers_cpa_lf:                   {counter: cnt_active_items_cpa_lf,         key: [user_logcat]}
@@ -405,6 +414,9 @@ metric.ratio:
   seller_contact_per_active_deliverable_item:     {num: seller_contacts_on_deliverable_items, den: items_delivery_available}
   items_delivery_ratio:                           {num: items_with_delivery,              den: items_delivery_available, m42: true}
   items_rating_coverage:                          {num: items_with_rating,            den: active_items,             m42: True}
+  items_reputation_high_coverage:                 {num: active_items_reputation_high,   den: active_items,             m42: True}
+  items_reputation_medium_coverage:               {num: active_items_reputation_medium, den: active_items,             m42: True}
+  items_reputation_low_coverage:                  {num: active_items_reputation_low,    den: active_items,             m42: True}
   sellers_rating_coverage:                        {num: sellers_with_rating_new,          den: users_active_items,       m42: True}
   items_delivery_ratio_start_date:                {num: active_items_delivery_on_start_date, den: active_items_deliverable_start_date}
   items_delivery_seller_discount_ratio:           {num: items_with_delivery_seller_discount,              den: items_with_delivery, m42: true}
