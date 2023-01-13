@@ -297,6 +297,10 @@ definitions:
     - &is_reputation_medium {reputation_class: "medium"}
     - &is_reputation_low {reputation_class: "low"}
 
+    - &x_is_s_kmt { x_eid: 300, x_from_page.ilike: '%model_card%' }
+    - &x_is_mini_s_kmt { x_eid: 5184 } 
+    - &x_is_kmt { $or: [*x_is_s_kmt, *x_is_mini_s_kmt] }
+
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
@@ -1662,6 +1666,7 @@ metric.counter:
     iv_from_feed_cold: {filter: [*is_iv, x_eid: 6221, x_from_page: feed_default_recom] }
     c_from_feed_cold: {filter: [*is_contact, x_eid: 6221, x_from_page: feed_default_recom] }
     btc_from_feed_cold: {filter: [*is_btc, x_eid: 6221, x_from_page: feed_default_recom] }
+
     iv_video: { filter: [*is_item_with_video, *is_iv] }
     c_video: { filter: [*is_item_with_video, *is_contact] }
     fav_video: { filter: [*is_item_with_video, *is_fav] }
@@ -1689,6 +1694,17 @@ metric.counter:
     c_grid: { filter: [*is_contact, search_flags.bit: [39], search_flags.!bit: [40, 41, 42]] }
     c_list: { filter: [*is_contact, search_flags.bit: [40], search_flags.!bit: [39, 41, 42]] }
     c_rich: { filter: [*is_contact, search_flags.bit: [39, 40], search_flags.!bit: [41, 42]] }
+
+    s_kmt: { filter: [*is_search, from_page.ilike: '%model_card%'] }
+    iv_kmt: { filter: [*is_iv_wo_guessing, *x_is_kmt] }
+    iv_s_kmt: { filter: [*is_iv_wo_guessing, *x_is_s_kmt] }
+    iv_mini_s_kmt: {filter: [*is_iv_wo_guessing, *x_is_mini_s_kmt] }
+    c_kmt: { filter: [*is_contact_wo_guessing, *x_is_kmt] }
+    c_s_kmt: { filter: [*is_contact_wo_guessing, *x_is_s_kmt] }
+    c_mini_s_kmt: { filter: [*is_contact_wo_guessing, *x_is_mini_s_kmt] }
+    fav_kmt: { filter: [*is_fav, *x_is_kmt] }
+    btc_kmt: { filter: [*is_btc_wo_guessing, *x_is_kmt] }
+
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -2999,6 +3015,16 @@ metric.uniq:
     user_c_list: { counter: c_list, key: [cookie] }
     user_c_rich: { counter: c_rich, key: [cookie] }
 
+    user_s_kmt: { counter: s_kmt, key: [cookie] }
+    user_iv_kmt: { counter: iv_kmt, key: [cookie] }
+    user_iv_s_kmt: { counter: iv_s_kmt, key: [cookie] }
+    user_iv_mini_s_kmt: { counter: iv_mini_s_kmt, key: [cookie] }
+    user_c_kmt: { counter: c_kmt, key: [cookie] }
+    user_c_s_kmt: { counter: c_s_kmt, key: [cookie] }
+    user_c_mini_s_kmt: { counter: c_mini_s_kmt, key: [cookie] }
+    user_fav_kmt: { counter: fav_kmt, key: [cookie] }
+    user_btc_kmt: { counter: btc_kmt, key: [cookie] }
+
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
     btc_from_witcher_any_per_witcher_any: { num: btc_from_witcher_any, den: searches_witcher_any }
@@ -3606,3 +3632,6 @@ metric.ratio:
     prec_c_u2i_rnk3:    { num: c_u2i_rnk3,      den: recblock_shows_u2i_1p_x3}
     prec_c_u2i_rnk5:    { num: c_u2i_rnk5,      den: recblock_shows_u2i_1p_x5}
     prec_c_u2i_rnk10:   { num: c_u2i_rnk10,     den: recblock_shows_u2i_1p_x10}
+
+    iv_s_kmt_per_s_kmt: {num: iv_s_kmt,         den: s_kmt}
+    c_s_kmt_per_s_kmt:  {num: c_s_kmt,          den: s_kmt}
