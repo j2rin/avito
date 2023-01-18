@@ -301,10 +301,11 @@ definitions:
     - &x_is_mini_s_kmt { x_eid: 5184 } 
     - &x_is_kmt { $or: [*x_is_s_kmt, *x_is_mini_s_kmt] }
     
-    - &is_grid { search_flags.bit: [39], search_flags.!bit: [40], search_flags.!bit: [41], search_flags.!bit: [42] }
-    - &is_list { search_flags.!bit: [39], search_flags.bit: [40], search_flags.!bit: [41], search_flags.!bit: [42] }
-    - &is_rich { search_flags.bit: [39], search_flags.bit: [40], search_flags.!bit: [41], search_flags.!bit: [42] }
-
+    - &is_search_flags_39_bit {search_flags.bit: [39] }
+    - &is_search_flags_40_bit {search_flags.bit: [40] }
+    - &is_search_flags_41_bit {search_flags.bit: [41] }
+    - &is_search_flags_42_bit {search_flags.bit: [42] }
+    
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
