@@ -301,14 +301,9 @@ definitions:
     - &x_is_mini_s_kmt { x_eid: 5184 } 
     - &x_is_kmt { $or: [*x_is_s_kmt, *x_is_mini_s_kmt] }
     
-    - &is_search_flags_39_bit {search_flags.bit: [39] }
-    - &is_search_flags_40_bit {search_flags.bit: [40] }
-    - &is_search_flags_41_bit {search_flags.bit: [41] }
-    - &is_search_flags_42_bit {search_flags.bit: [42] }
-    - &is_search_flags_not_39_bit {search_flags.!bit: [39] }
-    - &is_search_flags_not_40_bit {search_flags.!bit: [40] }
-    - &is_search_flags_not_41_bit {search_flags.!bit: [41] }
-    - &is_search_flags_not_42_bit {search_flags.!bit: [42] }
+    - &is_grid {s_view_mode: 1}
+    - &is_list {s_view_mode: 2}
+    - &is_rich {s_view_mode: 3}
     
 
 metric.counter:
@@ -1691,18 +1686,18 @@ metric.counter:
     contacts_front: { filter: [*is_contacts_front] }
     contacts_front_cpa: { filter: [*is_contacts_front, *is_item_cpa]  }
     
-    search_grid: { filter: [eid : 300, *is_search_flags_39_bit, *is_search_flags_not_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    search_list: { filter: [eid : 300, *is_search_flags_not_39_bit, *is_search_flags_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    search_rich: { filter: [eid : 300, *is_search_flags_39_bit, *is_search_flags_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    iv_grid: { filter: [eid : 301, *is_search_flags_39_bit, *is_search_flags_not_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    iv_list: { filter: [eid : 301, *is_search_flags_not_39_bit, *is_search_flags_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    iv_rich: { filter: [eid : 301, *is_search_flags_39_bit, *is_search_flags_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    btc_grid: { filter: [*is_btc, *is_search_flags_39_bit, *is_search_flags_not_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    btc_list: { filter: [*is_btc, *is_search_flags_not_39_bit, *is_search_flags_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    btc_rich: { filter: [*is_btc, *is_search_flags_39_bit, *is_search_flags_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    c_grid: { filter: [*is_contact, *is_search_flags_39_bit, *is_search_flags_not_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    c_list: { filter: [*is_contact, *is_search_flags_not_39_bit, *is_search_flags_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
-    c_rich: { filter: [*is_contact, *is_search_flags_39_bit, *is_search_flags_40_bit, *is_search_flags_not_41_bit, *is_search_flags_not_42_bit] }
+    search_grid: { filter: [eid : 300, *is_grid] }
+    search_list: { filter: [eid : 300, *is_list] }
+    search_rich: { filter: [eid : 300, *is_rich] }
+    iv_grid: { filter: [eid : 301, *is_grid] }
+    iv_list: { filter: [eid : 301, *is_list] }
+    iv_rich: { filter: [eid : 301, *is_rich] }
+    btc_grid: { filter: [*is_btc, *is_grid] }
+    btc_list: { filter: [*is_btc, *is_list] }
+    btc_rich: { filter: [*is_btc, *is_rich] }
+    c_grid: { filter: [*is_contact, *is_grid] }
+    c_list: { filter: [*is_contact, *is_list] }
+    c_rich: { filter: [*is_contact, *is_rich] }
 
     s_kmt: { filter: [*is_search, from_page.ilike: '%model_card%'] }
     iv_kmt: { filter: [*is_iv_wo_guessing, *x_is_kmt] }
