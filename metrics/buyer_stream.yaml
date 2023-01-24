@@ -300,7 +300,11 @@ definitions:
     - &x_is_s_kmt { x_eid: 300, x_from_page.ilike: '%model_card%' }
     - &x_is_mini_s_kmt { x_eid: 5184 } 
     - &x_is_kmt { $or: [*x_is_s_kmt, *x_is_mini_s_kmt] }
-
+    
+    - &is_grid {s_view_mode: 1 }
+    - &is_list {s_view_mode: 2 }
+    - &is_rich {s_view_mode: 3 }
+    
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
@@ -1682,18 +1686,18 @@ metric.counter:
     contacts_front: { filter: [*is_contacts_front] }
     contacts_front_cpa: { filter: [*is_contacts_front, *is_item_cpa]  }
     
-    search_grid: { filter: [eid : 300, search_flags.bit: [39], search_flags.!bit: [40, 41, 42]] }
-    search_list: { filter: [eid : 300, search_flags.bit: [40], search_flags.!bit: [39, 41, 42]] }
-    search_rich: { filter: [eid : 300, search_flags.bit: [39, 40], search_flags.!bit: [41, 42]] }
-    iv_grid: { filter: [eid : 301, search_flags.bit: [39], search_flags.!bit: [40, 41, 42]] }
-    iv_list: { filter: [eid : 301, search_flags.bit: [40], search_flags.!bit: [39, 41, 42]] }
-    iv_rich: { filter: [eid : 301, search_flags.bit: [39, 40], search_flags.!bit: [41, 42]] }
-    btc_grid: { filter: [*is_btc, search_flags.bit: [39], search_flags.!bit: [40, 41, 42]] }
-    btc_list: { filter: [*is_btc, search_flags.bit: [40], search_flags.!bit: [39, 41, 42]] }
-    btc_rich: { filter: [*is_btc, search_flags.bit: [39, 40], search_flags.!bit: [41, 42]] }
-    c_grid: { filter: [*is_contact, search_flags.bit: [39], search_flags.!bit: [40, 41, 42]] }
-    c_list: { filter: [*is_contact, search_flags.bit: [40], search_flags.!bit: [39, 41, 42]] }
-    c_rich: { filter: [*is_contact, search_flags.bit: [39, 40], search_flags.!bit: [41, 42]] }
+    search_grid: { filter: [eid : 300, *is_grid] }
+    search_list: { filter: [eid : 300, *is_list] }
+    search_rich: { filter: [eid : 300, *is_rich] }
+    iv_grid: { filter: [eid : 301, *is_grid] }
+    iv_list: { filter: [eid : 301, *is_list] }
+    iv_rich: { filter: [eid : 301, *is_rich] }
+    btc_grid: { filter: [*is_btc, *is_grid] }
+    btc_list: { filter: [*is_btc, *is_list] }
+    btc_rich: { filter: [*is_btc, *is_rich] }
+    c_grid: { filter: [*is_contact, *is_grid] }
+    c_list: { filter: [*is_contact, *is_list] }
+    c_rich: { filter: [*is_contact, *is_rich] }
 
     s_kmt: { filter: [*is_search, from_page.ilike: '%model_card%'] }
     iv_kmt: { filter: [*is_iv_wo_guessing, *x_is_kmt] }
@@ -3002,18 +3006,7 @@ metric.uniq:
     user_contacts_front: { counter: contacts_front, key: [cookie] }
     user_contacts_front_cpa: { counter: contacts_front_cpa, key: [cookie] }
     
-    user_search_grid: { counter: search_grid, key: [cookie] }
-    user_search_list: { counter: search_list, key: [cookie] }
-    user_search_rich: { counter: search_rich, key: [cookie] }
-    user_iv_grid: { counter: iv_grid, key: [cookie] }
-    user_iv_list: { counter: iv_list, key: [cookie] }
-    user_iv_rich: { counter: iv_rich, key: [cookie] }
-    user_btc_grid: { counter: btc_grid, key: [cookie] }
-    user_btc_list: { counter: btc_list, key: [cookie] }
-    user_btc_rich: { counter: btc_rich, key: [cookie] }
-    user_c_grid: { counter: c_grid, key: [cookie] }
-    user_c_list: { counter: c_list, key: [cookie] }
-    user_c_rich: { counter: c_rich, key: [cookie] }
+
 
     user_s_kmt: { counter: s_kmt, key: [cookie] }
     user_iv_kmt: { counter: iv_kmt, key: [cookie] }
