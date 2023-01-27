@@ -765,6 +765,22 @@ buyer_filter:
   dtm: event_date
   segm: cookie_id
 
+story_delay:
+  metric_configs: [story_delay]
+  database: vertica
+  table: DEPRECATED
+  sql: story_delay
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  m42_cartesian_groups:
+    - [is_logged_in]
+  dtm: event_date
+  segm: cookie_id
+
 weighted_buyer:
   metric_configs: [weighted_buyer]
   database: vertica
