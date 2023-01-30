@@ -378,7 +378,7 @@ subscriptions:
         - items_started_net_conversion
         - item_started_net_per_items_add_started
         - items_added_per_items_add_started
-        
+
 
   - owner: avdenisova
     subscribers: ['~general-green-light']
@@ -515,11 +515,17 @@ subscriptions:
         - not_found_errors
         - user_not_found_errors
 
-  - owner: gvfandeev
-    subscribers: [kmbelenya, gvfandeev, '~perf-mobile-dwh-alerts']
+  - owner: kmbelenya
+    subscribers: [kmbelenya, gvfandeev]
     metrics_config:
       app_performance: [perf_total]
       exceptions: [perf_total]
+      fps: [perf_total]
+      app_memory_warnings: [perf_total]
+
+  - owner: kmbelenya
+    subscribers: ['~perf-mobile-dwh-alerts-experimental']
+    metrics_config:
       fps: [perf_total]
       app_memory_warnings: [perf_total]
 
@@ -814,7 +820,7 @@ subscriptions:
         - contacts_with_review_list_view_per_contacts
         - contacts_with_review_list_view_per_contacts_on_rating
         - search_items_ratings_coverage
-        
+
   - owner: aashakirova
     subscribers: [aashakirova, '~cpa-metrics-alarms']
     metrics_by_breakdowns:
