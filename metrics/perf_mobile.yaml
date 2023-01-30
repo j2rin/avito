@@ -5,8 +5,8 @@ definitions:
   - &android {platform_id: 3, mobile_app_version.>=: 124.5}
   - &correct_platforms {$or: [*ios,*android]}
   - &ok_event {$or: [response: "ok", *no_data_placeholder_no_error]}
-  #- &visible_error {$or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error]}
   - &visible_error {response.!=: "ok", was_error_in_screen: true}
+  #- &visible_error {$or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error]}
   - &no_visible_error {response: "ok", was_error_in_screen: false}
 
 metric.counter:
