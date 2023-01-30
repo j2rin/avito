@@ -1668,6 +1668,10 @@ metric.counter:
     btc_video_s: { filter: [*is_item_with_video, *is_btc_wo_guessing, *x_is_search] }
     c_mp_video: { filter: [*is_item_with_video, eid: [4675, 5942]] }
     c_mp_video_s: { filter: [*is_item_with_video, eid: [4675, 5942], *x_is_search] }
+    iv_cpa_video: { filter: [*is_item_with_video, *is_iv, *is_item_cpa] }
+    c_cpa_video: { filter: [*is_item_with_video, *is_contact, *is_item_cpa] }
+    iv_cpa_video_s: { filter: [*is_item_with_video, *is_iv_wo_guessing, *x_is_search, *is_item_cpa] }
+    c_cpa_video_s: { filter: [*is_item_with_video, *is_contact_wo_guessing, *x_is_search, *is_item_cpa] }
     
     c_callback: { filter: [*is_back_call] }
     c_callback_recallme: { filter: [*is_back_call_recallme] }
@@ -2972,8 +2976,12 @@ metric.uniq:
     user_c_video_s: { counter: c_video_s, key: [cookie] }
     user_fav_video_s: { counter: fav_video_s, key: [cookie] }
     user_btc_video_s: { counter: btc_video_s, key: [cookie] }
-    user_c_mp_video: { counter: c_mp_video, key: [cookie] }
-    user_c_mp_video_s: { counter: c_mp_video_s, key: [cookie] }
+    user_c_mp_video: { counter: c_mp_video, key: [cookie], m42: False }
+    user_c_mp_video_s: { counter: c_mp_video_s, key: [cookie], m42: False }
+    user_iv_cpa_video: { counter: iv_cpa_video, key: [cookie], m42: False }
+    user_c_cpa_video: { counter: c_cpa_video, key: [cookie], m42: False }
+    user_iv_cpa_video_s: { counter: iv_cpa_video_s, key: [cookie], m42: False }
+    user_c_cpa_video_s: { counter: c_cpa_video_s, key: [cookie], m42: False }
 
     user_contacts_front: { counter: contacts_front, key: [cookie] }
     user_contacts_front_cpa: { counter: contacts_front_cpa, key: [cookie] }
