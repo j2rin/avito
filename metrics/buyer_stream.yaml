@@ -304,6 +304,11 @@ definitions:
     - &is_grid {s_view_mode: 1 }
     - &is_list {s_view_mode: 2 }
     - &is_rich {s_view_mode: 3 }
+
+    - &is_fav_collection_item_add { <<: *is_fav, from_page: "favs_move_popup" }
+    - &is_fav_collection_item_rmv { <<: *is_fav_rmv, from_page: "favs_move_popup" }
+    - &x_is_fav_collection { <<: *x_is_fav_lst, search_flags.bit: 43 }
+    
     
 
 metric.counter:
@@ -1696,6 +1701,13 @@ metric.counter:
     fav_kmt: { filter: [*is_fav, *x_is_kmt] }
     btc_kmt: { filter: [*is_btc_wo_guessing, *x_is_kmt] }
 
+    item_add_fav_collection: { filter: [*is_fav_collection_item_add] }
+    item_rmv_fav_collection: { filter: [*is_fav_collection_item_rmv] }
+    iv_fav_collection: { filter: [*is_iv_wo_guessing, *x_is_fav_collection] }
+    c_fav_collection: { filter: [*is_contact_wo_guessing, *x_is_fav_collection] }
+    btc_fav_collection: { filter: [*is_btc_wo_guessing, *x_is_fav_collection] }
+
+
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -2974,8 +2986,6 @@ metric.uniq:
     user_contacts_front: { counter: contacts_front, key: [cookie] }
     user_contacts_front_cpa: { counter: contacts_front_cpa, key: [cookie] }
     
-
-
     user_s_kmt: { counter: s_kmt, key: [cookie] }
     user_iv_kmt: { counter: iv_kmt, key: [cookie] }
     user_iv_s_kmt: { counter: iv_s_kmt, key: [cookie] }
@@ -2985,6 +2995,12 @@ metric.uniq:
     user_c_mini_s_kmt: { counter: c_mini_s_kmt, key: [cookie] }
     user_fav_kmt: { counter: fav_kmt, key: [cookie] }
     user_btc_kmt: { counter: btc_kmt, key: [cookie] }
+
+    user_item_add_fav_collection: { counter: item_add_fav_collection, key: [cookie] }
+    user_item_rmv_fav_collection: { counter: item_rmv_fav_collection, key: [cookie] }
+    user_iv_fav_collection: { counter: iv_fav_collection, key: [cookie] }
+    user_c_fav_collection: { counter: c_fav_collection, key: [cookie] }
+    user_btc_fav_collection: { counter: btc_fav_collection, key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
