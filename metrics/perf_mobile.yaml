@@ -5,7 +5,9 @@ definitions:
   - &android {platform_id: 3, mobile_app_version.>=: 124.5}
   - &correct_platforms {$or: [*ios,*android]}
   - &ok_event {$or: [response: "ok", *no_data_placeholder_no_error]}
-  - &visible_error {$or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error]}
+  #- &visible_error {$or: [response.!in: ["ok", "no-data-placeholder"], *no_data_placeholder_error]}
+  - &visible_error {response.!=: "ok", was_error_in_screen: true}
+  - &no_visible_error {response: "ok", was_error_in_screen: false}
 
 metric.counter:
   cnt_di_events:                           {filter: [{stage_name: DI}], obs: [events], m42: False}
@@ -124,6 +126,12 @@ metric.counter:
   dialog_exceptions_failed_to_perform_action: {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "failed-to-perform-action-error"], obs: [events, exceptions], m42: True}
   dialog_exceptions_failed_to_reload:        {filter: [stage_name: Draw,error_dialog_type.isnull: false, response: "failed-to-reload-error"], obs: [events, exceptions], m42: True}
 
+  draw_session_over_1000:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, session_duration.>: 1000], obs: [events, exceptions], m42: False}
+  draw_session_over_1500:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, session_duration.>: 1500], obs: [events, exceptions], m42: False}
+  draw_session_over_2000:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, session_duration.>: 2000], obs: [events, exceptions], m42: False}
+  draw_session_over_5000:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, session_duration.>: 5000], obs: [events, exceptions], m42: False}
+
+
 metric.uniq:
 
   user_draw_all_events:                    {counter: cnt_draw_events_exceptions, key: [cookie_id], m42: True}
@@ -166,6 +174,11 @@ metric.uniq:
 
   user_draw_events_exceptions_fr_screens_on:    {counter: cnt_draw_events_exceptions_fr_screens_on, key: [cookie_id], m42: True}
   user_draw_new_exceptions_fr_screens_on:          {counter: draw_new_exceptions_fr_screens_on, key: [cookie_id], m42: True}
+
+  user_draw_session_over_1000: {counter: draw_session_over_1000, key: [cookie_id], m42: True}
+  user_draw_session_over_1500: {counter: draw_session_over_1500, key: [cookie_id], m42: True}
+  user_draw_session_over_2000: {counter: draw_session_over_2000, key: [cookie_id], m42: True}
+  user_draw_session_over_5000: {counter: draw_session_over_5000, key: [cookie_id], m42: True}
 
 
 metric.ratio:
@@ -226,3 +239,7 @@ metric.ratio:
   serverloading_session_duration:          {num: cnt_serverloading_session_duration, den: cnt_serverloading_session_duration_events}
   draw_new_exceptions_percent:             {num: draw_new_exceptions,             den: cnt_draw_events_exceptions}
   user_draw_new_exceptions_per_user:       {num: user_draw_new_exceptions,        den: user_draw_all_events}
+  user_draw_session_over_1000_per_user_fr_screen: {num: user_draw_session_over_1000,        den: user_draw_events_exceptions_fr_screens_on}
+  user_draw_session_over_1500_per_user_fr_screen: {num: user_draw_session_over_1500,        den: user_draw_events_exceptions_fr_screens_on}
+  user_draw_session_over_2000_per_user_fr_screen: {num: user_draw_session_over_2000,        den: user_draw_events_exceptions_fr_screens_on}
+  user_draw_session_over_5000_per_user_fr_screen: {num: user_draw_session_over_5000,        den: user_draw_events_exceptions_fr_screens_on}
