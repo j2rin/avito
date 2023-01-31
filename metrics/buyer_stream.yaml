@@ -308,7 +308,7 @@ definitions:
     - &is_fav_collection_item_add { <<: *is_fav, from_page: "favs_move_popup" }
     - &is_fav_collection_item_rmv { <<: *is_fav_rmv, from_page: "favs_move_popup" }
     - &x_is_fav_collection { <<: *x_is_fav_lst, search_flags.bit: 43 }
-    
+    - &is_fav_collection {<<: *is_fav_lst, search_flags.bit: 43 }
     
 
 metric.counter:
@@ -1706,6 +1706,7 @@ metric.counter:
     iv_fav_collection: { filter: [*is_iv_wo_guessing, *x_is_fav_collection] }
     c_fav_collection: { filter: [*is_contact_wo_guessing, *x_is_fav_collection] }
     btc_fav_collection: { filter: [*is_btc_wo_guessing, *x_is_fav_collection] }
+    fav_collection_view: { filter: [*is_fav_collection] }
 
 
 
@@ -3001,6 +3002,7 @@ metric.uniq:
     user_iv_fav_collection: { counter: iv_fav_collection, key: [cookie] }
     user_c_fav_collection: { counter: c_fav_collection, key: [cookie] }
     user_btc_fav_collection: { counter: btc_fav_collection, key: [cookie] }
+    user_fav_collection_view: { counter: fav_collection_view, key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
