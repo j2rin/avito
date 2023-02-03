@@ -304,6 +304,8 @@ definitions:
     - &is_grid {s_view_mode: 1 }
     - &is_list {s_view_mode: 2 }
     - &is_rich {s_view_mode: 3 }
+
+    - &is_item_with_video_cpa {is_item_with_video_cpa: 1}
     
 
 metric.counter:
@@ -1668,10 +1670,10 @@ metric.counter:
     btc_video_s: { filter: [*is_item_with_video, *is_btc_wo_guessing, *x_is_search] }
     c_mp_video: { filter: [*is_item_with_video, eid: [4675, 5942]] }
     c_mp_video_s: { filter: [*is_item_with_video, eid: [4675, 5942], *x_is_search] }
-    iv_cpa_video: { filter: [*is_item_with_video, *is_iv, *is_item_cpa] }
-    c_cpa_video: { filter: [*is_item_with_video, *is_contact, *is_item_cpa] }
-    iv_cpa_video_s: { filter: [*is_item_with_video, *is_iv_wo_guessing, *x_is_search, *is_item_cpa] }
-    c_cpa_video_s: { filter: [*is_item_with_video, *is_contact_wo_guessing, *x_is_search, *is_item_cpa] }
+    iv_cpa_video: { filter: [*is_item_with_video_cpa, *is_iv] }
+    c_cpa_video: { filter: [*is_item_with_video_cpa, *is_contact] }
+    iv_cpa_video_s: { filter: [*is_item_with_video_cpa, *is_iv_wo_guessing, *x_is_search] }
+    c_cpa_video_s: { filter: [*is_item_with_video_cpa, *is_contact_wo_guessing, *x_is_search] }
     
     c_callback: { filter: [*is_back_call] }
     c_callback_recallme: { filter: [*is_back_call_recallme] }
