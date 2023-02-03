@@ -106,7 +106,8 @@ select
          when ((ss.item_flags & (1 << 39) > 0) and (ss.item_flags & (1 << 40) > 0) and (ss.item_flags & (1 << 41) = 0) and (ss.item_flags & (1 << 42) = 0)) then 3
          when ((ss.item_flags & (1 << 39) = 0) and (ss.item_flags & (1 << 40) = 0) and (ss.item_flags & (1 << 41) > 0) and (ss.item_flags & (1 << 42) = 0)) then 4
          when ((ss.item_flags & (1 << 39) > 0) and (ss.item_flags & (1 << 40) = 0) and (ss.item_flags & (1 << 41) > 0) and (ss.item_flags & (1 << 42) = 0)) then 5
-         end as s_view_mode
+         end as s_view_mode,
+    ((ss.item_flags & (1 << 28) > 0) and (ss.item_flags & (1 << 17) > 0))::int as is_item_with_video_cpa
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
