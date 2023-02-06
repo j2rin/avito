@@ -113,10 +113,10 @@ metric.counter:
   dialog_exceptions_failed_to_perform_action: {filter: [stage_name: Draw, *visible_error, error_dialog_type.isnull: false, response: "failed-to-perform-action-error"], obs: [events, exceptions], m42: True}
   dialog_exceptions_failed_to_reload:        {filter: [stage_name: Draw, *visible_error, error_dialog_type.isnull: false, response: "failed-to-reload-error"], obs: [events, exceptions], m42: True}
 
-  draw_session_over_1000:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, session_duration.>: 1000], obs: [events, exceptions], m42: False}
-  draw_session_over_1500:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, session_duration.>: 1500], obs: [events, exceptions], m42: False}
-  draw_session_over_2000:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, session_duration.>: 2000], obs: [events, exceptions], m42: False}
-  draw_session_over_5000:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, session_duration.>: 5000], obs: [events, exceptions], m42: False}
+  draw_session_over_1000:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, max_session_duration.>: 1000], obs: [events, exceptions], m42: False}
+  draw_session_over_1500:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, max_session_duration.>: 1500], obs: [events, exceptions], m42: False}
+  draw_session_over_2000:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, max_session_duration.>: 2000], obs: [events, exceptions], m42: False}
+  draw_session_over_5000:    {filter: [frequent_screens_enabled: true, stage_name: Draw, *no_visible_error, max_session_duration.>: 5000], obs: [events, exceptions], m42: False}
 
 
 metric.uniq:
