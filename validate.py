@@ -6,21 +6,15 @@
 
 Внезапно этот же скрипт используется для отправки пресетов и конфига из CI в конфигуратор.
 """
-from __future__ import unicode_literals
 
 import io
 import json
 import os
 import sys
+from http import client as httplib
 from time import sleep
 
 from validate_sql import validate as validate_sql
-
-try:
-    from http import client as httplib  # python 3
-except ImportError:
-    import httplib  # python 2
-
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'

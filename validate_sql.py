@@ -7,6 +7,9 @@ import vertica_python
 SQL_FILES_PATTERN = r'sources/sql/([a-zA-Z0-9_]*).sql'
 PRODUCTION_BRANCH = 'origin/master'
 MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES')
+DURATION_LIMIT = 300
+REQUIRED_PARAMS = ['first_date', 'last_date']
+PARAM_REGEXP = r'(\:{param})\b'
 
 
 def get_vertica_credentials():
@@ -25,9 +28,6 @@ def get_vertica_credentials():
         load_dotenv()
         return get_from_env()
     return from_env
-
-
-DURATION_LIMIT = 300
 
 
 def list_modified_files():
@@ -54,11 +54,23 @@ def is_sql_file(filepath):
     return re.match(SQL_FILES_PATTERN, filepath) is not None
 
 
+def check_required_sql_params(sql):
+    missing = []
+    for param in REQUIRED_PARAMS:
+        pattern = PARAM_REGEXP.format(param=param)
+        match = re.match(pattern, sql)
+        if not match:
+            missing.append(param)
+    if missing:
+        return {'error': f"Missing required params: `{', '.join(missing)}`"}
+    return {}
+
+
 def bind_sql_params(sql, **params):
     for name, value in params.items():
         if isinstance(value, (str, date)):
             value = f"'{value}'"
-        pattern = r'(\:{name})\b'.format(name=name)
+        pattern = PARAM_REGEXP.format(param=name)
         sql = re.sub(pattern, value, sql)
     return sql
 
@@ -89,6 +101,9 @@ def prepare_test_sql(sql):
 def execute_file_and_collect_metrics(filepath):
     with open(filepath, 'r') as f:
         sql_raw = f.read()
+    check_result = check_required_sql_params(sql_raw)
+    if check_result:
+        return check_result
     sql_prepared = prepare_test_sql(sql_raw)
     return execute_sql_and_collect_metrics(sql_prepared)
 
@@ -111,7 +126,6 @@ def get_exceed_metrics(execution_result):
 
 
 def validate():
-    print('Validating SQL...')
     modified_files = filter(is_sql_file, list_modified_files())
     success = True
     for path in modified_files:
@@ -134,7 +148,7 @@ def validate():
             success = False
 
     if success:
-        print('\nSQL validation PASSED')
+        print('SQL validation PASSED')
 
     return success
 
