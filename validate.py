@@ -39,11 +39,16 @@ CONFIGS = [
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
     ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
     ('metrics_lists', os.path.join(CUR_DIR_PATH, 'presets/metrics'), True),
-    ('m42_cartesian_groups', os.path.join(CUR_DIR_PATH, 'config/m42_cartesian_groups.yaml'), False),
+    (
+        'm42_cartesian_groups',
+        os.path.join(CUR_DIR_PATH, 'config/m42_cartesian_groups.yaml'),
+        False,
+    ),
 ]
 
 
 def validate():
+
     result, file_name_maps = send_all(VALIDATE_URL)
 
     if 'errors' in result:
@@ -81,9 +86,7 @@ def validate():
 def process():
     result, _ = send_all(PROCESS_URL)
     del result['success']
-    print(
-        json.dumps(result, indent=4)
-    )
+    print(json.dumps(result, indent=4))
 
 
 def publish():
@@ -207,13 +210,9 @@ def read_yamls(dir_path):
 def get_errors(result, file_name):
     def marks_to_str(file_name, data, marks_attribute):
         return u'\n'.join(
-            u'{}:{} {}'.format(
-                file_name,
-                m['line'],
-                m['message']
-            )
-            for m in data[marks_attribute]
+            u'{}:{} {}'.format(file_name, m['line'], m['message']) for m in data[marks_attribute]
         )
+
     if not result.get('success'):
         return False, (
             marks_to_str(file_name, result, 'error_marks')
@@ -245,7 +244,7 @@ if __name__ == '__main__':
             PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
             PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
 
-            os.environ["API_KEY"] = 'api_key'
+            os.environ['API_KEY'] = 'api_key'
 
             publish()
             exit(0)
