@@ -90,7 +90,7 @@ from dma.item_add_chain_metrics t
 left join infomodel.current_infmquery_category ic on ic.infmquery_id = t.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join DMA.current_microcategories cm on cm.microcat_id = t.microcat_id
-where user_id is not null)
+where user_id is not null and chain_start_time::date between :first_date and :last_date)
 select 
       eventchain_id,
       cookie_id,
