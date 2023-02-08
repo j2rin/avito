@@ -14,6 +14,8 @@ import os
 import sys
 from time import sleep
 
+from validate_sql import validate as validate_sql
+
 try:
     from http import client as httplib  # python 3
 except ImportError:
@@ -48,6 +50,10 @@ CONFIGS = [
 
 
 def validate():
+
+    sql_success = validate_sql()
+    if not sql_success:
+        return False
 
     result, file_name_maps = send_all(VALIDATE_URL)
 
