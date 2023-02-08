@@ -43,4 +43,5 @@ select
     10 AS multiplier_10,
     *
 from dma.buyer_stream t
+participant_columns(cookie_id)
 ;

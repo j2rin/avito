@@ -4,4 +4,6 @@ select
     (t.start_time)::date AS start_date,
     (t.last_activation_time)::date AS last_activation_date,
     *
-FROM DMA.o_seller_item_active t;
+FROM DMA.o_seller_item_active t
+participant_columns(user_id)
+;
