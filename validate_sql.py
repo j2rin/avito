@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 SQL_FILES_PATTERN = r'sources/sql/([a-zA-Z0-9_]*).sql'
 PRODUCTION_BRANCH = 'origin/master'
+MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES', 'modified_files.txt')
 
 load_dotenv()
 VERTICA_CONFIG = {
@@ -31,7 +32,7 @@ def list_modified_files():
             result.append(item.a_path)
     except ImportError:
         # В TeamCity модифицированные файлы будут подсовываться в файлик
-        with open('modified_files.txt', 'r') as f:
+        with open(MODIFIED_FILES_PATH, 'r') as f:
             print(f.read())
     except Exception:
         raise
