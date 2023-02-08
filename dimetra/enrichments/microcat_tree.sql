@@ -10,7 +10,7 @@ select
     first(cm.Param1_microcat_id, cm_legacy.Param1_microcat_id)         as param1_id,
     first(cm.Param2_microcat_id, cm_legacy.Param2_microcat_id)         as param2_id,
     first(cm.Param3_microcat_id, cm_legacy.Param3_microcat_id)         as param3_id,
-    first(cm.Param4_microcat_id, cm_legacy.Param4_microcat_id)         as param4_id,
+    first(cm.Param4_microcat_id, cm_legacy.Param4_microcat_id)         as param4_id
 from :fact_table  t
 left join infomodel.current_infmquery_category ic on ic.infmquery_id = t.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
