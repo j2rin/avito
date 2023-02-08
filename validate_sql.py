@@ -19,7 +19,7 @@ def get_vertica_credentials():
         }
 
     from_env = get_from_env()
-    if not from_env['VERTICA_USER']:
+    if not from_env['user']:
         from dotenv import load_dotenv
 
         load_dotenv()
@@ -66,7 +66,7 @@ def bind_sql_params(sql, **params):
 def execute_sql_and_collect_metrics(sql):
     sql_query_metrics = 'select * from dma.vw_dm_test_limit_exceed;'
 
-    with vertica_python.connect(**VERTICA_CONFIG) as con:
+    with vertica_python.connect(**get_vertica_credentials()) as con:
         with con.cursor() as cur:
             try:
                 cur.execute(sql)
