@@ -3,19 +3,30 @@ import re
 from datetime import date, timedelta
 
 import vertica_python
-from dotenv import load_dotenv
 
 SQL_FILES_PATTERN = r'sources/sql/([a-zA-Z0-9_]*).sql'
 PRODUCTION_BRANCH = 'origin/master'
-MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES', 'modified_files.txt')
+MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES')
 
-load_dotenv()
-VERTICA_CONFIG = {
-    'host': os.getenv('VERTICA_HOST', 'vertica-dwh'),
-    'port': os.getenv('VERTICA_PORT', '5433'),
-    'user': os.getenv('VERTICA_USER', ''),
-    'password': os.getenv('VERTICA_PASSWORD', ''),
-}
+
+def get_vertica_credentials():
+    def get_from_env():
+        return {
+            'host': os.getenv('VERTICA_HOST', 'vertica-dwh'),
+            'port': os.getenv('VERTICA_PORT', '5433'),
+            'user': os.getenv('VERTICA_USER', ''),
+            'password': os.getenv('VERTICA_PASSWORD', ''),
+        }
+
+    from_env = get_from_env()
+    if not from_env['VERTICA_USER']:
+        from dotenv import load_dotenv
+
+        load_dotenv()
+        return get_from_env()
+    return from_env
+
+
 DURATION_LIMIT = 300
 
 
