@@ -4,6 +4,8 @@ from datetime import date, timedelta
 
 import vertica_python
 
+from utils import bind_sql_params, get_missing_sql_params, split_statements
+
 SQL_FILES_PATTERN = r'sources/sql/([a-zA-Z0-9_]*).sql'
 PRODUCTION_BRANCH = 'origin/master'
 MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES')
@@ -54,27 +56,6 @@ def is_sql_file(filepath):
     return re.match(SQL_FILES_PATTERN, filepath) is not None
 
 
-def check_required_sql_params(sql):
-    missing = []
-    for param in REQUIRED_PARAMS:
-        pattern = PARAM_REGEXP.format(param=param)
-        match = re.match(pattern, sql)
-        if not match:
-            missing.append(param)
-    if missing:
-        return {'error': f"Missing required params: `{', '.join(missing)}`"}
-    return {}
-
-
-def bind_sql_params(sql, **params):
-    for name, value in params.items():
-        if isinstance(value, (str, date)):
-            value = f"'{value}'"
-        pattern = PARAM_REGEXP.format(param=name)
-        sql = re.sub(pattern, value, sql)
-    return sql
-
-
 def execute_sql_and_collect_metrics(sql):
     sql_query_metrics = 'select * from dma.vw_dm_test_limit_exceed;'
 
@@ -101,9 +82,15 @@ def prepare_test_sql(sql):
 def execute_file_and_collect_metrics(filepath):
     with open(filepath, 'r') as f:
         sql_raw = f.read()
-    check_result = check_required_sql_params(sql_raw)
-    if check_result:
-        return check_result
+
+    missing_params = get_missing_sql_params(sql_raw, REQUIRED_PARAMS)
+    if missing_params:
+        return {'error': f"Missing required params: `{', '.join(missing_params)}`"}
+
+    n_statements = len(split_statements(sql_raw))
+    if n_statements != 1:
+        return {'error': f'Number of statements must be exactly one'}
+
     sql_prepared = prepare_test_sql(sql_raw)
     return execute_sql_and_collect_metrics(sql_prepared)
 
