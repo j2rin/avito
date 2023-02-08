@@ -1,4 +1,4 @@
-select platform_id, event_date, cookie_id,--
+select platform_id, event_date, cookie_id, error--
     case when delay >= 0 and delay <= 10000 then delay end as delay,
     (eid_4203 is not null and eid_4233 is not null)::int as both_event,
     (eid_4203 is null and eid_4233 is not null)::int as only_click,
