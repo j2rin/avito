@@ -4,7 +4,6 @@ from datetime import date, timedelta
 
 import vertica_python
 from dotenv import load_dotenv
-from git import Repo
 
 SQL_FILES_PATTERN = r'sources/sql/([a-zA-Z0-9_]*).sql'
 PRODUCTION_BRANCH = 'origin/master'
@@ -20,12 +19,23 @@ DURATION_LIMIT = 300
 
 
 def list_modified_files():
-    repo = Repo('.')
-    origin_master = repo.commit(PRODUCTION_BRANCH)
-
     result = []
-    for item in origin_master.diff(None):
-        result.append(item.a_path)
+    try:
+        # Для локального запуска
+        from git import Repo
+
+        repo = Repo('.')
+        origin_master = repo.commit(PRODUCTION_BRANCH)
+
+        for item in origin_master.diff(None):
+            result.append(item.a_path)
+    except ImportError:
+        # В TeamCity модифицированные файлы будут подсовываться в файлик
+        with open('modified_files.txt', 'r') as f:
+            print(f.read())
+    except Exception:
+        raise
+
     return result
 
 
