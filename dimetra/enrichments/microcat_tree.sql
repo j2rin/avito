@@ -12,7 +12,9 @@ select
     first(cm.Param3_microcat_id, cm_legacy.Param3_microcat_id)         as param3_id,
     first(cm.Param4_microcat_id, cm_legacy.Param4_microcat_id)         as param4_id
 from :fact_table  t
-left join infomodel.current_infmquery_category ic on ic.infmquery_id = t.infmquery_id
+left join
+	(select * from infomodel.current_infmquery_category
+     where infmquery_id in (select infmquery_id from :fact_table where __date__ between :first_date and :last_date)) ic on ic.infmquery_id = t.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join DMA.current_microcategories cm on cm.microcat_id = t.microcat_id
 left join DMA.current_microcategories cm_legacy on cm.microcat_id = ic.microcat_id
