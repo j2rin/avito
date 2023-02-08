@@ -1,4 +1,4 @@
-from validate_sql import bind_sql_params
+from utils import bind_sql_params
 
 
 def test_bind_sql_params():
