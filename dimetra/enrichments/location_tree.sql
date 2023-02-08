@@ -11,3 +11,4 @@ hierarchy (
     (region_id, city_id)
 )
 primary_key (location_id);
+
