@@ -62,6 +62,8 @@ left join /*+jtype(h),distrib(l,b)*/
     select user_id, logical_category_id, user_segment, converting_date,
         lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market 
+    Where converting_date <= :last_date::date
+
     ) as usm
         on chr.user_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
