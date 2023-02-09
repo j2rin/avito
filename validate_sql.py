@@ -6,10 +6,10 @@ import vertica_python
 
 from utils import bind_sql_params, get_missing_sql_params, split_statements
 
-SQL_FILES_PATTERN = r'sources/sql/([a-zA-Z0-9_]*).sql'
+SQL_FILES_PATTERN = r'sources/sql/(\w+).sql'
 PRODUCTION_BRANCH = 'origin/master'
 MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES')
-DURATION_LIMIT = 300
+DURATION_SECONDS_LIMIT = 300
 REQUIRED_PARAMS = ['first_date', 'last_date']
 
 
@@ -24,6 +24,8 @@ def get_vertica_credentials():
 
     from_env = get_from_env()
     if not from_env['user']:
+        # Если не нашлись креды, пробуем загрузить из файла `.env`
+        # Для удобства локального запуска
         from dotenv import load_dotenv
 
         load_dotenv()
@@ -94,11 +96,6 @@ def execute_file_and_collect_metrics(filepath):
     return execute_sql_and_collect_metrics(sql_prepared)
 
 
-def parse_sql_filename(path):
-    for n in re.findall(SQL_FILES_PATTERN, path):
-        return n
-
-
 def get_exceed_metrics(execution_result):
     result = {}
     for field, value in execution_result.items():
@@ -106,8 +103,8 @@ def get_exceed_metrics(execution_result):
             result[field] = value
         elif field == 'duration_exceed':
             fact_dur = execution_result['duration']
-            if fact_dur > DURATION_LIMIT:
-                result[field] = f'{fact_dur}>{DURATION_LIMIT}'
+            if fact_dur > DURATION_SECONDS_LIMIT:
+                result[field] = f'{fact_dur}>{DURATION_SECONDS_LIMIT}'
     return result
 
 
