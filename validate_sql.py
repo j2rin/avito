@@ -11,7 +11,6 @@ PRODUCTION_BRANCH = 'origin/master'
 MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES')
 DURATION_LIMIT = 300
 REQUIRED_PARAMS = ['first_date', 'last_date']
-PARAM_REGEXP = r'(\:{param})\b'
 
 
 def get_vertica_credentials():
