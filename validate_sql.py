@@ -108,6 +108,21 @@ def get_exceed_metrics(execution_result):
     return result
 
 
+METRICS_REPORT_TEMPLATE = '''
+duration: {duration} s
+input_rows: {input_rows}
+max_memory: {max_memory_gb} GB
+network_received: {network_received_gb} GB
+network_sent: {network_sent_gb} GB
+read: {read_gb} GB
+written: {written_gb} GB
+spilled: {spilled_gb} GB
+cpu_cycles_us: {cpu_cycles_us} GB
+thread_count: {thread_count}
+session_id: {session_id}
+'''
+
+
 def validate():
     modified_files = filter(is_sql_file, list_modified_files())
     success = True
@@ -115,20 +130,22 @@ def validate():
         report = execute_file_and_collect_metrics(path)
 
         if 'error' in report:
-            print(f'FAILED: {path}')
+            print(f'\nFAILED: {path}')
             print(report['error'])
             success = False
             continue
 
         exceed = get_exceed_metrics(report)
         if not exceed:
-            print(f'PASSED: {path}')
-            continue
+            print(f'\nPASSED: {path}')
 
-        print(f'FAILED: {path}')
-        for metric, value in exceed.items():
-            print(f'{metric}: {value}')
-            success = False
+        else:
+            print(f'\nFAILED: {path}')
+            for metric, value in exceed.items():
+                print(f'{metric}: {value}')
+                success = False
+
+        print(METRICS_REPORT_TEMPLATE.format(**report))
 
     if success:
         print('SQL validation PASSED')
