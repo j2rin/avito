@@ -24,5 +24,5 @@ from dma.messenger_chat_flow_report
 where user_id not in (select user_id from dma.current_user where isTest)
 and cnt_linkclicks>0
 and start_flow_time::date between :first_date and :last_date
-;
+
 
