@@ -7,7 +7,7 @@ definitions:
 metric.counter:
     chatbot_transitions:                              {filter: [*is_transition]}
     chatbot_conflicts:                                {filter: [*is_conflict]}
-    chatbot_transitions_and_clicklink:                {filter: $or: [*is_clicklink, *is_transition]}
+    chatbot_transitions_and_clicklink:                {filter: [$or: [*is_clicklink, *is_transition]]}
 
 metric.uniq:
      messenger_chatbot_dau_tr:                        {counter: chatbot_transitions_and_clicklink,    key: [user]}
