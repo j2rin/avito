@@ -6,19 +6,15 @@
 
 Внезапно этот же скрипт используется для отправки пресетов и конфига из CI в конфигуратор.
 """
-from __future__ import unicode_literals
 
 import io
 import json
 import os
 import sys
+from http import client as httplib
 from time import sleep
 
-try:
-    from http import client as httplib  # python 3
-except ImportError:
-    import httplib  # python 2
-
+from validate_sql import validate as validate_sql
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
@@ -47,8 +43,7 @@ CONFIGS = [
 ]
 
 
-def validate():
-
+def validate_configs():
     result, file_name_maps = send_all(VALIDATE_URL)
 
     if 'errors' in result:
@@ -70,17 +65,30 @@ def validate():
             if failed:
                 failed_configs.setdefault(config_name, []).append(file_name)
 
-    if not failed_configs:
-        if result['success']:
-            print('\nAll PASSED')
-            return True
+    success = result['success']
 
+    if success:
+        print('\nYAML validation PASSED')
+    elif not failed_configs:
         print('unknown error')
-        return False
+    else:
+        for preset_type, names in failed_configs.items():
+            print('\nFAILED {}: {}'.format(preset_type, ', '.join(sorted(names))))
 
-    for preset_type, names in failed_configs.items():
-        print('\nFAILED {}: {}'.format(preset_type, ', '.join(sorted(names))))
-    return False
+    return success
+
+
+def validate():
+
+    success = validate_configs()
+
+    if success:
+        success = validate_sql()
+
+    if success:
+        print('\nAll PASSED')
+
+    return success
 
 
 def process():
