@@ -2,10 +2,12 @@ definitions:
 
   - &is_transition                                   {eventtype_id: 297742000001}
   - &is_conflict                                     {eventtype_id: 390648500001}
+  - &is_clicklink                                    {cnt_linkclicks.isnull: false}
 
 metric.counter:
     chatbot_transitions:                              {filter: [*is_transition]}
     chatbot_conflicts:                                {filter: [*is_conflict]}
+    chatbot_transitions_and_clicklink:                {filter: $or: [*is_clicklink, *is_transition]}
 
 metric.uniq:
-     messenger_chatbot_dau_tr:                        {counter: chatbot_transitions,    key: [user]}
+     messenger_chatbot_dau_tr:                        {counter: chatbot_transitions_and_clicklink,    key: [user]}
