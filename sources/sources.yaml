@@ -802,6 +802,7 @@ seller_item_add:
   metric_configs: [seller_item_add]
   database: vertica
   table: dma.vo_seller_item_add
+  sql: seller_item_add
   column_map:
     cookie: cookie_id
     user: user_id
@@ -809,10 +810,11 @@ seller_item_add:
     - platform
     - vertical
     - logical_category
+    - user_segment_market
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
   m42_cartesian_groups:
-    - [vertical, logical_category]
+    - [vertical, logical_category, user_segment_market]
   dtm: event_date
   segm: eventchain_id
 
