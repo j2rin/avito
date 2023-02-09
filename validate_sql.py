@@ -3,6 +3,7 @@ import re
 from datetime import date, timedelta
 
 import vertica_python
+from yaml_getters import get_sql_primary_subject_map
 
 from utils import bind_sql_params, get_missing_sql_params, split_statements
 
@@ -11,6 +12,7 @@ PRODUCTION_BRANCH = 'origin/master'
 MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES')
 DURATION_SECONDS_LIMIT = 300
 REQUIRED_PARAMS = ['first_date', 'last_date']
+SQL_PRIMARY_SUBJECT_MAP = {}
 
 
 def get_vertica_credentials():
@@ -72,15 +74,27 @@ def execute_sql_and_collect_metrics(sql):
             return dict(zip(columns, row))
 
 
-def prepare_test_sql(sql):
+TEST_SQL_TEMPLATE = '''
+create local temp table {file_name} on commit preserve rows as /*+direct*/ (
+    select distinct {primary_subject} from ({sql}) _
+) order by {primary_subject} segmented by hash({primary_subject}) all nodes
+'''
+
+
+def prepare_test_sql(sql, file_name, primary_subject):
     two_days_ago = date.today() - timedelta(days=2)
-    sql = f'select count(*) from ({sql}) _'
+    sql = TEST_SQL_TEMPLATE.format(sql=sql, file_name=file_name, primary_subject=primary_subject)
     params = {'first_date': two_days_ago, 'last_date': two_days_ago}
     sql = bind_sql_params(sql, **params)
     return sql
 
 
-def execute_file_and_collect_metrics(filepath):
+def parse_sql_filename(path):
+    for n in re.findall(SQL_FILES_PATTERN, path):
+        return n
+
+
+def execute_file_and_collect_metrics(filepath, filename, primary_subject):
     with open(filepath, 'r') as f:
         sql_raw = f.read()
 
@@ -92,7 +106,7 @@ def execute_file_and_collect_metrics(filepath):
     if n_statements != 1:
         return {'error': f'Number of statements must be exactly one'}
 
-    sql_prepared = prepare_test_sql(sql_raw)
+    sql_prepared = prepare_test_sql(sql_raw, filename, primary_subject)
     return execute_sql_and_collect_metrics(sql_prepared)
 
 
@@ -117,7 +131,7 @@ network_sent: {network_sent_gb} GB
 read: {read_gb} GB
 written: {written_gb} GB
 spilled: {spilled_gb} GB
-cpu_cycles_us: {cpu_cycles_us} GB
+cpu_cycles_us: {cpu_cycles_us}
 thread_count: {thread_count}
 session_id: {session_id}
 '''
@@ -125,9 +139,14 @@ session_id: {session_id}
 
 def validate():
     modified_files = filter(is_sql_file, list_modified_files())
+    sql_primary_subject_map = get_sql_primary_subject_map()
+
     success = True
     for path in modified_files:
-        report = execute_file_and_collect_metrics(path)
+        filename = parse_sql_filename(path)
+        primary_subject = sql_primary_subject_map[filename]
+
+        report = execute_file_and_collect_metrics(path, filename, primary_subject)
 
         if 'error' in report:
             print(f'\nFAILED: {path}')
