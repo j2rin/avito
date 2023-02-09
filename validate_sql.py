@@ -95,6 +95,9 @@ def parse_sql_filename(path):
 
 
 def execute_file_and_collect_metrics(filepath, filename, primary_subject):
+    if not primary_subject:
+        return {'error': 'No config in `sources.yaml` found for this SQL'}
+
     with open(filepath, 'r') as f:
         sql_raw = f.read()
 
@@ -144,7 +147,7 @@ def validate():
     success = True
     for path in modified_files:
         filename = parse_sql_filename(path)
-        primary_subject = sql_primary_subject_map[filename]
+        primary_subject = sql_primary_subject_map.get(filename)
 
         report = execute_file_and_collect_metrics(path, filename, primary_subject)
 
