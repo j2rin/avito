@@ -76,7 +76,7 @@ def execute_sql_and_collect_metrics(sql):
 
 TEST_SQL_TEMPLATE = '''
 create local temp table {file_name} on commit preserve rows as /*+direct*/ (
-    select distinct {primary_subject} from ({sql}) _
+    {sql}
 ) order by {primary_subject} segmented by hash({primary_subject}) all nodes
 '''
 

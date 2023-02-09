@@ -268,7 +268,11 @@ if __name__ == '__main__':
             print('Unknown argument')
             exit(1)
 
-    success = validate()
+    try:
+        success = validate()
+    except Exception as e:
+        print(e)
+        exit(1)
 
     if not success:
         exit(1)
