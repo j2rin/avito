@@ -20,6 +20,7 @@ def get_vertica_credentials():
         return {
             'host': os.getenv('VERTICA_HOST', 'vertica-dwh'),
             'port': os.getenv('VERTICA_PORT', '5433'),
+            'database': os.getenv('VERTICA_DATABASE', 'DWH'),
             'user': os.getenv('VERTICA_USER', ''),
             'password': os.getenv('VERTICA_PASSWORD', ''),
         }
@@ -82,7 +83,7 @@ create local temp table {file_name} on commit preserve rows as /*+direct*/ (
 
 
 def prepare_test_sql(sql, file_name, primary_subject):
-    two_days_ago = date.today() - timedelta(days=2)
+    two_days_ago = date.today() - timedelta(days=3)
     sql = TEST_SQL_TEMPLATE.format(sql=sql, file_name=file_name, primary_subject=primary_subject)
     params = {'first_date': two_days_ago, 'last_date': two_days_ago}
     sql = bind_sql_params(sql, **params)
