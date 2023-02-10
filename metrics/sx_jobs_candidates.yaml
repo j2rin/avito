@@ -1,5 +1,9 @@
 metric.counter:
   jobs_crm_opens:                       {filter: [eid: 5962]}
+  jobs_crm_first_opens:                 {filter: [{eid: 5962}, {rn: 1}]}
+  jobs_crm_second_opens:                {filter: [{eid: 5962}, {rn.>: 1}]}
+  jobs_crm_web_opens:                   {filter: [{eid: 5962}, {entrypoint: web}]}
+  jobs_crm_mobile_opens:                {filter: [{eid: 5962}, {entrypoint: mobile}]}
   jobs_crm_searches:                    {filter: [eid: 5960]}
   jobs_crm_status_changes:              {filter: [eid: 5967]}
   jobs_crm_expands:                     {filter: [eid: 5972]}
@@ -10,6 +14,10 @@ metric.counter:
 
 metric.uniq:
   jobs_crm_user_opens:                  {counter: jobs_crm_opens, key: [user]}
+  jobs_crm_user_first_opens:            {counter: jobs_crm_first_opens, key: [user]}
+  jobs_crm_user_second_opens:           {counter: jobs_crm_second_opens, key: [user]}
+  jobs_crm_user_web_opens:              {counter: jobs_crm_web_opens, key: [user]}
+  jobs_crm_user_mobile_opens:           {counter: jobs_crm_mobile_opens, key: [user]}
   jobs_crm_user_searches:               {counter: jobs_crm_searches, key: [user]}
   jobs_crm_user_status_changes:         {counter: jobs_crm_status_changes, key: [user]}
   jobs_crm_user_expands:                {counter: jobs_crm_expands, key: [user]}
