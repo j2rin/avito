@@ -21,3 +21,4 @@ select
     row_number() over (partition by user_id, eid order by event_timestamp) rn,
     row_number() over (partition by user_id, eid, entrypoint order by event_timestamp) rn_platform
 from entrypoints
+where event_date between :first_date and :last_date
