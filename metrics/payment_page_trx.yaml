@@ -10,8 +10,8 @@ definitions:
   
   - &is_sbp         {is_sbp: true}
   - &is_card        {is_sbp: false} 
-  - &is_new_card    {*is_card, linked_source_id.isnull: true}
-  - &is_saved_card  {*is_card, linked_source_id.isnull: false}
+  - &is_new_card    [*is_card, linked_source_id.isnull: true]
+  - &is_saved_card  [*is_card, linked_source_id.isnull: false]
   
   - &error_provider_any   {errorcode.!=: 0}
   - &error_provider_zero  {errorcode: 0}
@@ -22,9 +22,9 @@ definitions:
   - &is_submit    {pay_form_submit.isnull: false}
   - &is_3ds_sent  {sent_to_3ds.isnull: false}
   
-  - &is_aftersubmit_step_unknown_error_new_card    {*is_new_card, *is_pay_form, *is_submit, *is_not_success, $or: [*error_provider_zero, *error_provider_3ds]}
-  - &is_aftersubmit_step_unknown_error_saved_card  {*is_saved_card, *is_not_success, $or: [*error_provider_zero, *error_provider_3ds]}
-  - &is_aftersubmit_step_unknown_error_card        {$or: [[*is_aftersubmit_step_unknown_error_new_card], [*is_aftersubmit_step_unknown_error_saved_card]]}
+  - &is_aftersubmit_step_unknown_error_new_card    [*is_new_card, *is_pay_form, *is_submit, *is_not_success, $or: [*error_provider_zero, *error_provider_3ds]]
+  - &is_aftersubmit_step_unknown_error_saved_card  [*is_saved_card, *is_not_success, $or: [*error_provider_zero, *error_provider_3ds]]
+  - &is_aftersubmit_step_unknown_error_card        [$or: [*is_aftersubmit_step_unknown_error_new_card, *is_aftersubmit_step_unknown_error_saved_card]]
   
 
 
