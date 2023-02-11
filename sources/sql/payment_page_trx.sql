@@ -26,6 +26,7 @@ select
     cpt.provider_preset,
     cpt.payment_plan,
     nvl(cpt.payment_method,'other') payment_method,
+    nvl(cpt.payment_method,'other') = 'SBP' as is_sbp,
     cpt.linked_source_id,
     nvl(cpt.provider_payment_number, cpt.payment_linked_source) as payment_number,
     nvl(ec.errorcode,'0') errorcode

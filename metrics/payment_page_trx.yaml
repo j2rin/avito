@@ -8,8 +8,8 @@ definitions:
   - &is_marketplace {billing_order_id.isnull: false}
   - &is_avito       {order_id.isnull: false}
   
-  - &is_sbp         {payment_method: SBP}
-  - &is_card        {payment_method.!=: SBP} 
+  - &is_sbp         {is_sbp: true}
+  - &is_card        {is_sbp: false} 
   - &is_new_card    {*is_card, linked_source_id.isnull: true}
   - &is_saved_card  {*is_card, linked_source_id.isnull: false}
   
