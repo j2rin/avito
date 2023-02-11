@@ -1,0 +1,106 @@
+definitions:
+
+  - $error_3ds   [8151]
+  - $error_fraud [8152,8163]
+  
+  - &is_success     {status.in: [2,4,5]}
+  - &is_not_success {status.in: [1,3]}
+  - &is_error       {status: 3}
+  - &is_frozen      {status: 1}
+  
+  - &is_marketplace {billing_order_id.isnull: false}
+  - &is_avito       {order_id.isnull: false}
+  
+  - &is_sbp         {payment_method: SPB}
+  - &is_card        {payment_method.!=: SPB} 
+  - &is_new_card    {*is_card, linked_source_id.isnull: true}
+  - &is_saved_card  {*is_card, linked_source_id.isnull: false}
+  
+  - &error_provider_any   {errorcode.!=: 0}
+  - &error_provider_zero  {errorcode: 0}
+  - &error_provider_3ds   {errorcode.in: *error_3ds}
+  - &error_provider_fraud {errorcode.in: *error_fraud}
+  
+  - &is_pay_form  {pay_form_render.isnull: false}
+  - &is_submit    {pay_form_submit.isnull: false}
+  - &is_3ds_sent  {sent_to_3ds.isnull: false}
+  
+  - $is_aftersubmit_step_unknown_error_new_card    {[*is_new_card, *is_pay_form, *is_submit, *is_not_success, $or: [*error_provider_zero, *error_provider_3ds]]}
+  - $is_aftersubmit_step_unknown_error_saved_card  {[*is_saved_card, *is_not_success, $or: [*error_provider_zero, *error_provider_3ds]]}
+  - $is_aftersubmit_step_unknown_error_card        {$or: [*is_aftersubmit_step_unknown_error_new_card, *is_aftersubmit_step_unknown_error_saved_card]}
+  
+
+
+metric.counter:
+
+  trx_payment: {}
+  trx_payment_marketplace:                           {filter: [*is_marketplace]}
+  trx_payment_avito:                                 {filter: [*is_avito]}
+  
+  trx_payment_success:                               {filter: [*is_success]}
+  trx_payment_marketplace_success:                   {filter: [*is_success]}
+  trx_payment_avito_success:                         {filter: [*is_success]}
+  
+  trx_payment_frozen:                                {filter: [*is_frozen]}
+  trx_payment_error:                                 {filter: [*is_error]}
+  
+  trx_payment_sbp:                                   {filter: [*is_sbp]}
+  trx_payment_sbp_success:                           {filter: [*is_sbp, *is_success]}
+  
+  trx_payment_card:                                  {filter: [*is_card]}
+  trx_payment_card_success:                          {filter: [*is_card, *is_success]}
+  
+  trx_payment_new_card:                              {filter: [*is_new_card]}
+  trx_payment_new_card_success:                      {filter: [*is_new_card, *is_success]}
+  
+  trx_payment_saved_card:                            {filter: [*is_new_card]}
+  trx_payment_saved_card_success:                    {filter: [*is_saved_card, *is_success]}
+  
+  trx_payment_card_after_submit_unknown_error:       {filter: [*is_aftersubmit_step_unknown_error_card]}
+  trx_payment_new_card_after_submit_unknown_error:   {filter: [*is_aftersubmit_step_unknown_error_new_card]}
+  trx_payment_saved_card_after_submit_unknown_error: {filter: [*is_aftersubmit_step_unknown_error_saved_card]}
+  
+  trx_payment_unsuccess:                             {filter: [*is_not_success]}
+  trx_payment_error_provider:                        {filter: [*is_not_success, *error_provider_any]}
+  trx_payment_error_provider_3ds:                    {filter: [*is_not_success, *error_provider_3ds]}
+  trx_payment_error_provider_fraud:                  {filter: [*is_not_success, *error_provider_fraud]}
+  
+
+metric.uniq:
+  unq_trx_payment_order:                             {counter: trx_payment, key: [order_ext]}
+  unq_trx_payment_user:                              {counter: trx_payment, key: [user]}
+  
+  unq_trx_payment_card_order:                        {counter: trx_payment_card, key: [order_ext]}
+  unq_trx_payment_card_user:                         {counter: trx_payment_card, key: [user]}
+  
+  unq_trx_payment_new_card_order:                    {counter: trx_payment_new_card, key: [order_ext]}
+  unq_trx_payment_new_card_user:                     {counter: trx_payment_new_card, key: [user]}
+  
+  unq_trx_payment_success_order:                     {counter: trx_payment_success, key: [order_ext]}
+  unq_trx_payment_success_user:                      {counter: trx_payment_success, key: [user]}
+  
+  unq_trx_payment_card_success_order:                {counter: trx_payment_card_success, key: [order_ext]}
+  unq_trx_payment_card_success_user:                 {counter: trx_payment_card_success, key: [user]}
+  
+  unq_trx_payment_new_card_success_order:            {counter: trx_payment_new_card, key: [order_ext]}
+  unq_trx_payment_new_card_success_user:             {counter: trx_payment_new_card, key: [user]}
+  
+
+metric.ratio:
+  trx_payment_success_ratio:                         {num: trx_payment_success, den: trx_payment}
+  trx_payment_success_order_ratio:                   {num: unq_trx_payment_success_order, den: unq_trx_payment_order}
+  trx_payment_success_order_ratio:                   {num: unq_trx_payment_success_user, den: unq_trx_payment_user}
+  
+  trx_payment_card_ratio:                            {num: trx_payment_card, den: trx_payment}
+  trx_payment_card_order_ratio:                      {num: unq_trx_payment_card_order, den: unq_trx_payment_order}
+  trx_payment_card_user_ratio:                       {num: unq_trx_payment_card_user, den: unq_trx_payment_user}
+  
+  trx_payment_card_saved_card_ratio:                 {num: trx_payment_saved_card, den: trx_payment_card}
+  
+  trx_payment_card_success_ratio:                    {num: trx_payment_card_success, den: trx_payment_card}
+  trx_payment_card_success_order_ratio:              {num: unq_trx_payment_card_success_order, den: unq_trx_payment_card_order}
+  trx_payment_card_success_user_ratio:               {num: unq_trx_payment_card_success_user, den: unq_trx_payment_card_user}
+  
+  trx_payment_saved_card_success_ratio:              {num: trx_payment_saved_card_success, den: trx_payment_saved_card}
+  trx_payment_new_card_success_ratio:                {num: trx_payment_new_card_success, den: trx_payment_new_card}
+  trx_payment_sbp_success_ratio:                     {num: trx_payment_sbp_success, den: trx_payment_sbp}
