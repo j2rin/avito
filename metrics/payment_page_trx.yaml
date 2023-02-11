@@ -1,7 +1,4 @@
 definitions:
-
-  - $error_3ds   [8151]
-  - $error_fraud [8152,8163]
   
   - &is_success     {status.in: [2,4,5]}
   - &is_not_success {status.in: [1,3]}
@@ -18,8 +15,8 @@ definitions:
   
   - &error_provider_any   {errorcode.!=: 0}
   - &error_provider_zero  {errorcode: 0}
-  - &error_provider_3ds   {errorcode.in: *error_3ds}
-  - &error_provider_fraud {errorcode.in: *error_fraud}
+  - &error_provider_3ds   {errorcode.in: [8151]}
+  - &error_provider_fraud {errorcode.in: [8152,8163]}
   
   - &is_pay_form  {pay_form_render.isnull: false}
   - &is_submit    {pay_form_submit.isnull: false}
