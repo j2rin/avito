@@ -13,11 +13,11 @@ definitions:
   - &is_new_method    {linked_source_id.isnull: true}
   - &is_saved_method  {linked_source_id.isnull: false}
   
-  - &error_provider_any   {errorcode.!=: 0}
-  - &error_provider_zero  {errorcode: 0}
-  - &error_provider_3ds   {errorcode.in: [8151]}
-  - &error_provider_3ds_or_zero   {errorcode.in: [0,8151]}
-  - &error_provider_fraud {errorcode.in: [8152,8163]}
+  - &error_provider_any   {errorcode.!=: '0'}
+  - &error_provider_zero  {errorcode: '0'}
+  - &error_provider_3ds   {errorcode.in: ['8151']}
+  - &error_provider_3ds_or_zero   {errorcode.in: ['0','8151']}
+  - &error_provider_fraud {errorcode.in: ['8152','8163']}
   
   - &is_pay_form  {pay_form_render.isnull: false}
   - &is_submit    {pay_form_submit.isnull: false}
