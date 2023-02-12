@@ -49,9 +49,9 @@ metric.counter:
   trx_payment_saved_card:                            {filter: [*is_card, *is_saved_method]}
   trx_payment_saved_card_success:                    {filter: [*is_card, *is_saved_method, *is_success]}
   
-  trx_payment_card_after_submit_unknown_error:       {filter: [*is_card, $or: [[*is_new_method, *is_pay_form, *is_submit, *is_not_success, *error_provider_3ds_or_zero],[*is_saved_card, *is_not_success, *error_provider_3ds_or_zero]]]}
+  trx_payment_card_after_submit_unknown_error:       {filter: [*is_card, $or: [[*is_new_method, *is_pay_form, *is_submit, *is_not_success, *error_provider_3ds_or_zero],[*is_saved_method, *is_not_success, *error_provider_3ds_or_zero]]]}
   trx_payment_new_card_after_submit_unknown_error:   {filter: [*is_card, *is_new_method, *is_pay_form, *is_submit, *is_not_success, *error_provider_3ds_or_zero]}
-  trx_payment_saved_card_after_submit_unknown_error: {filter: [*is_card, *is_saved_card, *is_not_success, *error_provider_3ds_or_zero]}
+  trx_payment_saved_card_after_submit_unknown_error: {filter: [*is_card, *is_saved_method, *is_not_success, *error_provider_3ds_or_zero]}
   
   trx_payment_unsuccess:                             {filter: [*is_not_success]}
   trx_payment_error_provider:                        {filter: [*is_not_success, *error_provider_any]}
