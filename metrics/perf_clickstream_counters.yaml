@@ -1,6 +1,12 @@
 metric.counter:
   cnt_warm_start_events:                             {filter: [eid: 6978], obs: [events_count]}
   cnt_warm_start_duration:                           {filter: [eid: 6978], obs: [performance_metric_event_duration_sum]}
+
+  cnt_mobile_app_start_type:                         {filter: [eid: 6798], obs: [events_count]}
+  cnt_mobile_app_start_type_cold:                    {filter: [eid: 6798, mobile_app_start_type: 'cold'], obs: [events_count]}
+  cnt_mobile_app_start_type_warm:                    {filter: [eid: 6798, mobile_app_start_type: 'warm'], obs: [events_count]}
+  cnt_mobile_app_start_type_hot:                     {filter: [eid: 6798, mobile_app_start_type: 'hot'], obs: [events_count]}
+
   cnt_app_memory_metric_events:                      {filter: [eid: 4274], obs: [events_count]}
   cnt_native_heap_size:                              {filter: [eid: 4274], obs: [native_heap_size_sum]}
   cnt_java_heap_size:                                {filter: [eid: 4274], obs: [java_heap_size_sum]}
@@ -13,8 +19,53 @@ metric.counter:
   cnt_gc_events:                                     {filter: [eid: 4274], obs: [gc_count]}
   cnt_gc_time:                                       {filter: [eid: 4274], obs: [gc_time_sum]}
 
+  anr_error:                                         {filter: [eid: 7274], obs: [events_count]}
+
+  network_error:                                     {filter: [eid: 4599], obs: [events_count]}
+  network_api_error:                                 {filter: [eid: 4599, network_error_type: 'api error'], obs: [events_count]}
+  network_forbidden_error:                           {filter: [eid: 4599, network_error_type: 'forbidden'], obs: [events_count]}
+  network_unauthenticated_error:                     {filter: [eid: 4599, network_error_type: 'http unauthenticated'], obs: [events_count]}
+  network_image_load_error:                          {filter: [eid: 4599, network_error_type: ['image load error', '2. image error']], obs: [events_count]}
+  network_client_error:                              {filter: [eid: 4599, network_error_type: ['network client error']], obs: [events_count]}
+  network_system_error:                              {filter: [eid: 4599, network_error_type: 'network system error'], obs: [events_count]}
+
+  network_client_error2:                             {filter: [eid: 4599, network_error_type: '2. client error'], obs: [events_count]}
+  network_backend_error:                             {filter: [eid: 4599, network_error_type: '2. backend error'], obs: [events_count]}
+  network_network_error:                             {filter: [eid: 4599, network_error_type: '2. network error'], obs: [events_count]}
+  network_upload_error:                              {filter: [eid: 4599, network_error_type: '2. upload error'], obs: [events_count]}
+
+  network_api_bad_request_error:                     {filter: [eid: 4599, network_error_type: 'network system error', network_error_sub_type: 'bad request'], obs: [events_count]}
+  network_client_parsing_error:                      {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'parsing failure'], obs: [events_count]}
+  network_client_no_session_error:                   {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'attempt to send authorized request with no session'], obs: [events_count]}
+
+
+metric.uniq:
+  user_anr_error:                                    {counter: anr_error, key: [cookie]}
+
+  user_network_error:                                {counter: network_error, key: [cookie]}
+  user_network_api_error:                            {counter: network_api_error, key: [cookie]}
+  user_network_forbidden_error:                      {counter: network_forbidden_error, key: [cookie]}
+  user_network_unauthenticated_error:                {counter: network_unauthenticated_error, key: [cookie]}
+  user_network_image_load_error:                     {counter: network_image_load_error, key: [cookie]}
+  user_network_client_error:                         {counter: network_client_error, key: [cookie]}
+  user_network_system_error:                         {counter: network_system_error, key: [cookie]}
+  user_network_api_bad_request_error:                {counter: network_api_bad_request_error, key: [cookie]}
+  user_network_client_parsing_error:                 {counter: network_client_parsing_error, key: [cookie]}
+  user_network_client_no_session_error:              {counter: network_client_no_session_error, key: [cookie]}
+
+  user_network_client_error2:                        {counter: network_client_error2, key: [cookie]}
+  user_network_backend_error:                        {counter: network_backend_error, key: [cookie]}
+  user_network_network_error:                        {counter: network_network_error, key: [cookie]}
+  user_network_upload_error:                         {counter: network_upload_error, key: [cookie]}
+
+
 metric.ratio:
   warm_start_duration:                               {num: cnt_warm_start_duration,  den: cnt_warm_start_events}
+
+  mobile_app_start_type_cold:                        {num: cnt_mobile_app_start_type_cold, den: cnt_mobile_app_start_type}
+  mobile_app_start_type_warm:                        {num: cnt_mobile_app_start_type_warm, den: cnt_mobile_app_start_type}
+  mobile_app_start_type_hot:                         {num: cnt_mobile_app_start_type_hot, den: cnt_mobile_app_start_type}
+
   native_heap_size:                                  {num: cnt_native_heap_size,  den: cnt_app_memory_metric_events}
   java_heap_size:                                    {num: cnt_java_heap_size,  den: cnt_app_memory_metric_events}
   code_size:                                         {num: cnt_code_size,  den: cnt_app_memory_metric_events}
