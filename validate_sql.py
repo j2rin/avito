@@ -60,8 +60,9 @@ def is_sql_file(filepath):
     return re.match(SQL_FILES_PATTERN, filepath) is not None
 
 
-def execute_sql_and_collect_metrics(sql):
+def execute_sql_and_collect_metrics(sql, table_name):
     sql_query_metrics = 'select * from dma.vw_dm_test_limit_exceed;'
+    sql_output_rows = f'select count(*) from {table_name}'
 
     with vertica_python.connect(**get_vertica_credentials()) as con:
         with con.cursor() as cur:
@@ -72,7 +73,13 @@ def execute_sql_and_collect_metrics(sql):
             cur.execute(sql_query_metrics)
             row = cur.fetchone()
             columns = [col.name for col in cur.description]
-            return dict(zip(columns, row))
+            result = dict(zip(columns, row))
+
+            cur.execute(sql_output_rows)
+            output_rows = cur.fetchone()[0]
+            result['output_rows'] = output_rows
+
+            return result
 
 
 TEST_SQL_TEMPLATE = '''
@@ -111,7 +118,9 @@ def execute_file_and_collect_metrics(filepath, filename, primary_subject):
         return {'error': f'Number of statements must be exactly one'}
 
     sql_prepared = prepare_test_sql(sql_raw, filename, primary_subject)
-    return execute_sql_and_collect_metrics(sql_prepared)
+
+    print(f'\nExecuting: {filepath}')
+    return execute_sql_and_collect_metrics(sql_prepared, filename)
 
 
 def get_exceed_metrics(execution_result):
@@ -129,6 +138,7 @@ def get_exceed_metrics(execution_result):
 METRICS_REPORT_TEMPLATE = '''
 duration: {duration} s
 input_rows: {input_rows}
+output_rows: {output_rows}
 max_memory: {max_memory_gb} GB
 network_received: {network_received_gb} GB
 network_sent: {network_sent_gb} GB
