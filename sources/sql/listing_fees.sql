@@ -4,11 +4,6 @@ lf_users as (
     from dma.o_lf_metrics
     where event_date::date between :first_date::date and :last_date::date
         and user_id is not null
-),
-usm as (
-    select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
 )
 select /*+direct, syn_join*/
       olf.user_id
