@@ -80,12 +80,22 @@ def validate_configs():
 
 def validate():
 
-    success = validate_configs()
+    try:
+        success = validate_configs()
+
+        if success:
+            success = validate_sql()
+
+    except Exception as e:
+        success = False
+        print(e)
 
     if success:
-        success = validate_sql()
-
-    return success
+        print('\nValidation PASSED')
+        exit(0)
+    else:
+        print('\nValidation FAILED')
+        exit(1)
 
 
 def process():
@@ -265,15 +275,4 @@ if __name__ == '__main__':
             print('Unknown argument')
             exit(1)
 
-    try:
-        success = validate()
-    except Exception as e:
-        success = False
-        print(e)
-
-    if success:
-        print('\nValidation PASSED')
-        exit(0)
-    else:
-        print('\nValidation FAILED')
-        exit(1)
+    validate()
