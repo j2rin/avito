@@ -2,6 +2,7 @@ import os
 import re
 from datetime import date, timedelta
 
+import click
 import vertica_python
 from yaml_getters import get_sql_primary_subject_map
 
@@ -151,8 +152,13 @@ session_id: {session_id}
 '''
 
 
-def validate():
-    modified_files = filter(is_sql_file, list_modified_files())
+@click.command()
+@click.option('--filepath', '-fp', 'filepaths', type=str, multiple=True)
+def validate(filepaths=None):
+    if filepaths:
+        modified_files = filter(is_sql_file, filepaths)
+    else:
+        modified_files = filter(is_sql_file, list_modified_files())
     sql_primary_subject_map = get_sql_primary_subject_map()
 
     success = True
