@@ -80,6 +80,7 @@ def execute_sql_and_collect_metrics(sql, table_name):
             cur.execute(sql_output_rows)
             output_rows = cur.fetchone()[0]
             result['output_rows'] = output_rows
+            result['output_columns'] = len(columns)
 
             return result
 
@@ -104,6 +105,18 @@ def parse_sql_filename(path):
         return n
 
 
+def adjust_report(report: dict):
+    new_report = report.copy()
+    output_data_size = report['output_rows'] * report['output_columns']
+
+    network_received = report['network_received_gb']
+    # Для очень больших источников лимит network_received пробивается легко
+    if network_received <= 100 and output_data_size >= 10**10:
+        new_report['network_received_exceed'] = ''
+
+    return new_report
+
+
 def execute_file_and_collect_metrics(filepath, filename, primary_subject):
     if not primary_subject:
         return {'error': 'No config in `sources.yaml` found for this SQL'}
@@ -122,7 +135,9 @@ def execute_file_and_collect_metrics(filepath, filename, primary_subject):
     sql_prepared = prepare_test_sql(sql_raw, filename, primary_subject)
 
     print(f'\nExecuting: {filepath}')
-    return execute_sql_and_collect_metrics(sql_prepared, filename)
+    report = execute_sql_and_collect_metrics(sql_prepared, filename)
+    report_adjusted = adjust_report(report)
+    return report_adjusted
 
 
 def get_exceed_metrics(execution_result):
@@ -141,6 +156,7 @@ METRICS_REPORT_TEMPLATE = '''
 duration: {duration} s
 input_rows: {input_rows}
 output_rows: {output_rows}
+output_columns: {output_columns}
 max_memory: {max_memory_gb} GB
 network_received: {network_received_gb} GB
 network_sent: {network_sent_gb} GB
