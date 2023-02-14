@@ -85,9 +85,6 @@ def validate():
     if success:
         success = validate_sql()
 
-    if success:
-        print('\nAll PASSED')
-
     return success
 
 
@@ -271,8 +268,12 @@ if __name__ == '__main__':
     try:
         success = validate()
     except Exception as e:
+        success = False
         print(e)
-        exit(1)
 
-    if not success:
+    if success:
+        print('\nValidation PASSED')
+        exit(0)
+    else:
+        print('\nValidation FAILED')
         exit(1)
