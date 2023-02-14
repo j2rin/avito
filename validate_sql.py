@@ -136,8 +136,9 @@ def execute_file_and_collect_metrics(filepath, filename, primary_subject):
 
     print(f'\nExecuting: {filepath}')
     report = execute_sql_and_collect_metrics(sql_prepared, filename)
-    report_adjusted = adjust_report(report)
-    return report_adjusted
+    if 'error' not in report:
+        report = adjust_report(report)
+    return report
 
 
 def get_exceed_metrics(execution_result):
