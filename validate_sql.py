@@ -170,8 +170,6 @@ session_id: {session_id}
 '''
 
 
-@click.command()
-@click.option('--filename', '-fn', 'filenames', type=str, multiple=True)
 def validate(filenames=None):
     if filenames:
         modified_files = [f'{SQL_DIR}{fn}.sql' for fn in filenames]
@@ -210,5 +208,11 @@ def validate(filenames=None):
     return success
 
 
+@click.command()
+@click.option('--filename', '-fn', 'filenames', type=str, multiple=True)
+def main(filenames):
+    validate(filenames)
+
+
 if __name__ == '__main__':
-    validate()
+    main()
