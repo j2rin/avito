@@ -79,7 +79,7 @@ left join /*+jtype(h),distrib(l,a)*/ chatbot cb
                 and (reply_time <= end_flow_time  or end_flow_time is null)
             )
     )
-left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm
+left join /*+jtype(h)*/ DMA.current_microcategories cm
     on cm.microcat_id = chr.microcat_id
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id

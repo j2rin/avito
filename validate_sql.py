@@ -8,7 +8,8 @@ from yaml_getters import get_sql_primary_subject_map
 
 from utils import bind_sql_params, get_missing_sql_params, split_statements
 
-SQL_FILES_PATTERN = r'sources/sql/(\w+).sql'
+SQL_DIR = 'sources/sql/'
+SQL_FILES_PATTERN = r'{dir}(\w+).sql'.format(dir=SQL_DIR)
 PRODUCTION_BRANCH = 'origin/master'
 MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES')
 DURATION_SECONDS_LIMIT = 300
@@ -153,10 +154,10 @@ session_id: {session_id}
 
 
 @click.command()
-@click.option('--filepath', '-fp', 'filepaths', type=str, multiple=True)
-def validate(filepaths=None):
-    if filepaths:
-        modified_files = filter(is_sql_file, filepaths)
+@click.option('--filename', '-fn', 'filenames', type=str, multiple=True)
+def validate(filenames=None):
+    if filenames:
+        modified_files = [f'{SQL_DIR}{fn}.sql' for fn in filenames]
     else:
         modified_files = filter(is_sql_file, list_modified_files())
     sql_primary_subject_map = get_sql_primary_subject_map()
