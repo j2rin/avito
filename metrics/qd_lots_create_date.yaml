@@ -1,24 +1,24 @@
 metric.uniq:
-  qd_participants: {counter: qd_user,       key: [user_id],       m42: False}
-  qd_requests:     {counter: qd_mp_request, key: [mp_request_id], m42: False}
-  qd_lots:         {counter: qd_mp_lot,     key: [mp_lot_id],     m42: False}
+  qd_participants: {counter: qd_user,       key: [user_id],       }
+  qd_requests:     {counter: qd_mp_request, key: [mp_request_id]}
+  qd_lots:         {counter: qd_mp_lot,     key: [mp_lot_id],     }
 
 
 metric.counter:
-  lots_w_seller_choice_of_winner:              {obs: [is_seller_choice_of_winner], m42: False}
-  lots_w_any_choice_of_winner:                 {obs: [is_any_choice_of_winner],    m42: False}
-  lots_w_declined_offers:                      {obs: [is_declined_offers],         m42: False}
-  lots_w_offer:                                {obs: [has_offer],                  m42: False}
-  lots_w_buyout:                               {obs: [has_buyout],                 m42: False}
-  buyout_amount:                               {obs: [buyout_amount],              m42: False}
-  count_dealers_w_bid:                         {obs: [count_bid],                  m42: False}
-  qd_user:                                     {                                   m42: False}
-  qd_mp_request:                               {                                   m42: False}
-  qd_mp_lot:                                   {                                   m42: False}
+  lots_w_seller_choice_of_winner:              {obs: [is_seller_choice_of_winner]}
+  lots_w_any_choice_of_winner:                 {obs: [is_any_choice_of_winner],    }
+  lots_w_declined_offers:                      {obs: [is_declined_offers],         }
+  lots_w_offer:                                {obs: [has_offer],                  }
+  lots_w_buyout:                               {obs: [has_buyout],                 }
+  buyout_amount:                               {obs: [buyout_amount],              }
+  count_dealers_w_bid:                         {obs: [count_bid],                  }
+  qd_user:                                     {                                   }
+  qd_mp_request:                               {                                   }
+  qd_mp_lot:                                   {                                   }
 
 
 metric.ratio:
-  bids_per_lot:                                {num: count_dealers_w_bid, den: qd_lots,         m42: False}
-  lots_per_participant:                        {num: qd_lots,             den: qd_participants, m42: False}
-  requests_per_participant:                    {num: qd_requests,         den: qd_participants, m42: False}
-  buyout_amount_to_buyouts:                    {num: buyout_amount,       den: lots_w_buyout,   m42: False}
+  bids_per_lot:                                {num: count_dealers_w_bid, den: qd_lots,         }
+  lots_per_participant:                        {num: qd_lots,             den: qd_participants}
+  requests_per_participant:                    {num: qd_requests,         den: qd_participants}
+  buyout_amount_to_buyouts:                    {num: buyout_amount,       den: lots_w_buyout,   }
