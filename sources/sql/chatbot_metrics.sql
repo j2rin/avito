@@ -18,14 +18,14 @@ select
     end as group_name,
     transitions,
     datediff ('minute', t.start_flow_time, t.end_flow_time) as minute_end,
-    split_part (t.chat_type,'_',1) as chat_type,
-    case when t.chat_subtype = 'support' then true else false end is_support_chat,
+    split_part (r.chat_type,'_',1) as chat_type,
+    case when r.chat_subtype = 'support' then true else false end is_support_chat,
     cm.vertical_id,
     cm.logical_category_id,
     cm.category_id,
     cm.subcategory_id
 from  DMA.messenger_chat_flow_report t
-left join dma.messenger_chat_report using (chat_id)
+left join dma.messenger_chat_report r using (chat_id)
 left join dma.current_microcategories cm using (microcat_id)
 where (
         t.start_flow_time::date between :first_date and :last_date
