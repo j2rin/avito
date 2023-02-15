@@ -65,6 +65,7 @@ def is_sql_file(filepath):
 def execute_sql_and_collect_metrics(sql, table_name):
     sql_query_metrics = 'select * from dma.vw_dm_test_limit_exceed;'
     sql_output_rows = f'select count(*) from {table_name}'
+    sql_output_columns = f'select * from {table_name} limit 0'
 
     with vertica_python.connect(**get_vertica_credentials()) as con:
         with con.cursor() as cur:
@@ -80,7 +81,9 @@ def execute_sql_and_collect_metrics(sql, table_name):
             cur.execute(sql_output_rows)
             output_rows = cur.fetchone()[0]
             result['output_rows'] = output_rows
-            result['output_columns'] = len(columns)
+
+            cur.execute(sql_output_columns)
+            result['output_columns'] = len(cur.description)
 
             return result
 
@@ -113,6 +116,7 @@ def adjust_report(report: dict):
     # Для очень больших источников лимит network_received пробивается легко
     if network_received <= 100 and output_data_size >= 10**10:
         new_report['network_received_exceed'] = ''
+    new_report['thread_count_exceed'] = ''
 
     return new_report
 
