@@ -89,26 +89,24 @@ def execute_sql_and_collect_metrics(sql, table_name, primary_subject):
         'select * from dma.vw_dm_test_limit_exceed order by start_time desc limit 1;'
     )
     sql_output_rows = f'select count(*) from {table_name}'
-    sql_output_columns = f'select * from {table_name} limit 0'
 
+    result = {}
     with vertica_python.connect(**get_vertica_credentials()) as con:
         with con.cursor() as cur:
             try:
                 cur.execute(sql_limit0)
+                result['output_columns'] = len(cur.description)
                 cur.execute(sql_wrapped)
             except Exception as e:
                 return {'error': str(e)}
             cur.execute(sql_query_metrics)
             row = cur.fetchone()
             columns = [col.name for col in cur.description]
-            result = dict(zip(columns, row))
+            result |= dict(zip(columns, row))
 
             cur.execute(sql_output_rows)
             output_rows = cur.fetchone()[0]
             result['output_rows'] = output_rows
-
-            cur.execute(sql_output_columns)
-            result['output_columns'] = len(cur.description)
 
             return result
 
@@ -146,7 +144,7 @@ def validate_sql_file(filepath, filename, primary_subject):
     if n_statements != 1:
         return {'error': f'Number of statements must be exactly one'}
 
-    print(f'\nExecuting: {filepath}')
+    print(f'EXECUTING: {filepath}')
     report = execute_sql_and_collect_metrics(sql_raw, filename, primary_subject)
     if 'error' not in report:
         report = adjust_report(report)
@@ -197,22 +195,22 @@ def validate(filenames=None):
         report = validate_sql_file(path, filename, primary_subject)
 
         if 'error' in report:
-            print(f'\nFAILED: {path}')
+            print(f'FAILED: {path}')
             print(report['error'])
             success = False
             continue
 
+        print(METRICS_REPORT_TEMPLATE.format(**report))
+
         exceed = get_exceed_metrics(report)
         if not exceed:
-            print(f'\nPASSED: {path}')
+            print(f'PASSED: {path}')
 
         else:
-            print(f'\nFAILED: {path}')
+            print(f'FAILED: {path}')
             for metric, value in exceed.items():
                 print(f'{metric}: {value}')
                 success = False
-
-        print(METRICS_REPORT_TEMPLATE.format(**report))
 
     if success:
         print('SQL validation PASSED')
