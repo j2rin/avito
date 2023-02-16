@@ -250,7 +250,7 @@ geo_map_stream:
 perf_mobile:
   metric_configs: [perf_mobile]
   database: vertica
-  table: dma.o_perf_mobile
+  sql: perf_mobile
   dimensions: [platform, network_type, is_core_content, screen_name, content_type]
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
@@ -670,7 +670,7 @@ communications:
 image:
   metric_configs: [image]
   database: vertica
-  table: dma.o_image_mobile
+  sql: perf_image_mobile
   column_map:
     participant: cookie_id
   dimensions: [platform, network_type, screen_name]
@@ -1251,7 +1251,7 @@ clickstream_counters:
 messenger_stream:
   metric_configs: [messenger_stream]
   database: vertica
-  table: dma.vo_messenger_stream
+  sql: messenger_stream
   column_map:
     cookie: cookie_id
     user: user_id
