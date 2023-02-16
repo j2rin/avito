@@ -103,4 +103,3 @@ left join /*+jtype(h),distrib(l,b)*/
         on t.seller_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
         and t.event_date >= converting_date and t.event_date < next_converting_date
-;
