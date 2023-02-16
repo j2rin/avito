@@ -62,15 +62,40 @@ def is_sql_file(filepath):
     return re.match(SQL_FILES_PATTERN, filepath) is not None
 
 
-def execute_sql_and_collect_metrics(sql, table_name):
-    sql_query_metrics = 'select * from dma.vw_dm_test_limit_exceed;'
+TEST_SQL_TEMPLATE = '''
+create local temp table {table_name} on commit preserve rows as /*+direct*/ (
+    {sql}
+) order by {subject} segmented by hash({subject}) all nodes
+'''
+
+
+def wrap_sql_into_table(sql, table_name, subject):
+    return TEST_SQL_TEMPLATE.format(sql=sql, table_name=table_name, subject=subject)
+
+
+def bind_default_sql_params(sql):
+    two_days_ago = date.today() - timedelta(days=3)
+    params = {'first_date': two_days_ago, 'last_date': two_days_ago}
+    sql = bind_sql_params(sql, **params)
+    return sql
+
+
+def execute_sql_and_collect_metrics(sql, table_name, primary_subject):
+    sql_bind = bind_default_sql_params(sql)
+    sql_limit0 = f'select * from ({sql_bind}) _\nlimit 0'
+    sql_wrapped = wrap_sql_into_table(sql_bind, table_name, primary_subject)
+
+    sql_query_metrics = (
+        'select * from dma.vw_dm_test_limit_exceed order by start_time desc limit 1;'
+    )
     sql_output_rows = f'select count(*) from {table_name}'
     sql_output_columns = f'select * from {table_name} limit 0'
 
     with vertica_python.connect(**get_vertica_credentials()) as con:
         with con.cursor() as cur:
             try:
-                cur.execute(sql)
+                cur.execute(sql_limit0)
+                cur.execute(sql_wrapped)
             except Exception as e:
                 return {'error': str(e)}
             cur.execute(sql_query_metrics)
@@ -86,21 +111,6 @@ def execute_sql_and_collect_metrics(sql, table_name):
             result['output_columns'] = len(cur.description)
 
             return result
-
-
-TEST_SQL_TEMPLATE = '''
-create local temp table {file_name} on commit preserve rows as /*+direct*/ (
-    {sql}
-) order by {primary_subject} segmented by hash({primary_subject}) all nodes
-'''
-
-
-def prepare_test_sql(sql, file_name, primary_subject):
-    two_days_ago = date.today() - timedelta(days=3)
-    sql = TEST_SQL_TEMPLATE.format(sql=sql, file_name=file_name, primary_subject=primary_subject)
-    params = {'first_date': two_days_ago, 'last_date': two_days_ago}
-    sql = bind_sql_params(sql, **params)
-    return sql
 
 
 def parse_sql_filename(path):
@@ -121,7 +131,7 @@ def adjust_report(report: dict):
     return new_report
 
 
-def execute_file_and_collect_metrics(filepath, filename, primary_subject):
+def validate_sql_file(filepath, filename, primary_subject):
     if not primary_subject:
         return {'error': 'No config in `sources.yaml` found for this SQL'}
 
@@ -136,10 +146,8 @@ def execute_file_and_collect_metrics(filepath, filename, primary_subject):
     if n_statements != 1:
         return {'error': f'Number of statements must be exactly one'}
 
-    sql_prepared = prepare_test_sql(sql_raw, filename, primary_subject)
-
     print(f'\nExecuting: {filepath}')
-    report = execute_sql_and_collect_metrics(sql_prepared, filename)
+    report = execute_sql_and_collect_metrics(sql_raw, filename, primary_subject)
     if 'error' not in report:
         report = adjust_report(report)
     return report
@@ -186,7 +194,7 @@ def validate(filenames=None):
         filename = parse_sql_filename(path)
         primary_subject = sql_primary_subject_map.get(filename)
 
-        report = execute_file_and_collect_metrics(path, filename, primary_subject)
+        report = validate_sql_file(path, filename, primary_subject)
 
         if 'error' in report:
             print(f'\nFAILED: {path}')
