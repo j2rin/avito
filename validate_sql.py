@@ -153,7 +153,6 @@ def validate_sql_file(filepath, filename, primary_subject, limit0):
     if n_statements != 1:
         return {'error': f'Number of statements must be exactly one'}
 
-    print(f'EXECUTING: {filepath}')
     report = execute_sql_and_collect_metrics(sql_raw, filename, primary_subject, limit0)
     if 'error' not in report and not limit0:
         report = adjust_report(report)
@@ -209,9 +208,6 @@ def validate(filenames=None, limit0=False):
             success = False
             continue
 
-        if not limit0:
-            print(METRICS_REPORT_TEMPLATE.format(**report))
-
         exceed = get_exceed_metrics(report)
         if not exceed:
             print(f'PASSED: {path}')
@@ -221,6 +217,9 @@ def validate(filenames=None, limit0=False):
             for metric, value in exceed.items():
                 print(f'{metric}: {value}')
                 success = False
+
+        if not limit0:
+            print(METRICS_REPORT_TEMPLATE.format(**report))
 
     if success:
         print('SQL validation PASSED')
