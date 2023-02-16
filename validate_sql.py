@@ -84,7 +84,7 @@ def bind_default_sql_params(sql):
     return sql
 
 
-def execute_sql_and_collect_metrics(sql, table_name, primary_subject):
+def execute_sql_and_collect_metrics(sql, table_name, primary_subject, limit0):
     sql_bind = bind_default_sql_params(sql)
     sql_limit0 = f'select * from ({sql_bind}) _\nlimit 0'
     sql_wrapped = wrap_sql_into_table(sql_bind, table_name, primary_subject)
@@ -100,17 +100,22 @@ def execute_sql_and_collect_metrics(sql, table_name, primary_subject):
             try:
                 cur.execute(sql_limit0)
                 result['output_columns'] = len(cur.description)
+                if limit0:
+                    return result
+
                 cur.execute(sql_wrapped)
+
+                cur.execute(sql_query_metrics)
+                row = cur.fetchone()
+                columns = [col.name for col in cur.description]
+                result |= dict(zip(columns, row))
+
+                cur.execute(sql_output_rows)
+                output_rows = cur.fetchone()[0]
+                result['output_rows'] = output_rows
+
             except Exception as e:
                 return {'error': str(e)}
-            cur.execute(sql_query_metrics)
-            row = cur.fetchone()
-            columns = [col.name for col in cur.description]
-            result |= dict(zip(columns, row))
-
-            cur.execute(sql_output_rows)
-            output_rows = cur.fetchone()[0]
-            result['output_rows'] = output_rows
 
             return result
 
@@ -133,7 +138,7 @@ def adjust_report(report: dict):
     return new_report
 
 
-def validate_sql_file(filepath, filename, primary_subject):
+def validate_sql_file(filepath, filename, primary_subject, limit0):
     if not primary_subject:
         return {'error': 'No config in `sources.yaml` found for this SQL'}
 
@@ -149,8 +154,8 @@ def validate_sql_file(filepath, filename, primary_subject):
         return {'error': f'Number of statements must be exactly one'}
 
     print(f'EXECUTING: {filepath}')
-    report = execute_sql_and_collect_metrics(sql_raw, filename, primary_subject)
-    if 'error' not in report:
+    report = execute_sql_and_collect_metrics(sql_raw, filename, primary_subject, limit0)
+    if 'error' not in report and not limit0:
         report = adjust_report(report)
     return report
 
@@ -184,7 +189,7 @@ session_id: {session_id}
 '''
 
 
-def validate(filenames=None):
+def validate(filenames=None, limit0=False):
     if filenames:
         modified_files = [f'{SQL_DIR}{fn}.sql' for fn in filenames]
     else:
@@ -196,7 +201,7 @@ def validate(filenames=None):
         filename = parse_sql_filename(path)
         primary_subject = sql_primary_subject_map.get(filename)
 
-        report = validate_sql_file(path, filename, primary_subject)
+        report = validate_sql_file(path, filename, primary_subject, limit0)
 
         if 'error' in report:
             print(f'FAILED: {path}')
@@ -204,7 +209,8 @@ def validate(filenames=None):
             success = False
             continue
 
-        print(METRICS_REPORT_TEMPLATE.format(**report))
+        if not limit0:
+            print(METRICS_REPORT_TEMPLATE.format(**report))
 
         exceed = get_exceed_metrics(report)
         if not exceed:
@@ -223,9 +229,10 @@ def validate(filenames=None):
 
 
 @click.command()
-@click.option('--filename', '-fn', 'filenames', type=str, multiple=True)
-def main(filenames):
-    validate(filenames)
+@click.option('--filename', '-n', 'filenames', type=str, multiple=True)
+@click.option('--limit0', '-0', 'limit0', type=str, is_flag=True, default=False)
+def main(filenames, limit0):
+    validate(filenames, limit0)
 
 
 if __name__ == '__main__':
