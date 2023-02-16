@@ -190,7 +190,7 @@ seller_item_event:
 geo_loc_change:
   metric_configs: [geo_loc_change]
   database: vertica
-  table: dma.vo_geo_loc_change
+  sql: geo_loc_change
   column_map:
     cookie: cookie_id
     session: session_no
@@ -302,7 +302,6 @@ perf_mobile_memory_warnings:
 perf_web:
   metric_configs: [perf_web]
   database: vertica
-  table: dma.o_perf_web
   sql: perf_web
   column_map:
     cookie: cookie_id
@@ -798,7 +797,7 @@ seller_item_add_finish:
 support_ticket:
   metric_configs: [support_ticket]
   database: vertica
-  table: dma.vo_support_ticket
+  sql: support_ticket
   dimensions: [logical_category, vertical, region, city, user_segment_market, is_asd]
   participant: {user: user_id}
   primary_subject: user
@@ -1007,7 +1006,7 @@ autoteka_stream:
 geo_coordinates_stream:
   metric_configs: [geo_coordinates_stream]
   database: vertica
-  table: dma.vo_coordinates_stream
+  sql: coordinates_stream
   column_map:
     cookie: cookie_id
   dimensions:
@@ -1024,7 +1023,7 @@ geo_coordinates_stream:
 geo_laas_backend:
   metric_configs: [geo_laas_backend]
   database: vertica
-  table: dma.vo_laas_stream
+  sql: laas_stream
   column_map:
     cookie: cookie_id
   dimensions:
@@ -1542,7 +1541,7 @@ autoteka_stream_autoteka_participant:
 reviews:
   metric_configs: [reviews]
   database: vertica
-  table: dma.vo_reviews
+  sql: reviews
   column_map:
     cookie: cookie_id
     user: user_id
@@ -1643,7 +1642,7 @@ verified_users:
 rating_stream:
   metric_configs: [rating_stream]
   database: vertica
-  table: dma.vo_rating_stream
+  sql: rating_stream
   column_map:
     cookie: cookie_id
     user: user_id
@@ -1660,7 +1659,7 @@ rating_stream:
 rating_search_stream:
   metric_configs: [rating_search_stream]
   database: vertica
-  table: dma.vo_rating_search_stream
+  sql: rating_search_stream
   column_map:
     cookie: cookie_id
     user: user_id
@@ -1778,7 +1777,7 @@ user_cohort:
   column_map:
     user_logcat: [user_id, logical_category_id]
   database: vertica
-  table: dma.vo_user_cohort
+  sql: user_cohort
   dimensions: [vertical, logical_category, region, city, category, subcategory]
   m42_cartesian_groups:
     - [vertical, logical_category]
@@ -1789,7 +1788,7 @@ user_cohort:
 autoteka_funnel:
   metric_configs: [autoteka_funnel]
   database: vertica
-  table: dma.v_autoteka_funnel_main
+  sql: autoteka_funnel_main
   dimensions: [platform, is_pro, is_main_page_session, searchtype, is_session_to_exclude]
   participant: {autoteka_visitor: autoteka_cookie_id}
   primary_subject: autoteka_visitor
@@ -2106,7 +2105,7 @@ performance_fps:
 sphinx_cputime:
   metric_configs: [sphinx_cputime]
   database: vertica
-  table: dma.vo_sphinx_cpu
+  sql: sphinx_cpu
   column_map:
     cookie: cookie_id
   dimensions:
@@ -2429,7 +2428,7 @@ perf_clickstream_counters:
 chatbot_chats_delete:
   metric_configs: [chatbot_chats_delete]
   database: vertica
-  table: dma.vo_chatbot_chats_delete
+  sql: chatbot_chats_delete
   column_map:
     user: user_id
   participant: {user: user_id}
