@@ -114,23 +114,6 @@ metric.counter:
   show_shortcuts_widget:                                {filter: [eid: 4920, from_page: 'shortcuts_widget'], obs: [event_count]}
   click_shortcuts_widget:                               {filter: [eid: 4921, from_page: 'shortcuts_widget'], obs: [event_count]}
 
-  network_error:                                        {filter: [eid: 4599], obs: [event_count]}
-  network_api_error:                                    {filter: [eid: 4599, network_error_type: 'api error'], obs: [event_count]}
-  network_forbidden_error:                              {filter: [eid: 4599, network_error_type: 'forbidden'], obs: [event_count]}
-  network_unauthenticated_error:                        {filter: [eid: 4599, network_error_type: 'http unauthenticated'], obs: [event_count]}
-  network_image_load_error:                             {filter: [eid: 4599, network_error_type: ['image load error', '2. image error']], obs: [event_count]}
-  network_client_error:                                 {filter: [eid: 4599, network_error_type: ['network client error']], obs: [event_count]}
-  network_system_error:                                 {filter: [eid: 4599, network_error_type: 'network system error'], obs: [event_count]}
-
-  network_client_error2:                                {filter: [eid: 4599, network_error_type: '2. client error'], obs: [event_count]}
-  network_backend_error:                                {filter: [eid: 4599, network_error_type: '2. backend error'], obs: [event_count]}
-  network_network_error:                                {filter: [eid: 4599, network_error_type: '2. network error'], obs: [event_count]}
-  network_upload_error:                                 {filter: [eid: 4599, network_error_type: '2. upload error'], obs: [event_count]}
-
-  network_api_bad_request_error:                        {filter: [eid: 4599, network_error_type: 'network system error', network_error_sub_type: 'bad request'], obs: [event_count]}
-  network_client_parsing_error:                         {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'parsing failure'], obs: [event_count]}
-  network_client_no_session_error:                      {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'attempt to send authorized request with no session'], obs: [event_count]}
-
   total_item_on_delivery:                               {filter: [eid: 2703, is_delivery_available: True],  obs: [event_count]}
   total_item_off_delivery:                              {filter: [eid: 2703, is_delivery_available: False], obs: [event_count]}
   total_users_on_delivery:                              {filter: [eid: 2704, is_delivery_available: True],  obs: [event_count]}
@@ -160,6 +143,7 @@ metric.counter:
   cnt_competition_widget_shows_total:                   {filter: [eid: 6265]}
   cnt_competition_widget_shows_from_delivery_widgets:   {filter: [eid: 6265, source_click_page: 'delivery_widget']}
   cnt_competition_widget_shows_from_checkout:           {filter: [eid: 6265, source_click_page: 'checkout_cheaper']}
+
 
 metric.uniq:
   unq_geo_redirect_replace:          {counter: geo_redirect_replace,            key: [cookie]}
@@ -225,22 +209,6 @@ metric.uniq:
   user_show_shortcuts_widget:        {counter: show_shortcuts_widget,                 key: [cookie]}
   user_click_shortcuts_widget:       {counter: click_shortcuts_widget,                key: [cookie]}
 
-  user_network_error:                                        {counter: network_error,           key: [cookie]}
-  user_network_api_error:                                    {counter: network_api_error,           key: [cookie]}
-  user_network_forbidden_error:                              {counter: network_forbidden_error,           key: [cookie]}
-  user_network_unauthenticated_error:                        {counter: network_unauthenticated_error,           key: [cookie]}
-  user_network_image_load_error:                             {counter: network_image_load_error,           key: [cookie]}
-  user_network_client_error:                                 {counter: network_client_error,           key: [cookie]}
-  user_network_system_error:                                 {counter: network_system_error,           key: [cookie]}
-  user_network_api_bad_request_error:                        {counter: network_api_bad_request_error,           key: [cookie]}
-  user_network_client_parsing_error:                         {counter: network_client_parsing_error,           key: [cookie]}
-  user_network_client_no_session_error:                      {counter: network_client_no_session_error,           key: [cookie]}
-
-  user_network_client_error2:                                {counter: network_client_error2,           key: [cookie]}
-  user_network_backend_error:                                {counter: network_backend_error,           key: [cookie]}
-  user_network_network_error:                                {counter: network_network_error,           key: [cookie]}
-  user_network_upload_error:                                 {counter: network_upload_error,           key: [cookie]}
-
   item_on_delivery:                 {counter: total_item_on_delivery,           key: [item_id]}
   item_off_delivery:                {counter: total_item_off_delivery,          key: [item_id]}
   users_on_delivery:                {counter: total_users_on_delivery,          key: [item_id]}
@@ -294,7 +262,7 @@ metric.ratio:
   teleport_suggest_ctr_disable:              {num: teleport_suggest_disabled,                den: teleport_suggest}
   typo_replace_ctr_disable:                  {num: typo_disabled,                            den: typo_replace}
   typo_suggest_ctr_disable:                  {num: typo_suggest_disabled,                    den: typo_suggest}
-  ctr_click_banner_mygarage:                 {num: click_banner_mygarage,                    den: show_banner_mygarage, m42: False}
+  ctr_click_banner_mygarage:                 {num: click_banner_mygarage,                    den: show_banner_mygarage}
   ext_profile_on_off_ratio:                  {num: ext_profile_on,                           den: ext_profile_off}
   icebreaker_click_per_show:                 {num: icebreakers_message_template_clicks, den: icebreakers_message_template_shows}
   icebreaker_messenger_click_per_show:       {num: icebreakers_message_template_clicks_msg, den: icebreakers_message_template_shows_msg}

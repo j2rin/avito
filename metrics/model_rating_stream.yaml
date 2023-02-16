@@ -1,17 +1,36 @@
 metric.counter:
 
-  item_views_on_model_rating:                {filter: [{rating.in: [1,2,3,4,5]}],  obs: [item_views], m42: True}
-  item_views_wo_model_rating:                {filter: [{rating.!in: [1,2,3,4,5]}], obs: [item_views], m42: True}
-  item_views_on_model_rating_1:              {filter: [{rating.=: 1}],             obs: [item_views], m42: True}
-  item_views_on_model_rating_2:              {filter: [{rating.=: 2}],             obs: [item_views], m42: True}
-  item_views_on_model_rating_3:              {filter: [{rating.=: 3}],             obs: [item_views], m42: True}
-  item_views_on_model_rating_4:              {filter: [{rating.=: 4}],             obs: [item_views], m42: True}
-  item_views_on_model_rating_5:              {filter: [{rating.=: 5}],             obs: [item_views], m42: True}
-  contacts_on_model_rating:                  {filter: [{rating.in: [1,2,3,4,5]}],  obs: [contacts], m42: True}
-  contacts_wo_model_rating:                  {filter: [{rating.!in: [1,2,3,4,5]}], obs: [contacts], m42: True}
-  contacts_on_model_rating_1:                {filter: [{rating.=: 1}],             obs: [contacts], m42: True}
-  contacts_on_model_rating_2:                {filter: [{rating.=: 2}],             obs: [contacts], m42: True}
-  contacts_on_model_rating_3:                {filter: [{rating.=: 3}],             obs: [contacts], m42: True}
-  contacts_on_model_rating_4:                {filter: [{rating.=: 4}],             obs: [contacts], m42: True}
-  contacts_on_model_rating_5:                {filter: [{rating.=: 5}],             obs: [contacts], m42: True}
+  item_views_on_model_rating:                {filter: [{rating.in: [1,2,3,4,5]}],  obs: [item_views]}
+  item_views_wo_model_rating:                {filter: [{rating.!in: [1,2,3,4,5]}], obs: [item_views]}
+  item_views_on_model_rating_1:              {filter: [{rating.=: 1}],             obs: [item_views]}
+  item_views_on_model_rating_2:              {filter: [{rating.=: 2}],             obs: [item_views]}
+  item_views_on_model_rating_3:              {filter: [{rating.=: 3}],             obs: [item_views]}
+  item_views_on_model_rating_4:              {filter: [{rating.=: 4}],             obs: [item_views]}
+  item_views_on_model_rating_5:              {filter: [{rating.=: 5}],             obs: [item_views]}
+  contacts_on_model_rating:                  {filter: [{rating.in: [1,2,3,4,5]}],  obs: [contacts]}
+  contacts_wo_model_rating:                  {filter: [{rating.!in: [1,2,3,4,5]}], obs: [contacts]}
+  contacts_on_model_rating_1:                {filter: [{rating.=: 1}],             obs: [contacts]}
+  contacts_on_model_rating_2:                {filter: [{rating.=: 2}],             obs: [contacts]}
+  contacts_on_model_rating_3:                {filter: [{rating.=: 3}],             obs: [contacts]}
+  contacts_on_model_rating_4:                {filter: [{rating.=: 4}],             obs: [contacts]}
+  contacts_on_model_rating_5:                {filter: [{rating.=: 5}],             obs: [contacts]}
 
+
+metric.uniq:
+  
+  buyers_on_model_rating:                    {counter: contacts_on_model_rating,          key: [cookie]}
+  buyers_on_model_rating_1:                  {counter: contacts_on_model_rating_1,        key: [cookie]}
+  buyers_on_model_rating_2:                  {counter: contacts_on_model_rating_2,        key: [cookie]}
+  buyers_on_model_rating_3:                  {counter: contacts_on_model_rating_3,        key: [cookie]}
+  buyers_on_model_rating_4:                  {counter: contacts_on_model_rating_4,        key: [cookie]}
+  buyers_on_model_rating_5:                  {counter: contacts_on_model_rating_5,        key: [cookie]}
+
+
+metric.ratio:
+  
+  contacts_per_item_view_on_model_rating:        {num: contacts_on_model_rating,              den: item_views_on_model_rating,        }
+  contacts_per_item_view_on_model_rating_1:      {num: contacts_on_model_rating_1,            den: item_views_on_model_rating_1,      }
+  contacts_per_item_view_on_model_rating_2:      {num: contacts_on_model_rating_2,            den: item_views_on_model_rating_2,      }
+  contacts_per_item_view_on_model_rating_3:      {num: contacts_on_model_rating_3,            den: item_views_on_model_rating_3,      }
+  contacts_per_item_view_on_model_rating_4:      {num: contacts_on_model_rating_4,            den: item_views_on_model_rating_4,      }
+  contacts_per_item_view_on_model_rating_5:      {num: contacts_on_model_rating_5,            den: item_views_on_model_rating_5,      }

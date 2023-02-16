@@ -1,13 +1,15 @@
 definitions:
 
-  - &is_prob050            {sum_probability.>=: 0.50}
+  - &is_target_chat        {is_target_chat.=: 1}
   - &is_prob035            {sum_probability.>=: 0.35}
-  - &is_lead_class         {class.in: [0.5, 0.75, 1.0]}
+  - &is_lead_class         {class.in: [3, 4, 5]}
+
 
 metric.counter:
-    target_contact_chat_inbox:                           {filter: [*is_prob050]}
+    target_contact_chat_inbox:                           {filter: [*is_target_chat]}
     target_contact_chat_prob35_inbox:                    {filter: [*is_prob035]}
     target_contact_chat_class_inbox:                     {filter: [*is_lead_class]}
+
 
 metric.uniq: 
   user_target_contact_chat_inbox:                        {counter: target_contact_chat_inbox,            key: [user]}

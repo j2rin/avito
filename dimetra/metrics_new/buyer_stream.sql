@@ -37,13 +37,6 @@ select
        when (item_vas_flags & (1 << 16) > 0 or item_vas_flags & (1 << 17) > 0) then 10
        else 1
     end                                                          as vas_power,
-case
-        when (item_flags & (1 << 18) > 0) then 5 -- Новое
-        when (item_flags & (1 << 19) > 0) then 1 -- Б/у
-        when (item_flags & (1 << 20) > 0) then 2 -- Битый
-        when (item_flags & (1 << 21) > 0) then 4 -- Не битый
-        else 0 --Undefined
-    end                                                          as condition_id,
     0 as search_features,
     3 AS multiplier_3,
     5 AS multiplier_5,

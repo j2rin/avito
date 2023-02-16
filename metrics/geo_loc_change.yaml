@@ -13,14 +13,14 @@ definitions:
 
 
 metric.counter:
-  cnt_location_dialogue_savings_radius:    {filter: [{open_from: radius}, *is_close, *saved], obs: [events_count], m42: False}
-  cnt_location_dialogue_savings_s:         {filter: [{open_from: search}, *is_close, *saved], obs: [events_count], m42: False}
-  cnt_tooltip_accepts_city:                {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_accepts_region:              {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_accepts_russia:              {filter: [{location_level_id: 1}, {tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_not_accepts_city:            {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_not_accepts_region:          {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count], m42: False}
-  cnt_tooltip_not_accepts_russia:          {filter: [{location_level_id: 1}, {tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count], m42: False}
+  cnt_location_dialogue_savings_radius:    {filter: [{open_from: radius}, *is_close, *saved], obs: [events_count]}
+  cnt_location_dialogue_savings_s:         {filter: [{open_from: search}, *is_close, *saved], obs: [events_count]}
+  cnt_tooltip_accepts_city:                {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count]}
+  cnt_tooltip_accepts_region:              {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count]}
+  cnt_tooltip_accepts_russia:              {filter: [{location_level_id: 1}, {tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count]}
+  cnt_tooltip_not_accepts_city:            {filter: [{location_level_id: [4, 5, 6]}, {tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count]}
+  cnt_tooltip_not_accepts_region:          {filter: [{location_level_id: [2, 3]}, {tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count]}
+  cnt_tooltip_not_accepts_russia:          {filter: [{location_level_id: 1}, {tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count]}
   default_loc_tooltip_accepts:             {filter: [{tooltip_close_type: accept}, *is_tooltip_close], obs: [events_count]}
   default_loc_tooltip_declines:            {filter: [{tooltip_close_type: not accept}, *is_tooltip_close], obs: [events_count]}
   default_loc_tooltip_shows:               {filter: [*is_tooltip_open], obs: [events_count]}
@@ -91,7 +91,7 @@ metric.counter:
   loc_window_opens_radius:                 {filter: [{open_from: radius}, *is_open], obs: [events_count]}
   loc_window_opens_search:                 {filter: [{open_from: search}, *is_open], obs: [events_count]}
   loc_window_savings:                      {filter: [*is_close, *saved], obs: [events_count]}
-  loc_window_time_span:                    {filter: [*is_close, {time_span.>: 0}], obs: [time_span], m42: False}
+  loc_window_time_span:                    {filter: [*is_close, {time_span.>: 0}], obs: [time_span]}
 
 metric.uniq:
   default_loc_tooltip_accepts_city:        {counter: cnt_tooltip_accepts_city,        key: [cookie]}
@@ -100,15 +100,15 @@ metric.uniq:
   default_loc_tooltip_declines_city:       {counter: cnt_tooltip_not_accepts_city,    key: [cookie]}
   default_loc_tooltip_declines_region:     {counter: cnt_tooltip_not_accepts_region,  key: [cookie]}
   default_loc_tooltip_declines_russia:     {counter: cnt_tooltip_not_accepts_russia,  key: [cookie]}
-  unq_laas_tooltip_accepts:                {counter: laas_accepts,                    key: [cookie], m42: False}
-  unq_laas_tooltip_accepts_change:         {counter: laas_accepts_change,             key: [cookie], m42: False}
-  unq_laas_tooltip_accepts_change_declines: {counter: laas_answers_change,             key: [cookie], m42: False}
-  unq_laas_tooltip_accepts_declines:       {counter: laas_answers,                    key: [cookie], m42: False}
-  unq_laas_tooltip_accepts_regular:        {counter: laas_accepts_regular,            key: [cookie], m42: False}
-  unq_laas_tooltip_accepts_regular_declines: {counter: laas_answers_regular,            key: [cookie], m42: False}
-  unq_laas_tooltip_shows:                  {counter: laas_shows,                      key: [cookie], m42: False}
-  unq_laas_tooltip_shows_change:           {counter: laas_shows_change,               key: [cookie], m42: False}
-  unq_laas_tooltip_shows_regular:          {counter: laas_shows_regular,              key: [cookie], m42: False}
+  unq_laas_tooltip_accepts:                {counter: laas_accepts,                    key: [cookie]}
+  unq_laas_tooltip_accepts_change:         {counter: laas_accepts_change,             key: [cookie]}
+  unq_laas_tooltip_accepts_change_declines: {counter: laas_answers_change,             key: [cookie]}
+  unq_laas_tooltip_accepts_declines:       {counter: laas_answers,                    key: [cookie]}
+  unq_laas_tooltip_accepts_regular:        {counter: laas_accepts_regular,            key: [cookie]}
+  unq_laas_tooltip_accepts_regular_declines: {counter: laas_answers_regular,            key: [cookie]}
+  unq_laas_tooltip_shows:                  {counter: laas_shows,                      key: [cookie]}
+  unq_laas_tooltip_shows_change:           {counter: laas_shows_change,               key: [cookie]}
+  unq_laas_tooltip_shows_regular:          {counter: laas_shows_regular,              key: [cookie]}
   users_default_loc_tooltip:               {counter: default_loc_tooltip_shows,       key: [cookie]}
   users_default_loc_tooltip_accepts:       {counter: default_loc_tooltip_accepts,     key: [cookie]}
   users_default_loc_tooltip_declines:      {counter: default_loc_tooltip_declines,    key: [cookie]}

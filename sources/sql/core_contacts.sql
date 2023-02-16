@@ -25,7 +25,8 @@ select /*+syntactic_join*/
     lc.logical_category,
     cm.param1_microcat_id as param1_id,
     nvl(acd.is_asd, False)                                      as is_asd,
-    acd.user_group_id                                           as asd_user_group_id,
+    -- По дефолту ставим SS сегмент - 8383
+    nvl(acd.user_group_id ,8383)                             as asd_user_group_id,
     decode(
         csc.eventdate::date,
         bb.first_contact_event_date::date,true,false)           as is_buyer_new,

@@ -6,19 +6,15 @@
 
 Внезапно этот же скрипт используется для отправки пресетов и конфига из CI в конфигуратор.
 """
-from __future__ import unicode_literals
 
 import io
 import json
 import os
 import sys
+from http import client as httplib
 from time import sleep
 
-try:
-    from http import client as httplib  # python 3
-except ImportError:
-    import httplib  # python 2
-
+from validate_sql import validate as validate_sql
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
@@ -39,12 +35,15 @@ CONFIGS = [
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
     ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
     ('metrics_lists', os.path.join(CUR_DIR_PATH, 'presets/metrics'), True),
-    ('m42_cartesian_groups', os.path.join(CUR_DIR_PATH, 'config/m42_cartesian_groups.yaml'), False),
-    ('m42_subscriptions', os.path.join(CUR_DIR_PATH, 'config/metrics_subscriptions.yaml'), False),
+    (
+        'm42_cartesian_groups',
+        os.path.join(CUR_DIR_PATH, 'config/m42_cartesian_groups.yaml'),
+        False,
+    ),
 ]
 
 
-def validate():
+def validate_configs():
     result, file_name_maps = send_all(VALIDATE_URL)
 
     if 'errors' in result:
@@ -66,25 +65,43 @@ def validate():
             if failed:
                 failed_configs.setdefault(config_name, []).append(file_name)
 
-    if not failed_configs:
-        if result['success']:
-            print('\nAll PASSED')
-            return True
+    success = result['success']
 
+    if success:
+        print('\nYAML validation PASSED')
+    elif not failed_configs:
         print('unknown error')
-        return False
+    else:
+        for preset_type, names in failed_configs.items():
+            print('\nFAILED {}: {}'.format(preset_type, ', '.join(sorted(names))))
 
-    for preset_type, names in failed_configs.items():
-        print('\nFAILED {}: {}'.format(preset_type, ', '.join(sorted(names))))
-    return False
+    return success
+
+
+def validate():
+
+    try:
+        success = validate_configs()
+
+        if success:
+            success = validate_sql()
+
+    except Exception as e:
+        success = False
+        print(e)
+
+    if success:
+        print('\nValidation PASSED')
+        exit(0)
+    else:
+        print('\nValidation FAILED')
+        exit(1)
 
 
 def process():
     result, _ = send_all(PROCESS_URL)
     del result['success']
-    print(
-        json.dumps(result, indent=4)
-    )
+    print(json.dumps(result, indent=4))
 
 
 def publish():
@@ -208,13 +225,9 @@ def read_yamls(dir_path):
 def get_errors(result, file_name):
     def marks_to_str(file_name, data, marks_attribute):
         return u'\n'.join(
-            u'{}:{} {}'.format(
-                file_name,
-                m['line'],
-                m['message']
-            )
-            for m in data[marks_attribute]
+            u'{}:{} {}'.format(file_name, m['line'], m['message']) for m in data[marks_attribute]
         )
+
     if not result.get('success'):
         return False, (
             marks_to_str(file_name, result, 'error_marks')
@@ -246,7 +259,7 @@ if __name__ == '__main__':
             PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
             PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
 
-            os.environ["API_KEY"] = 'api_key'
+            os.environ['API_KEY'] = 'api_key'
 
             publish()
             exit(0)
@@ -262,7 +275,4 @@ if __name__ == '__main__':
             print('Unknown argument')
             exit(1)
 
-    success = validate()
-
-    if not success:
-        exit(1)
+    validate()

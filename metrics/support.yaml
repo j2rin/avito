@@ -26,6 +26,10 @@ metric.counter:
   support_ticket_platform_fraud_nodes:             {obs: [ticket_platform_fraud_nodes]}
   support_ticket_platform_fraud_templates_nodes:   {obs: [ticket_platform_fraud_templates_nodes]}
   support_tickets_problem_changed:                 {obs: [tickets_problem_changed]}
+  support_call_ht:                                 {obs: [call_ht]}
+  support_calls_with_ht:                           {obs: [calls_with_ht]}
+  support_calls_abandoned:                         {obs: [calls_abandoned]}
+  support_calls_ivr:                               {obs: [calls_ivr]}
 # --- COMBINING TOTAL ---
   support_email_wizard_tickets_created:    {obs: [ticket_email_created, ticket_wizard_created]}
   support_ticket_chat_platform:            {obs: [ticket_wizard_created, chats_created]}
@@ -36,7 +40,7 @@ metric.counter:
   support_chats_reviews:                   {obs: [chats_reviews]}
   support_flow_reviews:                    {obs: [ticket_reviews, ticket_call_reviews, chats_reviews]}
 # --- EXTRA INFO ---
-  cnt_tickets_problem_changed:             {obs: [tickets_problem_changed], m42: False}
+  cnt_tickets_problem_changed:             {obs: [tickets_problem_changed]}
 # --- Anonymous Number and Calltracking --- 
   support_flow_anonnumber_templates:         {obs: [ticket_anonnumber_templates, call_anonnumber_nodes, chat_anonnumber_templates]}
   support_flow_anonnumber_nodes:             {obs: [ticket_anonnumber_nodes, call_anonnumber_nodes, chat_anonnumber_nodes]}
@@ -47,6 +51,8 @@ metric.counter:
   support_ticket_csat_scores:                {obs: [ticket_csat_scores]}
   support_chat_satisfaction_scores:          {obs: [chat_satisfaction_scores]}
   support_chat_csat_scores:                  {obs: [chat_csat_scores]}
+  support_call_satisfaction_scores:          {obs: [call_satisfaction_scores]}
+  support_call_csat_scores:                  {obs: [call_csat_scores]}
 
 metric.uniq:
   support_contacters:                        {counter: support_total_flow,   key: [participant]}
@@ -64,3 +70,6 @@ metric.ratio:
   support_automation_rate:                  {num: support_automated, den: support_total_flow}
   support_chat_automation_rate:             {num: support_chats_automated, den: support_chats_created}
   support_ticket_automation_rate:           {num: support_tickets_automated, den: support_email_wizard_tickets_created}
+  support_call_aht:                         {num: support_call_ht, den: support_calls_with_ht}
+  support_call_csat:                        {num: support_call_csat_scores, den: support_call_satisfaction_scores}
+  support_call_abandon_rate:                {num: support_calls_abandoned, den: support_calls_ivr}

@@ -5,4 +5,5 @@ select
     t.last_activation_time::date                             as last_activation_date,
     *
 from DMA.o_seller_item_event t
+participant_columns(user_id)
 ;
