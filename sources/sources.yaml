@@ -260,7 +260,7 @@ perf_mobile:
 perf_content_sli:
   metric_configs: [perf_content_sli]
   database: vertica
-  table: dma.performance_requests_sli
+  sql: performance_requests_sli
   dimensions: [platform]
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
@@ -270,7 +270,7 @@ perf_content_sli:
 perf_resources:
   metric_configs: [perf_resources]
   database: vertica
-  table: dma.performance_resources_web
+  sql: perf_resources
   dimensions: [platform, screen_name]
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
@@ -290,7 +290,7 @@ perf_mobile_apps_startup_times:
 perf_mobile_memory_warnings:
   metric_configs: [perf_mobile_memory_warnings]
   database: vertica
-  table: dma.o_perf_memory_warnings
+  sql: perf_memory_warnings
   column_map:
     cookie: cookie_id
   dimensions: [platform, screen_name]
@@ -303,6 +303,7 @@ perf_web:
   metric_configs: [perf_web]
   database: vertica
   table: dma.o_perf_web
+  sql: perf_web
   column_map:
     cookie: cookie_id
   dimensions: [platform, network_type, screen_name, stage_name]
@@ -431,7 +432,7 @@ mnz_vas:
 labor:
   metric_configs: [labor]
   database: vertica
-  table: dma.vo_labor
+  sql: labor
   column_map:
     cookie: cookie_id
     session: session_no
@@ -780,7 +781,7 @@ seller_item_add:
 seller_item_add_finish:
   metric_configs: [seller_item_add_finish]
   database: vertica
-  table: dma.vo_seller_item_add
+  sql: seller_item_add
   column_map:
     cookie: cookie_id
     user: user_id
@@ -864,7 +865,7 @@ seller_matched_call:
 notification:
   metric_configs: [notification]
   database: vertica
-  table: dma.vo_notification
+  sql: notification
   column_map:
     cookie: cookie_id
     participant: participant_id
@@ -1416,7 +1417,7 @@ messenger_inbox_messages:
 messenger_messages:
   metric_configs: [messenger_messages]
   database: vertica
-  table: dma.vo_messenger_messages
+  sql: messenger_messages
   column_map:
     user: user_id
     message: message_id
@@ -1486,7 +1487,7 @@ credit_broker_revenue:
 classified_revenue:
   metric_configs: [classified_revenue]
   database: vertica
-  table: dma.v_paying_user_report_full
+  sql: classified_revenue
   column_map:
     user: user_id
   dimensions: [vertical, logical_category, logical_param1, logical_param2, location, region, city, location_group, location_level, is_asd, user_segment_market, condition, asd_user_group]
@@ -2092,7 +2093,7 @@ gmv_deals_proxy:
 performance_fps:
   metric_configs: [performance_fps]
   database: vertica
-  table: dma.performance_fps
+  sql: performance_fps
   column_map:
     cookie: cookie_id
   dimensions:
@@ -2168,7 +2169,7 @@ perf_video_metrics:
 perf_queried_hosts_durations:
   metric_configs: [perf_queried_hosts_durations]
   database: vertica
-  table: dma.perf_queried_hosts_durations
+  sql: perf_queried_hosts_durations
   column_map:
     cookie: cookie_id
     user: user_id
@@ -2354,7 +2355,7 @@ sbc_answered_inbox_special_offers:
 perf_screen_memory_consumption:
   metric_configs: [perf_screen_memory_consumption]
   database: vertica
-  table: dma.perf_screen_memory_consumption
+  sql: perf_screen_memory_consumption
   column_map:
     cookie: cookie_id
     user: user_id

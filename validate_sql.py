@@ -64,7 +64,11 @@ def is_sql_file(filepath):
 
 TEST_SQL_TEMPLATE = '''
 create local temp table {table_name} on commit preserve rows as /*+direct*/ (
-    {sql}
+select *
+from (
+{sql}
+) _
+where {subject} is not null
 ) order by {subject} segmented by hash({subject}) all nodes
 '''
 
