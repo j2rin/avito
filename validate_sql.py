@@ -64,7 +64,7 @@ def is_sql_file(filepath):
 
 TEST_SQL_TEMPLATE = '''
 create local temp table {table_name} on commit preserve rows as /*+direct*/ (
-select *
+select /*+syntactic_join*/ *
 from (
 {sql}
 ) _
