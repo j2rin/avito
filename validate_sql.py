@@ -211,9 +211,11 @@ def validate(filenames=None, limit0=False, n_days=1):
         modified_files = filter(is_sql_file, list_modified_files())
 
     success = True
+    do_validate = SQLFileValidator(limit0, n_days).validate
+
     for path in modified_files:
 
-        report = SQLFileValidator(limit0, n_days).validate(path)
+        report = do_validate(path)
 
         if 'error' in report:
             print(f'FAILED: {path}')
