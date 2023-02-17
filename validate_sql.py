@@ -63,13 +63,6 @@ def list_modified_files():
     return result
 
 
-def bind_date_period(sql):
-    two_days_ago = date.today() - timedelta(days=3)
-    params = {'first_date': two_days_ago, 'last_date': two_days_ago}
-    sql = bind_sql_params(sql, **params)
-    return sql
-
-
 class SQLFileValidator:
     def __init__(self, limit0, n_days=1):
         self.limit0 = limit0
