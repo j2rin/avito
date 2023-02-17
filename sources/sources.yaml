@@ -1192,7 +1192,7 @@ search_items:
 production_errors:
   metric_configs: [production_errors]
   database: vertica
-  table: dma.vo_production_errors
+  sql: production_errors
   column_map:
     cookie: cookie_id
   dimensions:
@@ -1907,7 +1907,7 @@ re_nd_buyer_stream:
 autoteka_new_buyer_expected_revenue_ap:
   metric_configs: [autoteka_new_buyer_expected_revenue_ap]
   database: vertica
-  table: dma.v_autoteka_new_buyers_expected_revenue
+  sql: autoteka_new_buyers_expected_revenue
   dimensions:  [platform, searchtype]
   participant: { autoteka_visitor: autoteka_cookie_id, autoteka_user: autotekauser_Id }
   primary_subject: autoteka_visitor
@@ -1916,7 +1916,7 @@ autoteka_new_buyer_expected_revenue_ap:
 autoteka_new_buyer_expected_revenue:
  metric_configs: [autoteka_new_buyer_expected_revenue]
  database: vertica
- table: dma.v_autoteka_new_buyers_expected_revenue
+ sql: autoteka_new_buyers_expected_revenue
  dimensions:  [platform, searchtype]
  participant: { visitor: cookie_id, user: user_id }
  primary_subject: visitor
@@ -2206,7 +2206,7 @@ short_rent_item_trx:
 deal_confirmed:
   metric_configs: [deal_confirmed]
   database: vertica
-  table: dma.vo_confirmed_deals
+  sql: confirmed_deals
   column_map:
     item: item_id
     user: user_id
@@ -2289,7 +2289,7 @@ target_call_sx:
 sbc_special_offers:
   metric_configs: [sbc_special_offers]
   database: vertica
-  table: dma.vo_seller_buyer_communication
+  sql: seller_buyer_communication
   column_map:
     user: user_id
     platform_id: platform_id
@@ -2306,7 +2306,7 @@ sbc_special_offers:
 sbc_answered_special_offers:
   metric_configs: [sbc_answered_special_offers]
   database: vertica
-  table: dma.vo_seller_buyer_communication
+  sql: seller_buyer_communication
   column_map:
     user: user_id
   dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, is_asd, user_segment_market]
@@ -2322,7 +2322,7 @@ sbc_answered_special_offers:
 sbc_inbox_special_offers:
   metric_configs: [sbc_inbox_special_offers]
   database: vertica
-  table: dma.vo_seller_buyer_communication
+  sql: seller_buyer_communication
   column_map:
     user: buyer_id
   dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4]
@@ -2338,7 +2338,7 @@ sbc_inbox_special_offers:
 sbc_answered_inbox_special_offers:
   metric_configs: [sbc_answered_inbox_special_offers]
   database: vertica
-  table: dma.vo_seller_buyer_communication
+  sql: seller_buyer_communication
   column_map:
     user: buyer_id
     platform_id: answer_platform
