@@ -79,13 +79,8 @@ left join /*+jtype(h),distrib(l,r)*/ (
     where usm.to_date >= :first_date::date
 ) usm
     on  c.user_id = usm.user_id
-    and c.event_date::date >= from_date and c.event_date::date < to_date
+    and c.event_date::date >= usm.from_date and c.event_date::date < usm.to_date
     and lc.logical_category_id = usm.logical_category_id
-
--- left join dma.user_segment_market usm
--- 	on usm.user_id = c.user_id
--- 	and usm.logical_category_id = lc.logical_category_id
---  and c.event_date interpolate previous value usm.converting_date
 
 left join dict.segmentation_ranks ls
     on ls.logical_category_id = lc.logical_category_id
