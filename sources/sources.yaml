@@ -280,7 +280,7 @@ perf_resources:
 perf_mobile_apps_startup_times:
   metric_configs: [perf_mobile_apps_startup_times]
   database: vertica
-  table: dma.o_perf_mobile_apps_startup_times
+  sql: perf_mobile_apps_startup_times
   dimensions: [platform]
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
@@ -361,7 +361,7 @@ mnz_bundle:
 user_rating:
   metric_configs: [user_rating]
   database: vertica
-  table: dma.vo_user_rating
+  sql: user_rating
   dimensions: [vertical, logical_category]
   m42_cartesian_groups:
     - [vertical, logical_category]
@@ -373,7 +373,7 @@ user_rating:
 str:
   metric_configs: [str]
   database: vertica
-  table: dma.vo_str
+  sql: str
   column_map:
     user: user_id
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
@@ -388,7 +388,7 @@ str:
 str_by_cookies:
   metric_configs: [str_by_cookies]
   database: vertica
-  table: dma.vo_str
+  sql: str
   column_map:
     participant: participant_id
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
@@ -403,7 +403,7 @@ str_by_cookies:
 public_profile:
   metric_configs: [public_profile]
   database: vertica
-  table: dma.vo_public_profile
+  sql: public_profile
   column_map:
     cookie: cookie_id
   dimensions: [platform]
@@ -448,7 +448,7 @@ labor:
 express_cv:
   metric_configs: [express_cv]
   database: vertica
-  table: dma.vo_express_cv
+  sql: express_cv
   dimensions: [platform]
   participant: {user: user_id}
   primary_subject: user
@@ -538,7 +538,7 @@ delivery_orders_seller:
 billing:
   metric_configs: [billing]
   database: vertica
-  table: dma.vo_billing
+  sql: billing
   column_map:
     user: user_id
   dimensions: [platform]
@@ -550,7 +550,7 @@ billing:
 session_source:
   metric_configs: [session_source]
   database: vertica
-  table: dma.vo_session_source
+  sql: session_source
   column_map:
     cookie: cookie_id
   dimensions:
@@ -579,7 +579,7 @@ session_source:
 support:
   metric_configs: [support]
   database: vertica
-  table: dma.vo_support
+  sql: support
   column_map:
     participant: participant_id
   dimensions: [platform]
@@ -603,7 +603,7 @@ support_hc:
 support_crosschannel:
   metric_configs: [support_crosschannel]
   database: vertica
-  table: dma.vo_support_crosschannel
+  sql: support_crosschannel
   column_map:
     participant: participant_id
   participant:  {visitor: cookie_id, user: user_id}
@@ -626,7 +626,7 @@ cookie_account_enter:
 favourite_sellers_totals:
   metric_configs: [favourite_sellers_totals]
   database: vertica
-  table: dma.favourite_sellers_totals
+  sql: favourite_sellers_totals
   column_map:
     user: user_id
   participant: {user: user_id}
@@ -682,7 +682,7 @@ image:
 buyer_suggest:
   metric_configs: [buyer_suggest]
   database: vertica
-  table: dma.vo_buyer_suggest
+  sql: buyer_suggest
   column_map:
     cookie: cookie_id
   dimensions:
@@ -697,7 +697,7 @@ buyer_suggest:
 buyer_shortcut:
   metric_configs: [buyer_shortcut]
   database: vertica
-  table: dma.o_buyer_shortcut
+  sql: buyer_shortcut
   column_map:
     cookie: cookie_id
   dimensions:
@@ -713,7 +713,7 @@ buyer_shortcut:
 buyer_filter:
   metric_configs: [buyer_filter]
   database: vertica
-  table: dma.o_buyer_filter
+  sql: buyer_filter
   column_map:
     cookie: cookie_id
   dimensions:
@@ -743,7 +743,7 @@ story_delay:
 weighted_buyer:
   metric_configs: [weighted_buyer]
   database: vertica
-  table: dma.vo_weighted_buyer_metric
+  sql: weighted_buyer_metric
   column_map:
     cookie: cookie_id
   dimensions:
@@ -807,7 +807,7 @@ support_ticket:
 geo_map_labor:
   metric_configs: [geo_map_labor]
   database: vertica
-  table: dma.vo_geo_map_labor
+  sql: geo_map_labor
   column_map:
     participant: participant_id
   dimensions:
@@ -876,7 +876,7 @@ notification:
 notification_availability:
   metric_configs: [notification_availability]
   database: vertica
-  table: dma.crm_notification_settings_by_user
+  sql: crm_notification_settings_by_user
   column_map:
     participant: user_id
   dimensions:
@@ -890,7 +890,7 @@ notification_availability:
 calltracking:
   metric_configs: [calltracking]
   database: vertica
-  table: dma.vo_calltracking
+  sql: calltracking
   column_map:
     user: user_id
   dimensions:
@@ -944,7 +944,7 @@ app_call_sx:
 app_call_event:
   metric_configs: [app_call_event]
   database: vertica
-  table: dma.vo_app_call_event
+  sql: app_call_event
   column_map:
     item: item_id
     cookie: cookie_id
@@ -979,7 +979,7 @@ app_call_seller_event:
 fraud_support_tickets:
   metric_configs: [fraud_support_tickets]
   database: vertica
-  table: dma.vo_fraud_support_tickets
+  sql: fraud_support_tickets
   column_map:
     cookie: cookie_id
   dimensions:
@@ -997,7 +997,7 @@ fraud_support_tickets:
 autoteka_stream:
   metric_configs: [autoteka_stream]
   database: vertica
-  table: dma.autoteka_stream
+  sql: autoteka_stream
   dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user, is_pro]
   participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
@@ -1040,7 +1040,7 @@ geo_laas_backend:
 moder:
   metric_configs: [moder]
   database: vertica
-  table: dma.vo_moder
+  sql: moder
   dimensions: [microcat]
   participant: {user: participant_id}
   primary_subject: user
@@ -1085,7 +1085,7 @@ listing_fees:
 tariff_transactions:
   metric_configs: [tariff_transactions]
   database: vertica
-  table: dma.vo_lf_metrics_transactions
+  sql: lf_metrics_transactions
   column_map:
     user: user_id
   dimensions:
@@ -1137,7 +1137,7 @@ tariff_funnel:
 support_comment:
   metric_configs: [support_comment]
   database: vertica
-  table: dma.vo_support_comment
+  sql: support_comment
   participant: {user: comment_id}
   primary_subject: user
   dtm: comment_create_date
@@ -1145,7 +1145,7 @@ support_comment:
 time_to_interview_for_job_seeker:
   metric_configs: [time_to_interview_for_job_seeker]
   database: vertica
-  table: dma.vo_time_to_interview
+  sql: time_to_interview
   column_map:
     user: job_seeker_user_id
   dimensions:
@@ -1158,7 +1158,7 @@ time_to_interview_for_job_seeker:
 time_to_interview_for_job_employer:
   metric_configs: [time_to_interview_for_job_employer]
   database: vertica
-  table: dma.vo_time_to_interview
+  sql: time_to_interview
   column_map:
     user: job_employer_user_id
   dimensions:
@@ -1204,7 +1204,7 @@ production_errors:
 geo_loc_suggest:
   metric_configs: [geo_loc_suggest]
   database: vertica
-  table: dma.vo_geo_loc_suggest
+  sql: geo_loc_suggest
   column_map:
     cookie: cookie_id
   dimensions:
@@ -1448,7 +1448,7 @@ messenger_active_chats:
 clickstream_antibot:
   metric_configs: [clickstream_antibot]
   database: vertica
-  table: dma.o_clickstream_antibot
+  sql: clickstream_antibot
   column_map:
       cookie: cookie_id
   dimensions: [platform, vertical, category, app_version]
@@ -1474,7 +1474,7 @@ credit_broker:
 credit_broker_revenue:
   metric_configs: [credit_broker_revenue]
   database: vertica
-  table: DMA.v_broker_events_revenue
+  sql: broker_events_revenue
   column_map:
     cookie: cookie_id
   dimensions: [platform, vertical, logical_category, location]
@@ -1500,7 +1500,7 @@ classified_revenue:
 other_projects_revenue:
   metric_configs: [other_projects_revenue]
   database: vertica
-  table: dma.vo_other_projects_revenue
+  sql: other_projects_revenue
   dimensions: [vertical]
   m42_cartesian_groups:
     - [vertical]
@@ -1522,7 +1522,7 @@ total_revenue:
 delivery_user_toggle:
   metric_configs: [delivery_user_toggle]
   database: vertica
-  table: dma.v_user_isDeliveryActive
+  sql: user_isDeliveryActive
   participant: {user: user_id}
   primary_subject: user
   dtm: event_date
@@ -1530,7 +1530,7 @@ delivery_user_toggle:
 autoteka_stream_autoteka_participant:
   metric_configs: [autoteka_stream_autoteka_participant]
   database: vertica
-  table: dma.autoteka_stream
+  sql: autoteka_stream
   column_map:
     platform_id: autoteka_platform_id
   dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user, is_pro]
@@ -1568,7 +1568,7 @@ lister_reactivations:
 buyer_items_distance:
   metric_configs: [buyers_items_distance]
   database: vertica
-  table: dma.vo_buyers_items_distance
+  sql: buyers_items_distance
   column_map:
     cookie: cookie_id
   dimensions:
@@ -1631,7 +1631,7 @@ chatbot_metrics_end:
 verified_users:
   metric_configs: [verified_users]
   database: vertica
-  table: dma.verification_statuses
+  sql: verification_statuses
   column_map:
     user: user_id
   participant: {user: user_id}
@@ -1753,7 +1753,7 @@ chatbot_events:
 autoload_package_info:
   metric_configs: [autoload_package_info]
   database: vertica
-  table: dma.autoload_feed_item_flow
+  sql: autoload_feed_item_flow
   column_map:
     user: user_id
     category: category_name
@@ -1877,7 +1877,7 @@ autoteka_reports_autoteka_participant:
 re_nd_buyer_stream:
   metric_configs: [re_nd_buyer_stream]
   database: vertica
-  table: dma.vo_re_nd_buyer_stream
+  sql: re_nd_buyer_stream
   column_map:
     item: item_id
     cookie: cookie_id
@@ -1925,7 +1925,7 @@ autoteka_new_buyer_expected_revenue:
 messenger_transitions:
  metric_configs: [messenger_transitions]
  database: vertica
- table: dma.vo_messenger_transitions
+ sql: messenger_transitions
  column_map:
    user: user_id
  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, is_asd, user_segment_market]
@@ -2034,7 +2034,7 @@ bs_first_click:
 first_position_click:
   metric_configs: [first_position_click]
   database: vertica
-  table: dma.first_position_click
+  sql: first_position_click
   column_map:
     cookie: cookie_id
   dimensions: [platform]
@@ -2061,7 +2061,7 @@ cpa_calls_metrics:
 new_pro_listers:
     metric_configs: [new_pro_listers]
     database: vertica
-    table: dma.new_pro_listers
+    sql: new_pro_listers
     column_map:
         user_logcat: [user_id, logical_category_id]
         user: user_id
@@ -2141,7 +2141,7 @@ action_returned:
 callback_calls:
   metric_configs: [callback_calls]
   database: vertica
-  table: dma.vo_recallme_calls
+  sql: recallme_calls
   column_map:
     cookie: cookie_id
   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
@@ -2155,7 +2155,7 @@ callback_calls:
 perf_video_metrics:
   metric_configs: [perf_video_metrics]
   database: vertica
-  table: dma.perf_video_metrics
+  sql: perf_video_metrics
   column_map:
     cookie: cookie_id
     user: user_id
@@ -2181,7 +2181,7 @@ perf_queried_hosts_durations:
 short_rent_item_trx:
   metric_configs: [short_rent_item_trx]
   database: vertica
-  table: dma.vo_short_rent_item_trx
+  sql: short_rent_item_trx
   column_map:
     item: item_id
     user: user_id
@@ -2229,7 +2229,7 @@ deal_confirmed:
 target_call_bx:
   metric_configs: [target_call_bx]
   database: vertica
-  table: dma.vo_target_call
+  sql: target_call
   column_map:
     cookie: buyer_cookie_id
     user: buyer_id
@@ -2259,7 +2259,7 @@ target_call_bx:
 target_call_sx:
   metric_configs: [target_call_sx]
   database: vertica
-  table: dma.vo_target_call
+  sql: target_call
   column_map:
     user: seller_id
   dimensions:
@@ -2378,7 +2378,7 @@ sx_jobs_candidates:
 messages_reply_percentiles:
   metric_configs: [messages_reply_percentiles]
   database: vertica
-  table: dma.vo_messages_reply_percentiles
+  sql: messages_reply_percentiles
   column_map:
     user: from_user_id
   dimensions: [vertical, logical_category, is_asd, platform, chat_role]
@@ -2391,7 +2391,7 @@ messages_reply_percentiles:
 reviews_stream:
   metric_configs: [reviews_stream]
   database: vertica
-  table: dma.reviews_stream
+  sql: reviews_stream
   column_map:
     cookie: cookie_id
     user: user_id
@@ -2404,7 +2404,7 @@ reviews_stream:
 qd_lots_create_date:
   metric_configs: [qd_lots_create_date]
   database: vertica
-  table: dma.vo_qd_lots
+  sql: qd_lots
   column_map:
     user: user_id
   dimensions: [platform, region, city, vertical, logical_category, category, subcategory, param1]
@@ -2450,7 +2450,7 @@ payment_page_trx:
 jobs_chatbot:
   metric_configs: [jobs_chatbot]
   database: vertica
-  table: dma.jobs_chatbot_metrics
+  sql: jobs_chatbot_metrics
   column_map:
     user: user_id
   participant: {user: user_id}
