@@ -3,7 +3,7 @@ import re
 from datetime import date, timedelta
 
 import click
-import vertica_python
+from vertica import get_query_columns, get_vertica_con
 from yaml_getters import get_sql_primary_subject_map
 
 from utils import bind_sql_params, get_missing_sql_params, split_statements
@@ -15,27 +15,6 @@ MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES')
 DURATION_SECONDS_LIMIT = 300
 REQUIRED_PARAMS = ['first_date', 'last_date']
 SQL_PRIMARY_SUBJECT_MAP = {}
-
-
-def get_vertica_credentials():
-    def get_from_env():
-        return {
-            'host': os.getenv('VERTICA_HOST', 'vertica-dwh'),
-            'port': os.getenv('VERTICA_PORT', '5433'),
-            'database': os.getenv('VERTICA_DATABASE', 'DWH'),
-            'user': os.getenv('VERTICA_USER', ''),
-            'password': os.getenv('VERTICA_PASSWORD', ''),
-        }
-
-    from_env = get_from_env()
-    if not from_env['user']:
-        # Если не нашлись креды, пробуем загрузить из файла `.env`
-        # Для удобства локального запуска
-        from dotenv import load_dotenv
-
-        load_dotenv()
-        return get_from_env()
-    return from_env
 
 
 def parse_sql_filename(path):
@@ -79,10 +58,8 @@ class SQLFileValidator:
 
     @staticmethod
     def _execute_limit0(con, sql):
-        sql_limit0 = f'select * from ({sql}) _\nlimit 0'
-        with con.cursor() as cur:
-            cur.execute(sql_limit0)
-            return {'output_columns': len(cur.description)}
+        columns = get_query_columns(con, sql)
+        return {'output_columns': len(columns)}
 
     @staticmethod
     def _execute_sql_and_collect_metrics(con, sql, table_name, subject):
@@ -143,7 +120,7 @@ where {subject} is not null
             if n_statements != 1:
                 return {'error': f'Number of statements must be exactly one'}
 
-            with vertica_python.connect(**get_vertica_credentials()) as con:
+            with get_vertica_con() as con:
                 report = self._execute_limit0(con, sql_bind)
                 if self.limit0:
                     return report
