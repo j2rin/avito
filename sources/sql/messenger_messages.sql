@@ -20,7 +20,7 @@ select
     end as is_chatbot_chat,
     case 
         when mm.from_user_id is null then null
-        when exists (select 1 from dma.current_user where isTest and user_id = mm.from_user_id) then true
+        when cut.user_id is not null then true
         else false 
     end as IsTest,
 	-- Dimensions -----------------------------------------------------------------------------------------------------
@@ -58,7 +58,12 @@ left join (
 		on mm.from_user_id = acd.user_id
 		and mm.event_date::date between acd.active_from_date and acd.active_to_date
 
-left join (
+left join /*distrib(l,a)*/ (
+    select user_id from dma.current_user where isTest
+) cut
+    on cut.user_id = mm.from_user_id
+
+left join /*distrib(l,a)*/ (
     select
         usm.user_id,
         usm.logical_category_id,
@@ -88,7 +93,7 @@ left join (
     and mm.event_date::date >= usm.from_date and mm.event_date::date < usm.to_date
     and cm.logical_category_id = usm.logical_category_id
 
-left join (
+left join /*distrib(l,a)*/ (
     select
         chat_id,
         start_flow_time,
