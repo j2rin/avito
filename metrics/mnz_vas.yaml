@@ -28,6 +28,7 @@ metric.counter:
   vas_amount_x20_7:                        {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x20_7']}  
   vas_amount_highlight:                    {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight']}
   vas_amount_xl:                           {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_amount_sticker:                      {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype.in: ['paid stickers 1 slot', 'paid stickers 2 slots', 'paid stickers 3 slots']]}
   vas_amount_bundle_mid:                   {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
   vas_amount_bundle_max:                   {obs: [amount],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
   vas_amount_pushup:                       {obs: [amount],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Pushup']}
@@ -68,6 +69,7 @@ metric.counter:
   vas_amount_net_x20_7:                    {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x20_7']}  
   vas_amount_net_highlight:                {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight']}
   vas_amount_net_xl:                       {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_amount_net_sticker:                  {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype.in: ['paid stickers 1 slot', 'paid stickers 2 slots', 'paid stickers 3 slots']]}
   vas_amount_net_bundle_mid:               {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
   vas_amount_net_bundle_max:               {obs: [amount_net],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
   vas_amount_net_pushup:                       {obs: [amount_net],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Pushup']}
@@ -108,6 +110,7 @@ metric.counter:
   vas_clean_reserved_amount_x20_7:                        {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x20_7']}  
   vas_clean_reserved_amount_highlight:                    {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
   vas_clean_reserved_amount_xl:                           {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_clean_reserved_amount_sticker:                      {obs: [amount],      filter: [*payment, product_type: 'vas', transaction_subtype.in: ['paid stickers 1 slot', 'paid stickers 2 slots', 'paid stickers 3 slots']]}
   vas_clean_reserved_amount_bundle_mid:                   {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
   vas_clean_reserved_amount_bundle_max:                   {obs: [amount],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
 #clean reserved revenue (amount) start_date (items activated in AB test) 
@@ -140,6 +143,7 @@ metric.counter:
   vas_clean_reserved_amount_net_x20_7:                    {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x20_7']}  
   vas_clean_reserved_amount_net_highlight:                {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
   vas_clean_reserved_amount_net_xl:                       {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_clean_reserved_amount_net_sticker:                  {obs: [amount_net],      filter: [*payment, product_type: 'vas', transaction_subtype.in: ['paid stickers 1 slot', 'paid stickers 2 slots', 'paid stickers 3 slots']]}
   vas_clean_reserved_amount_net_bundle_mid:               {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
   vas_clean_reserved_amount_net_bundle_max:               {obs: [amount_net],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
 #clean reserved revenue (amount_net) start_date (items activated in AB test)   
@@ -172,6 +176,7 @@ metric.counter:
   vas_transactions_mnz_x20_7:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'x20_7']}
   vas_transactions_highlight:              {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Highlight']}
   vas_transactions_xl:                     {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_transactions_sticker:                {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype.in: ['paid stickers 1 slot', 'paid stickers 2 slots', 'paid stickers 3 slots']]}
   vas_transactions_mnz_bundle_mid:         {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
   vas_transactions_mnz_bundle_max:         {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
   vas_transactions_pushup:                 {obs: [transaction_counter],      filter: [*revenue, product_type: 'vas', transaction_subtype: 'Pushup']}
@@ -212,6 +217,7 @@ metric.counter:
   vas_reserve_transactions_x20_7:              {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'x20_7']}
   vas_reserve_transactions_highlight:          {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'Highlight']}
   vas_reserve_transactions_xl:                 {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype: 'XL']}
+  vas_reserve_transactions_sticker:            {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', transaction_subtype.in: ['paid stickers 1 slot', 'paid stickers 2 slots', 'paid stickers 3 slots']]}
   vas_reserve_transactions_bundle_mid:         {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'mid']}
   vas_reserve_transactions_bundle_max:         {obs: [transaction_counter],      filter: [*payment, product_type: 'vas', product_subtype: 'bundle', transaction_subtype: 'max']}
 # reserve transactions (start_date)
@@ -249,6 +255,7 @@ metric.uniq:
   users_vas_x20_7:                         {counter: vas_amount_net_x20_7,            key: [user]}
   users_vas_highlight:                     {counter: vas_amount_net_highlight,        key: [user]}
   users_vas_xl:                            {counter: vas_amount_net_xl,               key: [user]}
+  users_vas_sticker:                       {counter: vas_amount_net_sticker,          key: [user]}
   users_vas_bundle_mid:                    {counter: vas_amount_net_bundle_mid,       key: [user]}
   users_vas_bundle_max:                    {counter: vas_amount_net_bundle_max,       key: [user]}
   users_vas_pushup:                        {counter: vas_amount_net_pushup,           key: [user]}
@@ -289,6 +296,7 @@ metric.uniq:
   users_vas_reserve_x20_7:                         {counter: vas_reserve_transactions_x20_7,            key: [user]}
   users_vas_reserve_highlight:                     {counter: vas_reserve_transactions_highlight,        key: [user]}
   users_vas_reserve_xl:                            {counter: vas_reserve_transactions_xl,               key: [user]}
+  users_vas_reserve_sticker:                       {counter: vas_reserve_transactions_sticker,          key: [user]}
   users_vas_reserve_bundle_mid:                    {counter: vas_reserve_transactions_bundle_mid,       key: [user]}
   users_vas_reserve_bundle_max:                    {counter: vas_reserve_transactions_bundle_max,       key: [user]}
 
@@ -318,6 +326,8 @@ metric.ratio:
   vas_avo_x20_7:                           {num: vas_amount_x20_7,                den: vas_transactions_mnz_x20_7}
   vas_avo_highlight:                       {num: vas_amount_highlight,            den: vas_transactions_highlight}
   vas_avo_xl:                              {num: vas_amount_xl,                   den: vas_transactions_xl}
+  vas_avo_sticker:                         {num: vas_amount_sticker,              den: vas_transactions_sticker}
+  vas_avo_sticker_per_xl:                  {num: vas_transactions_sticker,        den: vas_transactions_xl}
   vas_avo_bundle_mid:                      {num: vas_amount_bundle_mid,           den: vas_transactions_mnz_bundle_mid}
   vas_avo_bundle_max:                      {num: vas_amount_bundle_max,           den: vas_transactions_mnz_bundle_max}
   vas_avo_pushup:                          {num: vas_amount_pushup,               den: vas_transactions_pushup}
@@ -358,6 +368,7 @@ metric.ratio:
   vas_avo_net_x20_7:                           {num: vas_amount_net_x20_7,                den: vas_transactions_mnz_x20_7}
   vas_avo_net_highlight:                       {num: vas_amount_net_highlight,            den: vas_transactions_highlight}
   vas_avo_net_xl:                              {num: vas_amount_net_xl,                   den: vas_transactions_xl}
+  vas_avo_net_sticker:                         {num: vas_amount_net_sticker,              den: vas_transactions_sticker}
   vas_avo_net_bundle_mid:                      {num: vas_amount_net_bundle_mid,           den: vas_transactions_mnz_bundle_mid}
   vas_avo_net_bundle_max:                      {num: vas_amount_net_bundle_max,           den: vas_transactions_mnz_bundle_max}
   vas_avo_net_pushup:                          {num: vas_amount_net_pushup,               den: vas_transactions_pushup}
