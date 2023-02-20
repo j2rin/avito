@@ -128,6 +128,7 @@ from (
                 row_number() over (partition by autotekaorder_id order by event_date desc) rn
             from dma.autoteka_stream
             where funnel_stage_id = 4
+          	  and event_date::date between :first_date - 180 and :last_date
         ) _
         where rn = 1
     ) cas on cas.autotekaorder_id = ara.autoteka_order_id
