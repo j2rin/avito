@@ -1,3 +1,10 @@
+with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
+from_users as (
+    select distinct from_user_id
+    from dma.messenger_messages
+    where event_date::date between :first_date and :last_date
+        and from_user_id is not null
+)
 select
  	mm.event_date::date,
  	mm.eventtype_id,
@@ -20,7 +27,7 @@ select
     end as is_chatbot_chat,
     case 
         when mm.from_user_id is null then null
-        when exists (select 1 from dma.current_user where isTest and user_id = mm.from_user_id) then true
+        when cut.user_id is not null then true
         else false 
     end as IsTest,
 	-- Dimensions -----------------------------------------------------------------------------------------------------
@@ -42,7 +49,7 @@ select
     nvl(usm.user_segment, ls.segment)                            as user_segment_market
 from DMA.messenger_messages mm
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = mm.chat_item_microcat_id
-left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = cm.logical_category_id and ls.is_default
+left join /*+jtype(h),distrib(l,a)*/ dict.segmentation_ranks ls on ls.logical_category_id = cm.logical_category_id and ls.is_default
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl ON cl.Location_id = mm.chat_item_location_id
 left join (
     select
@@ -58,7 +65,15 @@ left join (
 		on mm.from_user_id = acd.user_id
 		and mm.event_date::date between acd.active_from_date and acd.active_to_date
 
-left join (
+left join /*distrib(l,a)*/ (
+    select user_id
+    from dma.current_user
+    where isTest
+        and user_id in (select from_user_id from from_users)
+) cut
+    on cut.user_id = mm.from_user_id
+
+left join /*distrib(l,a)*/ (
     select
         usm.user_id,
         usm.logical_category_id,
@@ -74,12 +89,7 @@ left join (
             lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
         from DMA.user_segment_market
         where true
-            and user_id in (
-                select from_user_id
-                from dma.messenger_messages
-                where event_date::date between :first_date and :last_date
-                    and from_user_id is not null
-            )
+            and user_id in (select from_user_id from from_users)
             and converting_date <= :last_date::date
     ) usm
     where usm.to_date >= :first_date::date
@@ -88,7 +98,7 @@ left join (
     and mm.event_date::date >= usm.from_date and mm.event_date::date < usm.to_date
     and cm.logical_category_id = usm.logical_category_id
 
-left join (
+left join /*distrib(l,a)*/ (
     select
         chat_id,
         start_flow_time,
