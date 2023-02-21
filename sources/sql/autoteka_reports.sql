@@ -5,6 +5,13 @@ items as (
     join dma_autoteka.report_details rd on rd.report_id = ar.report_id
     join /*+distrib(a,l)*/ dds.H_Item hi on hi.External_ID = rd.avito_item_id
     where autoteka_package_history_created_at::date between :first_date and :last_date
+      and autoteka_order_id is not null
+),
+orders as (
+    select distinct ar.autoteka_order_id
+    from dma.autoteka_report_attributes ar
+    where autoteka_package_history_created_at::date between :first_date and :last_date
+      and autoteka_order_id is not null
 ),
 item_price as (select item_id, actual_date, price from dds.S_Item_Price where item_id in (select item_id from items) and actual_date::date <= :last_date),
 item_location as (select item_id, actual_date, location_id from dds.L_Item_Location where item_id in (select item_id from items) and actual_date::date <= :last_date),
@@ -128,7 +135,7 @@ from (
                 row_number() over (partition by autotekaorder_id order by event_date desc) rn
             from dma.autoteka_stream
             where funnel_stage_id = 4
-          	  and event_date::date between :first_date - 180 and :last_date
+          	  and autotekaorder_id in (select autoteka_order_id from orders)
         ) _
         where rn = 1
     ) cas on cas.autotekaorder_id = ara.autoteka_order_id
