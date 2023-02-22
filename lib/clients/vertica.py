@@ -24,7 +24,7 @@ def get_vertica_credentials():
     return from_env
 
 
-def get_vertica_con():
+def get_connection():
     return vertica_python.connect(**get_vertica_credentials())
 
 
@@ -32,4 +32,4 @@ def get_query_columns(con, sql):
     sql_limit0 = f'select * from ({sql}) _\nlimit 0'
     with con.cursor() as cur:
         cur.execute(sql_limit0)
-        return cur.description
+        return {c.name: c.type_name for c in cur.description}

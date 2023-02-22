@@ -3,10 +3,13 @@ import re
 from datetime import date, timedelta
 
 import click
-from vertica import get_query_columns, get_vertica_con
-from yaml_getters import get_sql_primary_subject_map
 
-from utils import bind_sql_params, get_missing_sql_params, split_statements
+from lib.clients.clickhouse import get_connection as ch_get_con
+from lib.clients.clickhouse import get_query_columns as ch_get_query_columns
+from lib.clients.vertica import get_connection as v_get_con
+from lib.clients.vertica import get_query_columns as v_get_query_columns
+from lib.utils import bind_sql_params, get_missing_sql_params, split_statements
+from lib.yaml_getters import get_sql_metadata
 
 SQL_DIR = 'sources/sql/'
 SQL_FILES_PATTERN = r'{dir}(\w+).sql'.format(dir=SQL_DIR)
@@ -42,11 +45,11 @@ def list_modified_files():
     return result
 
 
-class SQLFileValidator:
-    def __init__(self, limit0, n_days=1):
+class VerticaFileValidator:
+    def __init__(self, sql_metadata, limit0, n_days=1):
         self.limit0 = limit0
         self.n_days = n_days
-        self._sql_primary_subject_map = get_sql_primary_subject_map()
+        self._sql_metadata = sql_metadata
 
     @staticmethod
     def _bind_date_period(sql, n_days):
@@ -58,7 +61,7 @@ class SQLFileValidator:
 
     @staticmethod
     def _execute_limit0(con, sql):
-        columns = get_query_columns(con, sql)
+        columns = v_get_query_columns(con, sql)
         return {'output_columns': len(columns)}
 
     @staticmethod
@@ -102,7 +105,7 @@ where {subject} is not null
 
         return new_report
 
-    def validate(self, filepath):
+    def validate(self, filepath, primary_subject):
 
         try:
 
@@ -120,22 +123,38 @@ where {subject} is not null
             if n_statements != 1:
                 return {'error': f'Number of statements must be exactly one'}
 
-            with get_vertica_con() as con:
+            with v_get_con() as con:
                 report = self._execute_limit0(con, sql_bind)
                 if self.limit0:
                     return report
 
                 filename = parse_sql_filename(filepath)
-                primary_subject = self._sql_primary_subject_map.get(filename)
-
-                if not primary_subject:
-                    return {'error': f'No config in `sources.yaml` found for `{filename}`'}
 
                 report |= self._execute_sql_and_collect_metrics(
                     con, sql_bind, filename, primary_subject
                 )
 
                 return self._adjust_report(report)
+
+        except Exception as e:
+            return {'error': str(e)}
+
+
+class ClickhouseFileValidator:
+    def validate(self, filepath):
+
+        try:
+
+            with open(filepath, 'r') as f:
+                sql_raw = f.read()
+
+            n_statements = len(split_statements(sql_raw))
+            if n_statements != 1:
+                return {'error': f'Number of statements must be exactly one'}
+
+            with ch_get_con() as con:
+                columns = ch_get_query_columns(con, sql_raw)
+                return {'output_columns': len(columns)}
 
         except Exception as e:
             return {'error': str(e)}
@@ -157,21 +176,31 @@ def get_exceed_metrics(execution_result):
     return result
 
 
-METRICS_REPORT_TEMPLATE = '''
-duration: {duration} s
-input_rows: {input_rows}
-output_rows: {output_rows}
-output_columns: {output_columns}
-max_memory: {max_memory_gb} GB
-network_received: {network_received_gb} GB
-network_sent: {network_sent_gb} GB
-read: {read_gb} GB
-written: {written_gb} GB
-spilled: {spilled_gb} GB
-cpu_cycles_us: {cpu_cycles_us}
-thread_count: {thread_count}
-session_id: {session_id}
-'''
+REPORT_CONFIG = {
+    'duration': 'duration: {value} s',
+    'output_rows': 'output_rows: {value}',
+    'output_columns': 'output_columns: {value}',
+    'input_rows': 'input_rows: {value}',
+    'max_memory_gb': 'max_memory: {value} GB',
+    'network_received_gb': 'network_received: {value} GB',
+    'network_sent_gb': 'network_sent: {value} GB',
+    'read_gb': 'read: {value} GB',
+    'written_gb': 'written: {value} GB',
+    'spilled_gb': 'spilled: {value} GB',
+    'cpu_cycles_us': 'cpu_cycles_us: {value}',
+    'thread_count': 'thread_count: {value}',
+    'session_id': 'session_id: {value}',
+    # 'start_time': 'start_time: {value}',
+    # 'request': 'request: {value}',
+    # 'request_id': 'request_id: {value}',
+    # 'tablename': 'tablename: {value}',
+    # 'duration_exceed': 'duration_exceed: {value}',
+    # 'thread_count_exceed': 'thread_count_exceed: {value}',
+    # 'max_memory_exceed': 'max_memory_exceed: {value}',
+    # 'network_received_exceed': 'network_received_exceed: {value}',
+    # 'network_sent_exceed': 'network_sent_exceed: {value}',
+    # 'spilled_exceed': 'spilled_exceed: {value}',
+}
 
 
 def validate(filenames=None, limit0=False, n_days=1):
@@ -181,11 +210,23 @@ def validate(filenames=None, limit0=False, n_days=1):
         modified_files = filter(is_sql_file, list_modified_files())
 
     success = True
-    do_validate = SQLFileValidator(limit0, n_days).validate
+    sql_metadata = get_sql_metadata()
+    vertica_validator = VerticaFileValidator(sql_metadata, limit0, n_days)
+    clickhouse_validator = ClickhouseFileValidator()
 
     for path in modified_files:
 
-        report = do_validate(path)
+        report = {}
+        filename = parse_sql_filename(path)
+        meta = sql_metadata.get(filename)
+
+        if not meta:
+            report |= {'error': f'No config in `sources.yaml` found for `{filename}`'}
+
+        if meta['database'] == 'vertica':
+            report |= vertica_validator.validate(path, meta['primary_subject'])
+        elif meta['database'] == 'clickhouse':
+            report |= clickhouse_validator.validate(path)
 
         if 'error' in report:
             print(f'FAILED: {path}')
@@ -203,8 +244,11 @@ def validate(filenames=None, limit0=False, n_days=1):
                 print(f'{metric}: {value}')
                 success = False
 
-        if not limit0:
-            print(METRICS_REPORT_TEMPLATE.format(**report))
+        print('')
+        for metric, template in REPORT_CONFIG.items():
+            if metric in report:
+                print(template.format(value=report[metric]))
+        print('')
 
     if success:
         print('SQL validation PASSED')
