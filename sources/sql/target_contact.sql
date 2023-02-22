@@ -76,13 +76,13 @@ from (
     from tmp_chats
 ) t 
 
-left join /*+jtype(h),distrib(l,a)*/  DMA.current_microcategories cm using (microcat_id)
-left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls
+left join  DMA.current_microcategories cm using (microcat_id)
+left join dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id
     and ls.is_default  
 left join DMA.current_locations cl using (Location_id)
 
-left join /*+jtype(h),distrib(l,a)*/ 
+left join
     (
     select 
       user_id,
@@ -93,7 +93,7 @@ left join /*+jtype(h),distrib(l,a)*/
 from DMA.am_client_day_versioned
     ) acd on t.seller_id = acd.user_id and t.event_date::date between acd.active_from_date and acd.active_to_date
     
-left join /*+jtype(h),distrib(l,b)*/ 
+left join 
     (
     select user_id, logical_category_id, user_segment, converting_date,
         lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
