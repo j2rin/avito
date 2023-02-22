@@ -1046,15 +1046,6 @@ moder:
   primary_subject: user
   dtm: event_date
 
-#callcenter_calls:
-#  metric_configs: [callcenter_calls]
-#  database: vertica
-#  table: dma.vo_callcenter_calls
-#  participant: {user: user_id}
-#  primary_subject: user
-#  dtm: enter_date
-
-
 listing_fees:
   metric_configs: [listing_fees]
   database: vertica
@@ -1267,6 +1258,7 @@ messenger_stream:
 clickstream_sparse.clickhouse:
     database: clickhouse
     table: dwh.vo_clickstream_sparse_local
+    sql: clickstream_sparse
     column_map:
       platform_id: business_platform
       cookie_item: [u, iid]

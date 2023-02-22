@@ -8,7 +8,7 @@ from ruamel.yaml import safe_load
 SOURCES_YAML_PATH = 'sources/sources.yaml'
 
 
-def get_sql_primary_subject_map():
+def get_sql_metadata():
     with open(SOURCES_YAML_PATH, 'r') as f:
         doc_loaded = safe_load(f)
 
@@ -18,6 +18,9 @@ def get_sql_primary_subject_map():
         if not sql_file_name:
             continue
         subject = source_meta['primary_subject']
-        result[sql_file_name] = source_meta['participant'][subject]
+        result[sql_file_name] = {
+            'primary_subject': source_meta['participant'][subject],
+            'database': source_meta['database'],
+        }
 
     return result
