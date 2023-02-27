@@ -1,4 +1,4 @@
-with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
+with
 items as (
     select distinct hi.item_id, hi.External_ID as item_ext_id
     from dma.autoteka_report_attributes ar
