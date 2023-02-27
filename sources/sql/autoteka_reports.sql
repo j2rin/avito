@@ -131,13 +131,11 @@ from (
                 platform_id,
                 amount,
                 reports_count,
-                autoteka_platform_id,
-                row_number() over (partition by autotekaorder_id order by event_date desc) rn
+                autoteka_platform_id
             from dma.autoteka_stream
             where funnel_stage_id = 4
           	  and autotekaorder_id in (select autoteka_order_id from orders)
         ) _
-        where rn = 1
     ) cas on cas.autotekaorder_id = ara.autoteka_order_id
     left join (
          select
