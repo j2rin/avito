@@ -48,13 +48,10 @@ select
        when cs.from_page='0' and cs.eid in (4920,4921,4954) then 'vertical_filter'
        when cs.from_page like 'recentSearch%' then 'recentSearch'
        else cs.from_page end as from_page,
-    network_error_type,
-    network_error_sub_type,
     item_id,
     source_click_page,
     orderid_string,
-    orderid,
-    mobile_app_start_type
+    orderid
 from DMA.click_stream_counters cs
 left join DMA.current_microcategories cm using (microcat_id)
 left join DMA.current_locations cl using (location_id)
