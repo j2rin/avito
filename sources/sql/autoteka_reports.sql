@@ -39,7 +39,7 @@ stream as (
     from dma.autoteka_stream
     where funnel_stage_id = 4
       and autotekaorder_id in (select distinct coalesce(autoteka_order_id, 0) from orders)
-      and event_date::date between (:first_date - 180) and :last_date
+      and event_date::date between (:first_date::date - 180) and :last_date
 ),
 item_price as (select item_id, actual_date, price from dds.S_Item_Price where item_id in (select item_id from items) and actual_date::date <= :last_date),
 item_location as (select item_id, actual_date, location_id from dds.L_Item_Location where item_id in (select item_id from items) and actual_date::date <= :last_date),
@@ -125,4 +125,4 @@ left join item_price p on p.Item_id = ih.Item_id and ar.autoteka_package_history
 left join item_location l on l.Item_id = ih.Item_id  and ar.autoteka_package_history_created_at  interpolate previous value l.Actual_date
 left join item_microcat m on m.Item_id = ih.Item_id  and ar.autoteka_package_history_created_at  interpolate previous value m.Actual_date
 left join dma.current_microcategories mc on  mc.microcat_id = m.Microcat_id and mc.vertical='Transport'
-left join dma.current_locations cl on cl.Location_id = l.Location_id;
+left join dma.current_locations cl on cl.Location_id = l.Location_id
