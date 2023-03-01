@@ -12,11 +12,6 @@ select
     cm.Param1_microcat_id as param1_id,
 	cm.Param2_microcat_id as param2_id,
 	t.platform_id,
-	case
-		when acd.is_asd then 'ASD'
-		when t.event_date >= us.converting_date then 'Pro'
-		else 'Private' end
-	as user_segment,
 	nvl(acd.is_asd, False) as is_asd,
     acd.user_group_id      as asd_user_group_id,
 	tu.user_id is not null as is_tariff_user,
@@ -67,10 +62,6 @@ left join dma.current_microcategories cm using(microcat_id)
 left join dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id
     and ls.is_default
-
-left join DMA.user_segments us
-    on t.user_id = us.user_id
-    and cm.logical_category_id = us.logical_category_id
 
 left join (
     select
