@@ -1,0 +1,9 @@
+metric.counter:
+  target_contact_all:                                   {filter: [{is_target: False}]}
+    
+
+metric.uniq: 
+  target_buyers_any:                                     {counter: target_contact_all,     key: [cookie]}
+  user_target_contact:                                   {counter: target_contact_all,     key: [user]}
+  target_contact_canonical:                              {counter: target_contact_all,      key: [logcat_item]}
+  target_buyers_canonical:                               {counter: target_contact_all,      key: [cookie_logcat]}
