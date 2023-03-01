@@ -1,0 +1,62 @@
+select
+    hash(buyer_id, cd.item_id) as deal_id,
+    chat_id,
+    buyer_id,
+    seller_id,
+    cd.item_id,
+    contactmethod,
+    null as deal_confirmation_source,
+    dealconfirmationstate,
+    event_time,
+    -- Dimensions -----------------------------------------------------------------------------------------------------
+    cm.vertical_id                                               as vertical_id,
+    cm.logical_category_id                                       as logical_category_id,
+    cm.category_id                                               as category_id,
+    cm.subcategory_id                                            as subcategory_id,
+    cm.Param1_microcat_id                                        as param1_id,
+    cm.Param2_microcat_id                                        as param2_id,
+    cm.Param3_microcat_id                                        as param3_id,
+    cm.Param4_microcat_id                                        as param4_id,
+    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
+    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    cl.LocationGroup_id                                          as location_group_id,
+    cl.City_Population_Group                                     as population_group,
+    cl.Logical_Level                                             as location_level_id
+from dma.confirmation_deals cd
+left join dma.current_item                      as ci on cd.item_id = ci.item_id
+left join dma.current_microcategories           as cm on ci.microcat_id = cm.microcat_id
+left join dma.current_locations                 as cl on ci.location_id = cl.location_id
+where cd.event_time::date between :first_date and :last_date
+    and not seller_id is null
+
+union all
+
+select
+    deal_id,
+    chat_id,
+    buyer_id,
+    seller_id,
+    cd.item_id,
+    contact_method as contactmethod,
+    deal_confirmation_source,
+    dealconfirmationstate,
+    event_time,
+    -- Dimensions -----------------------------------------------------------------------------------------------------
+    cm.vertical_id                                               as vertical_id,
+    cm.logical_category_id                                       as logical_category_id,
+    cm.category_id                                               as category_id,
+    cm.subcategory_id                                            as subcategory_id,
+    cm.Param1_microcat_id                                        as param1_id,
+    cm.Param2_microcat_id                                        as param2_id,
+    cm.Param3_microcat_id                                        as param3_id,
+    cm.Param4_microcat_id                                        as param4_id,
+    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
+    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    cl.LocationGroup_id                                          as location_group_id,
+    cl.City_Population_Group                                     as population_group,
+    cl.Logical_Level                                             as location_level_id
+from dma.new_confirmation_deals cd
+left join dma.current_item                      as ci on cd.item_id = ci.item_id
+left join dma.current_microcategories           as cm on ci.microcat_id = cm.microcat_id
+left join dma.current_locations                 as cl on ci.location_id = cl.location_id
+where cd.event_time::date between :first_date and :last_date

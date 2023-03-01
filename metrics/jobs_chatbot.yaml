@@ -1,0 +1,40 @@
+metric.counter:
+
+  jobs_chatbot_listing_visits: { filter: [ metric_name: 'listing visit' ] }
+
+  jobs_chatbot_revenue_rec: { filter: [ metric_name: 'revenue', is_recognized: true ], obs: [ amount_net ] }
+  jobs_chatbot_revenue_rec_listing: { filter: [ metric_name: 'revenue', is_recognized: true, is_listing: true ], obs: [ amount_net ] }
+  jobs_chatbot_revenue_unrec: { filter: [ metric_name: 'revenue', is_recognized: false ], obs: [ amount_net ] }
+  jobs_chatbot_revenue_unrec_listing: { filter: [ metric_name: 'revenue', is_recognized: false, is_listing: true ], obs: [ amount_net ] }
+
+  jobs_chatbot_purchases: { filter: [ metric_name: 'revenue', is_recognized: true ] }
+  jobs_chatbot_purchases_listing: { filter: [ metric_name: 'revenue', is_recognized: true, is_listing: true] }
+  jobs_chatbot_first_purchases: { filter: [ metric_name: 'revenue', is_recognized: true, is_first_purchase: true] }
+  jobs_chatbot_first_purchases_listing: { filter: [ metric_name: 'revenue', is_recognized: true, is_first_purchase: true, is_listing: true] }
+
+  jobs_chatbot_trial_activations: { filter: [ metric_name: 'trial activation' ] }
+  jobs_chatbot_trial_activations_listing: { filter: [ metric_name: 'trial activation', is_listing: true ] }
+  jobs_chatbot_first_trial_activations: { filter: [ metric_name: 'trial activation', is_first_trial: true ] }
+  jobs_chatbot_first_trial_activations_listing: { filter: [ metric_name: 'trial activation', is_first_trial: true, is_listing: true ] }
+
+  #jobs_chatbot_users_have_trials: {filter: [ metric_name: 'trial activation' ]}
+
+metric.uniq:
+
+  jobs_chatbot_buyers: { counter : jobs_chatbot_purchases, key: [ user_id ] }
+  jobs_chatbot_buyers_listing: { counter : jobs_chatbot_purchases_listing, key: [ user_id ] }
+  jobs_chatbot_new_buyers: { counter : jobs_chatbot_first_purchases, key: [ user_id ] }
+  jobs_chatbot_new_buyers_listing: { counter : jobs_chatbot_first_purchases_listing, key: [ user_id ] }
+
+  jobs_chatbot_trial_activators: { counter : jobs_chatbot_trial_activations, key: [ user_id ] }
+  jobs_chatbot_trial_activators_listing: { counter : jobs_chatbot_trial_activations_listing, key: [ user_id ] }
+  jobs_chatbot_first_trial_activators: { counter : jobs_chatbot_first_trial_activations, key: [ user_id ] }
+  jobs_chatbot_first_trial_activators_listing: { counter : jobs_chatbot_first_trial_activations_listing, key: [ user_id ] }
+
+  jobs_chatbot_activations: { counter : jobs_chatbot_revenue_rec, key: [ item_id, event_date ] }
+  jobs_chatbot_activations_listing: { counter : jobs_chatbot_revenue_rec_listing, key: [ item_id, event_date ] }
+
+  jobs_chatbot_listing_visits_uniq: { counter: jobs_chatbot_listing_visits, key: [ item_id, event_date ] }
+
+  jobs_chatbot_listing_visitors: { counter: jobs_chatbot_listing_visits, key: [ user_id ] }
+
