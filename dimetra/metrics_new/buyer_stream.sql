@@ -27,8 +27,21 @@ select
     hash(item_id, x, eid)                              as                                                                   item_x,
     hash(location_id, session_no, microcat_id)         as                                                                   location_session_microcat,
     CASE WHEN eid in (401, 2574, 2732) then 1 WHEN eid = 402 then -1 end as                                                 favorites_net,
+    case when t.eid in (451) then 1 when t.eid = 452 then -1 end as comparisons_net,
     rec_engine_id                                             as                                                            x_rec_engine_id,
-    ((case when x_eid is not null then coalesce(search_flags, 0) end & 16) > 0)::int as                               onmap,
+    ((case when t.x_eid is not null then coalesce(t.search_flags, 0) end & 16) > 0)::int as onmap,
+    item_vas_flags,
+    case
+       when (item_vas_flags & (1 << 12) > 0 or item_vas_flags & (1 << 13) > 0) then 2
+       when (item_vas_flags & (1 << 14) > 0 or item_vas_flags & (1 << 15) > 0) then 5
+       when (item_vas_flags & (1 << 16) > 0 or item_vas_flags & (1 << 17) > 0) then 10
+       else 1
+    end                                                          as vas_power,
+    0 as search_features,
+    3 AS multiplier_3,
+    5 AS multiplier_5,
+    10 AS multiplier_10,
     *
 from dma.buyer_stream t
+participant_columns(cookie_id)
 ;
