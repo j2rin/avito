@@ -77,6 +77,8 @@ definitions:
     - &is_back_call_jk      { eid: 4198, item.isnull: true }
     - &is_back_call_recallme { eid: 6608 }
     - &is_back_call         { $or: [*is_back_call_item, *is_back_call_jk, *is_back_call_recallme] }
+    - &is_agent_back_call     { eid: 7649 }
+    - &is_agent_back_call_start { eid: 7645 }
     - &is_contact_item      { $or: [eid: [303, 856, 857, 3005, 2581, 4066, 4675, 4813, 6154, 5942], *is_back_call_item, *is_back_call_recallme] }
     - &is_contact_jk        { $or: [*is_ph_realdev, *is_back_call_jk] }
     - &is_contact           { $or: [*is_contact_item, *is_contact_jk] }
@@ -1681,6 +1683,8 @@ metric.counter:
     
     c_callback: { filter: [*is_back_call] }
     c_callback_recallme: { filter: [*is_back_call_recallme] }
+    c_agent_callback_start: { filter: [*is_agent_back_call_start] }
+    c_agent_callback: { filter: [*is_agent_back_call] }
 
     contacts_front: { filter: [*is_contacts_front] }
     contacts_front_cpa: { filter: [*is_contacts_front, *is_item_cpa]  }
