@@ -15,6 +15,7 @@ select
     events_sla,
     duration,
     duration_events,
-    initial_page_render
+    initial_page_render,
+    max_duration
 from dma.o_perf_web w
 where observation_date::date between :first_date and :last_date
