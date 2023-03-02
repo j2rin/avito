@@ -29,7 +29,7 @@ metric.counter:
   cnt_draw_events:                         {filter: [{stage_name: Draw}], obs: [events]}
   cnt_draw_events_exceptions:              {filter: [{stage_name: Draw}], obs: [events, exceptions]}
   cnt_draw_events_exceptions_fr_screens_on: {filter: [{stage_name: Draw, frequent_screens_enabled: true}], obs: [events, exceptions]}
-  cnt_draw_ok_events_fr_screens:           {filter: [{stage_name: Draw, frequent_screens_enabled: true, is_appstart: false, *no_visible_error}], obs: [events, exceptions]}
+  cnt_draw_ok_events_fr_screens:           {filter: [stage_name: Draw, frequent_screens_enabled: true, is_appstart: false, <<: *no_visible_error], obs: [events, exceptions]}
   cnt_draw_events_p25:                     {filter: [{stage_name: Draw}], obs: [events_p25]}
   cnt_draw_events_p50:                     {filter: [{stage_name: Draw}], obs: [events_p50]}
   cnt_draw_events_p75:                     {filter: [{stage_name: Draw}], obs: [events_p75]}
