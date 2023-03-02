@@ -1,3 +1,4 @@
+metric.counter:
   cnt_app_cache_duration:                  {filter: [{stage_name: app_cache}], obs: [duration]}
   cnt_app_cache_duration_events:           {filter: [{stage_name: app_cache}], obs: [duration_events]}
   cnt_app_cache_events:                    {filter: [{stage_name: app_cache}], obs: [events]}
@@ -196,7 +197,7 @@
   cnt_user_interactive_duration_over_20000: {filter: [{stage_name: user_interactive, max_duration.>:20000}]}
 
 metric.uniq:
-  users_initial_page_render:                {counter: cnt_initial_page_render,     key: [cookie]}
+  users_initial_page_render:                 {counter: cnt_initial_page_render,     key: [cookie]}
 
   user_user_interactive:                     {counter: cnt_user_interactive_duration,                key: [cookie]}
   user_user_interactive_duration_over_2000:  {counter: cnt_user_interactive_duration_over_2000,      key: [cookie]}
