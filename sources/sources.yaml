@@ -746,12 +746,13 @@ weighted_buyer:
   sql: weighted_buyer_metric
   column_map:
     cookie: cookie_id
+    user: user_id
   dimensions:
     - platform
     - vertical
     - logical_category
     - user_segment_market
-  participant: {visitor: cookie_id}
+  participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, user_segment_market]
