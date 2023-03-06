@@ -1,6 +1,7 @@
 create fact buyer_stream as
 select
     t.event_date::date as                                                                                                   __date__,
+    item_user_id as _user_id_dim,
     CASE
         WHEN item_x_type % 2 = 0 and x_eid = 300 and page_no = 0 and item_rnk >= 0 and item_rnk <= 3 then 'serp_top3'
         WHEN item_x_type % 2 = 0 and x_eid = 300 and page_no = 0 and item_rnk >= 4 and item_rnk <= 10 then 'serp_top10'
