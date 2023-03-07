@@ -12,5 +12,5 @@ left join (
             where c.event_date between asd.active_to_date and asd.active_to_date
                 and asd.active_from_date <= :last_date::date
                 and asd.active_to_date >= :first_date::date
-                and asd.user_id in (select :distinct_ _user_id_dim from :fact_table where __date__ between :first_date and :last_date)
+                and asd.user_id in (select _user_id_dim from _user_id_dim_cte)
         ) asd on asd.user_id = t._user_id_dim and asd.event_date = t.__date__;
