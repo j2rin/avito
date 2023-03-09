@@ -1751,7 +1751,8 @@ metric.counter:
     btc_fav_collection: { filter: [*is_btc_wo_guessing, *x_is_fav_collection] }
     fav_collection_view: { filter: [*is_fav_collection] }
 
-
+    agbc_bt_clicks: { filter: [{ $or: [[*is_btc], [*is_agent_back_call_start]] }] }
+    agbc_contacts_all: { filter: [{ $or: [[*is_contact], [*is_agent_back_call]] }] }
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -3091,6 +3092,15 @@ metric.uniq:
     user_c_list: { counter: c_list, key: [cookie] }
     user_c_rich: { counter: c_rich, key: [cookie] }
 
+    agbc_bt_clicks_grouped: { counter: agbc_bt_clicks, key: [cookie_item] }
+    agbc_bt_clicks_users: {counter: agbc_bt_clicks, key: [cookie] }
+    agbc_contacts_grouped: {counter: agbc_contacts_all, key: [cookie_item] }
+    agbc_buyers: {counter: agbc_contacts_all, key: [cookie] }
+    c_agent_callback_items: {counter: c_agent_callback, key: [cookie_item] }
+    c_agent_callback_users: {counter: c_agent_callback, key: [cookie] }
+    c_agent_callback_start_items: {counter: c_agent_callback_start, key: [cookie_item] }
+    c_agent_callback_start_users: {counter: c_agent_callback_start, key: [cookie] }
+
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
     btc_from_witcher_any_per_witcher_any: { num: btc_from_witcher_any, den: searches_witcher_any }
@@ -3717,3 +3727,5 @@ metric.ratio:
     c_s_kmt_per_s_kmt:  { num: c_s_kmt,          den: s_kmt }
     user_iv_s_kmt_per_user_s_kmt: { num: user_iv_s_kmt,     den: user_s_kmt }
     user_c_s_kmt_per_user_s_kmt:  { num: user_c_s_kmt,      den: user_s_kmt }
+    
+    agbc_contacts_per_item_view: { num: agbc_contacts_all, den: item_views }
