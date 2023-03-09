@@ -289,6 +289,11 @@ definitions:
     - &is_item_with_video { item_flags.bit: 28 }
     
     - &is_item_mall { item_flags.bit: 30 }
+    - &is_s_mall_filter { search_flags.bit: 44 }
+    - &is_s_from_mall { from_page: "avito_mall" }
+    - &is_not_s_from_mall { from_page.!=: "avito_mall" }
+    - &x_is_s_from_mall { x_from_page: "avito_mall" }
+    - &x_is_mall_widget { x_eid: 7661 }
 
     - &is_new_btc { new_user_btc: true }
     - &is_old_btc { new_user_btc: false }
@@ -1692,6 +1697,23 @@ metric.counter:
     c_mall_s: { filter: [*is_item_mall, *is_contact_wo_guessing, *x_is_search] }
     fav_mall_s: { filter: [*is_item_mall, *is_fav, *x_is_search] }
     btc_mall_s: { filter: [*is_item_mall, *is_btc_wo_guessing, *x_is_search] }
+    iv_mall_widget: { filter: [*x_is_mall_widget, *is_iv] }
+    c_mall_widget: { filter: [*x_is_mall_widget, *is_contact] }
+    fav_mall_widget: { filter: [*x_is_mall_widget, *is_fav] }
+    btc_mall_widget: { filter: [*x_is_mall_widget, *is_btc] }
+    iv_s_from_mall: { filter: [*x_is_s_from_mall, *is_iv] }
+    c_s_from_mall: { filter: [*x_is_s_from_mall, *is_contact] }
+    fav_s_from_mall: { filter: [*x_is_s_from_mall, *is_fav] }
+    btc_s_from_mall: { filter: [*x_is_s_from_mall, *is_btc] }
+    iv_s_mall_filter: { filter: [*is_s_mall_filter, *is_iv] }
+    c_s_mall_filter: { filter: [*is_s_mall_filter, *is_contact] }
+    fav_s_mall_filter: { filter: [*is_s_mall_filter, *is_fav] }
+    btc_s_mall_filter: { filter: [*is_s_mall_filter, *is_btc] }
+    s_from_mall: { filter: [*is_s_from_mall, *is_search] }
+    s_mall_filter: { filter: [*is_s_mall_filter, *is_search] }
+    mall_page_views: {filter: [eid: 7660] }
+    mall_widget_views: {filter: [eid: 7661] }
+    
 
     
     c_callback: { filter: [*is_back_call] }
@@ -3022,6 +3044,22 @@ metric.uniq:
     user_c_mall_s: { counter: c_mall_s, key: [cookie] }
     user_fav_mall_s: { counter: fav_mall_s, key: [cookie] }
     user_btc_mall_s: { counter: btc_mall_s, key: [cookie] }
+    user_iv_mall_widget: { counter: iv_mall_widget, key: [cookie] }
+    user_c_mall_widget: { counter: iv_mall_widget, key: [cookie] }
+    user_fav_mall_widget: { counter: iv_mall_widget, key: [cookie] }
+    user_btc_mall_widget: { counter: iv_mall_widget, key: [cookie] }
+    user_iv_s_from_mall: { counter: iv_s_from_mall, key: [cookie] }
+    user_c_s_from_mall: { counter: c_s_from_mall, key: [cookie] }
+    user_fav_s_from_mall: { counter: fav_s_from_mall, key: [cookie] }
+    user_btc_s_from_mall: { counter: btc_s_from_mall, key: [cookie] }
+    user_iv_s_mall_filter: { counter: iv_s_mall_filter, key: [cookie] }
+    user_c_s_mall_filter: { counter: c_s_mall_filter, key: [cookie] }
+    user_fav_s_mall_filter: { counter: fav_s_mall_filter, key: [cookie] }
+    user_btc_s_mall_filter: { counter: btc_s_mall_filter, key: [cookie] }
+    user_s_from_mall: { counter: s_from_mall, key: [cookie] }
+    user_s_mall_filter: { counter: s_mall_filter, key: [cookie] }
+    user_mall_page_views: { counter: mall_page_views, key: [cookie] }
+    user_mall_widget_views: { counter: mall_widget_views, key: [cookie] }
 
     user_contacts_front: { counter: contacts_front, key: [cookie] }
     user_contacts_front_cpa: { counter: contacts_front_cpa, key: [cookie] }
