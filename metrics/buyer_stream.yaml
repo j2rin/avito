@@ -287,6 +287,8 @@ definitions:
     - &is_item_with_multilocs { item_flags.bit: 25 }
 
     - &is_item_with_video { item_flags.bit: 28 }
+    
+    - &is_item_mall { item_flags.bit: 30 }
 
     - &is_new_btc { new_user_btc: true }
     - &is_old_btc { new_user_btc: false }
@@ -1681,6 +1683,17 @@ metric.counter:
     iv_cpa_video_s: { filter: [*is_item_with_video_cpa, *is_iv_wo_guessing, *x_is_search] }
     c_cpa_video_s: { filter: [*is_item_with_video_cpa, *is_contact_wo_guessing, *x_is_search] }
     
+    
+    iv_mall: { filter: [*is_item_mall, *is_iv] }
+    c_mall: { filter: [*is_item_mall, *is_contact] }
+    fav_mall: { filter: [*is_item_mall, *is_fav] }
+    btc_mall: { filter: [*is_item_mall, *is_btc] }
+    iv_mall_s: { filter: [*is_item_mall, *is_iv_wo_guessing, *x_is_search] }
+    c_mall_s: { filter: [*is_item_mall, *is_contact_wo_guessing, *x_is_search] }
+    fav_mall_s: { filter: [*is_item_mall, *is_fav, *x_is_search] }
+    btc_mall_s: { filter: [*is_item_mall, *is_btc_wo_guessing, *x_is_search] }
+
+    
     c_callback: { filter: [*is_back_call] }
     c_callback_recallme: { filter: [*is_back_call_recallme] }
     c_agent_callback_start: { filter: [*is_agent_back_call_start] }
@@ -3000,6 +3013,15 @@ metric.uniq:
     user_c_cpa_video: { counter: c_cpa_video, key: [cookie] }
     user_iv_cpa_video_s: { counter: iv_cpa_video_s, key: [cookie] }
     user_c_cpa_video_s: { counter: c_cpa_video_s, key: [cookie] }
+    
+    user_iv_mall: { counter: iv_mall, key: [cookie] }
+    user_c_mall: { counter: c_mall, key: [cookie] }
+    user_fav_mall: { counter: fav_mall, key: [cookie] }
+    user_btc_mall: { counter: btc_mall, key: [cookie] }
+    user_iv_mall_s: { counter: iv_mall_s, key: [cookie] }
+    user_c_mall_s: { counter: c_mall_s, key: [cookie] }
+    user_fav_mall_s: { counter: fav_mall_s, key: [cookie] }
+    user_btc_mall_s: { counter: btc_mall_s, key: [cookie] }
 
     user_contacts_front: { counter: contacts_front, key: [cookie] }
     user_contacts_front_cpa: { counter: contacts_front_cpa, key: [cookie] }
@@ -3613,6 +3635,14 @@ metric.ratio:
     user_c_delivery_per_user_c_on_delivery_items: {num: user_c_delivery, den: user_c_on_delivery_items }
     user_btc_video_per_user_iv_video: { num: user_btc_video, den: user_iv_video }
     user_btc_video_s_per_user_iv_video_s: { num: user_btc_video_s, den: user_iv_video_s }
+    c_mall_per_iv_mall: { num: c_mall, den: iv_mall }
+    c_mall_s_per_iv_mall_s: { num: c_mall_s, den: iv_mall_s }
+    btc_mall_per_iv_mall: { num: btc_mall, den: iv_mall }
+    btc_mall_s_per_iv_mall_s: { num: btc_mall_s, den: iv_mall_s }
+    user_c_mall_per_user_iv_mall: { num: user_c_mall, den: user_iv_mall }
+    user_c_mall_s_per_user_iv_mall_s: { num: user_c_mall_s, den: user_iv_mall_s }
+    user_btc_mall_per_user_iv_mall: { num: user_btc_mall, den: user_iv_mall }
+    user_btc_mall_s_per_user_iv_mall_s: { num: user_btc_mall_s, den: user_iv_mall_s }
     s_conv_to_cont_imv_good:    { num: s_contact_imv_good,  den: s_iv_imv_good }
     s_conv_to_cont_imv_low:     { num: s_contact_imv_low,   den: s_iv_imv_low }
     s_conv_to_cont_imv_high:    { num: s_contact_imv_high,  den: s_iv_imv_high }
