@@ -162,7 +162,9 @@ from (
         decode(bl.level, 3, bl.Location_id, null)                    as buyer_city_id,
         bl.LocationGroup_id                                          as buyer_location_group_id,
         bl.City_Population_Group                                     as buyer_population_group,
-        bl.Logical_Level                                             as buyer_location_level_id
+        bl.Logical_Level                                             as buyer_location_level_id,
+  		--is_cart
+  		is_cart
     from dma.current_order_item as coi
     join /*+distrib(l,a)*/ delivery_status_date as ps on ps.deliveryorder_id = coi.deliveryorder_id
     left join /*+distrib(l,a)*/ (
