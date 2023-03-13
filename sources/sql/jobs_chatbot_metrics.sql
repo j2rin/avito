@@ -13,6 +13,8 @@ select
     rn,
     is_listing,
     item_id,
-    is_first_trial
+    is_first_trial,
+    platform_id,
+    action_from
 from dma.jobs_chatbot_metrics
 where event_date::date between :first_date and :last_date
