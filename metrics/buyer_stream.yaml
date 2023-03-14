@@ -1753,7 +1753,7 @@ metric.counter:
 
     agbc_bt_clicks: { filter: [{ $or: [[*is_btc], [*is_agent_back_call_start]] }] }
     agbc_contacts_all: { filter: [{ $or: [[*is_contact], [*is_agent_back_call]] }] }
-    cnt_btc_serp_freshness: { filter: [*is_btc_wo_guessing, *x_is_search] , obs: [ freshness ], }
+    cnt_btc_serp_age: { filter: [*is_btc_wo_guessing, *x_is_search] , obs: [ item_age_hours ], }
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -3737,4 +3737,4 @@ metric.ratio:
     
     agbc_contacts_per_item_view: { num: agbc_contacts_all, den: item_views }
 
-    btc_serp_freshness:             {num: cnt_btc_serp_freshness,       den: cnt_btc_s_item_attr}
+    btc_serp_age:             {num: cnt_btc_serp_age,       den: cnt_btc_s_item_attr}
