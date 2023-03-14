@@ -48,6 +48,12 @@
   		   call_ht,
   		   calls_with_ht,
   		   calls_abandoned,
-  		   calls_ivr
+  		   calls_ivr,
+           chat_resolution_time,
+  		   chat_solved,
+           chat_on_time,
+           chat_sl,
+           call_transfered,
+           call_queue_changed
 	  from dma.support_metric_observation
 where event_date::date between :first_date and :last_date
