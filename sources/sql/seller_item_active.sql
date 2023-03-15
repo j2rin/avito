@@ -4,6 +4,28 @@ sia_users as (
     from dma.o_seller_item_active
     where event_date::date between :first_date::date and :last_date::date
         and user_id is not null
+),
+usm as (
+	select
+        usm.user_id,
+        usm.logical_category_id,
+        usm.user_segment,
+        c.event_date
+    from (
+        select
+            user_id,
+            logical_category_id,
+            user_segment,
+            converting_date as from_date,
+            lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
+        from DMA.user_segment_market
+        where true
+            and user_id in (select user_id from sia_users)
+            and converting_date <= :last_date::date
+    ) usm
+    join dict.calendar c on c.event_date between :first_date::date and :last_date::date
+    where c.event_date >= usm.from_date and c.event_date < usm.to_date
+        and usm.to_date >= :first_date::date
 )
 select /*+syntactic_join*/
     ss.event_date,
@@ -75,7 +97,7 @@ select /*+syntactic_join*/
     cl.Logical_Level                                          as location_level_id,
     nvl(asd.is_asd, False)                                    as is_asd,
     nvl(asd.user_group_id, 8383)                              as asd_user_group_id, -- By default is SS group - 8383
-    nvl(usm.user_segment, ls.segment)                         as user_segment_market,
+    COALESCE(usm.user_segment, usm2.user_segment, ls.segment)                         as user_segment_market,
     lc.logical_param1_id,
     lc.logical_param2_id,
     ifnull(ss.condition_id, 0)                                as condition_id,
@@ -98,39 +120,24 @@ left join /*+jtype(h),distrib(l,a)*/ (
 ) ic
     on ic.infmquery_id = ss.infmquery_id
 
+left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = ss.microcat_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls
-    on ls.logical_category_id = lc.logical_category_id
+    on ls.logical_category_id = nvl(lc.logical_category_id, cm.logical_category_id)
     and ls.is_default
 
-left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = ss.microcat_id
+
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = ss.location_id
 
-left join /*+jtype(h),distrib(l,r)*/ (
-    select
-        usm.user_id,
-        usm.logical_category_id,
-        usm.user_segment,
-        c.event_date
-    from (
-        select
-            user_id,
-            logical_category_id,
-            user_segment,
-            converting_date as from_date,
-            lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
-        from DMA.user_segment_market
-        where true
-            and user_id in (select user_id from sia_users)
-            and converting_date <= :last_date::date
-    ) usm
-    join dict.calendar c on c.event_date between :first_date::date and :last_date::date
-    where c.event_date >= usm.from_date and c.event_date < usm.to_date
-        and usm.to_date >= :first_date::date
-) usm
+left join /*+jtype(h),distrib(l,r)*/ usm
     on  ss.user_id = usm.user_id
     and ss.event_date = usm.event_date
     and lc.logical_category_id = usm.logical_category_id
+
+left join /*+jtype(h),distrib(l,r)*/ usm usm2
+    on  ss.user_id = usm2.user_id
+    and ss.event_date = usm2.event_date
+    and cm.logical_category_id = usm2.logical_category_id
 
 left join /*+distrib(l,a)*/ dma.item_geo_information ig
     on ig.user_id = ss.user_id
