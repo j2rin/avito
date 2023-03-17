@@ -51,6 +51,9 @@ definitions:
 
   - &jk_featured                         {realty_development_flags.bit: 3}
   - &jk_not_featured                     {realty_development_flags.!bit: 3}
+  
+  - &jk_promo_max                        {realty_development_flags.bit: 4}
+  - &jk_not_promo_max                    {realty_development_flags.!bit: 4}
 
   - &item_cpa                            {item_flags.bit: 0}
   - &item_not_cpa                        {item_flags.!bit: 0}
@@ -63,6 +66,9 @@ definitions:
 
   - &featured                            {item_flags.bit: 3}
   - &not_featured                        {item_flags.!bit: 3}
+
+  - &item_promo_max                      {item_flags.bit: 4}
+  - &item_not_promo_max                  {item_flags.!bit: 4}
 
 metric.counter:
   catalog_jk_entry_point:                            {filter: [*is_entry_point]}
@@ -134,6 +140,10 @@ metric.counter:
   realty_dev_views_map_cpa:                          {filter: [*is_jk_view, from_page: map, *jk_cpa]}
   realty_dev_views_cat_jk_serp_cpa:                  {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_cpa]}
 
+  total_cpa_contact:                                 {filter: [{$or: [[*is_c_jk, *jk_cpa],[*is_item_c, *item_cpa]]}]}
+  total_auction_contact:                             {filter: [{$or: [[*is_c_jk, *jk_auction],[*is_item_c, *item_auction]]}]}
+  total_promo_contact:                               {filter: [{$or: [[*is_c_jk, *jk_auction, *jk_not_promo_max],[*is_item_c, *item_auction, *item_not_promo_max]]}]}
+  total_promo_max_contact:                           {filter: [{$or: [[*is_c_jk, *jk_promo_max],[*is_item_c, *item_promo_max]]}]}
 
   realty_dev_c_not_cpa:                              {filter: [*is_c_jk, *jk_not_cpa]}
   realty_dev_ph_not_cpa:                             {filter: [*is_ph_realdev, *jk_not_cpa]}
@@ -186,6 +196,11 @@ metric.counter:
   realty_item_views_auction:                         {filter: [ *is_item_view, *item_auction ] }
   realty_item_c_cpa_not_auction:                     {filter: [ *is_item_c, *item_not_auction ] }
   realty_item_views_cpa_not_auction:                 {filter: [ *is_item_view, *item_not_auction ] }
+  
+  realty_item_c_promo:                               {filter: [ *is_item_c, *item_auction , *item_not_promo_max ] }
+  realty_item_views_promo:                           {filter: [ *is_item_view, *item_auction , *item_not_promo_max ] }
+  realty_item_c_promo_max:                           {filter: [ *is_item_c, *item_promo_max ] }
+  realty_item_views_promo_max:                       {filter: [ *is_item_view, *item_promo_max ] }
 
   realty_dev_c_notification:                         {filter: [*is_c_notification]}
   realty_dev_c_notification_card:                    {filter: [*is_c_notification_card]}
@@ -313,12 +328,22 @@ metric.uniq:
   users_realty_item_c_cpa_not_auction:                {counter: realty_item_c_cpa_not_auction,                key: [cookie]}
   users_realty_item_views_cpa_not_auction:            {counter: realty_item_views_cpa_not_auction,            key: [cookie]}
 
+  users_realty_item_c_promo:                          {counter: realty_item_c_promo,                          key: [cookie]}
+  users_realty_item_views_promo:                      {counter: realty_item_views_promo,                      key: [cookie]}
+  users_realty_item_c_promo_max:                      {counter: realty_item_c_promo_max,                      key: [cookie]}
+  users_realty_item_views_promo_max:                  {counter: realty_item_views_promo_max,                  key: [cookie]}
+
   users_realty_realty_dev_c_notification:             {counter: realty_dev_c_notification,                    key: [cookie]}
   users_realty_realty_dev_c_notification_card:        {counter: realty_dev_c_notification_card,               key: [cookie]}
   users_realty_realty_item_c_notification_item:       {counter: realty_item_c_notification_item,              key: [cookie]}
 
   users_realty_open_back_call:                        {counter: realty_open_back_call,                        key: [cookie]}
   users_realty_send_back_call:                        {counter: realty_send_back_call,                        key: [cookie]}
+
+  users_total_cpa_contact:                            {counter: total_cpa_contact,                            key: [cookie]}
+  users_total_auction_contact:                        {counter: total_auction_contact,                        key: [cookie]}
+  users_total_promo_contact:                          {counter: total_promo_contact,                          key: [cookie]}
+  users_total_promo_max_contact:                      {counter: total_promo_max_contact,                      key: [cookie]}
 
 metric.ratio:
     realty_send_back_call_per_realty_open_back_call:                 { num: realty_send_back_call, den: realty_open_back_call }
