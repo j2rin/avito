@@ -140,10 +140,10 @@ metric.counter:
   realty_dev_views_map_cpa:                          {filter: [*is_jk_view, from_page: map, *jk_cpa]}
   realty_dev_views_cat_jk_serp_cpa:                  {filter: [*is_jk_view, from_page: catalog_jk_serp, *jk_cpa]}
 
-  total_cpa_contact:                                 {filter: [{$or: [[*is_c_jk, *jk_cpa],[*is_item_c, *item_cpa]]}}
-  total_auction_contact:                             {filter: [{$or: [[*is_c_jk, *jk_auction],[*is_item_c, *item_auction]]}}
-  total_promo_contact:                               {filter: [{$or: [[*is_c_jk, *jk_auction, *jk_not_promo_max],[*is_item_c, *item_auction, *item_not_promo_max]]}}
-  total_promo_max_contact:                           {filter: [{$or: [[*is_c_jk, *jk_promo_max],[*is_item_c, *item_promo_max]]}}
+  total_cpa_contact:                                 {filter: [{$or: [[*is_c_jk, *jk_cpa],[*is_item_c, *item_cpa]]}]}
+  total_auction_contact:                             {filter: [{$or: [[*is_c_jk, *jk_auction],[*is_item_c, *item_auction]]}]}
+  total_promo_contact:                               {filter: [{$or: [[*is_c_jk, *jk_auction, *jk_not_promo_max],[*is_item_c, *item_auction, *item_not_promo_max]]}]}
+  total_promo_max_contact:                           {filter: [{$or: [[*is_c_jk, *jk_promo_max],[*is_item_c, *item_promo_max]]}]}
 
   realty_dev_c_not_cpa:                              {filter: [*is_c_jk, *jk_not_cpa]}
   realty_dev_ph_not_cpa:                             {filter: [*is_ph_realdev, *jk_not_cpa]}
@@ -340,10 +340,10 @@ metric.uniq:
   users_realty_open_back_call:                        {counter: realty_open_back_call,                        key: [cookie]}
   users_realty_send_back_call:                        {counter: realty_send_back_call,                        key: [cookie]}
 
-  users_total_cpa_contact:                        {counter: total_cpa_contact,                        key: [cookie]}
+  users_total_cpa_contact:                            {counter: total_cpa_contact,                            key: [cookie]}
   users_total_auction_contact:                        {counter: total_auction_contact,                        key: [cookie]}
-  users_total_promo_contact:                        {counter: total_promo_contact,                        key: [cookie]}
-  users_total_promo_max_contact:                        {counter: total_promo_max_contact,                        key: [cookie]}
+  users_total_promo_contact:                          {counter: total_promo_contact,                          key: [cookie]}
+  users_total_promo_max_contact:                      {counter: total_promo_max_contact,                      key: [cookie]}
 
 metric.ratio:
     realty_send_back_call_per_realty_open_back_call:                 { num: realty_send_back_call, den: realty_open_back_call }
