@@ -97,7 +97,7 @@ select /*+syntactic_join*/
     cl.Logical_Level                                          as location_level_id,
     nvl(asd.is_asd, False)                                    as is_asd,
     nvl(asd.user_group_id, 8383)                              as asd_user_group_id, -- By default is SS group - 8383
-    COALESCE(usm.user_segment, usm2.user_segment, ls.segment)                         as user_segment_market,
+    COALESCE(usm.user_segment, ls.segment)                         as user_segment_market,
     lc.logical_param1_id,
     lc.logical_param2_id,
     ifnull(ss.condition_id, 0)                                as condition_id,
@@ -132,12 +132,8 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id 
 left join /*+jtype(h),distrib(l,r)*/ usm
     on  ss.user_id = usm.user_id
     and ss.event_date = usm.event_date
-    and lc.logical_category_id = usm.logical_category_id
+    and COALESCE(lc.logical_category_id, cm.logical_category_id) = usm.logical_category_id
 
-left join /*+jtype(h),distrib(l,r)*/ usm usm2
-    on  ss.user_id = usm2.user_id
-    and ss.event_date = usm2.event_date
-    and cm.logical_category_id = usm2.logical_category_id
 
 left join /*+distrib(l,a)*/ dma.item_geo_information ig
     on ig.user_id = ss.user_id
