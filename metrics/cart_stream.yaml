@@ -3,17 +3,17 @@ definitions:
     - &cart_page {eid: 4657, item_id.isnull: false}
     - &empty_cart_page {eid: 4657, item_id.isnull: true}
     - &cart_page_exp {eid: 4657, status: false}
-    - &cart_checkout_page {eid: 6389}
+    - &cart_checkout_page {eid: 6389}
     - &cart_p2p {eid: 6403, cart_flow_type.isnull: false}
     - &b2c {cart_flow_type: 'b2c'}
     
 metric.counter:
-    cart_add_total: {filter: *add}
-    cart_page_total: {filter: *cart_page}
-    expired_cart_page_total: {filter: *cart_page_exp}
-    empty_cart_page_total: {filter: *empty_cart_page}
-    cart_chckt_total: {filter: *cart_checkout_page}
-    cart_p2p_total: {filter: *cart_p2p}
+    cart_add_total: {filter: [*add]}
+    cart_page_total: {filter: [*cart_page]}
+    expired_cart_page_total: {filter: [*cart_page_exp]}
+    empty_cart_page_total: {filter: [*empty_cart_page]}
+    cart_chckt_total: {filter: [*cart_checkout_page]}
+    cart_p2p_total: {filter: [*cart_p2p]}
 
 metric.uniq:
     cart_add: {counter: cart_add_total, key: [cookie_item]}
