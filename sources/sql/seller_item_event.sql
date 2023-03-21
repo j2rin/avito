@@ -9,7 +9,7 @@ with am_client_day as (
         and active_to_date >= :first_date
 ),
 smartphone_buyout_screens as (
-  select sbs.item_id
+  select sbs.internal_item_id as item_id
        , event_date
        , max (case when eid = 6519 or (eid = 6703 and banner_type = 'invitation') then true else false end) as smartphone_buyout_seen_invitation_cd
        , max (case when eid = 6520 or (eid = 6698 and banner_type = 'invitation') then true else false end) as smartphone_buyout_entered_flow_cd

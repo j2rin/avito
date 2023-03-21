@@ -14,7 +14,7 @@ select
 from :fact_table  t
 left join
     (select * from infomodel.current_infmquery_category
-     where infmquery_id in (select infmquery_id from :fact_table where __date__ between :first_date and :last_date))
+     where infmquery_id in (select infmquery_id from infmquery_id_cte))
      ic on ic.infmquery_id = t.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join DMA.current_microcategories cm on cm.microcat_id = ic.microcat_id
