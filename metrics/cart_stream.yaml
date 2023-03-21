@@ -1,8 +1,8 @@
 definitions:
     - &add {eid: 5942}
-    - &cart_page {eid: 4657, item_id.isnull: false} 
-    - &empty_cart_page {eid: 4657, item_id.isnull: true} 
-    - &cart_page_exp {eid: 4657, status: false}    
+    - &cart_page {eid: 4657, item_id.isnull: false}
+    - &empty_cart_page {eid: 4657, item_id.isnull: true}
+    - &cart_page_exp {eid: 4657, status: false}
     - &cart_checkout_page {eid: 6389}
     - &cart_p2p {eid: 6403, cart_flow_type.isnull: false}
     - &b2c {cart_flow_type: 'b2c'}
@@ -16,17 +16,16 @@ metric.counter:
     cart_p2p_total: {filter: *cart_p2p}
 
 metric.uniq:
-# в column_map в конфиге источника прописать маппинг cookie_item: [cookie_id, item_ext] 
     cart_add: {counter: cart_add_total, key: [cookie_item]}
     cart_add_cookie: {counter: cart_add_total, key: [cookie_id]}
-    cart_page: {counter: cart_page_total, key: [cookie_item]} 
+    cart_page: {counter: cart_page_total, key: [cookie_item]}
     cart_page_cookie: {counter: cart_page_total, key: [cookie_id]}
-    expired_cart_page_cookie: {counter: expired_cart_page_total, key: [cookie_id]} 
-    empty_cart_page_cookie: {counter: empty_cart_page_total, key: [cookie_id]} 
-    cart_chckt: {counter: cart_chckt_total, key: [cookie_item]} 
-    cart_chckt_cookie: {counter: cart_chckt_total, key: [cookie_id]} 
-    cart_p2p: {counter: cart_p2p_total, key: [cookie_item]} 
-    cart_p2p_cookie: {counter: cart_p2p_total, key: [cookie_id} 
+    expired_cart_page_cookie: {counter: expired_cart_page_total, key: [cookie_id]}
+    empty_cart_page_cookie: {counter: empty_cart_page_total, key: [cookie_id]}
+    cart_chckt: {counter: cart_chckt_total, key: [cookie_item]}
+    cart_chckt_cookie: {counter: cart_chckt_total, key: [cookie_id]}
+    cart_p2p: {counter: cart_p2p_total, key: [cookie_item]}
+    cart_p2p_cookie: {counter: cart_p2p_total, key: [cookie_id}
 
 metric.ratio:
     cart_page_add_ratio: {num: cart_page, den: cart_add}
