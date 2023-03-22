@@ -1,3 +1,10 @@
+with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
+cart_items as 
+(
+    select distinct item_id 
+    from dma.cart_stream 
+    where event_date::date between :first_date and :last_date
+)
 select 
     cs.event_date::date as event_date, 
     cs.cookie_id,
@@ -46,6 +53,11 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.am_client_day_versioned asd on cs.user_
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_user cu on cu.user_id = cs.user_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations bl on bl.Location_id = cu.location_id
-left join /*+jtype(h),distrib(r,l)*/ DMA.current_item ci on ci.item_id = cs.item_id
+left join /*+jtype(h),distrib(r,l)*/ 
+    (
+        select item_id, Location_id
+        from DMA.current_item 
+        where item_id in (select * from cart_items)
+    ) ci on ci.item_id = cs.item_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = ci.location_id
 where cs.event_date::date between :first_date and :last_date
