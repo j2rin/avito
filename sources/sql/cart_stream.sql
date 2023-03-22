@@ -53,7 +53,7 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.am_client_day_versioned asd on cs.user_
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_user cu on cu.user_id = cs.user_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations bl on bl.Location_id = cu.location_id
-left join /*+jtype(h),distrib(r,l)*/ 
+left join /*+jtype(h),distrib(a,l)*/ 
     (
         select item_id, Location_id
         from DMA.current_item 
