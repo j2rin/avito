@@ -44,7 +44,7 @@ select
 from dma.cart_stream cs 
 left join /*+jtype(h),distrib(l,a)*/ DMA.am_client_day_versioned asd on cs.user_id = asd.user_id and cs.event_date::date between asd.active_from_date and asd.active_to_date
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
-left join /*+jtype(h),distrib(l,a)*/ DMA.current_user cu on cu.user_id = cs.user_id
+left join /*+jtype(h),distrib(r,l)*/ DMA.current_user cu on cu.user_id = cs.user_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations bl on bl.Location_id = cu.location_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = cs.location_id
 where cs.event_date::date between :first_date and :last_date
