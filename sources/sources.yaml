@@ -2490,3 +2490,42 @@ target_contact_seller:
   primary_subject: user
   dtm: event_date
   segm: seller_id 
+  
+cart_stream:
+  metric_configs: [cart_stream]
+  database: vertica
+  sql: cart_stream
+  column_map:
+    cookie_item: [cookie_id, item_id]
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - is_intercity
+    - is_asd
+    - asd_user_group
+    - buyer_location 
+    - buyer_region 
+    - buyer_city 
+    - buyer_location_group 
+    - buyer_location_level 
+    - buyer_population_group 
+    - location
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  m42_cartesian_groups:
+    - [vertical, logical_category, region]
+    - [category, subcategory]
+  dtm: event_date
+  segm: cookie_id
