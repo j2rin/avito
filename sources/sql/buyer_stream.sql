@@ -4,6 +4,12 @@ bs_users as (
     from dma.buyer_stream
     where event_date::date between :first_date::date and :last_date::date
         and item_user_id is not null
+),
+bs_items as (
+    select distinct item_id
+    from dma.buyer_stream
+    where event_date::date between :first_date::date and :last_date::date
+        and item_id is not null
 )
 select
     ss.platform_id,
@@ -108,7 +114,7 @@ select
          when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) = 0) and (ss.search_flags & (1 << 41) > 0) and (ss.search_flags & (1 << 42) = 0)) then 5
          end as s_view_mode,
     ((ss.item_flags & (1 << 28) > 0) and (ss.item_flags & (1 << 17) > 0))::int as is_item_with_video_cpa,
-    datediff('hour', ci.StartTime, ss.event_date) as item_age_hours
+    datediff('hour', ial.sort_time, ss.event_date) as item_age_hours
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -116,7 +122,6 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microc
 left join /*+jtype(h),distrib(l,a)*/ dict.segmentation_ranks ls on cm.logical_category_id = ls.logical_category_id and is_default
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations clx on clx.Location_id = ss.x_location_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = ss.location_id
-left join /*+jtype(h),distrib(l,a)*/ DMA.current_item ci on ss.item_id = ci.item_id
 
 left join /*+jtype(fm),distrib(l,a)*/ (
     select first_action_track_id as track_id, first_action_event_no as event_no
@@ -178,5 +183,21 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where user_id in (select user_id from bs_users)
         and event_timestamp::date <= :last_date::date
 ) ir on ss.item_id = ir.item_id and ss.event_date >= ir.converting_date and ss.event_date < ir.next_converting_date
+
+left join /*+jtype(h),distrib(l,a)*/ (
+    select
+        item_id,
+        from_date,
+        to_date,
+        sort_time
+    from dma.item_attr_log
+    where item_id in (
+            select item_id from bs_items
+        )
+        and from_date <= :last_date
+        and to_date >= :first_date
+) ial
+    on ial.item_id = ss.item_id
+    and ss.event_date::date between ial.from_date and ial.to_date
 
 where ss.event_date::date between :first_date and :last_date

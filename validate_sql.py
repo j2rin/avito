@@ -223,7 +223,7 @@ def validate(filenames=None, limit0=False, n_days=1):
         if not meta:
             report |= {'error': f'No config in `sources.yaml` found for `{filename}`'}
 
-        if meta['database'] == 'vertica':
+        elif meta['database'] == 'vertica':
             report |= vertica_validator.validate(path, meta['primary_subject'])
         elif meta['database'] == 'clickhouse':
             report |= clickhouse_validator.validate(path)

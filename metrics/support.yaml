@@ -21,6 +21,9 @@ metric.counter:
   support_ticket_ht:                               {obs: [ticket_ht]} 
   support_chats_with_ht:                           {obs: [chats_with_ht]}
   support_chat_ht:                                 {obs: [chat_ht]} 
+  support_chat_solved:                             {obs: [chat_solved]}
+  support_chat_on_time:                            {obs: [chat_on_time]}
+  support_chat_sl:                                 {obs: [chat_sl]}
   support_ticket_information_request:              {obs: [ticket_information_request]}
   support_ticket_platform_fraud_templates:         {obs: [ticket_platform_fraud_templates]}
   support_ticket_platform_fraud_nodes:             {obs: [ticket_platform_fraud_nodes]}
@@ -30,6 +33,8 @@ metric.counter:
   support_calls_with_ht:                           {obs: [calls_with_ht]}
   support_calls_abandoned:                         {obs: [calls_abandoned]}
   support_calls_ivr:                               {obs: [calls_ivr]}
+  support_calls_transfered:                        {obs: [call_transfered]}
+  support_calls_queue_changed:                     {obs: [call_queue_changed]}
 # --- COMBINING TOTAL ---
   support_email_wizard_tickets_created:    {obs: [ticket_email_created, ticket_wizard_created]}
   support_ticket_chat_platform:            {obs: [ticket_wizard_created, chats_created]}
@@ -60,6 +65,8 @@ metric.uniq:
 metric.ratio:
   support_ticket_with_changed_problem_rate: {num: cnt_tickets_problem_changed, den: support_email_wizard_tickets_created}
   support_chat_from_flow_share:             {num: support_chats_created, den: support_total_flow}
+  support_chat_on_time_share:               {num: support_chat_on_time, den: support_chat_solved}
+  support_chat_sl_share:                    {num: support_chat_sl, den: support_chats_flow}
   support_ticket_csat:                      {num: support_ticket_csat_scores, den: support_ticket_satisfaction_scores}
   support_chat_csat:                        {num: support_chat_csat_scores, den: support_chat_satisfaction_scores}
   support_ticket_aht:                       {num: support_ticket_ht, den: support_tickets_with_ht}
@@ -73,3 +80,6 @@ metric.ratio:
   support_call_aht:                         {num: support_call_ht, den: support_calls_with_ht}
   support_call_csat:                        {num: support_call_csat_scores, den: support_call_satisfaction_scores}
   support_call_abandon_rate:                {num: support_calls_abandoned, den: support_calls_ivr}
+  support_call_transfered_rate:             {num: support_calls_transfered, den: support_callcenter_calls}
+  support_call_queue_changed_rate:          {num: support_calls_queue_changed, den: support_callcenter_calls}
+  
