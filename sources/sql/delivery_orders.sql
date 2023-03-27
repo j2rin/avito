@@ -212,7 +212,7 @@ from (
     where true
         --and co.is_test is false
         --and not co.is_deleted
-        and not coi.is_deleted
+        --and not coi.is_deleted
 ) pre
 left join /*+distrib(l,a)*/ (
     select
