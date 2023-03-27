@@ -321,6 +321,9 @@ definitions:
     
     - &is_item_with_video_cpa {is_item_with_video_cpa: 1}
 
+    - &is_s_sav_serp_fav_list { from_page: "saved_search" }
+    - &x_is_s_sav_serp_fav_list { x_from_page: "saved_search" }
+
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
     base_serp_small: { filter: [*is_1p, *is_base_serp_small, *is_search] }
@@ -1756,6 +1759,11 @@ metric.counter:
     agbc_contacts_all: { filter: [{ $or: [[*is_contact], [*is_agent_back_call]] }] }
     cnt_btc_serp_age: { filter: [*is_btc_wo_guessing, *x_is_search] , obs: [ item_age_hours ], }
 
+    s_sav_serp_fav_list: { filter: [*is_search, *is_s_sav_serp_fav_list] }
+    iv_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
+    btc_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
+    contact_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
+
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
     bt_clicks_grouped: { counter: bt_clicks, key: [cookie_item] }
@@ -3108,6 +3116,12 @@ metric.uniq:
     c_agent_callback_users: {counter: c_agent_callback, key: [cookie] }
     c_agent_callback_start_items: {counter: c_agent_callback_start, key: [cookie_item] }
     c_agent_callback_start_users: {counter: c_agent_callback_start, key: [cookie] }
+
+    user_s_sav_serp_fav_list: {counter: s_sav_serp_fav_list, key: [cookie] }
+    user_iv_sav_serp_fav_list: {counter: iv_sav_serp_fav_list, key: [cookie] }
+    user_btc_sav_serp_fav_list: {counter: btc_sav_serp_fav_list, key: [cookie] }
+    user_contact_sav_serp_fav_list: {counter: contact_sav_serp_fav_list, key: [cookie] }
+
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
