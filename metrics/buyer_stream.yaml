@@ -1631,6 +1631,7 @@ metric.counter:
     btc_videocalls: { filter: [{ $or: [*is_btc, *is_videocalls_contact] }] }
     iv_s_vertical_defined: { filter: [*is_iv_wo_guessing, *x_is_search, *x_is_vertical_defined] }
     iv_s_vertical_undefined: { filter: [*is_iv_wo_guessing, *x_is_search, *x_is_vertical_undefined] }
+    cnt_contact_bs: { filter: [*is_contact_wo_guessing] }
     c_s_vertical_defined: { filter: [*is_contact_wo_guessing, *x_is_search, *x_is_vertical_defined] }
     c_s_vertical_undefined: { filter: [*is_contact_wo_guessing, *x_is_search, *x_is_vertical_undefined] }
     iv_multiloc_vertical_defined: { filter: [*is_multiloc, *is_iv_wo_guessing, *x_is_vertical_defined] }
@@ -1753,6 +1754,7 @@ metric.counter:
 
     agbc_bt_clicks: { filter: [{ $or: [[*is_btc], [*is_agent_back_call_start]] }] }
     agbc_contacts_all: { filter: [{ $or: [[*is_contact], [*is_agent_back_call]] }] }
+    cnt_btc_serp_age: { filter: [*is_btc_wo_guessing, *x_is_search] , obs: [ item_age_hours ], }
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -2241,6 +2243,11 @@ metric.uniq:
     seller_buyer_pair_with_btc_s: { counter: cnt_btc_s, key: [item_user_id] }
     seller_buyer_pair_with_btc_s_q: { counter: cnt_btc_s_query, key: [item_user_id] }
     seller_buyer_pair_with_btc_s_noq: { counter: cnt_btc_s_noquery, key: [item_user_id] }
+    seller_buyer_pair_with_contact: { counter: cnt_contact_bs, key: [item_user_id] }
+    seller_buyer_pair_with_contact_rec: { counter: cnt_cs_rec, key: [item_user_id] }
+    seller_buyer_pair_with_contact_s: { counter: cnt_cs_s_item_attr, key: [item_user_id] }
+    seller_buyer_pair_with_contact_s_q: { counter: cnt_s_query_c, key: [item_user_id] }
+    seller_buyer_pair_with_contact_s_noq: { counter: cnt_s_noquery_c, key: [item_user_id] }
     seller_buyer_pair_with_iv: { counter: item_views, key: [ item_user_id ] }
     seller_buyer_pair_with_iv_rec: { counter: cnt_iv_rec, key: [ item_user_id ] }
     seller_buyer_pair_with_iv_s: { counter: cnt_iv_s_item_attr, key: [ item_user_id ] }
@@ -3728,3 +3735,5 @@ metric.ratio:
     user_c_s_kmt_per_user_s_kmt:  { num: user_c_s_kmt,      den: user_s_kmt }
     
     agbc_contacts_per_item_view: { num: agbc_contacts_all, den: item_views }
+
+    btc_serp_age:             {num: cnt_btc_serp_age,       den: cnt_btc_s_item_attr}
