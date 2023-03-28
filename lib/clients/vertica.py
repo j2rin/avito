@@ -11,7 +11,7 @@ def get_vertica_credentials():
             'database': os.getenv('VERTICA_DATABASE', 'DWH'),
             'user': os.getenv('VERTICA_USER', ''),
             'password': os.getenv('VERTICA_PASSWORD', ''),
-            'connection_timeout': 1800,
+            'connection_timeout': 3600,
         }
 
     from_env = get_from_env()
