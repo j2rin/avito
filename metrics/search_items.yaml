@@ -29,9 +29,11 @@ metric.counter:
     seller_buyer_pair_with_rec_u2i:     {filter: [*is_u2i],             obs: [ sellers_count ] }
 
 metric.uniq:
-    user_item_shows_u2i:                {counter: cnt_rec_items_u2i,   key: [cookie]}
+    user_item_shows_u2i:                {counter: cnt_rec_items_u2i,    key: [cookie]}
 
 metric.ratio:
-    rec_score_u2i:              {num: cnt_rec_score_u2i,        den: cnt_rec_items_u2i}
-    rec_score_i2i:              {num: cnt_rec_score_i2i,        den: cnt_rec_items_i2i}
-    serp_freshness:             {num: cnt_serp_freshness,       den: cnt_serp_items}
+    rec_score_u2i:                      {num: cnt_rec_score_u2i,                den: cnt_rec_items_u2i}
+    rec_score_i2i:                      {num: cnt_rec_score_i2i,                den: cnt_rec_items_i2i}
+    serp_freshness:                     {num: cnt_serp_freshness,               den: cnt_serp_items}
+    seller_buyer_pair_per_serp_items:   {num: seller_buyer_pair_with_search,    den: cnt_serp_items}
+    seller_buyer_pair_per_u2i_items:    {num: seller_buyer_pair_with_rec_u2i,   den: cnt_rec_items_u2i}
