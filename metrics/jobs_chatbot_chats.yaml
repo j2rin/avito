@@ -1,0 +1,11 @@
+metric.counter:
+
+  jobs_chatbot_chat_any_action: { obs: [ any_action ] }
+  jobs_chatbot_chat_finished: { obs: [ is_finished ] }
+  jobs_chatbot_chat_billed: { obs: [ is_billed ] }
+ 
+metric.ratio:
+
+  jobs_chatbot_chat_cr_any_action_finished: { num: jobs_chatbot_chat_finished, den: jobs_chatbot_chat_any_action }
+  jobs_chatbot_chat_cr_finished_billed: { num: jobs_chatbot_chat_billed, den: jobs_chatbot_chat_finished }
+  jobs_chatbot_chat_cr_any_action_billed: { num: jobs_chatbot_chat_billed, den: jobs_chatbot_chat_any_action }
