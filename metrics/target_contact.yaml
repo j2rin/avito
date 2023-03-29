@@ -1,5 +1,14 @@
+definitions:
+   - &is_trash                                         {type: trash}
+   - &is_preliminary                                   {type: preliminary}
+   - &is_messenger                                     {contact_type: messenger}
+        
 metric.counter:
   target_contact_all:                                   {filter: [{is_target: True}]}
+  trash_contact:                                        {filter: [*is_trash]}
+  preliminary_contact:                                  {filter: [*is_preliminary]}
+  trash_contact_chat:                                   {filter: [*is_trash, *is_messenger]}
+
     
 
 metric.uniq: 
