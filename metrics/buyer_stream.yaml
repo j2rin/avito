@@ -287,6 +287,7 @@ definitions:
     - &is_item_with_multilocs { item_flags.bit: 25 }
 
     - &is_item_with_video { item_flags.bit: 28 }
+    - &is_item_non_video  { item_flags.!bit: 28 }
     
     - &is_item_mall { item_flags.bit: 30 }
     - &is_s_mall_filter { search_flags.bit: 44 }
@@ -1685,6 +1686,18 @@ metric.counter:
     c_video_s: { filter: [*is_item_with_video, *is_contact_wo_guessing, *x_is_search] }
     fav_video_s: { filter: [*is_item_with_video, *is_fav, *x_is_search] }
     btc_video_s: { filter: [*is_item_with_video, *is_btc_wo_guessing, *x_is_search] }
+    iv_video_u2i: { filter: [*is_item_with_video, *is_iv_wo_guessing, *x_is_u2i] }
+    c_video_u2i: { filter: [*is_item_with_video, *is_contact_wo_guessing, *x_is_u2i] }
+    btc_video_u2i: { filter: [*is_item_with_video, *is_btc_wo_guessing, *x_is_u2i] }
+    iv_video_i2i: { filter: [*is_item_with_video, *is_iv_wo_guessing, *x_is_i2i] }
+    c_video_i2i: { filter: [*is_item_with_video, *is_contact_wo_guessing, *x_is_i2i] }
+    btc_video_i2i: { filter: [*is_item_with_video, *is_btc_wo_guessing, *x_is_i2i] }
+    iv_non_video: { filter: [*is_item_non_video, *is_iv] }
+    c_non_video: { filter: [*is_item_non_video, *is_contact] }
+    iv_non_video_s: { filter: [*is_item_non_video, *is_iv_wo_guessing, *x_is_search] }
+    c_non_video_s: { filter: [*is_item_non_video, *is_contact_wo_guessing, *x_is_search] }
+    iv_non_video_u2i: { filter: [*is_item_non_video, *is_iv_wo_guessing, *x_is_u2i] }
+    c_non_video_u2i: { filter: [*is_item_non_video, *is_contact_wo_guessing, *x_is_u2i] }
     c_mp_video: { filter: [*is_item_with_video, eid: [4675, 5942]] }
     c_mp_video_s: { filter: [*is_item_with_video, eid: [4675, 5942], *x_is_search] }
     iv_cpa_video: { filter: [*is_item_with_video_cpa, *is_iv] }
@@ -3043,6 +3056,16 @@ metric.uniq:
     user_c_video_s: { counter: c_video_s, key: [cookie] }
     user_fav_video_s: { counter: fav_video_s, key: [cookie] }
     user_btc_video_s: { counter: btc_video_s, key: [cookie] }
+    user_iv_video_u2i: { counter: iv_video_u2i, key: [cookie] }
+    user_c_video_u2i: { counter: c_video_u2i, key: [cookie] }
+    user_c_video_i2i: { counter: c_video_i2i, key: [cookie] }
+    user_iv_video_i2i: { counter: iv_video_i2i, key: [cookie] }
+    user_iv_non_video: { counter: iv_non_video, key: [cookie] }
+    user_c_non_video: { counter: c_non_video, key: [cookie] }
+    user_iv_non_video_s: { counter: iv_non_video_s, key: [cookie] }
+    user_c_non_video_s: { counter: c_non_video_s, key: [cookie] }
+    user_iv_non_video_u2i: { counter: iv_non_video_u2i, key: [cookie] }
+    user_c_non_video_u2i: { counter: c_non_video_u2i, key: [cookie] }
     user_c_mp_video: { counter: c_mp_video, key: [cookie] }
     user_c_mp_video_s: { counter: c_mp_video_s, key: [cookie] }
     user_iv_cpa_video: { counter: iv_cpa_video, key: [cookie] }
