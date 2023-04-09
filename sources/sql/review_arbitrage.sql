@@ -7,7 +7,7 @@ select
   	is_initiator_reopen,
   	is_other_reopen,
   	is_both_reopen,
-    who_is_initiator as initiator,
+    who_is_initiator 											as initiator,
     files,
     use_in_rating,
     arbitrageresolution,
