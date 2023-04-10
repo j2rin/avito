@@ -34,3 +34,4 @@ from dma.payment_page_transaction_funnel pp
 join dma.current_payment_transactions cpt using(payment_transaction_id)
 left join dds.S_PaymentTransaction_ErrorCode ec on cpt.payment_transaction_id = ec.paymenttransaction_id
 where pp.transaction_date::date between :first_date and :last_date
+    and cpt.transaction_type = 'payment' -- если захотим не только платежи, прокинуть их в pp, убрать фильтр и убедиться что метрики не ломаются
