@@ -28,8 +28,9 @@ select
 	cl.City_Population_Group                                     as population_group,
 	cl.Logical_Level                                             as location_level_id,
  	-- Observations ---------------------------------------------------------------------------------------------------
-	observation_name,
-    observation_value
+	arbitrage_created,
+    arbitrage_resolved,
+    review_arbitrage_open_attempts
 from dma.arbitrage_metric_observation as ar
     left join /*+jtype(h)*/  dma.current_microcategories    as cm  on ar.microcat_id = cm.microcat_id
     left join /*+jtype(h)*/  dma.current_locations          as cl  on ar.Location_id = cl.location_id
