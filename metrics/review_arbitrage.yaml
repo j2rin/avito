@@ -1,18 +1,18 @@
 metric.counter:
-  review_arbitrage:                 {filter: [{observation_name.=: 'arbitrage_created'}],                                     obs: [observation_value]}
-  review_arbitrage_on_moderation:   {filter: [{observation_name.=: 'arbitrage_created', is_auto.=: false}],                   obs: [observation_value]}
-  review_arbitrage_automoderate:    {filter: [{observation_name.=: 'arbitrage_created', is_auto.=: true}],                    obs: [observation_value]}
-  review_arbitrage_reopen:          {filter: [{observation_name.=: 'arbitrage_created', is_both_reopen.=: true}],             obs: [observation_value]}
-  review_seller_arbitrage:          {filter: [{observation_name.=: 'arbitrage_created', initiator.=: 'seller'}],              obs: [observation_value]}
-  review_buyer_arbitrage:           {filter: [{observation_name.=: 'arbitrage_created', initiator.=: 'buyer'}],               obs: [observation_value]}
-  review_arbitrage_with_files:      {filter: [{observation_name.=: 'arbitrage_created', files.=: 'files'}],                   obs: [observation_value]}
-  rating_review_arbitrage:          {filter: [{observation_name.=: 'arbitrage_created', use_in_rating.=: true}],              obs: [observation_value]}
+  review_arbitrage:                 {obs: [arbitrage_created]}
+  review_arbitrage_on_moderation:   {filter: [{is_auto.=: false}],                   obs: [arbitrage_created]}
+  review_arbitrage_automoderate:    {filter: [{is_auto.=: true}],                    obs: [arbitrage_created]}
+  review_arbitrage_reopen:          {filter: [{is_both_reopen.=: true}],             obs: [arbitrage_created]}
+  review_seller_arbitrage:          {filter: [{initiator.=: 'seller'}],              obs: [arbitrage_created]}
+  review_buyer_arbitrage:           {filter: [{initiator.=: 'buyer'}],               obs: [arbitrage_created]}
+  review_arbitrage_with_files:      {filter: [{files.=: 'files'}],                   obs: [arbitrage_created]}
+  rating_review_arbitrage:          {filter: [{use_in_rating.=: true}],              obs: [arbitrage_created]}
 
-  review_arbitrage_declined:        {filter: [{observation_name.=: 'arbitrage_resolved', arbitrageresolution.=: 'Declined'}], obs: [observation_value]}
-  review_arbitrage_approved:        {filter: [{observation_name.=: 'arbitrage_resolved', arbitrageresolution.=: 'Approved'}], obs: [observation_value]}
-  review_arbitrage_resolved:        {filter: [{observation_name.=: 'arbitrage_resolved'}],                                    obs: [observation_value]}
+  review_arbitrage_declined:        {filter: [{arbitrageresolution.=: 'Declined'}], obs: [arbitrage_resolved]}
+  review_arbitrage_approved:        {filter: [{arbitrageresolution.=: 'Approved'}], obs: [arbitrage_resolved]}
+  review_arbitrage_resolved:        {obs: [arbitrage_resolved]}
 
-  review_arbitrage_open_attempts:   {filter: [{observation_name.=: 'review_arbitrage_open_attempts'}],                        obs: [observation_value]}
+  review_arbitrage_open_attempts:   {obs: [review_arbitrage_open_attempts]}
 
 metric.uniq:
   user_review_arbitrage:                {counter: review_arbitrage,               key: [user]}
