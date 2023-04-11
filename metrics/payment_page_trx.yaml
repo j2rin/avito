@@ -37,6 +37,13 @@ metric.counter:
   trx_payment_frozen:                                {filter: [*is_frozen]}
   trx_payment_error:                                 {filter: [*is_error]}
   
+  trx_payment_sbp_frozen:                            {filter: [*is_sbp, *is_frozen]}
+  trx_payment_new_card_frozen:                       {filter: [*is_card, *is_new_method, *is_frozen]}
+  trx_payment_saved_card_frozen:                     {filter: [*is_card, *is_saved_method, *is_frozen]}
+  
+  trx_payment_new_card_error:                        {filter: [*is_card, *is_new_method, *is_error]}
+  trx_payment_saved_card_error:                      {filter: [*is_card, *is_saved_method, *is_error]}
+  
   trx_payment_sbp:                                   {filter: [*is_sbp]}
   trx_payment_sbp_success:                           {filter: [*is_sbp, *is_success]}
   
@@ -75,14 +82,16 @@ metric.uniq:
   unq_trx_payment_card_success_order:                {counter: trx_payment_card_success, key: [order_ext]}
   unq_trx_payment_card_success_user:                 {counter: trx_payment_card_success, key: [user]}
   
-  unq_trx_payment_new_card_success_order:            {counter: trx_payment_new_card, key: [order_ext]}
-  unq_trx_payment_new_card_success_user:             {counter: trx_payment_new_card, key: [user]}
+  unq_trx_payment_new_card_success_order:            {counter: trx_payment_new_card_success, key: [order_ext]}
+  unq_trx_payment_new_card_success_user:             {counter: trx_payment_new_card_success, key: [user]}
   
 
 metric.ratio:
   trx_payment_success_ratio:                         {num: trx_payment_success, den: trx_payment}
   trx_payment_success_order_ratio:                   {num: unq_trx_payment_success_order, den: unq_trx_payment_order}
   trx_payment_success_user_ratio:                    {num: unq_trx_payment_success_user, den: unq_trx_payment_user}
+  
+  trx_payment_sbp_ratio:                             {num: trx_payment_sbp, den: trx_payment}
   
   trx_payment_card_ratio:                            {num: trx_payment_card, den: trx_payment}
   trx_payment_card_order_ratio:                      {num: unq_trx_payment_card_order, den: unq_trx_payment_order}
