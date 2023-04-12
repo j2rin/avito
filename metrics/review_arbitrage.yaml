@@ -1,0 +1,35 @@
+metric.counter:
+  review_arbitrage:                 {obs: [arbitrage_created]}
+  review_arbitrage_on_moderation:   {filter: [{is_auto.=: false}],                   obs: [arbitrage_created]}
+  review_arbitrage_automoderate:    {filter: [{is_auto.=: true}],                    obs: [arbitrage_created]}
+  review_arbitrage_reopen:          {filter: [{is_both_reopen.=: true}],             obs: [arbitrage_created]}
+  review_seller_arbitrage:          {filter: [{initiator.=: 'seller'}],              obs: [arbitrage_created]}
+  review_buyer_arbitrage:           {filter: [{initiator.=: 'buyer'}],               obs: [arbitrage_created]}
+  review_arbitrage_with_files:      {filter: [{files.=: 'files'}],                   obs: [arbitrage_created]}
+  rating_review_arbitrage:          {filter: [{use_in_rating.=: true}],              obs: [arbitrage_created]}
+
+  review_arbitrage_declined:        {filter: [{arbitrageresolution.=: 'Declined'}], obs: [arbitrage_resolved]}
+  review_arbitrage_approved:        {filter: [{arbitrageresolution.=: 'Approved'}], obs: [arbitrage_resolved]}
+  review_arbitrage_resolved:        {obs: [arbitrage_resolved]}
+
+  review_arbitrage_open_attempts:   {obs: [review_arbitrage_open_attempts]}
+
+metric.uniq:
+  user_review_arbitrage:                {counter: review_arbitrage,               key: [user]}
+  user_review_arbitrage_reopen:         {counter: review_arbitrage_reopen,        key: [user]}
+  user_review_seller_arbitrage:         {counter: review_seller_arbitrage,        key: [user]}
+  user_review_buyer_arbitrage:          {counter: review_buyer_arbitrage,         key: [user]}
+  user_review_arbitrage_with_files:     {counter: review_arbitrage_with_files,    key: [user]}
+  user_rating_review_arbitrage:         {counter: rating_review_arbitrage,        key: [user]}
+  user_review_arbitrage_open_attempts:  {counter: review_arbitrage_open_attempts, key: [user]}
+
+metric.ratio:
+  review_arbitrage_reopen_share:                {num: review_arbitrage_reopen,         den: review_arbitrage}
+  review_arbitrage_on_moderation_share:         {num: review_arbitrage_on_moderation,  den: review_arbitrage}
+  review_arbitrage_automoderate_share:          {num: review_arbitrage_automoderate,   den: review_arbitrage}
+  review_arbitrage_with_files_share:            {num: review_arbitrage_with_files,  den: review_arbitrage}
+  
+  review_arbitrage_decline_share:               {num: review_arbitrage_declined,       den: review_arbitrage_resolved}
+  review_arbitrage_approved_share:              {num: review_arbitrage_approved,       den: review_arbitrage_resolved}
+  
+  review_arbitrage_success_open_share:          {num: review_arbitrage,  den: review_arbitrage_open_attempts}
