@@ -26,5 +26,5 @@ select
     cm.Param2_microcat_id   as param2_id,
     cm.Param3_microcat_id   as param3_id,
     cm.Param4_microcat_id   as param4_id
-from 
+from dma.kmt_stream t
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = t.microcat_id;
