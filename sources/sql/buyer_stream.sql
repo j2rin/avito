@@ -4,6 +4,12 @@ bs_users as (
     from dma.buyer_stream
     where event_date::date between :first_date::date and :last_date::date
         and item_user_id is not null
+),
+bs_items as (
+    select distinct item_id
+    from dma.buyer_stream
+    where event_date::date between :first_date::date and :last_date::date
+        and item_id is not null
 )
 select
     ss.platform_id,
@@ -107,7 +113,9 @@ select
          when ((ss.search_flags & (1 << 39) = 0) and (ss.search_flags & (1 << 40) = 0) and (ss.search_flags & (1 << 41) > 0) and (ss.search_flags & (1 << 42) = 0)) then 4
          when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) = 0) and (ss.search_flags & (1 << 41) > 0) and (ss.search_flags & (1 << 42) = 0)) then 5
          end as s_view_mode,
-    ((ss.item_flags & (1 << 28) > 0) and (ss.item_flags & (1 << 17) > 0))::int as is_item_with_video_cpa
+    ((ss.item_flags & (1 << 28) > 0) and (ss.item_flags & (1 << 17) > 0))::int as is_item_with_video_cpa,
+    datediff('hour', ial.sort_time, ss.event_date) as item_age_hours,
+    pg.price_group
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -176,5 +184,24 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where user_id in (select user_id from bs_users)
         and event_timestamp::date <= :last_date::date
 ) ir on ss.item_id = ir.item_id and ss.event_date >= ir.converting_date and ss.event_date < ir.next_converting_date
+
+left join /*+jtype(h),distrib(l,a)*/ (
+    select
+        item_id,
+        from_date,
+        to_date,
+        sort_time,
+  		price
+    from dma.item_attr_log
+    where item_id in (
+            select item_id from bs_items
+        )
+        and from_date <= :last_date
+        and to_date >= :first_date
+) ial
+    on ial.item_id = ss.item_id
+    and ss.event_date::date between ial.from_date and ial.to_date
+left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_category_id=pg.logical_category_id and ial.price>=pg.min_price and ial.price< pg.max_price     
+    
 
 where ss.event_date::date between :first_date and :last_date

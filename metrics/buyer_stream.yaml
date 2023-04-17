@@ -287,6 +287,7 @@ definitions:
     - &is_item_with_multilocs { item_flags.bit: 25 }
 
     - &is_item_with_video { item_flags.bit: 28 }
+    - &is_item_non_video  { item_flags.!bit: 28 }
 
     - &is_item_mall { item_flags.bit: 30 }
     - &is_s_mall_filter { search_flags.bit: 44 }
@@ -320,6 +321,9 @@ definitions:
     - &is_fav_collection {<<: *is_fav_lst, search_flags.bit: 43 }
 
     - &is_item_with_video_cpa {is_item_with_video_cpa: 1}
+
+    - &is_s_sav_serp_fav_list { from_page: "saved_search" }
+    - &x_is_s_sav_serp_fav_list { x_from_page: "saved_search" }
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
@@ -1066,6 +1070,7 @@ metric.counter:
     contacts_reputation_medium: { filter: [*is_reputation_medium, *is_contact] }
     contacts_reputation_low: { filter: [*is_reputation_low, *is_contact] }
     contacts_story: { filter: [*is_contact, *is_story] }
+    btc_story: { filter: [*is_btc, *is_story] }
     contacts_items: { filter: [*is_contact_item]}
     contacts_items_wo_direct: {filter: [*is_contact_item, item_x_type.isnull: false]}
     contacts_items_cpa: {filter: [*is_contact_item, *is_item_cpa]}
@@ -1631,6 +1636,7 @@ metric.counter:
     btc_videocalls: { filter: [{ $or: [*is_btc, *is_videocalls_contact] }] }
     iv_s_vertical_defined: { filter: [*is_iv_wo_guessing, *x_is_search, *x_is_vertical_defined] }
     iv_s_vertical_undefined: { filter: [*is_iv_wo_guessing, *x_is_search, *x_is_vertical_undefined] }
+    cnt_contact_bs: { filter: [*is_contact_wo_guessing] }
     c_s_vertical_defined: { filter: [*is_contact_wo_guessing, *x_is_search, *x_is_vertical_defined] }
     c_s_vertical_undefined: { filter: [*is_contact_wo_guessing, *x_is_search, *x_is_vertical_undefined] }
     iv_multiloc_vertical_defined: { filter: [*is_multiloc, *is_iv_wo_guessing, *x_is_vertical_defined] }
@@ -1683,6 +1689,18 @@ metric.counter:
     c_delivery_video: { filter: [*is_item_with_video, eid: [4675, 5942], *x_is_search] }
     fav_video_s: { filter: [*is_item_with_video, *is_fav, *x_is_search] }
     btc_video_s: { filter: [*is_item_with_video, *is_btc_wo_guessing, *x_is_search] }
+    iv_video_u2i: { filter: [*is_item_with_video, *is_iv_wo_guessing, *x_is_u2i] }
+    c_video_u2i: { filter: [*is_item_with_video, *is_contact_wo_guessing, *x_is_u2i] }
+    btc_video_u2i: { filter: [*is_item_with_video, *is_btc_wo_guessing, *x_is_u2i] }
+    iv_video_i2i: { filter: [*is_item_with_video, *is_iv_wo_guessing, *x_is_i2i] }
+    c_video_i2i: { filter: [*is_item_with_video, *is_contact_wo_guessing, *x_is_i2i] }
+    btc_video_i2i: { filter: [*is_item_with_video, *is_btc_wo_guessing, *x_is_i2i] }
+    iv_non_video: { filter: [*is_item_non_video, *is_iv] }
+    c_non_video: { filter: [*is_item_non_video, *is_contact] }
+    iv_non_video_s: { filter: [*is_item_non_video, *is_iv_wo_guessing, *x_is_search] }
+    c_non_video_s: { filter: [*is_item_non_video, *is_contact_wo_guessing, *x_is_search] }
+    iv_non_video_u2i: { filter: [*is_item_non_video, *is_iv_wo_guessing, *x_is_u2i] }
+    c_non_video_u2i: { filter: [*is_item_non_video, *is_contact_wo_guessing, *x_is_u2i] }
     c_mp_video: { filter: [*is_item_with_video, eid: [4675, 5942]] }
     c_mp_video_s: { filter: [*is_item_with_video, eid: [4675, 5942], *x_is_search] }
     iv_cpa_video: { filter: [*is_item_with_video_cpa, *is_iv] }
@@ -1736,16 +1754,6 @@ metric.counter:
     c_list: { filter: [*is_contact, *is_list] }
     c_rich: { filter: [*is_contact, *is_rich] }
 
-    s_kmt: { filter: [*is_search, from_page.ilike: '%model_card%'] }
-    iv_kmt: { filter: [*is_iv_wo_guessing, *x_is_kmt] }
-    iv_s_kmt: { filter: [*is_iv_wo_guessing, *x_is_s_kmt] }
-    iv_mini_s_kmt: {filter: [*is_iv_wo_guessing, *x_is_mini_s_kmt] }
-    c_kmt: { filter: [*is_contact_wo_guessing, *x_is_kmt] }
-    c_s_kmt: { filter: [*is_contact_wo_guessing, *x_is_s_kmt] }
-    c_mini_s_kmt: { filter: [*is_contact_wo_guessing, *x_is_mini_s_kmt] }
-    fav_kmt: { filter: [*is_fav, *x_is_kmt] }
-    btc_kmt: { filter: [*is_btc_wo_guessing, *x_is_kmt] }
-
     item_add_fav_collection: { filter: [*is_fav_collection_item_add] }
     item_rmv_fav_collection: { filter: [*is_fav_collection_item_rmv] }
     iv_fav_collection: { filter: [*is_iv_wo_guessing, *x_is_fav_collection] }
@@ -1755,6 +1763,12 @@ metric.counter:
 
     agbc_bt_clicks: { filter: [{ $or: [[*is_btc], [*is_agent_back_call_start]] }] }
     agbc_contacts_all: { filter: [{ $or: [[*is_contact], [*is_agent_back_call]] }] }
+    cnt_btc_serp_age: { filter: [*is_btc_wo_guessing, *x_is_search] , obs: [ item_age_hours ], }
+
+    s_sav_serp_fav_list: { filter: [*is_search, *is_s_sav_serp_fav_list] }
+    iv_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
+    btc_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
+    contact_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -2243,6 +2257,11 @@ metric.uniq:
     seller_buyer_pair_with_btc_s: { counter: cnt_btc_s, key: [item_user_id] }
     seller_buyer_pair_with_btc_s_q: { counter: cnt_btc_s_query, key: [item_user_id] }
     seller_buyer_pair_with_btc_s_noq: { counter: cnt_btc_s_noquery, key: [item_user_id] }
+    seller_buyer_pair_with_contact: { counter: cnt_contact_bs, key: [item_user_id] }
+    seller_buyer_pair_with_contact_rec: { counter: cnt_cs_rec, key: [item_user_id] }
+    seller_buyer_pair_with_contact_s: { counter: cnt_cs_s_item_attr, key: [item_user_id] }
+    seller_buyer_pair_with_contact_s_q: { counter: cnt_s_query_c, key: [item_user_id] }
+    seller_buyer_pair_with_contact_s_noq: { counter: cnt_s_noquery_c, key: [item_user_id] }
     seller_buyer_pair_with_iv: { counter: item_views, key: [ item_user_id ] }
     seller_buyer_pair_with_iv_rec: { counter: cnt_iv_rec, key: [ item_user_id ] }
     seller_buyer_pair_with_iv_s: { counter: cnt_iv_s_item_attr, key: [ item_user_id ] }
@@ -2284,6 +2303,7 @@ metric.uniq:
     user_buyer_target_clicks_shop: { counter: cnt_btc_shopx, key: [cookie] }
     user_item_views_story: { counter:  item_views_story, key: [cookie] }
     user_contacts_story: { counter:  contacts_story, key: [cookie] }
+    user_btc_story: { counter:  btc_story, key: [cookie] }
     user_iv_cpa: { counter: cnt_iv_cpa, key: [cookie] }
     user_iv_s_cpa: { counter: cnt_iv_s_cpa, key: [cookie] }
     user_iv_rec_cpa: { counter: cnt_iv_rec_cpa, key: [cookie] }
@@ -3030,6 +3050,16 @@ metric.uniq:
     user_c_video_s: { counter: c_video_s, key: [cookie] }
     user_fav_video_s: { counter: fav_video_s, key: [cookie] }
     user_btc_video_s: { counter: btc_video_s, key: [cookie] }
+    user_iv_video_u2i: { counter: iv_video_u2i, key: [cookie] }
+    user_c_video_u2i: { counter: c_video_u2i, key: [cookie] }
+    user_c_video_i2i: { counter: c_video_i2i, key: [cookie] }
+    user_iv_video_i2i: { counter: iv_video_i2i, key: [cookie] }
+    user_iv_non_video: { counter: iv_non_video, key: [cookie] }
+    user_c_non_video: { counter: c_non_video, key: [cookie] }
+    user_iv_non_video_s: { counter: iv_non_video_s, key: [cookie] }
+    user_c_non_video_s: { counter: c_non_video_s, key: [cookie] }
+    user_iv_non_video_u2i: { counter: iv_non_video_u2i, key: [cookie] }
+    user_c_non_video_u2i: { counter: c_non_video_u2i, key: [cookie] }
     user_c_mp_video: { counter: c_mp_video, key: [cookie] }
     user_c_mp_video_s: { counter: c_mp_video_s, key: [cookie] }
     user_iv_cpa_video: { counter: iv_cpa_video, key: [cookie] }
@@ -3065,16 +3095,6 @@ metric.uniq:
     user_contacts_front: { counter: contacts_front, key: [cookie] }
     user_contacts_front_cpa: { counter: contacts_front_cpa, key: [cookie] }
 
-    user_s_kmt: { counter: s_kmt, key: [cookie] }
-    user_iv_kmt: { counter: iv_kmt, key: [cookie] }
-    user_iv_s_kmt: { counter: iv_s_kmt, key: [cookie] }
-    user_iv_mini_s_kmt: { counter: iv_mini_s_kmt, key: [cookie] }
-    user_c_kmt: { counter: c_kmt, key: [cookie] }
-    user_c_s_kmt: { counter: c_s_kmt, key: [cookie] }
-    user_c_mini_s_kmt: { counter: c_mini_s_kmt, key: [cookie] }
-    user_fav_kmt: { counter: fav_kmt, key: [cookie] }
-    user_btc_kmt: { counter: btc_kmt, key: [cookie] }
-
     user_item_add_fav_collection: { counter: item_add_fav_collection, key: [cookie] }
     user_item_rmv_fav_collection: { counter: item_rmv_fav_collection, key: [cookie] }
     user_iv_fav_collection: { counter: iv_fav_collection, key: [cookie] }
@@ -3103,6 +3123,12 @@ metric.uniq:
     c_agent_callback_users: {counter: c_agent_callback, key: [cookie] }
     c_agent_callback_start_items: {counter: c_agent_callback_start, key: [cookie_item] }
     c_agent_callback_start_users: {counter: c_agent_callback_start, key: [cookie] }
+
+    user_s_sav_serp_fav_list: {counter: s_sav_serp_fav_list, key: [cookie] }
+    user_iv_sav_serp_fav_list: {counter: iv_sav_serp_fav_list, key: [cookie] }
+    user_btc_sav_serp_fav_list: {counter: btc_sav_serp_fav_list, key: [cookie] }
+    user_contact_sav_serp_fav_list: {counter: contact_sav_serp_fav_list, key: [cookie] }
+
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
@@ -3724,9 +3750,7 @@ metric.ratio:
     prec_c_u2i_rnk5:    { num: c_u2i_rnk5,      den: recblock_shows_u2i_1p_x5}
     prec_c_u2i_rnk10:   { num: c_u2i_rnk10,     den: recblock_shows_u2i_1p_x10}
 
-    iv_s_kmt_per_s_kmt: { num: iv_s_kmt,         den: s_kmt }
-    c_s_kmt_per_s_kmt:  { num: c_s_kmt,          den: s_kmt }
-    user_iv_s_kmt_per_user_s_kmt: { num: user_iv_s_kmt,     den: user_s_kmt }
-    user_c_s_kmt_per_user_s_kmt:  { num: user_c_s_kmt,      den: user_s_kmt }
 
-    agbc_contacts_per_item_view: { num: agbc_contacts_all, den: item_views } 
+    agbc_contacts_per_item_view: { num: agbc_contacts_all, den: item_views }
+
+    btc_serp_age:             {num: cnt_btc_serp_age,       den: cnt_btc_s_item_attr}

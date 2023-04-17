@@ -202,17 +202,17 @@ from (
             min(accept_date) as accept_date
         from dma.current_order
         where true
-            and is_test is false
-            and not is_deleted
+            --and is_test is false
+            --and not is_deleted
             and (coalesce(pay_date, confirm_date) <= :last_date or accept_date <= :last_date)
             and buyer_id in (select buyer_id from buyers)
         group by 1
     ) du
         on du.buyer_id = co.buyer_id
     where true
-        and co.is_test is false
-        and not co.is_deleted
-        and not coi.is_deleted
+        --and co.is_test is false
+        --and not co.is_deleted
+        --and not coi.is_deleted
 ) pre
 left join /*+distrib(l,a)*/ (
     select
@@ -235,8 +235,8 @@ left join /*+distrib(l,a)*/ dma.current_delivery_subsidies cds on pre.deliveryor
 left join /*+distrib(l,a)*/ (
     select
         co.purchase_id,
-        MAX(case when expired_date >= create_date and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
-        SUM(case when expired_date >= create_date and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
+        MAX(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
+        SUM(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
     from dma.current_order co
     left join dma.user_payment_bindings pb on pb.user_id = co.buyer_id
     where true

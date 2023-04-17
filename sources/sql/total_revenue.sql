@@ -55,7 +55,7 @@ join (
     group by 1,2
 ) ps on ps.deliveryorder_id = coi.deliveryorder_id
 where ps.actual_date::date between :first_date and :last_date
-    and not co.is_test
-    and not co.is_deleted
-    and not coi.is_deleted
+    --and not co.is_test
+    --and not co.is_deleted
+    --and not coi.is_deleted
     and ps.platformstatus = 'accepted'

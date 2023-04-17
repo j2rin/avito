@@ -1,5 +1,26 @@
+definitions:
+   - &call                                              [iac, ct]
+
+   - &is_trash                                         {type: trash}
+   - &is_preliminary                                   {type: preliminary}
+   - &is_messenger                                     {contact_type: messenger}
+   - &is_iac                                           {contact_type: iac}
+   - &is_ct                                            {contact_type: ct}
+   - &is_call                                          {contact_type: *call}
+        
 metric.counter:
   target_contact_all:                                   {filter: [{is_target: True}]}
+  trash_contact:                                        {filter: [*is_trash]}
+  preliminary_contact:                                  {filter: [*is_preliminary]}
+  trash_contact_chat:                                   {filter: [*is_trash, *is_messenger]}
+  preliminary_contact_chat:                             {filter: [*is_preliminary, *is_messenger]}
+  trash_contact_call:                                   {filter: [*is_trash, *is_call]}
+  preliminary_contact_call:                             {filter: [*is_preliminary, *is_call]}
+  trash_contact_iac:                                    {filter: [*is_trash, *is_iac]}
+  preliminary_contact_iac:                              {filter: [*is_preliminary, *is_iac]}
+  trash_contact_ct:                                     {filter: [*is_trash, *is_ct]}
+  preliminary_contact_ct:                               {filter: [*is_preliminary, *is_ct]}
+
     
 
 metric.uniq: 
