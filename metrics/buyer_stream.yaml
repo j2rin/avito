@@ -1752,6 +1752,9 @@ metric.counter:
     c_list: { filter: [*is_contact, *is_list] }
     c_rich: { filter: [*is_contact, *is_rich] }
 
+    fav_kmt: { filter: [*is_fav, *x_is_kmt] }
+    btc_kmt: { filter: [*is_btc_wo_guessing, *x_is_kmt] }
+
     item_add_fav_collection: { filter: [*is_fav_collection_item_add] }
     item_rmv_fav_collection: { filter: [*is_fav_collection_item_rmv] }
     iv_fav_collection: { filter: [*is_iv_wo_guessing, *x_is_fav_collection] }
@@ -3092,6 +3095,9 @@ metric.uniq:
 
     user_contacts_front: { counter: contacts_front, key: [cookie] }
     user_contacts_front_cpa: { counter: contacts_front_cpa, key: [cookie] }
+
+    user_fav_kmt: { counter: fav_kmt, key: [cookie] }
+    user_btc_kmt: { counter: btc_kmt, key: [cookie] }
 
     user_item_add_fav_collection: { counter: item_add_fav_collection, key: [cookie] }
     user_item_rmv_fav_collection: { counter: item_rmv_fav_collection, key: [cookie] }
