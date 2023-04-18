@@ -1,5 +1,6 @@
 definitions:
-    - &is_organic    { traffic_source.like: 'organic%', first_event: true}
+    - &is_start_organic    { traffic_source.like: 'organic%', first_event: true}
+    - &is_start    { first_event: true}
 
 metric.counter:
     model_card_goods: {}
@@ -11,22 +12,22 @@ metric.counter:
     c_mini_s_kmt: {obs: [contacts_kmt]}
     iv_mini_s_kmt: {obs: [item_views_kmt]}
 
-    session_over_15_sec_cnt: {filter: [session_duration.>: 15]}
+    session_over_15_sec_cnt: {filter: [session_duration.>: 15, *is_start]}
 
-    c_kmt_organic: {filter: [*is_organic], obs: [contacts_kmt, contacts_serp_kmt]}
-    iv_kmt_organic: {filter: [*is_organic], obs: [item_views_kmt, item_views_serp_kmt]}
-    s_kmt_organic: {filter: [*is_organic], obs: [searches_kmt]}
+    c_kmt_organic: {filter: [*is_start_organic], obs: [contacts_kmt, contacts_serp_kmt]}
+    iv_kmt_organic: {filter: [*is_start_organic], obs: [item_views_kmt, item_views_serp_kmt]}
+    s_kmt_organic: {filter: [*is_start_organic], obs: [searches_kmt]}
 
-    kmt_organic: {filter: [*is_organic]}
-    kmt_session_over_15_sec_organic: {filter: [*is_organic, session_duration.>: 15]}
+    kmt_organic: {filter: [*is_start_organic]}
+    kmt_session_over_15_sec_organic: {filter: [*is_start_organic, session_duration.>: 15]}
 
-    contacts_in_session_kmt:  {obs: [contacts_in_session]}
-    item_views_in_session_kmt:  {obs: [item_views_in_session]}
-    searches_in_session_kmt:  {obs: [searches_in_session]}
+    contacts_in_session_kmt:  {filter: [*is_start], obs: [contacts_in_session]}
+    item_views_in_session_kmt:  {filter: [*is_start], obs: [item_views_in_session]}
+    searches_in_session_kmt:  {filter: [*is_start], obs: [searches_in_session]}
 
-    contacts_in_session_kmt_organic:  {filter: [*is_organic], obs: [contacts_in_session]}
-    item_views_in_session_kmt_organic:  {filter: [*is_organic], obs: [item_views_in_session]}
-    searches_in_session_kmt_organic:  {filter: [*is_organic], obs: [searches_in_session]}
+    contacts_in_session_kmt_organic:  {filter: [*is_start_organic], obs: [contacts_in_session]}
+    item_views_in_session_kmt_organic:  {filter: [*is_start_organic], obs: [item_views_in_session]}
+    searches_in_session_kmt_organic:  {filter: [*is_start_organic], obs: [searches_in_session]}
 
 metric.uniq:
     user_model_card_goods: { counter: model_card_goods, key: [cookie_id] }
