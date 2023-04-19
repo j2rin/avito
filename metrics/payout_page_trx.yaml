@@ -1,0 +1,14 @@
+metric.counter:
+  payout_trx_created: {}
+  payout_trx_paid:                                   {filter: [is_paid: True]}
+  payout_amount_created:                             {obs: [amount]}
+  payout_amount_paid:                                {filter: [is_paid: True], obs: [amount]}
+
+metric.uniq:
+  unq_users_payout_trx_created:                      {counter: payout_trx_created, key: [user]}
+  unq_users_payout_trx_paid:                         {counter: payout_trx_paid, key: [user]}
+
+metric.ratio:
+  payout_trx_success_ratio:                          {num: payout_trx_paid, den: payout_trx_created}
+  payout_trx_success_user_ratio:                     {num: unq_users_payout_trx_paid, den: unq_users_payout_trx_created}
+  payout_trx_success_amount_ratio:                   {num: payout_amount_paid, den: payout_amount_created}
