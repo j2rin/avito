@@ -11,6 +11,8 @@ metric.counter:
   jobs_crm_onboarding_finishes:         {filter: [eid: 6008]}
   jobs_crm_chat_opens:                  {filter: [eid: 6257]}
   jobs_crm_cv_opens:                    {filter: [eid: 5964]}
+  jobs_crm_target_actions:              {filter: [eid: [6257, 7911]]}
+  jobs_crm_phone_calls:                 {filter: [eid: 7911]}
 
 metric.uniq:
   jobs_crm_user_opens:                  {counter: jobs_crm_opens, key: [user]}
@@ -25,6 +27,8 @@ metric.uniq:
   jobs_crm_user_onboarding_finishes:    {counter: jobs_crm_onboarding_finishes, key: [user]}
   jobs_crm_user_chat_opens:             {counter: jobs_crm_chat_opens, key: [user]}
   jobs_crm_user_cv_opens:               {counter: jobs_crm_cv_opens, key: [user]}
+  jobs_crm_user_target_actions:         {counter: jobs_crm_target_actions, key: [user]}
+  jobs_crm_user_phone_calls:            {counter: jobs_crm_phone_calls, key: [user]}
 
 metric.ratio:
   jobs_crm_user_cr_to_expand:           {num: jobs_crm_user_expands, den: jobs_crm_user_opens}
@@ -32,3 +36,9 @@ metric.ratio:
   jobs_crm_user_cr_to_chat_open:        {num: jobs_crm_user_chat_opens, den: jobs_crm_user_opens}
   jobs_crm_user_cr_to_cv_open:          {num: jobs_crm_user_cv_opens, den: jobs_crm_user_opens}
   jobs_crm_user_cr_to_onboarding:       {num: jobs_crm_user_onboarding_finishes, den: jobs_crm_user_onboarding_begins}
+  jobs_crm_opens_per_user:              {num: jobs_crm_opens, den: jobs_crm_user_opens}
+  jobs_crm_searches_per_user:           {num: jobs_crm_searches, den: jobs_crm_user_searches}
+  jobs_crm_user_cr_to_target_action:    {num:jobs_crm_user_target_actions, den: jobs_crm_user_opens}
+  jobs_crm_target_actions_per_user:     {num: jobs_crm_target_actions, den: jobs_crm_user_target_actions}
+  jobs_crm_phone_calls_per_user:        {num: jobs_crm_phone_calls, den: jobs_crm_user_phone_calls}
+  jobs_crm_chats_per_user:              {num: jobs_crm_chat_opens, den: jobs_crm_user_chat_opens}

@@ -1,5 +1,6 @@
 with entrypoints as (
 select 
+    platform,
     eid, 
     user_id,
     event_date,
@@ -7,11 +8,12 @@ select
     is_asd,
     from_page,
     case when from_page in ('chat_list', 'chat', 'stats', 'tariffs') then 'mobile'
-         when from_page in ('lk_avito', 'pro_side_bar') then 'mobile' end entrypoint,
+         when coalesce(from_page, 'lk_avito') in ('lk_avito', 'pro_side_bar') then 'web' else 'web' end entrypoint,
     row_number() over (partition by user_id, eid order by event_timestamp) rn
 from dma.jobs_employers_crm_events
 )
 select 
+    platform,
     eid, 
     user_id,
     event_date,
