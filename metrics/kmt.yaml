@@ -1,36 +1,48 @@
 definitions:
+    - &kmt  { url_mask.like: 'card_model%'}
+    - &catalog  { url_mask.like: 'catalog%'}
     - &is_start_organic    { traffic_source.like: 'organic%', first_event: true}
     - &is_start    { first_event: true}
 
 metric.counter:
-    model_card_goods: {}
-    c_kmt: {obs: [contacts_kmt, contacts_serp_kmt]}
-    iv_kmt: {obs: [item_views_kmt, item_views_serp_kmt]}
-    s_kmt: {obs: [searches_kmt]}
-    c_s_kmt: {obs: [contacts_serp_kmt]}
-    iv_s_kmt: {obs: [item_views_serp_kmt]}
-    c_mini_s_kmt: {obs: [contacts_kmt]}
-    iv_mini_s_kmt: {obs: [item_views_kmt]}
+    kmt_or_catalog: {}
+    #историческое название model_card_goods. На самом деле это все КМТ
+    model_card_goods: {filter:[*kmt]}
+    catalog: {filter:[*catalog]}
+    c_kmt: {filter:[*kmt], obs: [contacts_kmt, contacts_serp_kmt]}
+    iv_kmt: {filter:[*kmt], obs: [item_views_kmt, item_views_serp_kmt]}
+    s_kmt: {filter:[*kmt], obs: [searches_kmt]}
+    c_s_kmt: {filter:[*kmt], obs: [contacts_serp_kmt]}
+    iv_s_kmt: {filter:[*kmt], obs: [item_views_serp_kmt]}
+    c_mini_s_kmt: {filter:[*kmt], obs: [contacts_kmt]}
+    iv_mini_s_kmt: {filter:[*kmt], obs: [item_views_kmt]}
 
-    session_over_15_sec_cnt: {filter: [session_duration.>: 15, *is_start]}
+    session_over_15_sec_cnt: {filter: [session_duration.>: 15, *is_start, *kmt]}
 
-    c_kmt_organic: {filter: [*is_start_organic], obs: [contacts_kmt, contacts_serp_kmt]}
-    iv_kmt_organic: {filter: [*is_start_organic], obs: [item_views_kmt, item_views_serp_kmt]}
-    s_kmt_organic: {filter: [*is_start_organic], obs: [searches_kmt]}
+    kmt_or_catalog_organic: {filter: [*is_start_organic]}
+    kmt_organic: {filter: [*kmt, *is_start_organic]}
+    catalog_organic: {filter: [*catalog, *is_start_organic]}
 
-    kmt_organic: {filter: [*is_start_organic]}
-    kmt_session_over_15_sec_organic: {filter: [*is_start_organic, session_duration.>: 15]}
+    kmt_session_over_15_sec_organic: {filter: [*is_start_organic, session_duration.>: 15, *kmt]}
 
-    contacts_in_session_kmt:  {filter: [*is_start], obs: [contacts_in_session]}
-    item_views_in_session_kmt:  {filter: [*is_start], obs: [item_views_in_session]}
-    searches_in_session_kmt:  {filter: [*is_start], obs: [searches_in_session]}
+    c_kmt_organic: {filter: [*is_start_organic, *kmt], obs: [contacts_kmt, contacts_serp_kmt]}
+    iv_kmt_organic: {filter: [*is_start_organic, *kmt], obs: [item_views_kmt, item_views_serp_kmt]}
+    s_kmt_organic: {filter: [*is_start_organic, *kmt], obs: [searches_kmt]}
 
-    contacts_in_session_kmt_organic:  {filter: [*is_start_organic], obs: [contacts_in_session]}
-    item_views_in_session_kmt_organic:  {filter: [*is_start_organic], obs: [item_views_in_session]}
-    searches_in_session_kmt_organic:  {filter: [*is_start_organic], obs: [searches_in_session]}
+
+
+    contacts_in_session_kmt:  {filter: [*is_start, *kmt], obs: [contacts_in_session]}
+    item_views_in_session_kmt:  {filter: [*is_start, *kmt], obs: [item_views_in_session]}
+    searches_in_session_kmt:  {filter: [*is_start, *kmt], obs: [searches_in_session]}
+
+    contacts_in_session_kmt_organic:  {filter: [*is_start_organic, *kmt], obs: [contacts_in_session]}
+    item_views_in_session_kmt_organic:  {filter: [*is_start_organic, *kmt], obs: [item_views_in_session]}
+    searches_in_session_kmt_organic:  {filter: [*is_start_organic, *kmt], obs: [searches_in_session]}
 
 metric.uniq:
+    user_kmt_or_catalog: { counter: kmt_or_catalog, key: [cookie_id] }
     user_model_card_goods: { counter: model_card_goods, key: [cookie_id] }
+    user_catalog: { counter: catalog, key: [cookie_id] }
     user_c_kmt: { counter: c_kmt, key: [cookie_id] }
     user_iv_kmt: { counter: iv_kmt, key: [cookie_id] }
     user_s_kmt: { counter: s_kmt, key: [cookie_id] }
@@ -41,18 +53,24 @@ metric.uniq:
     user_kmt_over_15_sec: { counter: session_over_15_sec_cnt, key: [cookie_id] }
     user_kmt_over_15_sec_organic: { counter: kmt_session_over_15_sec_organic, key: [cookie_id] }
 
+    user_kmt_or_catalog_organic: { counter: kmt_or_catalog_organic, key: [cookie_id] }
     user_kmt_organic: { counter: kmt_organic, key: [cookie_id] }
+    user_catalog_organic: { counter: catalog_organic, key: [cookie_id] }
     user_c_kmt_organic: { counter: c_kmt_organic, key: [cookie_id] }
     user_iv_kmt_organic: { counter: iv_kmt_organic, key: [cookie_id] }
     user_s_kmt_organic: { counter: s_kmt_organic, key: [cookie_id] }
 
+    session_kmt_or_catalog: { counter: kmt_or_catalog, key: [session_hash] }
     session_kmt: { counter: model_card_goods, key: [session_hash] }
+    session_catalog: { counter: catalog, key: [session_hash] }
     session_kmt_over_15_sec: { counter: session_over_15_sec_cnt, key: [session_hash] }
     session_kmt_c: { counter: contacts_in_session_kmt, key: [session_hash] }
     session_kmt_iv: { counter: item_views_in_session_kmt, key: [session_hash] }
     session_kmt_s: { counter: searches_in_session_kmt, key: [session_hash] }
 
+    session_kmt_or_catalog_organic: { counter: kmt_or_catalog_organic, key: [session_hash] }
     session_kmt_organic: { counter: kmt_organic, key: [session_hash] }
+    session_catalog_organic: { counter: catalog_organic, key: [session_hash] }
     session_over_15_sec_organic: { counter: kmt_session_over_15_sec_organic, key: [session_hash] }
     session_kmt_c_organic: { counter: contacts_in_session_kmt_organic, key: [session_hash] }
     session_kmt_iv_organic: { counter: item_views_in_session_kmt_organic, key: [session_hash] }
