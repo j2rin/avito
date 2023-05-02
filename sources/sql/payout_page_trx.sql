@@ -2,6 +2,7 @@ select
     created_txtime::date as create_date,
     payment_transaction_id,
     user_id,
+    null as platform_id,
     amount,
     status=2 as is_paid
 from dma.current_payment_transactions
