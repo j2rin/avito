@@ -17,6 +17,11 @@ metric.counter:
     c_mini_s_kmt: {filter: [*kmt], obs: [contacts_kmt]}
     iv_mini_s_kmt: {filter: [*kmt], obs: [item_views_kmt]}
 
+
+    kmt_or_catalog_started: {filter: [*is_start]}
+    kmt_started: {filter: [*kmt, *is_start]}
+    catalog_started: {filter: [*catalog, *is_start]}
+
     session_over_15_sec_cnt: {filter: [session_duration.>: 15, *is_start, *kmt]}
 
     kmt_or_catalog_organic: {filter: [*is_start_organic]}
@@ -53,6 +58,10 @@ metric.uniq:
     user_kmt_over_15_sec: { counter: session_over_15_sec_cnt, key: [cookie_id] }
     user_kmt_over_15_sec_organic: { counter: kmt_session_over_15_sec_organic, key: [cookie_id] }
 
+    user_kmt_or_catalog_started: { counter: kmt_or_catalog_started, key: [cookie_id] }
+    user_kmt_started: { counter: kmt_started, key: [cookie_id] }
+    user_catalog_started: { counter: catalog_started, key: [cookie_id] }
+
     user_kmt_or_catalog_organic: { counter: kmt_or_catalog_organic, key: [cookie_id] }
     user_kmt_organic: { counter: kmt_organic, key: [cookie_id] }
     user_catalog_organic: { counter: catalog_organic, key: [cookie_id] }
@@ -63,6 +72,11 @@ metric.uniq:
     session_kmt_or_catalog: { counter: kmt_or_catalog, key: [session_hash] }
     session_kmt: { counter: model_card_goods, key: [session_hash] }
     session_catalog: { counter: catalog, key: [session_hash] }
+
+    session_kmt_or_catalog_started: { counter: kmt_or_catalog_started, key: [session_hash] }
+    session_kmt_started: { counter: kmt_started, key: [session_hash] }
+    session_catalog_started: { counter: catalog_started, key: [session_hash] }
+
     session_kmt_over_15_sec: { counter: session_over_15_sec_cnt, key: [session_hash] }
     session_kmt_c: { counter: contacts_in_session_kmt, key: [session_hash] }
     session_kmt_iv: { counter: item_views_in_session_kmt, key: [session_hash] }
@@ -94,10 +108,10 @@ metric.ratio:
     user_c_s_kmt_per_user_s_kmt: { num: user_c_s_kmt, den: user_s_kmt }
     user_iv_s_kmt_per_user_s_kmt: { num: user_iv_s_kmt, den: user_s_kmt }
 
-    session_over_15_sec_per_session_kmt: { num: session_over_15_sec_cnt, den: session_kmt }
-    session_kmt_c_per_session_kmt: { num: session_kmt_c, den: session_kmt }
-    session_kmt_iv_per_session_kmt: { num: session_kmt_iv, den: session_kmt }
-    session_kmt_s_per_session_kmt: { num: session_kmt_s, den: session_kmt }
+    session_over_15_sec_per_session_kmt: { num: session_over_15_sec_cnt, den: session_kmt_started }
+    session_kmt_c_per_session_kmt: { num: session_kmt_c, den: session_kmt_started }
+    session_kmt_iv_per_session_kmt: { num: session_kmt_iv, den: session_kmt_started }
+    session_kmt_s_per_session_kmt: { num: session_kmt_s, den: session_kmt_started }
     session_over_15_sec_per_session_kmt_organic: { num: kmt_session_over_15_sec_organic, den: session_kmt_organic }
     session_kmt_c_per_session_kmt_organic: { num: session_kmt_c_organic, den: session_kmt_organic }
     session_kmt_iv_per_session_kmt_organic: { num: session_kmt_iv_organic, den: session_kmt_organic }
