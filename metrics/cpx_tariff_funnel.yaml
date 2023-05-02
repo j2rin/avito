@@ -8,9 +8,9 @@ metric.counter:
   cnt_cpx_tariff_configflow_submit:             {filter: [user_flow: 'item_activation', step: 'configurator submit']}
   cnt_cpx_tariff_configflow_advancepayment:     {filter: [user_flow: 'item_activation', step: 'cpa advance payment']}
 
-  cnt_cpx_tariff_total_openconfig:     {filter: [step: 'configurator']}
-  cnt_cpx_tariff_total_submit:         {filter: [step: 'configurator submit']}
-  cnt_cpx_tariff_total_advancepayment: {filter: [step: 'cpa advance payment']}
+  cnt_cpx_tariff_openconfig:     {filter: [step: 'configurator']}
+  cnt_cpx_tariff_submit:         {filter: [step: 'configurator submit']}
+  cnt_cpx_tariff_advancepayment: {filter: [step: 'cpa advance payment']}
 
 metric.uniq:
   users_cpx_tariff_itemaddflow_createitem:         {counter: cnt_cpx_tariff_itemaddflow_createitem,         key: [user_id]}
@@ -22,9 +22,9 @@ metric.uniq:
   users_cpx_tariff_configflow_submit:       {counter: cnt_cpx_tariff_configflow_submit,             key: [user_id]}
   users_cpx_tariff_configflow_advancepayment:     {counter: cnt_cpx_tariff_configflow_advancepayment,     key: [user_id]}
 
-  users_cpx_tariff_total_openconfig:   {counter: cnt_cpx_tariff_total_openconfig,           key: [user_id]}
-  users_cpx_tariff_total_submit:       {counter: cnt_cpx_tariff_total_submit,               key: [user_id]}
-  users_cpx_tariff_total_advancepayment:     {counter: cnt_cpx_tariff_total_advancepayment,       key: [user_id]}
+  users_cpx_tariff_openconfig:   {counter: cnt_cpx_tariff_openconfig,           key: [user_id]}
+  users_cpx_tariff_submit:       {counter: cnt_cpx_tariff_submit,               key: [user_id]}
+  users_cpx_tariff_advancepayment:     {counter: cnt_cpx_tariff_advancepayment,       key: [user_id]}
 
 metric.ratio:
 
@@ -39,6 +39,6 @@ metric.ratio:
   cr_users_cpx_tariff_configflow_openconfig_advancepayment: {num: users_cpx_tariff_configflow_advancepayment, den: users_cpx_tariff_configflow_openconfig}
   cr_users_cpx_tariff_configflow_submit_advancepayment:     {num: users_cpx_tariff_configflow_advancepayment, den: users_cpx_tariff_configflow_submit}
 
-  cr_users_cpx_tariff_total_openconfig_submit:         {num: users_cpx_tariff_total_submit,          den: users_cpx_tariff_total_openconfig}
-  cr_users_cpx_tariff_total_openconfig_advancepayment: {num: users_cpx_tariff_total_advancepayment,  den: users_cpx_tariff_total_openconfig}
-  cr_users_cpx_tariff_total_submit_advancepayment:     {num: users_cpx_tariff_total_advancepayment,  den: users_cpx_tariff_total_submit}
+  cr_users_cpx_tariff_openconfig_submit:         {num: users_cpx_tariff_submit,          den: users_cpx_tariff_openconfig}
+  cr_users_cpx_tariff_openconfig_advancepayment: {num: users_cpx_tariff_advancepayment,  den: users_cpx_tariff_openconfig}
+  cr_users_cpx_tariff_submit_advancepayment:     {num: users_cpx_tariff_advancepayment,  den: users_cpx_tariff_submit}
