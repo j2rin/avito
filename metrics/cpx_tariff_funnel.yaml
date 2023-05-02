@@ -1,0 +1,44 @@
+metric.counter:
+  cnt_cpx_tariff_itemaddflow_createitem:         {filter: [user_flow: 'item_activation', step: 'item creation']}
+  cnt_cpx_tariff_itemaddflow_openconfig:         {filter: [user_flow: 'item_activation', step: 'configurator']}
+  cnt_cpx_tariff_itemaddflow_submit:             {filter: [user_flow: 'item_activation', step: 'configurator submit']}
+  cnt_cpx_tariff_itemaddflow_advancepayment:     {filter: [user_flow: 'item_activation', step: 'cpa advance payment']}
+
+  cnt_cpx_tariff_configflow_openconfig:         {filter: [user_flow: 'item_activation', step: 'configurator']}
+  cnt_cpx_tariff_configflow_submit:             {filter: [user_flow: 'item_activation', step: 'configurator submit']}
+  cnt_cpx_tariff_configflow_advancepayment:     {filter: [user_flow: 'item_activation', step: 'cpa advance payment']}
+
+  cnt_cpx_tariff_total_openconfig:     {filter: [step: 'configurator']}
+  cnt_cpx_tariff_total_submit:         {filter: [step: 'configurator submit']}
+  cnt_cpx_tariff_total_advancepayment: {filter: [step: 'cpa advance payment']}
+
+metric.uniq:
+  users_cpx_tariff_itemaddflow_createitem:         {counter: cnt_cpx_tariff_itemaddflow_createitem,         key: [user_id]}
+  users_cpx_tariff_itemaddflow_openconfig:         {counter: cnt_cpx_tariff_itemaddflow_openconfig,         key: [user_id]}
+  users_cpx_tariff_itemaddflow_submit:             {counter: ccnt_cpx_tariff_itemaddflow_submit,            key: [user_id]}
+  users_cpx_tariff_itemaddflow_advancepayment:     {counter: cnt_cpx_tariff_itemaddflow_advancepayment,     key: [user_id]}
+
+  users_cpx_tariff_configflow_openconfig:   {counter: cnt_cpx_tariff_configflow_openconfig,         key: [user_id]}
+  users_cpx_tariff_configflow_submit:       {counter: cnt_cpx_tariff_configflow_submit,             key: [user_id]}
+  users_cpx_tariff_configflow_purchase:     {counter: cnt_cpx_tariff_configflow_advancepayment,     key: [user_id]}
+
+  users_cpx_tariff_total_openconfig:   {counter: cnt_cpx_tariff_total_openconfig,           key: [user_id]}
+  users_cpx_tariff_total_submit:       {counter: cnt_cpx_tariff_total_submit,               key: [user_id]}
+  users_cpx_tariff_total_advancepayment:     {counter: cnt_cpx_tariff_total_advancepayment,       key: [user_id]}
+
+metric.ratio:
+
+  cr_users_cpx_tariff_itemaddflow_createitem_openconfig:     {num: users_cpx_tariff_itemaddflow_openconfig,   den: users_cpx_tariff_itemaddflow_createitem}
+  cr_users_cpx_tariff_itemaddflow_createitem_submit:         {num: users_tariff_itemactivation_submit,       den: users_cpx_tariff_itemaddflow_createitem}
+  cr_users_cpx_tariff_itemaddflow_createitem_advancepayment: {num: users_tariff_itemactivation_advancepayment,     den: users_cpx_tariff_itemaddflow_createitem}
+  cr_users_cpx_tariff_itemaddflow_openconfig_submit:         {num: users_cpx_tariff_itemaddflow_submit,       den: users_cpx_tariff_itemaddflow_openconfig}
+  cr_users_cpx_tariff_itemaddflow_openconfig_advancepayment: {num: users_cpx_tariff_itemaddflow_advancepayment,     den: users_cpx_tariff_itemaddflow_openconfig}
+  cr_users_cpx_tariff_itemaddflow_submit_advancepayment:     {num: users_cpx_tariff_itemaddflow_advancepayment,     den: users_cpx_tariff_itemaddflow_submit}
+
+  cr_users_cpx_tariff_configflow_openconfig_submit:         {num: users_cpx_tariff_configflow_submit,   den: users_cpx_tariff_configflow_openconfig}
+  cr_users_cpx_tariff_configflow_openconfig_advancepayment: {num: users_cpx_tariff_configflow_advancepayment, den: users_cpx_tariff_configflow_openconfig}
+  cr_users_cpx_tariff_configflow_submit_advancepayment:     {num: users_cpx_tariff_configflow_advancepayment, den: users_cpx_tariff_configflow_submit}
+
+  cr_users_cpx_tariff_total_openconfig_submit:         {num: users_cpx_tariff_total_submit,    den: users_cpx_tariff_total_openconfig}
+  cr_users_cpx_tariff_total_openconfig_advancepayment: {num: users_cpx_tariff_total_advancepayment,  den: users_cpx_tariff_total_openconfig}
+  cr_users_cpx_tariff_total_submit_advancepayment:     {num: users_cpx_tariff_total_advancepayment,  den: users_cpx_tariff_total_submit}
