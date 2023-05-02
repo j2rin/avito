@@ -2,16 +2,51 @@ definitions:
   - &not_outlier {is_outlier: false}
 
 metric.counter:
-  in_time_frames:                         {filter: [*not_outlier], obs: [in_time_frames_count]}
-  jank_frames:                            {filter: [*not_outlier], obs: [jank_frames_count]}
-  all_frames:                             {filter: [*not_outlier], obs: [in_time_frames_count, jank_frames_count]}
-  jank_frames_size_total:                 {filter: [*not_outlier], obs: [jank_frames_size_total]}
+  in_time_frames:                                         {filter: [*not_outlier], obs: [in_time_frames_count]}
+  in_time_frames_scroll:                                  {filter: [*not_outlier, screen_fps_context: "scroll"], obs: [in_time_frames_count]}
+  in_time_frames_ui_formation:                            {filter: [*not_outlier, screen_fps_context: "ui_formation"], obs: [in_time_frames_count]}
+  in_time_frames_other:                                   {filter: [*not_outlier, screen_fps_context: "other"], obs: [in_time_frames_count]}
+
+  jank_frames:                                            {filter: [*not_outlier], obs: [jank_frames_count]}
+  jank_frames_scroll:                                     {filter: [*not_outlier, screen_fps_context: "scroll"], obs: [jank_frames_count]}
+  jank_frames_ui_formation:                               {filter: [*not_outlier, screen_fps_context: "ui_formation"], obs: [jank_frames_count]}
+  jank_frames_other:                                      {filter: [*not_outlier, screen_fps_context: "other"], obs: [jank_frames_count]}
+
+  all_frames:                                             {filter: [*not_outlier], obs: [in_time_frames_count, jank_frames_count]}
+  all_frames_scroll:                                      {filter: [*not_outlier, screen_fps_context: "scroll"], obs: [in_time_frames_count, jank_frames_count]}
+  all_frames_ui_formation:                                {filter: [*not_outlier, screen_fps_context: "ui_formation"], obs: [in_time_frames_count, jank_frames_count]}
+  all_frames_other:                                       {filter: [*not_outlier, screen_fps_context: "other"], obs: [in_time_frames_count, jank_frames_count]}
+
+  jank_frames_size_total:                                 {filter: [*not_outlier], obs: [jank_frames_size_total]}
+  jank_frames_size_total_scroll:                          {filter: [*not_outlier, screen_fps_context: "scroll"], obs: [jank_frames_size_total]}
+  jank_frames_size_total_ui_formation:                    {filter: [*not_outlier, screen_fps_context: "ui_formation"], obs: [jank_frames_size_total]}
+  jank_frames_size_total_other:                           {filter: [*not_outlier, screen_fps_context: "other"], obs: [jank_frames_size_total]}
+
 
 metric.uniq:
-  user_jank_frames:                       {counter: jank_frames, key: [cookie]}
-  user_all_frames:                        {counter: all_frames, key: [cookie]}
+  user_jank_frames:                                       {counter: jank_frames, key: [cookie]}
+  user_jank_frames_scroll:                                {counter: jank_frames_scroll, key: [cookie]}
+  user_jank_frames_ui_formation:                          {counter: jank_frames_ui_formation, key: [cookie]}
+  user_jank_frames_other:                                 {counter: jank_frames_other, key: [cookie]}
+
+  user_all_frames:                                        {counter: all_frames, key: [cookie]}
+  user_all_frames_scroll:                                 {counter: all_frames_scroll, key: [cookie]}
+  user_all_frames_ui_formation:                           {counter: all_frames_ui_formation, key: [cookie]}
+  user_all_frames_other:                                  {counter: all_frames_other, key: [cookie]}
+
 
 metric.ratio:
-  jank_frames_per_all_frames:               {num: jank_frames, den: all_frames}
-  user_jank_frames_per_user_all_frames:     {num: user_jank_frames, den: user_all_frames}
-  jank_frames_size:                         {num: jank_frames_size_total, den: jank_frames}
+  jank_frames_per_all_frames:                             {num: jank_frames, den: all_frames}
+  jank_frames_per_all_frames_scroll:                      {num: jank_frames_scroll, den: all_frames_scroll}
+  jank_frames_per_all_frames_ui_formation:                {num: jank_frames_ui_formation, den: all_frames_ui_formation}
+  jank_frames_per_all_frames_other:                       {num: jank_frames_other, den: all_frames_other}
+
+  user_jank_frames_per_user_all_frames:                   {num: user_jank_frames, den: user_all_frames}
+  user_jank_frames_per_user_all_frames_scroll:            {num: user_jank_frames_scroll, den: user_all_frames_scroll}
+  user_jank_frames_per_user_all_frames_ui_formation:      {num: user_jank_frames_ui_formation, den: user_all_frames_ui_formation}
+  user_jank_frames_per_user_all_frames_other:             {num: user_jank_frames_other, den: user_all_frames_other}
+
+  jank_frames_size:                                       {num: jank_frames_size_total, den: jank_frames}
+  jank_frames_size_scroll:                                {num: jank_frames_size_total_scroll, den: jank_frames_scroll}
+  jank_frames_size_ui_formation:                          {num: jank_frames_size_total_ui_formation, den: jank_frames_ui_formation}
+  jank_frames_size_other:                                 {num: jank_frames_size_total_other, den: jank_frames_other}
