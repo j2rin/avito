@@ -12,7 +12,8 @@ select
     items_count,
     score,
     freshness,
-    sellers_count
+    sellers_count,
+    items_dedup_count
 from dma.vo_search_items
 where event_date::date between :first_date and :last_date
 
