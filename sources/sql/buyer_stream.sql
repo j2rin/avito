@@ -116,7 +116,13 @@ select
     ((ss.item_flags & (1 << 28) > 0) and (ss.item_flags & (1 << 17) > 0))::int as is_item_with_video_cpa,
     datediff('hour', ial.sort_time, ss.event_date) as item_age_hours,
     pg.price_group,
-    (10^round(log(ial.price), 1))::INT as price_round
+    hash(
+        round(10^round(log(ial.price), 1)),
+        ss.item_user_id,
+        ss.microcat_id,
+        ss.x,
+        ss.eid
+        ) as seller_microcat_price_x
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
