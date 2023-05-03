@@ -82,7 +82,8 @@ select /*+syntactic_join*/
     ss.is_item_cpa,
     ss.is_user_cpa,
     ss.cpaaction_type,
-    ir.reputation_class
+    ir.reputation_class,
+    round(10^round(log(ss.price),1)) as price_rounded
 
 from DMA.o_seller_item_active ss
 
