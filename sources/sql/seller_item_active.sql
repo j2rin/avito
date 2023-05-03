@@ -83,7 +83,7 @@ select /*+syntactic_join*/
     ss.is_user_cpa,
     ss.cpaaction_type,
     ir.reputation_class,
-    round(10^round(log(ss.price),1)) as price_round
+    (10^round(log(ss.price), 1))::INT as price_round
 
 from DMA.o_seller_item_active ss
 
