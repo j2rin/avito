@@ -83,7 +83,11 @@ select /*+syntactic_join*/
     ss.is_user_cpa,
     ss.cpaaction_type,
     ir.reputation_class,
-    round(10^round(log(ss.price),1)) as price_rounded
+    hash(
+        round(10^round(log(ss.price), 1)),
+        ss.user_id,
+        ss.microcat_id
+        ) as user_microcat_price
 
 from DMA.o_seller_item_active ss
 
