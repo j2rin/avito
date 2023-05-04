@@ -1115,6 +1115,24 @@ tariff_funnel:
   dtm: event_date
   segm: user_id
 
+cpx_tariff_funnel:
+  metric_configs: [cpx_tariff_funnel]
+  database: vertica
+  sql: cpx_tariff_funnel
+  column_map:
+    user: user_id
+  dimensions:
+    - user_segment_market
+    - platform
+    - vertical
+    - logical_category
+  participant: {user: user_id}
+  primary_subject: user
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category]
+  dtm: event_date
+  segm: user_id
+
 support_comment:
   metric_configs: [support_comment]
   database: vertica
