@@ -1,0 +1,21 @@
+metric.counter:
+ payment_orders: {}
+ payment_orders_sbp:           {filter: [is_sbp: True]}
+ payment_orders_card_total:    {filter: [is_sbp: False]}
+ payment_orders_card_mir:      {filter: [is_sbp: False, is_mir: True]}
+ payment_orders_card_non_mir:  {filter: [is_sbp: False, is_mir: False]}
+ payment_amount:               {obs: [items_price]}
+ payment_amount_sbp:           {filter: [is_sbp: True],obs: [items_price]}
+ payment_amount_card_total:    {filter: [is_sbp: False],obs: [items_price]}
+ payment_amount_card_mir:      {filter: [is_sbp: False, is_mir: True],obs: [items_price]}
+ payment_amount_card_non_mir:  {filter: [is_sbp: False, is_mir: False],obs: [items_price]}
+ payment_commission:           {obs: [payment_commission_calculated]}
+
+metric.ratio:
+ payment_acquiring_fee:   {num: payment_commission, den: payment_amount}
+ payment_orders_sbp_ratio:  {num: payment_orders_sbp, den: payment_orders}
+ payment_orders_card_ratio:  {num: payment_orders_card_total, den: payment_orders} 
+ payment_orders_card_mir_ratio:  {num: payment_orders_card_mir, den: payment_orders}
+ payment_amount_sbp_ratio:  {num: payment_amount_sbp, den: payment_amount}
+ payment_amount_card_ratio:  {num: payment_amount_card_total, den: payment_amount} 
+ payment_amount_card_mir_ratio:  {num: payment_amount_card_mir, den: payment_amount}
