@@ -16,6 +16,7 @@ definitions:
     - &sort_price   [3, 4]
     - &sort_distance [6]
     - &sort_dft     [5]
+    - &sort_param   [7, 8]
     - &c_front      [2216, 2650, 3461, 857, 4198]
     - &c_all        [303, 3461, 857, 4198]
 
@@ -230,6 +231,7 @@ definitions:
     - &is_s_sort_price      { search_sort: *sort_price }
     - &is_s_sort_distance   { search_sort: *sort_distance }
     - &is_s_sort_dft        { search_sort: *sort_dft }
+    - &is_s_sort_param      { search_sort: *sort_param} 
 
     - &q { q.>: "" }
     - &noq { q.=: "" }
@@ -1351,6 +1353,7 @@ metric.counter:
     searches_default_sort: { filter: [*is_1p, *is_s_sort_dft, *is_search] }
     searches_price_sort: { filter: [*is_1p, *is_s_sort_price, *is_search] }
     searches_distance_sort: { filter: [*is_1p, *is_s_sort_distance, *is_search] }
+    searches_param_sort: { filter: [*is_1p, *is_s_sort_param, *is_search] }
     searches_district: { filter: [*is_1p, *is_s_district, *is_search] }
     searches_extra_delivery: { filter: [*is_search, *x_is_extra_delivery] }
     searches_extra_regions: { filter: [*is_search, *x_is_extra_regions] }
@@ -2229,6 +2232,7 @@ metric.uniq:
     user_search_default_sort: { counter: searches_default_sort, key: [cookie] }
     user_search_price_sort: { counter: searches_price_sort, key: [cookie] }
     user_search_distance_sort: { counter: searches_distance_sort, key: [cookie] }
+    user_search_param_sort: { counter: searches_param_sort, key: [cookie] }
     user_btc_date_sort: { counter: cnt_s_btc_date_sort, key: [cookie] }
     user_btc_default_sort: { counter: cnt_s_btc_default_sort, key: [cookie] }
     user_btc_price_sort: { counter: cnt_s_btc_price_sort, key: [cookie] }
