@@ -138,7 +138,6 @@ left join /*+jtype(h),distrib(l,r)*/ (
     and ss.event_date = usm.event_date
     and COALESCE(lc.logical_category_id, cm.logical_category_id) = usm.logical_category_id
 
-
 left join /*+distrib(l,a)*/ dma.item_geo_information ig
     on ig.user_id = ss.user_id
     and ig.event_date = ss.event_date
