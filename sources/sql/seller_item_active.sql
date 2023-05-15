@@ -74,8 +74,8 @@ select /*+syntactic_join*/
     cl.City_Population_Group                                  as population_group,
     cl.Logical_Level                                          as location_level_id,
     nvl(asd.is_asd, False)                                    as is_asd,
-    nvl(asd.user_group_id, 8383)                              as asd_user_group_id, -- By default is SS group - 8383
-    COALESCE(usm.user_segment, ls.segment)                         as user_segment_market,
+    nvl(asd.asd_user_group_id, 8383)                          as asd_user_group_id, -- By default is SS group - 8383
+    COALESCE(usm.user_segment, ls.segment)                    as user_segment_market,
     lc.logical_param1_id,
     lc.logical_param2_id,
     ifnull(ss.condition_id, 0)                                as condition_id,
@@ -149,17 +149,17 @@ left join /*+distrib(l,a)*/ (
    select
         asd.user_id,
         (asd.personal_manager_team is not null and asd.user_is_asd_recognised) as is_asd,
-        asd.user_group_id as user_group_id,
-        c.event_date
+        asd.user_group_id as asd_user_group_id,
+        asd.active_from_date,
+        asd.active_to_date
     from DMA.am_client_day_versioned asd
-    join dict.calendar c on c.event_date between :first_date::date and :last_date::date
-    where c.event_date between asd.active_to_date and asd.active_to_date
+    where true
         and asd.active_from_date <= :last_date::date
         and asd.active_to_date >= :first_date::date
         and asd.user_id in (select user_id from sia_users)
 ) asd
     on ss.user_id = asd.user_id
-    and ss.event_date::date = asd.event_date
+    and ss.event_date::date between asd.active_from_date and asd.active_to_date
 
 left join /*+distrib(l,r)*/ (
     select
