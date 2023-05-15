@@ -15,7 +15,7 @@ select /*+direct, syn_join*/
 	, subscriptionlog_id
     , is_cpa
     , tariff_source
-    , nvl(acd.is_asd, False) as is_asd
+    , nvl(asd.is_asd, False) as is_asd
     , nvl(asd.asd_user_group_id, 8383) as asd_user_group_id
     , nvl(usm.user_segment, ls.segment) as user_segment_market
 	, avito_version
@@ -108,7 +108,7 @@ left join /*+distrib(l,a)*/ (
         and asd.active_from_date <= :last_date::date
         and asd.active_to_date >= :first_date::date
         and asd.user_id in (select user_id from lf_users)
-) acd
-    on olf.user_id = acd.user_id
-    and olf.event_date::date between acd.active_from_date and acd.active_to_date
+) asd
+    on olf.user_id = asd.user_id
+    and olf.event_date::date between asd.active_from_date and asd.active_to_date
 where olf.event_date between :first_date and :last_date
