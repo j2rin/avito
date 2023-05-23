@@ -154,6 +154,8 @@ definitions:
     - &is_delivery_courier  { $or: [other_flags.bit: 2, other_flags.bit: 3] }
     - &is_delivery_active   { item_flags.bit: 16 }
 
+    - &is_with_kmt          { other_flags.bit: 8 }
+
     - &is_item_marketplace      { item_flags.bit: 2 }
     - &is_not_item_marketplace  { item_flags.!bit: 2 }
     - &is_search_marketplace    { search_flags.bit: 31 }
@@ -231,7 +233,7 @@ definitions:
     - &is_s_sort_price      { search_sort: *sort_price }
     - &is_s_sort_distance   { search_sort: *sort_distance }
     - &is_s_sort_dft        { search_sort: *sort_dft }
-    - &is_s_sort_param      { search_sort: *sort_param} 
+    - &is_s_sort_param      { search_sort: *sort_param}
 
     - &q { q.>: "" }
     - &noq { q.=: "" }
@@ -1212,6 +1214,7 @@ metric.counter:
                     { $or: [*is_item_pessimized, *is_seller_pessimized] },
                 ],
         }
+    item_views_with_kmt: { filter: [*is_iv, *is_with_kmt] }
     meta_regions_level_searches: { filter: [{ location_level_id: 2 }, *is_1p, *is_search] }
     noncapital_city_level_searches: { filter: [{ location_level_id: 6 }, *is_1p, *is_search] }
     not_default_radius_searches: { filter: [*is_1p, *is_not_default_radius, *is_search] }
@@ -2372,6 +2375,7 @@ metric.uniq:
     user_comp_list_views_from_item: { counter: comparison_list_views_from_item, key: [cookie] }
     user_comp_list_views_from_favorite: { counter: comparison_list_views_from_favorite, key: [cookie] }
     user_comp_removed: { counter: comparison_removed, key: [cookie] }
+    user_item_view_with_kmt: {counter: item_views_with_kmt, key: [cookie] }
     user_item_view_from_map_total: { counter: cnt_iv_from_map_s_area, key: [cookie] }
     user_item_views_from_jk_card: { counter: item_views_from_jk_card, key: [cookie] }
     user_item_views_any_ext_block: { counter: cnt_iv_any_ext_block, key: [cookie] }
