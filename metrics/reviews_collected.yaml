@@ -1,0 +1,17 @@
+metric.counter:
+  all_reviews_collected:                          {}
+  rating_reviews_collected:                       {filter: [{stage.in: [1,2]}]}
+  reviews_collected_published:                    {filter: [{reviewstatus.=: 1}]}
+  rating_reviews_collected_published:             {filter: [{reviewstatus.=: 1}, {stage.in: [1,2]}]}
+  rating_reviews_collected_score_sum:             {filter: [{stage.in: [1,2]}], obs: [score]}
+  rating_reviews_collected_published_score_sum:   {filter: [{reviewstatus.=: 1}, {stage.in: [1,2]}], obs: [score]}
+
+metric.uniq:
+  user_all_reviews_collected:                     {counter: all_reviews_collected, key: [user]}
+  user_rating_reviews_collected:                  {counter: rating_reviews_collected, key: [user]}
+  user_reviews_collected_published:               {counter: reviews_collected_published, key: [user]}
+  user_rating_reviews_collected_published:        {counter: rating_reviews_collected_published, key: [user]}
+
+metric.ratio:
+  rating_reviews_collected_avg_score:             {num: rating_reviews_collected_score_sum,  den: rating_reviews_collected}
+  rating_reviews_collected_published_avg_score:   {num: rating_reviews_collected_published_score_sum,  den: rating_reviews_collected_published}
