@@ -2,6 +2,7 @@ definitions:
   - &eid_entry_point                [3131, 6601]
   - &eid_item_c                     [303]
   - &eid_item_iv                    [301]
+  - &eid_chat_open                  [2654]
   - &eid_jk_view                    [3459]
   - &eid_ph                         [3461]
   - &eid_back_call                  [4198]
@@ -39,6 +40,7 @@ definitions:
   - &is_c_notification_item              {eid: *eid_c_notification, item_id_not_null: 1}
   - &is_open_back_call                   {eid: *eid_open_back_call}
   - &is_send_back_call                   {eid: *eid_send_back_call}
+  - &is_chat_open_card                   {eid: *eid_chat_open, item_id_not_null: 0}
 
   - &jk_cpa                              {realty_development_flags.bit: 0}
   - &jk_not_cpa                          {realty_development_flags.!bit: 0}
@@ -208,6 +210,9 @@ metric.counter:
 
   realty_open_back_call:                             {filter: [*is_open_back_call]}
   realty_send_back_call:                             {filter: [*is_send_back_call]}
+  
+  realty_dev_chat_open:                              {filter: [*is_chat_open_card]}
+  realty_dev_chat_open_cpa:                          {filter: [*is_chat_open_card, *jk_cpa]}
 
 metric.uniq:
   user_catalog_jk_entry_point:                       {counter: catalog_jk_entry_point,                     key: [cookie]}
@@ -344,6 +349,9 @@ metric.uniq:
   users_total_auction_contact:                        {counter: total_auction_contact,                        key: [cookie]}
   users_total_promo_contact:                          {counter: total_promo_contact,                          key: [cookie]}
   users_total_promo_max_contact:                      {counter: total_promo_max_contact,                      key: [cookie]}
+  
+  users_realty_dev_chat_open:                         {counter: realty_dev_chat_open,                         key: [cookie]}
+  users_realty_dev_chat_open_cpa:                     {counter: realty_dev_chat_open_cpa,                     key: [cookie]}
 
 metric.ratio:
     realty_send_back_call_per_realty_open_back_call:                 { num: realty_send_back_call, den: realty_open_back_call }
