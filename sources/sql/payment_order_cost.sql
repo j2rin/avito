@@ -28,7 +28,7 @@ sellers as (
     select distinct seller_id
     from dma.current_order_item
     where deliveryorder_id in (select deliveryorder_id from orders))
-,final as (select
+select
     cbcm.create_date::date as create_date,
     co.buyer_id as user_id,
     co.create_date::date < coalesce(du.pay_date, '9999-12-21'::date) as is_delivery_paid_new,
