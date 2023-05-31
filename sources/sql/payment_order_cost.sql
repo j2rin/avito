@@ -10,7 +10,12 @@ with delivery_status_date as ( --чтобы побороть дубли стат
     order by deliveryorder_id
 
 ),
-orders as (
+order_data as (
+select purchase_ext, min(platform_id) as platform_id ,min(buyer_id) as buyer_id, min(create_date) as create_date
+from dma.current_order
+group by 1
+)
+,orders as (
     select distinct deliveryorder_id
     from delivery_status_date
 ),
@@ -23,7 +28,7 @@ sellers as (
     select distinct seller_id
     from dma.current_order_item
     where deliveryorder_id in (select deliveryorder_id from orders))
-select
+,final as (select
     cbcm.create_date::date as create_date,
     co.buyer_id as user_id,
     co.create_date::date < coalesce(du.pay_date, '9999-12-21'::date) as is_delivery_paid_new,
@@ -37,7 +42,7 @@ select
     case when is_mir = 1 then TRUE else FALSE end as is_mir,
     case when has_refund > 0 then TRUE else FALSE end as has_refund
     from dma.current_billing_cost_mp cbcm
-    join dma.current_order co on cbcm.billing_order_ext = co.purchase_ext
+    join order_data co on cbcm.billing_order_ext = co.purchase_ext
         left join /*+distrib(l,a)*/ (
         select
             buyer_id,
