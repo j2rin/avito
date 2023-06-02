@@ -211,10 +211,10 @@ from (
         group by 1
     ) du
         on du.buyer_id = co.buyer_id
-    where true
     left join dds.S_Item_HasShortVideo hsv 
         on coi.item_id = hsv.item_id
         and co.create_date interpolate previous value hsv.Actual_date
+    where true
         --and co.is_test is false
         --and not co.is_deleted
         --and not coi.is_deleted
