@@ -165,6 +165,8 @@ from (
         bl.Logical_Level                                             as buyer_location_level_id,
   		--is_cart
   		is_cart
+        -- has_short_video
+        case when HasShortVideo is null then false else HasShortVideo end as has_short_video
     from dma.current_order_item as coi
     join /*+distrib(l,a)*/ delivery_status_date as ps on ps.deliveryorder_id = coi.deliveryorder_id
     left join /*+distrib(l,a)*/ (
@@ -210,6 +212,9 @@ from (
     ) du
         on du.buyer_id = co.buyer_id
     where true
+    left join dds.S_Item_HasShortVideo hsv 
+        on coi.item_id = hsv.item_id
+        and co.create_date interpolate previous value hsv.Actual_date
         --and co.is_test is false
         --and not co.is_deleted
         --and not coi.is_deleted
