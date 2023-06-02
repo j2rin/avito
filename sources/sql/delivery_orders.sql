@@ -164,7 +164,7 @@ from (
         bl.City_Population_Group                                     as buyer_population_group,
         bl.Logical_Level                                             as buyer_location_level_id,
   		--is_cart
-  		is_cart
+  		is_cart,
         -- has_short_video
         case when HasShortVideo is null then false else HasShortVideo end as has_short_video
     from dma.current_order_item as coi
