@@ -37,6 +37,7 @@ definitions:
     - &user2vec     { item_engines.bit: 1 }
     - &similars     { item_engines.bit: 3 }
     - &graph        { item_engines.bit: 4 }
+    - &crosscat     { item_engines.bit: 5 }
 
     - &x_is_search  { x_eid: *eid_search }
     - &x_is_rec     { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
@@ -409,28 +410,29 @@ metric.counter:
     cnt_btc_from_map_s_area: { filter: [*is_btc_wo_guessing, { $or: [[*is_s_map, *x_is_search], [*x_is_map]] }] }
     cnt_btc_new_from_map_s_area:
         { filter: [*is_new_btc, *is_btc_wo_guessing, { $or: [[*is_s_map, *x_is_search], [*x_is_map]] }] }
-    cnt_btc_rec: { filter: [*is_btc_wo_guessing, *x_is_rec] }
-    cnt_btc_new_rec: { filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_rec] }
-    cnt_btc_old_rec: { filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_rec] }
-    cnt_btc_push_land: { filter: [*is_btc_wo_guessing, *x_is_push_land] }
-    cnt_btc_rec_i2i: { filter: [*is_btc_wo_guessing, *x_is_i2i] }
-    cnt_btc_new_rec_i2i: { filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_i2i] }
-    cnt_btc_old_rec_i2i: { filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_i2i] }
-    cnt_btc_rec_cv2vac: { filter: [*is_btc_wo_guessing, *x_is_cv2vac] }
-    cnt_btc_rec_u2i: { filter: [*is_btc_wo_guessing, *x_is_u2i] }
-    cnt_btc_rec_u2i_collab: { filter: [*is_btc_wo_guessing, *x_is_u2i, *collab] }
-    cnt_btc_rec_u2i_user2vec: { filter: [*is_btc_wo_guessing, *x_is_u2i, *user2vec] }
-    cnt_btc_rec_u2i_similars: { filter: [*is_btc_wo_guessing, *x_is_u2i, *similars] }
-    cnt_btc_rec_u2i_graph: { filter: [*is_btc_wo_guessing, *x_is_u2i, *graph] }
-    cnt_btc_new_rec_u2i: { filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_u2i] }
-    cnt_btc_old_rec_u2i: { filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_u2i] }
-    cnt_btc_rec_vas: { filter: [*is_btc_wo_guessing, *is_item_vas, *x_is_rec] }
-    cnt_btc_rec_perfvas_x2_1: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec] }
-    cnt_btc_rec_perfvas_x2_7: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_7, *x_is_rec] }
-    cnt_btc_rec_perfvas_x5_1: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x5_1, *x_is_rec] }
-    cnt_btc_rec_perfvas_x5_7: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x5_7, *x_is_rec] }
-    cnt_btc_rec_perfvas_x10_1: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x10_1, *x_is_rec] }
-    cnt_btc_rec_perfvas_x10_7: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x10_7, *x_is_rec] }
+    cnt_btc_rec:        { filter: [*is_btc_wo_guessing, *x_is_rec] }
+    cnt_btc_new_rec:    { filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_rec] }
+    cnt_btc_old_rec:    { filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_rec] }
+    cnt_btc_push_land:  { filter: [*is_btc_wo_guessing, *x_is_push_land] }
+    cnt_btc_rec_i2i:        { filter: [*is_btc_wo_guessing, *x_is_i2i] }
+    cnt_btc_new_rec_i2i:    { filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_i2i] }
+    cnt_btc_old_rec_i2i:    { filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_i2i] }
+    cnt_btc_rec_cv2vac:     { filter: [*is_btc_wo_guessing, *x_is_cv2vac] }
+    cnt_btc_rec_u2i:            { filter: [*is_btc_wo_guessing, *x_is_u2i] }
+    cnt_btc_rec_u2i_collab:     { filter: [*is_btc_wo_guessing, *x_is_u2i, *collab]     }
+    cnt_btc_rec_u2i_user2vec:   { filter: [*is_btc_wo_guessing, *x_is_u2i, *user2vec]   }
+    cnt_btc_rec_u2i_similars:   { filter: [*is_btc_wo_guessing, *x_is_u2i, *similars]   }
+    cnt_btc_rec_u2i_graph:      { filter: [*is_btc_wo_guessing, *x_is_u2i, *graph]      }
+    cnt_btc_rec_u2i_crosscat:   { filter: [*is_btc_wo_guessing, *x_is_u2i, *crosscat]   }
+    cnt_btc_new_rec_u2i:        { filter: [*is_new_btc, *is_btc_wo_guessing, *x_is_u2i] }
+    cnt_btc_old_rec_u2i:        { filter: [*is_old_btc, *is_btc_wo_guessing, *x_is_u2i] }
+    cnt_btc_rec_vas:            { filter: [*is_btc_wo_guessing, *is_item_vas, *x_is_rec] }
+    cnt_btc_rec_perfvas_x2_1:   { filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec] }
+    cnt_btc_rec_perfvas_x2_7:   { filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_7, *x_is_rec] }
+    cnt_btc_rec_perfvas_x5_1:   { filter: [*is_btc_wo_guessing, *is_item_perfvas_x5_1, *x_is_rec] }
+    cnt_btc_rec_perfvas_x5_7:   { filter: [*is_btc_wo_guessing, *is_item_perfvas_x5_7, *x_is_rec] }
+    cnt_btc_rec_perfvas_x10_1:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x10_1, *x_is_rec] }
+    cnt_btc_rec_perfvas_x10_7:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x10_7, *x_is_rec] }
     cnt_btc_reg: { filter: [*is_btc_wo_guessing, *is_serp_regions, *x_is_search] }
     cnt_btc_new_reg: { filter: [*is_new_btc, *is_btc_wo_guessing, *is_serp_regions, *x_is_search] }
     cnt_btc_reg_mix: { filter: [*is_btc_wo_guessing, *is_serp_regions_mix, *x_is_search] }
@@ -602,10 +604,11 @@ metric.counter:
     cnt_cs_rec_u2i_reputation_high: { filter: [*is_reputation_high, *is_contact_wo_guessing, *x_is_u2i] }
     cnt_cs_rec_u2i_reputation_medium: { filter: [*is_reputation_medium, *is_contact_wo_guessing, *x_is_u2i] }
     cnt_cs_rec_u2i_reputation_low: { filter: [*is_reputation_low, *is_contact_wo_guessing, *x_is_u2i] }
-    cnt_cs_rec_u2i_collab: { filter: [*is_contact_wo_guessing, *x_is_u2i, *collab] }
-    cnt_cs_rec_u2i_user2vec: { filter: [*is_contact_wo_guessing, *x_is_u2i, *user2vec] }
-    cnt_cs_rec_u2i_similars: { filter: [*is_contact_wo_guessing, *x_is_u2i, *similars] }
-    cnt_cs_rec_u2i_graph: { filter: [*is_contact_wo_guessing, *x_is_u2i, *graph] }
+    cnt_cs_rec_u2i_collab:      { filter: [*is_contact_wo_guessing, *x_is_u2i, *collab]     }
+    cnt_cs_rec_u2i_user2vec:    { filter: [*is_contact_wo_guessing, *x_is_u2i, *user2vec]   }
+    cnt_cs_rec_u2i_similars:    { filter: [*is_contact_wo_guessing, *x_is_u2i, *similars]   }
+    cnt_cs_rec_u2i_graph:       { filter: [*is_contact_wo_guessing, *x_is_u2i, *graph]      }
+    cnt_cs_rec_u2i_crosscat:    { filter: [*is_contact_wo_guessing, *x_is_u2i, *crosscat]   }
     cnt_cs_msg_rec_u2i: { filter: [*is_msg, *x_is_u2i] }
     cnt_cs_perfvas_w: { filter: [*is_contact_wo_guessing, *x_is_search, *is_item_perfvas], obs: [vas_power] }
     cnt_cs_ph_rec_u2i: { filter: [*is_ph, *x_is_u2i] }
@@ -729,11 +732,12 @@ metric.counter:
     cnt_comp_rec_i2i: { filter: [*is_comp, *x_is_i2i] }
     cnt_fav_rec_cv2vac: { filter: [*is_fav, *x_is_cv2vac] }
     cnt_fav_rec_i2i_vas: { filter: [*is_fav, *is_item_vas, *x_is_i2i] }
-    cnt_fav_rec_u2i: { filter: [*is_fav, *x_is_u2i] }
-    cnt_fav_rec_u2i_collab: { filter: [*is_fav, *x_is_u2i, *collab] }
-    cnt_fav_rec_u2i_user2vec: { filter: [*is_fav, *x_is_u2i, *user2vec] }
-    cnt_fav_rec_u2i_similars: { filter: [*is_fav, *x_is_u2i, *similars] }
-    cnt_fav_rec_u2i_graph: { filter: [*is_fav, *x_is_u2i, *graph] }
+    cnt_fav_rec_u2i:            { filter: [*is_fav, *x_is_u2i]              }
+    cnt_fav_rec_u2i_collab:     { filter: [*is_fav, *x_is_u2i, *collab]     }
+    cnt_fav_rec_u2i_user2vec:   { filter: [*is_fav, *x_is_u2i, *user2vec]   }
+    cnt_fav_rec_u2i_similars:   { filter: [*is_fav, *x_is_u2i, *similars]   }
+    cnt_fav_rec_u2i_graph:      { filter: [*is_fav, *x_is_u2i, *graph]      }
+    cnt_fav_rec_u2i_crosscat:   { filter: [*is_fav, *x_is_u2i, *crosscat]   }
     cnt_fav_rec_u2i_vas: { filter: [*is_fav, *is_item_vas, *x_is_u2i] }
     cnt_fav_rec_vas: { filter: [*is_fav, *is_item_vas, *x_is_rec] }
     cnt_fav_reg: { filter: [*is_fav, *is_serp_regions, *x_is_search] }
@@ -821,10 +825,11 @@ metric.counter:
     cnt_iv_rec_u2i_reputation_high: { filter: [*is_reputation_high, *is_iv_wo_guessing, *x_is_u2i] }
     cnt_iv_rec_u2i_reputation_medium: { filter: [*is_reputation_medium, *is_iv_wo_guessing, *x_is_u2i] }
     cnt_iv_rec_u2i_reputation_low: { filter: [*is_reputation_low, *is_iv_wo_guessing, *x_is_u2i] }
-    cnt_iv_rec_u2i_collab: { filter: [*is_iv_wo_guessing, *x_is_u2i, *collab] }
-    cnt_iv_rec_u2i_user2vec: { filter: [*is_iv_wo_guessing, *x_is_u2i, *user2vec] }
-    cnt_iv_rec_u2i_similars: { filter: [*is_iv_wo_guessing, *x_is_u2i, *similars] }
-    cnt_iv_rec_u2i_graph: { filter: [*is_iv_wo_guessing, *x_is_u2i, *graph] }
+    cnt_iv_rec_u2i_collab:      { filter: [*is_iv_wo_guessing, *x_is_u2i, *collab]      }
+    cnt_iv_rec_u2i_user2vec:    { filter: [*is_iv_wo_guessing, *x_is_u2i, *user2vec]    }
+    cnt_iv_rec_u2i_similars:    { filter: [*is_iv_wo_guessing, *x_is_u2i, *similars]    }
+    cnt_iv_rec_u2i_graph:       { filter: [*is_iv_wo_guessing, *x_is_u2i, *graph]       }
+    cnt_iv_rec_u2i_crosscat:    { filter: [*is_iv_wo_guessing, *x_is_u2i, *crosscat]    }
     cnt_iv_rec_u2i_vas: { filter: [*is_item_vas, *is_iv_wo_guessing, *x_is_u2i] }
     cnt_iv_rec_vas: { filter: [*is_item_vas, *is_iv_wo_guessing, *x_is_rec] }
     cnt_iv_rec_perfvas_x2_1: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec] }
@@ -1914,11 +1919,12 @@ metric.uniq:
     buyer_target_clicks_new_rec_i2i: { counter: cnt_btc_new_rec_i2i, key: [item_x] }
     buyer_target_clicks_returned_rec_i2i: { counter: cnt_btc_old_rec_i2i, key: [item_x] }
     buyer_target_clicks_rec_cv2vac: { counter: cnt_btc_rec_cv2vac, key: [item_x] }
-    buyer_target_clicks_rec_u2i: { counter: cnt_btc_rec_u2i, key: [item_x] }
-    buyer_target_clicks_rec_u2i_collab: { counter: cnt_btc_rec_u2i_collab, key: [item_x] }
-    buyer_target_clicks_rec_u2i_user2vec: { counter: cnt_btc_rec_u2i_user2vec, key: [item_x] }
-    buyer_target_clicks_rec_u2i_similars: { counter: cnt_btc_rec_u2i_similars, key: [item_x] }
-    buyer_target_clicks_rec_u2i_graph: { counter: cnt_btc_rec_u2i_graph, key: [item_x] }
+    buyer_target_clicks_rec_u2i:            { counter: cnt_btc_rec_u2i,          key: [item_x] }
+    buyer_target_clicks_rec_u2i_collab:     { counter: cnt_btc_rec_u2i_collab,   key: [item_x] }
+    buyer_target_clicks_rec_u2i_user2vec:   { counter: cnt_btc_rec_u2i_user2vec, key: [item_x] }
+    buyer_target_clicks_rec_u2i_similars:   { counter: cnt_btc_rec_u2i_similars, key: [item_x] }
+    buyer_target_clicks_rec_u2i_graph:      { counter: cnt_btc_rec_u2i_graph,    key: [item_x] }
+    buyer_target_clicks_rec_u2i_crosscat:   { counter: cnt_btc_rec_u2i_crosscat, key: [item_x] }
     buyer_target_clicks_new_rec_u2i: { counter: cnt_btc_new_rec_u2i, key: [item_x] }
     buyer_target_clicks_returned_rec_u2i: { counter: cnt_btc_old_rec_u2i, key: [item_x] }
     buyer_target_clicks_regions: { counter: cnt_btc_reg, key: [item_x] }
@@ -1993,10 +1999,11 @@ metric.uniq:
     contacts_rec_u2i_reputation_high: { counter: cnt_cs_rec_u2i_reputation_high, key: [item_x] }
     contacts_rec_u2i_reputation_medium: { counter: cnt_cs_rec_u2i_reputation_medium, key: [item_x] }
     contacts_rec_u2i_reputation_low: { counter: cnt_cs_rec_u2i_reputation_low, key: [item_x] }
-    contacts_rec_u2i_collab: { counter: cnt_cs_rec_u2i_collab, key: [item_x] }
-    contacts_rec_u2i_user2vec: { counter: cnt_cs_rec_u2i_user2vec, key: [item_x] }
-    contacts_rec_u2i_similars: { counter: cnt_cs_rec_u2i_similars, key: [item_x] }
-    contacts_rec_u2i_graph: { counter: cnt_cs_rec_u2i_graph, key: [item_x] }
+    contacts_rec_u2i_collab:    { counter: cnt_cs_rec_u2i_collab,   key: [item_x] }
+    contacts_rec_u2i_user2vec:  { counter: cnt_cs_rec_u2i_user2vec, key: [item_x] }
+    contacts_rec_u2i_similars:  { counter: cnt_cs_rec_u2i_similars, key: [item_x] }
+    contacts_rec_u2i_graph:     { counter: cnt_cs_rec_u2i_graph,    key: [item_x] }
+    contacts_rec_u2i_crosscat:  { counter: cnt_cs_rec_u2i_crosscat, key: [item_x] }
     contacts_rec_u2i_vas: { counter: cnt_cs_rec_u2i_vas, key: [item_x] }
     contacts_rec_vas: { counter: cnt_cs_rec_vas, key: [item_x] }
     contacts_rec_vas_cpa: { counter: cnt_cs_rec_vas_cpa, key: [item_x] }
@@ -2130,11 +2137,12 @@ metric.uniq:
     comp_added_rec_i2i: { counter: cnt_comp_rec_i2i, key: [item_x] }
     fav_added_rec_cv2vac: { counter: cnt_fav_rec_cv2vac, key: [item_x] }
     fav_added_rec_i2i_vas: { counter: cnt_fav_rec_i2i_vas, key: [item_x] }
-    fav_added_rec_u2i: { counter: cnt_fav_rec_u2i, key: [item_x] }
-    fav_added_rec_u2i_collab: { counter: cnt_fav_rec_u2i_collab, key: [item_x] }
+    fav_added_rec_u2i:          { counter: cnt_fav_rec_u2i,          key: [item_x] }
+    fav_added_rec_u2i_collab:   { counter: cnt_fav_rec_u2i_collab,   key: [item_x] }
     fav_added_rec_u2i_user2vec: { counter: cnt_fav_rec_u2i_user2vec, key: [item_x] }
     fav_added_rec_u2i_similars: { counter: cnt_fav_rec_u2i_similars, key: [item_x] }
-    fav_added_rec_u2i_graph: { counter: cnt_fav_rec_u2i_graph, key: [item_x] }
+    fav_added_rec_u2i_graph:    { counter: cnt_fav_rec_u2i_graph,    key: [item_x] }
+    fav_added_rec_u2i_crosscat: { counter: cnt_fav_rec_u2i_crosscat, key: [item_x] }
     fav_added_rec_u2i_vas: { counter: cnt_fav_rec_u2i_vas, key: [item_x] }
     fav_added_rec_vas: { counter: cnt_fav_rec_vas, key: [item_x] }
     fav_added_regions: { counter: cnt_fav_reg, key: [item_x] }
@@ -2179,15 +2187,16 @@ metric.uniq:
     item_views_rec_i2i_vas:       { counter: cnt_iv_rec_i2i_vas,          key: [item_x] }
     item_views_rec_u2i:           { counter: cnt_iv_rec_u2i,              key: [item_x] }
     item_views_rec_u2i_dedup:     { counter: cnt_iv_rec_u2i,              key: [seller_microcat_price_x] }
-    item_views_rec_u2i_reputation_high:   { counter: cnt_iv_rec_u2i_reputation_high, key: [item_x] }
+    item_views_rec_u2i_reputation_high:   { counter: cnt_iv_rec_u2i_reputation_high,   key: [item_x] }
     item_views_rec_u2i_reputation_medium: { counter: cnt_iv_rec_u2i_reputation_medium, key: [item_x] }
-    item_views_rec_u2i_reputation_low:    { counter: cnt_iv_rec_u2i_reputation_low, key: [item_x] }
-    item_views_rec_u2i_collab:    { counter: cnt_iv_rec_u2i_collab, key: [item_x] }
-    item_views_rec_u2i_user2vec:  { counter: cnt_iv_rec_u2i_user2vec, key: [item_x] }
-    item_views_rec_u2i_similars:  { counter: cnt_iv_rec_u2i_similars, key: [item_x] }
-    item_views_rec_u2i_graph:     { counter: cnt_iv_rec_u2i_graph, key: [item_x] }
-    item_views_rec_u2i_vas:       { counter: cnt_iv_rec_u2i_vas, key: [item_x] }
-    item_views_rec_vas:           { counter: cnt_iv_rec_vas, key: [item_x] }
+    item_views_rec_u2i_reputation_low:    { counter: cnt_iv_rec_u2i_reputation_low,    key: [item_x] }
+    item_views_rec_u2i_collab:    { counter: cnt_iv_rec_u2i_collab,     key: [item_x] }
+    item_views_rec_u2i_user2vec:  { counter: cnt_iv_rec_u2i_user2vec,   key: [item_x] }
+    item_views_rec_u2i_similars:  { counter: cnt_iv_rec_u2i_similars,   key: [item_x] }
+    item_views_rec_u2i_graph:     { counter: cnt_iv_rec_u2i_graph,      key: [item_x] }
+    item_views_rec_u2i_crosscat:  { counter: cnt_iv_rec_u2i_crosscat,   key: [item_x] }
+    item_views_rec_u2i_vas:       { counter: cnt_iv_rec_u2i_vas,        key: [item_x] }
+    item_views_rec_vas:           { counter: cnt_iv_rec_vas,            key: [item_x] }
     item_views_rec_perfvas_x2_1:  { counter: cnt_iv_rec_perfvas_x2_1,   key: [item_x] }
     item_views_rec_perfvas_x2_7:  { counter: cnt_iv_rec_perfvas_x2_7,   key: [item_x] }
     item_views_rec_perfvas_x5_1:  { counter: cnt_iv_rec_perfvas_x5_1,   key: [item_x] }
@@ -2200,10 +2209,10 @@ metric.uniq:
     item_views_quorum:            { counter: cnt_iv_qrm,                key: [item_x] }
     item_views_vector:            { counter: cnt_iv_vec,                key: [item_x] }
     item_views_serp:              { counter: cnt_iv_s_item_attr,        key: [item_x] }
-    item_views_serp_reputation_high:             { counter: cnt_iv_s_item_attr_reputation_high,       key: [item_x] }
-    item_views_serp_reputation_medium:           { counter: cnt_iv_s_item_attr_reputation_medium,     key: [item_x] }
-    item_views_serp_reputation_low:              { counter: cnt_iv_s_item_attr_reputation_low,        key: [item_x] }
-    item_views_serp_dedup:        { counter: cnt_iv_s_item_attr,        key: [seller_microcat_price_x] }
+    item_views_serp_reputation_high:    { counter: cnt_iv_s_item_attr_reputation_high,       key: [item_x] }
+    item_views_serp_reputation_medium:  { counter: cnt_iv_s_item_attr_reputation_medium,     key: [item_x] }
+    item_views_serp_reputation_low:     { counter: cnt_iv_s_item_attr_reputation_low,        key: [item_x] }
+    item_views_serp_dedup:        { counter: cnt_iv_s_item_attr,           key: [seller_microcat_price_x] }
     item_views_serp_guarantee:    { counter: cnt_iv_s_item_attr_guarantee, key: [item_x] }
     item_views_nox:               { counter: cnt_iv_no_item_attr,       key: [item_x] }
     item_views_serp_district:     { counter: cnt_iv_s_distr,            key: [item_x] }
@@ -2212,7 +2221,7 @@ metric.uniq:
     item_views_serp_road:         { counter: cnt_iv_s_road,             key: [item_x] }
     item_views_serp_saved:        { counter: cnt_iv_s_saved,            key: [item_x] }
     item_views_serp_not_saved_filters:  { counter: cnt_iv_s_not_saved_filters, key: [item_x] }
-    item_views_serp_saved_filters: {counter: cnt_iv_s_saved_filters,    key: [item_x] }
+    item_views_serp_saved_filters:      { counter: cnt_iv_s_saved_filters,     key: [item_x] }
     item_views_serp_similar:      { counter: cnt_iv_grouped,            key: [item_x] }
     item_views_shop:              { counter: cnt_iv_shopx,              key: [item_x] }
     item_views_public_profile:    { counter: cnt_iv_public_profile,     key: [item_x] }
@@ -2392,11 +2401,12 @@ metric.uniq:
     user_fav_added_push_land: { counter: cnt_fav_push_land, key: [cookie] }
     user_fav_added_rec_i2i: { counter: cnt_fav_rec_i2i, key: [cookie] }
     user_fav_added_rec_cv2vac: { counter: cnt_fav_rec_cv2vac, key: [cookie] }
-    user_fav_added_rec_u2i: { counter: cnt_fav_rec_u2i, key: [cookie] }
-    user_fav_added_rec_u2i_collab: { counter: cnt_fav_rec_u2i_collab, key: [cookie] }
+    user_fav_added_rec_u2i:          { counter: cnt_fav_rec_u2i,          key: [cookie] }
+    user_fav_added_rec_u2i_collab:   { counter: cnt_fav_rec_u2i_collab,   key: [cookie] }
     user_fav_added_rec_u2i_user2vec: { counter: cnt_fav_rec_u2i_user2vec, key: [cookie] }
     user_fav_added_rec_u2i_similars: { counter: cnt_fav_rec_u2i_similars, key: [cookie] }
-    user_fav_added_rec_u2i_graph: { counter: cnt_fav_rec_u2i_graph, key: [cookie] }
+    user_fav_added_rec_u2i_graph:    { counter: cnt_fav_rec_u2i_graph,    key: [cookie] }
+    user_fav_added_rec_u2i_crosscat: { counter: cnt_fav_rec_u2i_crosscat, key: [cookie] }
     user_fav_from_map_total: { counter: cnt_fav_from_map_s_area, key: [cookie] }
     user_favorites_list_views: { counter: favorites_list_views, key: [cookie] }
     user_favorites_removed: { counter: favorites_removed, key: [cookie] }
@@ -2490,11 +2500,12 @@ metric.uniq:
     user_btc_new_rec_i2i: { counter: cnt_btc_new_rec_i2i, key: [cookie] }
     user_btc_returned_rec_i2i: { counter: cnt_btc_old_rec_i2i, key: [cookie] }
     user_btc_rec_cv2vac: { counter: cnt_btc_rec_cv2vac, key: [cookie] }
-    user_btc_rec_u2i: { counter: cnt_btc_rec_u2i, key: [cookie] }
-    user_btc_rec_u2i_collab: { counter: cnt_btc_rec_u2i_collab, key: [cookie] }
-    user_btc_rec_u2i_user2vec: { counter: cnt_btc_rec_u2i_user2vec, key: [cookie] }
-    user_btc_rec_u2i_similars: { counter: cnt_btc_rec_u2i_similars, key: [cookie] }
-    user_btc_rec_u2i_graph: { counter: cnt_btc_rec_u2i_graph, key: [cookie] }
+    user_btc_rec_u2i:           { counter: cnt_btc_rec_u2i,          key: [cookie] }
+    user_btc_rec_u2i_collab:    { counter: cnt_btc_rec_u2i_collab,   key: [cookie] }
+    user_btc_rec_u2i_user2vec:  { counter: cnt_btc_rec_u2i_user2vec, key: [cookie] }
+    user_btc_rec_u2i_similars:  { counter: cnt_btc_rec_u2i_similars, key: [cookie] }
+    user_btc_rec_u2i_graph:     { counter: cnt_btc_rec_u2i_graph,    key: [cookie] }
+    user_btc_rec_u2i_crosscat:  { counter: cnt_btc_rec_u2i_crosscat, key: [cookie] }
     user_btc_new_rec_u2i: { counter: cnt_btc_new_rec_u2i, key: [cookie] }
     user_btc_returned_rec_u2i: { counter: cnt_btc_old_rec_u2i, key: [cookie] }
     users_contact_rec_daily: { counter: cnt_cs_rec, key: [cookie] }
@@ -2502,14 +2513,15 @@ metric.uniq:
     users_job_ast_contacts: { counter: job_ast_contacts, key: [cookie] }
     users_contact_rec_daily_vas: { counter: cnt_cs_rec_vas, key: [cookie] }
     users_contact_push_land: { counter: cnt_cs_push_land, key: [cookie] }
-    users_contact_rec_i2i: { counter: cnt_cs_rec_i2i, key: [cookie] }
-    users_contact_rec_cv2vac: { counter: cnt_cs_rec_cv2vac, key: [cookie] }
-    users_contact_rec_i2i_vas: { counter: cnt_cs_rec_i2i_vas, key: [cookie] }
-    users_contact_rec_u2i: { counter: cnt_cs_rec_u2i, key: [cookie] }
-    users_contact_rec_u2i_collab: { counter: cnt_cs_rec_u2i_collab, key: [cookie] }
+    users_contact_rec_i2i:          { counter: cnt_cs_rec_i2i,          key: [cookie] }
+    users_contact_rec_cv2vac:       { counter: cnt_cs_rec_cv2vac,       key: [cookie] }
+    users_contact_rec_i2i_vas:      { counter: cnt_cs_rec_i2i_vas,      key: [cookie] }
+    users_contact_rec_u2i:          { counter: cnt_cs_rec_u2i,          key: [cookie] }
+    users_contact_rec_u2i_collab:   { counter: cnt_cs_rec_u2i_collab,   key: [cookie] }
     users_contact_rec_u2i_user2vec: { counter: cnt_cs_rec_u2i_user2vec, key: [cookie] }
     users_contact_rec_u2i_similars: { counter: cnt_cs_rec_u2i_similars, key: [cookie] }
-    users_contact_rec_u2i_graph: { counter: cnt_cs_rec_u2i_graph, key: [cookie] }
+    users_contact_rec_u2i_graph:    { counter: cnt_cs_rec_u2i_graph,    key: [cookie] }
+    users_contact_rec_u2i_crosscat: { counter: cnt_cs_rec_u2i_crosscat, key: [cookie] }
     users_contact_rec_u2i_vas: { counter: cnt_cs_rec_u2i_vas, key: [cookie] }
     users_contact_search_query: { counter: cnt_s_query_c, key: [cookie] }
     users_contact_search_noquery: { counter: cnt_s_noquery_c, key: [cookie] }
@@ -2551,11 +2563,12 @@ metric.uniq:
     users_item_view_rec_i2i: { counter: cnt_iv_rec_i2i, key: [cookie] }
     users_item_view_rec_cv2vac: { counter: cnt_iv_rec_cv2vac, key: [cookie] }
     users_item_view_rec_i2i_vas: { counter: cnt_iv_rec_i2i_vas, key: [cookie] }
-    users_item_view_rec_u2i: { counter: cnt_iv_rec_u2i, key: [cookie] }
-    users_item_view_rec_u2i_collab: { counter: cnt_iv_rec_u2i_collab, key: [cookie] }
-    users_item_view_rec_u2i_user2vec: { counter: cnt_iv_rec_u2i_user2vec, key: [cookie] }
-    users_item_view_rec_u2i_similars: { counter: cnt_iv_rec_u2i_similars, key: [cookie] }
-    users_item_view_rec_u2i_graph: { counter: cnt_iv_rec_u2i_graph, key: [cookie] }
+    users_item_view_rec_u2i:            { counter: cnt_iv_rec_u2i,          key: [cookie] }
+    users_item_view_rec_u2i_collab:     { counter: cnt_iv_rec_u2i_collab,   key: [cookie] }
+    users_item_view_rec_u2i_user2vec:   { counter: cnt_iv_rec_u2i_user2vec, key: [cookie] }
+    users_item_view_rec_u2i_similars:   { counter: cnt_iv_rec_u2i_similars, key: [cookie] }
+    users_item_view_rec_u2i_graph:      { counter: cnt_iv_rec_u2i_graph,    key: [cookie] }
+    users_item_view_rec_u2i_crosscat:   { counter: cnt_iv_rec_u2i_crosscat, key: [cookie] }
     users_item_view_rec_u2i_vas: { counter: cnt_iv_rec_u2i_vas, key: [cookie] }
     users_item_view_search_query: { counter: cnt_s_query_iv, key: [cookie] }
     users_item_view_search_noquery: { counter: cnt_s_noquery_iv, key: [cookie] }
