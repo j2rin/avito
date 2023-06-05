@@ -16,6 +16,7 @@ select
     autotekaorder_id,
     reports_count,
     amount,
+    amount_net,
     payment_method,
     user_created_at,
     is_new_user,
@@ -35,4 +36,44 @@ select
     utm_content,
     utm_term
 from dma.autoteka_stream
+where event_date::date between :first_date and :last_date
+union all
+select
+    track_id,
+    event_no,
+    event_date,
+    cookie_id,
+    user_id,
+    cookie_id as additionalcookie_id,
+    user_id as autotekauser_id,
+    is_authorized,
+    null as searchkey,
+    1 as searchtype,
+    item_id,
+    null platenumber,
+    null vin,
+    null autoteka_platform_id,
+    order_items_id as autotekaorder_id,
+    reports_count,
+    amount,
+    amount_net,
+    null payment_method,
+    null user_created_at,
+    is_new_user,
+    null b_track_id,
+    null b_event_no,
+    null b_event_date,
+    null f_track_id,
+    null f_event_no,
+    null f_event_date,
+    funnel_stage_id,
+    null utm_campaign,
+    null utm_source,
+    null utm_medium,
+    platform_id,
+    cookie_id as autoteka_cookie_id,
+    is_pro,
+    null utm_content,
+    null utm_term
+from dma.autoteka_on_avito_stream_and_payments
 where event_date::date between :first_date and :last_date
