@@ -14,6 +14,7 @@ definitions:
     - &similars     {item_engines.bit: 3        }
     - &graph        {item_engines.bit: 4        }
     - &crosscat     {item_engines.bit: 5        }
+    - &is_serp_push {item_type.bit: [3]         }
 
 metric.counter:
     cnt_rec_score_u2i:                  {filter: [*is_u2i],             obs: [score]            }
@@ -29,6 +30,8 @@ metric.counter:
     show_u2i_crosscat:                  {filter: [*is_u2i, *crosscat],  obs: [items_count]      }
     cnt_serp_freshness:                 {filter: [*is_serp],            obs: [freshness]        }
     cnt_serp_items:                     {filter: [*is_serp],            obs: [items_count]      }
+    cnt_serp_push_rnk10:                {filter: [*is_serp_push, *is_serp],  obs: [items_count]      }
+    cnt_serp_rnk10:                     {filter: [*is_serp],            obs: [items_count]      }
     serp_items_dedup:                   {filter: [*is_serp],            obs: [items_dedup_count]}
     serp_items_grouped:                 {filter: [*is_serp],            obs: [items_grouped_count]}
     push_items:                         {filter: [*is_push],            obs: [items_count]      }
@@ -43,6 +46,7 @@ metric.ratio:
     rec_score_u2i:                      {num: cnt_rec_score_u2i,                den: cnt_rec_items_u2i  }
     rec_score_i2i:                      {num: cnt_rec_score_i2i,                den: cnt_rec_items_i2i  }
     serp_freshness:                     {num: cnt_serp_freshness,               den: cnt_serp_items     }
+    serp_push_ratio_rnk10:              {num: cnt_serp_push_rnk10,              den: cnt_serp_rnk10     }
     seller_buyer_pair_per_serp_items:   {num: seller_buyer_pair_with_search,    den: cnt_serp_items     }
     seller_buyer_pair_per_u2i_items:    {num: seller_buyer_pair_with_rec_u2i,   den: cnt_rec_items_u2i  }
     serp_items_dedup_ratio:             {num: serp_items_dedup,                 den: cnt_serp_items     }
