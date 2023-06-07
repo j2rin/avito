@@ -2418,6 +2418,18 @@ qd_lots_create_date:
   dtm: created_at
   segm: user_id
 
+qd_lots_terminated_date:
+  metric_configs: [qd_lots_terminated_date]
+  database: vertica
+  sql: qd_lots
+  column_map:
+    user: user_id
+  dimensions: [platform, region, city, vertical, logical_category, category, subcategory, param1]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: terminated_at
+  segm: user_id
+
 perf_clickstream_counters:
   metric_configs: [perf_clickstream_counters]
   database: vertica
