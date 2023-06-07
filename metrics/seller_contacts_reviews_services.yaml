@@ -1,0 +1,15 @@
+metric.counter:
+  contacts_all_reviews_services:            {obs: [contacts]}
+  contacts_0_reviews_services:              {filter: [rating_reviews_count_services.=: 0], obs: [contacts]}
+  contacts_0_4_reviews_services:            {filter: [rating_reviews_count_services.>=: 0, rating_reviews_count_services.<=: 4], obs: [contacts]}
+  contacts_5_plus_reviews_services:         {filter: [rating_reviews_count_services.>=: 5], obs: [contacts]}
+
+metric.uniq:
+  users_0_reviews_services:                 {counter: contacts_0_reviews_services, key: [user_id]}
+  users_0_4_reviews_services:               {counter: contacts_0_4_reviews_services, key: [user_id]}
+  users_5_plus_reviews_services:            {counter: contacts_5_plus_reviews_services, key: [user_id]}
+
+metric.ratio:
+  contacts_share_0_reviews_services:        {num: contacts_0_reviews_services,    den: contacts_all_reviews_services}
+  contacts_share_0_4_reviews_services:      {num: contacts_0_4_reviews_services,   den: contacts_all_reviews_services}
+  contacts_share_5_plus_reviews_services:   {num: contacts_5_plus_reviews_services,   den: contacts_all_reviews_services}
