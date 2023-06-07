@@ -1559,6 +1559,20 @@ reviews_collected:
   dtm: event_date
   segm: user_id
 
+contacts_reviews_services:
+  metric_configs: [seller_contacts_reviews_services]
+  database: vertica
+  sql: contacts_reviews_services
+  column_map:
+    user: user_id
+  dimensions: [vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
+
 lister_reactivations:
     metric_configs: [lister_reactivations]
     database: vertica
