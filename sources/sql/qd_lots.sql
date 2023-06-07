@@ -13,6 +13,7 @@ select
     has_offer,
     has_buyout,
     buyout_amount,
+    charge,
     count_bid,
     case when seller_choice_at is not null and status_id !=9 then 1 else 0 end as is_seller_choice_of_winner, 
     case when seller_choice_applied_to_offers_at is not null and status_id !=9 then 1 else 0 end as is_any_choice_of_winner,
