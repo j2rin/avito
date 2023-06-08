@@ -9,6 +9,8 @@ select
     cm.microcat_id,
   	rpc.cookie_id,
   	cr.from_user_id as user_id,
+	cr.to_user_id as seller_id,
+	reviewstatus,
   	cr.stage,
   	cr.score,
   	cr.photo_count,

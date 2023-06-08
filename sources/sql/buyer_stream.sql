@@ -115,6 +115,7 @@ select
          end as s_view_mode,
     ((ss.item_flags & (1 << 28) > 0) and (ss.item_flags & (1 << 17) > 0))::int as is_item_with_video_cpa,
     datediff('hour', ial.sort_time, ss.event_date) as item_age_hours,
+    datediff('hour', ial.start_time, ss.event_date) as item_start_hours,
     pg.price_group,
     hash(
         round(10^round(log(ial.price), 1)),
@@ -198,6 +199,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from_date,
         to_date,
         sort_time,
+        start_time,
   		price
     from dma.item_attr_log
     where item_id in (
