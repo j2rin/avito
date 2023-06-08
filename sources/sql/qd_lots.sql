@@ -34,3 +34,4 @@ select
 from dma.qd_auto_report_lots l
 left join DMA.current_locations cl on cl.location_id = l.location_id
 where created_at::date between :first_date and :last_date
+    or terminated_at::date between :first_date and :last_date
