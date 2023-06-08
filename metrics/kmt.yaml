@@ -34,8 +34,6 @@ metric.counter:
     iv_kmt_organic: {filter: [*is_start_organic, *kmt], obs: [item_views_kmt, item_views_serp_kmt]}
     s_kmt_organic: {filter: [*is_start_organic, *kmt], obs: [searches_kmt]}
 
-
-
     contacts_in_session_kmt:  {filter: [*is_start, *kmt], obs: [contacts_in_session]}
     item_views_in_session_kmt:  {filter: [*is_start, *kmt], obs: [item_views_in_session]}
     searches_in_session_kmt:  {filter: [*is_start, *kmt], obs: [searches_in_session]}
@@ -43,6 +41,8 @@ metric.counter:
     contacts_in_session_kmt_organic:  {filter: [*is_start_organic, *kmt], obs: [contacts_in_session]}
     item_views_in_session_kmt_organic:  {filter: [*is_start_organic, *kmt], obs: [item_views_in_session]}
     searches_in_session_kmt_organic:  {filter: [*is_start_organic, *kmt], obs: [searches_in_session]}
+
+    kmt_similar: {filter: [*kmt, from_page: model_recs_model_tab]}
 
 metric.uniq:
     user_kmt_or_catalog: { counter: kmt_or_catalog, key: [cookie_id] }
@@ -89,6 +89,10 @@ metric.uniq:
     session_kmt_c_organic: { counter: contacts_in_session_kmt_organic, key: [session_hash] }
     session_kmt_iv_organic: { counter: item_views_in_session_kmt_organic, key: [session_hash] }
     session_kmt_s_organic: { counter: searches_in_session_kmt_organic, key: [session_hash] }
+
+    session_kmt_similar: { counter: kmt_similar, key: [session_hash] }
+    user_kmt_similar: { counter: kmt_similar, key: [cookie_id] }
+
 
 metric.ratio:
     c_kmt_per_kmt: { num: c_kmt, den: model_card_goods }
