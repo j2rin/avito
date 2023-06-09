@@ -1,8 +1,8 @@
 definitions:
-  - &callback_scenario  [notification_call_back,deeplink_call_back,call_log_callback,recall_on_call_screen,call_screen,recall_after_micaccess,pro_callback]
+  - &callback_scenario  [notification_call_back,deeplink_call_back,call_log_callback,recall_on_call_screen,call_screen,recall_after_micaccess,pro_callback,answering_machine_callback]
   - &direct_scenario    [item,item_gallery,item_feed,item_feed_photo,messenger_chat_menu,seller_messenger_chat,mini_messenger_chat_menu]
   - &item_scenario      [item,item_gallery,item_feed,item_feed_photo]
-  - &any_scenario       [item,item_gallery,item_feed,item_feed_photo,messenger_chat_menu,notification_call_back,deeplink_call_back,call_log_callback,recall_on_call_screen,call_screen,recall_after_micaccess,seller_messenger_chat,pro_callback,mini_messenger_chat_menu,pro_mini_messenger_chat_menu,pro_messenger_chat_menu]
+  - &any_scenario       [item,item_gallery,item_feed,item_feed_photo,messenger_chat_menu,notification_call_back,deeplink_call_back,call_log_callback,recall_on_call_screen,call_screen,recall_after_micaccess,seller_messenger_chat,pro_callback,mini_messenger_chat_menu,pro_mini_messenger_chat_menu,pro_messenger_chat_menu,answering_machine_callback]
 
   - &is_callback_c      {AppCallScenario: *callback_scenario}
   - &is_direct_c        {AppCallScenario: *direct_scenario}
@@ -39,6 +39,10 @@ metric.counter:
   appcall_bx_outgoing_callback:            {filter: [*is_outgoing, *is_callback_c]}
   appcall_bx_outgoing_callback_answered:   {filter: [*is_outgoing, *is_callback_c, *is_answered]}
   appcall_bx_outgoing_callback_success:    {filter: [*is_outgoing, *is_callback_c, *is_success]}
+  
+  appcall_bx_incoming_callback:            {filter: [*is_incoming, *is_callback_c]}
+  appcall_bx_incoming_callback_answered:   {filter: [*is_incoming, *is_callback_c, *is_answered]}
+  appcall_bx_incoming_callback_success:    {filter: [*is_incoming, *is_callback_c, *is_success]}
   
   appcall_bx_outgoing_direct:              {filter: [*is_outgoing, *is_direct_c]}
   appcall_bx_outgoing_direct_answered:     {filter: [*is_outgoing, *is_direct_c, *is_answered]}
