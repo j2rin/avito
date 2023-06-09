@@ -94,7 +94,7 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microc
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = nvl(lc.logical_category_id, cm.logical_category_id) and ls.is_default
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = t.location_id
 left join /*+distrib(l,a)*/ dma.user_segment_market usm on t.user_id = usm.user_id and nvl(lc.logical_category_id, cm.logical_category_id) = usm.logical_category_id
-                                                                and t.event_date interpolate previous value usm.converting_date
+                                                                and t.event_date between usm.converting_date and usm.max_valid_date
 left join /*+jtype(h),distrib(l,a)*/ am_client_day acd on t.user_id = acd.user_id and t.event_date between acd.active_from_date and acd.active_to_date
 left join /*+jtype(h),distrib(l,a)*/ smartphone_buyout_screens as sbs on t.item_id = sbs.item_id and t.event_date = sbs.event_date
 where t.event_date between :first_date and :last_date
