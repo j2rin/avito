@@ -18,7 +18,8 @@ select
         when class in (1,2,6,7,8) and with_reply = true then 'preliminary'
         when is_spam = true then 'trash'
         when with_reply = false then 'not_answered'
-    end as type
+    end as type,
+    '1' as tags
 from  dma.messenger_chat_report t
 left join  dma.messenger_chat_scores cs using (chat_id,item_id)
 where t.first_message_event_date::date between :first_date::date  and :last_date::date
@@ -54,7 +55,8 @@ select
       or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'illegal_vacancy') >0.5  
       or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
     then 'trash'
-    end as type
+    end as type,
+    '1' as tags
 from dma.target_call
 where call_time::date between :first_date::date  and :last_date::date
 )
