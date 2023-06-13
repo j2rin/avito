@@ -19,7 +19,7 @@ select
         when is_spam = true then 'trash'
         when with_reply = false then 'not_answered'
     end as type,
-    array[to_char(class)] as tags
+    ' '||to_char(class)||' ' as tags
 from  dma.messenger_chat_report t
 left join  dma.messenger_chat_scores cs using (chat_id,item_id)
 where t.first_message_event_date::date between :first_date::date  and :last_date::date
@@ -56,14 +56,12 @@ select
       or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
     then 'trash'
     end as type,    
-    case 
-      when fifth_tag_prob > 0.5 then array[first_tag, second_tag, third_tag, fourth_tag, fifth_tag]
-      when fourth_tag_prob > 0.5 then array[first_tag, second_tag, third_tag, fourth_tag]
-      when third_tag_prob > 0.5 then array[first_tag, second_tag, third_tag]
-      when second_tag_prob > 0.5 then array[first_tag, second_tag]
-      when first_tag_prob > 0.5 then array[first_tag]
-      else (array[''])
-    end as tags
+      ' '|| case when first_tag_prob > 0.5 then first_tag else '' end
+    ||' '|| case when second_tag_prob > 0.5 then second_tag else '' end
+    ||' '|| case when third_tag_prob > 0.5 then third_tag else '' end 
+    ||' '|| case when fourth_tag_prob > 0.5 then fourth_tag else '' end 
+    ||' '|| case when fifth_tag_prob > 0.5 then fifth_tag else '' end
+    ||' ' as tags
 from dma.target_call
 where call_time::date between :first_date::date  and :last_date::date
 )

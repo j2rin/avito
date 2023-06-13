@@ -7,6 +7,38 @@ definitions:
    - &is_iac                                           {contact_type: iac}
    - &is_ct                                            {contact_type: ct}
    - &is_call                                          {contact_type: *call}
+   - &is_delivery_agreement                            {tags.ilike: '% delivery_agreement %'} 
+   - &is_sending_docs                                  {tags.ilike: '% sending_docs %'} 
+   - &is_item_deal_discussion                          {tags.ilike: '% item_deal_discussion %'} 
+   - &is_agent_call                                    {tags.ilike: '% agent_call %'} 
+   - &is_refused_by_employer                           {tags.ilike: '% refused_by_employer %'} 
+   - &is_call_later_no_meeting                         {tags.ilike: '% call_later_no_meeting %'} 
+   - &is_mistake                                       {tags.ilike: '% mistake %'} 
+   - &is_different_number                              {tags.ilike: '% different_number %'} 
+   - &is_dispatcher_call                               {tags.ilike: '% dispatcher_call %'} 
+   - &is_meeting_moment                                {tags.ilike: '% meeting_moment %'} 
+   - &is_going_for_interview                           {tags.ilike: '% going_for_interview %'} 
+   - &is_fast_hiring                                   {tags.ilike: '% fast_hiring %'} 
+   - &is_spam                                          {tags.ilike: '% spam %'} 
+   - &is_contact_exchange                              {tags.ilike: '% contact_exchange %'} 
+   - &is_auto_ru                                       {tags.ilike: '% auto_ru %'} 
+   - &is_discrimination                                {tags.ilike: '% discrimination %'} 
+   - &is_illegal_vacancy                               {tags.ilike: '% illegal_vacancy %'} 
+   - &is_unclear                                       {tags.ilike: '% unclear %'} 
+   - &is_delivery_discussion                           {tags.ilike: '% delivery_discussion %'} 
+   - &is_ask_for_resume                                {tags.ilike: '% ask_for_resume %'} 
+   - &is_applicant_refused                             {tags.ilike: '% applicant_refused %'} 
+   - &is_different_offer                               {tags.ilike: '% different_offer %'} 
+   - &is_agreed_on_booking                             {tags.ilike: '% agreed_on_booking %'} 
+   - &is_already_sold                                  {tags.ilike: '% already_sold %'} 
+   - &is_irrelevant_applicant                          {tags.ilike: '% irrelevant_applicant %'} 
+   - &is_autoreply                                     {tags.ilike: '% autoreply %'} 
+   - &is_failed_call                                   {tags.ilike: '% failed_call %'} 
+   - &is_failed_agreement                              {tags.ilike: '% failed_agreement %'} 
+   - &is_closed_vacancy                                {tags.ilike: '% closed_vacancy %'} 
+   - &is_going_to_meet                                 {tags.ilike: '% going_to_meet %'} 
+
+
         
 metric.counter:
   target_contact_all:                                   {filter: [{is_target: True}]}
@@ -20,6 +52,39 @@ metric.counter:
   preliminary_contact_iac:                              {filter: [*is_preliminary, *is_iac]}
   trash_contact_ct:                                     {filter: [*is_trash, *is_ct]}
   preliminary_contact_ct:                               {filter: [*is_preliminary, *is_ct]}
+  call_delivery_agreement:                              {filter: [*is_delivery_agreement, *is_call]}
+  call_sending_docs:                                    {filter: [*is_sending_docs, *is_call]}
+  call_item_deal_discussion:                            {filter: [*is_item_deal_discussion, *is_call]}
+  call_agent_call:                                      {filter: [*is_agent_call, *is_call]}
+  call_refused_by_employer:                             {filter: [*is_refused_by_employer, *is_call]}
+  call_call_later_no_meeting:                           {filter: [*is_call_later_no_meeting, *is_call]}
+  call_mistake:                                         {filter: [*is_mistake, *is_call]}
+  call_different_number:                                {filter: [*is_different_number, *is_call]}
+  call_dispatcher_call:                                 {filter: [*is_dispatcher_call, *is_call]}
+  call_meeting_moment:                                  {filter: [*is_meeting_moment, *is_call]}
+  call_going_for_interview:                             {filter: [*is_going_for_interview, *is_call]}
+  call_fast_hiring:                                     {filter: [*is_fast_hiring, *is_call]}
+  call_spam:                                            {filter: [*is_spam, *is_call]}
+  call_contact_exchange:                                {filter: [*is_contact_exchange, *is_call]}
+  call_auto_ru:                                         {filter: [*is_auto_ru, *is_call]}
+  call_discrimination:                                  {filter: [*is_discrimination, *is_call]}
+  call_illegal_vacancy:                                 {filter: [*is_illegal_vacancy, *is_call]}
+  call_unclear:                                         {filter: [*is_unclear, *is_call]}
+  call_delivery_discussion:                             {filter: [*is_delivery_discussion, *is_call]}
+  call_ask_for_resume:                                  {filter: [*is_ask_for_resume, *is_call]}
+  call_applicant_refused:                               {filter: [*is_applicant_refused, *is_call]}
+  call_different_offer:                                 {filter: [*is_different_offer, *is_call]}
+  call_agreed_on_booking:                               {filter: [*is_agreed_on_booking, *is_call]}
+  call_already_sold:                                    {filter: [*is_already_sold, *is_call]}
+  call_irrelevant_applicant:                            {filter: [*is_irrelevant_applicant, *is_call]}
+  call_autoreply:                                       {filter: [*is_autoreply, *is_call]}
+  call_failed_call:                                     {filter: [*is_failed_call, *is_call]}
+  call_failed_agreement:                                {filter: [*is_failed_agreement, *is_call]}
+  call_closed_vacancy:                                  {filter: [*is_closed_vacancy, *is_call]}
+  call_going_to_meet:                                   {filter: [*is_going_to_meet, *is_call]}
+
+
+
 
     
 
