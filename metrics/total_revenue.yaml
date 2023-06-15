@@ -9,9 +9,10 @@ definitions:
   - &str             {product_type: 'short_term_rent', transaction_subtype: 'buyer book'}
   - &cpt             {product_type: 'cpt', transaction_subtype: 'c2c commission'}
   - &chatbots        {product_type: 'JOB ChatBot'}
+  - &auto_auction    {product_type: 'auto_auction'}
 
 metric.counter:
   avito_amount_net_adj:                {obs: [amount_net_adj],  filter: [$or: [*advertisement, *classified, *paid_contact]]}
-  other_projects_amount_net_adj:       {obs: [amount_net_adj],  filter: [$or: [*autoteka, *delivery, *domofond, *domoteka, *str, *chatbots, *cpt]]}
-  total_amount_net_adj:                {obs: [amount_net_adj],  filter: [$or: [*advertisement, *classified, *paid_contact, *autoteka,
-                                                                                    *delivery, *domofond, *domoteka, *str, *chatbots, *cpt]]}
+  other_projects_amount_net_adj:       {obs: [amount_net_adj],  filter: [$or: [*autoteka, *delivery, *domofond, *domoteka, *str, *chatbots, *cpt, *auto_auction]]}
+  total_amount_net_adj:                {obs: [amount_net_adj],  filter: [$or: [*advertisement, *classified, *paid_contact,
+                                                                               *autoteka, *delivery, *domofond, *domoteka, *str, *chatbots, *cpt, *auto_auction]]}
