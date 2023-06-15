@@ -4,23 +4,24 @@ with calls_scores as
         call_id
         ,call_type
         ,is_target_call as is_target
-        ,case                       -- МОЖЕТ СТОИТ ДОБАВИТЬ not_andswered как в чатах?
-                when is_target = true then 'target'
-                when maplookup(mapjsonextractor(prob_distrib), 'already_sold') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'item_deal_discussion') >0.5
-                        or maplookup(mapjsonextractor(prob_distrib), 'irrelevant_applicant') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'reject_by_employer') >0.5 
-                        or maplookup(mapjsonextractor(prob_distrib), 'closed_vacancy') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'applicant_refused') >0.5 
-                        or maplookup(mapjsonextractor(prob_distrib), 'refused_by_employer') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'failed_agreement') >0.5  
-                            or maplookup(mapjsonextractor(prob_distrib), 'call_later_no_meeting') >0.5  
-            then 'preliminary'
-                when maplookup(mapjsonextractor(prob_distrib), 'spam') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'autoreply') >0.5
-                    or maplookup(mapjsonextractor(prob_distrib), 'agent_call') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5 
-              or maplookup(mapjsonextractor(prob_distrib), 'unclear') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'dispatcher_call') >0.5 
-              or maplookup(mapjsonextractor(prob_distrib), 'auto_ru') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'failed_call') >0.5 
-              or maplookup(mapjsonextractor(prob_distrib), 'mistake') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'different_number') >0.5 
-              or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'illegal_vacancy') >0.5  
-              or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
-            then 'trash'
-        end as type
+        -- ,case                       -- МОЖЕТ СТОИТ ДОБАВИТЬ not_andswered как в чатах?
+        --         when is_target = true then 'target'
+        --         when maplookup(mapjsonextractor(prob_distrib), 'already_sold') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'item_deal_discussion') >0.5
+        --                 or maplookup(mapjsonextractor(prob_distrib), 'irrelevant_applicant') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'reject_by_employer') >0.5 
+        --                 or maplookup(mapjsonextractor(prob_distrib), 'closed_vacancy') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'applicant_refused') >0.5 
+        --                 or maplookup(mapjsonextractor(prob_distrib), 'refused_by_employer') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'failed_agreement') >0.5  
+        --                     or maplookup(mapjsonextractor(prob_distrib), 'call_later_no_meeting') >0.5  
+        --     then 'preliminary'
+        --         when maplookup(mapjsonextractor(prob_distrib), 'spam') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'autoreply') >0.5
+        --             or maplookup(mapjsonextractor(prob_distrib), 'agent_call') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5 
+        --       or maplookup(mapjsonextractor(prob_distrib), 'unclear') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'dispatcher_call') >0.5 
+        --       or maplookup(mapjsonextractor(prob_distrib), 'auto_ru') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'failed_call') >0.5 
+        --       or maplookup(mapjsonextractor(prob_distrib), 'mistake') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'different_number') >0.5 
+        --       or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'illegal_vacancy') >0.5  
+        --       or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
+        --     then 'trash'
+        -- end as type
+        'trash' as type
     from
         dma.target_call
     where
