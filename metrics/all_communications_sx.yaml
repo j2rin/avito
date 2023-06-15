@@ -1,0 +1,10 @@
+definitions:
+  - &call                        [iac, gsm]
+  - &is_call                     {communication: *call}
+  # - &is_success_call      {talk_duration.>: 30}
+
+metric.counter:
+  calls_sx:                      {filter: [*is_call]} # количество звонков
+
+metric.uniq:
+  user_calls_sx:                 {counter: calls_sx, key: [user]}
