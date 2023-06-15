@@ -1,26 +1,10 @@
 definitions:
 
   - &is_target_chat        {is_target_chat.=: 1}
-  - &is_first_class        {class.in: [1]}
-  - &is_second_class       {class.in: [2]}
-  - &is_third_class       {class.in: [3]}
-  - &is_fourth_class       {class.in: [4]}
-  - &is_fifth_class        {class.in: [5]}
-  - &is_sixth_class       {class.in: [6]}
-  - &is_seventh_class       {class.in: [7]}
-  - &is_eighth_class       {class.in: [8]}
 
 
 metric.counter:
     target_contact_chat:                            {filter: [*is_target_chat]}
-    chat_first_class:                               {filter: [*is_first_class]}
-    chat_second_class:                              {filter: [*is_second_class]}
-    chat_third_class:                              {filter: [*is_third_class]}
-    chat_fourth_class:                              {filter: [*is_fourth_class]}
-    chat_fifth_class:                               {filter: [*is_fifth_class]}
-    chat_sixth_class:                              {filter: [*is_sixth_class]}
-    chat_seventh_class:                              {filter: [*is_seventh_class]}
-    chat_eighth_class:                               {filter: [*is_eighth_class]}
 
 metric.uniq: 
   user_target_contact_chat:                               {counter: target_contact_chat,            key: [user]}

@@ -3,40 +3,49 @@ definitions:
 
    - &is_trash                                         {type: trash}
    - &is_preliminary                                   {type: preliminary}
+   - &is_target                                        {type: target}
    - &is_messenger                                     {contact_type: messenger}
    - &is_iac                                           {contact_type: iac}
    - &is_ct                                            {contact_type: ct}
    - &is_call                                          {contact_type: *call}
-   - &is_delivery_agreement                            {tags.ilike: '% delivery_agreement %'} 
-   - &is_sending_docs                                  {tags.ilike: '% sending_docs %'} 
-   - &is_item_deal_discussion                          {tags.ilike: '% item_deal_discussion %'} 
-   - &is_agent_call                                    {tags.ilike: '% agent_call %'} 
-   - &is_refused_by_employer                           {tags.ilike: '% refused_by_employer %'} 
-   - &is_call_later_no_meeting                         {tags.ilike: '% call_later_no_meeting %'} 
-   - &is_mistake                                       {tags.ilike: '% mistake %'} 
-   - &is_different_number                              {tags.ilike: '% different_number %'} 
-   - &is_dispatcher_call                               {tags.ilike: '% dispatcher_call %'} 
-   - &is_meeting_moment                                {tags.ilike: '% meeting_moment %'} 
-   - &is_going_for_interview                           {tags.ilike: '% going_for_interview %'} 
-   - &is_fast_hiring                                   {tags.ilike: '% fast_hiring %'} 
-   - &is_spam                                          {tags.ilike: '% spam %'} 
-   - &is_contact_exchange                              {tags.ilike: '% contact_exchange %'} 
-   - &is_auto_ru                                       {tags.ilike: '% auto_ru %'} 
-   - &is_discrimination                                {tags.ilike: '% discrimination %'} 
-   - &is_illegal_vacancy                               {tags.ilike: '% illegal_vacancy %'} 
-   - &is_unclear                                       {tags.ilike: '% unclear %'} 
-   - &is_delivery_discussion                           {tags.ilike: '% delivery_discussion %'} 
-   - &is_ask_for_resume                                {tags.ilike: '% ask_for_resume %'} 
-   - &is_applicant_refused                             {tags.ilike: '% applicant_refused %'} 
-   - &is_different_offer                               {tags.ilike: '% different_offer %'} 
-   - &is_agreed_on_booking                             {tags.ilike: '% agreed_on_booking %'} 
-   - &is_already_sold                                  {tags.ilike: '% already_sold %'} 
-   - &is_irrelevant_applicant                          {tags.ilike: '% irrelevant_applicant %'} 
-   - &is_autoreply                                     {tags.ilike: '% autoreply %'} 
-   - &is_failed_call                                   {tags.ilike: '% failed_call %'} 
-   - &is_failed_agreement                              {tags.ilike: '% failed_agreement %'} 
-   - &is_closed_vacancy                                {tags.ilike: '% closed_vacancy %'} 
-   - &is_going_to_meet                                 {tags.ilike: '% going_to_meet %'} 
+   - &is_delivery_agreement                            {tags.ilike: ' delivery_agreement %'} 
+   - &is_sending_docs                                  {tags.ilike: ' sending_docs %'} 
+   - &is_item_deal_discussion                          {tags.ilike: ' item_deal_discussion %'} 
+   - &is_agent_call                                    {tags.ilike: ' agent_call %'} 
+   - &is_refused_by_employer                           {tags.ilike: ' refused_by_employer %'} 
+   - &is_call_later_no_meeting                         {tags.ilike: ' call_later_no_meeting %'} 
+   - &is_mistake                                       {tags.ilike: ' mistake %'} 
+   - &is_different_number                              {tags.ilike: ' different_number %'} 
+   - &is_dispatcher_call                               {tags.ilike: ' dispatcher_call %'} 
+   - &is_meeting_moment                                {tags.ilike: ' meeting_moment %'} 
+   - &is_going_for_interview                           {tags.ilike: ' going_for_interview %'} 
+   - &is_fast_hiring                                   {tags.ilike: ' fast_hiring %'} 
+   - &is_spam                                          {tags.ilike: ' spam %'} 
+   - &is_contact_exchange                              {tags.ilike: ' contact_exchange %'} 
+   - &is_auto_ru                                       {tags.ilike: ' auto_ru %'} 
+   - &is_discrimination                                {tags.ilike: ' discrimination %'} 
+   - &is_illegal_vacancy                               {tags.ilike: ' illegal_vacancy %'} 
+   - &is_unclear                                       {tags.ilike: ' unclear %'} 
+   - &is_delivery_discussion                           {tags.ilike: ' delivery_discussion %'} 
+   - &is_ask_for_resume                                {tags.ilike: ' ask_for_resume %'} 
+   - &is_applicant_refused                             {tags.ilike: ' applicant_refused %'} 
+   - &is_different_offer                               {tags.ilike: ' different_offer %'} 
+   - &is_agreed_on_booking                             {tags.ilike: ' agreed_on_booking %'} 
+   - &is_already_sold                                  {tags.ilike: ' already_sold %'} 
+   - &is_irrelevant_applicant                          {tags.ilike: ' irrelevant_applicant %'} 
+   - &is_autoreply                                     {tags.ilike: ' autoreply %'} 
+   - &is_failed_call                                   {tags.ilike: ' failed_call %'} 
+   - &is_failed_agreement                              {tags.ilike: ' failed_agreement %'} 
+   - &is_closed_vacancy                                {tags.ilike: ' closed_vacancy %'} 
+   - &is_going_to_meet                                 {tags.ilike: ' going_to_meet %'} 
+   - &is_first_class                                   {tags.ilike: ' 1 %'} 
+   - &is_second_class                                  {tags.ilike: ' 2 %'}
+   - &is_third_class                                   {tags.ilike: ' 3 %'}
+   - &is_fourth_class                                  {tags.ilike: ' 4 %'}
+   - &is_fifth_class                                   {tags.ilike: ' 5 %'}
+   - &is_sixth_class                                   {tags.ilike: ' 6 %'}
+   - &is_seventh_class                                 {tags.ilike: ' 7 %'}
+   - &is_eighth_class                                  {tags.ilike: ' 8 %'}
 
 
         
@@ -82,6 +91,14 @@ metric.counter:
   call_failed_agreement:                                {filter: [*is_failed_agreement, *is_call]}
   call_closed_vacancy:                                  {filter: [*is_closed_vacancy, *is_call]}
   call_going_to_meet:                                   {filter: [*is_going_to_meet, *is_call]}
+  chat_first_class:                                     {filter: [*is_first_class, *is_messenger]}
+  chat_second_class:                                    {filter: [*is_second_class, *is_messenger]}
+  chat_third_class:                                     {filter: [*is_third_class, *is_messenger]}
+  chat_fourth_class:                                    {filter: [*is_fourth_class, *is_messenger]}
+  chat_fifth_class:                                     {filter: [*is_fifth_class, *is_messenger]}
+  chat_sixth_class:                                     {filter: [*is_sixth_class, *is_messenger]}
+  chat_seventh_class:                                   {filter: [*is_seventh_class, *is_messenger]}
+  chat_eighth_class:                                    {filter: [*is_eighth_class, *is_messenger]}
 
 
 
