@@ -21,7 +21,7 @@ with calls_scores as
         --       or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
         --     then 'trash'
         -- end as type
-        'trash' as type
+        ,'trash' as type
     from
         dma.target_call
     where
