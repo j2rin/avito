@@ -4,24 +4,23 @@ with calls_scores as
         call_id
         ,call_type
         ,is_target_call as is_target
-        -- ,case                       -- МОЖЕТ СТОИТ ДОБАВИТЬ not_andswered как в чатах?
-        --         when is_target = true then 'target'
-        --         when maplookup(mapjsonextractor(prob_distrib), 'already_sold') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'item_deal_discussion') >0.5
-        --                 or maplookup(mapjsonextractor(prob_distrib), 'irrelevant_applicant') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'reject_by_employer') >0.5 
-        --                 or maplookup(mapjsonextractor(prob_distrib), 'closed_vacancy') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'applicant_refused') >0.5 
-        --                 or maplookup(mapjsonextractor(prob_distrib), 'refused_by_employer') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'failed_agreement') >0.5  
-        --                     or maplookup(mapjsonextractor(prob_distrib), 'call_later_no_meeting') >0.5  
-        --     then 'preliminary'
-        --         when maplookup(mapjsonextractor(prob_distrib), 'spam') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'autoreply') >0.5
-        --             or maplookup(mapjsonextractor(prob_distrib), 'agent_call') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5 
-        --       or maplookup(mapjsonextractor(prob_distrib), 'unclear') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'dispatcher_call') >0.5 
-        --       or maplookup(mapjsonextractor(prob_distrib), 'auto_ru') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'failed_call') >0.5 
-        --       or maplookup(mapjsonextractor(prob_distrib), 'mistake') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'different_number') >0.5 
-        --       or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'illegal_vacancy') >0.5  
-        --       or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
-        --     then 'trash'
-        -- end as type
-        ,'trash' as type
+        ,case                       -- МОЖЕТ СТОИТ ДОБАВИТЬ not_andswered как в чатах?
+                when is_target = true then 'target'
+                when maplookup(mapjsonextractor(prob_distrib), 'already_sold') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'item_deal_discussion') >0.5
+                        or maplookup(mapjsonextractor(prob_distrib), 'irrelevant_applicant') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'reject_by_employer') >0.5 
+                        or maplookup(mapjsonextractor(prob_distrib), 'closed_vacancy') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'applicant_refused') >0.5 
+                        or maplookup(mapjsonextractor(prob_distrib), 'refused_by_employer') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'failed_agreement') >0.5  
+                            or maplookup(mapjsonextractor(prob_distrib), 'call_later_no_meeting') >0.5  
+            then 'preliminary'
+                when maplookup(mapjsonextractor(prob_distrib), 'spam') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'autoreply') >0.5
+                    or maplookup(mapjsonextractor(prob_distrib), 'agent_call') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5 
+              or maplookup(mapjsonextractor(prob_distrib), 'unclear') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'dispatcher_call') >0.5 
+              or maplookup(mapjsonextractor(prob_distrib), 'auto_ru') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'failed_call') >0.5 
+              or maplookup(mapjsonextractor(prob_distrib), 'mistake') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'different_number') >0.5 
+              or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'illegal_vacancy') >0.5  
+              or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
+            then 'trash'
+        end as type
     from
         dma.target_call
     where
@@ -193,7 +192,7 @@ with calls_scores as
         ,chat_subtype as communication_subtype
         ,chr.chat_id as communication_id
         ,first_message_user_id as buyer_id -- сделал первое сообщение и не является владельцем айтема (всегда баер)
-        ,reply_user_id as seller_id -- обязательно владелец объявления
+        ,user_id as seller_id -- владелец объявления
         ,reply_time::date as reply_date
         ,chr.item_id as item_id
         ,0 as call_duration
@@ -244,9 +243,9 @@ with calls_scores as
 )
 select 
     a.*
-    ,nvl(asd.is_asd, False) as is_asd
-    ,asd.user_group_id as asd_user_group_id
-    ,nvl(usm.user_segment, ls.segment) as user_segment_market
+    -- ,nvl(asd.is_asd, False) as is_asd
+    -- ,asd.user_group_id as asd_user_group_id
+    -- ,nvl(usm.user_segment, ls.segment) as user_segment_market
 from 
     (
         select *
@@ -258,10 +257,10 @@ from
         select *
         from chats
     ) as a 
-    left join asd on a.seller_id = asd.user_id 
-                    and a.event_date between asd.active_from_date and asd.active_to_date
-    left join dict.segmentation_ranks ls on ls.logical_category_id = a.logical_category_id 
-                    and ls.is_default
-    left join usm on a.seller_id = usm.user_id
-                    and a.logical_category_id = usm.logical_category_id
-                    and a.event_date >= usm.converting_date and a.event_date < next_converting_date
+    -- left join asd on a.seller_id = asd.user_id 
+    --                 and a.event_date between asd.active_from_date and asd.active_to_date
+    -- left join dict.segmentation_ranks ls on ls.logical_category_id = a.logical_category_id 
+    --                 and ls.is_default
+    -- left join usm on a.seller_id = usm.user_id
+    --                 and a.logical_category_id = usm.logical_category_id
+    --                 and a.event_date >= usm.converting_date and a.event_date < next_converting_date
