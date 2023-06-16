@@ -1,17 +1,10 @@
 definitions:
 
   - &is_target_chat        {is_target_chat.=: 1}
-  - &is_first_class        {class.in: [1]}
-  - &is_second_class       {class.in: [2]}
-  - &is_fifth_class        {class.in: [5]}
 
 
 metric.counter:
     target_contact_chat:                            {filter: [*is_target_chat]}
-    chat_first_class:                               {filter: [*is_first_class]}
-    chat_second_class:                              {filter: [*is_second_class]}
-    chat_fifth_class:                               {filter: [*is_fifth_class]}
-    
 
 metric.uniq: 
   user_target_contact_chat:                               {counter: target_contact_chat,            key: [user]}
