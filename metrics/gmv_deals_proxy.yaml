@@ -1,3 +1,11 @@
 metric.counter:
   proxy_deals:                            {obs: [proxy_deals]}
   gmv:                                    {obs: [gmv_volume]}
+
+metric.uniq:
+  cnt_users_with_deals:                    {counter: proxy_deals, key: [user]}
+  cnt_items_with_deals:                    {counter: proxy_deals, key: [item]}
+
+metric.ratio:
+  proxy_deals_per_user:    {num: proxy_deals,                   den: cnt_users_with_deals}
+  proxy_deals_per_item:    {num: proxy_deals,                   den: cnt_items_with_deals}
