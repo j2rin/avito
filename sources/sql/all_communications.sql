@@ -259,10 +259,8 @@ from
     ) as a 
     left join asd on a.seller_id = asd.user_id 
                     and asd.active_from_date interpolate previous value a.event_date
-                    -- and a.event_date between asd.active_from_date and asd.active_to_date
     left join dict.segmentation_ranks ls on ls.logical_category_id = a.logical_category_id 
                     and ls.is_default
     left join usm on a.seller_id = usm.user_id
                     and a.logical_category_id = usm.logical_category_id
                     and usm.converting_date interpolate previous value a.event_date
-                    -- and a.event_date >= usm.converting_date and a.event_date < next_converting_date
