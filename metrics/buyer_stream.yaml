@@ -632,6 +632,18 @@ metric.counter:
     cnt_cs_s_grouped_doubles:
         { filter: [*is_contact_wo_guessing, *is_region_with_double_groups, *is_serp_grouping, *x_is_search] }
     cnt_cs_s_item_attr:                   { filter: [*is_contact_wo_guessing, *x_is_search] }
+    cnt_iv_s_start_time_1day:             { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_1day] }
+    cnt_iv_s_start_time_3days:            { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_3days] }
+    cnt_iv_s_start_time_7days:            { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_7days] }
+    cnt_iv_s_start_time_14days:           { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_14days] }
+    cnt_iv_s_start_time_1day_cpa:         { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_1day, *is_item_cpa] }
+    cnt_iv_s_start_time_3days_cpa:        { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_3days, *is_item_cpa] }
+    cnt_iv_s_start_time_7days_cpa:        { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_7days, *is_item_cpa] }
+    cnt_iv_s_start_time_14days_cpa:       { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_14days, *is_item_cpa] }
+    cnt_iv_s_start_time_1day_nocpa:       { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_1day, *is_item_nocpa] }
+    cnt_iv_s_start_time_3days_nocpa:      { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_3days, *is_item_nocpa] }
+    cnt_iv_s_start_time_7days_nocpa:      { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_7days, *is_item_nocpa] }
+    cnt_iv_s_start_time_14days_nocpa:     { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_14days, *is_item_nocpa] }
     cnt_cs_s_start_time_1day:             { filter: [*is_contact_wo_guessing, *x_is_search, *is_start_time_less_1day] }
     cnt_cs_s_start_time_3days:            { filter: [*is_contact_wo_guessing, *x_is_search, *is_start_time_less_3days] }
     cnt_cs_s_start_time_7days:            { filter: [*is_contact_wo_guessing, *x_is_search, *is_start_time_less_7days] }
@@ -2024,6 +2036,18 @@ metric.uniq:
     contacts_vertical_main: { counter: cnt_cs_vertical_main, key: [item_x] }
     contacts_vertical_main_rec: { counter: cnt_cs_vertical_main_rec, key: [item_x] }
     contacts_serp:                      { counter: cnt_cs_s_item_attr,                  key: [item_x] }
+    iv_serp_start_time_1d:              { counter: cnt_iv_s_start_time_1day,            key: [item_x] }
+    iv_serp_start_time_3d:              { counter: cnt_iv_s_start_time_3days,           key: [item_x] }
+    iv_serp_start_time_7d:              { counter: cnt_iv_s_start_time_7days,           key: [item_x] }
+    iv_serp_start_time_14d:             { counter: cnt_iv_s_start_time_14days,          key: [item_x] }
+    iv_serp_start_time_1d_cpa:          { counter: cnt_iv_s_start_time_1day_cpa,        key: [item_x] }
+    iv_serp_start_time_3d_cpa:          { counter: cnt_iv_s_start_time_3days_cpa,       key: [item_x] }
+    iv_serp_start_time_7d_cpa:          { counter: cnt_iv_s_start_time_7days_cpa,       key: [item_x] }
+    iv_serp_start_time_14d_cpa:         { counter: cnt_iv_s_start_time_14days_cpa,      key: [item_x] }
+    iv_serp_start_time_1d_nocpa:        { counter: cnt_iv_s_start_time_1day_nocpa,      key: [item_x] }
+    iv_serp_start_time_3d_nocpa:        { counter: cnt_iv_s_start_time_3days_nocpa,     key: [item_x] }
+    iv_serp_start_time_7d_nocpa:        { counter: cnt_iv_s_start_time_7days_nocpa,     key: [item_x] }
+    iv_serp_start_time_14d_nocpa:       { counter: cnt_iv_s_start_time_14days_nocpa,    key: [item_x] }
     contacts_serp_start_time_1d:        { counter: cnt_cs_s_start_time_1day,            key: [item_x] }
     contacts_serp_start_time_3d:        { counter: cnt_cs_s_start_time_3days,           key: [item_x] }
     contacts_serp_start_time_7d:        { counter: cnt_cs_s_start_time_7days,           key: [item_x] }
@@ -3606,11 +3630,15 @@ metric.ratio:
     user_fav_witcher_funnel_regions_per_user_s_from_witcher_reg: { num: user_fav_witcher_funnel_regions, den: user_s_from_witcher_reg }
     iv_multiloc_per_iv_s: { num: iv_multiloc, den: item_views_serp }
     c_multiloc_per_c_s: { num: c_multiloc, den: contacts_serp }
-    c_serp_start_time_1d_per_c_s:   { num: contacts_serp_start_time_1d,  den: contacts_serp }
-    c_serp_start_time_3d_per_c_s:   { num: contacts_serp_start_time_3d,  den: contacts_serp }
-    c_serp_start_time_7d_per_c_s:   { num: contacts_serp_start_time_7d,  den: contacts_serp }
-    c_serp_start_time_14d_per_c_s:  { num: contacts_serp_start_time_14d, den: contacts_serp }
-    user_iv_multiloc_per_user_iv_s: { num: user_iv_multiloc, den: users_item_view_serp_daily }
+    iv_serp_start_time_1d_per_iv_s:   { num: iv_serp_start_time_1d,         den: item_views_serp }
+    iv_serp_start_time_3d_per_iv_s:   { num: iv_serp_start_time_3d,         den: item_views_serp }
+    iv_serp_start_time_7d_per_iv_s:   { num: iv_serp_start_time_7d,         den: item_views_serp }
+    iv_serp_start_time_14d_per_iv_s:  { num: iv_serp_start_time_14d,        den: item_views_serp }
+    c_serp_start_time_1d_per_c_s:     { num: contacts_serp_start_time_1d,   den: contacts_serp }
+    c_serp_start_time_3d_per_c_s:     { num: contacts_serp_start_time_3d,   den: contacts_serp }
+    c_serp_start_time_7d_per_c_s:     { num: contacts_serp_start_time_7d,   den: contacts_serp }
+    c_serp_start_time_14d_per_c_s:    { num: contacts_serp_start_time_14d,  den: contacts_serp }
+    user_iv_multiloc_per_user_iv_s:   { num: user_iv_multiloc, den: users_item_view_serp_daily }
     user_c_multiloc_per_user_c_s: { num: user_c_multiloc, den: users_contact_serp_daily }
     c_multiloc_per_iv_multiloc: { num: c_multiloc, den: iv_multiloc }
     user_c_multiloc_per_user_iv_multiloc: { num: user_c_multiloc, den: user_iv_multiloc }
