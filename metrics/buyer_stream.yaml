@@ -20,7 +20,8 @@ definitions:
     - &c_front      [2216, 2650, 3461, 857, 4198]
     - &c_all        [303, 3461, 857, 4198]
 
-    - &is_search    { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0] }
+    - &is_profile_search {search_flags.bit: 7 }
+    - &is_search    { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0], *is_profile_search: false }
     - &is_rec       { $or: [{ eid: *eid_rec }, { search_flags.bit: 10 }] }
     - &is_rec_sg    { search_flags.bit: 10 }
     - &is_u2i       { eid: *eid_u2i }
@@ -116,8 +117,8 @@ definitions:
 
     - &is_videocalls_contact { eid: 5629 }
 
-    - &is_shop      { search_flags.bit: 7 }
-    - &x_is_shop    { search_flags.bit: 7 }
+    - &is_shop      { false }
+    - &x_is_shop    { false }
 
     - &is_s_geo         { search_flags.bit: [0, 1, 2, 3] }
     - &is_s_local_geo   { search_flags.bit: [0, 1, 2] }
