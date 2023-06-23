@@ -1,4 +1,4 @@
-select create_timestamp::date as order_create_date, 
+select create_timestamp::date as event_date, 
        orderid,
        sc.buyer_id, 
        sc.item_id, 
