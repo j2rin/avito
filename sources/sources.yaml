@@ -2666,3 +2666,30 @@ operating_model_asd_revenue:
    primary_subject: user
    dtm: event_date
    segm: user_id
+
+
+calendar_orders:
+   metric_configs: [calendar_orders]
+   database: vertica
+   sql: calendar_orders
+   column_map:
+     user: seller_id # селлер
+     item: item_id 
+   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, region, city, location_group, population_group, location_level]
+   participant: {user: seller_id}
+   primary_subject: user
+   dtm: order_create_date
+
+calendar_sellers_items: 
+   metric_configs: [calendar_sellers_items]
+   database: vertica
+   sql: calendar_sellers_items
+   column_map:
+     user: user_id # селлер
+     item: item_id 
+   dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, region, city, location_group, population_group, location_level]
+   participant: {user: user_id}
+   primary_subject: user
+   dtm: event_date
+
+ 

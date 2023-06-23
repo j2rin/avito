@@ -1,0 +1,11 @@
+definitions:
+  - &is_order_created       {create_timetamp.isnull: false}
+
+metric.counter: 
+  orders_created_calendar:         {filter: [*is_order_created]} # кол-во созданных записей # не указано obs, поэтому 1 
+  orders_succeed_calendar:         {filter: [current_status: ['succeed']]} # кол-во записей которые считаем состоявшимися # не указано obs, поэтому 1 
+
+metric.uniq: 
+  seller_had_order_via_calendar:            {counter: orders_created_calendar, key: user} # уникальные юзеры, к которым была хоть одна запись
+  seller_had_order_succeed_via_calendar:    {counter: orders_succeed_calendar, key: user} # уникальные юзеры, к которым была хоть одна запись, которую считаем состоявшейся
+
