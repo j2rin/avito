@@ -71,10 +71,11 @@ select
     false                       as is_classified,
     'auto_auction'              as project_type,
     amount_net_adj
-from (select terminated_at::date    as event_date
-                , sum(charge)       as amount_net_adj
+from (select terminated_at::date        as event_date
+                , sum(bt_revenue)       as amount_net_adj
       from dma.qd_auto_report_lots
       where has_buyout = 1
+            and buyout_amount > 0
       group by terminated_at::date
       ) t
 where event_date::date between :first_date and :last_date
