@@ -30,4 +30,3 @@ left join dma.current_item ci using (item_id)
 left join dma.current_microcategories cm using (microcat_id) 
 left join dma.current_locations cl using (location_id)
 where create_timestamp::date between :first_date::date and :last_date::date
-;
