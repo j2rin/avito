@@ -40,7 +40,7 @@ definitions:
     - &crosscat     { item_engines.bit: 5 }
 
     - &x_is_search  { x_eid: *eid_search, search_flags.!bit: 7 }
-    - &x_is_rec     { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
+    - &x_is_rec     { $or: [{ x_eid: *eid_rec }, { search_flags.bit: 10 }, {x_eid: *eid_map, engine: personal_geo_map}] }
     - &x_is_rec_sg  { search_flags.bit: 10 }
     - &x_is_u2i     { $or: [{x_eid: *eid_u2i}, {x_eid: *eid_map, engine: personal_geo_map}] }
     - &x_is_i2i     { x_eid: *eid_i2i }
