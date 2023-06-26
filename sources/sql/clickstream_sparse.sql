@@ -19,7 +19,7 @@ select
     bitShiftLeft(toUInt64(onmap > 0), 4) +
     bitShiftLeft(toUInt64(d > 0), 5) +
     bitShiftLeft(toUInt64(ssid > 0), 6) +
-    bitShiftLeft(toUInt64(sid > 0), 7) + 
+    bitShiftLeft(toUInt64(puid > 0), 7) + 
     bitShiftLeft(toUInt64(length(params) > 2), 8) +
     bitShiftLeft(toUInt64(pmin > 0 or pmax > 0), 9) +
     bitShiftLeft(toUInt64(search_features), 10) +
