@@ -1818,6 +1818,12 @@ metric.counter:
     btc_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
     contact_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
 
+    nd_click_request_call:                       {filter: [eid: 4219]}
+    nd_click_submit_application_for_back_call:   {filter: [eid: 4197]}
+    nd_banner_successful_dispatch_for_back_call: { filter: [{ $or: [*is_back_call_item, *is_back_call_jk] }] }
+    nd_banner_successful_dis_for_back_call_item: {filter: [*is_back_call_item]}
+    nd_banner_successful_dis_for_back_call_jk:   {filter: [*is_back_call_jk]}
+
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
     bt_clicks_grouped: { counter: bt_clicks, key: [cookie_item] }
@@ -3214,6 +3220,11 @@ metric.uniq:
     user_btc_sav_serp_fav_list: {counter: btc_sav_serp_fav_list, key: [cookie] }
     user_contact_sav_serp_fav_list: {counter: contact_sav_serp_fav_list, key: [cookie] }
 
+    user_nd_click_request_call:                       {counter: nd_click_request_call,                       key: [cookie]}
+    user_nd_click_submit_application_for_back_call:   {counter: nd_click_submit_application_for_back_call,   key: [cookie]}
+    user_nd_banner_successful_dispatch_for_back_call: {counter: nd_banner_successful_dispatch_for_back_call, key: [cookie]}
+    user_nd_banner_successful_dis_for_back_call_item: {counter: nd_banner_successful_dis_for_back_call_item, key: [cookie]}
+    user_nd_banner_successful_dis_for_back_call_jk:   {counter: nd_banner_successful_dis_for_back_call_jk,   key: [cookie]}
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
@@ -3842,3 +3853,7 @@ metric.ratio:
     agbc_contacts_per_item_view: { num: agbc_contacts_all, den: item_views }
 
     btc_serp_age:             {num: cnt_btc_serp_age,       den: cnt_btc_s_item_attr}
+
+    nd_banner_successful_dispatch_per_click_request_back_call: {num: nd_banner_successful_dispatch_for_back_call, den: nd_click_request_call}
+    user_nd_bsd_per_user_iv: {num: user_nd_banner_successful_dispatch_for_back_call, den: users_item_view_daily}
+    nd_bsd_per_item_view: {num: nd_banner_successful_dispatch_for_back_call, den: item_views}
