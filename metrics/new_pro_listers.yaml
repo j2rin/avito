@@ -1,7 +1,7 @@
 definitions:
-  - &is_lister            { vertical_is_null: false, logical_category_is_null: false }
-  - &is_seller_vertical   { vertical_is_null: false, logical_category_is_null: true }
-  - &is_seller            { vertical_is_null: true }
+  - &is_lister            { vertical_id.isnull: false, logical_category_id.isnull: false }
+  - &is_seller_vertical   { vertical_id.isnull: false, logical_category_id.isnull: true }
+  - &is_seller            { vertical_id.isnull: true }
 
 metric.counter:
   new_pro_listers_total:                            {filter: [*is_lister]}
