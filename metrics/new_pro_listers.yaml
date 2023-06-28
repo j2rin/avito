@@ -1,15 +1,20 @@
+definitions:
+  - &is_lister            { vertical_is_null: false, logical_category_is_null: false }
+  - &is_seller_vertical   { vertical_is_null: false, logical_category_is_null: true }
+  - &is_seller            { vertical_is_null: true }
+
 metric.counter:
-  new_pro_listers_total:                            {filter: [vertical_id.!=: -1, logical_category_id.!=: -1]}
-  new_pro_listers_less_1_month:                     {filter: [less_1_month: True, vertical_id.!=: -1, logical_category_id.!=: -1]}
-  new_pro_listers_over_1_month:                     {filter: [less_1_month: False, vertical_id.!=: -1, logical_category_id.!=: -1]}
+  new_pro_listers_total:                            {filter: [*is_lister]}
+  new_pro_listers_less_1_month:                     {filter: [less_1_month: True, *is_lister]}
+  new_pro_listers_over_1_month:                     {filter: [less_1_month: False, *is_lister]}
 
-  new_pro_sellers_total:                            {filter: [vertical_id: -1]}
-  new_pro_sellers_less_1_month:                     {filter: [less_1_month: True, vertical_id: -1]}
-  new_pro_sellers_over_1_month:                     {filter: [less_1_month: False, vertical_id: -1]}
+  new_pro_sellers_total:                            {filter: [*is_seller]}
+  new_pro_sellers_less_1_month:                     {filter: [less_1_month: True, *is_seller]}
+  new_pro_sellers_over_1_month:                     {filter: [less_1_month: False, *is_seller]}
 
-  new_pro_sellers_vertical_total:                    {filter: [vertical_id.!=: -1, logical_category_id: -1]}
-  new_pro_sellers_vertical_less_1_month:             {filter: [less_1_month: True, vertical_id.!=: -1, logical_category_id: -1]}
-  new_pro_sellers_vertical_over_1_month:             {filter: [less_1_month: False, vertical_id.!=: -1, logical_category_id: -1]}
+  new_pro_sellers_vertical_total:                    {filter: [*is_seller_vertical]}
+  new_pro_sellers_vertical_less_1_month:             {filter: [less_1_month: True, *is_seller_vertical]}
+  new_pro_sellers_vertical_over_1_month:             {filter: [less_1_month: False, *is_seller_vertical]}
 
 metric.uniq:
   new_pro_listers_uniq:       {counter: new_pro_listers_total, key: [user_logcat]}
