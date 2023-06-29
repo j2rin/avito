@@ -1,97 +1,121 @@
-definitions:
-  - &callback_scenario  [notification_call_back,deeplink_call_back,call_log_callback,recall_on_call_screen,call_screen,recall_after_micaccess,pro_callback,answering_machine_callback]
-  - &direct_scenario    [item,item_gallery,item_feed,item_feed_photo,messenger_chat_menu,seller_messenger_chat,mini_messenger_chat_menu]
-  - &item_scenario      [item,item_gallery,item_feed,item_feed_photo]
-  - &any_scenario       [item,item_gallery,item_feed,item_feed_photo,messenger_chat_menu,notification_call_back,deeplink_call_back,call_log_callback,recall_on_call_screen,call_screen,recall_after_micaccess,seller_messenger_chat,pro_callback,mini_messenger_chat_menu,pro_mini_messenger_chat_menu,pro_messenger_chat_menu,answering_machine_callback]
+# IAC Mertics Description: https://docs.google.com/spreadsheets/d/1te22Wy-GVOW7VR4sTDmrRYb6x4SniWAcYfeZPWOmkhM
 
-  - &is_callback_c      {AppCallScenario: *callback_scenario}
-  - &is_direct_c        {AppCallScenario: *direct_scenario}
-  - &is_item_c          {AppCallScenario: *item_scenario}
-  - &is_c               {AppCallScenario: *any_scenario}
-  - &is_messenger_chat_menu  {AppCallScenario: messenger_chat_menu}
-  - &is_deeplink_call_back   {AppCallScenario: deeplink_call_back}
-  - &is_outgoing        {CallType: outgoing}
-  - &is_incoming        {CallType: incoming}
-  - &is_answered        {TalkDuration.>: 0}
-  - &is_success         {TalkDuration.>: 30}
-  - &is_less5           {TalkDuration.<: 5}
-  - &is_less15          {TalkDuration.<: 15}
-  - &is_less60          {TalkDuration.<: 60}
-  - &is_less120         {TalkDuration.<: 120}
-  - &is_less300         {TalkDuration.<: 300}
+definitions:
+  # Screens
+  - &item_scenarios       [item, item_gallery]
+  - &serp_scenarios       [item_feed, item_feed_photo]
+  - &messenger_scenarios  [messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback]
+  - &call_scenarios       [call_screen, recall_after_micaccess, recall_on_call_screen]
+  - &pro_scenarios        [pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu]
+  - &other_scenarios      [call_log_callback, notification_call_back]
+
+
+  # Logical Groups
+  - &callback_scenario    [deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, call_log_callback, notification_call_back]
+  - &direct_scenario      [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, pro_mini_messenger_chat_menu, pro_messenger_chat_menu]
+  - &any_scenario         [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, call_log_callback, notification_call_back]
+
+  
+  # Filters
+  - &is_item_c            {AppCallScenario: *item_scenarios}
+  - &is_serp_c            {AppCallScenario: *serp_scenarios}
+  - &is_messenger_c       {AppCallScenario: *messenger_scenarios}
+  - &is_call_c            {AppCallScenario: *call_scenarios}
+  - &is_pro_c             {AppCallScenario: *pro_scenarios}
+  - &is_other_c           {AppCallScenario: *other_scenarios}
+
+  - &is_callback_c        {AppCallScenario: *callback_scenario}
+  - &is_direct_c          {AppCallScenario: *direct_scenario}
+  - &is_c                 {AppCallScenario: *any_scenario}
+
+  - &is_outgoing          {CallType: outgoing}
+  - &is_incoming          {CallType: incoming}
+  - &is_answered          {TalkDuration.>: 0}
+  - &is_success           {TalkDuration.>: 30}
+  - &is_zero              {TalkDuration.=: 0}
+
+
+
+
+
+
+
+
+
+
+
 
 metric.counter:
 
-  appcall_bx_incoming:                     {filter: [*is_incoming,  *is_c]}
-  appcall_bx_incoming_answered:            {filter: [*is_incoming,  *is_c, *is_answered]}
-  appcall_bx_incoming_success:             {filter: [*is_incoming,  *is_c, *is_success]}
-  appcall_bx_incoming_talkseconds:         {filter: [*is_incoming,  *is_c, *is_answered], obs: [TalkDuration]}
-  
-  appcall_bx_outgoing:                     {filter: [*is_outgoing, *is_c]}
-  appcall_bx_outgoing_answered:            {filter: [*is_outgoing, *is_c, *is_answered]}
-  appcall_bx_outgoing_success:             {filter: [*is_outgoing, *is_c, *is_success]}
-  appcall_bx_outgoing_talkseconds:         {filter: [*is_outgoing, *is_c, *is_answered], obs: [TalkDuration]}
-  appcall_bx_outgoing_less15seconds:       {filter: [*is_outgoing, *is_c, *is_answered, *is_less15]}
-  appcall_bx_outgoing_less60seconds:       {filter: [*is_outgoing, *is_c, *is_answered, *is_less60]}
-  appcall_bx_outgoing_less120seconds:      {filter: [*is_outgoing, *is_c, *is_answered, *is_less120]}
-  appcall_bx_outgoing_less300seconds:      {filter: [*is_outgoing, *is_c, *is_answered, *is_less300]}
-  
-  appcall_bx_outgoing_callback:            {filter: [*is_outgoing, *is_callback_c]}
-  appcall_bx_outgoing_callback_answered:   {filter: [*is_outgoing, *is_callback_c, *is_answered]}
-  appcall_bx_outgoing_callback_success:    {filter: [*is_outgoing, *is_callback_c, *is_success]}
-  
-  appcall_bx_incoming_callback:            {filter: [*is_incoming, *is_callback_c]}
-  appcall_bx_incoming_callback_answered:   {filter: [*is_incoming, *is_callback_c, *is_answered]}
-  appcall_bx_incoming_callback_success:    {filter: [*is_incoming, *is_callback_c, *is_success]}
-  
-  appcall_bx_outgoing_direct:              {filter: [*is_outgoing, *is_direct_c]}
-  appcall_bx_outgoing_direct_answered:     {filter: [*is_outgoing, *is_direct_c, *is_answered]}
-  appcall_bx_outgoing_direct_success:      {filter: [*is_outgoing, *is_direct_c, *is_success]}
-  
-  appcall_bx_outgoing_item:                {filter: [*is_outgoing, *is_item_c]}
-  appcall_bx_outgoing_item_answered:       {filter: [*is_outgoing, *is_item_c, *is_answered]}
-  appcall_bx_outgoing_item_success:        {filter: [*is_outgoing, *is_item_c, *is_success]}
-  
-  appcall_bx_msg_chat_menu:                {filter: [*is_outgoing, *is_messenger_chat_menu]}
-  appcall_bx_msg_chat_menu_success:        {filter: [*is_outgoing, *is_messenger_chat_menu, *is_success]}
-  appcall_bx_msg_chat_menu_talkseconds:    {filter: [*is_outgoing, *is_messenger_chat_menu, *is_answered], obs: [TalkDuration]}
-  
-  appcall_bx_msg_callback:                {filter: [*is_outgoing, *is_deeplink_call_back]}
-  appcall_bx_msg_callback_success:        {filter: [*is_outgoing, *is_deeplink_call_back, *is_success]}
-  appcall_bx_msg_callback_talkseconds:    {filter: [*is_outgoing, *is_deeplink_call_back, *is_answered], obs: [TalkDuration]}
+  # Essential
+  appcall_bx_any_calls:                         {filter: [*is_c]}
+  appcall_bx_any_answered:                      {filter: [*is_c, *is_answered]}
+  appcall_bx_any_talkseconds:                   {filter: [*is_c, *is_answered], obs: [TalkDuration]}
 
-  appcall_bx_any_calls:                    {filter: [*is_c]}
-  appcall_bx_any_calls_answered:           {filter: [*is_c, *is_answered]}
-  appcall_bx_any_calls_success:            {filter: [*is_c, *is_success]}
-  appcall_bx_any_talkseconds:              {filter: [*is_c, *is_answered], obs: [TalkDuration]}
-  appcall_bx_any_less5seconds:             {filter: [*is_c, *is_answered, *is_less5]}
-  appcall_bx_any_less15seconds:            {filter: [*is_c, *is_answered, *is_less15]}
-  appcall_bx_any_less60seconds:            {filter: [*is_c, *is_answered, *is_less60]}
-  appcall_bx_any_less120seconds:           {filter: [*is_c, *is_answered, *is_less120]}
-  appcall_bx_any_less300seconds:           {filter: [*is_c, *is_answered, *is_less300]}
- 
+  appcall_bx_incoming:                          {filter: [*is_incoming,  *is_c]}
+  appcall_bx_incoming_answered:                 {filter: [*is_incoming,  *is_c, *is_answered]}
+  appcall_bx_incoming_talkseconds:              {filter: [*is_incoming,  *is_c, *is_answered], obs: [TalkDuration]}
+  
+  appcall_bx_outgoing:                          {filter: [*is_outgoing, *is_c]}
+  appcall_bx_outgoing_answered:                 {filter: [*is_outgoing, *is_c, *is_answered]}
+  appcall_bx_outgoing_talkseconds:              {filter: [*is_outgoing, *is_c, *is_answered], obs: [TalkDuration]}
+
+  # By logical group
+  appcall_bx_outgoing_callback:                 {filter: [*is_outgoing, *is_callback_c]}
+  appcall_bx_outgoing_callback_answered:        {filter: [*is_outgoing, *is_callback_c, *is_answered]}
+  appcall_bx_outgoing_callback_talkseconds:     {filter: [*is_outgoing, *is_callback_c, *is_answered], obs: [TalkDuration]}
+  
+  appcall_bx_incoming_callback:                 {filter: [*is_incoming, *is_callback_c]}
+  appcall_bx_incoming_callback_answered:        {filter: [*is_incoming, *is_callback_c, *is_answered]}
+  appcall_bx_incoming_callback_talkseconds:     {filter: [*is_incoming, *is_callback_c, *is_answered], obs: [TalkDuration]}
+  
+  appcall_bx_outgoing_direct:                   {filter: [*is_outgoing, *is_direct_c]}
+  appcall_bx_outgoing_direct_answered:          {filter: [*is_outgoing, *is_direct_c, *is_answered]}
+  appcall_bx_outgoing_direct_talkseconds:       {filter: [*is_outgoing, *is_direct_c, *is_answered], obs: [TalkDuration]}
+
+  appcall_bx_incoming_direct:                   {filter: [*is_incoming, *is_direct_c]}
+  appcall_bx_incoming_direct_answered:          {filter: [*is_incoming, *is_direct_c, *is_answered]}
+  appcall_bx_incoming_direct_talkseconds:       {filter: [*is_incoming, *is_direct_c, *is_answered], obs: [TalkDuration]}
+
+  # By screen
+  appcall_bx_outgoing_item:                     {filter: [*is_outgoing, *is_item_c]}
+  appcall_bx_outgoing_item_answered:            {filter: [*is_outgoing, *is_item_c, *is_answered]}
+  appcall_bx_outgoing_item_talkseconds:         {filter: [*is_outgoing, *is_item_c], obs: [TalkDuration]}
+
+  appcall_bx_outgoing_serp:                     {filter: [*is_outgoing, *is_serp_c]}
+  appcall_bx_outgoing_serp_answered:            {filter: [*is_outgoing, *is_serp_c, *is_answered]}
+  appcall_bx_outgoing_serp_talkseconds:         {filter: [*is_outgoing, *is_serp_c], obs: [TalkDuration]}
+
+  appcall_bx_outgoing_messenger:                {filter: [*is_outgoing, *is_messenger_c]}
+  appcall_bx_outgoing_messenger_answered:       {filter: [*is_outgoing, *is_messenger_c, *is_answered]}
+  appcall_bx_outgoing_messenger_talkseconds:    {filter: [*is_outgoing, *is_messenger_c], obs: [TalkDuration]}
+
+  appcall_bx_incoming_messenger:                {filter: [*is_incoming, *is_messenger_c]}
+  appcall_bx_incoming_messenger_answered:       {filter: [*is_incoming, *is_messenger_c, *is_answered]}
+  appcall_bx_incoming_messenger_talkseconds:    {filter: [*is_incoming, *is_messenger_c], obs: [TalkDuration]}
+
+  appcall_bx_incoming_pro:                      {filter: [*is_incoming, *is_pro_c]}
+  appcall_bx_incoming_pro_answered:             {filter: [*is_incoming, *is_pro_c, *is_answered]}
+  appcall_bx_incoming_pro_talkseconds:          {filter: [*is_incoming, *is_pro_c], obs: [TalkDuration]}
+
+  # Success
+  appcall_bx_outgoing_success:                  {filter: [*is_outgoing, *is_c, *is_success]}
+  appcall_bx_incoming_success:                  {filter: [*is_incoming,  *is_c, *is_success]}
+  appcall_bx_any_success:                       {filter: [*is_c, *is_success]}
+  appcall_bx_outgoing_direct_success:           {filter: [*is_outgoing, *is_direct_c, *is_success]}
+
+
 metric.uniq:
-  unq_appcall_bx_outgoing_item:            {counter: appcall_bx_outgoing_item, key: [user]}
-  unq_appcall_bx_outgoing_item_success:    {counter: appcall_bx_outgoing_item_success, key: [user]}
-  unq_appcall_bx_any_calls:                {counter: appcall_bx_any_calls, key: [user]}
+  appcall_bx_any_canonical:                     {counter: appcall_bx_any_calls, key: [user, item]}
+  unq_appcall_bx_outgoing_item:                 {counter: appcall_bx_outgoing_item, key: [user]}
+
+
 
 metric.ratio:
-  appcall_bx_outgoing_direct_answered_ratio:            {num: appcall_bx_outgoing_direct_answered, den: appcall_bx_outgoing_direct}
+  appcall_bx_outgoing_talkseconds_avg:          {num: appcall_bx_outgoing_talkseconds, den: appcall_bx_outgoing_answered}
+  appcall_bx_incoming_talkseconds_avg:          {num: appcall_bx_incoming_talkseconds, den: appcall_bx_incoming_answered}
+  appcall_bx_any_talkseconds_avg:               {num: appcall_bx_any_talkseconds, den: appcall_bx_any_answered}
+  appcall_bx_outgoing_direct_answered_ratio:    {num: appcall_bx_outgoing_direct_answered, den: appcall_bx_outgoing_direct}
+
   appcall_bx_outgoing_direct_success_answered_ratio:    {num: appcall_bx_outgoing_direct_success, den: appcall_bx_outgoing_direct_answered}
   appcall_bx_outgoing_direct_success_ratio:             {num: appcall_bx_outgoing_direct_success, den: appcall_bx_outgoing_direct}
-  
-  appcall_bx_msg_chat_menu_success_ratio:               {num: appcall_bx_msg_chat_menu_success, den: appcall_bx_msg_chat_menu}
-  appcall_bx_msg_callback_success_ratio:                {num: appcall_bx_msg_callback_success, den: appcall_bx_msg_callback}
-  
-  appcall_bx_outgoing_talkseconds_avg:                  {num: appcall_bx_outgoing_talkseconds, den: appcall_bx_outgoing_answered}
-  appcall_bx_incoming_talkseconds_avg:                  {num: appcall_bx_incoming_talkseconds, den: appcall_bx_incoming_answered}
-  appcall_bx_any_talkseconds_avg:                       {num: appcall_bx_any_talkseconds, den: appcall_bx_any_calls_answered}
-  
-  appcall_bx_any_less5seconds_ratio:                    {num: appcall_bx_any_less5seconds, den: appcall_bx_any_calls_answered}
-  appcall_bx_any_less15seconds_ratio:                   {num: appcall_bx_any_less15seconds, den: appcall_bx_any_calls_answered}
-  appcall_bx_any_less60seconds_ratio:                   {num: appcall_bx_any_less60seconds, den: appcall_bx_any_calls_answered}
-  appcall_bx_any_less120seconds_ratio:                  {num: appcall_bx_any_less120seconds, den: appcall_bx_any_calls_answered}
-  appcall_bx_any_less300seconds_ratio:                  {num: appcall_bx_any_less300seconds, den: appcall_bx_any_calls_answered}
-  
-  
-  
