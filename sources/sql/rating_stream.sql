@@ -14,6 +14,7 @@ select
   	rs.item_rating,
   	rs.item_views,
     rs.contacts,
+    rs.bt_clicks,
     rs.contacts_with_review_list_view,
  	-- Dimensions -----------------------------------------------------------------------------------------------------
 	cm.Param1_microcat_id                                        as param1_id,

@@ -2,10 +2,19 @@ metric.counter:
   inn_verifications_success:                   {filter: [verification_type: INN, status: true]}
   passport_verifications_success:              {filter: [verification_type: passport, status: true]}
   driver_license_verifications_success:        {filter: [verification_type: driver_license, status: true]}
-  documents_verification_success:              {filter: [verification_type: [INN,passport,driver_license], status: true]}
+  tinkoff_documents_verifications_success:     {filter: [verification_type: tinkoff_documents, status: true]}
+  sber_documents_verifications_success:        {filter: [verification_type: sber_documents, status: true]}
+  tinkoff_self_employed_verifications_success: {filter: [verification_type: tinkoff_self_employed, status: true]}
+  sber_self_employed_verifications_success:    {filter: [verification_type: sber_self_employed, status: true]}
+  documents_verification_success:              {filter: [verification_type: [INN,passport,driver_license,tinkoff_documents,sber_documents,tinkoff_self_employed,sber_self_employed], status: true]}
 
 metric.uniq:
   inn_verified_users:                          {counter: inn_verifications_success, key: [user]}
   passport_verified_users:                     {counter: passport_verifications_success, key: [user]}
   driver_license_verified_users:               {counter: driver_license_verifications_success, key: [user]}
+  tinkoff_documents_verified_users:            {counter: tinkoff_documents_verifications_success, key: [user]}
+  sber_documents_verified_users:               {counter: sber_documents_verifications_success, key: [user]}
+  tinkoff_self_employed_verified_users:        {counter: tinkoff_self_employed_verifications_success, key: [user]}
+  sber_self_employed_verified_users:           {counter: sber_self_employed_verifications_success, key: [user]}  
   documents_verified_users:                    {counter: documents_verification_success, key: [user]}
+

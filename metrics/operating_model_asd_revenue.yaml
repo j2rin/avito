@@ -1,0 +1,97 @@
+definitions:
+  - &days_1_60              { days_after_pro_paying_convert.<: 60 }
+  - &days_61_180            { days_after_pro_paying_convert.>=: 60 }
+  - &lf                     { product_type: 'lf' }
+  - &subs                   { product_type: 'subscription' }
+  - &vas                    { product_type: 'vas' }
+  - &cpa                    { product_type: 'cpa' }
+  - &paid_contact           { product_type: 'paid_contact' }
+  - &str                    { product_type: 'short_term_rent', transaction_subtype: 'buyer book' }
+  - &cpt                    { product_type: 'cpt', transaction_subtype: 'c2c commission' }
+
+
+metric.counter:
+    # 1-60
+    new_pro_paying_revenue_1_60_total:                      { obs: [transaction_amount], filter: [ *days_1_60 ] }
+    new_pro_paying_revenue_1_60_total_net:                  { obs: [transaction_amount_net], filter: [ *days_1_60 ] }
+    new_pro_paying_revenue_1_60_total_net_adj:              { obs: [transaction_amount_net_adj], filter: [ *days_1_60 ] }
+    new_pro_paying_revenue_1_60_total_vertical:             { obs: [ transaction_amount ], filter: [ *days_1_60, is_payment_in_converted_vertical: true ] }
+    new_pro_paying_revenue_1_60_total_vertical_net:         { obs: [ transaction_amount_net ], filter: [ *days_1_60, is_payment_in_converted_vertical: true ] }
+    new_pro_paying_revenue_1_60_total_vertical_net_adj:     { obs: [ transaction_amount_net_adj ], filter: [ *days_1_60, is_payment_in_converted_vertical: true ] }
+    new_pro_paying_revenue_1_60_lf:                         { obs: [transaction_amount], filter: [ *days_1_60, *lf ]  }
+    new_pro_paying_revenue_1_60_lf_net:                     { obs: [transaction_amount_net], filter: [ *days_1_60, *lf ] }
+    new_pro_paying_revenue_1_60_lf_net_adj:                 { obs: [transaction_amount_net_adj], filter: [ *days_1_60, *lf ] }
+    new_pro_paying_revenue_1_60_subs:                       { obs: [ transaction_amount ], filter: [ *days_1_60, *subs ] }
+    new_pro_paying_revenue_1_60_subs_net:                   { obs: [ transaction_amount_net ], filter: [ *days_1_60, *subs ] }
+    new_pro_paying_revenue_1_60_subs_net_adj:               { obs: [ transaction_amount_net_adj ], filter: [ *days_1_60, *subs ] }
+    new_pro_paying_revenue_1_60_vas:                        { obs: [ transaction_amount ], filter: [ *days_1_60, *vas ] }
+    new_pro_paying_revenue_1_60_vas_net:                    { obs: [ transaction_amount_net ], filter: [ *days_1_60, *vas ] }
+    new_pro_paying_revenue_1_60_vas_net_adj:                { obs: [ transaction_amount_net_adj ], filter: [ *days_1_60, *vas ] }
+    new_pro_paying_revenue_1_60_cpa:                        { obs: [ transaction_amount ], filter: [ *days_1_60, *cpa ] }
+    new_pro_paying_revenue_1_60_cpa_net:                    { obs: [ transaction_amount_net ], filter: [ *days_1_60, *cpa ] }
+    new_pro_paying_revenue_1_60_cpa_net_adj:                { obs: [ transaction_amount_net_adj ], filter: [ *days_1_60, *cpa ] }
+    new_pro_paying_revenue_1_60_paid_contact:               { obs: [ transaction_amount ], filter: [ *days_1_60, *paid_contact ] }
+    new_pro_paying_revenue_1_60_paid_contact_net:           { obs: [ transaction_amount_net ], filter: [ *days_1_60, *paid_contact ] }
+    new_pro_paying_revenue_1_60_paid_contact_net_adj:       { obs: [ transaction_amount_net_adj ], filter: [ *days_1_60, *paid_contact ] }
+    new_pro_paying_revenue_1_60_str:                        { obs: [ transaction_amount ], filter: [ *days_1_60, *str ] }
+    new_pro_paying_revenue_1_60_str_net:                    { obs: [ transaction_amount_net ], filter: [ *days_1_60, *str ] }
+    new_pro_paying_revenue_1_60_str_net_adj:                { obs: [ transaction_amount_net_adj ], filter: [ *days_1_60, *str ] }
+    new_pro_paying_revenue_1_60_cpt:                        { obs: [ transaction_amount ], filter: [ *days_1_60, *cpt ] }
+    new_pro_paying_revenue_1_60_cpt_net:                    { obs: [ transaction_amount_net ], filter: [ *days_1_60, *cpt ] }
+    new_pro_paying_revenue_1_60_cpt_net_adj:                { obs: [ transaction_amount_net_adj ], filter: [ *days_1_60, *cpt ] }
+    # 61-180
+    new_pro_paying_revenue_61_180_total:                    { obs: [transaction_amount], filter: [ *days_61_180 ] }
+    new_pro_paying_revenue_61_180_total_net:                { obs: [transaction_amount_net], filter: [ *days_61_180 ] }
+    new_pro_paying_revenue_61_180_total_net_adj:            { obs: [transaction_amount_net_adj], filter: [ *days_61_180 ] }
+    new_pro_paying_revenue_61_180_total_vertical:           { obs: [ transaction_amount ], filter: [ *days_1_60, is_payment_in_converted_vertical: true ] }
+    new_pro_paying_revenue_61_180_total_vertical_net:       { obs: [ transaction_amount_net ], filter: [ *days_1_60, is_payment_in_converted_vertical: true ] }
+    new_pro_paying_revenue_61_180_total_vertical_net_adj:   { obs: [ transaction_amount_net_adj ], filter: [ *days_1_60, is_payment_in_converted_vertical: true ] }
+    new_pro_paying_revenue_61_180_lf:                       { obs: [transaction_amount], filter: [ *days_61_180, *lf ]  }
+    new_pro_paying_revenue_61_180_lf_net:                   { obs: [transaction_amount_net], filter: [ *days_61_180, *lf ] }
+    new_pro_paying_revenue_61_180_lf_net_adj:               { obs: [transaction_amount_net_adj], filter: [ *days_61_180, *lf ] }
+    new_pro_paying_revenue_61_180_subs:                     { obs: [ transaction_amount ], filter: [ *days_61_180, *subs ] }
+    new_pro_paying_revenue_61_180_subs_net:                 { obs: [ transaction_amount_net ], filter: [ *days_61_180, *subs ] }
+    new_pro_paying_revenue_61_180_subs_net_adj:             { obs: [ transaction_amount_net_adj ], filter: [ *days_61_180, *subs ] }
+    new_pro_paying_revenue_61_180_vas:                      { obs: [ transaction_amount ], filter: [ *days_61_180, *vas ] }
+    new_pro_paying_revenue_61_180_vas_net:                  { obs: [ transaction_amount_net ], filter: [ *days_61_180, *vas ] }
+    new_pro_paying_revenue_61_180_vas_net_adj:              { obs: [ transaction_amount_net_adj ], filter: [ *days_61_180, *vas ] }
+    new_pro_paying_revenue_61_180_cpa:                      { obs: [ transaction_amount ], filter: [ *days_61_180, *cpa ] }
+    new_pro_paying_revenue_61_180_cpa_net:                  { obs: [ transaction_amount_net ], filter: [ *days_61_180, *cpa ] }
+    new_pro_paying_revenue_61_180_cpa_net_adj:              { obs: [ transaction_amount_net_adj ], filter: [ *days_61_180, *cpa ] }
+    new_pro_paying_revenue_61_180_paid_contact:             { obs: [ transaction_amount ], filter: [ *days_61_180, *paid_contact ] }
+    new_pro_paying_revenue_61_180_paid_contact_net:         { obs: [ transaction_amount_net ], filter: [ *days_61_180, *paid_contact ] }
+    new_pro_paying_revenue_61_180_paid_contact_net_adj:     { obs: [ transaction_amount_net_adj ], filter: [ *days_61_180, *paid_contact ] }
+    new_pro_paying_revenue_61_180_str:                      { obs: [ transaction_amount ], filter: [ *days_61_180, *str ] }
+    new_pro_paying_revenue_61_180_str_net:                  { obs: [ transaction_amount_net ], filter: [ *days_61_180, *str ] }
+    new_pro_paying_revenue_61_180_str_net_adj:              { obs: [ transaction_amount_net_adj ], filter: [ *days_61_180, *str ] }
+    new_pro_paying_revenue_61_180_cpt:                      { obs: [ transaction_amount ], filter: [ *days_61_180, *cpt ] }
+    new_pro_paying_revenue_61_180_cpt_net:                  { obs: [ transaction_amount_net ], filter: [ *days_61_180, *cpt ] }
+    new_pro_paying_revenue_61_180_cpt_net_adj:              { obs: [ transaction_amount_net_adj ], filter: [ *days_61_180, *cpt ] }
+    # 1-180
+    new_pro_paying_revenue_1_180_total:                     { obs: [ transaction_amount ] }
+    new_pro_paying_revenue_1_180_total_net:                 { obs: [ transaction_amount_net ] }
+    new_pro_paying_revenue_1_180_total_net_adj:             { obs: [ transaction_amount_net_adj ] }
+    new_pro_paying_revenue_1_180_total_vertical:            { obs: [ transaction_amount ], filter: [ is_payment_in_converted_vertical: true ] }
+    new_pro_paying_revenue_1_180_total_vertical_net:        { obs: [ transaction_amount_net ], filter: [ is_payment_in_converted_vertical: true ] }
+    new_pro_paying_revenue_1_180_total_vertical_net_adj:    { obs: [ transaction_amount_net_adj ], filter: [ is_payment_in_converted_vertical: true ] }
+    new_pro_paying_revenue_1_180_lf:                        { obs: [ transaction_amount ], filter: [ *lf ] }
+    new_pro_paying_revenue_1_180_lf_net:                    { obs: [ transaction_amount_net ], filter: [ *lf ] }
+    new_pro_paying_revenue_1_180_lf_net_adj:                { obs: [ transaction_amount_net_adj ], filter: [ *lf ] }
+    new_pro_paying_revenue_1_180_subs:                      { obs: [ transaction_amount ], filter: [ *subs ] }
+    new_pro_paying_revenue_1_180_subs_net:                  { obs: [ transaction_amount_net ], filter: [ *subs ] }
+    new_pro_paying_revenue_1_180_subs_net_adj:              { obs: [ transaction_amount_net_adj ], filter: [ *subs ] }
+    new_pro_paying_revenue_1_180_vas:                       { obs: [ transaction_amount ], filter: [ *vas ] }
+    new_pro_paying_revenue_1_180_vas_net:                   { obs: [ transaction_amount_net ], filter: [ *vas ] }
+    new_pro_paying_revenue_1_180_vas_net_adj:               { obs: [ transaction_amount_net_adj ], filter: [ *vas ] }
+    new_pro_paying_revenue_1_180_cpa:                       { obs: [ transaction_amount ], filter: [ *cpa ] }
+    new_pro_paying_revenue_1_180_cpa_net:                   { obs: [ transaction_amount_net ], filter: [ *cpa ] }
+    new_pro_paying_revenue_1_180_cpa_net_adj:               { obs: [ transaction_amount_net_adj ], filter: [ *cpa ] }
+    new_pro_paying_revenue_1_180_paid_contact:              { obs: [ transaction_amount ], filter: [ *paid_contact ] }
+    new_pro_paying_revenue_1_180_paid_contact_net:          { obs: [ transaction_amount_net ], filter: [ *paid_contact ] }
+    new_pro_paying_revenue_1_180_paid_contact_net_adj:      { obs: [ transaction_amount_net_adj ], filter: [ *paid_contact ] }
+    new_pro_paying_revenue_1_180_str:                       { obs: [ transaction_amount ], filter: [ *str ] }
+    new_pro_paying_revenue_1_180_str_net:                   { obs: [ transaction_amount_net ], filter: [ *str ] }
+    new_pro_paying_revenue_1_180_str_net_adj:               { obs: [ transaction_amount_net_adj ], filter: [ *str ] }
+    new_pro_paying_revenue_1_180_cpt:                       { obs: [ transaction_amount ], filter: [ *cpt ] }
+    new_pro_paying_revenue_1_180_cpt_net:                   { obs: [ transaction_amount_net ], filter: [ *cpt ] }
+    new_pro_paying_revenue_1_180_cpt_net_adj:               { obs: [ transaction_amount_net_adj ], filter: [ *cpt ] }

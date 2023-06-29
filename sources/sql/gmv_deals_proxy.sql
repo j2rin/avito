@@ -12,6 +12,7 @@ select
     ,dp.user_segment_market
     ,dp.proxy_deals as proxy_deals
     ,dp.gmv_volume as gmv_volume
+    ,dp.item_id
 from dma.gmv_deals_proxy dp
 join dma.current_item ci on dp.item_id = ci.item_id
 left join dma.current_locations cl on ci.location_id = cl.location_id

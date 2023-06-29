@@ -1,7 +1,7 @@
 metric.counter:
-  buyout_gmv:                               {obs: [buyout_amount],     filter: [has_buyout.=: 1]}
-  buyout_revenue_net_adj:                   {obs: [charge],            filter: [has_buyout.=: 1]}
-  buyout_mp_deals:                          {filter: [has_buyout.=: 1]}
+  buyout_gmv:                               {obs: [buyout_amount],     filter: [has_buyout.=: 1, buyout_amount.>: 0]}
+  buyout_revenue_net_adj:                   {obs: [bt_revenue],        filter: [has_buyout.=: 1, buyout_amount.>: 0]}
+  buyout_mp_deals:                          {filter: [has_buyout.=: 1, buyout_amount.>: 0]}
 
 metric.uniq:
   buyout_deals:         {counter: buyout_mp_deals,     key: [mp_lot_id]}

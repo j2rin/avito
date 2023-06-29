@@ -103,6 +103,10 @@ where {subject} is not null
             new_report['network_received_exceed'] = ''
         new_report['thread_count_exceed'] = ''
 
+        spilled = report['spilled_gb']
+        if spilled <= 300 and report['output_rows'] > 10**6:
+            new_report['spilled_exceed'] = ''
+
         return new_report
 
     def validate(self, filepath, primary_subject):
