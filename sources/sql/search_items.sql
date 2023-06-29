@@ -9,7 +9,6 @@ select
     category_id,
     subcategory_id,
     region_id,
-    item_type,
     items_count,
     score,
     freshness,
