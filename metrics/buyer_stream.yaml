@@ -20,7 +20,7 @@ definitions:
     - &c_front      [2216, 2650, 3461, 857, 4198]
     - &c_all        [303, 3461, 857, 4198]
 
-    - &is_search    { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0] }
+    - &is_search    { eid: *eid_search, $or: [platform_id.!=: 1, onmap: 0], search_flags.!bit: 7 }
     - &is_rec       { $or: [{ eid: *eid_rec }, { search_flags.bit: 10 }] }
     - &is_rec_sg    { search_flags.bit: 10 }
     - &is_u2i       { eid: *eid_u2i }
@@ -39,8 +39,8 @@ definitions:
     - &graph        { item_engines.bit: 4 }
     - &crosscat     { item_engines.bit: 5 }
 
-    - &x_is_search  { x_eid: *eid_search }
-    - &x_is_rec     { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
+    - &x_is_search  { x_eid: *eid_search, search_flags.!bit: 7 }
+    - &x_is_rec     { $or: [{ x_eid: *eid_rec }, { search_flags.bit: 10 }, {x_eid: *eid_map, engine: personal_geo_map}] }
     - &x_is_rec_sg  { search_flags.bit: 10 }
     - &x_is_u2i     { $or: [{x_eid: *eid_u2i}, {x_eid: *eid_map, engine: personal_geo_map}] }
     - &x_is_i2i     { x_eid: *eid_i2i }
@@ -72,7 +72,7 @@ definitions:
     - &is_sgt       { eid: 2443 }
     - &is_iv        { eid: 301 }
     - &is_iv_client { eid: 2649 }
-    - &is_btc       { eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451, 6608, 6154, 5942] }
+    - &is_btc       { eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451, 6608, 6154, 5942, 8109] }
 
     - &is_ph_realdev        { eid: *eid_ph_realdev }
     - &is_back_call_item    { eid: 4198, item.isnull: false }
@@ -116,8 +116,8 @@ definitions:
 
     - &is_videocalls_contact { eid: 5629 }
 
-    - &is_shop      { search_flags.bit: 7 }
-    - &x_is_shop    { search_flags.bit: 7 }
+    - &is_shop      { multiplier_3: 0 }
+    - &x_is_shop    { multiplier_3: 0 }
 
     - &is_s_geo         { search_flags.bit: [0, 1, 2, 3] }
     - &is_s_local_geo   { search_flags.bit: [0, 1, 2] }
@@ -632,6 +632,18 @@ metric.counter:
     cnt_cs_s_grouped_doubles:
         { filter: [*is_contact_wo_guessing, *is_region_with_double_groups, *is_serp_grouping, *x_is_search] }
     cnt_cs_s_item_attr:                   { filter: [*is_contact_wo_guessing, *x_is_search] }
+    cnt_iv_s_start_time_1day:             { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_1day] }
+    cnt_iv_s_start_time_3days:            { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_3days] }
+    cnt_iv_s_start_time_7days:            { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_7days] }
+    cnt_iv_s_start_time_14days:           { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_14days] }
+    cnt_iv_s_start_time_1day_cpa:         { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_1day, *is_item_cpa] }
+    cnt_iv_s_start_time_3days_cpa:        { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_3days, *is_item_cpa] }
+    cnt_iv_s_start_time_7days_cpa:        { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_7days, *is_item_cpa] }
+    cnt_iv_s_start_time_14days_cpa:       { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_14days, *is_item_cpa] }
+    cnt_iv_s_start_time_1day_nocpa:       { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_1day, *is_item_nocpa] }
+    cnt_iv_s_start_time_3days_nocpa:      { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_3days, *is_item_nocpa] }
+    cnt_iv_s_start_time_7days_nocpa:      { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_7days, *is_item_nocpa] }
+    cnt_iv_s_start_time_14days_nocpa:     { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_14days, *is_item_nocpa] }
     cnt_cs_s_start_time_1day:             { filter: [*is_contact_wo_guessing, *x_is_search, *is_start_time_less_1day] }
     cnt_cs_s_start_time_3days:            { filter: [*is_contact_wo_guessing, *x_is_search, *is_start_time_less_3days] }
     cnt_cs_s_start_time_7days:            { filter: [*is_contact_wo_guessing, *x_is_search, *is_start_time_less_7days] }
@@ -1806,6 +1818,12 @@ metric.counter:
     btc_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
     contact_sav_serp_fav_list: { filter: [*x_is_search, *x_is_s_sav_serp_fav_list] }
 
+    nd_click_request_call:                       {filter: [eid: 4219]}
+    nd_click_submit_application_for_back_call:   {filter: [eid: 4197]}
+    nd_banner_successful_dispatch_for_back_call: { filter: [{ $or: [*is_back_call_item, *is_back_call_jk] }] }
+    nd_banner_successful_dis_for_back_call_item: {filter: [*is_back_call_item]}
+    nd_banner_successful_dis_for_back_call_jk:   {filter: [*is_back_call_jk]}
+
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
     bt_clicks_grouped: { counter: bt_clicks, key: [cookie_item] }
@@ -2024,6 +2042,18 @@ metric.uniq:
     contacts_vertical_main: { counter: cnt_cs_vertical_main, key: [item_x] }
     contacts_vertical_main_rec: { counter: cnt_cs_vertical_main_rec, key: [item_x] }
     contacts_serp:                      { counter: cnt_cs_s_item_attr,                  key: [item_x] }
+    iv_serp_start_time_1d:              { counter: cnt_iv_s_start_time_1day,            key: [item_x] }
+    iv_serp_start_time_3d:              { counter: cnt_iv_s_start_time_3days,           key: [item_x] }
+    iv_serp_start_time_7d:              { counter: cnt_iv_s_start_time_7days,           key: [item_x] }
+    iv_serp_start_time_14d:             { counter: cnt_iv_s_start_time_14days,          key: [item_x] }
+    iv_serp_start_time_1d_cpa:          { counter: cnt_iv_s_start_time_1day_cpa,        key: [item_x] }
+    iv_serp_start_time_3d_cpa:          { counter: cnt_iv_s_start_time_3days_cpa,       key: [item_x] }
+    iv_serp_start_time_7d_cpa:          { counter: cnt_iv_s_start_time_7days_cpa,       key: [item_x] }
+    iv_serp_start_time_14d_cpa:         { counter: cnt_iv_s_start_time_14days_cpa,      key: [item_x] }
+    iv_serp_start_time_1d_nocpa:        { counter: cnt_iv_s_start_time_1day_nocpa,      key: [item_x] }
+    iv_serp_start_time_3d_nocpa:        { counter: cnt_iv_s_start_time_3days_nocpa,     key: [item_x] }
+    iv_serp_start_time_7d_nocpa:        { counter: cnt_iv_s_start_time_7days_nocpa,     key: [item_x] }
+    iv_serp_start_time_14d_nocpa:       { counter: cnt_iv_s_start_time_14days_nocpa,    key: [item_x] }
     contacts_serp_start_time_1d:        { counter: cnt_cs_s_start_time_1day,            key: [item_x] }
     contacts_serp_start_time_3d:        { counter: cnt_cs_s_start_time_3days,           key: [item_x] }
     contacts_serp_start_time_7d:        { counter: cnt_cs_s_start_time_7days,           key: [item_x] }
@@ -3190,6 +3220,11 @@ metric.uniq:
     user_btc_sav_serp_fav_list: {counter: btc_sav_serp_fav_list, key: [cookie] }
     user_contact_sav_serp_fav_list: {counter: contact_sav_serp_fav_list, key: [cookie] }
 
+    user_nd_click_request_call:                       {counter: nd_click_request_call,                       key: [cookie]}
+    user_nd_click_submit_application_for_back_call:   {counter: nd_click_submit_application_for_back_call,   key: [cookie]}
+    user_nd_banner_successful_dispatch_for_back_call: {counter: nd_banner_successful_dispatch_for_back_call, key: [cookie]}
+    user_nd_banner_successful_dis_for_back_call_item: {counter: nd_banner_successful_dis_for_back_call_item, key: [cookie]}
+    user_nd_banner_successful_dis_for_back_call_jk:   {counter: nd_banner_successful_dis_for_back_call_jk,   key: [cookie]}
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
@@ -3606,11 +3641,15 @@ metric.ratio:
     user_fav_witcher_funnel_regions_per_user_s_from_witcher_reg: { num: user_fav_witcher_funnel_regions, den: user_s_from_witcher_reg }
     iv_multiloc_per_iv_s: { num: iv_multiloc, den: item_views_serp }
     c_multiloc_per_c_s: { num: c_multiloc, den: contacts_serp }
-    c_serp_start_time_1d_per_c_s:   { num: contacts_serp_start_time_1d,  den: contacts_serp }
-    c_serp_start_time_3d_per_c_s:   { num: contacts_serp_start_time_3d,  den: contacts_serp }
-    c_serp_start_time_7d_per_c_s:   { num: contacts_serp_start_time_7d,  den: contacts_serp }
-    c_serp_start_time_14d_per_c_s:  { num: contacts_serp_start_time_14d, den: contacts_serp }
-    user_iv_multiloc_per_user_iv_s: { num: user_iv_multiloc, den: users_item_view_serp_daily }
+    iv_serp_start_time_1d_per_iv_s:   { num: iv_serp_start_time_1d,         den: item_views_serp }
+    iv_serp_start_time_3d_per_iv_s:   { num: iv_serp_start_time_3d,         den: item_views_serp }
+    iv_serp_start_time_7d_per_iv_s:   { num: iv_serp_start_time_7d,         den: item_views_serp }
+    iv_serp_start_time_14d_per_iv_s:  { num: iv_serp_start_time_14d,        den: item_views_serp }
+    c_serp_start_time_1d_per_c_s:     { num: contacts_serp_start_time_1d,   den: contacts_serp }
+    c_serp_start_time_3d_per_c_s:     { num: contacts_serp_start_time_3d,   den: contacts_serp }
+    c_serp_start_time_7d_per_c_s:     { num: contacts_serp_start_time_7d,   den: contacts_serp }
+    c_serp_start_time_14d_per_c_s:    { num: contacts_serp_start_time_14d,  den: contacts_serp }
+    user_iv_multiloc_per_user_iv_s:   { num: user_iv_multiloc, den: users_item_view_serp_daily }
     user_c_multiloc_per_user_c_s: { num: user_c_multiloc, den: users_contact_serp_daily }
     c_multiloc_per_iv_multiloc: { num: c_multiloc, den: iv_multiloc }
     user_c_multiloc_per_user_iv_multiloc: { num: user_c_multiloc, den: user_iv_multiloc }
@@ -3814,3 +3853,7 @@ metric.ratio:
     agbc_contacts_per_item_view: { num: agbc_contacts_all, den: item_views }
 
     btc_serp_age:             {num: cnt_btc_serp_age,       den: cnt_btc_s_item_attr}
+
+    nd_banner_successful_dispatch_per_click_request_back_call: {num: nd_banner_successful_dispatch_for_back_call, den: nd_click_request_call}
+    user_nd_bsd_per_user_iv: {num: user_nd_banner_successful_dispatch_for_back_call, den: users_item_view_daily}
+    nd_bsd_per_item_view: {num: nd_banner_successful_dispatch_for_back_call, den: item_views}
