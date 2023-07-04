@@ -6,7 +6,7 @@ calls_scores as
         call_id
         ,call_type
         ,is_target_call as is_target
-        ,case                       -- МОЖЕТ СТОИТ ДОБАВИТЬ not_andswered как в чатах?
+        ,case
                 when is_target = True then 'target'
                 when maplookup(mapjsonextractor(prob_distrib), 'already_sold') >0.5                 or maplookup(mapjsonextractor(prob_distrib), 'item_deal_discussion') >0.5
                         or maplookup(mapjsonextractor(prob_distrib), 'irrelevant_applicant') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'reject_by_employer') >0.5 
@@ -106,7 +106,7 @@ calls_scores as
             ,coalesce(a.Item_id, b.item_id) as item_id
             ,coalesce(a.UPPCallDuration, 0) as call_duration
             ,coalesce(a.UPPTalkDuration, 0) as talk_duration
-            ,UPPLinkedPhone is not null and not UPPCallIsBlocked as is_common_funel
+            ,UPPLinkedPhone is not null and not UPPCallIsBlocked as is_common_funnel
             ,case
                 -- мтс
                 when UPPProvider = 1 and c.user_id is null      then talk_duration > 8
@@ -175,7 +175,7 @@ calls_scores as
         ,a.Item_id as item_id
         ,coalesce(a.CallDuration, 0) as call_duration
         ,coalesce(a.TalkDuration, 0) as talk_duration
-        ,CallerIsBuyer as is_common_funel
+        ,CallerIsBuyer as is_common_funnel
         ,coalesce(a.TalkDuration, 0) > 0 as is_answered
         ,case when CallerIsBuyer then CallerPlatform else RecieverPlatform end as platform_id -- платформа баера
         ,case when CallerIsBuyer then RecieverPlatform else CallerPlatform end as seller_platform_id -- платформа баера
@@ -237,7 +237,7 @@ calls_scores as
         ,chr.item_id as item_id
         ,0 as call_duration
         ,0 as talk_duration
-        ,not is_spam as is_common_funel
+        ,not is_spam as is_common_funnel
         ,with_reply as is_answered
         ,platform_id -- платформа баера
         ,reply_platform_id as seller_platform_id -- платформа селлера
