@@ -90,11 +90,6 @@ ub as (
     group by 1
     order by 1
 ),
-hsv as (select distinct item_id,
-       last_value(HasShortVideo) over(partition by item_id order by actual_date) as HasShortVideo 
-       from dds.S_Item_HasShortVideo
-       where actual_date::date <= :last_date::date
-),
 pre as (
     select
         co.create_date::date as create_date,
@@ -213,7 +208,8 @@ pre as (
     left join /*+distrib(l,a)*/ dma.current_locations as bl on co.buyer_location_id = bl.location_id
     left join /*+distrib(l,a)*/ acd on acd.user_id = coi.seller_id and co.create_date::date between acd.active_from_date and acd.active_to_date
     left join /*+distrib(l,a)*/ du on du.buyer_id = co.buyer_id
-    left join /*+distrib(l,a)*/ hsv on coi.item_id = hsv.item_id
+    left join /*+distrib(l,a)*/ dds.S_Item_HasShortVideo hsv on coi.item_id = hsv.item_id
+        and co.create_date interpolate previous value hsv.Actual_date
     order by seller_id, create_date, logical_category_id
 ),
 cdd3 as (
