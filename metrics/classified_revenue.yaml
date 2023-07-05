@@ -132,6 +132,26 @@ metric.counter:
   paid_contact_burned_amount_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [product_type: 'paid_contact', transaction_subtype: 'burned from package']}
   paid_contact_purchase_transactions:                 {obs: [transaction_count],  filter: [is_revenue: false, product_type: 'paid_contact', transaction_subtype: 'package purchase']}
   paid_contact_purchase_amount_net_adj:               {obs: [transaction_amount_net_adj],  filter: [is_revenue: false, product_type: 'paid_contact', transaction_subtype: 'package purchase']}
+  auto_paid_contact_view_transactions:                {obs: [transaction_count],          filter: [is_revenue: true,  product_type: 'auto_paid_contact', transaction_type: 'auto contact package write off']}
+  auto_paid_contact_view_amount_net:                  {obs: [transaction_amount_net],     filter: [is_revenue: true,  product_type: 'auto_paid_contact', transaction_type: 'auto contact package write off']}
+  auto_paid_contact_view_amount_net_adj:              {obs: [transaction_amount_net_adj], filter: [is_revenue: true,  product_type: 'auto_paid_contact', transaction_type: 'auto contact package write off']}
+  auto_paid_contact_burned_transactions:              {obs: [transaction_count],          filter: [is_revenue: true,  product_type: 'auto_paid_contact', transaction_type: 'auto contact package burned']}
+  auto_paid_contact_burned_amount_net:                {obs: [transaction_amount_net],     filter: [is_revenue: true,  product_type: 'auto_paid_contact', transaction_type: 'auto contact package burned']}
+  auto_paid_contact_burned_amount_net_adj:            {obs: [transaction_amount_net_adj], filter: [is_revenue: true,  product_type: 'auto_paid_contact', transaction_type: 'auto contact package burned']}
+  auto_paid_contact_purchase_transactions:            {obs: [transaction_count],          filter: [is_revenue: false, product_type: 'auto_paid_contact', transaction_type: 'auto contact package pay in']}
+  auto_paid_contact_purchase_amount_net:              {obs: [transaction_amount_net],     filter: [is_revenue: false, product_type: 'auto_paid_contact', transaction_type: 'auto contact package pay in']}
+  auto_paid_contact_purchase_amount_net_adj:          {obs: [transaction_amount_net_adj], filter: [is_revenue: false, product_type: 'auto_paid_contact', transaction_type: 'auto contact package pay in']}
+  auto_paid_contact_amount:                           {obs: [transaction_amount],         filter: [is_revenue: true,  product_type: 'auto_paid_contact']}
+  auto_paid_contact_amount_net:                       {obs: [transaction_amount_net],     filter: [is_revenue: true,  product_type: 'auto_paid_contact']}
+  auto_paid_contact_amount_net_adj:                   {obs: [transaction_amount_net_adj], filter: [is_revenue: true,  product_type: 'auto_paid_contact']}
+  
+ 
+
+
+
+
+
+
 
 
 metric.uniq:
@@ -168,6 +188,10 @@ metric.uniq:
   paid_contact_users_view:                   {counter: paid_contact_view_transactions,            key: [user]}
   paid_contact_users_purchase:               {counter: paid_contact_purchase_transactions,        key: [user]}
   paid_contact_users_burned:                 {counter: paid_contact_burned_transactions,          key: [user]}
+  auto_paid_contact_users_view:              {counter: auto_paid_contact_view_transactions,       key: [user]}
+  auto_paid_contact_users_purchase:          {counter: auto_paid_contact_purchase_transactions,   key: [user]}
+  auto_paid_contact_users_burned:            {counter: auto_paid_contact_burned_transactions,     key: [user]}
+
 
 
 metric.ratio:

@@ -106,7 +106,7 @@ left join (
     where converting_date::date <= :last_date
 ) usm
     on  ur.user_id = usm.user_id
-    and cm.logical_category_id = usm.logical_category_id
+    and lc.logical_category_id = usm.logical_category_id
     and ur.event_date::date >= converting_date and ur.event_date::date < next_converting_date
 
 left join am_client_day aus

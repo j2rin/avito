@@ -8,59 +8,94 @@ delivery_status_date as ( --чтобы побороть дубли статус�
     where actual_date::date <= :last_date
     group by 1, 2
     having min(actual_date) >= :first_date
-    order by deliveryorder_id
+    order by 1
 ),
 orders as (
     select distinct deliveryorder_id
     from delivery_status_date
+    order by 1
 ),
 buyers as (
     select distinct buyer_id
     from dma.current_order
     where deliveryorder_id in (select deliveryorder_id from orders)
+    order by 1
 ),
 sellers as (
     select distinct seller_id
     from dma.current_order_item
     where deliveryorder_id in (select deliveryorder_id from orders)
-)
-select /*+syntactic_join*/
-    pre.*,
-    coalesce(usm.user_segment, ls.segment) as user_segment_market,
-    ------ cкидки
-    threefirst_discount/items_qty as threefirst_discount,  --нормируем на кол-во айтемов в заказе
-    bonus_discount/items_qty as bonus_discount,
-    cdd3.discount_value/items_qty as bonus_cashback,
-    promocode_discount/items_qty as promocode_discount,
-    c2c_seller_discount/items_qty as c2c_seller_discount,
-    exmail_discount/items_qty as exmail_discount,
-    ------ флаг скидки
-    case when threefirst_discount > 0 then True else False end as is_threefirst_discount,
-    case when bonus_discount > 0 then True else False end as is_bonus_discount,
-    case when cdd3.discount_value is not null then True else False end as is_bonus_cashback,
-    case when promocode_discount > 0 then True else False end as is_promocode_discount,
-    case when seller_comission > 0 then True else False end as is_c2c_seller_discount,
-    case when exmail_discount > 0 then True else False end as is_exmail_discount,
-    ------ субсидии
-    total_subsidies/items_qty as total_subsidies,--нормируем на кол-во айтемов в заказе
-    -------------- subsidies (субсидии c экономией от скидки с2с_seller_discount)
-    threefirst_subsidies/items_qty as threefirst_subsidies,
-    bonus_subsidies/items_qty as bonus_subsidies,
-    promocode_subsidies/items_qty as promocode_subsidies_wo_tax,
-    (promocode_subsidies + additional_tax)/items_qty as promocode_subsidies,
-    exmail_subsidies/items_qty as exmail_subsidies,
-    -------------- total_subsidies (субсидии без экономии от скидки с2с_seller_discount)
-    total_threefirst_subsidies/items_qty as total_threefirst_subsidies,
-    total_exmail_subsidies/items_qty as total_exmail_subsidies,
-    total_promocode_subsidies/items_qty as total_promocode_subsidies_wo_tax,
-    (total_promocode_subsidies + additional_tax)/items_qty as total_promocode_subsidies,
-    -------------- saved_subsidies
-    threefirst_subsidies_saved/items_qty as threefirst_subsidies_saved,
-    exmail_subsidies_saved/items_qty as exmail_subsidies_saved,
-    promocode_subsidies_saved/items_qty as promocode_subsidies_saved,
-    ------ привязки в контуре авито
-    coalesce(has_avito_bindings, false) as has_avito_bindings
-from (
+    order by 1
+),
+cic as (
+        select infmquery_id, logcat_id
+        from infomodel.current_infmquery_category
+        where infmquery_id in (
+            select distinct infmquery_id
+            from dma.current_order_item
+            where deliveryorder_id in (select deliveryorder_id from orders)
+                and infmquery_id is not null
+        )
+    order by 1,2),
+acd as (
+        select
+            user_id,
+            active_from_date,
+            active_to_date,
+            (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
+            user_group_id
+        from DMA.am_client_day_versioned
+        where active_from_date <= :last_date
+            and active_to_date >= :first_date
+            and user_id in (select seller_id from sellers)
+    order by 1,2),
+du as (
+        select
+            buyer_id,
+            min(coalesce(pay_date, confirm_date)) as pay_date,
+            min(accept_date) as accept_date
+        from dma.current_order
+        where true
+            --and is_test is false
+            --and not is_deleted
+            and (coalesce(pay_date, confirm_date) <= :last_date or accept_date <= :last_date)
+            and buyer_id in (select buyer_id from buyers)
+        group by 1
+        order by 1
+    ),
+usm as (
+    select
+        user_id,
+        logical_category_id,
+        user_segment,
+        converting_date as from_date,
+        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
+    from DMA.user_segment_market
+    where true
+        and converting_date <= :last_date::date
+        and user_id in (select seller_id from sellers)
+    order by 1
+),
+ub as (
+    select
+        co.purchase_id,
+        MAX(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
+        SUM(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
+    from dma.current_order co
+    left join dma.user_payment_bindings pb on pb.user_id = co.buyer_id
+    where true
+        and pb.external_source_provider_id in (18)
+        and pb.is_available = True
+        and co.deliveryorder_id in (select deliveryorder_id from orders)
+    group by 1
+    order by 1
+),
+hsv as (select distinct item_id,
+       last_value(HasShortVideo) over(partition by item_id order by actual_date) as HasShortVideo 
+       from dds.S_Item_HasShortVideo
+       where actual_date::date <= :last_date::date
+),
+pre as (
     select
         co.create_date::date as create_date,
         ps.actual_date::date as status_date,
@@ -163,90 +198,84 @@ from (
         bl.LocationGroup_id                                          as buyer_location_group_id,
         bl.City_Population_Group                                     as buyer_population_group,
         bl.Logical_Level                                             as buyer_location_level_id,
-  		--is_cart
-  		is_cart,
+        --is_cart
+  	is_cart,
         -- has_short_video
         case when HasShortVideo is null then false else HasShortVideo end as has_short_video
     from dma.current_order_item as coi
     join /*+distrib(l,a)*/ delivery_status_date as ps on ps.deliveryorder_id = coi.deliveryorder_id
-    left join /*+distrib(l,a)*/ (
-        select infmquery_id, logcat_id
-        from infomodel.current_infmquery_category
-        where infmquery_id in (
-            select distinct infmquery_id
-            from dma.current_order_item
-            where deliveryorder_id in (select deliveryorder_id from orders)
-                and infmquery_id is not null
-        )
-    ) cic
+    left join /*+distrib(l,a)*/ cic
         on cic.infmquery_id = coi.infmquery_id
     left join /*+distrib(l,a)*/ dma.current_logical_categories clc on clc.logcat_id = cic.logcat_id
     left join /*+distrib(l,l)*/ dma.current_order as co on co.deliveryorder_id = coi.deliveryorder_id
     left join /*+distrib(l,a)*/ dma.current_microcategories as cm on coi.microcat_id = cm.microcat_id
     left join /*+distrib(l,a)*/ dma.current_locations as cl on co.warehouse_location_id = cl.location_id
     left join /*+distrib(l,a)*/ dma.current_locations as bl on co.buyer_location_id = bl.location_id
-    left join /*+distrib(l,a)*/ (
-        select
-            user_id,
-            active_from_date,
-            active_to_date,
-            (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
-            user_group_id
-        from DMA.am_client_day_versioned
-        where active_from_date <= :last_date
-            and active_to_date >= :first_date
-            and user_id in (select seller_id from sellers)
-    ) as acd on acd.user_id = coi.seller_id and co.create_date::date between acd.active_from_date and acd.active_to_date
-    left join /*+distrib(l,a)*/ (
-        select
-            buyer_id,
-            min(coalesce(pay_date, confirm_date)) as pay_date,
-            min(accept_date) as accept_date
-        from dma.current_order
-        where true
-            --and is_test is false
-            --and not is_deleted
-            and (coalesce(pay_date, confirm_date) <= :last_date or accept_date <= :last_date)
-            and buyer_id in (select buyer_id from buyers)
-        group by 1
-    ) du
-        on du.buyer_id = co.buyer_id
-    left join dds.S_Item_HasShortVideo hsv 
-        on coi.item_id = hsv.item_id
-        and co.create_date interpolate previous value hsv.Actual_date
-    where true
-        --and co.is_test is false
-        --and not co.is_deleted
-        --and not coi.is_deleted
-) pre
-left join /*+distrib(l,a)*/ (
-    select
-        user_id,
-        logical_category_id,
-        user_segment,
-        converting_date as from_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
-    from DMA.user_segment_market
-    where true
-        and converting_date <= :last_date::date
-        and user_id in (select seller_id from sellers)
-) usm
+    left join /*+distrib(l,a)*/ acd on acd.user_id = coi.seller_id and co.create_date::date between acd.active_from_date and acd.active_to_date
+    left join /*+distrib(l,a)*/ du on du.buyer_id = co.buyer_id
+    left join /*+distrib(l,a)*/ hsv on coi.item_id = hsv.item_id
+    order by seller_id, create_date, logical_category_id
+),
+cdd3 as (
+    select deliveryorder_id, discount_value
+    from dma.delivery_discounts
+        where campaign_name ilike '%bonus_cashback%' and deliveryorder_id in (select deliveryorder_id from pre)
+    order by 1
+),
+cds as (
+    select deliveryorder_id,
+threefirst_discount, bonus_discount, promocode_discount, c2c_seller_discount, 
+exmail_discount, seller_comission, total_subsidies, threefirst_subsidies, 
+bonus_subsidies, promocode_subsidies, additional_tax, exmail_subsidies,
+total_threefirst_subsidies, total_exmail_subsidies, total_promocode_subsidies,
+threefirst_subsidies_saved, exmail_subsidies_saved, promocode_subsidies_saved
+    from dma.current_delivery_subsidies
+        where deliveryorder_id in (select deliveryorder_id from pre)
+    order by 1
+)
+select /*+syntactic_join*/
+    pre.*,
+    coalesce(usm.user_segment, ls.segment) as user_segment_market,
+    ------ cкидки
+    threefirst_discount/items_qty as threefirst_discount,  --нормируем на кол-во айтемов в заказе
+    bonus_discount/items_qty as bonus_discount,
+    cdd3.discount_value/items_qty as bonus_cashback,
+    promocode_discount/items_qty as promocode_discount,
+    c2c_seller_discount/items_qty as c2c_seller_discount,
+    exmail_discount/items_qty as exmail_discount,
+    ------ флаг скидки
+    case when threefirst_discount > 0 then True else False end as is_threefirst_discount,
+    case when bonus_discount > 0 then True else False end as is_bonus_discount,
+    case when cdd3.discount_value is not null then True else False end as is_bonus_cashback,
+    case when promocode_discount > 0 then True else False end as is_promocode_discount,
+    case when seller_comission > 0 then True else False end as is_c2c_seller_discount,
+    case when exmail_discount > 0 then True else False end as is_exmail_discount,
+    ------ субсидии
+    total_subsidies/items_qty as total_subsidies,--нормируем на кол-во айтемов в заказе
+    -------------- subsidies (субсидии c экономией от скидки с2с_seller_discount)
+    threefirst_subsidies/items_qty as threefirst_subsidies,
+    bonus_subsidies/items_qty as bonus_subsidies,
+    promocode_subsidies/items_qty as promocode_subsidies_wo_tax,
+    (promocode_subsidies + additional_tax)/items_qty as promocode_subsidies,
+    exmail_subsidies/items_qty as exmail_subsidies,
+    -------------- total_subsidies (субсидии без экономии от скидки с2с_seller_discount)
+    total_threefirst_subsidies/items_qty as total_threefirst_subsidies,
+    total_exmail_subsidies/items_qty as total_exmail_subsidies,
+    total_promocode_subsidies/items_qty as total_promocode_subsidies_wo_tax,
+    (total_promocode_subsidies + additional_tax)/items_qty as total_promocode_subsidies,
+    -------------- saved_subsidies
+    threefirst_subsidies_saved/items_qty as threefirst_subsidies_saved,
+    exmail_subsidies_saved/items_qty as exmail_subsidies_saved,
+    promocode_subsidies_saved/items_qty as promocode_subsidies_saved,
+    ------ привязки в контуре авито
+    coalesce(has_avito_bindings, false) as has_avito_bindings
+from pre
+left join /*+distrib(l,a)*/ usm
     on  pre.seller_id = usm.user_id
     and pre.create_date >= usm.from_date and pre.create_date < usm.to_date
     and pre.logical_category_id = usm.logical_category_id
 left join /*+distrib(l,a)*/ dict.segmentation_ranks as ls on ls.logical_category_id = pre.logical_category_id and ls.is_default
-left join /*+distrib(l,a)*/ dma.delivery_discounts cdd3 on pre.deliveryorder_id = cdd3.deliveryorder_id and cdd3.campaign_name ilike '%bonus_cashback%'
-left join /*+distrib(l,a)*/ dma.current_delivery_subsidies cds on pre.deliveryorder_id = cds.deliveryorder_id
-left join /*+distrib(l,a)*/ (
-    select
-        co.purchase_id,
-        MAX(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
-        SUM(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
-    from dma.current_order co
-    left join dma.user_payment_bindings pb on pb.user_id = co.buyer_id
-    where true
-        and pb.external_source_provider_id in (18)
-        and pb.is_available = True
-        and co.deliveryorder_id in (select deliveryorder_id from orders)
-    group by 1
-) ub on pre.purchase_id = ub.purchase_id
+left join /*+distrib(l,a)*/ cdd3 on pre.deliveryorder_id = cdd3.deliveryorder_id
+left join /*+distrib(l,a)*/ cds on pre.deliveryorder_id = cds.deliveryorder_id
+left join /*+distrib(l,a)*/ ub on pre.purchase_id = ub.purchase_id
+

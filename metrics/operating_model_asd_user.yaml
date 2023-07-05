@@ -1,0 +1,16 @@
+definitions:
+  - &is_total   { is_new_pro_seller_total: true }
+  - &is_ttft    { is_for_ttft: true }
+
+metric.counter:
+  new_pro_paying_sellers_total:                       { filter: [ *is_total ] }
+  new_pro_paying_sellers_vertical:                    { }
+  # metrics for time to first transaction ratio
+  new_pro_paying_sellers_total_for_ttft:              { filter: [ *is_total, *is_ttft ] }
+  new_pro_paying_sellers_vertical_for_ttft:           { filter: [ *is_ttft ] }
+  days_to_paying_convert_total:                       { filter: [ *is_total, *is_ttft ] }
+  days_to_paying_convert_vertical:                    { filter: [ *is_ttft ] }
+
+metric.ratio:
+  avg_days_to_pro_paying_convert_total:               { num: days_to_paying_convert_total, den: new_pro_paying_sellers_total }
+  avg_days_to_pro_paying_convert_vertical:            { num: days_to_paying_convert_vertical, den: new_pro_paying_sellers_vertical }

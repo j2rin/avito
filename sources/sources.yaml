@@ -1559,6 +1559,20 @@ reviews_collected:
   dtm: event_date
   segm: user_id
 
+contacts_reviews_services:
+  metric_configs: [seller_contacts_reviews_services]
+  database: vertica
+  sql: contacts_reviews_services
+  column_map:
+    user: user_id
+  dimensions: [vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
+
 lister_reactivations:
     metric_configs: [lister_reactivations]
     database: vertica
@@ -2085,6 +2099,7 @@ gmv_deals_proxy:
     sql: gmv_deals_proxy
     column_map:
         user: user_id
+        item: item_id
     dimensions: [vertical, logical_category, region, city, category, subcategory, is_asd, user_segment_market]
     m42_cartesian_groups:
     - [vertical, logical_category, is_asd, user_segment_market]
@@ -2418,6 +2433,18 @@ qd_lots_create_date:
   dtm: created_at
   segm: user_id
 
+qd_lots_terminated_date:
+  metric_configs: [qd_lots_terminated_date]
+  database: vertica
+  sql: qd_lots
+  column_map:
+    user: user_id
+  dimensions: [platform, region, city, vertical, logical_category, category, subcategory, param1]
+  participant: {user: user_id}
+  primary_subject: user
+  dtm: terminated_at
+  segm: user_id
+
 perf_clickstream_counters:
   metric_configs: [perf_clickstream_counters]
   database: vertica
@@ -2615,4 +2642,65 @@ payment_order_cost:
  participant: {user: user_id}
  primary_subject: user
  dtm: create_date
+
+operating_model_asd_user:
+   metric_configs: [operating_model_asd_user]
+   database: vertica
+   sql: operating_model_asd_user
+   column_map:
+     user: user_id
+   dimensions: [vertical]
+   participant: {user: user_id}
+   primary_subject: user
+   dtm: event_date
+   segm: user_id
+
+operating_model_asd_revenue:
+   metric_configs: [operating_model_asd_revenue]
+   database: vertica
+   sql: operating_model_asd_revenue
+   column_map:
+     user: user_id
+   dimensions: [vertical]
+   participant: {user: user_id}
+   primary_subject: user
+   dtm: event_date
+   segm: user_id
+
+
+calendar_orders:
+   metric_configs: [calendar_orders]
+   database: vertica
+   sql: calendar_orders
+   column_map:
+     user: seller_id # селлер
+     item: item_id 
+   dimensions: [vertical, logical_category, category, subcategory, param1, param2, region, city, location_group, population_group, location_level]
+   participant: {user: seller_id}
+   primary_subject: user
+   dtm: event_date
+
+calendar_sellers_items: 
+   metric_configs: [calendar_sellers_items]
+   database: vertica
+   sql: calendar_sellers_items
+   column_map:
+     user: user_id # селлер
+     item: item_id 
+   dimensions: [vertical, logical_category, category, subcategory, param1, param2, region, city, location_group, population_group, location_level]
+   participant: {user: user_id}
+   primary_subject: user
+   dtm: event_date
+
+ 
+ux_feedback:
+   metric_configs: [ux_feedback]
+   database: vertica
+   sql: ux_feedback
+   column_map:
+     user: user_id
+   participant: {user: user_id}
+   primary_subject: user
+   dtm: event_date
+   segm: user_id
 

@@ -13,6 +13,7 @@ definitions:
     - &user2vec     {item_engines.bit: 1        }
     - &similars     {item_engines.bit: 3        }
     - &graph        {item_engines.bit: 4        }
+    - &crosscat     {item_engines.bit: 5        }
 
 metric.counter:
     cnt_rec_score_u2i:                  {filter: [*is_u2i],             obs: [score]            }
@@ -25,6 +26,7 @@ metric.counter:
     show_u2i_user2vec:                  {filter: [*is_u2i, *user2vec],  obs: [items_count]      }
     show_u2i_similars:                  {filter: [*is_u2i, *similars],  obs: [items_count]      }
     show_u2i_graph:                     {filter: [*is_u2i, *graph],     obs: [items_count]      }
+    show_u2i_crosscat:                  {filter: [*is_u2i, *crosscat],  obs: [items_count]      }
     cnt_serp_freshness:                 {filter: [*is_serp],            obs: [freshness]        }
     cnt_serp_items:                     {filter: [*is_serp],            obs: [items_count]      }
     serp_items_dedup:                   {filter: [*is_serp],            obs: [items_dedup_count]}
