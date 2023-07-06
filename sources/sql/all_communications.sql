@@ -6,7 +6,7 @@ calls_scores as
         call_id
         ,call_type
         ,is_target_call as is_target
-        ,case
+        ,case                       -- МОЖЕТ СТОИТ ДОБАВИТЬ not_andswered как в чатах?
                 when is_target = True then 'target'
                 when maplookup(mapjsonextractor(prob_distrib), 'already_sold') >0.5                 or maplookup(mapjsonextractor(prob_distrib), 'item_deal_discussion') >0.5
                         or maplookup(mapjsonextractor(prob_distrib), 'irrelevant_applicant') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'reject_by_employer') >0.5 
@@ -103,10 +103,11 @@ calls_scores as
             ,a.User_id as seller_id
             ,True as caller_is_buyer
             ,a.UPPCallAcceptedAt::date as reply_date
+            ,1 as reply_time_minutes
             ,coalesce(a.Item_id, b.item_id) as item_id
             ,coalesce(a.UPPCallDuration, 0) as call_duration
             ,coalesce(a.UPPTalkDuration, 0) as talk_duration
-            ,UPPLinkedPhone is not null and not UPPCallIsBlocked as is_common_funnel
+            ,UPPLinkedPhone is not null and not UPPCallIsBlocked as is_common_funel
             ,case
                 -- мтс
                 when UPPProvider = 1 and c.user_id is null      then talk_duration > 8
@@ -171,11 +172,12 @@ calls_scores as
         ,case when CallerIsBuyer then AppCallCaller_id else AppCallReciever_id end as buyer_id
         ,case when CallerIsBuyer then AppCallReciever_id else AppCallCaller_id end as seller_id
         ,CallerIsBuyer as caller_is_buyer -- направление вызова
-        ,a.AppCallStart::date as reply_date 
+        ,a.AppCallStart::date as reply_date
+        ,1 as reply_time_minutes
         ,a.Item_id as item_id
         ,coalesce(a.CallDuration, 0) as call_duration
         ,coalesce(a.TalkDuration, 0) as talk_duration
-        ,CallerIsBuyer as is_common_funnel
+        ,CallerIsBuyer as is_common_funel
         ,coalesce(a.TalkDuration, 0) > 0 as is_answered
         ,case when CallerIsBuyer then CallerPlatform else RecieverPlatform end as platform_id -- платформа баера
         ,case when CallerIsBuyer then RecieverPlatform else CallerPlatform end as seller_platform_id -- платформа баера
@@ -234,11 +236,12 @@ calls_scores as
         ,user_id as seller_id -- владелец объявления
         ,True as caller_is_buyer
         ,reply_time::date as reply_date
+        ,datediff ('minute', first_message_event_date, reply_time) as reply_time_minutes
         ,chr.item_id as item_id
         ,0 as call_duration
         ,0 as talk_duration
-        ,not is_spam as is_common_funnel
-        ,with_reply as is_answered
+        ,coalesce(not is_spam, False) as is_common_funel
+        ,with_reply and chat_subtype is null and reply_message_bot is null as is_answered
         ,platform_id -- платформа баера
         ,reply_platform_id as seller_platform_id -- платформа селлера
         ,first_message_cookie_id as buyer_cookie_id

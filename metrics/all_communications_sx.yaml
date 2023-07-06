@@ -1,6 +1,6 @@
 definitions:
   - &call                         [iac, gsm]
-  - &is_messenger                 {communication: msg}
+  - &is_msg                       {communication: msg}
   - &is_iac                       {communication: iac}
   - &is_gsm                       {communication: gsm}
   - &is_call                      {communication: *call}
@@ -9,6 +9,8 @@ definitions:
   - &is_trash                     {type: trash}
   - &is_preliminary               {type: preliminary}
   - &is_target                    {type: target}
+  - &reply_time_not_zero          {reply_time_minutes.>: 0} # порог для месенджера
+  - &reply_3days                  {reply_time_minutes.<=: 4320} # порог для месенджера
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
@@ -18,11 +20,17 @@ metric.counter:
   gsm_sx_preliminary:                           {filter: [*is_gsm, *is_common_funnel, *is_preliminary]}
   gsm_sx_target:                                {filter: [*is_gsm, *is_common_funnel, *is_target]}
 
-  iac_sx_incoming:                              {filter: [*is_iac, *is_common_funnel]}
-  iac_sx_incoming_answered:                     {filter: [*is_iac, *is_common_funnel, *is_answered]}
-  iac_sx_incoming_trash:                        {filter: [*is_iac, *is_common_funnel, *is_trash]}
-  iac_sx_incoming_preliminary:                  {filter: [*is_iac, *is_common_funnel, *is_preliminary]}
-  iac_sx_incoming_target:                       {filter: [*is_iac, *is_common_funnel, *is_target]}
+  iac_sx_outgoing:                              {filter: [*is_iac, *is_common_funnel]}
+  iac_sx_outgoing_answered:                     {filter: [*is_iac, *is_common_funnel, *is_answered]}
+  iac_sx_outgoing_trash:                        {filter: [*is_iac, *is_common_funnel, *is_trash]}
+  iac_sx_outgoing_preliminary:                  {filter: [*is_iac, *is_common_funnel, *is_preliminary]}
+  iac_sx_outgoing_target:                       {filter: [*is_iac, *is_common_funnel, *is_target]}
+
+  msg_sx_first:                                 {filter: [*is_msg, *is_common_funnel]}
+  msg_sx_answered:                              {filter: [*is_msg, *is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
+  msg_sx_trash:                                 {filter: [*is_msg, *is_common_funnel, *is_trash]}
+  msg_sx_preliminary:                           {filter: [*is_msg, *is_common_funnel, *is_preliminary]}
+  msg_sx_target:                                {filter: [*is_msg, *is_common_funnel, *is_target]}
 
   calls_sx:                                     {filter: [*is_call, *is_common_funnel]}
   calls_sx_answered:                            {filter: [*is_call, *is_common_funnel, *is_answered]}
@@ -30,9 +38,21 @@ metric.counter:
   calls_sx_preliminary:                         {filter: [*is_call, *is_common_funnel, *is_preliminary]}
   calls_sx_target:                              {filter: [*is_call, *is_common_funnel, *is_target]}
 
+  comns_sx:                                     {filter: [*is_common_funnel]}
+  comns_sx_answered:                            {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
+  comns_sx_trash:                               {filter: [*is_common_funnel, *is_trash]}
+  comns_sx_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
+  comns_sx_target:                              {filter: [*is_common_funnel, *is_target]}
+
 metric.uniq:
   calls_sx_canonical:                           {counter: calls_sx,              key: [logcat_item]}
   calls_sx_answered_canonical:                  {counter: calls_sx_answered,     key: [logcat_item]}
   calls_sx_trash_canonical:                     {counter: calls_sx_trash,        key: [logcat_item]}
   calls_sx_preliminary_canonical:               {counter: calls_sx_preliminary,  key: [logcat_item]}
   calls_sx_target_canonical:                    {counter: calls_sx_target,       key: [logcat_item]}
+
+  comns_sx_canonical:                           {counter: comns_sx,              key: [logcat_item]}
+  comns_sx_answered_canonical:                  {counter: comns_sx_answered,     key: [logcat_item]}
+  comns_sx_trash_canonical:                     {counter: comns_sx_trash,        key: [logcat_item]}
+  comns_sx_preliminary_canonical:               {counter: comns_sx_preliminary,  key: [logcat_item]}
+  comns_sx_target_canonical:                    {counter: comns_sx_target,       key: [logcat_item]}
