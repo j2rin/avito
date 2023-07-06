@@ -1,18 +1,19 @@
 definitions:
-  - &classified      {is_classified: true}
-  - &paid_contact    {product_type: 'paid_contact'}
-  - &advertisement   {project_type: ['advertisement_direct', 'advertisement_indirect']}
-  - &autoteka        {project_type: 'autoteka'}
-  - &delivery        {project_type: 'delivery'}
-  - &domofond        {project_type: 'domofond'}
-  - &domoteka        {product_type: 'short_term_rent', transaction_subtype: 'check'}
-  - &str             {product_type: 'short_term_rent', transaction_subtype: 'buyer book'}
-  - &cpt             {product_type: 'cpt', transaction_subtype: 'c2c commission'}
-  - &chatbots        {product_type: 'JOB ChatBot'}
-  - &auto_auction    {project_type: 'auto_auction'}
+  - &classified         {is_classified: true}
+  - &paid_contact       {product_type: 'paid_contact'}
+  - &advertisement      {project_type: ['advertisement_direct', 'advertisement_indirect']}
+  - &autoteka           {project_type: 'autoteka'}
+  - &delivery           {project_type: 'delivery'}
+  - &domofond           {project_type: 'domofond'}
+  - &domoteka           {product_type: 'short_term_rent', transaction_subtype: 'check'}
+  - &str                {product_type: 'short_term_rent', transaction_subtype: 'buyer book'}
+  - &cpt                {product_type: 'cpt', transaction_subtype: 'c2c commission'}
+  - &chatbots           {product_type: 'JOB ChatBot'}
+  - &auto_auction       {project_type: 'auto_auction'}
+  - &auto_paid_contact  {product_type: 'auto_paid_contact'}
 
 metric.counter:
   avito_amount_net_adj:                {obs: [amount_net_adj],  filter: [$or: [*advertisement, *classified, *paid_contact]]}
   other_projects_amount_net_adj:       {obs: [amount_net_adj],  filter: [$or: [*autoteka, *delivery, *domofond, *domoteka, *str, *chatbots, *cpt, *auto_auction]]}
   total_amount_net_adj:                {obs: [amount_net_adj],  filter: [$or: [*advertisement, *classified, *paid_contact,
-                                                                               *autoteka, *delivery, *domofond, *domoteka, *str, *chatbots, *cpt, *auto_auction]]}
+                                                                               *autoteka, *delivery, *domofond, *domoteka, *str, *chatbots, *cpt, *auto_auction, *auto_paid_contact]]}
