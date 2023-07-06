@@ -103,11 +103,11 @@ calls_scores as
             ,a.User_id as seller_id
             ,True as caller_is_buyer
             ,a.UPPCallAcceptedAt::date as reply_date
-            ,1 as reply_time_minutes
+            ,0 as reply_time_minutes
             ,coalesce(a.Item_id, b.item_id) as item_id
             ,coalesce(a.UPPCallDuration, 0) as call_duration
             ,coalesce(a.UPPTalkDuration, 0) as talk_duration
-            ,UPPLinkedPhone is not null and not UPPCallIsBlocked as is_common_funel
+            ,UPPLinkedPhone is not null and not UPPCallIsBlocked as is_common_funnel
             ,case
                 -- мтс
                 when UPPProvider = 1 and c.user_id is null      then talk_duration > 8
@@ -173,11 +173,11 @@ calls_scores as
         ,case when CallerIsBuyer then AppCallReciever_id else AppCallCaller_id end as seller_id
         ,CallerIsBuyer as caller_is_buyer -- направление вызова
         ,a.AppCallStart::date as reply_date
-        ,1 as reply_time_minutes
+        ,0 as reply_time_minutes
         ,a.Item_id as item_id
         ,coalesce(a.CallDuration, 0) as call_duration
         ,coalesce(a.TalkDuration, 0) as talk_duration
-        ,CallerIsBuyer as is_common_funel
+        ,CallerIsBuyer as is_common_funnel
         ,coalesce(a.TalkDuration, 0) > 0 as is_answered
         ,case when CallerIsBuyer then CallerPlatform else RecieverPlatform end as platform_id -- платформа баера
         ,case when CallerIsBuyer then RecieverPlatform else CallerPlatform end as seller_platform_id -- платформа баера
@@ -240,7 +240,7 @@ calls_scores as
         ,chr.item_id as item_id
         ,0 as call_duration
         ,0 as talk_duration
-        ,coalesce(not is_spam, False) as is_common_funel
+        ,coalesce(not is_spam, False) as is_common_funnel
         ,with_reply and chat_subtype is null and reply_message_bot is null as is_answered
         ,platform_id -- платформа баера
         ,reply_platform_id as seller_platform_id -- платформа селлера
