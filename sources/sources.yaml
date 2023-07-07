@@ -2725,3 +2725,16 @@ m42_usage:
    dimensions: [ldap_user, picked_metric]
    dtm: event_date
    segm: user_id
+
+sq_track_metrics:
+  metric_configs: [sq_track_metrics]
+  database: vertica
+  sql: sq_track_metrics
+  column_map:
+    cookie: cookie_id
+    item: item_id
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id
+  
