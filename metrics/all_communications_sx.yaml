@@ -14,39 +14,39 @@ definitions:
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
-  gsm_sx:                                       {filter: [*is_gsm, *is_common_funnel]}
-  gsm_sx_answered:                              {filter: [*is_gsm, *is_common_funnel, *is_answered]}
-  gsm_sx_trash:                                 {filter: [*is_gsm, *is_common_funnel, *is_trash]}
-  gsm_sx_preliminary:                           {filter: [*is_gsm, *is_common_funnel, *is_preliminary]}
-  gsm_sx_target:                                {filter: [*is_gsm, *is_common_funnel, *is_target]}
+  gsm_sx:                                                {filter: [*is_gsm, *is_common_funnel]}
+  gsm_sx_answered:                                       {filter: [*is_gsm, *is_common_funnel, *is_answered]}
+  gsm_sx_trash:                                          {filter: [*is_gsm, *is_common_funnel, *is_trash]}
+  gsm_sx_preliminary:                                    {filter: [*is_gsm, *is_common_funnel, *is_preliminary]}
+  gsm_sx_target:                                         {filter: [*is_gsm, *is_common_funnel, *is_target]}
 
-  iac_sx_outgoing:                              {filter: [*is_iac, *is_common_funnel]}
-  iac_sx_outgoing_answered:                     {filter: [*is_iac, *is_common_funnel, *is_answered]}
-  iac_sx_outgoing_trash:                        {filter: [*is_iac, *is_common_funnel, *is_trash]}
-  iac_sx_outgoing_preliminary:                  {filter: [*is_iac, *is_common_funnel, *is_preliminary]}
-  iac_sx_outgoing_target:                       {filter: [*is_iac, *is_common_funnel, *is_target]}
+  iac_sx_incoming:                                       {filter: [*is_iac, *is_common_funnel]}
+  iac_sx_incoming_answered:                              {filter: [*is_iac, *is_common_funnel, *is_answered]}
+  iac_sx_incoming_trash:                                 {filter: [*is_iac, *is_common_funnel, *is_trash]}
+  iac_sx_incoming_preliminary:                           {filter: [*is_iac, *is_common_funnel, *is_preliminary]}
+  iac_sx_incoming_target:                                {filter: [*is_iac, *is_common_funnel, *is_target]}
 
-  calls_sx:                                     {filter: [*is_call, *is_common_funnel]}
-  calls_sx_answered:                            {filter: [*is_call, *is_common_funnel, *is_answered]}
-  calls_sx_trash:                               {filter: [*is_call, *is_common_funnel, *is_trash]}
-  calls_sx_preliminary:                         {filter: [*is_call, *is_common_funnel, *is_preliminary]}
-  calls_sx_target:                              {filter: [*is_call, *is_common_funnel, *is_target]}
+  calls_sx_incoming:                                     {filter: [*is_call, *is_common_funnel]}
+  calls_sx_incoming_answered:                            {filter: [*is_call, *is_common_funnel, *is_answered]}
+  calls_sx_incoming_trash:                               {filter: [*is_call, *is_common_funnel, *is_trash]}
+  calls_sx_incoming_preliminary:                         {filter: [*is_call, *is_common_funnel, *is_preliminary]}
+  calls_sx_incoming_target:                              {filter: [*is_call, *is_common_funnel, *is_target]}
 
-  comns_sx:                                     {filter: [*is_common_funnel]}
-  comns_sx_answered:                            {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
-  comns_sx_trash:                               {filter: [*is_common_funnel, *is_trash]}
-  comns_sx_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
-  comns_sx_target:                              {filter: [*is_common_funnel, *is_target]}
+  comns_sx_incoming:                                     {filter: [*is_common_funnel]}
+  comns_sx_incoming_answered:                            {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
+  comns_sx_incoming_trash:                               {filter: [*is_common_funnel, *is_trash]}
+  comns_sx_incoming_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
+  comns_sx_incoming_target:                              {filter: [*is_common_funnel, *is_target]}
 
 metric.uniq:
-  calls_sx_canonical:                           {counter: calls_sx,              key: [logcat_item]}
-  calls_sx_answered_canonical:                  {counter: calls_sx_answered,     key: [logcat_item]}
-  calls_sx_trash_canonical:                     {counter: calls_sx_trash,        key: [logcat_item]}
-  calls_sx_preliminary_canonical:               {counter: calls_sx_preliminary,  key: [logcat_item]}
-  calls_sx_target_canonical:                    {counter: calls_sx_target,       key: [logcat_item]}
+  calls_sx_incoming_canonical:                           {counter: calls_sx,              key: [logcat_item]}
+  calls_sx_incoming_answered_canonical:                  {counter: calls_sx_answered,     key: [logcat_item]}
+  calls_sx_incoming_trash_canonical:                     {counter: calls_sx_trash,        key: [logcat_item]}
+  calls_sx_incoming_preliminary_canonical:               {counter: calls_sx_preliminary,  key: [logcat_item]}
+  calls_sx_incoming_target_canonical:                    {counter: calls_sx_target,       key: [logcat_item]}
 
-  comns_sx_canonical:                           {counter: comns_sx,              key: [logcat_item]}
-  comns_sx_answered_canonical:                  {counter: comns_sx_answered,     key: [logcat_item]}
-  comns_sx_trash_canonical:                     {counter: comns_sx_trash,        key: [logcat_item]}
-  comns_sx_preliminary_canonical:               {counter: comns_sx_preliminary,  key: [logcat_item]}
-  comns_sx_target_canonical:                    {counter: comns_sx_target,       key: [logcat_item]}
+  comns_sx_incoming_canonical:                           {counter: comns_sx,              key: [logcat_item]}
+  comns_sx_incoming_answered_canonical:                  {counter: comns_sx_answered,     key: [logcat_item]}
+  comns_sx_incoming_trash_canonical:                     {counter: comns_sx_trash,        key: [logcat_item]}
+  comns_sx_incoming_preliminary_canonical:               {counter: comns_sx_preliminary,  key: [logcat_item]}
+  comns_sx_incoming_target_canonical:                    {counter: comns_sx_target,       key: [logcat_item]}
