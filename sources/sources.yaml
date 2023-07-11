@@ -2726,6 +2726,7 @@ m42_usage:
    dtm: event_date
    segm: user_id
 
+
 sq_track_metrics:
   metric_configs: [sq_track_metrics]
   database: vertica
@@ -2737,4 +2738,37 @@ sq_track_metrics:
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
-  
+
+all_communications_bx:
+  metric_configs: [all_communications_bx]
+  database: vertica
+  sql: all_communications
+  column_map:
+    cookie: buyer_cookie_id
+    user: buyer_id
+    logcat_item: [item_id, logical_category_id]
+  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  participant: {visitor: buyer_cookie_id, user: buyer_id}
+  primary_subject: user
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  dtm: event_date
+  segm: buyer_cookie_id
+
+all_communications_sx:
+  metric_configs: [all_communications_sx]
+  database: vertica
+  sql: all_communications
+  column_map:
+    user: seller_id
+    platform_id: seller_platform_id
+    logcat_item: [item_id, logical_category_id]
+  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  participant: {user: seller_id}
+  primary_subject: user
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  dtm: event_date
+  segm: seller_id
