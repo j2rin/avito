@@ -120,6 +120,7 @@ pre as (
             then (co.delivery_revenue/1.2 - co.safedeal_comission - co.delivery_comission - coalesce(co.real_delivery_provider_cost, co.approximate_delivery_provider_cost)/1.2)/co.items_qty
         end as real_delivery_margin,
         coi.seller_commission,
+        coi.trx_revenue,
         co.current_status as status,
         case when co.workflow ilike '%marketplace%' then 'marketplace' else co.workflow end as delivery_workflow,
         delivery_service,
