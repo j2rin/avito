@@ -169,9 +169,9 @@ metric.counter:
   seller_delivery_items_delivery_discount_performed_start_date:        {filter: [{is_performed: true}, {create_date.>: $ab_start_date}, {is_delivery_discount: true}]}
   
 # seller revenue
-  seller_transactional_revenue_paid_start_date:                        {filter: [{is_paid: true}, {create_date.>: $ab_start_date}, obs: [trx_commission_no_vat,b2c_white_commission_no_vat]}
-  seller_transactional_revenue_performed_start_date:                   {filter: [{is_performed: true}, {create_date.>: $ab_start_date}, obs: [trx_commission_no_vat,b2c_white_commission_no_vat]}
-  seller_transactional_revenue_accepted_start_date:                    {filter: [{is_accepted: true}, {create_date.>: $ab_start_date}, obs: [trx_commission_no_vat,b2c_white_commission_no_vat]}
+  seller_transactional_revenue_paid_start_date:                        {filter: [{is_paid: true}, {create_date.>: $ab_start_date}], obs: [trx_commission_no_vat,b2c_white_commission_no_vat]}
+  seller_transactional_revenue_performed_start_date:                   {filter: [{is_performed: true}, {create_date.>: $ab_start_date}], obs: [trx_commission_no_vat,b2c_white_commission_no_vat]}
+  seller_transactional_revenue_accepted_start_date:                    {filter: [{is_accepted: true}, {create_date.>: $ab_start_date}], obs: [trx_commission_no_vat,b2c_white_commission_no_vat]}
 
 metric.uniq:  
   seller_delivery_orders_created:          {counter: seller_delivery_items_created, key: [deliveryorder_id]}
