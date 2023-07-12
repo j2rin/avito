@@ -120,7 +120,10 @@ pre as (
             then (co.delivery_revenue/1.2 - co.safedeal_comission - co.delivery_comission - coalesce(co.real_delivery_provider_cost, co.approximate_delivery_provider_cost)/1.2)/co.items_qty
         end as real_delivery_margin,
         coi.seller_commission,
-        coi.trx_commission,
+  		case when co.workflow ilike '%b2c%' then coi.seller_commission/1.2 as b2c_white_commission_no_vat,
+        coi.trx_commission/1.2 as trx_commission_no_vat,
+        case when co.workflow ilike '%b2c%' then coi.seller_commission as b2c_white_commission,
+        coi.trx_commission as trx_commission,
         co.current_status as status,
         case when co.workflow ilike '%marketplace%' then 'marketplace' else co.workflow end as delivery_workflow,
         delivery_service,
