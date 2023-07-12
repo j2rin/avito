@@ -13,8 +13,6 @@ select
     cs.page_type,
     cs.banner_id,
     cs.action_type,
-    coalesce(cs.is_notifications_on, false) as is_notifications_on,
-    coalesce(cs.notification_value, false) as notification_value,
     coalesce(cs.app_call_mic_access, false) as app_call_mic_access,
     cs.from_block,
     cs.ext_profile_is_using,
