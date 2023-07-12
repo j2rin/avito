@@ -22,6 +22,9 @@ metric.counter:
   jank_frames_size_total_ui_formation:                    {filter: [*not_outlier, screen_fps_context: "ui_formation"], obs: [jank_frames_size_total]}
   jank_frames_size_total_other:                           {filter: [*not_outlier, screen_fps_context: "other"], obs: [jank_frames_size_total]}
 
+  fps_events:                                             {obs: [events_count]}
+  hitch_time_ratio_total:                                 {obs: [hitch_time_ratio_sum]}
+
 
 metric.uniq:
   user_jank_frames:                                       {counter: jank_frames, key: [cookie]}
@@ -50,3 +53,5 @@ metric.ratio:
   jank_frames_size_scroll:                                {num: jank_frames_size_total_scroll, den: jank_frames_scroll}
   jank_frames_size_ui_formation:                          {num: jank_frames_size_total_ui_formation, den: jank_frames_ui_formation}
   jank_frames_size_other:                                 {num: jank_frames_size_total_other, den: jank_frames_other}
+
+  hitch_time_ratio:                                       {num: hitch_time_ratio_total, den: fps_events}
