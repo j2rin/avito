@@ -335,6 +335,9 @@ definitions:
 
     - &is_s_sav_serp_fav_list { from_page: "saved_search" }
     - &x_is_s_sav_serp_fav_list { x_from_page: "saved_search" }
+    
+    - &is_item_original { item_flags.bit: 31 }
+    - &is_black_target_clicks { eid: [401, 2483, 5942] }
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
@@ -1824,6 +1827,12 @@ metric.counter:
     nd_banner_successful_dispatch_for_back_call: { filter: [{ $or: [*is_back_call_item, *is_back_call_jk] }] }
     nd_banner_successful_dis_for_back_call_item: {filter: [*is_back_call_item]}
     nd_banner_successful_dis_for_back_call_jk:   {filter: [*is_back_call_jk]}
+    
+    iv_original: { filter: [*is_item_original, *is_iv] }
+    cart_original: { filter: [*is_item_original, eid: 5942] }
+    fav_original: { filter: [*is_item_original, *is_fav] }
+    target_contacts_original: { filter: [*is_item_original, *is_black_target_clicks] }
+    delivery_contats_original: { filter: [*is_item_original, eid: 2483] }
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -3227,6 +3236,12 @@ metric.uniq:
     user_nd_banner_successful_dispatch_for_back_call: {counter: nd_banner_successful_dispatch_for_back_call, key: [cookie]}
     user_nd_banner_successful_dis_for_back_call_item: {counter: nd_banner_successful_dis_for_back_call_item, key: [cookie]}
     user_nd_banner_successful_dis_for_back_call_jk:   {counter: nd_banner_successful_dis_for_back_call_jk,   key: [cookie]}
+    
+    user_iv_original: { counter: iv_original, key: [cookie] }
+    user_cart_original: { counter: cart_original, key: [cookie] }
+    user_fav_original: { counter: fav_original, key: [cookie] }
+    user_target_contacts_original: { counter: target_contacts_original, key: [cookie] }
+    user_delivery_contats_original: { counter: delivery_contats_original, key: [cookie] }  
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
@@ -3860,3 +3875,13 @@ metric.ratio:
     nd_banner_successful_dispatch_per_click_request_back_call: {num: nd_banner_successful_dispatch_for_back_call, den: nd_click_request_call}
     user_nd_bsd_per_user_iv: {num: user_nd_banner_successful_dispatch_for_back_call, den: users_item_view_daily}
     nd_bsd_per_item_view: {num: nd_banner_successful_dispatch_for_back_call, den: item_views}
+    
+    cart_per_iv_original: { num: cart_original, den: iv_original }
+    fav_per_iv_original: { num: fav_original, den: iv_original }
+    target_c_per_iv_original: { num: target_contacts_original, den: iv_original }
+    delivery_c_per_iv_original: { num: delivery_contats_original, den: iv_original }
+    cart_per_user_iv_original: { num: cart_original, den: user_iv_original }
+    fav_per_user_iv_original: { num: fav_original, den: user_iv_original }
+    target_c_per_user_iv_original: { num: target_contacts_original, den: user_iv_original }
+    delivery_c_per_user_iv_original: { num: delivery_contats_original, den: user_iv_original }
+    iv_per_user_iv_original: { num: iv_original, den: user_iv_original }
