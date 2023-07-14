@@ -1,7 +1,11 @@
 metric.counter:
   cnt_m42_all: {filter: [eid: 6287]}
+  cnt_ab_pv: {filter: [eid: [6373, 6374, 6381, 6380, 6383, 6382, 6378, 6377, 6376]]}
+  m42_lpie_update: {filter: [eid: 7071]}
 
 metric.uniq:
-#  m42_all: {counter: cnt_m42_all, key: [event_hash]}
   user_m42_all: {counter: cnt_m42_all, key: [user_hash]}
   user_date_m42_all: {counter: cnt_m42_all, key: [user_date_hash]}
+  user_ab: {counter: cnt_ab_pv, key: [user_hash]}
+  user_m42_lpie: {counter: m42_lpie_update, key: [user_hash]}
+

@@ -6,7 +6,6 @@ select
     ldap_user,
     hash(ldap_user) as user_hash,
     hash(ldap_user, date(dtm)) as user_date_hash,
-    0 as user_id, -- dummy user_id, пока мы требуем его в системе
     uuid,
     m42_filters,
     event_time,
