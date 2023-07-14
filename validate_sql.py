@@ -72,7 +72,6 @@ select /*+syntactic_join*/ *
 from (
 {sql}
 ) _
-where {subject} is not null
 ) order by {subject} segmented by hash({subject}) all nodes
 '''
 

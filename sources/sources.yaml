@@ -2713,7 +2713,7 @@ clickstream_data_platform:
    primary_subject: user
    dimensions: [ldap_user]
    dtm: event_date
-   segm: user_id
+   segm: user_hash
 
 
 m42_usage:
@@ -2724,7 +2724,7 @@ m42_usage:
    primary_subject: user
    dimensions: [ldap_user, picked_metric]
    dtm: event_date
-   segm: user_id
+   segm: user_hash
 
 
 sq_track_metrics:
@@ -2772,3 +2772,13 @@ all_communications_sx:
     - [category, subcategory]
   dtm: event_date
   segm: seller_id
+
+mattermost_messages:
+   metric_configs: [mattermost_messages]
+   database: vertica
+   sql: mattermost_messages
+   participant: {user: user_hash}
+   primary_subject: user
+   dimensions: [ldap_user]
+   dtm: message_ts
+   segm: user_hash
