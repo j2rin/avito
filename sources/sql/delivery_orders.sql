@@ -90,6 +90,14 @@ ub as (
     group by 1
     order by 1
 ),
+original as(
+  select ich.item_id, 
+       actual_date,
+       status
+from DDS.L_Item_AuthCheck ich
+    join DDS.S_AuthCheck_Status ch
+        on ich.AuthCheck_id = ch.AuthCheck_id
+),
 pre as (
     select
         co.create_date::date as create_date,
@@ -198,7 +206,9 @@ pre as (
         bl.City_Population_Group                                     as buyer_population_group,
         bl.Logical_Level                                             as buyer_location_level_id,
   		--is_cart
-  		is_cart
+  		is_cart,
+        -- есть ли у айтема бейдж "оригинал"
+        case when original.status = 'verified' then true else false end as is_original
     from dma.current_order_item as coi
     join /*+distrib(l,a)*/ delivery_status_date as ps on ps.deliveryorder_id = coi.deliveryorder_id
     left join /*+distrib(l,a)*/ cic
@@ -210,6 +220,7 @@ pre as (
     left join /*+distrib(l,a)*/ dma.current_locations as bl on co.buyer_location_id = bl.location_id
     left join /*+distrib(l,a)*/ acd on acd.user_id = coi.seller_id and co.create_date::date between acd.active_from_date and acd.active_to_date
     left join /*+distrib(l,a)*/ du on du.buyer_id = co.buyer_id
+  	left join /*+distrib(l,a)*/ original on coi.item_id = original.item_id and co.create_date interpolate previous value original.Actual_date
     order by seller_id, create_date, logical_category_id
 ),
 cdd3 as (
@@ -274,4 +285,3 @@ left join /*+distrib(l,a)*/ dict.segmentation_ranks as ls on ls.logical_category
 left join /*+distrib(l,a)*/ cdd3 on pre.deliveryorder_id = cdd3.deliveryorder_id
 left join /*+distrib(l,a)*/ cds on pre.deliveryorder_id = cds.deliveryorder_id
 left join /*+distrib(l,a)*/ ub on pre.purchase_id = ub.purchase_id
-
