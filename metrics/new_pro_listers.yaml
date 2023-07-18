@@ -2,19 +2,23 @@ definitions:
   - &is_lister            { vertical_id.isnull: false, logical_category_id.isnull: false }
   - &is_seller_vertical   { vertical_id.isnull: false, logical_category_id.isnull: true }
   - &is_seller            { vertical_id.isnull: true }
+  - &is_seller_vertical_new   { is_seller_vertical: true }
+  - &is_seller_new            { is_seller: true }
 
 metric.counter:
   new_pro_listers_total:                            {filter: [*is_lister]}
   new_pro_listers_less_1_month:                     {filter: [less_1_month: True, *is_lister]}
   new_pro_listers_over_1_month:                     {filter: [less_1_month: False, *is_lister]}
 
-  new_pro_sellers_total:                            {filter: [*is_seller]}
+  new_pro_sellers_total:                            {filter: [*is_seller_new]}
   new_pro_sellers_less_1_month:                     {filter: [less_1_month: True, *is_seller]}
   new_pro_sellers_over_1_month:                     {filter: [less_1_month: False, *is_seller]}
+  new_pro_sellers_converted_less_30d:               {filter: [is_converted_less_30d: True, *is_seller_new]}
 
-  new_pro_sellers_vertical_total:                    {filter: [*is_seller_vertical]}
-  new_pro_sellers_vertical_less_1_month:             {filter: [less_1_month: True, *is_seller_vertical]}
-  new_pro_sellers_vertical_over_1_month:             {filter: [less_1_month: False, *is_seller_vertical]}
+  new_pro_sellers_vertical_total:                   {filter: [*is_seller_vertical_new]}
+  new_pro_sellers_vertical_less_1_month:            {filter: [less_1_month: True, *is_seller_vertical]}
+  new_pro_sellers_vertical_over_1_month:            {filter: [less_1_month: False, *is_seller_vertical]}
+  new_pro_sellers_vertical_converted_less_30d:      {filter: [is_converted_less_30d: True, *is_seller_vertical_new]}
 
 metric.uniq:
   new_pro_listers_uniq:       {counter: new_pro_listers_total, key: [user_logcat]}
