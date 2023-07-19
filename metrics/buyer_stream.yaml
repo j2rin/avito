@@ -337,7 +337,7 @@ definitions:
     - &x_is_s_sav_serp_fav_list { x_from_page: "saved_search" }
     
     - &is_item_original { item_flags.bit: 31 }
-    - &is_black_target_clicks { eid: [401, 2483, 5942] }
+    - &is_black_target_clicks { eid: [2483, 5942] }
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
@@ -1831,7 +1831,8 @@ metric.counter:
     iv_original: { filter: [*is_item_original, *is_iv] }
     cart_original: { filter: [*is_item_original, eid: 5942] }
     fav_original: { filter: [*is_item_original, *is_fav] }
-    target_contacts_original: { filter: [*is_item_original, *is_black_target_clicks] }
+    chat_original: { filter: [*is_item_original, eid: 2654] }
+    marketplace_contacts_original: { filter: [*is_item_original, *is_black_target_clicks] }
     delivery_contats_original: { filter: [*is_item_original, eid: 2483] }
 
 metric.uniq:
@@ -3240,8 +3241,9 @@ metric.uniq:
     user_iv_original: { counter: iv_original, key: [cookie] }
     user_cart_original: { counter: cart_original, key: [cookie] }
     user_fav_original: { counter: fav_original, key: [cookie] }
-    user_target_contacts_original: { counter: target_contacts_original, key: [cookie] }
-    user_delivery_contats_original: { counter: delivery_contats_original, key: [cookie] }  
+    user_chat_original: { counter: chat_original, key: [cookie] }
+    user_target_contacts_original: { counter: marketplace_contacts_original, key: [cookie] }
+    user_delivery_contats_original: { counter: delivery_contats_original, key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
@@ -3878,10 +3880,12 @@ metric.ratio:
     
     cart_per_iv_original: { num: cart_original, den: iv_original }
     fav_per_iv_original: { num: fav_original, den: iv_original }
-    target_c_per_iv_original: { num: target_contacts_original, den: iv_original }
+    chat_per_iv_original: { num: chat_original, den: iv_original }
+    marketplace_c_per_iv_original: { num: marketplace_contacts_original, den: iv_original }
     delivery_c_per_iv_original: { num: delivery_contats_original, den: iv_original }
     cart_per_user_iv_original: { num: cart_original, den: user_iv_original }
     fav_per_user_iv_original: { num: fav_original, den: user_iv_original }
-    target_c_per_user_iv_original: { num: target_contacts_original, den: user_iv_original }
+    chat_per_user_iv_original: { num: chat_original, den: user_iv_original }
+    marketplace_c_per_user_iv_original: { num: marketplace_contacts_original, den: user_iv_original }
     delivery_c_per_user_iv_original: { num: delivery_contats_original, den: user_iv_original }
     iv_per_user_iv_original: { num: iv_original, den: user_iv_original }
