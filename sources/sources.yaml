@@ -1255,7 +1255,6 @@ messenger_stream:
 
 clickstream_sparse.clickhouse:
     database: clickhouse
-    table: dwh.vo_clickstream_sparse_local
     sql: clickstream_sparse
     column_map:
       platform_id: business_platform
@@ -2268,7 +2267,7 @@ target_call_bx:
     - location_group
     - population_group
     - location_level
-  participant: {user: buyer_id}
+  participant: {visitor: buyer_cookie_id, user: buyer_id}
   primary_subject: user
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, region]
@@ -2704,3 +2703,81 @@ ux_feedback:
    dtm: event_date
    segm: user_id
 
+
+clickstream_data_platform:
+   metric_configs: [clickstream_data_platform]
+   database: vertica
+   sql: clickstream_data_platform
+   participant: {user: user_hash}
+   primary_subject: user
+   dimensions: [ldap_user]
+   dtm: event_date
+   segm: user_hash
+
+
+m42_usage:
+   metric_configs: [m42_usage]
+   database: vertica
+   sql: m42_usage
+   participant: {user: user_hash}
+   primary_subject: user
+   dimensions: [ldap_user, picked_metric]
+   dtm: event_date
+   segm: user_hash
+
+
+sq_track_metrics:
+  metric_configs: [sq_track_metrics]
+  database: vertica
+  sql: sq_track_metrics
+  column_map:
+    cookie: cookie_id
+    item: item_id
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id
+
+all_communications_bx:
+  metric_configs: [all_communications_bx]
+  database: vertica
+  sql: all_communications
+  column_map:
+    cookie: buyer_cookie_id
+    user: buyer_id
+    logcat_item: [item_id, logical_category_id]
+  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  participant: {visitor: buyer_cookie_id, user: buyer_id}
+  primary_subject: user
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  dtm: event_date
+  segm: buyer_cookie_id
+
+all_communications_sx:
+  metric_configs: [all_communications_sx]
+  database: vertica
+  sql: all_communications
+  column_map:
+    user: seller_id
+    platform_id: seller_platform_id
+    logcat_item: [item_id, logical_category_id]
+  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  participant: {user: seller_id}
+  primary_subject: user
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  dtm: event_date
+  segm: seller_id
+
+mattermost_messages:
+   metric_configs: [mattermost_messages]
+   database: vertica
+   sql: mattermost_messages
+   participant: {user: user_hash}
+   primary_subject: user
+   dimensions: [ldap_user]
+   dtm: message_ts
+   segm: user_hash

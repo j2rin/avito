@@ -90,6 +90,14 @@ ub as (
     group by 1
     order by 1
 ),
+original as(
+  select ich.item_id, 
+       actual_date,
+       status
+from DDS.L_Item_AuthCheck ich
+    join DDS.S_AuthCheck_Status ch
+        on ich.AuthCheck_id = ch.AuthCheck_id
+),
 pre as (
     select
         co.create_date::date as create_date,
@@ -120,6 +128,10 @@ pre as (
             then (co.delivery_revenue/1.2 - co.safedeal_comission - co.delivery_comission - coalesce(co.real_delivery_provider_cost, co.approximate_delivery_provider_cost)/1.2)/co.items_qty
         end as real_delivery_margin,
         coi.seller_commission,
+  		case when co.workflow ilike '%b2c%' then coi.seller_commission/1.2 end as b2c_white_commission_no_vat,
+        coi.trx_commission/1.2 as trx_commission_no_vat,
+        case when co.workflow ilike '%b2c%' then coi.seller_commission end as b2c_white_commission,
+        coi.trx_commission as trx_commission,
         co.current_status as status,
         case when co.workflow ilike '%marketplace%' then 'marketplace' else co.workflow end as delivery_workflow,
         delivery_service,
@@ -193,10 +205,12 @@ pre as (
         bl.LocationGroup_id                                          as buyer_location_group_id,
         bl.City_Population_Group                                     as buyer_population_group,
         bl.Logical_Level                                             as buyer_location_level_id,
-        --is_cart
-  	is_cart,
+  		--is_cart
+  		is_cart,
+        -- есть ли у айтема бейдж "оригинал"
+        case when original.status = 'verified' then true else false end as is_original,
         -- has_short_video
-        case when HasShortVideo is null then false else HasShortVideo end as has_short_video
+        case when sv.video is not null then true else false end      as has_short_video
     from dma.current_order_item as coi
     join /*+distrib(l,a)*/ delivery_status_date as ps on ps.deliveryorder_id = coi.deliveryorder_id
     left join /*+distrib(l,a)*/ cic
@@ -208,8 +222,8 @@ pre as (
     left join /*+distrib(l,a)*/ dma.current_locations as bl on co.buyer_location_id = bl.location_id
     left join /*+distrib(l,a)*/ acd on acd.user_id = coi.seller_id and co.create_date::date between acd.active_from_date and acd.active_to_date
     left join /*+distrib(l,a)*/ du on du.buyer_id = co.buyer_id
-    left join /*+distrib(l,a)*/ dds.S_Item_HasShortVideo hsv on coi.item_id = hsv.item_id
-        and co.create_date interpolate previous value hsv.Actual_date
+  	left join /*+distrib(l,a)*/ original on coi.item_id = original.item_id and co.create_date interpolate previous value original.Actual_date
+    left join /*+distrib(l,a)*/ dds.s_item_video sv on coi.item_id = sv.item_id and co.create_date interpolate previous value sv.Actual_date
     order by seller_id, create_date, logical_category_id
 ),
 cdd3 as (
@@ -274,4 +288,3 @@ left join /*+distrib(l,a)*/ dict.segmentation_ranks as ls on ls.logical_category
 left join /*+distrib(l,a)*/ cdd3 on pre.deliveryorder_id = cdd3.deliveryorder_id
 left join /*+distrib(l,a)*/ cds on pre.deliveryorder_id = cds.deliveryorder_id
 left join /*+distrib(l,a)*/ ub on pre.purchase_id = ub.purchase_id
-

@@ -1,0 +1,52 @@
+definitions:
+  - &call                         [iac, gsm]
+  - &is_msg                       {communication: msg}
+  - &is_iac                       {communication: iac}
+  - &is_gsm                       {communication: gsm}
+  - &is_call                      {communication: *call}
+  - &is_common_funnel             {is_common_funnel: True} # коммуникации, считающиеся в воронке. Только исходящие от баера, без заблокированных
+  - &is_answered                  {is_answered: True} # отвеченные (для GSM подобраны пороги, а не просто talk_duration > 0)
+  - &is_trash                     {type: trash}
+  - &is_preliminary               {type: preliminary}
+  - &is_target                    {type: target}
+  - &reply_time_not_zero          {reply_time_minutes.>=: 0} # порог для месенджера
+  - &reply_3days                  {reply_time_minutes.<=: 4320} # порог для месенджера
+
+metric.counter:
+# Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
+  gsm_bx:                                                {filter: [*is_gsm, *is_common_funnel]}
+  gsm_bx_answered:                                       {filter: [*is_gsm, *is_common_funnel, *is_answered]}
+  gsm_bx_trash:                                          {filter: [*is_gsm, *is_common_funnel, *is_trash]}
+  gsm_bx_preliminary:                                    {filter: [*is_gsm, *is_common_funnel, *is_preliminary]}
+  gsm_bx_target:                                         {filter: [*is_gsm, *is_common_funnel, *is_target]}
+
+  iac_bx_outgoing:                                       {filter: [*is_iac, *is_common_funnel]}
+  iac_bx_outgoing_answered:                              {filter: [*is_iac, *is_common_funnel, *is_answered]}
+  iac_bx_outgoing_trash:                                 {filter: [*is_iac, *is_common_funnel, *is_trash]}
+  iac_bx_outgoing_preliminary:                           {filter: [*is_iac, *is_common_funnel, *is_preliminary]}
+  iac_bx_outgoing_target:                                {filter: [*is_iac, *is_common_funnel, *is_target]}
+
+  calls_bx_outgoing:                                     {filter: [*is_call, *is_common_funnel]}
+  calls_bx_outgoing_answered:                            {filter: [*is_call, *is_common_funnel, *is_answered]}
+  calls_bx_outgoing_trash:                               {filter: [*is_call, *is_common_funnel, *is_trash]}
+  calls_bx_outgoing_preliminary:                         {filter: [*is_call, *is_common_funnel, *is_preliminary]}
+  calls_bx_outgoing_target:                              {filter: [*is_call, *is_common_funnel, *is_target]}
+
+  comns_bx_outgoing:                                     {filter: [*is_common_funnel]}
+  comns_bx_outgoing_answered:                            {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
+  comns_bx_outgoing_trash:                               {filter: [*is_common_funnel, *is_trash]}
+  comns_bx_outgoing_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
+  comns_bx_outgoing_target:                              {filter: [*is_common_funnel, *is_target]}
+
+metric.uniq:
+  calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [logcat_item]}
+  calls_bx_outgoing_answered_canonical:                  {counter: calls_bx_outgoing_answered,     key: [logcat_item]}
+  calls_bx_outgoing_trash_canonical:                     {counter: calls_bx_outgoing_trash,        key: [logcat_item]}
+  calls_bx_outgoing_preliminary_canonical:               {counter: calls_bx_outgoing_preliminary,  key: [logcat_item]}
+  calls_bx_outgoing_target_canonical:                    {counter: calls_bx_outgoing_target,       key: [logcat_item]}
+
+  comns_bx_outgoing_canonical:                           {counter: comns_bx_outgoing,              key: [logcat_item]}
+  comns_bx_outgoing_answered_canonical:                  {counter: comns_bx_outgoing_answered,     key: [logcat_item]}
+  comns_bx_outgoing_trash_canonical:                     {counter: comns_bx_outgoing_trash,        key: [logcat_item]}
+  comns_bx_outgoing_preliminary_canonical:               {counter: comns_bx_outgoing_preliminary,  key: [logcat_item]}
+  comns_bx_outgoing_target_canonical:                    {counter: comns_bx_outgoing_target,       key: [logcat_item]}

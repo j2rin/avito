@@ -24,3 +24,4 @@ select
     if(x != '' and __x_position = 0, position, __x_position) as __x_position,
     safedeal_services
 from dwh.clickstream_sparse_local
+where event_date between date(:first_date) and date(:last_date)

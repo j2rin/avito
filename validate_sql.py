@@ -45,19 +45,19 @@ def list_modified_files():
     return result
 
 
+def _bind_date_period(sql, n_days):
+    last_date = date.today() - timedelta(days=3)
+    first_date = last_date - timedelta(days=n_days - 1)
+    params = {'first_date': first_date, 'last_date': last_date}
+    sql = bind_sql_params(sql, **params)
+    return sql
+
+
 class VerticaFileValidator:
     def __init__(self, sql_metadata, limit0, n_days=1):
         self.limit0 = limit0
         self.n_days = n_days
         self._sql_metadata = sql_metadata
-
-    @staticmethod
-    def _bind_date_period(sql, n_days):
-        last_date = date.today() - timedelta(days=3)
-        first_date = last_date - timedelta(days=n_days - 1)
-        params = {'first_date': first_date, 'last_date': last_date}
-        sql = bind_sql_params(sql, **params)
-        return sql
 
     @staticmethod
     def _execute_limit0(con, sql):
@@ -72,7 +72,6 @@ select /*+syntactic_join*/ *
 from (
 {sql}
 ) _
-where {subject} is not null
 ) order by {subject} segmented by hash({subject}) all nodes
 '''
 
@@ -121,7 +120,7 @@ where {subject} is not null
             if missing_params:
                 return {'error': f"Missing required params: `{', '.join(missing_params)}`"}
 
-            sql_bind = self._bind_date_period(sql_raw, self.n_days)
+            sql_bind = _bind_date_period(sql_raw, self.n_days)
 
             n_statements = len(split_statements(sql_bind))
             if n_statements != 1:
@@ -156,8 +155,9 @@ class ClickhouseFileValidator:
             if n_statements != 1:
                 return {'error': f'Number of statements must be exactly one'}
 
+            sql = _bind_date_period(sql_raw, 1)
             with ch_get_con() as con:
-                columns = ch_get_query_columns(con, sql_raw)
+                columns = ch_get_query_columns(con, sql)
                 return {'output_columns': len(columns)}
 
         except Exception as e:
