@@ -2,6 +2,10 @@ metric.counter:
   buyer_delivery_gmv_created:          {filter: [{is_created: true}], obs: [item_price]}
   buyer_delivery_gmv_paid:             {filter: [{is_paid: true}], obs: [item_price]}
   buyer_delivery_gmv_confirmed:        {filter: [{is_confirmed: true}], obs: [item_price]}
+  buyer_delivery_gmv_paid_video:             {filter: [{is_paid: true}, {has_short_video: true}], obs: [item_price]}
+  buyer_delivery_gmv_confirmed_video:        {filter: [{is_confirmed: true}, {has_short_video: true}], obs: [item_price]}
+  buyer_delivery_gmv_paid_no_video:             {filter: [{is_paid: true}, {has_short_video: false}], obs: [item_price]}
+  buyer_delivery_gmv_confirmed_no_video:        {filter: [{is_confirmed: true}, {has_short_video: false}], obs: [item_price]}
   buyer_delivery_gmv_performed:        {filter: [{is_performed: true}], obs: [item_price]}
   buyer_delivery_gmv_provided:         {filter: [{is_provided: true}], obs: [item_price]}
   buyer_delivery_gmv_received:         {filter: [{is_received: true}], obs: [item_price]}
@@ -16,7 +20,11 @@ metric.counter:
 
   buyer_delivery_items_created:          {filter: [{is_created: true}]}
   buyer_delivery_items_paid:             {filter: [{is_paid: true}]}
+  buyer_delivery_items_paid_video:       {filter: [{is_paid: true}, {has_short_video: true}]}
+  buyer_delivery_items_paid_no_video:       {filter: [{is_paid: true}, {has_short_video: false}]}
   buyer_delivery_items_confirmed:        {filter: [{is_confirmed: true}]}
+  buyer_delivery_items_confirmed_video:  {filter: [{is_confirmed: true}, {has_short_video: true}]}
+  buyer_delivery_items_confirmed_no_video:  {filter: [{is_confirmed: true}, {has_short_video: false}]}
   buyer_delivery_items_performed:        {filter: [{is_performed: true}]}
   buyer_delivery_items_provided:         {filter: [{is_provided: true}]}
   buyer_delivery_items_received:         {filter: [{is_received: true}]}
@@ -199,7 +207,11 @@ metric.counter:
 
   buyer_delivery_revenue_no_vat_created:          {filter: [{is_created: true}], obs: [delivery_revenue_no_vat]}
   buyer_delivery_revenue_no_vat_paid:             {filter: [{is_paid: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_revenue_no_vat_paid_video:             {filter: [{is_paid: true}, {has_short_video: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_revenue_no_vat_paid_no_video:             {filter: [{is_paid: true}, {has_short_video: false}], obs: [delivery_revenue_no_vat]}
   buyer_delivery_revenue_no_vat_confirmed:        {filter: [{is_confirmed: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_revenue_no_vat_confirmed_video:        {filter: [{is_confirmed: true, has_short_video: true}], obs: [delivery_revenue_no_vat]}
+  buyer_delivery_revenue_no_vat_confirmed_no_video:        {filter: [{is_confirmed: true, has_short_video: false}], obs: [delivery_revenue_no_vat]}
   buyer_delivery_revenue_no_vat_performed:        {filter: [{is_performed: true}], obs: [delivery_revenue_no_vat]}
   buyer_delivery_revenue_no_vat_provided:         {filter: [{is_provided: true}], obs: [delivery_revenue_no_vat]}
   buyer_delivery_revenue_no_vat_received:         {filter: [{is_received: true}], obs: [delivery_revenue_no_vat]}
@@ -292,7 +304,11 @@ metric.counter:
 metric.uniq:  
   buyer_delivery_orders_created:          {counter: buyer_delivery_items_created, key: [deliveryorder_id]}
   buyer_delivery_orders_paid:             {counter: buyer_delivery_items_paid, key: [deliveryorder_id]}
+  buyer_delivery_orders_paid_video:             {counter: buyer_delivery_items_paid_video, key: [deliveryorder_id]}
+  buyer_delivery_orders_paid_no_video:             {counter: buyer_delivery_items_paid_no_video, key: [deliveryorder_id]}
   buyer_delivery_orders_confirmed:        {counter: buyer_delivery_items_confirmed, key: [deliveryorder_id]}
+  buyer_delivery_orders_confirmed_video:        {counter: buyer_delivery_items_confirmed_video, key: [deliveryorder_id]}
+  buyer_delivery_orders_confirmed_no_video:        {counter: buyer_delivery_items_confirmed_no_video, key: [deliveryorder_id]}
   buyer_delivery_orders_performed:        {counter: buyer_delivery_items_performed, key: [deliveryorder_id]}
   buyer_delivery_orders_provided:         {counter: buyer_delivery_items_provided, key: [deliveryorder_id]}
   buyer_delivery_orders_received:         {counter: buyer_delivery_items_received, key: [deliveryorder_id]}
@@ -390,7 +406,11 @@ metric.uniq:
 metric.ratio:
   buyer_delivery_average_item_price_created: {num: buyer_delivery_gmv_created, den: buyer_delivery_items_created}
   buyer_delivery_average_item_price_paid: {num: buyer_delivery_gmv_paid, den: buyer_delivery_items_paid}
+  buyer_delivery_average_item_price_paid_video: {num: buyer_delivery_gmv_paid_video, den: buyer_delivery_items_paid_video}
+  buyer_delivery_average_item_price_paid_no_video: {num: buyer_delivery_gmv_paid_no_video, den: buyer_delivery_items_paid_no_video}
   buyer_delivery_average_item_price_confirmed: {num: buyer_delivery_gmv_confirmed, den: buyer_delivery_items_confirmed}
+  buyer_delivery_average_item_price_confirmed_video: {num: buyer_delivery_gmv_confirmed_video, den: buyer_delivery_items_confirmed_video}
+  buyer_delivery_average_item_price_confirmed_no_video: {num: buyer_delivery_gmv_confirmed_no_video, den: buyer_delivery_items_confirmed_no_video}
   buyer_delivery_average_item_price_performed: {num: buyer_delivery_gmv_performed, den: buyer_delivery_items_performed}
   buyer_delivery_average_item_price_provided: {num: buyer_delivery_gmv_provided, den: buyer_delivery_items_provided}
   buyer_delivery_average_item_price_received: {num: buyer_delivery_gmv_received, den: buyer_delivery_items_received}
@@ -405,7 +425,11 @@ metric.ratio:
 
   buyer_delivery_average_revenue_no_vat_created: {num: buyer_delivery_revenue_no_vat_created, den: buyer_delivery_orders_created}
   buyer_delivery_average_revenue_no_vat_paid: {num: buyer_delivery_revenue_no_vat_paid, den: buyer_delivery_orders_paid}
+  buyer_delivery_average_revenue_no_vat_paid_video: {num: buyer_delivery_revenue_no_vat_paid_video, den: buyer_delivery_orders_paid_video}
+  buyer_delivery_average_revenue_no_vat_paid_no_video: {num: buyer_delivery_revenue_no_vat_paid_no_video, den: buyer_delivery_orders_paid_no_video}
   buyer_delivery_average_revenue_no_vat_confirmed: {num: buyer_delivery_revenue_no_vat_confirmed, den: buyer_delivery_orders_confirmed}
+  buyer_delivery_average_revenue_no_vat_confirmed_video: {num: buyer_delivery_revenue_no_vat_confirmed_video, den: buyer_delivery_orders_confirmed_video}
+  buyer_delivery_average_revenue_no_vat_confirmed_no_video: {num: buyer_delivery_revenue_no_vat_confirmed_no_video, den: buyer_delivery_orders_confirmed_no_video}
   buyer_delivery_average_revenue_no_vat_performed: {num: buyer_delivery_revenue_no_vat_performed, den: buyer_delivery_orders_performed}
   buyer_delivery_average_revenue_no_vat_provided: {num: buyer_delivery_revenue_no_vat_provided, den: buyer_delivery_orders_provided}
   buyer_delivery_average_revenue_no_vat_received: {num: buyer_delivery_revenue_no_vat_received, den: buyer_delivery_orders_received}
