@@ -208,7 +208,9 @@ pre as (
   		--is_cart
   		is_cart,
         -- есть ли у айтема бейдж "оригинал"
-        case when original.status = 'verified' then true else false end as is_original
+        case when original.status = 'verified' then true else false end as is_original,
+        -- has_short_video
+        case when sv.video is not null then true else false end      as has_short_video
     from dma.current_order_item as coi
     join /*+distrib(l,a)*/ delivery_status_date as ps on ps.deliveryorder_id = coi.deliveryorder_id
     left join /*+distrib(l,a)*/ cic
@@ -221,6 +223,7 @@ pre as (
     left join /*+distrib(l,a)*/ acd on acd.user_id = coi.seller_id and co.create_date::date between acd.active_from_date and acd.active_to_date
     left join /*+distrib(l,a)*/ du on du.buyer_id = co.buyer_id
   	left join /*+distrib(l,a)*/ original on coi.item_id = original.item_id and co.create_date interpolate previous value original.Actual_date
+    left join /*+distrib(l,a)*/ dds.s_item_video sv on coi.item_id = sv.item_id and co.create_date interpolate previous value sv.Actual_date
     order by seller_id, create_date, logical_category_id
 ),
 cdd3 as (
