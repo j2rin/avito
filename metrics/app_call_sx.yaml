@@ -7,13 +7,14 @@ definitions:
   - &messenger_scenarios  [messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback]
   - &call_scenarios       [call_screen, recall_after_micaccess, recall_on_call_screen]
   - &pro_scenarios        [pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu]
+  - &redirect_scenarios   [web_redirect]
   - &other_scenarios      [call_log_callback, notification_call_back]
 
 
   # Logical Groups
   - &callback_scenario    [deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, call_log_callback, notification_call_back]
-  - &direct_scenario      [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, pro_mini_messenger_chat_menu, pro_messenger_chat_menu]
-  - &any_scenario         [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, call_log_callback, notification_call_back]
+  - &direct_scenario      [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, web_redirect]
+  - &any_scenario         [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, call_log_callback, notification_call_back, web_redirect]
 
 
   # Filters
@@ -22,6 +23,7 @@ definitions:
   - &is_messenger_c       {AppCallScenario: *messenger_scenarios}
   - &is_call_c            {AppCallScenario: *call_scenarios}
   - &is_pro_c             {AppCallScenario: *pro_scenarios}
+  - &is_redirect_c        {AppCallScenario: *redirect_scenarios}
   - &is_other_c           {AppCallScenario: *other_scenarios}
 
   - &is_callback_c        {AppCallScenario: *callback_scenario}
@@ -41,6 +43,7 @@ definitions:
   - &mic_granted        {Reciever_MicAccess: True}
   - &mic_notgranted     {Reciever_MicAccess: False}
   - &mic_checked        {Reciever_MicAccess.isnull: False}
+
 
 
 
