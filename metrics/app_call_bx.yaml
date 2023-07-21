@@ -7,13 +7,15 @@ definitions:
   - &messenger_scenarios  [messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback]
   - &call_scenarios       [call_screen, recall_after_micaccess, recall_on_call_screen]
   - &pro_scenarios        [pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu]
+  - &redirect_scenarios   [web_redirect]
   - &other_scenarios      [call_log_callback, notification_call_back]
 
 
   # Logical Groups
   - &callback_scenario    [deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, call_log_callback, notification_call_back]
-  - &direct_scenario      [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, pro_mini_messenger_chat_menu, pro_messenger_chat_menu]
-  - &any_scenario         [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, call_log_callback, notification_call_back]
+  - &direct_scenario      [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, web_redirect]
+  - &redirect_scenarios   [web_redirect]
+  - &any_scenario         [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, call_log_callback, notification_call_back, web_redirect]
 
   
   # Filters
@@ -22,6 +24,7 @@ definitions:
   - &is_messenger_c       {AppCallScenario: *messenger_scenarios}
   - &is_call_c            {AppCallScenario: *call_scenarios}
   - &is_pro_c             {AppCallScenario: *pro_scenarios}
+  - &is_redirect_c        {AppCallScenario: *redirect_scenarios}
   - &is_other_c           {AppCallScenario: *other_scenarios}
 
   - &is_callback_c        {AppCallScenario: *callback_scenario}
@@ -97,6 +100,10 @@ metric.counter:
   appcall_bx_incoming_pro:                      {filter: [*is_incoming, *is_pro_c]}
   appcall_bx_incoming_pro_answered:             {filter: [*is_incoming, *is_pro_c, *is_answered]}
   appcall_bx_incoming_pro_talkseconds:          {filter: [*is_incoming, *is_pro_c], obs: [TalkDuration]}
+
+  appcall_bx_outgoing_redirect:                  {filter: [*is_outgoing, *is_redirect_c]}
+  appcall_bx_outgoing_redirect_answered:         {filter: [*is_outgoing, *is_redirect_c, *is_answered]}
+  appcall_bx_outgoing_redirect_talkseconds:      {filter: [*is_outgoing, *is_redirect_c], obs: [TalkDuration]}
 
   # Success
   appcall_bx_outgoing_success:                  {filter: [*is_outgoing, *is_c, *is_success]}
