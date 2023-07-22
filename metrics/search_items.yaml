@@ -20,6 +20,7 @@ metric.counter:
     cnt_rec_score_i2i:                  {filter: [*is_i2i],             obs: [score]            }
     cnt_rec_items_u2i:                  {filter: [*is_u2i],             obs: [items_count]      }
     rec_items_dedup_u2i:                {filter: [*is_u2i],             obs: [items_dedup_count]}
+    rec_items_duplicate_u2i:            {filter: [*is_u2i],             obs: [items_duplicates_count]}
     cnt_rec_items_i2i:                  {filter: [*is_i2i],             obs: [items_count]      }
     cnt_rec_items_cv2vac:               {filter: [*is_cv2vac],          obs: [items_count]      }
     show_u2i_collab:                    {filter: [*is_u2i, *collab],    obs: [items_count]      }
@@ -30,6 +31,7 @@ metric.counter:
     cnt_serp_freshness:                 {filter: [*is_serp],            obs: [freshness]        }
     cnt_serp_items:                     {filter: [*is_serp],            obs: [items_count]      }
     serp_items_dedup:                   {filter: [*is_serp],            obs: [items_dedup_count]}
+    serp_items_duplicate:               {filter: [*is_serp],            obs: [items_duplicates_count]}
     serp_items_grouped:                 {filter: [*is_serp],            obs: [items_grouped_count]}
     push_items:                         {filter: [*is_push],            obs: [items_count]      }
     seller_buyer_pair_with_show:        {                               obs: [sellers_count]    }
@@ -46,5 +48,7 @@ metric.ratio:
     seller_buyer_pair_per_serp_items:   {num: seller_buyer_pair_with_search,    den: cnt_serp_items     }
     seller_buyer_pair_per_u2i_items:    {num: seller_buyer_pair_with_rec_u2i,   den: cnt_rec_items_u2i  }
     serp_items_dedup_ratio:             {num: serp_items_dedup,                 den: cnt_serp_items     }
+    serp_items_duplicate_ratio:         {num: serp_items_duplicate,             den: cnt_serp_items     }
     serp_items_grouped_ratio:           {num: serp_items_grouped,               den: cnt_serp_items     }
     rec_items_dedup_u2i_ratio:          {num: rec_items_dedup_u2i,              den: cnt_rec_items_u2i  }
+    rec_items_duplicate_u2i_ratio:      {num: rec_items_duplicate_u2i,          den: cnt_rec_items_u2i  }
