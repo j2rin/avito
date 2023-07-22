@@ -14,7 +14,7 @@ select
     freshness,
     sellers_count,
     items_dedup_count,
-    items_count - items_dedup_count as items_duplicates_count
+    items_count - items_dedup_count as items_duplicates_count,
     items_grouped_count
 from dma.vo_search_items
 where event_date::date between :first_date and :last_date
