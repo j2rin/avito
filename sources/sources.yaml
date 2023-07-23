@@ -46,7 +46,7 @@ buyer_stream:
     - user_segment_market
     - is_asd
     - price_group
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
@@ -79,7 +79,7 @@ pageviews:
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -109,7 +109,7 @@ user_dau:
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
   segm: cookie_id
@@ -146,7 +146,7 @@ seller_item_active:
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -183,7 +183,7 @@ seller_item_event:
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -213,7 +213,7 @@ geo_loc_change:
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -243,7 +243,7 @@ geo_map_stream:
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -252,8 +252,9 @@ perf_mobile:
   metric_configs: [perf_mobile]
   database: vertica
   sql: perf_mobile
-  dimensions: [platform, network_type, is_core_content, screen_name, content_type]
-  participant: {visitor: cookie_id, user: user_id}
+  dimensions:
+    [platform, network_type, is_core_content, screen_name, content_type]
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: observation_date
   segm: cookie_id
@@ -263,7 +264,7 @@ perf_content_sli:
   database: vertica
   sql: performance_requests_sli
   dimensions: [platform]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -273,7 +274,7 @@ perf_resources:
   database: vertica
   sql: perf_resources
   dimensions: [platform, screen_name]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -283,7 +284,7 @@ perf_mobile_apps_startup_times:
   database: vertica
   sql: perf_mobile_apps_startup_times
   dimensions: [platform]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -295,7 +296,7 @@ perf_mobile_memory_warnings:
   column_map:
     cookie: cookie_id
   dimensions: [platform, screen_name]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -307,7 +308,7 @@ perf_web:
   column_map:
     cookie: cookie_id
   dimensions: [platform, network_type, screen_name, stage_name]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: observation_date
   segm: cookie_id
@@ -320,11 +321,30 @@ core_contacts:
     cookie_logcat: [cookie_id, logical_category_id]
   database: vertica
   sql: core_contacts
-  dimensions: [platform, vertical, logical_category, logical_param1, logical_param2, category, subcategory, param1, region, city, location_group, population_group, location_level, price_group, is_asd, user_segment_market, asd_user_group]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      logical_param1,
+      logical_param2,
+      category,
+      subcategory,
+      param1,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      price_group,
+      is_asd,
+      user_segment_market,
+      asd_user_group,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -339,11 +359,10 @@ advert_funnel:
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
-
 
 user_rating:
   metric_configs: [user_rating]
@@ -352,7 +371,7 @@ user_rating:
   dimensions: [vertical, logical_category]
   m42_cartesian_groups:
     - [vertical, logical_category]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -363,11 +382,27 @@ str:
   sql: str
   column_map:
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -378,11 +413,27 @@ str_by_cookies:
   sql: str
   column_map:
     participant: participant_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, region]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -394,7 +445,7 @@ public_profile:
   column_map:
     cookie: cookie_id
   dimensions: [platform]
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -405,8 +456,27 @@ mnz_vas:
   sql: mnz_vas
   column_map:
     user: user_id
-  dimensions: [platform, page_from, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
-  participant: {user: user_id}
+  dimensions:
+    [
+      platform,
+      page_from,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
+  participant: { user: user_id }
   primary_subject: user
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
@@ -423,11 +493,22 @@ labor:
     cookie: cookie_id
     session: session_no
     participant: participant_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -437,7 +518,7 @@ express_cv:
   database: vertica
   sql: express_cv
   dimensions: [platform]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -480,9 +561,9 @@ delivery_orders_buyer:
     - has_avito_bindings
     - is_cart
   m42_cartesian_groups:
-      - [vertical, logical_category, city, user_segment_market, is_asd]
-      - [category, subcategory, param1, city, user_segment_market, is_asd]
-  participant: {user: buyer_id}
+    - [vertical, logical_category, city, user_segment_market, is_asd]
+    - [category, subcategory, param1, city, user_segment_market, is_asd]
+  participant: { user: buyer_id }
   primary_subject: user
   dtm: status_date
   segm: deliveryorder_id
@@ -518,11 +599,10 @@ delivery_orders_seller:
     - is_intercity
     - user_segment_market
     - is_cart
-  participant: {user: seller_id}
+  participant: { user: seller_id }
   primary_subject: user
   dtm: status_date
   segm: deliveryorder_id
-
 
 billing:
   metric_configs: [billing]
@@ -531,7 +611,7 @@ billing:
   column_map:
     user: user_id
   dimensions: [platform]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -560,7 +640,7 @@ session_source:
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant:  {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -572,7 +652,7 @@ support:
   column_map:
     participant: participant_id
   dimensions: [platform]
-  participant:  {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -584,7 +664,7 @@ support_hc:
   column_map:
     participant: participant_id
   dimensions: [platform]
-  participant:  {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -595,7 +675,7 @@ support_crosschannel:
   sql: support_crosschannel
   column_map:
     participant: participant_id
-  participant:  {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -607,7 +687,7 @@ cookie_account_enter:
   column_map:
     cookie: cookie_id
   dimensions: [platform]
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -618,7 +698,7 @@ favourite_sellers_totals:
   sql: favourite_sellers_totals
   column_map:
     user: user_id
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -651,7 +731,7 @@ communications:
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant:  {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -663,7 +743,7 @@ image:
   column_map:
     participant: cookie_id
   dimensions: [platform, network_type, screen_name, content_type]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: observation_date
   segm: cookie_id
@@ -676,7 +756,7 @@ buyer_suggest:
     cookie: cookie_id
   dimensions:
     - platform
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [is_logged_in]
@@ -692,7 +772,7 @@ buyer_shortcut:
   dimensions:
     - platform
     - category
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [is_logged_in, category]
@@ -707,7 +787,7 @@ buyer_filter:
     cookie: cookie_id
   dimensions:
     - platform
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [is_logged_in]
@@ -722,7 +802,7 @@ story_delay:
     cookie: cookie_id
   dimensions:
     - platform
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [is_logged_in]
@@ -741,7 +821,7 @@ weighted_buyer:
     - vertical
     - logical_category
     - user_segment_market
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, user_segment_market]
@@ -760,7 +840,7 @@ seller_item_add:
     - vertical
     - logical_category
     - user_segment_market
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [vertical, logical_category, user_segment_market]
@@ -779,7 +859,7 @@ seller_item_add_finish:
     - vertical
     - logical_category
     - microcat
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: item_create_date
   segm: eventchain_id
@@ -803,7 +883,7 @@ geo_map_labor:
     - location_level
   m42_cartesian_groups:
     - [is_logged_in]
-  participant:  {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_Date
   segm: cookie_id
@@ -815,11 +895,26 @@ buyer_call:
   column_map:
     item: item_id
     participant: participant_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group, user_segment_market]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      population_group,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -831,15 +926,28 @@ seller_matched_call:
   column_map:
     item: item_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      population_group,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
-
 
 notification:
   metric_configs: [notification]
@@ -849,7 +957,7 @@ notification:
     cookie: cookie_id
     participant: participant_id
   dimensions: [platform]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
 
@@ -863,7 +971,7 @@ notification_availability:
     - vertical
   m42_cartesian_groups:
     - [vertical]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
 
@@ -882,7 +990,7 @@ calltracking:
     - location_level
   m42_cartesian_groups:
     - [is_logged_in, vertical]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -895,11 +1003,25 @@ app_call_bx:
     item: item_id
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      population_group,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: event_date
@@ -912,11 +1034,25 @@ app_call_sx:
     item: item_id
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      population_group,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: event_date
@@ -929,11 +1065,25 @@ app_call_event:
     item: item_id
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      population_group,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: event_date
@@ -946,15 +1096,28 @@ app_call_seller_event:
     item: item_id
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      population_group,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: event_date
-
 
 fraud_support_tickets:
   metric_configs: [fraud_support_tickets]
@@ -970,7 +1133,7 @@ fraud_support_tickets:
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: create_date
 
@@ -978,8 +1141,17 @@ autoteka_stream:
   metric_configs: [autoteka_stream]
   database: vertica
   sql: autoteka_stream
-  dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user, is_pro]
-  participant: {visitor: cookie_id, user: user_id}
+  dimensions:
+    [
+      platform,
+      payment_method,
+      reports_count,
+      searchtype,
+      is_authorized,
+      is_new_user,
+      is_pro,
+    ]
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -995,8 +1167,8 @@ geo_coordinates_stream:
     - population_group
     - location_level
   m42_cartesian_groups:
-      - [is_logged_in]
-  participant: {visitor: cookie_id, user: user_id}
+    - [is_logged_in]
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -1012,8 +1184,8 @@ geo_laas_backend:
     - population_group
     - location_level
   m42_cartesian_groups:
-      - [is_logged_in]
-  participant: {visitor: cookie_id, user: user_id}
+    - [is_logged_in]
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -1022,7 +1194,7 @@ moder:
   database: vertica
   sql: moder
   dimensions: [microcat]
-  participant: {user: participant_id}
+  participant: { user: participant_id }
   primary_subject: user
   dtm: event_date
 
@@ -1046,7 +1218,7 @@ listing_fees:
     - location_level
     - logical_param1
     - logical_param2
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, user_segment_market]
@@ -1072,13 +1244,12 @@ tariff_transactions:
     - population_group
     - location_level
     - platform
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
   dtm: event_date
   segm: user_id
-
 
 tariff_funnel:
   metric_configs: [tariff_funnel]
@@ -1097,7 +1268,7 @@ tariff_funnel:
     - param2
     - param3
     - param4
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
@@ -1116,7 +1287,7 @@ cpx_tariff_funnel:
     - platform
     - vertical
     - logical_category
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
@@ -1127,7 +1298,7 @@ support_comment:
   metric_configs: [support_comment]
   database: vertica
   sql: support_comment
-  participant: {user: comment_id}
+  participant: { user: comment_id }
   primary_subject: user
   dtm: comment_create_date
 
@@ -1139,7 +1310,7 @@ time_to_interview_for_job_seeker:
     user: job_seeker_user_id
   dimensions:
     - platform
-  participant: {user: job_seeker_user_id}
+  participant: { user: job_seeker_user_id }
   primary_subject: user
   dtm: event_time
   segm: job_seeker_user_id
@@ -1152,7 +1323,7 @@ time_to_interview_for_job_employer:
     user: job_employer_user_id
   dimensions:
     - platform
-  participant: {user: job_employer_user_id}
+  participant: { user: job_employer_user_id }
   primary_subject: user
   dtm: event_time
   segm: job_employer_user_id
@@ -1170,13 +1341,13 @@ search_items:
     - category
     - subcategory
     - region
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
   dtm: event_date
-  segm: event_date  # Просто рандомный столбец, не совпадающий с cookie_id. Чтобы вынудить сделать материализацию при расчете витрин
+  segm: event_date # Просто рандомный столбец, не совпадающий с cookie_id. Чтобы вынудить сделать материализацию при расчете витрин
 
 production_errors:
   metric_configs: [production_errors]
@@ -1186,7 +1357,7 @@ production_errors:
     cookie: cookie_id
   dimensions:
     - platform
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -1201,7 +1372,7 @@ geo_loc_suggest:
     - location_group
     - population_group
     - location_level
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -1211,12 +1382,27 @@ clickstream:
   sql: clickstream
   column_map:
     cookie: cookie_id
-  dimensions: [platform, vertical, logical_category, category, region, city, location_group, population_group,
-               location_level, subcategory, param1, param2, param3, param4]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -1228,12 +1414,27 @@ clickstream_counters:
     cookie: cookie_id
     cookie_order: [cookie_id, orderid]
     cookie_item: [cookie_id, item_id]
-  dimensions: [platform, vertical, logical_category, category, region, city, location_group, population_group,
-               location_level, subcategory, param1, param2, param3, param4]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -1244,85 +1445,103 @@ messenger_stream:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
   segm: cookie_id
 
 clickstream_sparse.clickhouse:
-    database: clickhouse
-    sql: clickstream_sparse
-    column_map:
-      platform_id: business_platform
-      cookie_item: [u, iid]
-      cookie: u
-      item: iid
-      item_x: [iid, x]
-      x_eid: __x_eid
-      q: __x_q
-      engine: _x__engine
-      item_x_type: 0
-      event_count: 1
-      network_error_type: ios_network_error_type
-      network_error_sub_type: ios_network_error_subtype
-    dtm: event_date
-    participant: {visitor: u, user: uid}
-    primary_subject: visitor
-    metric_configs: [clickstream_sparse]
-    metrics:
-      - bt_clicks
-      - bt_clicks_grouped
-      - buyers
-      - contacts
-      - contacts_grouped
-      - user_pv
-      - users_bt_click_daily
-      - users_first_messages
-      - fatal_app_errors
-      - users_fatal_app_errors
-      - users_item_view_daily
-      - items_added
-      - sellers_daily
-      - user_btc_rec_u2i
-      - users_item_view_rec_u2i
-      - call_phones
-      - fps_falls_below_10pct
-      - fps_falls_below_30pct
-      - fps_falls_below_50pct
-      - fps_falls_below_70pct
-      - fps_falls_below_85pct
-      - fps_falls_below_90pct
-      - fps_falls_below_95pct
-      - users_fps_falls_below_10pct
-      - users_fps_falls_below_30pct
-      - users_fps_falls_below_50pct
-      - users_fps_falls_below_70pct
-      - users_fps_falls_below_85pct
-      - users_fps_falls_below_90pct
-      - users_fps_falls_below_95pct
-      - users_buyer_target_click_serp_daily
-      - users_buyer_target_click_rec_daily
-      - users_search
-      - buyer_target_clicks_serp
-      - buyer_target_clicks_rec
-      - users_contact_serp_daily
-      - searches_serp
-      - searches
-      - contacts
-      - item_views
-      - search_btc
-      - searches_contact_serp
-      - user_btc_sq
-      - search_q
-      - user_sq
-      - sq_c
-      - users_contact_search_query
-      - buyer_target_clicks_rec_i2i
-      - users_contact_rec_i2i
+  database: clickhouse
+  sql: clickstream_sparse
+  column_map:
+    platform_id: business_platform
+    cookie_item: [u, iid]
+    cookie: u
+    item: iid
+    item_x: [iid, x]
+    x_eid: __x_eid
+    q: __x_q
+    engine: _x__engine
+    item_x_type: 0
+    event_count: 1
+    network_error_type: ios_network_error_type
+    network_error_sub_type: ios_network_error_subtype
+  dtm: event_date
+  participant: { visitor: u, user: uid }
+  primary_subject: visitor
+  metric_configs: [clickstream_sparse]
+  metrics:
+    - bt_clicks
+    - bt_clicks_grouped
+    - buyers
+    - contacts
+    - contacts_grouped
+    - user_pv
+    - users_bt_click_daily
+    - users_first_messages
+    - fatal_app_errors
+    - users_fatal_app_errors
+    - users_item_view_daily
+    - items_added
+    - sellers_daily
+    - user_btc_rec_u2i
+    - users_item_view_rec_u2i
+    - call_phones
+    - fps_falls_below_10pct
+    - fps_falls_below_30pct
+    - fps_falls_below_50pct
+    - fps_falls_below_70pct
+    - fps_falls_below_85pct
+    - fps_falls_below_90pct
+    - fps_falls_below_95pct
+    - users_fps_falls_below_10pct
+    - users_fps_falls_below_30pct
+    - users_fps_falls_below_50pct
+    - users_fps_falls_below_70pct
+    - users_fps_falls_below_85pct
+    - users_fps_falls_below_90pct
+    - users_fps_falls_below_95pct
+    - users_buyer_target_click_serp_daily
+    - users_buyer_target_click_rec_daily
+    - users_search
+    - buyer_target_clicks_serp
+    - buyer_target_clicks_rec
+    - users_contact_serp_daily
+    - searches_serp
+    - searches
+    - contacts
+    - item_views
+    - search_btc
+    - searches_contact_serp
+    - user_btc_sq
+    - search_q
+    - user_sq
+    - sq_c
+    - users_contact_search_query
+    - buyer_target_clicks_rec_i2i
+    - users_contact_rec_i2i
 
 messenger_blocks:
   metric_configs: [messenger_blocks]
@@ -1331,11 +1550,29 @@ messenger_blocks:
   column_map:
     user: user_id
     chat: chat_Id
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -1347,11 +1584,29 @@ messenger_response_messages:
   column_map:
     user: user_id
     platform_id: reply_platform_id
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant:  {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: reply_time
   segm: chat_id
@@ -1363,11 +1618,29 @@ messenger_answered_inbox_messages:
   column_map:
     user: user_id
     platform_id: reply_platform_id
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant:  {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: first_message_event_date
   segm: chat_id
@@ -1378,11 +1651,29 @@ messenger_answered_messages:
   sql: messenger_chat_report
   column_map:
     user: first_message_user_id
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {visitor: first_message_cookie_id, user: first_message_user_id}
+  participant: { visitor: first_message_cookie_id, user: first_message_user_id }
   primary_subject: visitor
   dtm: first_message_event_date
   segm: chat_id
@@ -1393,11 +1684,28 @@ messenger_inbox_messages:
   sql: messenger_chat_report
   column_map:
     user: user_id
-  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  dimensions:
+    [
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: first_message_event_date
   segm: chat_id
@@ -1410,11 +1718,27 @@ messenger_messages:
     user: user_id
     message: message_id
     chat: chat_id
-  dimensions: [platform,vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: from_cookie_id, user: user_id}
+  participant: { visitor: from_cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -1425,11 +1749,26 @@ messenger_active_chats:
   sql: messenger_messages
   column_map:
     chat: chat_id
-  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {user: zero}
+  participant: { user: zero }
   primary_subject: user
   dtm: event_date
   segm: chat_id
@@ -1439,12 +1778,12 @@ clickstream_antibot:
   database: vertica
   sql: clickstream_antibot
   column_map:
-      cookie: cookie_id
+    cookie: cookie_id
   dimensions: [platform, vertical, category, app_version]
   m42_cartesian_groups:
-    - [ category, vertical, app_version ]
+    - [category, vertical, app_version]
   dtm: event_date
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   segm: cookie_id
 
@@ -1456,7 +1795,7 @@ credit_broker:
     cookie: cookie_id
   dimensions: [platform, vertical, logical_category, location]
   dtm: event_date
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   segm: cookie_id
 
@@ -1468,7 +1807,7 @@ credit_broker_revenue:
     cookie: cookie_id
   dimensions: [platform, vertical, logical_category, location]
   dtm: issued_date
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   segm: cookie_id
 
@@ -1478,11 +1817,26 @@ classified_revenue:
   sql: classified_revenue
   column_map:
     user: user_id
-  dimensions: [vertical, logical_category, logical_param1, logical_param2, location, region, city, location_group, location_level, is_asd, user_segment_market, condition, asd_user_group]
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      logical_param1,
+      logical_param2,
+      location,
+      region,
+      city,
+      location_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+      condition,
+      asd_user_group,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category, city, is_asd, user_segment_market]
   dtm: event_date
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   segm: user_id
 
@@ -1493,7 +1847,7 @@ other_projects_revenue:
   dimensions: [vertical]
   m42_cartesian_groups:
     - [vertical]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: observation_date
 
@@ -1504,7 +1858,7 @@ total_revenue:
   dimensions: [vertical]
   m42_cartesian_groups:
     - [vertical]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
 
@@ -1512,7 +1866,7 @@ delivery_user_toggle:
   metric_configs: [delivery_user_toggle]
   database: vertica
   sql: user_isDeliveryActive
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
 
@@ -1522,8 +1876,18 @@ autoteka_stream_autoteka_participant:
   sql: autoteka_stream
   column_map:
     platform_id: autoteka_platform_id
-  dimensions: [platform, payment_method, reports_count, searchtype, is_authorized, is_new_user, is_pro]
-  participant: {autoteka_visitor: autoteka_cookie_id, autoteka_user: autotekauser_id}
+  dimensions:
+    [
+      platform,
+      payment_method,
+      reports_count,
+      searchtype,
+      is_authorized,
+      is_new_user,
+      is_pro,
+    ]
+  participant:
+    { autoteka_visitor: autoteka_cookie_id, autoteka_user: autotekauser_id }
   primary_subject: autoteka_visitor
   dtm: event_date
 
@@ -1534,11 +1898,27 @@ reviews:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -1549,11 +1929,27 @@ reviews_collected:
   sql: reviews
   column_map:
     user: seller_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {user: seller_id}
+  participant: { user: seller_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -1564,24 +1960,39 @@ contacts_reviews_services:
   sql: contacts_reviews_services
   column_map:
     user: user_id
-  dimensions: [vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
 
 lister_reactivations:
-    metric_configs: [lister_reactivations]
-    database: vertica
-    sql: lister_reactivations
-    dimensions: [logical_category, vertical, region, city]
-    m42_cartesian_groups:
-      - [logical_category, vertical]
-    participant: {user: user_id}
-    primary_subject: user
-    dtm: event_date
+  metric_configs: [lister_reactivations]
+  database: vertica
+  sql: lister_reactivations
+  dimensions: [logical_category, vertical, region, city]
+  m42_cartesian_groups:
+    - [logical_category, vertical]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
 
 buyer_items_distance:
   metric_configs: [buyers_items_distance]
@@ -1601,10 +2012,9 @@ buyer_items_distance:
     - location_level
   m42_cartesian_groups:
     - [vertical]
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
-
 
 chatbot_metrics_start:
   metric_configs: [chatbot_metrics_start]
@@ -1621,10 +2031,9 @@ chatbot_metrics_start:
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: start_flow_time
-
 
 chatbot_metrics_end:
   metric_configs: [chatbot_metrics_end]
@@ -1641,10 +2050,9 @@ chatbot_metrics_end:
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: end_flow_time
-
 
 verified_users:
   metric_configs: [verified_users]
@@ -1652,10 +2060,9 @@ verified_users:
   sql: verification_statuses
   column_map:
     user: user_id
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_time
-
 
 rating_stream:
   metric_configs: [rating_stream]
@@ -1664,15 +2071,30 @@ rating_stream:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
-
 
 rating_search_stream:
   metric_configs: [rating_search_stream]
@@ -1681,15 +2103,30 @@ rating_search_stream:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
-
 
 model_rating_stream:
   metric_configs: [model_rating_stream]
@@ -1698,15 +2135,30 @@ model_rating_stream:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
-
 
 videocalls_stream:
   metric_configs: [videocalls_stream]
@@ -1716,11 +2168,25 @@ videocalls_stream:
     item: item_id
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      population_group,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: event_date
@@ -1751,7 +2217,7 @@ msh_banned_contacts:
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: item_id
@@ -1764,7 +2230,7 @@ chatbot_events:
     user: user_id
     flow: flow_id
     chat: chat_id
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
 
@@ -1789,7 +2255,6 @@ autoload_package_info:
   dtm: event_date
   segm: user_id
 
-
 user_cohort:
   metric_configs: [user_cohort]
   column_map:
@@ -1799,7 +2264,7 @@ user_cohort:
   dimensions: [vertical, logical_category, region, city, category, subcategory]
   m42_cartesian_groups:
     - [vertical, logical_category]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
 
@@ -1807,21 +2272,36 @@ autoteka_funnel:
   metric_configs: [autoteka_funnel]
   database: vertica
   sql: autoteka_funnel_main
-  dimensions: [platform, is_pro, is_main_page_session, searchtype, is_session_to_exclude]
-  participant: {autoteka_visitor: autoteka_cookie_id}
+  dimensions:
+    [platform, is_pro, is_main_page_session, searchtype, is_session_to_exclude]
+  participant: { autoteka_visitor: autoteka_cookie_id }
   primary_subject: autoteka_visitor
   dtm: event_date
 
 autoteka_reports:
-    metric_configs: [ autoteka_reports ]
-    database: vertica
-    sql: autoteka_reports
-    dimensions: [ autoteka_car_age_group, autoteka_car_price_group, autoteka_mileage_group, vertical, logical_category, region, city, platform, reports_count, searchtype, is_new_user, is_pro]
-    m42_cartesian_groups:
-      - [ vertical, logical_category ]
-    participant: {visitor: cookie_id, user: user_id}
-    primary_subject: visitor
-    dtm: autoteka_package_history_created_at
+  metric_configs: [autoteka_reports]
+  database: vertica
+  sql: autoteka_reports
+  dimensions:
+    [
+      autoteka_car_age_group,
+      autoteka_car_price_group,
+      autoteka_mileage_group,
+      vertical,
+      logical_category,
+      region,
+      city,
+      platform,
+      reports_count,
+      searchtype,
+      is_new_user,
+      is_pro,
+    ]
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: autoteka_package_history_created_at
 
 buyer_confirmation_deals:
   metric_configs: [buyer_confirmation_deals]
@@ -1847,7 +2327,7 @@ buyer_confirmation_deals:
     - location_level
   m42_cartesian_groups:
     - [logical_category, vertical]
-  participant: {user: buyer_id}
+  participant: { user: buyer_id }
   primary_subject: user
   dtm: event_time
 
@@ -1875,7 +2355,7 @@ seller_confirmation_deals:
     - location_level
   m42_cartesian_groups:
     - [logical_category, vertical]
-  participant: {user: seller_id}
+  participant: { user: seller_id }
   primary_subject: user
   dtm: event_time
 
@@ -1885,10 +2365,25 @@ autoteka_reports_autoteka_participant:
   sql: autoteka_reports
   column_map:
     platform_id: autoteka_platform_id
-  dimensions: [ autoteka_car_age_group, autoteka_car_price_group, autoteka_mileage_group, vertical, logical_category, region, city, platform, reports_count, searchtype, is_new_user, is_pro ]
+  dimensions:
+    [
+      autoteka_car_age_group,
+      autoteka_car_price_group,
+      autoteka_mileage_group,
+      vertical,
+      logical_category,
+      region,
+      city,
+      platform,
+      reports_count,
+      searchtype,
+      is_new_user,
+      is_pro,
+    ]
   m42_cartesian_groups:
-    - [ vertical, logical_category ]
-  participant: { autoteka_visitor: autoteka_cookie_id, autoteka_user: autoteka_user_id }
+    - [vertical, logical_category]
+  participant:
+    { autoteka_visitor: autoteka_cookie_id, autoteka_user: autoteka_user_id }
   primary_subject: autoteka_visitor
   dtm: autoteka_package_history_created_at
 
@@ -1915,7 +2410,7 @@ re_nd_buyer_stream:
     - location
     - microcat
     - is_human
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [vertical, logical_category]
@@ -1926,36 +2421,47 @@ autoteka_new_buyer_expected_revenue_ap:
   metric_configs: [autoteka_new_buyer_expected_revenue_ap]
   database: vertica
   sql: autoteka_new_buyers_expected_revenue
-  dimensions:  [platform, searchtype]
-  participant: { autoteka_visitor: autoteka_cookie_id, autoteka_user: autotekauser_Id }
+  dimensions: [platform, searchtype]
+  participant:
+    { autoteka_visitor: autoteka_cookie_id, autoteka_user: autotekauser_Id }
   primary_subject: autoteka_visitor
   dtm: event_date
 
 autoteka_new_buyer_expected_revenue:
- metric_configs: [autoteka_new_buyer_expected_revenue]
- database: vertica
- sql: autoteka_new_buyers_expected_revenue
- dimensions:  [platform, searchtype]
- participant: { visitor: cookie_id, user: user_id }
- primary_subject: visitor
- dtm: event_date
+  metric_configs: [autoteka_new_buyer_expected_revenue]
+  database: vertica
+  sql: autoteka_new_buyers_expected_revenue
+  dimensions: [platform, searchtype]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
 
 messenger_transitions:
- metric_configs: [messenger_transitions]
- database: vertica
- sql: messenger_transitions
- column_map:
-   user: user_id
- dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, is_asd, user_segment_market]
- m42_cartesian_groups:
-   - [is_asd, vertical, logical_category, user_segment_market]
-   - [category, subcategory]
- participant: {user: user_id}
- primary_subject: user
- dtm: trigger_date
- segm: user_id
-
-
+  metric_configs: [messenger_transitions]
+  database: vertica
+  sql: messenger_transitions
+  column_map:
+    user: user_id
+  dimensions:
+    [
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      is_asd,
+      user_segment_market,
+    ]
+  m42_cartesian_groups:
+    - [is_asd, vertical, logical_category, user_segment_market]
+    - [category, subcategory]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: trigger_date
+  segm: user_id
 
 messenger_chat_leads:
   metric_configs: [chat_leads]
@@ -1964,11 +2470,27 @@ messenger_chat_leads:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: first_message_event_date
   segm: cookie_id
@@ -1979,11 +2501,28 @@ messenger_inbox_chat_leads:
   sql: chat_scores
   column_map:
     user: seller_id
-  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  dimensions:
+    [
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category, is_asd, user_segment_market]
     - [category, subcategory]
-  participant: {user: seller_id}
+  participant: { user: seller_id }
   primary_subject: user
   dtm: first_message_event_date
   segm: seller_id
@@ -1995,11 +2534,24 @@ contact_deal:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -2010,11 +2562,24 @@ contact_deal_weight:
   sql: contact_deal_weight
   column_map:
     cookie: cookie_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -2026,11 +2591,24 @@ contact_deal_user:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -2044,7 +2622,7 @@ bs_first_click:
   dimensions: [platform, vertical, logical_category]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -2056,7 +2634,7 @@ first_position_click:
   column_map:
     cookie: cookie_id
   dimensions: [platform]
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -2068,45 +2646,68 @@ cpa_calls_metrics:
   column_map:
     user: user_id
     user_logcat: [user_id, logical_category_id]
-  dimensions: [vertical, logical_category, logical_param1, logical_param2, location, region, city, location_group, location_level, is_asd, user_segment_market]
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      logical_param1,
+      logical_param2,
+      location,
+      region,
+      city,
+      location_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category, city, is_asd, user_segment_market]
   dtm: event_date
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   segm: user_id
 
 new_pro_listers:
-    metric_configs: [new_pro_listers]
-    database: vertica
-    sql: new_pro_listers
-    column_map:
-        user_logcat: [user_id, logical_category_id]
-        user: user_id
-        user_vertical: [user_id, vertical_id]
-    dimensions: [vertical, logical_category, is_asd]
-    m42_cartesian_groups:
+  metric_configs: [new_pro_listers]
+  database: vertica
+  sql: new_pro_listers
+  column_map:
+    user_logcat: [user_id, logical_category_id]
+    user: user_id
+    user_vertical: [user_id, vertical_id]
+  dimensions: [vertical, logical_category, is_asd]
+  m42_cartesian_groups:
     - [vertical, logical_category, is_asd]
-    participant: {user: user_id}
-    primary_subject: user
-    dtm: event_date
-    segm: user_id
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
 
 gmv_deals_proxy:
-    metric_configs: [gmv_deals_proxy]
-    database: vertica
-    sql: gmv_deals_proxy
-    column_map:
-        user: user_id
-        item: item_id
-    dimensions: [vertical, logical_category, region, city, category, subcategory, is_asd, user_segment_market]
-    m42_cartesian_groups:
+  metric_configs: [gmv_deals_proxy]
+  database: vertica
+  sql: gmv_deals_proxy
+  column_map:
+    user: user_id
+    item: item_id
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      region,
+      city,
+      category,
+      subcategory,
+      is_asd,
+      user_segment_market,
+    ]
+  m42_cartesian_groups:
     - [vertical, logical_category, is_asd, user_segment_market]
     - [category, subcategory]
-    participant: {user: user_id}
-    primary_subject: user
-    dtm: event_date
-    segm: user_id
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
 
 performance_fps:
   metric_configs: [performance_fps]
@@ -2117,7 +2718,7 @@ performance_fps:
   dimensions:
     - platform
     - screen_name
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -2130,7 +2731,7 @@ sphinx_cputime:
   dimensions:
     - platform
     - sphinx_context
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -2151,7 +2752,7 @@ action_returned:
     - population_group
     - location_level
     - location
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [vertical, logical_category, is_logged_in]
@@ -2163,11 +2764,25 @@ callback_calls:
   sql: recallme_calls
   column_map:
     cookie: cookie_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, population_group]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      population_group,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -2180,7 +2795,7 @@ perf_video_metrics:
     user: user_id
   dimensions:
     - platform
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -2193,7 +2808,7 @@ perf_queried_hosts_durations:
     user: user_id
   dimensions:
     - platform
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -2217,7 +2832,7 @@ short_rent_item_trx:
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -2240,7 +2855,7 @@ deal_confirmed:
   m42_cartesian_groups:
     - [is_logged_in, is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
   segm: user_id
@@ -2267,7 +2882,7 @@ target_call_bx:
     - location_group
     - population_group
     - location_level
-  participant: {visitor: buyer_cookie_id, user: buyer_id}
+  participant: { visitor: buyer_cookie_id, user: buyer_id }
   primary_subject: user
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, region]
@@ -2296,14 +2911,13 @@ target_call_sx:
     - location_group
     - population_group
     - location_level
-  participant: {user: seller_id}
+  participant: { user: seller_id }
   primary_subject: user
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category, region]
     - [category, subcategory]
   dtm: call_time
   segm: seller_id
-
 
 sbc_special_offers:
   metric_configs: [sbc_special_offers]
@@ -2312,15 +2926,27 @@ sbc_special_offers:
   column_map:
     user: user_id
     platform_id: platform_id
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, is_asd, user_segment_market]
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: discount_send_date
   segm: user_id
-
 
 sbc_answered_special_offers:
   metric_configs: [sbc_answered_special_offers]
@@ -2328,15 +2954,26 @@ sbc_answered_special_offers:
   sql: seller_buyer_communication
   column_map:
     user: user_id
-  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, is_asd, user_segment_market]
+  dimensions:
+    [
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [is_asd, vertical, logical_category, user_segment_market]
     - [category, subcategory]
-  participant:  {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: discount_send_date
   segm: user_id
-
 
 sbc_inbox_special_offers:
   metric_configs: [sbc_inbox_special_offers]
@@ -2344,15 +2981,24 @@ sbc_inbox_special_offers:
   sql: seller_buyer_communication
   column_map:
     user: buyer_id
-  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4]
+  dimensions:
+    [
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {user: buyer_id}
+  participant: { user: buyer_id }
   primary_subject: user
   dtm: discount_send_date
   segm: buyer_id
-
 
 sbc_answered_inbox_special_offers:
   metric_configs: [sbc_answered_inbox_special_offers]
@@ -2361,11 +3007,21 @@ sbc_answered_inbox_special_offers:
   column_map:
     user: buyer_id
     platform_id: answer_platform
-  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4]
+  dimensions:
+    [
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant:  {user: buyer_id}
+  participant: { user: buyer_id }
   primary_subject: user
   dtm: answer_time
   segm: buyer_id
@@ -2378,7 +3034,7 @@ perf_screen_memory_consumption:
     cookie: cookie_id
     user: user_id
   dimensions: [platform, screen_name]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -2389,10 +3045,9 @@ sx_jobs_candidates:
   column_map:
     user: user_id
   dimensions: [is_asd]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-
 
 messages_reply_percentiles:
   metric_configs: [messages_reply_percentiles]
@@ -2403,7 +3058,7 @@ messages_reply_percentiles:
   dimensions: [vertical, logical_category, is_asd, platform, chat_role]
   m42_cartesian_groups:
     - [is_asd, vertical, logical_category]
-  participant: {user: from_user_id}
+  participant: { user: from_user_id }
   primary_subject: user
   dtm: event_date
 
@@ -2415,10 +3070,9 @@ reviews_stream:
     cookie: cookie_id
     user: user_id
   dimensions: [platform]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-
 
 qd_lots_create_date:
   metric_configs: [qd_lots_create_date]
@@ -2426,8 +3080,18 @@ qd_lots_create_date:
   sql: qd_lots
   column_map:
     user: user_id
-  dimensions: [platform, region, city, vertical, logical_category, category, subcategory, param1]
-  participant: {user: user_id}
+  dimensions:
+    [
+      platform,
+      region,
+      city,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+    ]
+  participant: { user: user_id }
   primary_subject: user
   dtm: created_at
   segm: user_id
@@ -2438,8 +3102,18 @@ qd_lots_terminated_date:
   sql: qd_lots
   column_map:
     user: user_id
-  dimensions: [platform, region, city, vertical, logical_category, category, subcategory, param1]
-  participant: {user: user_id}
+  dimensions:
+    [
+      platform,
+      region,
+      city,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+    ]
+  participant: { user: user_id }
   primary_subject: user
   dtm: terminated_at
   segm: user_id
@@ -2452,7 +3126,7 @@ perf_clickstream_counters:
     cookie: cookie_id
     user: user_id
   dimensions: [platform, screen_name]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
@@ -2462,7 +3136,7 @@ chatbot_chats_delete:
   sql: chatbot_chats_delete
   column_map:
     user: user_id
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
 
@@ -2474,7 +3148,7 @@ payment_page_trx:
     cookie: cookie_id
     user: user_id
   dimensions: [platform]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
 
@@ -2485,11 +3159,9 @@ jobs_chatbot:
   column_map:
     user: user_id
   dimensions: [platform]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-
-
 
 target_contact:
   metric_configs: [target_contact]
@@ -2500,15 +3172,30 @@ target_contact:
     user: buyer_id
     logcat_item: [item_id, logical_category_id]
     cookie_logcat: [buyer_cookie_id, logical_category_id]
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: buyer_cookie_id, user: buyer_id}
+  participant: { visitor: buyer_cookie_id, user: buyer_id }
   primary_subject: user
   dtm: event_date
   segm: buyer_cookie_id
-
 
 target_contact_seller:
   metric_configs: [target_contact_seller]
@@ -2518,11 +3205,28 @@ target_contact_seller:
     user: seller_id
     logcat_item: [item_id, logical_category_id]
     user_logcat: [seller_id, logical_category_id]
-  dimensions: [vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
+  dimensions:
+    [
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
   m42_cartesian_groups:
     - [vertical, logical_category]
     - [category, subcategory]
-  participant: {user: seller_id}
+  participant: { user: seller_id }
   primary_subject: user
   dtm: event_date
   segm: seller_id
@@ -2558,7 +3262,7 @@ cart_stream:
     - location_group
     - population_group
     - location_level
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   m42_cartesian_groups:
     - [vertical, logical_category, region]
@@ -2572,7 +3276,7 @@ jobs_chatbot_chats:
   sql: jobs_chatbot_chats
   column_map:
     user: user_id
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: event_date
 
@@ -2583,39 +3287,55 @@ review_arbitrage:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform, vertical, logical_category, category, subcategory, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
   m42_cartesian_groups:
     - [is_logged_in, vertical, logical_category]
     - [category, subcategory]
-  participant: {visitor: cookie_id, user: user_id}
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
 
 kmt_stream:
-    metric_configs: [kmt]
-    database: vertica
-    sql: kmt_stream
-    column_map:
-      cookie: cookie_id
-      session: session_hash
-    dimensions:
-      - platform
-      - vertical
-      - logical_category
-      - category
-      - subcategory
-      - param1
-      - param2
-      - param3
-      - param4
-    m42_cartesian_groups:
-      - [is_logged_in, vertical, logical_category]
-      - [category, subcategory]
-    participant: {visitor: cookie_id, user: user_id}
-    primary_subject: visitor
-    dtm: event_date
-    segm: cookie_id
+  metric_configs: [kmt]
+  database: vertica
+  sql: kmt_stream
+  column_map:
+    cookie: cookie_id
+    session: session_hash
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category]
+    - [category, subcategory]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id
 
 payout_page_trx:
   metric_configs: [payout_page_trx]
@@ -2624,107 +3344,128 @@ payout_page_trx:
   column_map:
     user: user_id
   dimensions: [platform]
-  participant: {user: user_id}
+  participant: { user: user_id }
   primary_subject: user
   dtm: create_date
 
 payment_order_cost:
- metric_configs: [payment_order_cost]
- database: vertica
- sql: payment_order_cost
- column_map:
-  user: user_id
- dimensions: 
-  - platform
-  - has_avito_bindings
-  - is_delivery_paid_new
- participant: {user: user_id}
- primary_subject: user
- dtm: create_date
+  metric_configs: [payment_order_cost]
+  database: vertica
+  sql: payment_order_cost
+  column_map:
+    user: user_id
+  dimensions:
+    - platform
+    - has_avito_bindings
+    - is_delivery_paid_new
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: create_date
 
 operating_model_asd_user:
-   metric_configs: [operating_model_asd_user]
-   database: vertica
-   sql: operating_model_asd_user
-   column_map:
-     user: user_id
-   dimensions: [vertical]
-   participant: {user: user_id}
-   primary_subject: user
-   dtm: event_date
-   segm: user_id
+  metric_configs: [operating_model_asd_user]
+  database: vertica
+  sql: operating_model_asd_user
+  column_map:
+    user: user_id
+  dimensions: [vertical]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
 
 operating_model_asd_revenue:
-   metric_configs: [operating_model_asd_revenue]
-   database: vertica
-   sql: operating_model_asd_revenue
-   column_map:
-     user: user_id
-   dimensions: [vertical]
-   participant: {user: user_id}
-   primary_subject: user
-   dtm: event_date
-   segm: user_id
-
+  metric_configs: [operating_model_asd_revenue]
+  database: vertica
+  sql: operating_model_asd_revenue
+  column_map:
+    user: user_id
+  dimensions: [vertical]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
 
 calendar_orders:
-   metric_configs: [calendar_orders]
-   database: vertica
-   sql: calendar_orders
-   column_map:
-     user: seller_id # селлер
-     item: item_id 
-   dimensions: [vertical, logical_category, category, subcategory, param1, param2, region, city, location_group, population_group, location_level]
-   participant: {user: seller_id}
-   primary_subject: user
-   dtm: event_date
+  metric_configs: [calendar_orders]
+  database: vertica
+  sql: calendar_orders
+  column_map:
+    user: seller_id # селлер
+    item: item_id
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
+  participant: { user: seller_id }
+  primary_subject: user
+  dtm: event_date
 
-calendar_sellers_items: 
-   metric_configs: [calendar_sellers_items]
-   database: vertica
-   sql: calendar_sellers_items
-   column_map:
-     user: user_id # селлер
-     item: item_id 
-   dimensions: [vertical, logical_category, category, subcategory, param1, param2, region, city, location_group, population_group, location_level]
-   participant: {user: user_id}
-   primary_subject: user
-   dtm: event_date
+calendar_sellers_items:
+  metric_configs: [calendar_sellers_items]
+  database: vertica
+  sql: calendar_sellers_items
+  column_map:
+    user: user_id # селлер
+    item: item_id
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
 
- 
 ux_feedback:
-   metric_configs: [ux_feedback]
-   database: vertica
-   sql: ux_feedback
-   column_map:
-     user: user_id
-   participant: {user: user_id}
-   primary_subject: user
-   dtm: event_date
-   segm: user_id
-
+  metric_configs: [ux_feedback]
+  database: vertica
+  sql: ux_feedback
+  column_map:
+    user: user_id
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
 
 clickstream_data_platform:
-   metric_configs: [clickstream_data_platform]
-   database: vertica
-   sql: clickstream_data_platform
-   participant: {user: user_hash}
-   primary_subject: user
-   dimensions: [ldap_user]
-   dtm: event_date
-   segm: user_hash
-
+  metric_configs: [clickstream_data_platform]
+  database: vertica
+  sql: clickstream_data_platform
+  participant: { user: user_hash }
+  primary_subject: user
+  dimensions: [ldap_user]
+  dtm: event_date
+  segm: user_hash
 
 m42_usage:
-   metric_configs: [m42_usage]
-   database: vertica
-   sql: m42_usage
-   participant: {user: user_hash}
-   primary_subject: user
-   dimensions: [ldap_user, picked_metric]
-   dtm: event_date
-   segm: user_hash
-
+  metric_configs: [m42_usage]
+  database: vertica
+  sql: m42_usage
+  participant: { user: user_hash }
+  primary_subject: user
+  dimensions: [ldap_user, picked_metric]
+  dtm: event_date
+  segm: user_hash
 
 sq_track_metrics:
   metric_configs: [sq_track_metrics]
@@ -2733,7 +3474,7 @@ sq_track_metrics:
   column_map:
     cookie: cookie_id
     item: item_id
-  participant: {visitor: cookie_id}
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
   segm: cookie_id
@@ -2746,8 +3487,24 @@ all_communications_bx:
     cookie: buyer_cookie_id
     user: buyer_id
     logcat_item: [item_id, logical_category_id]
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level]
-  participant: {visitor: buyer_cookie_id, user: buyer_id}
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
+  participant: { visitor: buyer_cookie_id, user: buyer_id }
   primary_subject: user
   m42_cartesian_groups:
     - [vertical, logical_category]
@@ -2763,8 +3520,26 @@ all_communications_sx:
     user: seller_id
     platform_id: seller_platform_id
     logcat_item: [item_id, logical_category_id]
-  dimensions: [platform, vertical, category, subcategory, logical_category, param1, param2, param3, param4, region, city, location_group, population_group, location_level, is_asd, user_segment_market]
-  participant: {user: seller_id}
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      is_asd,
+      user_segment_market,
+    ]
+  participant: { user: seller_id }
   primary_subject: user
   m42_cartesian_groups:
     - [vertical, logical_category]
@@ -2773,11 +3548,21 @@ all_communications_sx:
   segm: seller_id
 
 mattermost_messages:
-   metric_configs: [mattermost_messages]
-   database: vertica
-   sql: mattermost_messages
-   participant: {user: user_hash}
-   primary_subject: user
-   dimensions: [ldap_user]
-   dtm: message_ts
-   segm: user_hash
+  metric_configs: [mattermost_messages]
+  database: vertica
+  sql: mattermost_messages
+  participant: { user: user_hash }
+  primary_subject: user
+  dimensions: [ldap_user]
+  dtm: message_ts
+  segm: user_hash
+
+passport_event_stream:
+  metric_configs: [passport_event_stream]
+  database: vertica
+  sql: passport_event_stream
+  dimensions: [platform]
+  participant: { visitor: cookie_id, user: user_id, passport: passport_id }
+  primary_subject: passport
+  dtm: event_datetime
+  segm: passport_id
