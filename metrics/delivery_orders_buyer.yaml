@@ -19,12 +19,14 @@ metric.counter:
   buyer_delivery_gmv_unconfirmed:      {filter: [{is_unconfirmed: true}], obs: [item_price]}
 
   buyer_delivery_items_created:          {filter: [{is_created: true}]}
+  buyer_delivery_items_created_video:    {filter: [{is_created: true}, {has_short_video: true}]}
+  buyer_delivery_items_created_no_video: {filter: [{is_created: true}, {has_short_video: false}]}
   buyer_delivery_items_paid:             {filter: [{is_paid: true}]}
   buyer_delivery_items_paid_video:       {filter: [{is_paid: true}, {has_short_video: true}]}
-  buyer_delivery_items_paid_no_video:       {filter: [{is_paid: true}, {has_short_video: false}]}
+  buyer_delivery_items_paid_no_video:    {filter: [{is_paid: true}, {has_short_video: false}]}
   buyer_delivery_items_confirmed:        {filter: [{is_confirmed: true}]}
   buyer_delivery_items_confirmed_video:  {filter: [{is_confirmed: true}, {has_short_video: true}]}
-  buyer_delivery_items_confirmed_no_video:  {filter: [{is_confirmed: true}, {has_short_video: false}]}
+  buyer_delivery_items_confirmed_no_video: {filter: [{is_confirmed: true}, {has_short_video: false}]}
   buyer_delivery_items_performed:        {filter: [{is_performed: true}]}
   buyer_delivery_items_provided:         {filter: [{is_provided: true}]}
   buyer_delivery_items_received:         {filter: [{is_received: true}]}
@@ -303,6 +305,8 @@ metric.counter:
 
 metric.uniq:  
   buyer_delivery_orders_created:          {counter: buyer_delivery_items_created, key: [deliveryorder_id]}
+  buyer_delivery_orders_created_video:    {counter: buyer_delivery_items_created_video, key: [deliveryorder_id]}
+  buyer_delivery_orders_created_no_video: {counter: buyer_delivery_items_created_no_video, key: [deliveryorder_id]}
   buyer_delivery_orders_paid:             {counter: buyer_delivery_items_paid, key: [deliveryorder_id]}
   buyer_delivery_orders_paid_video:             {counter: buyer_delivery_items_paid_video, key: [deliveryorder_id]}
   buyer_delivery_orders_paid_no_video:             {counter: buyer_delivery_items_paid_no_video, key: [deliveryorder_id]}
@@ -324,7 +328,16 @@ metric.uniq:
   buyer_delivery_clustered_items_paid:    {counter: buyer_delivery_items_paid, key: [buyer_item]}
 
   buyers_with_delivery_order_created:     {counter: buyer_delivery_items_created, key: [buyer_id]}
+  buyers_with_delivery_order_created_video:     {counter: buyer_delivery_items_created_video, key: [buyer_id]}
+  buyers_with_delivery_order_created_no_video:     {counter: buyer_delivery_items_created_no_video, key: [buyer_id]}
+
   buyers_with_delivery_order_paid:        {counter: buyer_delivery_items_paid, key: [buyer_id]}
+  buyers_with_delivery_order_paid_video:        {counter: buyer_delivery_items_paid_video, key: [buyer_id]}
+  buyers_with_delivery_order_paid_no_video:        {counter: buyer_delivery_items_paid_no_video, key: [buyer_id]}
+
+  buyers_with_delivery_order_confirmed:   {counter: buyer_delivery_items_confirmed, key: [buyer_id]}
+  buyers_with_delivery_order_confirmed_video:   {counter: buyer_delivery_items_confirmed_video, key: [buyer_id]}
+  buyers_with_delivery_order_confirmed_no_video:   {counter: buyer_delivery_items_confirmed_no_video, key: [buyer_id]}
 
   buyer_delivery_purchases_created:       {counter: buyer_delivery_items_created, key: [purchase_id]} # созданные покупки
   buyer_delivery_purchases_paid:          {counter: buyer_delivery_items_paid, key: [purchase_id]} # оплаченные покупки
