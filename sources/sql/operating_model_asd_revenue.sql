@@ -2,6 +2,8 @@ select
     pur.event_date,
     pur.user_id,
     npsm.vertical_id,
+    npsm.logical_category_id,
+    npsm.user_segment_market_paying as user_segment_market,
     DATEDIFF('day', npsm.pro_paying_converted_date, pur.event_date) as days_after_pro_paying_convert,
     coalesce(cm.vertical_id = npsm.vertical_id, False) as is_payment_in_converted_vertical,
     ctt.transaction_type,

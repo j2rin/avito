@@ -2675,9 +2675,9 @@ new_pro_listers:
     user_logcat: [user_id, logical_category_id]
     user: user_id
     user_vertical: [user_id, vertical_id]
-  dimensions: [vertical, logical_category, is_asd]
+  dimensions: [vertical, logical_category, is_asd, user_segment_market]
   m42_cartesian_groups:
-    - [vertical, logical_category, is_asd]
+    - [vertical, logical_category, is_asd, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
@@ -3368,7 +3368,9 @@ operating_model_asd_user:
   sql: operating_model_asd_user
   column_map:
     user: user_id
-  dimensions: [vertical]
+  dimensions: [vertical, logical_category, user_segment_market]
+  m42_cartesian_groups:
+    - [vertical, logical_category, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
@@ -3380,7 +3382,9 @@ operating_model_asd_revenue:
   sql: operating_model_asd_revenue
   column_map:
     user: user_id
-  dimensions: [vertical]
+  dimensions: [vertical, logical_category, user_segment_market]
+  m42_cartesian_groups:
+    - [vertical, logical_category, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
