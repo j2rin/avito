@@ -7,7 +7,7 @@ select
     DATEDIFF('day', cu.RegistrationTime::date, npl.event_date) <= 30 as is_converted_less_30d,
     npl.is_asd,
     npl.asd_user_group_id,
-    npl.user_segment as user_segment_market,
+    case when npl.user_segment!='Any' then npl.user_segment end as user_segment_market,
     npl.is_seller_vertical,
     npl.is_seller
 from dma.new_pro_listers npl
