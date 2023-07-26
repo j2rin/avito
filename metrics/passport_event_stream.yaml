@@ -1,66 +1,44 @@
 metric.counter:
   # Merge scenario.
-  event_merge_start: { filter: [eid: 7535] }
-  event_merge_success: { filter: [eid: 7540] }
+  cnt_event_passport_merge_start: { filter: [eid: 7535] }
+  cnt_event_passport_merge_success: { filter: [eid: 7540] }
 
   # Create scenario.
-  event_create_start: { filter: [eid: 6579] }
-  event_create_success: { filter: [eid: 6582] }
+  cnt_event_passport_create_start: { filter: [eid: 6579] }
+  cnt_event_passport_create_success: { filter: [eid: 6582] }
 
 metric.uniq:
   # Merge scenario.
-  passport_merge_start:
-    counter: event_merge_start
+  cnt_passport_passport_merge_start:
+    counter: cnt_event_passport_merge_start
     key: [passport_id]
-  passport_merge_success:
-    counter: event_merge_success
+  cnt_passport_passport_merge_success:
+    counter: cnt_event_passport_merge_success
     key: [passport_id]
-
-  user_merge_start:
-    counter: event_merge_start
-    key: [user_id]
-  user_merge_success:
-    counter: event_merge_success
-    key: [user_id]
 
   # Create scenario.
-  passport_create_start:
-    counter: event_create_start
+  cnt_passport_passport_create_start:
+    counter: cnt_event_passport_create_start
     key: [passport_id]
-  passport_create_success:
-    counter: event_create_success
+  cnt_passport_passport_create_success:
+    counter: cnt_event_passport_create_success
     key: [passport_id]
-
-  user_create_start:
-    counter: event_create_start
-    key: [user_id]
-  user_create_success:
-    counter: event_create_success
-    key: [user_id]
 
 metric.ratio:
   # Merge scenario.
-  event_merge_start_to_finish:
-    num: event_merge_success
-    den: event_merge_start
+  cnt_event_passport_merge_start_to_finish:
+    num: cnt_event_passport_merge_success
+    den: cnt_event_passport_merge_start
 
-  passport_merge_start_to_finish:
-    num: passport_merge_success
-    den: passport_merge_start
-
-  user_merge_start_to_finish:
-    num: user_merge_success
-    den: user_merge_start
+  cnt_passport_passport_merge_start_to_finish:
+    num: cnt_passport_passport_merge_success
+    den: cnt_passport_passport_merge_start
 
   # Create scenario.
-  event_create_start_to_finish:
-    num: event_create_success
-    den: event_create_start
+  cnt_event_passport_create_start_to_finish:
+    num: cnt_event_passport_create_success
+    den: cnt_event_passport_create_start
 
-  passport_create_start_to_finish:
-    num: passport_create_success
-    den: passport_create_start
-
-  user_create_start_to_finish:
-    num: user_create_success
-    den: user_create_start
+  cnt_passport_passport_create_start_to_finish:
+    num: cnt_passport_passport_create_success
+    den: cnt_passport_passport_create_start
