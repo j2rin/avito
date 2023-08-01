@@ -1,38 +1,144 @@
 definitions:
-    - &btc        {metric_name: 'btc'}
-    - &c          {metric_name: 'contact'}
-    - &delivery   {metric_name: 'delivery'}
-    - &order      {metric_name: 'order'}
-    - &d3         {delay: 3}
-    - &d7         {delay: 7}
-    - &d14        {delay: 14}
+    - &btc          {metric_name: 'btc'}
+    - &c            {metric_name: 'contact'}
+    - &delivery     {metric_name: 'delivery'}
+    - &order        {metric_name: 'order'}
+    - &dp           {metric_name: 'dp'}
+    - &d3           {delay: 3}
+    - &d7           {delay: 7}
+    - &d14          {delay: 14}
+    - &serp         {source: 'serp'}
+    - &u2i          {source: 'u2i'}
+    - &i2i          {source: 'i2i'}
 
 
 metric.counter:
-    btc_delay_3:               { filter: [*btc,       *d3], obs: [metric_value] }
-    btc_delay_7:               { filter: [*btc,       *d7], obs: [metric_value] }
-    btc_delay_14:              { filter: [*btc,      *d14], obs: [metric_value] }
-    c_delay_3:                 { filter: [*c,         *d3], obs: [metric_value] }
-    c_delay_7:                 { filter: [*c,         *d7], obs: [metric_value] }
-    c_delay_14:                { filter: [*c,        *d14], obs: [metric_value] }
-    delivery_delay_3:          { filter: [*delivery,  *d3], obs: [metric_value] }
-    delivery_delay_7:          { filter: [*delivery,  *d7], obs: [metric_value] }
-    delivery_delay_14:         { filter: [*delivery, *d14], obs: [metric_value] }
-    order_delay_3:             { filter: [*order,     *d3], obs: [metric_value] }
-    order_delay_7:             { filter: [*order,     *d7], obs: [metric_value] }
-    order_delay_14:            { filter: [*order,    *d14], obs: [metric_value] }
+    btc_delay_3:               { filter: [*btc,       *d3],        obs: [metric_value] }
+    btc_delay_7:               { filter: [*btc,       *d7],        obs: [metric_value] }
+    btc_delay_14:              { filter: [*btc,      *d14],        obs: [metric_value] }
+    c_delay_3:                 { filter: [*c,         *d3],        obs: [metric_value] }
+    c_delay_7:                 { filter: [*c,         *d7],        obs: [metric_value] }
+    c_delay_14:                { filter: [*c,        *d14],        obs: [metric_value] }
+    delivery_delay_3:          { filter: [*delivery,  *d3],        obs: [metric_value] }
+    delivery_delay_7:          { filter: [*delivery,  *d7],        obs: [metric_value] }
+    delivery_delay_14:         { filter: [*delivery, *d14],        obs: [metric_value] }
+    order_delay_3:             { filter: [*order,     *d3],        obs: [metric_value] }
+    order_delay_7:             { filter: [*order,     *d7],        obs: [metric_value] }
+    order_delay_14:            { filter: [*order,    *d14],        obs: [metric_value] }
+    dp_delay_3:                { filter: [*dp,        *d3],        obs: [metric_value] }
+    dp_delay_7:                { filter: [*dp,        *d7],        obs: [metric_value] }
+    dp_delay_14:               { filter: [*dp,       *d14],        obs: [metric_value] }
+
+    btc_s_delay_3:             { filter: [*btc,       *d3, *serp], obs: [metric_value] }
+    btc_s_delay_7:             { filter: [*btc,       *d7, *serp], obs: [metric_value] }
+    btc_s_delay_14:            { filter: [*btc,      *d14, *serp], obs: [metric_value] }
+    c_s_delay_3:               { filter: [*c,         *d3, *serp], obs: [metric_value] }
+    c_s_delay_7:               { filter: [*c,         *d7, *serp], obs: [metric_value] }
+    c_s_delay_14:              { filter: [*c,        *d14, *serp], obs: [metric_value] }
+    delivery_s_delay_3:        { filter: [*delivery,  *d3, *serp], obs: [metric_value] }
+    delivery_s_delay_7:        { filter: [*delivery,  *d7, *serp], obs: [metric_value] }
+    delivery_s_delay_14:       { filter: [*delivery, *d14, *serp], obs: [metric_value] }
+    order_s_delay_3:           { filter: [*order,     *d3, *serp], obs: [metric_value] }
+    order_s_delay_7:           { filter: [*order,     *d7, *serp], obs: [metric_value] }
+    order_s_delay_14:          { filter: [*order,    *d14, *serp], obs: [metric_value] }
+    dp_s_delay_3:              { filter: [*dp,        *d3, *serp], obs: [metric_value] }
+    dp_s_delay_7:              { filter: [*dp,        *d7, *serp], obs: [metric_value] }
+    dp_s_delay_14:             { filter: [*dp,       *d14, *serp], obs: [metric_value] }
+
+    btc_u2i_delay_3:          { filter: [*btc,       *d3, *u2i],  obs: [metric_value] }
+    btc_u2i_delay_7:          { filter: [*btc,       *d7, *u2i],  obs: [metric_value] }
+    btc_u2i_delay_14:         { filter: [*btc,      *d14, *u2i],  obs: [metric_value] }
+    c_u2i_delay_3:            { filter: [*c,         *d3, *u2i],  obs: [metric_value] }
+    c_u2i_delay_7:            { filter: [*c,         *d7, *u2i],  obs: [metric_value] }
+    c_u2i_delay_14:           { filter: [*c,        *d14, *u2i],  obs: [metric_value] }
+    delivery_u2i_delay_3:     { filter: [*delivery,  *d3, *u2i],  obs: [metric_value] }
+    delivery_u2i_delay_7:     { filter: [*delivery,  *d7, *u2i],  obs: [metric_value] }
+    delivery_u2i_delay_14:    { filter: [*delivery, *d14, *u2i],  obs: [metric_value] }
+    order_u2i_delay_3:        { filter: [*order,     *d3, *u2i],  obs: [metric_value] }
+    order_u2i_delay_7:        { filter: [*order,     *d7, *u2i],  obs: [metric_value] }
+    order_u2i_delay_14:       { filter: [*order,    *d14, *u2i],  obs: [metric_value] }
+    dp_u2i_delay_3:           { filter: [*dp,        *d3, *u2i],  obs: [metric_value] }
+    dp_u2i_delay_7:           { filter: [*dp,        *d7, *u2i],  obs: [metric_value] }
+    dp_u2i_delay_14:          { filter: [*dp,       *d14, *u2i],  obs: [metric_value] }
+
+    btc_i2i_delay_3:          { filter: [*btc,       *d3, *i2i],  obs: [metric_value] }
+    btc_i2i_delay_7:          { filter: [*btc,       *d7, *i2i],  obs: [metric_value] }
+    btc_i2i_delay_14:         { filter: [*btc,      *d14, *i2i],  obs: [metric_value] }
+    c_i2i_delay_3:            { filter: [*c,         *d3, *i2i],  obs: [metric_value] }
+    c_i2i_delay_7:            { filter: [*c,         *d7, *i2i],  obs: [metric_value] }
+    c_i2i_delay_14:           { filter: [*c,        *d14, *i2i],  obs: [metric_value] }
+    delivery_i2i_delay_3:     { filter: [*delivery,  *d3, *i2i],  obs: [metric_value] }
+    delivery_i2i_delay_7:     { filter: [*delivery,  *d7, *i2i],  obs: [metric_value] }
+    delivery_i2i_delay_14:    { filter: [*delivery, *d14, *i2i],  obs: [metric_value] }
+    order_i2i_delay_3:        { filter: [*order,     *d3, *i2i],  obs: [metric_value] }
+    order_i2i_delay_7:        { filter: [*order,     *d7, *i2i],  obs: [metric_value] }
+    order_i2i_delay_14:       { filter: [*order,    *d14, *i2i],  obs: [metric_value] }
+    dp_i2i_delay_3:           { filter: [*dp,        *d3, *i2i],  obs: [metric_value] }
+    dp_i2i_delay_7:           { filter: [*dp,        *d7, *i2i],  obs: [metric_value] }
+    dp_i2i_delay_14:          { filter: [*dp,       *d14, *i2i],  obs: [metric_value] }
 
   
 metric.uniq:
-    user_btc_delay_3:          { counter: btc_delay_3,       key: [cookie] }
-    user_btc_delay_7:          { counter: btc_delay_7,       key: [cookie] }
-    user_btc_delay_14:         { counter: btc_delay_14,      key: [cookie] }
-    user_c_delay_3:            { counter: c_delay_3,         key: [cookie] }
-    user_c_delay_7:            { counter: c_delay_7,         key: [cookie] }
-    user_c_delay_14:           { counter: c_delay_14,        key: [cookie] }
-    user_delivery_delay_3:     { counter: delivery_delay_3,  key: [cookie] }
-    user_delivery_delay_7:     { counter: delivery_delay_7,  key: [cookie] }
-    user_delivery_delay_14:    { counter: delivery_delay_14, key: [cookie] }
-    user_order_delay_3:        { counter: order_delay_3,     key: [cookie] }
-    user_order_delay_7:        { counter: order_delay_7,     key: [cookie] }
-    user_order_delay_14:       { counter: order_delay_14,    key: [cookie] }
+    user_btc_delay_3:           { counter: btc_delay_3,       key: [cookie] }
+    user_btc_delay_7:           { counter: btc_delay_7,       key: [cookie] }
+    user_btc_delay_14:          { counter: btc_delay_14,      key: [cookie] }
+    user_c_delay_3:             { counter: c_delay_3,         key: [cookie] }
+    user_c_delay_7:             { counter: c_delay_7,         key: [cookie] }
+    user_c_delay_14:            { counter: c_delay_14,        key: [cookie] }
+    user_delivery_delay_3:      { counter: delivery_delay_3,  key: [cookie] }
+    user_delivery_delay_7:      { counter: delivery_delay_7,  key: [cookie] }
+    user_delivery_delay_14:     { counter: delivery_delay_14, key: [cookie] }
+    user_order_delay_3:         { counter: order_delay_3,     key: [cookie] }
+    user_order_delay_7:         { counter: order_delay_7,     key: [cookie] }
+    user_order_delay_14:        { counter: order_delay_14,    key: [cookie] }
+    user_dp_delay_3:            { counter: dp_delay_3,        key: [cookie] }
+    user_dp_delay_7:            { counter: dp_delay_7,        key: [cookie] }
+    user_dp_delay_14:           { counter: dp_delay_14,       key: [cookie] }
+
+    user_btc_s_delay_3:         { counter: btc_s_delay_3,       key: [cookie] }
+    user_btc_s_delay_7:         { counter: btc_s_delay_7,       key: [cookie] }
+    user_btc_s_delay_14:        { counter: btc_s_delay_14,      key: [cookie] }
+    user_c_s_delay_3:           { counter: c_s_delay_3,         key: [cookie] }
+    user_c_s_delay_7:           { counter: c_s_delay_7,         key: [cookie] }
+    user_c_s_delay_14:          { counter: c_s_delay_14,        key: [cookie] }
+    user_delivery_s_delay_3:    { counter: delivery_s_delay_3,  key: [cookie] }
+    user_delivery_s_delay_7:    { counter: delivery_s_delay_7,  key: [cookie] }
+    user_delivery_s_delay_14:   { counter: delivery_s_delay_14, key: [cookie] }
+    user_order_s_delay_3:       { counter: order_s_delay_3,     key: [cookie] }
+    user_order_s_delay_7:       { counter: order_s_delay_7,     key: [cookie] }
+    user_order_s_delay_14:      { counter: order_s_delay_14,    key: [cookie] }
+    user_dp_s_delay_3:          { counter: dp_s_delay_3,        key: [cookie] }
+    user_dp_s_delay_7:          { counter: dp_s_delay_7,        key: [cookie] }
+    user_dp_s_delay_14:         { counter: dp_s_delay_14,       key: [cookie] }
+
+    user_btc_u2i_delay_3:       { counter: btc_u2i_delay_3,       key: [cookie] }
+    user_btc_u2i_delay_7:       { counter: btc_u2i_delay_7,       key: [cookie] }
+    user_btc_u2i_delay_14:      { counter: btc_u2i_delay_14,      key: [cookie] }
+    user_c_u2i_delay_3:         { counter: c_u2i_delay_3,         key: [cookie] }
+    user_c_u2i_delay_7:         { counter: c_u2i_delay_7,         key: [cookie] }
+    user_c_u2i_delay_14:        { counter: c_u2i_delay_14,        key: [cookie] }
+    user_delivery_u2i_delay_3:  { counter: delivery_u2i_delay_3,  key: [cookie] }
+    user_delivery_u2i_delay_7:  { counter: delivery_u2i_delay_7,  key: [cookie] }
+    user_delivery_u2i_delay_14: { counter: delivery_u2i_delay_14, key: [cookie] }
+    user_order_u2i_delay_3:     { counter: order_u2i_delay_3,     key: [cookie] }
+    user_order_u2i_delay_7:     { counter: order_u2i_delay_7,     key: [cookie] }
+    user_order_u2i_delay_14:    { counter: order_u2i_delay_14,    key: [cookie] }
+    user_dp_u2i_delay_3:        { counter: dp_u2i_delay_3,        key: [cookie] }
+    user_dp_u2i_delay_7:        { counter: dp_u2i_delay_7,        key: [cookie] }
+    user_dp_u2i_delay_14:       { counter: dp_u2i_delay_14,       key: [cookie] }
+
+    user_btc_i2i_delay_3:       { counter: btc_i2i_delay_3,       key: [cookie] }
+    user_btc_i2i_delay_7:       { counter: btc_i2i_delay_7,       key: [cookie] }
+    user_btc_i2i_delay_14:      { counter: btc_i2i_delay_14,      key: [cookie] }
+    user_c_i2i_delay_3:         { counter: c_i2i_delay_3,         key: [cookie] }
+    user_c_i2i_delay_7:         { counter: c_i2i_delay_7,         key: [cookie] }
+    user_c_i2i_delay_14:        { counter: c_i2i_delay_14,        key: [cookie] }
+    user_delivery_i2i_delay_3:  { counter: delivery_i2i_delay_3,  key: [cookie] }
+    user_delivery_i2i_delay_7:  { counter: delivery_i2i_delay_7,  key: [cookie] }
+    user_delivery_i2i_delay_14: { counter: delivery_i2i_delay_14, key: [cookie] }
+    user_order_i2i_delay_3:     { counter: order_i2i_delay_3,     key: [cookie] }
+    user_order_i2i_delay_7:     { counter: order_i2i_delay_7,     key: [cookie] }
+    user_order_i2i_delay_14:    { counter: order_i2i_delay_14,    key: [cookie] }
+    user_dp_i2i_delay_3:        { counter: dp_i2i_delay_3,        key: [cookie] }
+    user_dp_i2i_delay_7:        { counter: dp_i2i_delay_7,        key: [cookie] }
+    user_dp_i2i_delay_14:       { counter: dp_i2i_delay_14,       key: [cookie] }
