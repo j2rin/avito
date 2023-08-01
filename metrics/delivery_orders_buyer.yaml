@@ -303,7 +303,9 @@ metric.counter:
   buyer_delivery_seller_commission_returned:         {filter: [{is_returned: true}], obs: [seller_commission]}
   buyer_delivery_seller_commission_unconfirmed:      {filter: [{is_unconfirmed: true}], obs: [seller_commission]}
 
-metric.uniq:  
+  buyer_delivery_total_payment_time:                 {filter: [{is_paid: true}], obs: [time_to_payment]}
+
+metric.uniq:
   buyer_delivery_orders_created:          {counter: buyer_delivery_items_created, key: [deliveryorder_id]}
   buyer_delivery_orders_created_video:    {counter: buyer_delivery_items_created_video, key: [deliveryorder_id]}
   buyer_delivery_orders_created_no_video: {counter: buyer_delivery_items_created_no_video, key: [deliveryorder_id]}
@@ -342,7 +344,7 @@ metric.uniq:
   buyer_delivery_purchases_created:       {counter: buyer_delivery_items_created, key: [purchase_id]} # созданные покупки
   buyer_delivery_purchases_paid:          {counter: buyer_delivery_items_paid, key: [purchase_id]} # оплаченные покупки
   buyer_delivery_purchases_canceled:      {counter: buyer_delivery_items_canceled, key: [purchase_id]} # отмененные покупки
-  
+
   buyer_delivery_orders_delivery_discount_created:                        {counter: buyer_delivery_items_delivery_discount_created, key: [deliveryorder_id]} # созданные заказы со скидкой: delivery_discount > 0
   buyer_delivery_orders_delivery_discount_paid:                           {counter: buyer_delivery_items_delivery_discount_paid, key: [deliveryorder_id]}
   buyer_delivery_orders_delivery_discount_accepted:                       {counter: buyer_delivery_items_delivery_discount_accepted, key: [deliveryorder_id]}
@@ -384,7 +386,7 @@ metric.uniq:
   buyer_delivery_orders_bonus_cashback_accepted:                          {counter: buyer_delivery_items_bonus_cashback_accepted, key: [deliveryorder_id]}
   buyer_delivery_orders_bonus_cashback_returned:                          {counter: buyer_delivery_items_bonus_cashback_returned, key: [deliveryorder_id]}
   buyer_delivery_orders_bonus_cashback_accepted_and_returned:             {counter: buyer_delivery_items_bonus_cashback_accepted_and_returned, key: [deliveryorder_id]}
-  
+
   buyer_delivery_orders_promocode_discount_created:                       {counter: buyer_delivery_items_promocode_discount_created, key: [deliveryorder_id]} # созданные заказы со скидкой по промокоду
   buyer_delivery_orders_promocode_discount_paid:                          {counter: buyer_delivery_items_promocode_discount_paid, key: [deliveryorder_id]}
   buyer_delivery_orders_promocode_discount_accepted:                      {counter: buyer_delivery_items_promocode_discount_accepted, key: [deliveryorder_id]}
@@ -402,7 +404,7 @@ metric.uniq:
   buyer_delivery_orders_c2c_seller_discount_accepted:                     {counter: buyer_delivery_items_c2c_seller_discount_accepted, key: [deliveryorder_id]}
   buyer_delivery_orders_c2c_seller_discount_returned:                     {counter: buyer_delivery_items_c2c_seller_discount_returned, key: [deliveryorder_id]}
   buyer_delivery_orders_c2c_seller_discount_accepted_and_returned:        {counter: buyer_delivery_items_c2c_seller_discount_accepted_and_returned, key: [deliveryorder_id]}
-  
+
   buyer_delivery_orders_exmail_discount_created:                          {counter: buyer_delivery_items_exmail_discount_created, key: [deliveryorder_id]} # созданные заказы со скидкой exmail
   buyer_delivery_orders_exmail_discount_paid:                             {counter: buyer_delivery_items_exmail_discount_paid, key: [deliveryorder_id]}
   buyer_delivery_orders_exmail_discount_accepted:                         {counter: buyer_delivery_items_exmail_discount_accepted, key: [deliveryorder_id]}
@@ -415,6 +417,7 @@ metric.uniq:
   buyer_delivery_orders_exmail_subsidies_returned:                        { counter: buyer_delivery_items_exmail_subsidies_returned, key: [ deliveryorder_id ] }
   buyer_delivery_orders_exmail_subsidies_accepted_and_returned:           { counter: buyer_delivery_items_exmail_subsidies_accepted_and_returned, key: [ deliveryorder_id ] }
 
+  buyer_delivery_purchases_total_payment_time:                               { counter: buyer_delivery_total_payment_time, key: [ purchase_id ] }
 
 metric.ratio:
   buyer_delivery_average_item_price_created: {num: buyer_delivery_gmv_created, den: buyer_delivery_items_created}
@@ -454,31 +457,31 @@ metric.ratio:
   buyer_delivery_average_revenue_no_vat_return_delivered: {num: buyer_delivery_revenue_no_vat_return_delivered, den: buyer_delivery_orders_return_delivered}
   buyer_delivery_average_revenue_no_vat_returned: {num: buyer_delivery_revenue_no_vat_returned, den: buyer_delivery_orders_returned}
   buyer_delivery_average_revenue_no_vat_unconfirmed: {num: buyer_delivery_revenue_no_vat_unconfirmed, den: buyer_delivery_orders_unconfirmed}
-  
+
   buyer_delivery_avg_delivery_subsidies_created: {num: buyer_delivery_subsidies_created, den: buyer_delivery_orders_delivery_subsidies_created}
   buyer_delivery_avg_delivery_subsidies_paid: {num: buyer_delivery_subsidies_paid, den: buyer_delivery_orders_delivery_subsidies_paid}
   buyer_delivery_avg_delivery_subsidies_accepted: {num: buyer_delivery_subsidies_accepted, den: buyer_delivery_orders_delivery_subsidies_accepted}
   buyer_delivery_avg_delivery_subsidies_returned: {num: buyer_delivery_subsidies_returned, den: buyer_delivery_orders_delivery_subsidies_returned}
   buyer_delivery_avg_delivery_subsidies_accepted_and_returned: {num: buyer_delivery_subsidies_accepted_and_returned, den: buyer_delivery_orders_delivery_subsidies_accepted_and_returned}
-  
+
   buyer_delivery_avg_threefirst_subsidies_created: {num: buyer_threefirst_subsidies_created, den: buyer_delivery_orders_threefirst_subsidies_created}
   buyer_delivery_avg_threefirst_subsidies_paid: {num: buyer_threefirst_subsidies_paid, den: buyer_delivery_orders_threefirst_subsidies_paid}
   buyer_delivery_avg_threefirst_subsidies_accepted: {num: buyer_threefirst_subsidies_accepted, den: buyer_delivery_orders_threefirst_subsidies_accepted}
   buyer_delivery_avg_threefirst_subsidies_returned: {num: buyer_threefirst_subsidies_returned, den: buyer_delivery_orders_threefirst_subsidies_returned}
   buyer_delivery_avg_threefirst_subsidies_accepted_and_returned: {num: buyer_threefirst_subsidies_accepted_and_returned, den: buyer_delivery_orders_threefirst_subsidies_accepted_and_returned}
-  
+
   buyer_delivery_avg_bonus_subsidies_created: {num: buyer_bonus_subsidies_created, den: buyer_delivery_orders_bonus_subsidies_created}
   buyer_delivery_avg_bonus_subsidies_paid: {num: buyer_bonus_subsidies_paid, den: buyer_delivery_orders_bonus_subsidies_paid}
   buyer_delivery_avg_bonus_subsidies_accepted: {num: buyer_bonus_subsidies_accepted, den: buyer_delivery_orders_bonus_subsidies_accepted}
   buyer_delivery_avg_bonus_subsidies_returned: {num: buyer_bonus_subsidies_returned, den: buyer_delivery_orders_bonus_subsidies_returned}
   buyer_delivery_avg_bonus_subsidies_accepted_and_returned: {num: buyer_bonus_subsidies_accepted_and_returned, den: buyer_delivery_orders_bonus_subsidies_accepted_and_returned}
-  
+
   buyer_delivery_avg_promocode_subsidies_created: {num: buyer_promocode_subsidies_created, den: buyer_delivery_orders_promocode_subsidies_created}
   buyer_delivery_avg_promocode_subsidies_paid: {num: buyer_promocode_subsidies_paid, den: buyer_delivery_orders_promocode_subsidies_paid}
   buyer_delivery_avg_promocode_subsidies_accepted: {num: buyer_promocode_subsidies_accepted, den: buyer_delivery_orders_promocode_subsidies_accepted}
   buyer_delivery_avg_promocode_subsidies_returned: {num: buyer_promocode_subsidies_returned, den: buyer_delivery_orders_promocode_subsidies_returned}
   buyer_delivery_avg_promocode_subsidies_accepted_and_returned: {num: buyer_promocode_subsidies_accepted_and_returned, den: buyer_delivery_orders_promocode_subsidies_accepted_and_returned}
-  
+
   buyer_delivery_avg_exmail_subsidies_created: {num: buyer_exmail_subsidies_created, den: buyer_delivery_orders_exmail_subsidies_created}
   buyer_delivery_avg_exmail_subsidies_paid: {num: buyer_exmail_subsidies_paid, den: buyer_delivery_orders_exmail_subsidies_paid}
   buyer_delivery_avg_exmail_subsidies_accepted: {num: buyer_exmail_subsidies_accepted, den: buyer_delivery_orders_exmail_subsidies_accepted}
@@ -515,9 +518,10 @@ metric.ratio:
   buyers_with_delivery_created_paid_uniq_ratio : {num: buyers_with_delivery_order_paid, den: buyers_with_delivery_order_created}
 
   buyer_delivery_orders_received_per_provided: {num: buyer_delivery_orders_received, den: buyer_delivery_orders_provided}
-  
+
   buyer_delivery_create_paid_purchases_ratio:       {num: buyer_delivery_purchases_paid, den: buyer_delivery_purchases_created} # доля оплат среди созданных
   buyer_delivery_paid_canceled_purchases_ratio:     {num: buyer_delivery_purchases_canceled, den: buyer_delivery_purchases_paid} # доля отмен среди оплат
- 
+
   buyer_delivery_average_purchase_price_paid:       {num: buyer_delivery_gmv_paid, den: buyer_delivery_purchases_paid} # средняя стоимость покупки
-  
+
+  buyer_delivery_average_payment_time:              {num: buyer_delivery_purchases_total_payment_time, den: buyer_delivery_purchases_paid}
