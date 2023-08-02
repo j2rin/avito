@@ -106,7 +106,12 @@ select
     3 AS multiplier_3,
     5 AS multiplier_5,
     10 AS multiplier_10,
-    ir.reputation_class,
+    case 
+        when ((ss.item_flags & (1 << 32) > 0) and (ss.item_flags & (1 << 33) > 0)) then 'high'
+        when ((ss.item_flags & (1 << 32) > 0) and (ss.item_flags & (1 << 33) = 0)) then 'medium'
+        when ((ss.item_flags & (1 << 32) = 0) and (ss.item_flags & (1 << 33) > 0)) then 'low'
+        else NULL
+    end as reputation_class,
     case when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) = 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 1
     	 when ((ss.search_flags & (1 << 39) = 0) and (ss.search_flags & (1 << 40) > 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 2
          when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) > 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 3
@@ -184,14 +189,6 @@ left join /*+jtype(h),distrib(l,b)*/ (
         and user_id in (select user_id from bs_users)
     group by user_id
 ) acc on acc.User_id = ss.item_user_id
-
-left join /*+jtype(h),distrib(l,a)*/ (
-    select item_id, reputation_class, event_timestamp as converting_date,
-        lead(event_timestamp, 1, '20990101') over(partition by item_id order by event_timestamp) as next_converting_date
-    from DMA.click_stream_item_reputation
-    where user_id in (select user_id from bs_users)
-        and event_timestamp::date <= :last_date::date
-) ir on ss.item_id = ir.item_id and ss.event_date >= ir.converting_date and ss.event_date < ir.next_converting_date
 
 left join /*+jtype(h),distrib(l,a)*/ (
     select
