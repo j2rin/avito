@@ -11,7 +11,7 @@ from (
         date(dtm) as event_date,
         ldap_user,
         hash(uuid) as event_hash,
-        explode(string_to_array(JsonLookup(m42_filters, 'metric'))) over(partition by event_date, ldap_user, event_hash) as (ind, metric)
+        explode(string_to_array(JsonLookup(m42_filters, 'metric'))) over(partition by date(dtm), ldap_user, hash(uuid)) as (ind, metric)
     from dwhcs.clickstream_data_platform
     where date(dtm) between :first_date and :last_date
         and m42_filters is not null
