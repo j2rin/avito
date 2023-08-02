@@ -107,8 +107,11 @@ metric.counter:
   click_recommendations_widget:                         {filter: [eid: 4921, from_page: 'vertical_recommendations'], obs: [event_count]}
   show_shortcuts_widget:                                {filter: [eid: 4920, from_page: 'shortcuts_widget'], obs: [event_count]}
   click_shortcuts_widget:                               {filter: [eid: 4921, from_page: 'shortcuts_widget'], obs: [event_count]}
-  show_rubricator_widget:                                {filter: [eid: 4920, from_page: 'rubricator_widget'], obs: [event_count]}
-  click_rubricator_widget:                               {filter: [eid: 4921, from_page: 'rubricator_widget'], obs: [event_count]}
+  show_rubricator_widget:                               {filter: [eid: 4920, from_page: 'rubricator_widget'], obs: [event_count]}
+  click_rubricator_widget:                              {filter: [eid: 4921, from_page: 'rubricator_widget'], obs: [event_count]}
+  show_seen_items_widget:                               {filter: [eid: 4920, from_page: 'seen_items'], obs: [event_count]}
+  click_seen_items_widget:                              {filter: [eid: 4921, from_page: 'seen_items'], obs: [event_count]}
+
 
   total_item_on_delivery:                               {filter: [eid: 2703, is_delivery_available: True],  obs: [event_count]}
   total_item_off_delivery:                              {filter: [eid: 2703, is_delivery_available: False], obs: [event_count]}
@@ -208,6 +211,8 @@ metric.uniq:
   user_click_shortcuts_widget:       {counter: click_shortcuts_widget,                key: [cookie]}
   user_show_rubricator_widget:       {counter: show_rubricator_widget,                key: [cookie]}
   user_click_rubricator_widget:      {counter: click_rubricator_widget,               key: [cookie]}
+  user_show_seen_items_widget:       {counter: show_seen_items_widget,                key: [cookie]}
+  user_click_seen_items_widget:      {counter: click_seen_items_widget,               key: [cookie]}
 
   item_on_delivery:                 {counter: total_item_on_delivery,           key: [item_id]}
   item_off_delivery:                {counter: total_item_off_delivery,          key: [item_id]}
@@ -283,6 +288,7 @@ metric.ratio:
   ctr_recommendations_widget:                {num: click_recommendations_widget,             den: show_recommendations_widget}
   ctr_shortcuts_widget:                      {num: click_shortcuts_widget,                   den: show_shortcuts_widget}
   ctr_rubricator_widget:                     {num: click_rubricator_widget,                  den: show_rubricator_widget}
+  ctr_seen_items_widget:                     {num: click_seen_items_widget,                  den: show_seen_items_widget}
   user_ctr_search_widget:                    {num: user_click_search_widget,                 den: user_show_search_widget}
   user_ctr_category_widget:                  {num: user_click_category_widget,               den: user_show_category_widget}
   user_ctr_promo_widget:                     {num: user_click_promo_widget,                  den: user_show_promo_widget}
@@ -291,4 +297,5 @@ metric.ratio:
   user_ctr_recommendations_widget:           {num: user_click_recommendations_widget,        den: user_show_recommendations_widget}
   user_ctr_shortcuts_widget:                 {num: user_click_shortcuts_widget,              den: user_show_shortcuts_widget}
   user_ctr_rubricator_widget:                {num: user_click_rubricator_widget,             den: user_show_rubricator_widget}
+  user_ctr_seen_items_widget:                {num: user_click_seen_items_widget,             den: user_show_seen_items_widget}
 
