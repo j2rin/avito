@@ -106,12 +106,7 @@ select
     3 AS multiplier_3,
     5 AS multiplier_5,
     10 AS multiplier_10,
-    case 
-        when ((ss.item_flags & (1 << 32) > 0) and (ss.item_flags & (1 << 33) > 0)) then 'high'
-        when ((ss.item_flags & (1 << 32) > 0) and (ss.item_flags & (1 << 33) = 0)) then 'medium'
-        when ((ss.item_flags & (1 << 32) = 0) and (ss.item_flags & (1 << 33) > 0)) then 'low'
-        else NULL
-    end as reputation_class,
+    decode((ss.item_flags & ((1 << 32) + (1 << 33)))/power(2, 32), 1, 'medium', 2, 'low', 3, 'high', null) as reputation_class,
     case when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) = 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 1
     	 when ((ss.search_flags & (1 << 39) = 0) and (ss.search_flags & (1 << 40) > 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 2
          when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) > 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 3
