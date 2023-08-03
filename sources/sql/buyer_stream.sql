@@ -106,7 +106,7 @@ select
     3 AS multiplier_3,
     5 AS multiplier_5,
     10 AS multiplier_10,
-    decode((ss.item_flags & ((1 << 32) + (1 << 33)))/power(2, 32), 1, 'medium', 2, 'low', 3, 'high', null) as reputation_class,
+    decode((ss.item_flags & ((1 << 32) + (1 << 33))) / power(2, 32), 1, 'medium', 2, 'low', 3, 'high', null) as reputation_class,
     case when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) = 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 1
     	 when ((ss.search_flags & (1 << 39) = 0) and (ss.search_flags & (1 << 40) > 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 2
          when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) > 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 3
