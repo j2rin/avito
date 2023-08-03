@@ -3580,3 +3580,47 @@ passport_event_stream:
   primary_subject: passport
   dtm: event_datetime
   segm: passport_id
+
+buyer_reviews_stream:
+  metric_configs: [buyer_reviews_stream]
+  database: vertica
+  sql: buyer_reviews_stream
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions: [platform]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
+buyer_reviews:
+  metric_configs: [buyer_reviews]
+  database: vertica
+  sql: buyer_reviews
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
+  m42_cartesian_groups:
+    - [is_logged_in, vertical, logical_category]
+    - [category, subcategory]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+  segm: cookie_id

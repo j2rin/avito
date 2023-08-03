@@ -1,0 +1,10 @@
+metric.counter:
+  all_buyer_reviews_added:                       {}
+  cnt_all_buyer_reviews_score_sum:               {obs: [score]}
+
+
+metric.uniq:
+  user_all_buyer_reviews_added:                  {counter: all_buyer_reviews_added,               key: [user]}
+
+metric.ratio:
+  all_buyer_reviews_avg_score:                   {num: cnt_all_buyer_reviews_score_sum,           den: all_buyer_reviews_added}
