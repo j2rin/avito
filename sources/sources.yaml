@@ -3644,3 +3644,27 @@ fraud_tickets_user_reported:
   participant: { user: user_id }
   primary_subject: user
   dtm: create_date
+
+
+item_abuses:
+  metric_configs: [item_abuses]
+  database: vertica
+  sql: item_abuses
+  column_map:
+    user: user_id
+  dimensions:
+    [
+      platform,
+      abuse_type,
+      source,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+    ]
+  m42_cartesian_groups:
+    - [vertical, logical_category]
+    - [category, subcategory]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: abuse_Date
