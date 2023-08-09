@@ -1,15 +1,31 @@
 definitions:
-  - &is_total   { is_new_pro_seller_total: true }
+  - &new_pro_paying_seller   { metric_group: 'new_pro_paying_seller' }
+  - &reactivated_pro_seller   { metric_group: 'reactivated_pro_seller' }
+  - &reactivated_pro_paying_seller   { metric_group: 'reactivated_pro_paying_seller' }
+  - &is_total   { is_seller_total: true }
   - &is_ttft    { is_for_ttft: true }
 
 metric.counter:
-  new_pro_paying_sellers_total:                       { filter: [ *is_total ] }
-  new_pro_paying_sellers_vertical:                    { }
+  # new_pro_paying_seller
+  new_pro_paying_sellers_total:                       { filter: [ *new_pro_paying_seller, *is_total ] }
+  new_pro_paying_sellers_vertical:                    {filter: [ *new_pro_paying_seller ] }
   # metrics for time to first transaction ratio
-  new_pro_paying_sellers_total_for_ttft:              { filter: [ *is_total, *is_ttft ] }
-  new_pro_paying_sellers_vertical_for_ttft:           { filter: [ *is_ttft ] }
-  days_to_paying_convert_total:                       { obs: [days_to_paying_convert], filter: [ *is_total, *is_ttft ] }
-  days_to_paying_convert_vertical:                    { obs: [days_to_paying_convert], filter: [ *is_ttft ] }
+  new_pro_paying_sellers_total_for_ttft:              { filter: [ *new_pro_paying_seller, *is_total, *is_ttft ] }
+  new_pro_paying_sellers_vertical_for_ttft:           { filter: [ *new_pro_paying_seller, *is_ttft ] }
+  days_to_paying_convert_total:                       { obs: [days_to_paying_convert], filter: [ *new_pro_paying_seller, *is_total, *is_ttft ] }
+  days_to_paying_convert_vertical:                    { obs: [days_to_paying_convert], filter: [ *new_pro_paying_seller, *is_ttft ] }
+  # reactivated_pro_seller
+  reactivated_pro_sellers_total:                      { filter: [ *reactivated_pro_seller, *is_total ] }
+  reactivated_pro_sellers_vertical:                   { filter: [ *reactivated_pro_seller ] }
+  # reactivated_pro_paying_seller
+  reactivated_pro_paying_sellers_total:               { filter: [ *reactivated_pro_paying_seller, *is_total ] }
+  reactivated_pro_paying_sellers_vertical:            { filter: [ *reactivated_pro_paying_seller ] }
+
+metric.uniq:
+  reactivated_pro_sellers_total_uniq:                 { counter: reactivated_pro_sellers_total, key: [user] }
+  reactivated_pro_sellers_vertical_uniq:              { counter: reactivated_pro_sellers_total, key: [user_vertical] }
+  reactivated_pro_paying_sellers_total_uniq:          { counter: reactivated_pro_paying_sellers_total, key: [user] }
+  reactivated_pro_paying_sellers_vertical_uniq:       { counter: reactivated_pro_paying_sellers_vertical, key: [user_vertical] }
 
 metric.ratio:
   avg_days_to_pro_paying_convert_total:               { num: days_to_paying_convert_total, den: new_pro_paying_sellers_total_for_ttft }
