@@ -3442,6 +3442,56 @@ calendar_sellers_items:
   primary_subject: user
   dtm: event_date
 
+calendar_orders_mp:
+  metric_configs: [calendar_orders_mp]
+  database: vertica
+  sql: calendar_orders_mp
+  column_map:
+    user: seller_id # селлер
+    item: item_id
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
+  participant: { user: seller_id }
+  primary_subject: user
+  dtm: event_date
+
+calendar_sellers_items_mp:
+  metric_configs: [calendar_sellers_items_mp]
+  database: vertica
+  sql: calendar_sellers_items_mp
+  column_map:
+    user: user_id # селлер
+    item: item_id
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
 ux_feedback:
   metric_configs: [ux_feedback]
   database: vertica
