@@ -211,7 +211,8 @@ pre as (
         case when original.status = 'verified' then true else false end as is_original,
         -- has_short_video
         case when sv.video is not null then true else false end      as has_short_video,
-        TIMESTAMPDIFF(SECOND, co.create_date, case when ps.platformstatus = 'paid' then ps.actual_date end)/60 as time_to_payment
+        TIMESTAMPDIFF(SECOND, co.create_date, case when ps.platformstatus = 'paid' then ps.actual_date end)/60 as time_to_payment,
+  		(co.items_price >= 20000)::boolean as is_high_price
     from dma.current_order_item as coi
     join /*+distrib(l,a)*/ delivery_status_date as ps on ps.deliveryorder_id = coi.deliveryorder_id
     left join /*+distrib(l,a)*/ cic
