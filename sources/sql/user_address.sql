@@ -1,13 +1,18 @@
 with cal as 
+<<<<<<< HEAD
 (select * 
 from 
 	dict.calendar 
 where event_date::date between :first_date and :last_date),
+=======
+(select * from dict.calendar where event_date::date between :first_date and :last_date),
+>>>>>>> master
 user_address as 
 (select 
     event_date,
     uad.* 
 from 
+<<<<<<< HEAD
 	cal
     	join dma.current_user_addresses uad on created_at::date<=event_date
 ),
@@ -18,6 +23,11 @@ from
 	dma.dau_source 
 where pv_count>0 and event_date::date between :first_date and :last_date 
 group by 1,2,3)
+=======
+cal
+    join dma.current_user_addresses uad on created_at::date<=event_date
+)
+>>>>>>> master
 select 
     t.event_date,
     t.useraddress_id,
@@ -37,4 +47,9 @@ select
     ifnull(pv_count,0) as pv_count
 from 
     user_address t
+<<<<<<< HEAD
         left join dau using(event_date, user_id)
+=======
+        left join (select event_date, user_id, platform_id, sum(pv_count) pv_count from dma.dau_source where pv_count>0 and event_date::date between :first_date and :last_date group by 1,2,3)dau using(event_date, user_id);
+        
+>>>>>>> master
