@@ -1,0 +1,87 @@
+definitions:
+  - &active       {status: 1}
+  - &migrated     {status: 2}
+  - &removed      {status: 3}
+
+  - &home         {kind: 1}
+  - &work         {kind: 2}
+  - &other        {kind: 3}
+
+  - &has_apt        {has_apartments: true}
+  - &has_floor      {has_floor: true}
+  - &has_ent        {has_entrance: true}
+  - &has_comment    {has_comment: true}
+
+  - &added_today        {created_today: true}
+  - &deleted_today      {deleted_today: true}
+  - &updated_today      {updated_today: true}
+
+metric.counter:
+  address_cnt:                     {}
+  address_active_cnt:              {filter: [*active]}
+  address_migrated_cnt:            {filter: [*migrated]}
+  address_removed_cnt:             {filter: [*removed]}
+
+
+  address_active_home_cnt:              {filter: [*active, *home]}
+  address_active_work_cnt:              {filter: [*active, *work]}
+  address_active_other_cnt:             {filter: [*active, *other]}
+
+  address_active_has_apt_cnt:              {filter: [*active, *has_apt]}
+  address_active_has_floor_cnt:            {filter: [*active, *has_floor]}
+  address_active_has_ent_cnt:              {filter: [*active, *has_ent]}
+  address_active_has_comment_cnt:          {filter: [*active, *has_comment]}
+  address_active_has_afe_cnt:              {filter: [*active, *has_ent, *has_floor, *has_apt]}
+  address_active_has_afec_cnt:              {filter: [*active, *has_ent, *has_floor, *has_apt, *has_comment]}
+
+  address_add_cnt:          {filter: [*active, *added_today]}
+  address_delete_cnt:        {filter: [*active, *deleted_today]}
+  address_update_cnt:        {filter: [*active, *updated_today]}
+
+
+metric.uniq:
+  addresses: { counter: address_cnt, key: [useraddress_id] }
+
+  address_active: { counter: address_active_cnt, key: [useraddress_id] }
+  address_migrated: { counter: address_migrated_cnt, key: [useraddress_id] }
+  address_removed: { counter: address_removed_cnt, key: [useraddress_id] }
+
+  address_active_home: { counter: address_active_home_cnt, key: [useraddress_id] }
+  address_active_work: { counter: address_active_work_cnt, key: [useraddress_id] }
+  address_active_other: { counter: address_active_other_cnt, key: [useraddress_id] }
+
+  address_active_apt: { counter: address_active_has_apt_cnt, key: [useraddress_id] }
+  address_active_floor: { counter: address_active_has_floor_cnt, key: [useraddress_id] }
+  address_active_ent: { counter: address_active_has_ent_cnt, key: [useraddress_id] }
+  address_active_comment: { counter: address_active_has_comment_cnt, key: [useraddress_id] }
+  address_active_afe: { counter: address_active_has_afe_cnt, key: [useraddress_id] }
+  address_active_afec: { counter: address_active_has_afec_cnt, key: [useraddress_id] }
+
+  address_add: { counter: address_add_cnt, key: [useraddress_id] }
+  address_del: { counter: address_delete_cnt, key: [useraddress_id] }
+  address_upd: { counter: address_update_cnt, key: [useraddress_id] }
+
+
+  user_address: { counter: address_cnt, key: [user_id] }
+
+  user_address_active: { counter: address_active_cnt, key: [user_id] }
+  user_address_migrated: { counter: address_migrated_cnt, key: [user_id] }
+  user_address_removed: { counter: address_removed_cnt, key: [user_id] }
+
+  user_address_active_home: { counter: address_active_home_cnt, key: [user_id] }
+  user_address_active_work: { counter: address_active_work_cnt, key: [user_id] }
+  user_address_active_other: { counter: address_active_other_cnt, key: [user_id] }
+
+  user_address_active_apt: { counter: address_active_has_apt_cnt, key: [user_id] }
+  user_address_active_floor: { counter: address_active_has_floor_cnt, key: [user_id] }
+  user_address_active_ent: { counter: address_active_has_ent_cnt, key: [user_id] }
+  user_address_active_comment: { counter: address_active_has_comment_cnt, key: [user_id] }
+  user_address_active_afe: { counter: address_active_has_afe_cnt, key: [user_id] }
+  user_address_active_afec: { counter: address_active_has_afec_cnt, key: [user_id] }
+
+  user_address_add: { counter: address_add_cnt, key: [user_id] }
+  user_address_del: { counter: address_delete_cnt, key: [user_id] }
+  user_address_upd: { counter: address_update_cnt, key: [user_id] }
+
+  user_address_2plus: { counter: address_cnt, key: [{ user_id: 1 }] }
+  user_address_active_2plus: { counter: address_active_cnt, key: [{ user_id: 1 }] }
