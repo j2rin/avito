@@ -1,0 +1,9 @@
+definitions:
+  - &is_total   { is_seller_total: true }
+  - &is_paying   { is_paying_seller: true }
+
+metric.counter:
+  active_pro_sellers_total:                      { filter: [ *is_total ] }
+  active_pro_sellers_vertical:                   { filter: [ ] }
+  active_pro_paying_sellers_total:               { filter: [ *is_total, *is_paying ] }
+  active_pro_paying_sellers_vertical:            { filter: [ *is_paying ] }
