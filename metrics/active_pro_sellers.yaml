@@ -7,3 +7,9 @@ metric.counter:
   active_pro_sellers_vertical:                   { filter: [ ] }
   active_pro_paying_sellers_total:               { filter: [ *is_total, *is_paying ] }
   active_pro_paying_sellers_vertical:            { filter: [ *is_paying ] }
+
+metric.uniq:
+  active_pro_sellers_total_uniq:                 { counter: active_pro_sellers_total, key: [user] }
+  active_pro_sellers_vertical_uniq:              { counter: active_pro_sellers_vertical, key: [user_vertical] }
+  active_pro_paying_sellers_total_uniq:          { counter: active_pro_paying_sellers_total, key: [user] }
+  active_pro_paying_sellers_vertical_uniq:       { counter: active_pro_paying_sellers_vertical, key: [user_vertical] }

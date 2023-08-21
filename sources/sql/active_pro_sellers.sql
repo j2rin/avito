@@ -8,11 +8,11 @@ daily_active_listers as (
         count(sia.item_id) as items
     from DMA.o_seller_item_active sia
     join dma.current_microcategories cm on cm.microcat_id = sia.microcat_id
-    where event_date::date between :first_date::date and :last_date::date
-        and is_active
-        and not coalesce(is_marketplace, false)
-        and sia.event_date::date between :first_date::date and :last_date::date
-        and user_id is not null
+    where sia.event_date::date between :first_date::date and :last_date::date
+        and sia.is_active
+        and not coalesce(sia.is_marketplace, false)
+        and not coalesce(sia.is_user_test, false)
+        and sia.user_id is not null
     group by 1, 2, 3, 4
 ),
 daily_active_listers_w_segment as (
