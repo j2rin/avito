@@ -14,8 +14,6 @@ import sys
 from http import client as httplib
 from time import sleep
 
-from validate_sql import validate as validate_sql
-
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
 PUBLISH_URL = '/api/publishMetricsRepo'
@@ -42,6 +40,11 @@ CONFIGS = [
     ),
 ]
 
+DEPRECATED_CONFIGS = [
+    'breakdown_presets',
+    'ab_config_presets',
+    'metrics_lists'
+]
 
 def validate_configs():
     result, file_name_maps = send_all(VALIDATE_URL)
@@ -82,9 +85,6 @@ def validate():
 
     try:
         success = validate_configs()
-
-        if success:
-            success = validate_sql()
 
     except Exception as e:
         success = False
@@ -129,6 +129,10 @@ def send_all(url, api_key=None):
         data['api_key'] = api_key
 
     for name, path, is_multi in CONFIGS:
+        if name in DEPRECATED_CONFIGS:
+            data[name] = {}
+            file_name_maps[name] = {}
+            continue
         if is_multi:
             data[name], file_name_maps[name] = read_yamls(path)
         else:
