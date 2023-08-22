@@ -118,7 +118,7 @@ metric.counter:
   domoteka_amount_net_adj:                            {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'check']}
   str_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'buyer book']}
   chatbots_amount_net_adj:                            {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'JOB ChatBot']}
-  cpt_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'cpt', transaction_subtype: 'c2c commission']}
+  cpt_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'cpt', transaction_subtype: ['c2c commission', 'b2c commission']]}
   pc_w_classified_amount_net_adj:                     {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, $or: [is_classified: true, product_type: 'paid_contact']]}
   vas_amount_net_adj_visual_cpa_user:                 {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'vas', product_subtype: 'visual', is_user_cpa: true]}
   vas_amount_net_adj_performance_cpa_user:            {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'vas', product_subtype: 'performance', is_user_cpa: true]}
