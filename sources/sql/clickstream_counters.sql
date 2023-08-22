@@ -1,4 +1,4 @@
-select
+select 
     cs.event_date,
     cs.eid,
     cs.platform_id,
