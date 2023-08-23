@@ -118,7 +118,7 @@ select
     datediff('hour', ial.start_time, ss.event_date) as item_start_hours,
     pg.price_group,
     hash(
-        round(3^round(log(3, ial.price), 1)),
+        round(exp(round(ln(ial.price), 1))),
         ss.item_user_id,
         ss.microcat_id,
         ss.x,

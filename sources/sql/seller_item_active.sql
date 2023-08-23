@@ -84,7 +84,7 @@ select /*+syntactic_join*/
     ss.cpaaction_type,
     ir.reputation_class,
     hash(
-        round(3^round(log(3, ss.price), 1)),
+        round(exp(round(ln(ss.price), 1))),
         ss.user_id,
         ss.microcat_id
         ) as user_microcat_price
