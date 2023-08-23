@@ -13,6 +13,7 @@ import os
 import sys
 from http import client as httplib
 from time import sleep
+from validate_sql import validate as validate_sql
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
@@ -85,6 +86,9 @@ def validate():
 
     try:
         success = validate_configs()
+
+        if success:
+            success = validate_sql()
 
     except Exception as e:
         success = False
