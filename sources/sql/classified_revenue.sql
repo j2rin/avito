@@ -74,7 +74,8 @@ select
     lc.logical_param2_id,
     udc.user_id is not null as is_user_cpa,
 	cpaaction_type,
-	cpa_target_action_count
+	cpa_target_action_count,
+	cpt.user_id is not null as is_user_cpt_tariff
 from DMA.paying_user_report ur
 join current_transaction_type ctt using(transactiontype_id)
 
@@ -127,6 +128,15 @@ left join (
     and ur.event_date = udc.event_date
 
 left join condition using(is_new)
+
+left join (
+    select distinct event_date, user_id
+    from dma.presence_users_distribution
+    where event_date between :first_date and :last_date
+        and tariff_scenario in ('mvp_cpt', 'ss_cpt')
+) cpt
+    on ur.user_id = cpt.user_id
+    and ur.event_date = cpt.event_date
 
 where ur.user_id not in (select cu.user_id from dma.current_user cu where cu.IsTest)
     and ur.event_date::date between :first_date and :last_date
