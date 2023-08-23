@@ -26,21 +26,20 @@ def parse_sql_filename(path):
 
 
 def list_modified_files():
-    try:
+    result = []
+
+    if MODIFIED_FILES_PATH:
+        # В TeamCity модифицированные файлы будут подсовываться в файлик
+        with open(MODIFIED_FILES_PATH, 'r') as f:
+            result = f.read().splitlines()
+    else:
         # Для локального запуска
         from git import Repo
 
         repo = Repo('.')
         origin_master = repo.commit(PRODUCTION_BRANCH)
-        result = []
         for item in origin_master.diff(None):
             result.append(item.a_path)
-    except ImportError:
-        # В TeamCity модифицированные файлы будут подсовываться в файлик
-        with open(MODIFIED_FILES_PATH, 'r') as f:
-            result = f.read().splitlines()
-    except Exception:
-        raise
 
     return result
 
