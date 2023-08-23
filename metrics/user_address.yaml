@@ -16,12 +16,13 @@ definitions:
   - &deleted_today      {deleted_today: true}
   - &updated_today      {updated_today: true}
 
+  - &active_user        {pv_count.>: 0 }
+
 metric.counter:
   address_cnt:                     {}
   address_active_cnt:              {filter: [*active]}
   address_migrated_cnt:            {filter: [*migrated]}
   address_removed_cnt:             {filter: [*removed]}
-
 
   address_active_home_cnt:              {filter: [*active, *home]}
   address_active_work_cnt:              {filter: [*active, *work]}
@@ -37,6 +38,18 @@ metric.counter:
   address_add_cnt:          {filter: [*active, *added_today]}
   address_delete_cnt:        {filter: [*active, *deleted_today]}
   address_update_cnt:        {filter: [*active, *updated_today]}
+
+  user_active_address_active_cnt:              {filter: [*active, *active_user]}
+  user_active_address_active_home_cnt:              {filter: [*active, *home, *active_user]}
+  user_active_address_active_work_cnt:              {filter: [*active, *work, *active_user]}
+  user_active_address_active_other_cnt:             {filter: [*active, *other, *active_user]}
+
+  user_active_address_active_has_apt_cnt:              {filter: [*active, *has_apt, *active_user]}
+  user_active_address_active_has_floor_cnt:            {filter: [*active, *has_floor, *active_user]}
+  user_active_address_active_has_ent_cnt:              {filter: [*active, *has_ent, *active_user]}
+  user_active_address_active_has_comment_cnt:          {filter: [*active, *has_comment, *active_user]}
+  user_active_address_active_has_afe_cnt:              {filter: [*active, *has_ent, *has_floor, *has_apt, *active_user]}
+  user_active_address_active_has_afec_cnt:              {filter: [*active, *has_ent, *has_floor, *has_apt, *has_comment, *active_user]}
 
 
 metric.uniq:
@@ -85,3 +98,16 @@ metric.uniq:
 
   user_address_2plus: { counter: address_cnt, key: [{ user_id: 1 }] }
   user_address_active_2plus: { counter: address_active_cnt, key: [{ user_id: 1 }] }
+
+
+  user_active_address_active:                   { counter: user_active_address_active_cnt, key: [user_id] }
+  user_active_address_active_home:              { counter: user_active_address_active_home_cnt, key: [user_id] }
+  user_active_address_active_work:              { counter: user_active_address_active_work_cnt, key: [user_id] }
+  user_active_address_active_other:             { counter: user_active_address_active_other_cnt, key: [user_id] }
+
+  user_active_address_active_has_apt:              { counter: user_active_address_active_has_apt_cnt, key: [user_id] }
+  user_active_address_active_has_floor:            { counter: user_active_address_active_has_floor_cnt, key: [user_id] }
+  user_active_address_active_has_ent:              { counter: user_active_address_active_has_ent_cnt, key: [user_id] }
+  user_active_address_active_has_comment:          { counter: user_active_address_active_has_comment_cnt, key: [user_id] }
+  user_active_address_active_has_afe:              { counter: user_active_address_active_has_afe_cnt, key: [user_id] }
+  user_active_address_active_has_afec:             { counter: user_active_address_active_has_afec_cnt, key: [user_id] }
