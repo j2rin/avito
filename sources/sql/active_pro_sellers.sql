@@ -3,11 +3,22 @@ daily_active_listers as (
     select
         sia.event_date,
         sia.user_id,
-        cm.logical_category_id,
-        cm.vertical_id,
+        coalesce(lc.vertical_id, cm.vertical_id) as vertical_id,
+        coalesce(lc.logical_category_id, cm.logical_category_id) as logical_category_id,
         count(sia.item_id) as items
     from DMA.o_seller_item_active sia
-    join dma.current_microcategories cm on cm.microcat_id = sia.microcat_id
+    left join /*+jtype(h),distrib(l,a)*/ (
+        select infmquery_id, logcat_id
+        from infomodel.current_infmquery_category
+        where infmquery_id in (
+            select distinct infmquery_id
+            from dma.o_seller_item_active
+            where event_date::date between :first_date and :last_date
+                and infmquery_id is not null
+        )
+    ) ic on ic.infmquery_id = sia.infmquery_id
+    left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
+    left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm on cm.microcat_id = sia.microcat_id
     where sia.event_date::date between :first_date::date and :last_date::date
         and sia.is_active
         and not coalesce(sia.is_marketplace, false)
