@@ -54,6 +54,9 @@
            chat_on_time,
            chat_sl,
            call_transfered,
-           call_queue_changed
+           call_queue_changed,
+           chat_reopen,
+           chat_thank_question,
+           chat_reopen_after_thank
 	  from dma.support_metric_observation
 where event_date::date between :first_date and :last_date

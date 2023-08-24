@@ -11,6 +11,7 @@
   		   participant_id,
   		   observation_name,
   		   observation_value,
+           has_short_video,
   		   -- Dimensions -----------------------------------------------------------------------------------------------------
 	       cm.Param1_microcat_id                                        as param1_id,
 	       cm.Param2_microcat_id                                        as param2_id,
