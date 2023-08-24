@@ -10,6 +10,7 @@ user_address as
 from
 	cal
     	join dma.current_user_addresses uad on created_at::date<=event_date
+where user_id not in (select user_id from dma.current_user where isTest)
 ),
 dau as
 (select
@@ -25,7 +26,7 @@ select
     t.user_id,
     t.kind,
     t.status,
-		t.has_apartments,
+	t.has_apartments,
     t.has_entrance,
     t.has_floor,
     t.has_comment,
