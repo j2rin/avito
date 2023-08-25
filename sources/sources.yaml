@@ -3727,6 +3727,21 @@ user_address:
   dtm: event_date
   segm: user_id
 
+active_pro_sellers:
+  metric_configs: [active_pro_sellers]
+  database: vertica
+  sql: active_pro_sellers
+  column_map:
+    user: user_id
+    user_vertical: [user_id, vertical_id]
+  dimensions: [vertical, logical_category, user_segment_market]
+  m42_cartesian_groups:
+    - [vertical, logical_category, user_segment_market]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
+
 passport_coverage_m42:
   metric_configs: [passport_coverage_m42]
   database: vertica
