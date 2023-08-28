@@ -2,6 +2,8 @@ definitions:
   - &new_pro_paying_seller   { metric_group: 'new_pro_paying_seller' }
   - &reactivated_pro_seller   { metric_group: 'reactivated_pro_seller' }
   - &reactivated_pro_paying_seller   { metric_group: 'reactivated_pro_paying_seller' }
+  - &x_vertical_new_pro_seller   { metric_group: 'x_vertical_new_pro_seller' }
+  - &x_vertical_new_pro_paying_seller   { metric_group: 'x_vertical_new_pro_paying_seller' }
   - &is_total   { is_seller_total: true }
   - &is_ttft    { is_for_ttft: true }
 
@@ -20,6 +22,10 @@ metric.counter:
   # reactivated_pro_paying_seller
   reactivated_pro_paying_sellers_total:               { filter: [ *reactivated_pro_paying_seller, *is_total ] }
   reactivated_pro_paying_sellers_vertical:            { filter: [ *reactivated_pro_paying_seller ] }
+  # x_vertical_new_pro_seller
+  x_vertical_new_pro_sellers:                         { filter: [ *x_vertical_new_pro_seller ] }
+  # x_vertical_new_pro_paying_seller
+  x_vertical_new_pro_paying_sellers:                  { filter: [ *x_vertical_new_pro_paying_seller ] }
 
 metric.uniq:
   reactivated_pro_sellers_total_uniq:                 { counter: reactivated_pro_sellers_total, key: [user] }
