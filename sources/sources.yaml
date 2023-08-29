@@ -3699,7 +3699,6 @@ fraud_tickets_user_reported:
   primary_subject: user
   dtm: create_date
 
-
 item_abuses:
   metric_configs: [item_abuses]
   database: vertica
@@ -3731,16 +3730,15 @@ hacked_metrics:
   dtm: event_date
   segm: user_id
 
-
 user_address:
-    metric_configs: [user_address]
-    database: vertica
-    sql: user_address
-    dimensions: [platform]
-    participant: { user: user_id }
-    primary_subject: user
-    dtm: event_date
-    segm: user_id
+  metric_configs: [user_address]
+  database: vertica
+  sql: user_address
+  dimensions: [platform]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
 
 active_pro_sellers:
   metric_configs: [active_pro_sellers]
@@ -3756,3 +3754,11 @@ active_pro_sellers:
   primary_subject: user
   dtm: event_date
   segm: user_id
+
+passport_coverage_m42:
+  metric_configs: [passport_coverage_m42]
+  database: vertica
+  sql: passport_coverage_m42
+  participant: { user: _ } # No participants in table, just value by date.
+  primary_subject: user
+  dtm: calc_date
