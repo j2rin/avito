@@ -1,4 +1,7 @@
 metric.counter:
+  # Add scenario.
+  cnt_event_passport_add_profile: {filter: [eid: 7728]}
+
   # Merge scenario.
   cnt_event_passport_merge_start: { filter: [eid: 7535] }
   cnt_event_passport_merge_success: { filter: [eid: 7540] }
@@ -8,6 +11,11 @@ metric.counter:
   cnt_event_passport_create_success: { filter: [eid: 6582] }
 
 metric.uniq:
+  # Add scenario.
+  cnt_passport_passport_add_profile:
+    counter: cnt_event_passport_add_profile
+    key: [passport_id]
+  
   # Merge scenario.
   cnt_passport_passport_merge_start:
     counter: cnt_event_passport_merge_start
@@ -29,7 +37,6 @@ metric.ratio:
   cnt_event_passport_merge_start_to_finish:
     num: cnt_event_passport_merge_success
     den: cnt_event_passport_merge_start
-
   cnt_passport_passport_merge_start_to_finish:
     num: cnt_passport_passport_merge_success
     den: cnt_passport_passport_merge_start
@@ -38,7 +45,6 @@ metric.ratio:
   cnt_event_passport_create_start_to_finish:
     num: cnt_event_passport_create_success
     den: cnt_event_passport_create_start
-
   cnt_passport_passport_create_start_to_finish:
     num: cnt_passport_passport_create_success
     den: cnt_passport_passport_create_start
