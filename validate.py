@@ -13,7 +13,11 @@ import os
 import sys
 from http import client as httplib
 from time import sleep
+
+from dotenv import load_dotenv
 from validate_sql import validate as validate_sql
+
+load_dotenv()
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
@@ -41,11 +45,8 @@ CONFIGS = [
     ),
 ]
 
-DEPRECATED_CONFIGS = [
-    'breakdown_presets',
-    'ab_config_presets',
-    'metrics_lists'
-]
+DEPRECATED_CONFIGS = ['breakdown_presets', 'ab_config_presets', 'metrics_lists']
+
 
 def validate_configs():
     result, file_name_maps = send_all(VALIDATE_URL)

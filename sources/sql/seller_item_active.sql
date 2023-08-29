@@ -224,11 +224,12 @@ left join /*+distrib(l,r)*/ (
                 user_id,
                 item_id,
                 event_timestamp::date as from_date,
-                argmax_agg(event_timestamp, reputation_class) as reputation_class
+                reputation_class,
+                row_number() over(partition by user_id, item_id, event_timestamp::date order by event_timestamp desc) as rn
             from DMA.click_stream_item_reputation
             where event_timestamp::date <= :last_date
-            group by 1, 2, 3
         ) r
+        where rn = 1
     ) r
     join dict.calendar c on c.event_date between :first_date::date and :last_date::date
     where c.event_date >= r.from_date and c.event_date < r.to_date
