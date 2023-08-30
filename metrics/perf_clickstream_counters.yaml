@@ -38,6 +38,8 @@ metric.counter:
   network_client_parsing_error:                      {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'parsing failure'], obs: [events_count]}
   network_client_no_session_error:                   {filter: [eid: 4599, network_error_type: 'network client error', network_error_sub_type: 'attempt to send authorized request with no session'], obs: [events_count]}
 
+  memory_leak:                                       {filter: [eid: 8837], obs: [events_count]}
+
 
 metric.uniq:
   user_anr_error:                                    {counter: anr_error, key: [cookie]}
@@ -57,6 +59,8 @@ metric.uniq:
   user_network_backend_error:                        {counter: network_backend_error, key: [cookie]}
   user_network_network_error:                        {counter: network_network_error, key: [cookie]}
   user_network_upload_error:                         {counter: network_upload_error, key: [cookie]}
+
+  user_memory_leak:                                  {counter: memory_leak, key: [cookie]}
 
 
 metric.ratio:
