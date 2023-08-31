@@ -27,36 +27,37 @@ metric.counter:
   sms_action:                              {filter: [eid: 2619, notification_channel: 'sms'], obs: [events_count]}
   nc_action:                               {filter: [eid: 2619, notification_channel: 'notificationCenter'], obs: [events_count]}
   email_action:                            {filter: [eid: 2619, notification_channel: 'email'], obs: [events_count]}
-  push_rec_marketing_no_data:              {obs: [events_count]}
-  push_rec_marketing_prepared:             {obs: [events_count]}
-  push_rec_marketing_to_provider:          {obs: [events_count]}
-  push_rec_marketing_to_receiver:          {obs: [events_count]}
-  push_rec_marketing_open:                 {obs: [events_count]}
-  push_marketing_to_receiver:              {obs: [events_count]}
-  browser_pushes_marketing_to_receiver:    {obs: [events_count]}
-  sms_marketing_to_receiver:               {obs: [events_count]}
-  nc_marketing_to_receiver:                {obs: [events_count]}
-  email_marketing_to_receiver:             {obs: [events_count]}
-  push_rec_to_receiver:                    {obs: [events_count]}
-  push_crm_to_receiver:                    {obs: [events_count]}
-  notification_marketing_prepared:         {obs: [events_count]}
-  notification_marketing_no_data:          {obs: [events_count]}
-  notification_marketing_to_provider:      {obs: [events_count]}
-  notification_marketing_to_receiver:      {obs: [events_count]}
-  notification_marketing_open:             {obs: [events_count]}
-  notification_marketing_action:           {obs: [events_count]}
-  notification_rec_prepared:               {obs: [events_count]}
-  notification_rec_no_data:                {obs: [events_count]}
-  notification_rec_to_provider:            {obs: [events_count]}
-  notification_rec_to_receiver:            {obs: [events_count]}
-  notification_rec_open:                   {obs: [events_count]}
-  notification_rec_action:                 {obs: [events_count]}
-  notification_crm_prepared:               {obs: [events_count]}
-  notification_crm_no_data:                {obs: [events_count]}
-  notification_crm_to_provider:            {obs: [events_count]}
-  notification_crm_to_receiver:            {obs: [events_count]}
-  notification_crm_open:                   {obs: [events_count]}
-  notification_crm_action:                 {obs: [events_count]}
+  push_rec_marketing_no_data:              {filter: [eid: 2615, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  push_rec_marketing_prepared:             {filter: [eid: 2614, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  push_rec_marketing_to_provider:          {filter: [eid: 2616, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  push_rec_marketing_to_receiver:          {filter: [eid: 2617, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  push_rec_marketing_open:                 {filter: [eid: 2618, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  push_marketing_to_receiver:              {filter: [eid: 2617, notification_channel: 'appPush', notification_owner: 'Marketing'], obs: [events_count]}
+  browser_pushes_marketing_to_receiver:    {filter: [eid: 2617, notification_channel: 'browserPush', notification_owner: 'Marketing'], obs: [events_count]}
+  sms_marketing_to_receiver:               {filter: [eid: 2617, notification_channel: 'sms', notification_owner: 'Marketing'], obs: [events_count]}
+  nc_marketing_to_receiver:                {filter: [eid: 2617, notification_channel: 'notificationCenter', notification_owner: 'Marketing'], obs: [events_count]}
+  email_marketing_to_receiver:             {filter: [eid: 2617, notification_channel: 'email', notification_owner: 'Marketing'], obs: [events_count]}
+  push_rec_to_receiver:                    {filter: [eid: 2617, notification_channel: 'appPush', notification_owner: 'Recommendations'], obs: [events_count]}
+  push_crm_to_receiver:                    {filter: [eid: 2617, notification_channel: 'appPush', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  notification_marketing_prepared:         {filter: [eid: 2614, notification_owner: 'Marketing'], obs: [events_count]}
+  notification_marketing_no_data:          {filter: [eid: 2615, notification_owner: 'Marketing'], obs: [events_count]}
+  notification_marketing_to_provider:      {filter: [eid: 2616, notification_owner: 'Marketing'], obs: [events_count]}
+  notification_marketing_to_receiver:      {filter: [eid: 2617, notification_owner: 'Marketing'], obs: [events_count]}
+  notification_marketing_open:             {filter: [eid: 2618, notification_owner: 'Marketing'], obs: [events_count]}
+  notification_marketing_action:           {filter: [eid: 2619, notification_owner: 'Marketing'], obs: [events_count]}
+  notification_rec_prepared:               {filter: [eid: 2614, notification_owner: 'Recommendations'], obs: [events_count]}
+  notification_rec_no_data:                {filter: [eid: 2615, notification_owner: 'Recommendations'], obs: [events_count]}
+  notification_rec_to_provider:            {filter: [eid: 2616, notification_owner: 'Recommendations'], obs: [events_count]}
+  notification_rec_to_receiver:            {filter: [eid: 2617, notification_owner: 'Recommendations'], obs: [events_count]}
+  notification_rec_open:                   {filter: [eid: 2618, notification_owner: 'Recommendations'], obs: [events_count]}
+  notification_rec_action:                 {filter: [eid: 2619, notification_owner: 'Recommendations'], obs: [events_count]}
+  notification_crm_prepared:               {filter: [eid: 2614, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  notification_crm_no_data:                {filter: [eid: 2615, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  notification_crm_to_provider:            {filter: [eid: 2616, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  notification_crm_to_receiver:            {filter: [eid: 2617, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  notification_crm_open:                   {filter: [eid: 2618, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  notification_crm_action:                 {filter: [eid: 2619, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
+  
   notifications_off_profile:               {obs: [events_count]}
   notifications_on_profile:                {obs: [events_count]}
   notifications_off_system:                {obs: [events_count]}
