@@ -2,13 +2,33 @@ metric.counter:
   authorized_page_views:                   {filter: [user_id.isnull: false],  obs: [events_count]}
   page_views:                              {                                  obs: [events_count]}
   item_views_count:                        {                                  obs: [itemviews_count]}
+  active_count:                            {                                  obs: [itemviews_count, serp_count]}
+  serp_count:                              {                                  obs: [serp_count]}
+  btc_count:                               {                                  obs: [btc_count]}
+  c_count:                                 {                                  obs: [contact_count]}
 
 metric.uniq:
   daily_active_authorized_users:           {counter: authorized_page_views,   key: [user]}
   daily_active_users:                      {counter: page_views,              key: [cookie]}
   user_day_iv:                             {counter: item_views_count,        key: [cookie_day_hash]}
   user_month_iv:                           {counter: item_views_count,        key: [cookie_month_hash]}
+  user_day_s:                              {counter: serp_count,              key: [cookie_day_hash]}
+  user_month_s:                            {counter: serp_count,              key: [cookie_month_hash]}
+  user_day_active:                         {counter: active_count,            key: [cookie_day_hash]}
+  user_month_active:                       {counter: active_count,            key: [cookie_month_hash]}
+  user_day_btc:                            {counter: btc_count,               key: [cookie_day_hash]}
+  user_month_btc:                          {counter: btc_count,               key: [cookie_month_hash]}
+  user_day_c:                              {counter: c_count,                 key: [cookie_day_hash]}
+  user_month_c:                            {counter: c_count,                 key: [cookie_month_hash]}
+  user_day_page_view:                      {counter: page_views,              key: [cookie_day_hash]}
+  user_month_page_view:                    {counter: page_views,              key: [cookie_month_hash]}
 
 metric.ratio:
   authorized_visitors_share:               {num: daily_active_authorized_users,   den: daily_active_users}
   user_day_iv_per_month:                   {num: user_day_iv,                     den: user_month_iv}
+  user_day_s_per_month:                    {num: user_day_s,                      den: user_month_s}
+  user_day_active_per_month:               {num: user_day_active,                 den: user_month_active}
+  user_day_btc_per_month:                  {num: user_day_btc,                    den: user_month_btc}
+  user_day_c_per_month:                    {num: user_day_c,                      den: user_month_c}
+  user_day_page_view_per_month:            {num: user_day_page_view,              den: user_month_page_view}
+
