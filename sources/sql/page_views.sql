@@ -31,8 +31,11 @@ select /*+syntactic_join*/
     cl.LocationGroup_id                                    as location_group_id,
     cl.City_Population_Group                               as population_group,
     cl.Logical_Level                                       as location_level_id,
-    src.pv_count as events_count,
-    src.iv_count as itemviews_count,
+    src.pv_count                                           as events_count,
+    src.iv_count                                           as itemviews_count,
+    src.serp_count                                         as serp_count,
+    src.btc_count                                          as btc_count,
+    src.contact                                            as contact_count,
     hash(src.cookie_id, src.event_date)                        as cookie_day_hash,
     hash(src.cookie_id, date_trunc('month', src.event_date))   as cookie_month_hash
 from dma.dau_source src
