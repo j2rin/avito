@@ -1,6 +1,9 @@
-# IAC Mertics Description: https://docs.google.com/spreadsheets/d/1te22Wy-GVOW7VR4sTDmrRYb6x4SniWAcYfeZPWOmkhM
+# IAC Metrics Description: https://docs.google.com/spreadsheets/d/1te22Wy-GVOW7VR4sTDmrRYb6x4SniWAcYfeZPWOmkhM
 
 definitions:
+  - &is_iac               {communication: iac}
+
+
   # Screens
   - &item_scenarios       [item, item_gallery]
   - &serp_scenarios       [item_feed, item_feed_photo]
@@ -18,31 +21,31 @@ definitions:
 
 
   # Filters
-  - &is_item_c            {AppCallScenario: *item_scenarios}
-  - &is_serp_c            {AppCallScenario: *serp_scenarios}
-  - &is_messenger_c       {AppCallScenario: *messenger_scenarios}
-  - &is_call_c            {AppCallScenario: *call_scenarios}
-  - &is_pro_c             {AppCallScenario: *pro_scenarios}
-  - &is_redirect_c        {AppCallScenario: *redirect_scenarios}
-  - &is_other_c           {AppCallScenario: *other_scenarios}
+  - &is_item_c            {communication_type: *item_scenarios}
+  - &is_serp_c            {communication_type: *serp_scenarios}
+  - &is_messenger_c       {communication_type: *messenger_scenarios}
+  - &is_call_c            {communication_type: *call_scenarios}
+  - &is_pro_c             {communication_type: *pro_scenarios}
+  - &is_redirect_c        {communication_type: *redirect_scenarios}
+  - &is_other_c           {communication_type: *other_scenarios}
 
-  - &is_callback_c        {AppCallScenario: *callback_scenario}
-  - &is_direct_c          {AppCallScenario: *direct_scenario}
-  - &is_c                 {AppCallScenario: *any_scenario}
+  - &is_callback_c        {communication_type: *callback_scenario}
+  - &is_direct_c          {communication_type: *direct_scenario}
+  - &is_c                 {communication_type: *any_scenario}
 
-  - &is_outgoing          {CallType: outgoing}
-  - &is_incoming          {CallType: incoming}
-  - &is_answered          {TalkDuration.>: 0}
-  - &is_success           {TalkDuration.>: 30}
-  - &is_zero              {TalkDuration.=: 0}
+  - &is_outgoing          {caller_is_buyer: false}
+  - &is_incoming          {caller_is_buyer: true}
+  - &is_answered          {is_answered: True}
+  - &is_success           {talk_duration.>: 30}
+  - &is_zero              {talk_duration.=: 0}
   
 
-  # Auxiliary filters (TBC)
-  - &is_initiated       {$or: [{is_receiver_init: True}, {is_receiver_ringing: True}, {TalkDuration.>: 0}]}
-  - &is_ringing         {$or: [{is_receiver_ringing: True}, {TalkDuration.>: 0}]}
-  - &mic_granted        {Reciever_MicAccess: True}
-  - &mic_notgranted     {Reciever_MicAccess: False}
-  - &mic_checked        {Reciever_MicAccess.isnull: False}
+  # Auxiliary filters
+  # - &is_initiated       {$or: [{is_receiver_init: True}, {is_receiver_ringing: True}, {talk_duration.>: 0}]}
+  # - &is_ringing         {$or: [{is_receiver_ringing: True}, {talk_duration.>: 0}]}
+  # - &mic_granted        {Reciever_MicAccess: True}
+  # - &mic_notgranted     {Reciever_MicAccess: False}
+  # - &mic_checked        {Reciever_MicAccess.isnull: False}
 
 
 
@@ -50,69 +53,70 @@ definitions:
 metric.counter:
 
   # Essential
-  appcall_sx_any_calls:                         {filter: [*is_c]}
-  appcall_sx_any_answered:                      {filter: [*is_c, *is_answered]}
-  appcall_sx_any_talkseconds:                   {filter: [*is_c, *is_answered], obs: [TalkDuration]}
+  appcall_sx_any_calls:                         {filter: [*is_iac, *is_c]}
+  appcall_sx_any_answered:                      {filter: [*is_iac, *is_c, *is_answered]}
+  appcall_sx_any_talkseconds:                   {filter: [*is_iac, *is_c, *is_answered], obs: [talk_duration]}
 
-  appcall_sx_incoming:                          {filter: [*is_incoming, *is_c]}
-  appcall_sx_incoming_answered:                 {filter: [*is_incoming, *is_c, *is_answered]}
-  appcall_sx_incoming_talkseconds:              {filter: [*is_incoming, *is_c, *is_answered], obs: [TalkDuration]}
+  appcall_sx_incoming:                          {filter: [*is_iac, *is_incoming, *is_c]}
+  appcall_sx_incoming_answered:                 {filter: [*is_iac, *is_incoming, *is_c, *is_answered]}
+  appcall_sx_incoming_talkseconds:              {filter: [*is_iac, *is_incoming, *is_c, *is_answered], obs: [talk_duration]}
 
-  appcall_sx_outgoing:                          {filter: [*is_outgoing, *is_c]}
-  appcall_sx_outgoing_answered:                 {filter: [*is_outgoing, *is_c, *is_answered]}
-  appcall_sx_outgoing_talkseconds:              {filter: [*is_outgoing, *is_c, *is_answered], obs: [TalkDuration]}
+  appcall_sx_outgoing:                          {filter: [*is_iac, *is_outgoing, *is_c]}
+  appcall_sx_outgoing_answered:                 {filter: [*is_iac, *is_outgoing, *is_c, *is_answered]}
+  appcall_sx_outgoing_talkseconds:              {filter: [*is_iac, *is_outgoing, *is_c, *is_answered], obs: [talk_duration]}
   
   # By logical group
-  appcall_sx_outgoing_callback:                 {filter: [*is_outgoing, *is_callback_c]}
-  appcall_sx_outgoing_callback_answered:        {filter: [*is_outgoing, *is_callback_c, *is_answered]}
-  appcall_sx_outgoing_callback_talkseconds:     {filter: [*is_outgoing, *is_callback_c, *is_answered], obs: [TalkDuration]}
+  appcall_sx_outgoing_callback:                 {filter: [*is_iac, *is_outgoing, *is_callback_c]}
+  appcall_sx_outgoing_callback_answered:        {filter: [*is_iac, *is_outgoing, *is_callback_c, *is_answered]}
+  appcall_sx_outgoing_callback_talkseconds:     {filter: [*is_iac, *is_outgoing, *is_callback_c, *is_answered], obs: [talk_duration]}
 
-  appcall_sx_incoming_callback:                 {filter: [*is_incoming, *is_callback_c]}
-  appcall_sx_incoming_callback_answered:        {filter: [*is_incoming, *is_callback_c, *is_answered]}
-  appcall_sx_incoming_callback_talkseconds:     {filter: [*is_incoming, *is_callback_c, *is_answered], obs: [TalkDuration]}
+  appcall_sx_incoming_callback:                 {filter: [*is_iac, *is_incoming, *is_callback_c]}
+  appcall_sx_incoming_callback_answered:        {filter: [*is_iac, *is_incoming, *is_callback_c, *is_answered]}
+  appcall_sx_incoming_callback_talkseconds:     {filter: [*is_iac, *is_incoming, *is_callback_c, *is_answered], obs: [talk_duration]}
 
-  appcall_sx_outgoing_direct:                   {filter: [*is_outgoing, *is_direct_c]}
-  appcall_sx_outgoing_direct_answered:          {filter: [*is_outgoing, *is_direct_c, *is_answered]}
-  appcall_sx_outgoing_direct_talkseconds:       {filter: [*is_outgoing, *is_direct_c, *is_answered], obs: [TalkDuration]}
+  appcall_sx_outgoing_direct:                   {filter: [*is_iac, *is_outgoing, *is_direct_c]}
+  appcall_sx_outgoing_direct_answered:          {filter: [*is_iac, *is_outgoing, *is_direct_c, *is_answered]}
+  appcall_sx_outgoing_direct_talkseconds:       {filter: [*is_iac, *is_outgoing, *is_direct_c, *is_answered], obs: [talk_duration]}
 
-  appcall_sx_incoming_direct:                   {filter: [*is_incoming, *is_direct_c]}
-  appcall_sx_incoming_direct_answered:          {filter: [*is_incoming, *is_direct_c, *is_answered]}
-  appcall_sx_incoming_direct_talkseconds:       {filter: [*is_incoming, *is_direct_c, *is_answered], obs: [TalkDuration]}
+  appcall_sx_incoming_direct:                   {filter: [*is_iac, *is_incoming, *is_direct_c]}
+  appcall_sx_incoming_direct_answered:          {filter: [*is_iac, *is_incoming, *is_direct_c, *is_answered]}
+  appcall_sx_incoming_direct_talkseconds:       {filter: [*is_iac, *is_incoming, *is_direct_c, *is_answered], obs: [talk_duration]}
 
   # By screen
-  appcall_sx_incoming_item:                     {filter: [*is_incoming, *is_item_c]}
-  appcall_sx_incoming_item_answered:            {filter: [*is_incoming, *is_item_c, *is_answered]}
-  appcall_sx_incoming_item_talkseconds:         {filter: [*is_incoming, *is_item_c], obs: [TalkDuration]}
+  appcall_sx_incoming_item:                     {filter: [*is_iac, *is_incoming, *is_item_c]}
+  appcall_sx_incoming_item_answered:            {filter: [*is_iac, *is_incoming, *is_item_c, *is_answered]}
+  appcall_sx_incoming_item_talkseconds:         {filter: [*is_iac, *is_incoming, *is_item_c], obs: [talk_duration]}
 
-  appcall_sx_incoming_messenger:                {filter: [*is_incoming, *is_messenger_c]}
-  appcall_sx_incoming_messenger_answered:       {filter: [*is_incoming, *is_messenger_c, *is_answered]}
-  appcall_sx_incoming_messenger_talkseconds:    {filter: [*is_incoming, *is_messenger_c], obs: [TalkDuration]}
+  appcall_sx_incoming_messenger:                {filter: [*is_iac, *is_incoming, *is_messenger_c]}
+  appcall_sx_incoming_messenger_answered:       {filter: [*is_iac, *is_incoming, *is_messenger_c, *is_answered]}
+  appcall_sx_incoming_messenger_talkseconds:    {filter: [*is_iac, *is_incoming, *is_messenger_c], obs: [talk_duration]}
 
-  appcall_sx_outgoing_pro:                      {filter: [*is_outgoing, *is_pro_c]}
-  appcall_sx_outgoing_pro_answered:             {filter: [*is_outgoing, *is_pro_c, *is_answered]}
-  appcall_sx_outgoing_pro_talkseconds:          {filter: [*is_outgoing, *is_pro_c], obs: [TalkDuration]}
+  appcall_sx_outgoing_pro:                      {filter: [*is_iac, *is_outgoing, *is_pro_c]}
+  appcall_sx_outgoing_pro_answered:             {filter: [*is_iac, *is_outgoing, *is_pro_c, *is_answered]}
+  appcall_sx_outgoing_pro_talkseconds:          {filter: [*is_iac, *is_outgoing, *is_pro_c], obs: [talk_duration]}
 
   # Auxiliary
-  appcall_sx_incoming_initiated:                {filter: [*is_incoming, *is_c, *is_initiated]}
-  appcall_sx_incoming_ringing:                  {filter: [*is_incoming, *is_c, *is_ringing]}
-  appcall_sx_incoming_direct_mic_granted:       {filter: [*is_incoming, *is_direct_c, *mic_granted]}
-  appcall_sx_incoming_direct_mic_checked:       {filter: [*is_incoming, *is_direct_c, *mic_checked]}
-  appcall_sx_outgoing_callback_initiated:       {filter: [*is_outgoing, *is_callback_c, *is_initiated]}
-  appcall_sx_outgoing_callback_ringing:         {filter: [*is_outgoing, *is_callback_c, *is_ringing]}
-  appcall_sx_incoming_callback_initiated:       {filter: [*is_incoming, *is_callback_c, *is_initiated]}
-  appcall_sx_incoming_callback_ringing:         {filter: [*is_incoming, *is_callback_c, *is_ringing]}
-  appcall_sx_incoming_direct_initiated:         {filter: [*is_incoming, *is_direct_c, *is_initiated]}
-  appcall_sx_incoming_direct_ringing:           {filter: [*is_incoming, *is_direct_c, *is_ringing]}
+  # appcall_sx_incoming_initiated:                {filter: [*is_iac, *is_incoming, *is_c, *is_initiated]}
+  # appcall_sx_incoming_ringing:                  {filter: [*is_iac, *is_incoming, *is_c, *is_ringing]}
+  # appcall_sx_incoming_direct_mic_granted:       {filter: [*is_iac, *is_incoming, *is_direct_c, *mic_granted]}
+  # appcall_sx_incoming_direct_mic_checked:       {filter: [*is_iac, *is_incoming, *is_direct_c, *mic_checked]}
+  # appcall_sx_outgoing_callback_initiated:       {filter: [*is_iac, *is_outgoing, *is_callback_c, *is_initiated]}
+  # appcall_sx_outgoing_callback_ringing:         {filter: [*is_iac, *is_outgoing, *is_callback_c, *is_ringing]}
+  # appcall_sx_incoming_callback_initiated:       {filter: [*is_iac, *is_incoming, *is_callback_c, *is_initiated]}
+  # appcall_sx_incoming_callback_ringing:         {filter: [*is_iac, *is_incoming, *is_callback_c, *is_ringing]}
+  # appcall_sx_incoming_direct_initiated:         {filter: [*is_iac, *is_incoming, *is_direct_c, *is_initiated]}
+  # appcall_sx_incoming_direct_ringing:           {filter: [*is_iac, *is_incoming, *is_direct_c, *is_ringing]}
 
-  appcall_sx_outgoing_success:                  {filter: [*is_outgoing, *is_c, *is_success]}
-  appcall_sx_incoming_success:                  {filter: [*is_incoming, *is_c, *is_success]}
-  appcall_sx_incoming_direct_success:      {filter: [*is_incoming, *is_direct_c, *is_success]}
-  appcall_sx_any_success:                       {filter: [*is_c, *is_success]}
+  appcall_sx_outgoing_success:                  {filter: [*is_iac, *is_outgoing, *is_c, *is_success]}
+  appcall_sx_incoming_success:                  {filter: [*is_iac, *is_incoming, *is_c, *is_success]}
+  appcall_sx_incoming_direct_success:           {filter: [*is_iac, *is_incoming, *is_direct_c, *is_success]}
+  appcall_sx_any_success:                       {filter: [*is_iac, *is_c, *is_success]}
 
 
 
 metric.uniq:
-  appcall_sx_any_canonical:                 {counter: appcall_sx_any_calls, key: [user, item]}
+  appcall_sx_any_canonical:                 {counter: appcall_sx_any_calls, key: [logcat_item]}
+
 
 
 
@@ -120,12 +124,11 @@ metric.ratio:
   appcall_sx_outgoing_talkseconds_avg:                  {num: appcall_sx_outgoing_talkseconds, den: appcall_sx_outgoing_answered}
   appcall_sx_incoming_talkseconds_avg:                  {num: appcall_sx_incoming_talkseconds, den: appcall_sx_incoming_answered}
   appcall_sx_any_talkseconds_avg:                       {num: appcall_sx_any_talkseconds, den: appcall_sx_any_answered}
-  appcall_sx_incoming_direct_initiated_ratio:           {num: appcall_sx_incoming_direct_initiated, den: appcall_sx_incoming_direct}
-  appcall_sx_incoming_direct_ringing_ratio:             {num: appcall_sx_incoming_direct_ringing, den: appcall_sx_incoming_direct}
+  # appcall_sx_incoming_direct_initiated_ratio:           {num: appcall_sx_incoming_direct_initiated, den: appcall_sx_incoming_direct}
+  # appcall_sx_incoming_direct_ringing_ratio:             {num: appcall_sx_incoming_direct_ringing, den: appcall_sx_incoming_direct}
   appcall_sx_incoming_direct_answered_ratio:            {num: appcall_sx_incoming_direct_answered, den: appcall_sx_incoming_direct}
-  appcall_sx_incoming_direct_initiated_ringing_ratio:   {num: appcall_sx_incoming_direct_ringing, den: appcall_sx_incoming_direct_initiated}
-  appcall_sx_incoming_direct_ringing_answered_ratio:    {num: appcall_sx_incoming_direct_answered, den: appcall_sx_incoming_direct_ringing}
-  appcall_sx_incoming_direct_mic_granted_ratio:         {num: appcall_sx_incoming_direct_mic_granted, den: appcall_sx_incoming_direct_mic_checked}
-
+  # appcall_sx_incoming_direct_initiated_ringing_ratio:   {num: appcall_sx_incoming_direct_ringing, den: appcall_sx_incoming_direct_initiated}
+  # appcall_sx_incoming_direct_ringing_answered_ratio:    {num: appcall_sx_incoming_direct_answered, den: appcall_sx_incoming_direct_ringing}
+  # appcall_sx_incoming_direct_mic_granted_ratio:         {num: appcall_sx_incoming_direct_mic_granted, den: appcall_sx_incoming_direct_mic_checked}
   appcall_sx_incoming_direct_success_ratio:             {num: appcall_sx_incoming_direct_success, den: appcall_sx_incoming_direct}
   appcall_sx_incoming_direct_answered_success_ratio:    {num: appcall_sx_incoming_direct_success, den: appcall_sx_incoming_direct_answered}
