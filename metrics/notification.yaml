@@ -57,51 +57,50 @@ metric.counter:
   notification_crm_to_receiver:            {filter: [eid: 2617, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
   notification_crm_open:                   {filter: [eid: 2618, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
   notification_crm_action:                 {filter: [eid: 2619, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
-  
-  notifications_off_profile:               {obs: [events_count]}
-  notifications_on_profile:                {obs: [events_count]}
-  notifications_off_system:                {obs: [events_count]}
-  notifications_on_system:                 {obs: [events_count]}
-  notifications_off_any:                   {obs: [events_count]}
-  notifications_on_any:                    {obs: [events_count]}
-  notifications_off_profile_push:          {obs: [events_count]}
-  notifications_on_profile_push:           {obs: [events_count]}
-  notifications_off_profile_email:         {obs: [events_count]}
-  notifications_on_profile_email:          {obs: [events_count]}
-  notifications_off_profile_messenger:     {obs: [events_count]}
-  notifications_on_profile_messenger:      {obs: [events_count]}
-  notifications_off_profile_push_avito_news:         {obs: [events_count]}
-  notifications_off_profile_push_messenger:          {obs: [events_count]}
-  notifications_off_profile_push_pro_notifications:  {obs: [events_count]}
-  notifications_off_profile_push_discount:           {obs: [events_count]}
-  notifications_off_profile_push_poll:               {obs: [events_count]}
-  notifications_off_profile_push_fav_sellers:        {obs: [events_count]}
-  notifications_off_profile_push_user_reviews:       {obs: [events_count]}
-  notifications_off_profile_push_delivery:           {obs: [events_count]}
-  notifications_off_profile_push_action:             {obs: [events_count]}
-  notifications_off_profile_push_recommendation:     {obs: [events_count]}
-  notifications_off_profile_push_tips:               {obs: [events_count]}
-  notifications_off_profile_push_messenger_reminder: {obs: [events_count]}
-  notifications_off_profile_email_recommendation:    {obs: [events_count]}
-  notifications_off_profile_email_tips:              {obs: [events_count]}
-  notifications_off_profile_email_delivery:          {obs: [events_count]}
-  notifications_off_profile_email_fav_sellers:       {obs: [events_count]}
-  notifications_off_profile_email_messenger:         {obs: [events_count]}
-  notifications_off_profile_email_user_reviews:      {obs: [events_count]}
-  notifications_off_profile_email_action:            {obs: [events_count]}
-  notifications_off_profile_email_avito_news:        {obs: [events_count]}
-  notifications_off_profile_email_notification:      {obs: [events_count]}
-  notifications_off_profile_email_poll:              {obs: [events_count]}
-  notifications_off_profile_email_discount:          {obs: [events_count]}
-  notifications_off_profile_messenger_recommendation: {obs: [events_count]}
-  notifications_off_profile_messenger_limit_calls:    {obs: [events_count]}
-  notifications_off_profile_messenger_discount:       {obs: [events_count]}
-  notifications_off_profile_messenger_avito_news:     {obs: [events_count]}
-  notifications_off_profile_messenger_tips:           {obs: [events_count]}
-  notifications_off_profile_messenger_user_reviews:   {obs: [events_count]}
-  notifications_off_profile_messenger_deal_confirmation: {obs: [events_count]}
-  notifications_off_profile_messenger_action:            {obs: [events_count]}
-  notifications_off_profile_messenger_pro_notifications: {obs: [events_count]}
+  notifications_off_profile:               {filter: [eid: 2390, notification_value: 0], obs: [events_count]}
+  notifications_on_profile:                {filter: [eid: 2390, notification_value: 1], obs: [events_count]}
+  notifications_off_system:                {filter: [eid: 2558, notification_value: 0], obs: [events_count]}
+  notifications_on_system:                 {filter: [eid: 2558, notification_value: 1], obs: [events_count]}
+  notifications_off_any:                   {filter: [$or: [eid.=: 2390, eid.=: 2558], notification_value: 0], obs: [events_count]}
+  notifications_on_any:                    {filter: [$or: [eid.=: 2390, eid.=: 2558], notification_value: 1], obs: [events_count]}
+  notifications_off_profile_push:          {filter: [eid: 2390, notification_channel: 'appPush', notification_value: 0], obs: [events_count]}
+  notifications_on_profile_push:           {filter: [eid: 2390, notification_channel: 'appPush', notification_value: 1], obs: [events_count]}
+  notifications_off_profile_email:         {filter: [eid: 2390, notification_channel: 'email', notification_value: 0], obs: [events_count]}
+  notifications_on_profile_email:          {filter: [eid: 2390, notification_channel: 'email', notification_value: 1], obs: [events_count]}
+  notifications_off_profile_messenger:     {filter: [eid: 2390, notification_channel: 'messenger', notification_value: 0], obs: [events_count]}
+  notifications_on_profile_messenger:      {filter: [eid: 2390, notification_channel: 'messenger', notification_value: 1], obs: [events_count]}
+  notifications_off_profile_push_avito_news:         {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'avito_news',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_messenger:          {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'messenger',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_pro_notifications:  {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'pro_notifications',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_discount:           {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'discount',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_poll:               {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'poll',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_fav_sellers:        {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'fav_sellers',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_user_reviews:       {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'user_reviews',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_delivery:           {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'delivery',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_action:             {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'action',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_recommendation:     {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'recommendation',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_tips:               {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'tips',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_push_messenger_reminder: {filter: [eid: 2390, notification_channel: 'appPush', notification_type: 'messenger_reminder',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_recommendation:    {filter: [eid: 2390, notification_channel: 'email', notification_type: 'recommendation',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_tips:              {filter: [eid: 2390, notification_channel: 'email', notification_type: 'tips',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_delivery:          {filter: [eid: 2390, notification_channel: 'email', notification_type: 'delivery',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_fav_sellers:       {filter: [eid: 2390, notification_channel: 'email', notification_type: 'fav_sellers',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_messenger:         {filter: [eid: 2390, notification_channel: 'email', notification_type: 'messenger',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_user_reviews:      {filter: [eid: 2390, notification_channel: 'email', notification_type: 'user_reviews',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_action:            {filter: [eid: 2390, notification_channel: 'email', notification_type: 'action',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_avito_news:        {filter: [eid: 2390, notification_channel: 'email', notification_type: 'avito_news',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_notification:      {filter: [eid: 2390, notification_channel: 'email', notification_type: 'notification',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_poll:              {filter: [eid: 2390, notification_channel: 'email', notification_type: 'poll',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_email_discount:          {filter: [eid: 2390, notification_channel: 'email', notification_type: 'discount',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_messenger_recommendation:    {filter: [eid: 2390, notification_channel: 'messenger', notification_type: 'recommendation',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_messenger_limit_calls:       {filter: [eid: 2390, notification_channel: 'messenger', notification_type: 'limit_calls',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_messenger_discount:          {filter: [eid: 2390, notification_channel: 'messenger', notification_type: 'discount',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_messenger_avito_news:        {filter: [eid: 2390, notification_channel: 'messenger', notification_type: 'avito_news',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_messenger_tips:              {filter: [eid: 2390, notification_channel: 'messenger', notification_type: 'tips',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_messenger_user_reviews:      {filter: [eid: 2390, notification_channel: 'messenger', notification_type: 'user_reviews',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_messenger_deal_confirmation: {filter: [eid: 2390, notification_channel: 'messenger', notification_type: 'deal_confirmation',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_messenger_action:            {filter: [eid: 2390, notification_channel: 'messenger', notification_type: 'action',  notification_value: 0], obs: [events_count]}
+  notifications_off_profile_messenger_pro_notifications: {filter: [eid: 2390, notification_channel: 'messenger', notification_type: 'pro_notifications',  notification_value: 0], obs: [events_count]}
 
 metric.uniq:
   user_push_no_data:                            {counter: push_no_data,                                 key: [participant]}
