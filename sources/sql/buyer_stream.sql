@@ -34,8 +34,8 @@ select
     ss.item_x_type % 2 as item_x_type,
     ss.x_eid,
     case when ss.x_eid is not null then coalesce(ss.search_flags,0) end as search_flags,
-    coalesce(ss.item_flags,0) as item_flags,
-    coalesce(ss.other_flags,0) as other_flags,
+    coalesce(ss.item_flags,  0) as item_flags,
+    coalesce(ss.other_flags, 0) as other_flags,
     ss.x_from_page,
     ss.search_sort,
     ss.search_query_type,
@@ -53,8 +53,8 @@ select
     case when ss.eid in (401, 2574, 2732) then 1 when ss.eid = 402 then -1 end as favorites_net,
     case when ss.eid in (451) then 1 when ss.eid = 452 then -1 end as comparisons_net,
     -- Dimensions -----------------------------------------------------------------------------------------------------
-    cm.vertical_id                                               as vertical_id,
-    cm.logical_category_id                                       as logical_category_id,
+    coalesce(lc.vertical_id, cm.vertical_id)                     as vertical_id,
+    coalesce(lc.logical_category_id, cm.logical_category_id)     as logical_category_id,
     cm.category_id                                               as category_id,
     cm.subcategory_id                                            as subcategory_id,
     cm.Param1_microcat_id                                        as param1_id,
@@ -128,6 +128,17 @@ from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = ss.microcat_id
+left join /*+jtype(h),distrib(l,a)*/ (
+        select infmquery_id, logcat_id
+        from infomodel.current_infmquery_category
+        where infmquery_id in (
+            select distinct infmquery_id
+            from dma.o_seller_item_active
+            where event_date::date between :first_date and :last_date
+                and infmquery_id is not null
+        )
+    ) ic on ic.infmquery_id = ss.infmquery_id
+left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join /*+jtype(h),distrib(l,a)*/ dict.segmentation_ranks ls on cm.logical_category_id = ls.logical_category_id and is_default
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations clx on clx.Location_id = ss.x_location_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = ss.location_id
