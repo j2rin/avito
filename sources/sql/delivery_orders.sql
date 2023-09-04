@@ -215,7 +215,8 @@ pre as (
   		(co.items_price >= 20000)::boolean as is_high_price,
         -- есть ли возможность возврата в течение 14 дней
         case when co.workflow in ('delivery-b2c', 'delivery-b2c-courier') then True else False end b2c_wo_dbs,
-        co.return_within_14_days
+        co.return_within_14_days as c2c_return_within_14_days,
+        coalesce(b2c_wo_dbs, c2c_return_within_14_days) as return_within_14_days
     from dma.current_order_item as coi
     join /*+distrib(l,a)*/ delivery_status_date as ps on ps.deliveryorder_id = coi.deliveryorder_id
     left join /*+distrib(l,a)*/ cic
