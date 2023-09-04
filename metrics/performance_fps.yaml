@@ -23,7 +23,15 @@ metric.counter:
   jank_frames_size_total_other:                           {filter: [*not_outlier, screen_fps_context: "other"], obs: [jank_frames_size_total]}
 
   fps_events:                                             {obs: [events_count]}
+  fps_events_scroll:                                      {filter: [screen_fps_context: "scroll"], obs: [events_count]}
+  fps_events_ui_formation:                                {filter: [screen_fps_context: "ui_formation"], obs: [events_count]}
+  fps_events_other:                                       {filter: [screen_fps_context: "other"], obs: [events_count]}
+
   hitch_time_ratio_total:                                 {obs: [hitch_time_ratio_sum]}
+  hitch_time_ratio_total_scroll:                          {filter: [screen_fps_context: "scroll"], obs: [hitch_time_ratio_sum]}
+  hitch_time_ratio_total_ui_formation:                    {filter: [screen_fps_context: "ui_formation"], obs: [hitch_time_ratio_sum]}
+  hitch_time_ratio_total_other:                           {filter: [screen_fps_context: "other"], obs: [hitch_time_ratio_sum]}
+
 
 
 metric.uniq:
@@ -55,3 +63,6 @@ metric.ratio:
   jank_frames_size_other:                                 {num: jank_frames_size_total_other, den: jank_frames_other}
 
   hitch_time_ratio:                                       {num: hitch_time_ratio_total, den: fps_events}
+  hitch_time_ratio_scroll:                                {num: hitch_time_ratio_total_scroll, den: fps_events_scroll}
+  hitch_time_ratio_ui_formation:                          {num: hitch_time_ratio_total_ui_formation, den: fps_events_ui_formation}
+  hitch_time_ratio_other:                                 {num: hitch_time_ratio_total_other, den: fps_events_other}
