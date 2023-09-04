@@ -59,10 +59,10 @@ metric.counter:
   notification_crm_action:                 {filter: [eid: 2619, $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations']], obs: [events_count]}
   notifications_off_profile:               {filter: [eid: 2390, notification_value: 0], obs: [events_count]}
   notifications_on_profile:                {filter: [eid: 2390, notification_value: 1], obs: [events_count]}
-  notifications_off_system:                {filter: [eid: 2558, notification_value: 0], obs: [events_count]}
-  notifications_on_system:                 {filter: [eid: 2558, notification_value: 1], obs: [events_count]}
-  notifications_off_any:                   {filter: [$or: [eid.=: 2390, eid.=: 2558], notification_value: 0], obs: [events_count]}
-  notifications_on_any:                    {filter: [$or: [eid.=: 2390, eid.=: 2558], notification_value: 1], obs: [events_count]}
+  notifications_off_system:                {filter: [eid: 2558, is_notifications_on: 0], obs: [events_count]}
+  notifications_on_system:                 {filter: [eid: 2558, is_notifications_on: 1], obs: [events_count]}
+  notifications_off_any:                   {filter: [$or: [[eid: 2390, notification_value: 0], [eid: 2558, is_notifications_on: 0]]], obs: [events_count]}
+  notifications_on_any:                    {filter: [$or: [[eid: 2390, notification_value: 1], [eid: 2558, is_notifications_on: 1]]], obs: [events_count]}
   notifications_off_profile_push:          {filter: [eid: 2390, notification_channel: 'appPush', notification_value: 0], obs: [events_count]}
   notifications_on_profile_push:           {filter: [eid: 2390, notification_channel: 'appPush', notification_value: 1], obs: [events_count]}
   notifications_off_profile_email:         {filter: [eid: 2390, notification_channel: 'email', notification_value: 0], obs: [events_count]}
