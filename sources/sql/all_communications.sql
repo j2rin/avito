@@ -180,8 +180,8 @@ calls_scores as
         ,CallerIsBuyer as is_common_funnel
         ,coalesce(a.TalkDuration, 0) > 0 as is_answered
         ,case when CallerIsBuyer then CallerPlatform else RecieverPlatform end as platform_id -- платформа баера
-        ,case when CallerIsBuyer then RecieverPlatform else CallerPlatform end as seller_platform_id -- платформа баера
-        ,CallerDevice as buyer_cookie_id
+        ,case when CallerIsBuyer then RecieverPlatform else CallerPlatform end as seller_platform_id -- платформа селлера
+        ,case when CallerIsBuyer then CallerDevice else RecieverDevice end as buyer_cookie_id
         ,a.Microcat_id
         ,c.category_id
         ,a.location_id
