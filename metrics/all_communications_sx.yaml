@@ -19,18 +19,24 @@ metric.counter:
   gsm_sx_trash:                                          {filter: [*is_gsm, *is_common_funnel, *is_trash]}
   gsm_sx_preliminary:                                    {filter: [*is_gsm, *is_common_funnel, *is_preliminary]}
   gsm_sx_target:                                         {filter: [*is_gsm, *is_common_funnel, *is_target]}
+  gsm_sx_outgoing_call_dur:                              {filter: [*is_gsm, *is_common_funnel], obs: [call_duration]}
+  gsm_sx_outgoing_talk_dur:                              {filter: [*is_gsm, *is_common_funnel], obs: [talk_duration]}
 
   iac_sx_incoming:                                       {filter: [*is_iac, *is_common_funnel]}
   iac_sx_incoming_answered:                              {filter: [*is_iac, *is_common_funnel, *is_answered]}
   iac_sx_incoming_trash:                                 {filter: [*is_iac, *is_common_funnel, *is_trash]}
   iac_sx_incoming_preliminary:                           {filter: [*is_iac, *is_common_funnel, *is_preliminary]}
   iac_sx_incoming_target:                                {filter: [*is_iac, *is_common_funnel, *is_target]}
+  iac_sx_outgoing_call_dur:                              {filter: [*is_iac, *is_common_funnel], obs: [call_duration]}
+  iac_sx_outgoing_talk_dur:                              {filter: [*is_iac, *is_common_funnel], obs: [talk_duration]}
 
   calls_sx_incoming:                                     {filter: [*is_call, *is_common_funnel]}
   calls_sx_incoming_answered:                            {filter: [*is_call, *is_common_funnel, *is_answered]}
   calls_sx_incoming_trash:                               {filter: [*is_call, *is_common_funnel, *is_trash]}
   calls_sx_incoming_preliminary:                         {filter: [*is_call, *is_common_funnel, *is_preliminary]}
   calls_sx_incoming_target:                              {filter: [*is_call, *is_common_funnel, *is_target]}
+  calls_sx_outgoing_call_dur:                            {filter: [*is_call, *is_common_funnel], obs: [call_duration]}
+  calls_sx_outgoing_talk_dur:                            {filter: [*is_call, *is_common_funnel], obs: [talk_duration]}
 
   comns_sx_incoming:                                     {filter: [*is_common_funnel]}
   comns_sx_incoming_answered:                            {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
@@ -50,3 +56,11 @@ metric.uniq:
   comns_sx_incoming_trash_canonical:                     {counter: comns_sx_incoming_trash,        key: [logcat_item]}
   comns_sx_incoming_preliminary_canonical:               {counter: comns_sx_incoming_preliminary,  key: [logcat_item]}
   comns_sx_incoming_target_canonical:                    {counter: comns_sx_incoming_target,       key: [logcat_item]}
+
+metric.ratio:
+  gsm_sx_outgoing_call_dur_per_call:                     {num: gsm_sx_outgoing_call_dur,            den: gsm_sx}
+  iac_sx_outgoing_call_dur_per_call:                     {num: iac_sx_outgoing_call_dur,            den: iac_sx_outgoing}
+  calls_sx_outgoing_call_dur_per_call:                   {num: calls_sx_outgoing_call_dur,          den: calls_sx_outgoing}
+  gsm_sx_outgoing_talk_dur_per_call:                     {num: gsm_sx_outgoing_talk_dur,            den: gsm_sx}
+  iac_sx_outgoing_talk_dur_per_call:                     {num: iac_sx_outgoing_talk_dur,            den: iac_sx_outgoing}
+  calls_sx_outgoing_talk_dur_per_call:                   {num: calls_sx_outgoing_talk_dur,          den: calls_sx_outgoing}
