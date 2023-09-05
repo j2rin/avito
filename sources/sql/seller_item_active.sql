@@ -86,7 +86,8 @@ select /*+syntactic_join*/
     hash(
         round(exp(round(ln(ss.price), 1))),
         ss.user_id,
-        ss.microcat_id
+        ss.microcat_id,
+        ss.profession_id
         ) as user_microcat_price
 
 from DMA.o_seller_item_active ss
