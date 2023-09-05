@@ -1,0 +1,28 @@
+metric.counter:
+  watch_short_video:                    {filter: [eid: 6304], obs: [metric_value]}
+  watch_short_video_gallery:            {filter: [eid: 6304, from_page.ilike: '%gallery%'], obs: [metric_value]}
+  watch_short_video_snippet:            {filter: [eid: 6304, from_page.ilike: '%snippet%'], obs: [metric_value]}
+  
+  video_upload_attempt:                 {filter: [eid: 6303], obs: [metric_value]}
+  video_upload_success:                 {filter: [eid: 6303, error_text.isnull: True], obs: [metric_value]}
+  video_upload_success_item_add:        {filter: [eid: 6303, error_text.isnull: True, from_page: 'item_add'], obs: [metric_value]}
+  video_upload_success_item_edit:       {filter: [eid: 6303, error_text.isnull: True, from_page: 'item_edit'], obs: [metric_value]}
+
+  add_video_screen_show_item_add:       {filter: [eid: 3071, item_add_screen.ilike: '%видео%'], obs: [metric_value]}
+
+  add_video_btn:                        {filter: [eid: 6828], obs: [metric_value]}
+
+metric.uniq:
+  user_watch_short_video:               {counter: watch_short_video, key: [cookie]}
+  user_watch_short_video_gallery:       {counter: watch_short_video_gallery, key: [cookie]}
+  user_watch_short_video_snippet:       {counter: watch_short_video_snippet, key: [cookie]}
+
+  user_video_upload_attempt:            {counter: video_upload_attempt, key: [cookie]}
+  user_video_upload_success:            {counter: video_upload_success, key: [cookie]}
+  user_video_upload_success_item_add:   {counter: video_upload_success_item_add, key: [cookie]}
+  user_video_upload_success_item_edit:  {counter: video_upload_success_item_edit, key: [cookie]}
+  
+  user_add_video_screen_show_item_add:  {counter: add_video_screen_show_item_add, key: [cookie]}
+
+  user_add_video_btn:                   {counter: add_video_btn, key: [cookie]}
+
