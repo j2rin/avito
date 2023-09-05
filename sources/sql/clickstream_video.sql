@@ -1,6 +1,14 @@
+with cond as 
+(
+  	select 
+  	distinct 
+  		condition_id,
+  		value
+  	from DMA.condition_values
+)
 select 
     cs.event_date,
-    cs.business_platform,
+    cs.business_platform platform_id,
     cs.user_id,
     cs.microcat_id,
     cs.item_id,
@@ -10,8 +18,10 @@ select
     cs.item_add_screen,
     cs.event_chain,
     cs.from_source,
-    cs.condition,
+    cond.condition_id,
+    cs.cookie_id,
     cs.metric_value,
+    cm.vertical_id,
     cm.logical_category_id,
     cm.category_id,
     cm.subcategory_id,
@@ -21,4 +31,5 @@ select
     cm.Param4_microcat_id                                      as param4_id
 from DMA.clickstream_video cs
 left join DMA.current_microcategories cm using (microcat_id)
+join cond on (condition = value)
 where cs.event_date::date between :first_date and :last_date
