@@ -37,7 +37,9 @@ select /*+syntactic_join*/
     src.btc_count                                          as btc_count,
     src.contact                                            as contact_count,
     hash(src.cookie_id, src.event_date)                        as cookie_day_hash,
-    hash(src.cookie_id, date_trunc('month', src.event_date))   as cookie_month_hash
+    hash(src.cookie_id, date_trunc('month', src.event_date))   as cookie_month_hash,
+    hash(src.user_id, src.event_date)                        as user_day_hash,
+    hash(src.user_id, date_trunc('month', src.event_date))   as user_month_hash
 from dma.dau_source src
 left join /*+jtype(h),distrib(l,a)*/ current_infmquery_category ic
     on ic.infmquery_id = src.infmquery_id
