@@ -9,6 +9,8 @@ definitions:
     - &eid_i2i      [2437]
     - &eid_cv2vac   [4386]
     - &eid_fav_lst  [400]
+    - &eid_fav_coll [8175]
+    - &eid_fav_coll_list [8172]
     - &eid_comp_lst [450]
     - &eid_push_land [5354]
     - &eid_map      [2743]
@@ -28,6 +30,8 @@ definitions:
     - &is_push_land { eid: *eid_push_land }
     - &is_cv2vac    { eid: *eid_cv2vac }
     - &is_fav_lst   { eid: *eid_fav_lst }
+    - &is_fav_coll	{ eid: *eid_fav_coll }
+    - &is_fav_coll_list {eid: *eid_fav_coll_list }
     - &is_comp_lst  { eid: *eid_comp_lst }
     - &is_map       { eid: *eid_map }
     - &adv_page     { $or: [{ eid: [300, 2592] }, { platform_id: [1, 2], eid: [2572] }, { platform_id: [1], eid: [301] }] }
@@ -49,6 +53,7 @@ definitions:
     - &x_is_cv2vac  { x_eid: *eid_cv2vac }
     - &x_is_rec_msg { x_from_page: msg_recommendations }
     - &x_is_fav_lst { x_eid: *eid_fav_lst }
+    - &x_is_fav_coll { x_eid: *eid_fav_coll }
     - &x_is_comp_lst { x_eid: *eid_comp_lst }
     - &x_is_map     { x_eid: *eid_map }
     - &x_no         { x_eid.isnull: true }
@@ -327,8 +332,10 @@ definitions:
 
     - &is_fav_collection_item_add { <<: *is_fav, from_page: "favs_move_popup" }
     - &is_fav_collection_item_rmv { <<: *is_fav_rmv, from_page: "favs_move_popup" }
-    - &x_is_fav_collection { <<: *x_is_fav_lst, search_flags.bit: 43 }
-    - &is_fav_collection {<<: *is_fav_lst, search_flags.bit: 43 }
+    
+    - &x_is_fav_collection { <<: *x_is_fav_coll }
+    - &is_fav_collection {<<: *is_fav_coll }
+    - &is_fav_collection_list {<<: * is_fav_coll_list}
 
     - &is_item_with_video_cpa {is_item_with_video_cpa: 1}
 
@@ -1815,10 +1822,12 @@ metric.counter:
 
     item_add_fav_collection: { filter: [*is_fav_collection_item_add] }
     item_rmv_fav_collection: { filter: [*is_fav_collection_item_rmv] }
+    
     iv_fav_collection: { filter: [*is_iv_wo_guessing, *x_is_fav_collection] }
     c_fav_collection: { filter: [*is_contact_wo_guessing, *x_is_fav_collection] }
     btc_fav_collection: { filter: [*is_btc_wo_guessing, *x_is_fav_collection] }
     fav_collection_view: { filter: [*is_fav_collection] }
+    fav_collection_list_view: {filter: [*is_fav_collection_list] }
 
     agbc_bt_clicks: { filter: [{ $or: [[*is_btc], [*is_agent_back_call_start]] }] }
     agbc_contacts_all: { filter: [{ $or: [[*is_contact], [*is_agent_back_call]] }] }
@@ -3223,10 +3232,12 @@ metric.uniq:
 
     user_item_add_fav_collection: { counter: item_add_fav_collection, key: [cookie] }
     user_item_rmv_fav_collection: { counter: item_rmv_fav_collection, key: [cookie] }
+    
     user_iv_fav_collection: { counter: iv_fav_collection, key: [cookie] }
     user_c_fav_collection: { counter: c_fav_collection, key: [cookie] }
     user_btc_fav_collection: { counter: btc_fav_collection, key: [cookie] }
     user_fav_collection_view: { counter: fav_collection_view, key: [cookie] }
+    user_fav_collection_list_view: {counter: fav_collection_list_view, key: [cookie] }
 
     user_search_grid: { counter: search_grid, key: [cookie] }
     user_search_list: { counter: search_list, key: [cookie] }
