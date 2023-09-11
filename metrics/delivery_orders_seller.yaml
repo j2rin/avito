@@ -32,9 +32,9 @@ metric.counter:
   seller_delivery_items_paid_start_date:       {filter: [{is_paid: true}, {create_date.>: $ab_start_date}]}
   seller_delivery_items_performed_start_date:  {filter: [{is_performed: true}, {create_date.>: $ab_start_date}]}
 
-  buyer_p&s_revenue_no_vat_paid:                      {filter: [{is_paid: true}], obs: [delivery_revenue_no_vat, trx_commission_no_vat, seller_commission/1.2]}
-  buyer_p&s_revenue_no_vat_performed:                 {filter: [{is_performed: true}], obs: [delivery_revenue_no_vat, trx_commission_no_vat, seller_commission/1.2]}
-  buyer_p&s_revenue_no_vat_accepted:                  {filter: [{is_accepted: true}], obs: [delivery_revenue_no_vat, trx_commission_no_vat, seller_commission/1.2]}
+  seller_total_revenue_no_vat_paid:                      {filter: [{is_paid: true}], obs: [delivery_revenue_no_vat, trx_commission_no_vat, seller_commission/1.2]}
+  seller_total_revenue_no_vat_performed:                 {filter: [{is_performed: true}], obs: [delivery_revenue_no_vat, trx_commission_no_vat, seller_commission/1.2]}
+  seller_total_revenue_no_vat_accepted:                  {filter: [{is_accepted: true}], obs: [delivery_revenue_no_vat, trx_commission_no_vat, seller_commission/1.2]}
 
   seller_delivery_revenue_no_vat_created:          {filter: [{is_created: true}], obs: [delivery_revenue_no_vat]}
   seller_delivery_revenue_no_vat_paid:             {filter: [{is_paid: true}], obs: [delivery_revenue_no_vat]}
@@ -232,6 +232,10 @@ metric.ratio:
   seller_delivery_average_revenue_no_vat_return_delivered: {num: seller_delivery_revenue_no_vat_return_delivered, den: seller_delivery_orders_return_delivered}
   seller_delivery_average_revenue_no_vat_returned: {num: seller_delivery_revenue_no_vat_returned, den: seller_delivery_orders_returned}
   seller_delivery_average_revenue_no_vat_unconfirmed: {num: seller_delivery_revenue_no_vat_unconfirmed, den: seller_delivery_orders_unconfirmed}
+  
+  seller_delivery_average_revenue_no_vat_paid: {num: seller_total_revenue_no_vat_paid, den: seller_delivery_orders_paid}
+  seller_delivery_average_revenue_no_vat_performed: {num: seller_total_revenue_no_vat_performed, den: seller_delivery_orders_performed}
+  seller_delivery_average_revenue_no_vat_accepted: {num: seller_total_revenue_no_vat_accepted, den: seller_delivery_orders_accepted}
   
   seller_delivery_items_performed_per_paid_start_date: {num: seller_delivery_items_performed_start_date, den: seller_delivery_items_paid_start_date}
   seller_delivery_orders_performed_per_paid_start_date: {num: seller_delivery_orders_performed_start_date, den: seller_delivery_orders_paid_start_date}
