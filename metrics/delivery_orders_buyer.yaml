@@ -207,6 +207,10 @@ metric.counter:
   buyer_bonus_cashback_returned:                            {filter: [{is_returned: true}], obs: [bonus_cashback]}
   buyer_bonus_cashback_accepted_and_returned:               {filter: [{$or: [{is_returned: true}, {is_accepted: true}]}], obs: [bonus_cashback]}
 
+  buyer_delivery_total_revenue_no_vat_paid:                      {filter: [{is_paid: true}], obs: [delivery_revenue_no_vat, trx_commission_no_vat, seller_commission_no_vat]}
+  buyer_delivery_total_revenue_no_vat_performed:                 {filter: [{is_performed: true}], obs: [delivery_revenue_no_vat, trx_commission_no_vat, seller_commission_no_vat]}
+  buyer_delivery_total_revenue_no_vat_accepted:                  {filter: [{is_accepted: true}], obs: [delivery_revenue_no_vat, trx_commission_no_vat, seller_commission_no_vat]}
+  
   buyer_delivery_revenue_no_vat_created:          {filter: [{is_created: true}], obs: [delivery_revenue_no_vat]}
   buyer_delivery_revenue_no_vat_paid:             {filter: [{is_paid: true}], obs: [delivery_revenue_no_vat]}
   buyer_delivery_revenue_no_vat_paid_video:             {filter: [{is_paid: true}, {has_short_video: true}], obs: [delivery_revenue_no_vat]}
@@ -436,6 +440,10 @@ metric.ratio:
   buyer_delivery_average_item_price_return_delivered: {num: buyer_delivery_gmv_return_delivered, den: buyer_delivery_items_return_delivered}
   buyer_delivery_average_item_price_returned: {num: buyer_delivery_gmv_returned, den: buyer_delivery_items_returned}
   buyer_delivery_average_item_price_unconfirmed: {num: buyer_delivery_gmv_unconfirmed, den: buyer_delivery_items_unconfirmed}
+
+  buyer_delivery_average_total_revenue_no_vat_paid: {num: buyer_delivery_total_revenue_no_vat_paid, den: buyer_delivery_orders_paid}
+  buyer_delivery_average_total_revenue_no_vat_performed: {num: buyer_delivery_total_revenue_no_vat_performed, den: buyer_delivery_orders_performed}
+  buyer_delivery_average_total_revenue_no_vat_accepted: {num: buyer_delivery_total_revenue_no_vat_accepted, den: buyer_delivery_orders_accepted}
 
   buyer_delivery_average_revenue_no_vat_created: {num: buyer_delivery_revenue_no_vat_created, den: buyer_delivery_orders_created}
   buyer_delivery_average_revenue_no_vat_paid: {num: buyer_delivery_revenue_no_vat_paid, den: buyer_delivery_orders_paid}
