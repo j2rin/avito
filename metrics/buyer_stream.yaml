@@ -332,10 +332,9 @@ definitions:
 
     - &is_fav_collection_item_add { <<: *is_fav, from_page: "favs_move_popup" }
     - &is_fav_collection_item_rmv { <<: *is_fav_rmv, from_page: "favs_move_popup" }
-    
     - &x_is_fav_collection { <<: *x_is_fav_coll }
-    - &is_fav_collection {<<: *is_fav_coll }
-    - &is_fav_collection_list {<<: *is_fav_coll_list}
+    - &is_fav_collection { <<: *is_fav_coll }
+    - &is_fav_collection_list { <<: *is_fav_coll_list }
 
     - &is_item_with_video_cpa {is_item_with_video_cpa: 1}
 
@@ -1827,7 +1826,7 @@ metric.counter:
     c_fav_collection: { filter: [*is_contact_wo_guessing, *x_is_fav_collection] }
     btc_fav_collection: { filter: [*is_btc_wo_guessing, *x_is_fav_collection] }
     fav_collection_view: { filter: [*is_fav_collection] }
-    fav_collection_list_view: {filter: [*is_fav_collection_list] }
+    fav_collection_list_view: { filter: [*is_fav_collection_list] }
 
     agbc_bt_clicks: { filter: [{ $or: [[*is_btc], [*is_agent_back_call_start]] }] }
     agbc_contacts_all: { filter: [{ $or: [[*is_contact], [*is_agent_back_call]] }] }
@@ -3237,7 +3236,7 @@ metric.uniq:
     user_c_fav_collection: { counter: c_fav_collection, key: [cookie] }
     user_btc_fav_collection: { counter: btc_fav_collection, key: [cookie] }
     user_fav_collection_view: { counter: fav_collection_view, key: [cookie] }
-    user_fav_collection_list_view: {counter: fav_collection_list_view, key: [cookie] }
+    user_fav_collection_list_view: { counter: fav_collection_list_view, key: [cookie] }
 
     user_search_grid: { counter: search_grid, key: [cookie] }
     user_search_list: { counter: search_list, key: [cookie] }
