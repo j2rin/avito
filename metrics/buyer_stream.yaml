@@ -344,8 +344,8 @@ definitions:
     - &is_item_original { item_flags.bit: 31 }
     - &is_black_target_clicks { eid: [2483, 5942] }
 
-    - &is_b2c { item_flags.bit: 34 }
-    - &is_c2c_return_within_14_days { item_flags.bit: 35 }
+    - &is_b2c { b2c_wo_dbs: 1}
+    - &is_c2c_return_within_14_days { c2c_return_within_14_days: 1}
     - &is_return_within_14_days {return_within_14_days: 1}
 
 
@@ -1850,21 +1850,21 @@ metric.counter:
     marketplace_contacts_original: { filter: [*is_item_original, *is_black_target_clicks] }
     delivery_contats_original: { filter: [*is_item_original, eid: 2483] }
 
-#    total_delivery_item_view_b2c: { filter: [*is_delivery_active, *is_iv, *is_b2c] }
-#    total_delivery_item_view_c2c_14days_return:  { filter: [*is_delivery_active, *is_iv, *is_c2c_return_within_14_days] }
-    total_delivery_item_view_14days_return:  { filter: [*is_delivery_active, *is_iv, *is_return_within_14_days] }
+    total_delivery_item_view_b2c: { filter: [*is_iv, *is_b2c] }
+    total_delivery_item_view_c2c_14days_return:  { filter: [*is_iv, *is_c2c_return_within_14_days] }
+    total_delivery_item_view_14days_return:  { filter: [*is_iv, *is_return_within_14_days] }
 
-    total_delivery_contact_b2c: { filter: [*is_not_item_marketplace, *is_delivery, *is_b2c] }
-    total_delivery_contact_c2c_14days_return:  { filter: [*is_not_item_marketplace, *is_delivery, *is_c2c_return_within_14_days] }
-    total_delivery_contact_14days_return:  { filter: [*is_not_item_marketplace, *is_delivery, *is_return_within_14_days] }
+    total_delivery_contact_b2c: { filter: [*is_delivery, *is_b2c] }
+    total_delivery_contact_c2c_14days_return:  { filter: [*is_delivery, *is_c2c_return_within_14_days] }
+    total_delivery_contact_14days_return:  { filter: [*is_delivery, *is_return_within_14_days] }
 
-    total_delivery_click_b2c: { filter: [*is_delivery_pvz, *is_not_item_marketplace, *is_b2c, eid: 2483] }
-    total_delivery_click_c2c_14days_return:  { filter: [*is_delivery_pvz, *is_not_item_marketplace, *is_c2c_return_within_14_days, eid: 2483] }
-    total_delivery_click_14days_return:  { filter: [*is_delivery_pvz, *is_not_item_marketplace, *is_return_within_14_days, eid: 2483] }
+    total_delivery_click_b2c: { filter: [*is_delivery_pvz, *is_b2c, eid: 2483] }
+    total_delivery_click_c2c_14days_return:  { filter: [*is_delivery_pvz, *is_c2c_return_within_14_days, eid: 2483] }
+    total_delivery_click_14days_return:  { filter: [*is_delivery_pvz, *is_return_within_14_days, eid: 2483] }
 
-    total_delivery_confirm_b2c: { filter: [*is_not_item_marketplace, eid: 2749, *is_b2c ]  }
-    total_delivery_confirm_c2c_14days_return:  { filter: [*is_not_item_marketplace, eid: 2749, *is_c2c_return_within_14_days ]  }
-    total_delivery_confirm_14days_return:  { filter: [*is_not_item_marketplace, eid: 2749, *is_return_within_14_days ] }
+    total_delivery_confirm_b2c: { filter: [eid: 2749, *is_b2c ]  }
+    total_delivery_confirm_c2c_14days_return:  { filter: [ eid: 2749, *is_c2c_return_within_14_days ]  }
+    total_delivery_confirm_14days_return:  { filter: [ eid: 2749, *is_return_within_14_days ] }
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
