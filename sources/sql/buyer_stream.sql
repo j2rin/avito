@@ -124,7 +124,9 @@ select
         ss.x,
         ss.eid
         ) as seller_microcat_price_x,
-    ((ss.item_flags & (1 << 34) > 0) or (ss.item_flags & (1 << 35) > 0))::int as return_within_14_days
+    ( (ss.item_flags & (1 << 34) > 0) and (ss.item_flags & (1 << 16) > 0) )::int as b2c_wo_dbs,
+    ( (ss.item_flags & (1 << 35) > 0) and (ss.item_flags & (1 << 16) > 0) )::int as c2c_return_within_14_days,
+    ( ((ss.item_flags & (1 << 34) > 0) or (ss.item_flags & (1 << 35) > 0)) and (ss.item_flags & (1 << 16) > 0) )::int as return_within_14_days    
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
