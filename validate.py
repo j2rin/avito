@@ -150,8 +150,8 @@ def send_all(url, api_key=None):
 
 def post(url, data):
     def _post():
-        # conn = httplib.HTTPConnection('127.0.0.1', 5000)
-        conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
+        conn = httplib.HTTPConnection('127.0.0.1', 5000)
+        # conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
 
         conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
 

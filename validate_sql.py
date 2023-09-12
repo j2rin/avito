@@ -6,6 +6,8 @@ import click
 
 from lib.clients.clickhouse import get_connection as ch_get_con
 from lib.clients.clickhouse import get_query_columns as ch_get_query_columns
+from lib.clients.trino import explain_validate
+from lib.clients.trino import get_connection as t_get_con
 from lib.clients.vertica import get_connection as v_get_con
 from lib.clients.vertica import get_query_columns as v_get_query_columns
 from lib.utils import bind_sql_params, get_missing_sql_params, split_statements
@@ -142,6 +144,30 @@ from (
             return {'error': str(e)}
 
 
+class TrinoFileValidator:
+    def __init__(self):
+        self.not_found_tables = set()
+
+    def validate(self, filepath):
+        try:
+
+            with open(filepath, 'r') as f:
+                sql_raw = f.read()
+
+            sql = _bind_date_period(sql_raw, 1)
+            with t_get_con() as con:
+                result = explain_validate(con, sql)
+                if 'error' in result and result['error'].error_name == 'TABLE_NOT_FOUND':
+                    match = re.search(r"Table '\w+\.([\w.]+)'", result['error'].message)
+                    if match:
+                        table_name = match.group(1)
+                        self.not_found_tables.add(table_name)
+                return result
+
+        except Exception as e:
+            return {'error': str(e)}
+
+
 class ClickhouseFileValidator:
     def validate(self, filepath):
 
@@ -216,6 +242,7 @@ def validate(filenames=None, limit0=False, n_days=1):
     sql_metadata = get_sql_metadata()
     vertica_validator = VerticaFileValidator(sql_metadata, limit0, n_days)
     clickhouse_validator = ClickhouseFileValidator()
+    trino_validator = TrinoFileValidator()
 
     for path in modified_files:
 
@@ -247,6 +274,12 @@ def validate(filenames=None, limit0=False, n_days=1):
                 print(f'{metric}: {value}')
                 success = False
 
+        trino_validation_result = trino_validator.validate(path)
+        if 'error' in trino_validation_result:
+            print(
+                f'WARNING: syntax is not valid for Trino. {trino_validation_result["error"].message}'
+            )
+
         print('')
         for metric, template in REPORT_CONFIG.items():
             if metric in report:
@@ -256,6 +289,10 @@ def validate(filenames=None, limit0=False, n_days=1):
     if success:
         print('SQL validation PASSED')
 
+    print(
+        f'Some tables has not been found in Trino.'
+        f"Execute `select public.publish('{','.join(trino_validator.not_found_tables)}');`"
+    )
     return success
 
 
