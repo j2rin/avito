@@ -1,8 +1,9 @@
+definitions:
+    - &src_ab         [1487, 1746]
+    - &src_m42        [1477]
+
 metric.counter:
-  cnt_m42_all:                                {filter: [eid: 6287]}
-  cnt_ab_pv:                                  {filter: [eid: [6373, 6374, 6381, 6380, 6383, 6382, 6378, 6377, 6376]]}
-  cnt_big10_all:                              {filter: [eid: [6312, 6313, 8485, 7981, 6602]]}
-  m42_lpie_update:                            {filter: [eid: 7071]}
+  #  clickstream
   cnt_clickstream_all:                        {filter: [src_id: [1421]]}
   cnt_clickstream_created_event:              {filter: [eid: 6658]}
   cnt_clickstream_created_field:              {filter: [eid: 6663]}
@@ -12,22 +13,114 @@ metric.counter:
   cnt_clickstream_admin_open:                 {filter: [eid: 8288]}
   cnt_clickstream_admin_close:                {filter: [eid: 8289]}
 
+  # 3 sigma
+  cnt_ab_pv:                                  {filter: [src_id: *src_ab]}
+  cnt_ab_experiments_opening:                 {filter: [eid: 8705]}
+  cnt_ab_metric_opening:                      {filter: [eid: 8703]}
+  cnt_ab_projects_opening:                    {filter: [eid: 8704]}
+  cnt_ab_layers_opening:                      {filter: [eid: 8706]}
+  cnt_ab_groups_opening:                      {filter: [eid: 8707]}
+  cnt_ab_lists_opening:                       {filter: [eid: 8708]}
+  cnt_ab_journal_opening:                     {filter: [eid: 8709]}
+  cnt_ab_calendar_def_opening:                {filter: [eid: 8711]}
+  cnt_ab_initiatives_roadmap_opening:         {filter: [eid: 8712]}
+  cnt_ab_docs_opening:                        {filter: [eid: 8713]}
+  cnt_ab_subscriptions_opening:               {filter: [eid: 8702]}
+
+  cnt_ab_report_filters_update:               {filter: [eid: 8693]}
+  cnt_ab_report_show_lift:                    {filter: [eid: 8694]}
+  cnt_ab_report_oec_report:                   {filter: [eid: 8695]}
+  cnt_ab_report_select_preset:                {filter: [eid: 8716]}
+  cnt_ab_report_create_preset:                {filter: [eid: 8717]}
+  cnt_ab_report_check_settings:               {filter: [eid: 8718]}
+  cnt_ab_report_show_realtime:                {filter: [eid: 8719]}
+
+  cnt_ab_experiment_create_new_scratch:                       {filter: [eid: 8696]}
+  cnt_ab_experiment_clone_experiment:                         {filter: [eid: 8697]}
+  cnt_ab_experiment_create_from_project:                      {filter: [eid: 8698]}
+  cnt_ab_experiment_run_setting_mark_conflict:                {filter: [eid: 8701]}
+  cnt_ab_experiment_overview_change_project:                  {filter: [eid: 8721]}
+  cnt_ab_experiment_overview_go_to_project:                   {filter: [eid: 8722]}
+  cnt_ab_experiment_overview_set_feature:                     {filter: [eid: 8723]}
+  cnt_ab_experiment_overview_go_to_other_project_experiment:  {filter: [eid: 8724]}
+  cnt_ab_experiment_overview_go_to_ticket:                    {filter: [eid: 8725]}
+  cnt_ab_experiment_diagnostic_page_opening:                  {filter: [eid: 8929]}
+  cnt_ab_experiment_diagnostic_page_calculation:              {filter: [eid: 8930]}
+  cnt_ab_groups_show_ab_participation:                        {filter: [eid: 8742]}
+
+  cnt_ab_project_go_to_initiative:                  {filter: [eid: 8726]}
+  cnt_ab_project_hypothesis_show_full_description:  {filter: [eid: 8727]}
+  cnt_ab_project_image_view:                        {filter: [eid: 8728]}
+  cnt_ab_project_go_to_experiment_from_hypothesis:  {filter: [eid: 8729]}
+  cnt_ab_project_go_to_experiment_from_comment:     {filter: [eid: 8730]}
+  cnt_ab_project_create_release:                    {filter: [eid: 8731]}
+
+  cnt_ab_metric_generate_sql:             {filter: [eid: 8733]}
+  cnt_ab_metric_mass_edit:                {filter: [eid: 8734]}
+  cnt_ab_metric_open_ab_metric_card:      {filter: [eid: 8735]}
+  cnt_ab_metric_subscribe_from_card:      {filter: [eid: 8736]}
+  cnt_ab_metric_offer_suggestion:         {filter: [eid: 8737]}
+  cnt_ab_metric_show_sql:                 {filter: [eid: 8738]}
+  cnt_ab_metric_show_sql_mde:             {filter: [eid: 8739]}
+  cnt_ab_metric_go_to_semantic_bi:        {filter: [eid: 8740]}
+  cnt_ab_metric_subscription_subscribe:   {filter: [eid: 8749]}
+
+  cnt_ab_portfolio_go_to_linked_project:                      {filter: [eid: 8746]}
+  cnt_ab_calendar_def_opening_from_portfolio_list_page:       {filter: [eid: 8743]}
+  cnt_ab_roadmap_opening_from_portfolio_list_page:            {filter: [eid: 8744]}
+  cnt_ab_calendar_def_opening_from_initiative:                {filter: [eid: 8745]}
+  cnt_ab_calendar_def_add_slot:                               {filter: [eid: 8747]}
+  cnt_ab_calendar_def_preview_defense:                        {filter: [eid: 8748]}
+
+  # m42 specific
+  cnt_m42_all:                                {filter: [eid: 6287]}
+  cnt_big10_all:                              {filter: [eid: [6312, 6313, 8485, 7981, 6602]]}
+  m42_lpie_update:                            {filter: [eid: 7071]}
+
 
 metric.uniq:
-  user_m42_all:                               {counter: cnt_m42_all, key: [user_hash]}
-  user_date_m42_all:                          {counter: cnt_m42_all, key: [user_date_hash]}
-  user_ab:                                    {counter: cnt_ab_pv, key: [user_hash]}
-  user_m42_lpie:                              {counter: m42_lpie_update, key: [user_hash]}
-  user_big10_all:                             {counter: cnt_big10_all, key: [user_hash]}
-  user_clickstream_all:                       {counter: cnt_clickstream_all, key: [user_hash]}
-  user_clickstream_created_event:             {counter: cnt_clickstream_created_event, key: [user_hash]}
-  user_clickstream_created_field:             {counter: cnt_clickstream_created_field, key: [user_hash]}
-  user_clickstream_created_environment:       {counter: cnt_clickstream_created_environment, key: [user_hash]}
-  user_clickstream_events_search:             {counter: cnt_clickstream_events_search, key: [user_hash]}
-  user_clickstream_eop:                       {counter: cnt_clickstream_eop, key: [user_hash]}
-  user_clickstream_admin_open:                {counter: cnt_clickstream_admin_open, key: [user_hash]}
-  user_clickstream_admin_close:               {counter: cnt_clickstream_admin_close, key: [user_hash]}
+  #  clickstream
+  user_clickstream_all: { counter: cnt_clickstream_all, key: [ user_hash ] }
+  user_clickstream_created_event: { counter: cnt_clickstream_created_event, key: [ user_hash ] }
+  user_clickstream_created_field: { counter: cnt_clickstream_created_field, key: [ user_hash ] }
+  user_clickstream_created_environment: { counter: cnt_clickstream_created_environment, key: [ user_hash ] }
+  user_clickstream_events_search: { counter: cnt_clickstream_events_search, key: [ user_hash ] }
+  user_clickstream_eop: { counter: cnt_clickstream_eop, key: [ user_hash ] }
+  user_clickstream_admin_open: { counter: cnt_clickstream_admin_open, key: [ user_hash ] }
+  user_clickstream_admin_close: { counter: cnt_clickstream_admin_close, key: [ user_hash ] }
+  # 3 sigma
+  user_ab_experiments_opening:                {counter: cnt_ab_experiments_opening,           key: [ user_hash ] }
+  user_ab_metric_opening:                     {counter: cnt_ab_metric_opening,                key: [ user_hash ] }
+  user_ab_projects_opening:                   {counter: cnt_ab_projects_opening,              key: [ user_hash ] }
+  user_ab_layers_opening:                     {counter: cnt_ab_layers_opening,                key: [ user_hash ] }
+  user_ab_groups_opening:                     {counter: cnt_ab_groups_opening,                key: [ user_hash ] }
+  user_ab_lists_opening:                      {counter: cnt_ab_lists_opening,                 key: [ user_hash ] }
+  user_ab_journal_opening:                    {counter: cnt_ab_journal_opening,               key: [ user_hash ] }
+  user_ab_calendar_def_opening:               {counter: cnt_ab_calendar_def_opening,          key: [ user_hash ] }
+  user_ab_initiatives_roadmap_opening:        {counter: cnt_ab_initiatives_roadmap_opening,   key: [ user_hash ] }
+  user_ab_docs_opening:                       {counter: cnt_ab_docs_opening,                  key: [ user_hash ] }
+  user_ab_subscriptions_opening:              {counter: cnt_ab_subscriptions_opening,         key: [ user_hash ] }
+
+  user_ab_report_oec_report:                  {counter: cnt_ab_report_oec_report,     key: [ user_hash ]}
+  user_ab_report_show_realtime:               {counter: cnt_ab_report_show_realtime,  key: [ user_hash ]}
+
+  user_ab_metric_go_to_semantic_bi:           {counter: cnt_ab_metric_go_to_semantic_bi,  key: [ user_hash ]}
+  user_ab_metric_mass_edit:                   {counter: cnt_ab_metric_mass_edit,          key: [ user_hash ]}
+
+  user_ab_metric_open_ab_metric_card:         {counter: cnt_ab_metric_open_ab_metric_card,         key: [ user_hash ]}
+  user_ab_experiment_diagnostic_page_opening: {counter: cnt_ab_experiment_diagnostic_page_opening, key: [ user_hash ]}
+  user_ab_groups_show_ab_participation:       {counter: cnt_ab_groups_show_ab_participation,       key: [ user_hash ]}
+
+  user_m42_all:                               {counter: cnt_m42_all,        key: [user_hash]}
+  user_date_m42_all:                          {counter: cnt_m42_all,        key: [user_date_hash]}
+  user_ab:                                    {counter: cnt_ab_pv,          key: [user_hash]}
+  user_m42_lpie:                              {counter: m42_lpie_update,    key: [user_hash]}
+  user_big10_all:                             {counter: cnt_big10_all,      key: [user_hash]}
 
 
 metric.ratio:
+  #  clickstream
   clickstream_penetration:                    { num: user_clickstream_all, den: user_avito_employee }
+  # 3 sigma
+  ab_platform_penetration:                    {num: user_ab, den: user_avito_employee}
+  semantic_bi_penetration:                    {num: user_m42_all, den: user_avito_employee }
