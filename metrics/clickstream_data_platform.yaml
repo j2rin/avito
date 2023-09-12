@@ -14,7 +14,7 @@ metric.counter:
   cnt_clickstream_admin_close:                {filter: [eid: 8289]}
 
   # 3 sigma
-  cnt_ab_pv:                                  {filter: [src_id: [*src_ab]]}
+  cnt_ab_pv:                                  {filter: [src_id: *src_ab]}
   cnt_ab_experiments_opening:                 {filter: [eid: 8705]}
   cnt_ab_metric_opening:                      {filter: [eid: 8703]}
   cnt_ab_projects_opening:                    {filter: [eid: 8704]}
@@ -65,12 +65,12 @@ metric.counter:
   cnt_ab_metric_go_to_semantic_bi:        {filter: [eid: 8740]}
   cnt_ab_metric_subscription_subscribe:   {filter: [eid: 8749]}
 
-  cnt_ab_portfolio_go_to_linked_project: {filter: [eid: 8746]}
-  cnt_ab_calendar_def_opening_from_portfolio_list_page: {filter: [eid: 8743]}
-  cnt_ab_roadmap_opening_from_portfolio_list_page: {filter: [eid: 8744]}
-  cnt_ab_calendar_def_opening_from_initiative: {filter: [eid: 8745]}
-  ab_calendar_def_add_slot: {filter: [eid: 8747]}
-  ab_calendar_def_preview_defense: {filter: [eid: 8748]}
+  cnt_ab_portfolio_go_to_linked_project:                      {filter: [eid: 8746]}
+  cnt_ab_calendar_def_opening_from_portfolio_list_page:       {filter: [eid: 8743]}
+  cnt_ab_roadmap_opening_from_portfolio_list_page:            {filter: [eid: 8744]}
+  cnt_ab_calendar_def_opening_from_initiative:                {filter: [eid: 8745]}
+  cnt_ab_calendar_def_add_slot:                               {filter: [eid: 8747]}
+  cnt_ab_calendar_def_preview_defense:                        {filter: [eid: 8748]}
 
   # m42 specific
   cnt_m42_all:                                {filter: [eid: 6287]}
@@ -101,9 +101,15 @@ metric.uniq:
   user_ab_docs_opening: { counter: cnt_ab_docs_opening, key: [ user_hash ] }
   user_ab_subscriptions_opening: { counter: cnt_ab_subscriptions_opening, key: [ user_hash ] }
 
+  user_ab_report_oec_report: {counter: cnt_ab_report_oec_report, key: [ user_hash ]}
+  user_ab_report_show_realtime: {counter: cnt_ab_report_show_realtime, key: [ user_hash ]}
+
   user_ab_metric_go_to_semantic_bi: {counter: cnt_ab_metric_go_to_semantic_bi, key: [ user_hash ]}
   user_ab_metric_mass_edit: {counter: cnt_ab_metric_mass_edit, key: [ user_hash ]}
 
+  user_ab_metric_open_ab_metric_card: {counter: cnt_ab_metric_open_ab_metric_card, key: [ user_hash ]}
+  user_ab_experiment_diagnostic_page_opening: {counter: cnt_ab_experiment_diagnostic_page_opening, key: [ user_hash ]}
+  user_ab_groups_show_ab_participation: {counter: cnt_ab_groups_show_ab_participation, key: [ user_hash ]}
 
   user_m42_all:                               {counter: cnt_m42_all, key: [user_hash]}
   user_date_m42_all:                          {counter: cnt_m42_all, key: [user_date_hash]}
