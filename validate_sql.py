@@ -158,7 +158,7 @@ class TrinoFileValidator:
             with t_get_con() as con:
                 result = explain_validate(con, sql)
                 if 'error' in result and result['error'].error_name == 'TABLE_NOT_FOUND':
-                    match = re.search(r"Table '\w+\.([\w.]+)'", result['error'].message)
+                    match = re.search(r"Table '\w+\.([\w.]+)'", result['error'])
                     if match:
                         table_name = match.group(1)
                         self.not_found_tables.add(table_name)
@@ -232,7 +232,7 @@ REPORT_CONFIG = {
 }
 
 
-def validate(filenames=None, limit0=False, n_days=1):
+def validate(filenames=None, limit0=False, n_days=1, validate_trino=True):
     if filenames:
         modified_files = [f'{SQL_DIR}{fn}.sql' for fn in filenames]
     else:
@@ -274,11 +274,12 @@ def validate(filenames=None, limit0=False, n_days=1):
                 print(f'{metric}: {value}')
                 success = False
 
-        trino_validation_result = trino_validator.validate(path)
-        if 'error' in trino_validation_result:
-            print(
-                f'WARNING: syntax is not valid for Trino. {trino_validation_result["error"].message}'
-            )
+        if validate_trino:
+            trino_validation_result = trino_validator.validate(path)
+            if 'error' in trino_validation_result:
+                print(
+                    f'WARNING: syntax is not valid for Trino. {trino_validation_result["error"].message}'
+                )
 
         print('')
         for metric, template in REPORT_CONFIG.items():
@@ -289,10 +290,11 @@ def validate(filenames=None, limit0=False, n_days=1):
     if success:
         print('SQL validation PASSED')
 
-    print(
-        f'\nSome tables have not been found in Trino.'
-        f"Execute `select public.publish('{','.join(trino_validator.not_found_tables)}');`"
-    )
+    if trino_validator.not_found_tables:
+        print(
+            f'\nSome tables have not been found in Trino.'
+            f"Execute `select public.publish('{','.join(trino_validator.not_found_tables)}');`"
+        )
     return success
 
 
