@@ -290,7 +290,7 @@ def validate(filenames=None, limit0=False, n_days=1):
         print('SQL validation PASSED')
 
     print(
-        f'Some tables has not been found in Trino.'
+        f'\nSome tables have not been found in Trino.'
         f"Execute `select public.publish('{','.join(trino_validator.not_found_tables)}');`"
     )
     return success
