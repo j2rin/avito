@@ -7,7 +7,6 @@ select
     be.eid,
     be.banner_type,
     be.buyout_screen_type,
-    be.location_id,
     be.segment,
     be.dispatch_cd,
     be.source,
