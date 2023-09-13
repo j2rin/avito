@@ -3795,5 +3795,18 @@ clickstream_video:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
+
+buyout_events:
+  metric_configs: [buyout_events]
+  database: vertica
+  sql: buyout_events
+  column_map:
+    user: user_id
+    item: item_id
+    user_segment_market: segment
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+  segm: user_id
   
   

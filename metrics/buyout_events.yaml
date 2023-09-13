@@ -1,0 +1,28 @@
+definitions:
+    - &bottomsheet    {$or: [eid.in: [6519, 8667, 8669], [eid: 6703, banner_type: 'invitation']]}
+    - &entered_flow   {$or: [eid.in: [6520, 8672, 8673], [eid: 6698, banner_type: 'invitation']]}
+    - &request_screen {eid: 6769, buyout_screen_type: 'request'}
+    - &final_screen   {eid: 6769, buyout_screen_type: 'final'}
+    - &buyout         {eid: 10000, event_type: 'fake event'}
+
+metric.counter:
+  electronics_recommerce_seen_bottomsheet:  {filter: *bottomsheet}
+  electronics_recommerce_entered_flow:      {filter: *entered_flow}
+  electronics_recommerce_request_screen:    {filter: *request_screen}
+  electronics_recommerce_request_completed: {filter: *final_screen}
+  electronics_recommerce_buyout:            {filter: *buyout}
+
+metric.uniq:
+  electronics_recommerce_seen_bottomsheet_uniq:   {counter: electronics_recommerce_seen_bottomsheet,  key:[entity_id]}
+  electronics_recommerce_entered_flow_uniq:       {counter: electronics_recommerce_entered_flow,      key:[entity_id]}
+  electronics_recommerce_request_screen_uniq:     {counter: electronics_recommerce_request_screen,    key:[entity_id]}
+  electronics_recommerce_request_completed_uniq:  {counter: electronics_recommerce_request_completed, key:[entity_id]}
+  electronics_recommerce_buyout_uniq:             {counter: electronics_recommerce_buyout,            key:[entity_id]}
+
+metric.ratio:
+  electronics_recommerce_entered_flow_per_seen_invitation:  {num: electronics_recommerce_entered_flow_uniq,       den: electronics_recommerce_seen_bottomsheet_uniq}
+  electronics_recommerce_request_screen_per_entered_flow:   {num: electronics_recommerce_request_screen_uniq,     den: electronics_recommerce_entered_flow_uniq}
+  electronics_recommerce_requests_per_request_screen:       {num: electronics_recommerce_request_completed_uniq,  den: electronics_recommerce_request_screen_uniq}
+  electronics_recommerce_buyouts_per_requests:              {num: electronics_recommerce_buyout_uniq,             den: electronics_recommerce_request_completed_uniq}
+  electronics_recommerce_buyouts_per_seen_invitation:       {num: electronics_recommerce_buyout_uniq,             den: electronics_recommerce_seen_bottomsheet_uniq}
+  electronics_recommerce_requests_per_entered_flow:         {num: electronics_recommerce_request_completed_uniq,  den: electronics_recommerce_entered_flow_uniq}
