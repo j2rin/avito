@@ -5,4 +5,4 @@
 		   participant_id as user_id,
 		   observation_value
 	from dma.ratings_logcat_metric_observation
-where event_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

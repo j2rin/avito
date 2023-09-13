@@ -52,4 +52,4 @@ select
     is_messenger_recommendation_setting_available,
     is_messenger_tips_setting_available
 from dma.crm_notification_settings_by_user
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

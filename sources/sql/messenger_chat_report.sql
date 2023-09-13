@@ -5,14 +5,14 @@ with am_client_day as (
            (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
            user_group_id
     from DMA.am_client_day_versioned
-    where active_from_date::date <= :last_date
-        and active_to_date::date >= :first_date
+    where cast(active_from_date as date) <= :last_date
+        and cast(active_to_date as date) >= :first_date
 )
 , usm as (
     select user_id, logical_category_id, user_segment, converting_date,
         lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
-    where converting_date::date <= :last_date
+    where cast(converting_date as date) <= :last_date
 )
 , chatbot as (
     select
@@ -20,12 +20,12 @@ with am_client_day as (
         start_flow_time,
         end_flow_time
     from DMA.messenger_chat_flow_report
-    where start_flow_time::date <= :last_date
-        and end_flow_time::date >= :first_date
+    where cast(start_flow_time as date) <= :last_date
+        and cast(end_flow_time as date) >= :first_date
 )
  select
  	chr.chat_id,
- 	first_message_event_date::Date,
+ 	cast(first_message_event_date as Date),
 	platform_id,
     first_message_user_id,
     first_message_cookie_id,
@@ -40,10 +40,10 @@ with am_client_day as (
     reply_platform_id,
     with_reply,
     chr.user_id,
-    reply_time::date,
+    cast(reply_time as date),
     datediff ('minute',first_message_event_date, reply_time) as reply_time_minutes,
     case
-        when first_message_event_date::date=reply_time::date then true
+        when cast(first_message_event_date as date)=cast(reply_time as date) then true
         else false
     end as is_one_day_reply,
 	chr.microcat_id,
@@ -57,14 +57,14 @@ with am_client_day as (
 	cm.Param2_microcat_id                                        as param2_id,
 	cm.Param3_microcat_id                                        as param3_id,
 	cm.Param4_microcat_id                                        as param4_id,
-	decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-	decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
 	cl.LocationGroup_id                                          as location_group_id,
 	cl.City_Population_Group                                     as population_group,
 	cl.Logical_Level                                             as location_level_id,
-	nvl(acd.is_asd, False)                                       as is_asd,
+	coalesce(acd.is_asd, False)                                       as is_asd,
     acd.user_group_id                                            as asd_user_group_id,
-    nvl(usm.user_segment, ls.segment)                            as user_segment_market,
+    coalesce(usm.user_segment, ls.segment)                            as user_segment_market,
     0 															 as zero
 from DMA.messenger_chat_report chr
 left join /*+jtype(h),distrib(l,a)*/ chatbot cb
@@ -88,17 +88,17 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl
     ON cl.Location_id = chr.item_location_id
 left join am_client_day acd
     on chr.user_id = acd.user_id
-    and chr.first_message_event_date::date between acd.active_from_date and acd.active_to_date
+    and cast(chr.first_message_event_date as date) between acd.active_from_date and acd.active_to_date
 left join usm
     on chr.user_id = usm.user_id
     and cm.logical_category_id = usm.logical_category_id
-    and chr.first_message_event_date::timestamp >= converting_date and chr.first_message_event_date::timestamp < next_converting_date
+    and cast(chr.first_message_event_date as timestamp) >= converting_date and cast(chr.first_message_event_date as timestamp) < next_converting_date
 where true
     and not is_spam
     and not is_bad_cookie
     and not is_blocked
     and not is_deleted
     and (
-            first_message_event_date::date between :first_date and :last_date
-        or  reply_time::date between :first_date and :last_date
+            cast(first_message_event_date as date) between :first_date and :last_date
+        or  cast(reply_time as date) between :first_date and :last_date
     )

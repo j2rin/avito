@@ -19,11 +19,11 @@ from DMA.am_client_day_versioned
 	-- Dimensions -----------------------------------------------------------------------------------------------------
     lc.vertical_id,
 	lc.logical_category_id,
-	nvl(acd.is_asd, False)                                       as is_asd,
+	coalesce(acd.is_asd, False)                                       as is_asd,
     acd.user_group_id                                            as asd_user_group_id
 from dma.messenger_answer_percentiles t
 left join am_client_day acd
 		on t.from_user_id = acd.user_id
-		and t.event_date::date between acd.active_from_date and acd.active_to_date
+		and cast(t.event_date as date) between acd.active_from_date and acd.active_to_date
 left join DMA.current_logical_categories lc on lc.logcat_id = t.logical_category_id and level_id=2
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

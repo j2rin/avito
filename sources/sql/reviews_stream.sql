@@ -14,7 +14,7 @@ select
         else page_from 
     end as page_from
 from dma.reviews_stream
-where event_date::date between :first_date and :last_date
-    and not (eid = 2754 and nvl(page_from,'none') in ('item_rating','item_scroll','item_all_reviews'))
-    and not (eid = 2754 and nvl(page_from,'none') = 'item' and platform_id = 3)
+where cast(event_date as date) between :first_date and :last_date
+    and not (eid = 2754 and coalesce(page_from,'none') in ('item_rating','item_scroll','item_all_reviews'))
+    and not (eid = 2754 and coalesce(page_from,'none') = 'item' and platform_id = 3)
 

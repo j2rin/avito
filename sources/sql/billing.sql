@@ -25,4 +25,4 @@
         payment_method_page - payment_method_page_subs - payment_method_page_cv - payment_method_page_wallet as payment_method_page_account_pay,
         payment_method_choice - payment_method_choice_subs - payment_method_choice_cv - payment_method_choice_wallet as payment_method_choice_account_pay
    from dma.billing_metric_observation
-where event_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

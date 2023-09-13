@@ -28,7 +28,7 @@ from (
             bs.location_id
         from dma.buyer_stream bs
         where bs.item_flags & 4 = 0 and eid in (2015,4035)
-            and bs.event_date::date between :first_date and :last_date
+            and cast(bs.event_date as date) between :first_date and :last_date
     )
     union all
     (
@@ -48,7 +48,7 @@ from (
                 'buyer_str_bookings'
             )
             and observation_value>0
-            and observation_date::date between :first_date and :last_date
+            and cast(observation_date as date) between :first_date and :last_date
     )
     union all
     (
@@ -72,12 +72,12 @@ from (
             and with_reply = True
             and reply_message_bot is null
             and datediff ('minute',first_message_event_date, reply_time) between 0 and 4320
-            and first_message_event_date::date between :first_date and :last_date
+            and cast(first_message_event_date as date) between :first_date and :last_date
     )
     union all
     (
         select
-            AppCallStart::date as event_date,
+            cast(AppCallStart as date) as event_date,
             case when CallerIsBuyer then CallerDevice 		when not CallerIsBuyer then RecieverDevice 		end as cookie_id,
         	case when CallerIsBuyer then AppCallCaller_id	when not CallerIsBuyer then AppCallReciever_id	end as user_id,
             'appcall_bx_outgoing' as observation_name,
@@ -98,7 +98,7 @@ from (
                 'messenger_empty_chat',
                 'notification_call_back'
             )
-           and AppCallStart::date between :first_date and :last_date
+           and cast(AppCallStart as date) between :first_date and :last_date
     )
 ) t
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = t.microcat_id

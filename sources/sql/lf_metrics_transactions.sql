@@ -11,13 +11,13 @@ select
     user_id, 
     logical_category_id, 
     user_segment, 
-    timestampadd('s', 86399, converting_date::timestamp(0)) converting_date
+    timestampadd('s', 86399, cast(converting_date as timestamp(0))) converting_date
 from dma.user_segment_market
 )
 select 	lfmtr.first_vasfact_id, 
 		lfmtr.second_vasfact_id, 
 		lfmtr.user_id, 
-		lfmtr.event_time::date event_date,
+		cast(lfmtr.event_time as date) event_date,
 		lfmtr.tariff_source,
 		case when lfmtr.lf_product = 'subscription 1.0' then 'subscription' else lfmtr.lf_product end tariff_type,
 		lfmtr.lf_product_level tariff_subtype,
@@ -25,8 +25,8 @@ select 	lfmtr.first_vasfact_id,
 	    clc.vertical,
 	    clc.logical_category_id,
 	    clc.logical_category,
-	    decode(cl.level, 3, cl.parentlocation_id, cl.location_id)    as region_id,
-	    decode(cl.level, 3, cl.location_id, null)                    as city_id,
+        case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+        case cl.level when 3 then cl.Location_id end                           as city_id,
 	    cl.locationgroup_id                                          as location_group_id,
 	    cl.city_population_group                                     as population_group,
 	    cl.logical_level                                             as location_level_id,
@@ -35,9 +35,9 @@ select 	lfmtr.first_vasfact_id,
         lfmtr.amount,
         lfmtr.amount_net,
         lfmtr.amount_net_adj,
-        nvl(acd.is_asd, False)                                       as is_asd,
+        coalesce(acd.is_asd, False)                                       as is_asd,
         acd.user_group_id                                            as asd_user_group_id,
-		nvl(usm.user_segment, ls.segment) as user_segment_market
+		coalesce(usm.user_segment, ls.segment) as user_segment_market
 from dma.o_lf_metrics_transactions lfmtr
 left join dds.h_platform pt 	
     on lower(lfmtr.avito_version) = lower(pt.external_id)
@@ -57,6 +57,6 @@ left join user_segment_market usm
     and clc.logical_category_id = usm.logical_category_id 
     and lfmtr.event_time interpolate previous value usm.converting_date
 left join am_client_day acd
-    on lfmtr.event_time::date between acd.active_from_date and acd.active_to_date
+    on cast(lfmtr.event_time as date) between acd.active_from_date and acd.active_to_date
     and lfmtr.user_id = acd.user_id
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

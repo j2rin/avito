@@ -3,8 +3,8 @@ select
     flowrun_id,
     t.user_id,
     flow_id,
-    start_flow_time::date,
-    end_flow_time::date,
+    cast(start_flow_time as date),
+    cast(end_flow_time as date),
     reason_end_flow,
 	0 as zero,
     case
@@ -25,11 +25,11 @@ select
     cm.category_id,
     cm.subcategory_id
 from  DMA.messenger_chat_flow_report t
-left join dma.messenger_chat_report r using (chat_id)
-left join dma.current_microcategories cm using (microcat_id)
+left join dma.messenger_chat_report r on r.chat_id = t.chat_id
+left join dma.current_microcategories cm on cm.microcat_id = r.microcat_id
 where (
-        t.start_flow_time::date between :first_date and :last_date
-        or t.end_flow_time::date between :first_date and :last_date
+        cast(t.start_flow_time as date) between :first_date and :last_date
+        or cast(t.end_flow_time as date) between :first_date and :last_date
     )
     and not is_spam
     and not is_blocked

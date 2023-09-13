@@ -18,4 +18,4 @@ select
     initial_page_render,
     max_duration
 from dma.o_perf_web w
-where observation_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

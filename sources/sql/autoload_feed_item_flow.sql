@@ -52,4 +52,4 @@ select
     deactivate_success_items,
     deactivate_total_time_spent_for_success_sec
 from dma.autoload_feed_item_flow
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

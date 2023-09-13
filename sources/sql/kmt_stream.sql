@@ -30,4 +30,4 @@ select
     cm.Param4_microcat_id   as param4_id
 from dma.kmt_stream t 
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = t.microcat_id
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

@@ -1,6 +1,6 @@
-with cs as (
+with clickstream as (
     select 
-        event_date::date,
+        cast(event_date as date) as event_date,
         business_platform as platform_id, 
         cookie_id,
   		user_id,
@@ -27,7 +27,7 @@ select  /*+syntactic_join*/
         cs.cpaaction_type,
         re.talk_duration_a,
         re.talk_duration_b,
-        re.callstarted::date,
+        cast(re.callstarted as date),
         -- Dimensions -----------------------------------------------------------------------------------------------------
         cm.vertical_id                                               as vertical_id,
         cm.logical_category_id                                       as logical_category_id,
@@ -37,13 +37,13 @@ select  /*+syntactic_join*/
         cm.Param2_microcat_id                                        as param2_id,
         cm.Param3_microcat_id                                        as param3_id,
         cm.Param4_microcat_id                                        as param4_id,
-        decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-        decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+        case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+        case cl.level when 3 then cl.Location_id end                           as city_id,
         cl.LocationGroup_id                                          as location_group_id,
         cl.City_Population_Group                                     as population_group,
         cl.Logical_Level   
 from dma.recallme_calls re 
-join /*+jtype(h)*/ cs using(recallmerequest_id)
+join /*+jtype(h)*/ clickstream cs on cs.recallmerequest_id = re.recallmerequest_id
 LEFT JOIN /*+jtype(h)*/ DMA.current_microcategories cm on cm.microcat_id   = cs.microcat_id
 LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id   = cs.location_id
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

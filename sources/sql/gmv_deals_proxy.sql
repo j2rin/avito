@@ -3,11 +3,11 @@ select
     ,dp.user_id
     ,lc.vertical_id
     ,lc.logical_category_id
-    ,decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id) as region_id
-	,decode(cl.level, 3, cl.Location_id, null) as city_id
+    ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
+    ,case cl.level when 3 then cl.Location_id end                           as city_id
 	,cm.category_id
 	,cm.subcategory_id
-	,nvl(acd.is_asd, False) as is_asd
+	,coalesce(acd.is_asd, False) as is_asd
     ,acd.user_group_id      as asd_user_group_id
     ,dp.user_segment_market
     ,dp.proxy_deals as proxy_deals
@@ -33,4 +33,4 @@ left join (
     on   acd.user_id = dp.user_id
     and  dp.event_date between acd.active_from_date and acd.active_to_date
 
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

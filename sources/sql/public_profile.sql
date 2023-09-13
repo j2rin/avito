@@ -8,4 +8,4 @@
     	  public_profile_closed_tabs,
     	  public_profile_closed_items_paginations 
     from dma.public_profile_metric_observation
-where event_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

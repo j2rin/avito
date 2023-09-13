@@ -22,4 +22,4 @@ select
     auth_notsocial_success
 from    dma.cookie_account_enter
 where   enter_start > 0 or restore_start > 0
-    and event_date::date between :first_date and :last_date
+    and cast(event_date as date) between :first_date and :last_date

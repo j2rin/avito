@@ -47,19 +47,19 @@ select
             end as x_from_page,
 
        case when partner is null
-                     and  bfe.event_date<='2021-05-13'
+                     and  bfe.event_date<=date('2021-05-13')
                      or partner = 'sravni_api' then 0.016*credit_amount
            when partner = 'tinkoff_direct'
-                    and  bfe.event_date<='2021-06-20' then 0.02*credit_amount
+                    and  bfe.event_date<=date('2021-06-20') then 0.02*credit_amount
            when partner = 'tinkoff_direct'
-                    and  bfe.event_date>'2021-06-20' then 0.023*credit_amount
+                    and  bfe.event_date>date('2021-06-20') then 0.023*credit_amount
            when partner = 'tinkoff_cash'
                     then 0.025*credit_amount
            else null
            end as revenue,
        case when is_issued = 1
-                     and (closed_date<=ADD_MONTHS(date_trunc('month', issued_date),1)+4) then 1
+                     and (closed_date<=date_trunc('month', issued_date) + interval'1'month + interval'4'day) then 1
            end as is_early_closed
 from dma.broker_full_events bfe
     left join DMA.current_microcategories cm on cm.microcat_id=bfe.microcat_id
-where issued_date::date between :first_date and :last_date
+where cast(issued_date as date) between :first_date and :last_date

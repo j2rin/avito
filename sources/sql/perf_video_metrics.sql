@@ -11,4 +11,4 @@ select
     skipped_frames_count,
     playback_stalls_count
 from dma.perf_video_metrics
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

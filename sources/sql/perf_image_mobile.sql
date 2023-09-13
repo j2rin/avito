@@ -23,4 +23,4 @@ select
     core_content_exceptions,
     image_host
 from dma.o_image_mobile m
-where observation_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

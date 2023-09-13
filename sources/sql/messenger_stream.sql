@@ -5,14 +5,14 @@ with am_client_day as (
            (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
            user_group_id
     from DMA.am_client_day_versioned
-    where active_from_date::date <= :last_date
-        and active_to_date::date >= :first_date
+    where cast(active_from_date as date) <= :last_date
+        and cast(active_to_date as date) >= :first_date
 ),
 usm as (
     select user_id, logical_category_id, user_segment, converting_date,
         lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
-    where converting_date::date <= :last_date
+    where cast(converting_date as date) <= :last_date
 )
 select
     m.event_date,
@@ -36,14 +36,14 @@ select
     cm.Param2_microcat_id                                        as param2_id,
     cm.Param3_microcat_id                                        as param3_id,
     cm.Param4_microcat_id                                        as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                          as location_group_id,
     cl.City_Population_Group                                     as population_group,
     cl.Logical_Level                                             as location_level_id,
-    nvl(acd.is_asd, False)                                       as is_asd,
+    coalesce(acd.is_asd, False)                                       as is_asd,
     acd.user_group_id                                            as asd_user_group_id,
-    nvl(usm.user_segment, ls.segment)                            as user_segment_market
+    coalesce(usm.user_segment, ls.segment)                            as user_segment_market
 from DMA.messenger_stream m
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm
 		on cm.microcat_id = m.microcat_id
@@ -58,5 +58,5 @@ left join /*+jtype(h),distrib(l,a)*/ am_client_day acd
 left join /*+distrib(l,a)*/ usm
         on m.user_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
-		and m.event_date::TIMESTAMP >= converting_date and m.event_date::TIMESTAMP < next_converting_date
-where m.event_date::date between :first_date and :last_date
+		and cast(m.event_date as TIMESTAMP) >= converting_date and cast(m.event_date as TIMESTAMP) < next_converting_date
+where cast(m.event_date as date) between :first_date and :last_date

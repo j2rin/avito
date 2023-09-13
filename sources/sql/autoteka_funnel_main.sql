@@ -9,7 +9,7 @@ events as (
            null as is_pro,
            null as searchtype
     from dma.autoteka_report_stream
-    where event_date::date between :first_date and :last_date
+    where cast(event_date as date) between :first_date and :last_date
     union all
     select track_id,
            event_no,
@@ -26,7 +26,7 @@ events as (
            is_pro,
            searchtype
     from dma.autoteka_stream
-    where event_date::date between :first_date and :last_date
+    where cast(event_date as date) between :first_date and :last_date
 ),
 events_interpolated as (
     select
@@ -41,19 +41,19 @@ events_interpolated as (
             else
                 coalesce(last_value(autoteka_platform_id)
                          over (partition by autoteka_cookie_id
-                             , event_date::date order by event_date rows between unbounded preceding and current row )
+                             , cast(event_date as date) order by event_date rows between unbounded preceding and current row )
                     , last_value(autoteka_platform_id)
                       over (partition by autoteka_cookie_id
-                          , event_date::date order by event_date desc rows between unbounded preceding and current row )) end as platform_id
+                          , cast(event_date as date) order by event_date desc rows between unbounded preceding and current row )) end as platform_id
         , case
             when is_pro is not null then is_pro
             else
                 coalesce(last_value(is_pro)
                          over (partition by autoteka_cookie_id
-                             , event_date::date order by event_date rows between unbounded preceding and current row )
+                             , cast(event_date as date) order by event_date rows between unbounded preceding and current row )
                     , last_value(is_pro)
                       over (partition by autoteka_cookie_id
-                          , event_date::date order by event_date desc rows between unbounded preceding and current row )) end as ispro
+                          , cast(event_date as date) order by event_date desc rows between unbounded preceding and current row )) end as ispro
 
     from events
 ),
@@ -139,4 +139,4 @@ join (
         max(case when ispro then True else False end)              as is_pro_user
     from autoteka_sessions_searchtype
     group by 1
-) cs_agg using (cookie_session)
+) cs_agg on cs_agg.cookie_session = cs.cookie_session

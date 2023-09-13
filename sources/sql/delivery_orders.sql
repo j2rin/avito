@@ -5,7 +5,7 @@ delivery_status_date as ( --чтобы побороть дубли статус�
         platformstatus,
         min(actual_date) as actual_date
     from dds.s_deliveryorder_platformstatus
-    where actual_date::date <= :last_date
+    where cast(actual_date as date) <= :last_date
     group by 1, 2
     having min(actual_date) >= :first_date
     order by 1
@@ -72,7 +72,7 @@ usm as (
         lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
     from DMA.user_segment_market
     where true
-        and converting_date <= :last_date::date
+        and converting_date <= :last_date
         and user_id in (select seller_id from sellers)
     order by 1
 ),
@@ -100,13 +100,13 @@ from DDS.L_Item_AuthCheck ich
 ),
 pre as (
     select
-        co.create_date::date as create_date,
-        ps.actual_date::date as status_date,
+        cast(co.create_date as date) as create_date,
+        cast(ps.actual_date as date) as status_date,
         co.buyer_id,
-        co.create_date < coalesce(du.pay_date, '9999-12-21'::date) as is_delivery_paid_new,
-        co.create_date < coalesce(du.accept_date, '9999-12-21'::date) as is_delivery_accepted_new,
+        co.create_date < coalesce(du.pay_date, cast('9999-12-21' as date)) as is_delivery_paid_new,
+        co.create_date < coalesce(du.accept_date, cast('9999-12-21' as date)) as is_delivery_accepted_new,
         coi.seller_id,
-        nvl(acd.is_asd, False) as is_asd,
+        coalesce(acd.is_asd, False) as is_asd,
         acd.user_group_id      as asd_user_group_id,
         co.deliveryorder_id,
         co.purchase_id,
@@ -120,21 +120,21 @@ pre as (
         co.real_delivery_provider_cost/co.items_qty/1.2 as real_delivery_provider_cost_no_vat, --нормируем на кол-во айтемов в заказе, чтобы не дублировать стоимость доставки
         co.delivery_discount/co.items_qty/1.2 as delivery_discount_no_vat, --нормируем на кол-во айтемов в заказе, чтобы не дублировать стоимость скидку на доставку
         case
-            when create_date::date >= '2020-08-01' --просто мы начали писать approximate_delivery_provider_cost только в середине июля
+            when cast(create_date as date) >= '2020-08-01' --просто мы начали писать approximate_delivery_provider_cost только в середине июля
             then (co.delivery_revenue/1.2 - co.safedeal_comission - co.delivery_comission - co.approximate_delivery_provider_cost/1.2)/co.items_qty
         end as approximate_delivery_margin,
         case
-            when create_date::date >= '2020-08-01' --просто мы начали писать approximate_delivery_provider_cost только в середине июля
+            when cast(create_date as date) >= '2020-08-01' --просто мы начали писать approximate_delivery_provider_cost только в середине июля
             then (co.delivery_revenue/1.2 - co.safedeal_comission - co.delivery_comission - coalesce(co.real_delivery_provider_cost, co.approximate_delivery_provider_cost)/1.2)/co.items_qty
         end as real_delivery_margin,
         coi.seller_commission,
         coi.seller_commission/1.2 as seller_commission_no_vat,
-  		case when co.workflow ilike '%b2c%' then coi.seller_commission/1.2 end as b2c_white_commission_no_vat,
+  		case when lower(co.workflow) like '%b2c%' then coi.seller_commission/1.2 end as b2c_white_commission_no_vat,
         coi.trx_commission/1.2 as trx_commission_no_vat,
-        case when co.workflow ilike '%b2c%' then coi.seller_commission end as b2c_white_commission,
+        case when lower(co.workflow) like '%b2c%' then coi.seller_commission end as b2c_white_commission,
         coi.trx_commission as trx_commission,
         co.current_status as status,
-        case when co.workflow ilike '%marketplace%' then 'marketplace' else co.workflow end as delivery_workflow,
+        case when lower(co.workflow) like '%marketplace%' then 'marketplace' else co.workflow end as delivery_workflow,
         delivery_service,
         co.platform_id,
         case
@@ -194,15 +194,15 @@ pre as (
         clc.logical_param2_id                                        as logical_param2_id,
         --seller/item location
         cl.location_id                                               as location_id,
-        decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-        decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+        case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+        case cl.level when 3 then cl.Location_id end                           as city_id,
         cl.LocationGroup_id                                          as location_group_id,
         cl.City_Population_Group                                     as population_group,
         cl.Logical_Level                                             as location_level_id,
         --buyer location
         bl.location_id                                               as buyer_location_id,
-        decode(bl.level, 3, bl.ParentLocation_id, bl.Location_id)    as buyer_region_id,
-        decode(bl.level, 3, bl.Location_id, null)                    as buyer_city_id,
+        case bl.level when 3 then bl.ParentLocation_id else bl.Location_id end as buyer_region_id,
+        case bl.level when 3 then bl.Location_id end                           as buyer_city_id,
         bl.LocationGroup_id                                          as buyer_location_group_id,
         bl.City_Population_Group                                     as buyer_population_group,
         bl.Logical_Level                                             as buyer_location_level_id,
@@ -212,8 +212,8 @@ pre as (
         case when original.status = 'verified' then true else false end as is_original,
         -- has_short_video
         case when sv.video is not null then true else false end      as has_short_video,
-        TIMESTAMPDIFF(SECOND, co.create_date, case when ps.platformstatus = 'paid' then ps.actual_date end)/60 as time_to_payment,
-  		(co.items_price >= 20000)::boolean as is_high_price,
+        TIMESTAMPDIFF(SECOND, co.create_date, case when ps.platformstatus = 'paid' then ps.actual_date end)/60 as time_to_payment,cast(
+  		(co.items_price >= 20000) as boolean) as is_high_price,
         -- есть ли возможность возврата в течение 14 дней
         case when co.workflow in ('delivery-b2c', 'delivery-b2c-courier') then True else False end b2c_wo_dbs,
         co.return_within_14_days as c2c_return_within_14_days,
@@ -227,7 +227,7 @@ pre as (
     left join /*+distrib(l,a)*/ dma.current_microcategories as cm on coi.microcat_id = cm.microcat_id
     left join /*+distrib(l,a)*/ dma.current_locations as cl on co.warehouse_location_id = cl.location_id
     left join /*+distrib(l,a)*/ dma.current_locations as bl on co.buyer_location_id = bl.location_id
-    left join /*+distrib(l,a)*/ acd on acd.user_id = coi.seller_id and co.create_date::date between acd.active_from_date and acd.active_to_date
+    left join /*+distrib(l,a)*/ acd on acd.user_id = coi.seller_id and cast(co.create_date as date) between acd.active_from_date and acd.active_to_date
     left join /*+distrib(l,a)*/ du on du.buyer_id = co.buyer_id
   	left join /*+distrib(l,a)*/ original on coi.item_id = original.item_id and co.create_date interpolate previous value original.Actual_date
     left join /*+distrib(l,a)*/ dds.s_item_video sv on coi.item_id = sv.item_id and co.create_date interpolate previous value sv.Actual_date
@@ -236,7 +236,7 @@ pre as (
 cdd3 as (
     select deliveryorder_id, discount_value
     from dma.delivery_discounts
-        where campaign_name ilike '%bonus_cashback%' and deliveryorder_id in (select deliveryorder_id from pre)
+        where lower(campaign_name) like '%bonus_cashback%' and deliveryorder_id in (select deliveryorder_id from pre)
     order by 1
 ),
 cds as (

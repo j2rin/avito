@@ -2,11 +2,11 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
 from_users as (
     select distinct from_user_id
     from dma.messenger_messages
-    where event_date::date between :first_date and :last_date
+    where cast(event_date as date) between :first_date and :last_date
         and from_user_id is not null
 )
 select
- 	mm.event_date::date,
+ 	cast(mm.event_date as date),
  	mm.eventtype_id,
  	mm.chat_id,
 	mm.platform_id,
@@ -39,14 +39,14 @@ select
 	cm.Param2_microcat_id                                        as param2_id,
 	cm.Param3_microcat_id                                        as param3_id,
 	cm.Param4_microcat_id                                        as param4_id,
-	decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-	decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
 	cl.LocationGroup_id                                          as location_group_id,
 	cl.City_Population_Group                                     as population_group,
 	cl.Logical_Level                                             as location_level_id,
-	nvl(acd.is_asd, False)                                       as is_asd,
+	coalesce(acd.is_asd, False)                                       as is_asd,
     acd.user_group_id                                            as asd_user_group_id,
-    nvl(usm.user_segment, ls.segment)                            as user_segment_market
+    coalesce(usm.user_segment, ls.segment)                            as user_segment_market
 from DMA.messenger_messages mm
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = mm.chat_item_microcat_id
 left join /*+jtype(h),distrib(l,a)*/ dict.segmentation_ranks ls on ls.logical_category_id = cm.logical_category_id and ls.is_default
@@ -63,11 +63,11 @@ left join (
         and active_to_date >= :first_date
 ) acd
 		on mm.from_user_id = acd.user_id
-		and mm.event_date::date between acd.active_from_date and acd.active_to_date
+		and cast(mm.event_date as date) between acd.active_from_date and acd.active_to_date
 
 left join /*distrib(l,a)*/ (
     select user_id
-    from dma.current_user
+    from dma."current_user"
     where isTest
         and user_id in (select from_user_id from from_users)
 ) cut
@@ -90,28 +90,28 @@ left join /*distrib(l,a)*/ (
         from DMA.user_segment_market
         where true
             and user_id in (select from_user_id from from_users)
-            and converting_date <= :last_date::date
+            and converting_date <= :last_date
     ) usm
-    where usm.to_date >= :first_date::date
+    where usm.to_date >= :first_date
 ) usm
     on  mm.from_user_id = usm.user_id
-    and mm.event_date::date >= usm.from_date and mm.event_date::date < usm.to_date
+    and cast(mm.event_date as date) >= usm.from_date and cast(mm.event_date as date) < usm.to_date
     and cm.logical_category_id = usm.logical_category_id
 
 left join /*distrib(l,a)*/ (
     select
         chat_id,
         start_flow_time,
-        coalesce(end_flow_time, '9999-12-31'::timestamp) as _end_flow_time
+        coalesce(end_flow_time, cast('9999-12-31' as timestamp)) as _end_flow_time
     from DMA.messenger_chat_flow_report
-    where start_flow_time::date <= :last_date
+    where cast(start_flow_time as date) <= :last_date
         and _end_flow_time >= :first_date
 ) cb
     on cb.chat_id = mm.chat_id
     and mm.event_date >=  cb.start_flow_time
     and mm.event_date <= cb._end_flow_time
 
-where mm.event_date::date between :first_date and :last_date
+where cast(mm.event_date as date) between :first_date and :last_date
     and not mm.is_spam
     and not mm.is_blocked
     and not mm.is_deleted

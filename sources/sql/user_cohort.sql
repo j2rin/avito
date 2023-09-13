@@ -10,5 +10,5 @@ select
 from DMA.user_cohort uc
 join DMA.current_logical_categories clc
 	on uc.logical_category_id = clc.logical_category_id
-where uc.user_id not in (select user_id from dma.current_user where isTest)
-    and uc.event_date::date between :first_date and :last_date
+where uc.user_id not in (select user_id from dma."current_user" where isTest)
+    and cast(uc.event_date as date) between :first_date and :last_date

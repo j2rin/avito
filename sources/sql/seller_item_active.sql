@@ -2,7 +2,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
 sia_users as (
     select distinct user_id as user_id
     from dma.o_seller_item_active
-    where event_date::date between :first_date::date and :last_date::date
+    where cast(event_date as date) between :first_date and :last_date
         and user_id is not null
 )
 select /*+syntactic_join*/
@@ -11,9 +11,9 @@ select /*+syntactic_join*/
     ss.item_id,
     ss.platform_id,
     ss.start_time,
-    ss.start_time::date as start_date,
+    cast(ss.start_time as date) as start_date,
     ss.last_activation_time,
-    ss.last_activation_time::date as last_activation_date,
+    cast(ss.last_activation_time as date) as last_activation_date,
     ss.is_active,
     ss.is_marketplace,
     ss.is_message_forbidden,
@@ -30,7 +30,7 @@ select /*+syntactic_join*/
     ss.activations_after_ttl_count,
     ss.item_views,
     ss.vas_mask,
-    nvl(ig.Location_id, ss.location_id)                       as location_id,
+    coalesce(ig.Location_id, ss.location_id)                       as location_id,
     ig.CoordinatesIsManual,
     ig.metro_id,
     ig.address_length,
@@ -42,7 +42,7 @@ select /*+syntactic_join*/
     ig.wrong_order,
     ig.location_distance,
     ig.metro_distance,
-    null::varchar as user_segment,
+    cast(null as varchar) as user_segment,
     ig.has_address_id,
     ig.CoordinatesLatitude,
     ig.CoordinatesLongitude,
@@ -60,25 +60,25 @@ select /*+syntactic_join*/
     ipl.count_services_price_list,
     sic.item_id is not null as is_item_calendar,
     -- Dimensions -----------------------------------------------------------------------------------------------------
-    nvl(lc.vertical_id, cm.vertical_id)                       as vertical_id,
-    nvl(lc.logical_category_id, cm.logical_category_id)       as logical_category_id,
+    coalesce(lc.vertical_id, cm.vertical_id)                       as vertical_id,
+    coalesce(lc.logical_category_id, cm.logical_category_id)       as logical_category_id,
     cm.category_id                                            as category_id,
     cm.subcategory_id                                         as subcategory_id,
     cm.Param1_microcat_id                                     as param1_id,
     cm.Param2_microcat_id                                     as param2_id,
     cm.Param3_microcat_id                                     as param3_id,
     cm.Param4_microcat_id                                     as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id) as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                 as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                       as location_group_id,
     cl.City_Population_Group                                  as population_group,
     cl.Logical_Level                                          as location_level_id,
-    nvl(asd.is_asd, False)                                    as is_asd,
-    nvl(asd.asd_user_group_id, 8383)                          as asd_user_group_id, -- By default is SS group - 8383
+    coalesce(asd.is_asd, False)                                    as is_asd,
+    coalesce(asd.asd_user_group_id, 8383)                          as asd_user_group_id, -- By default is SS group - 8383
     COALESCE(usm.user_segment, ls.segment)                    as user_segment_market,
     lc.logical_param1_id,
     lc.logical_param2_id,
-    ifnull(ss.condition_id, 0)                                as condition_id,
+    coalesce(ss.condition_id, 0)                                as condition_id,
     ss.is_item_cpa,
     ss.is_user_cpa,
     ss.cpaaction_type,
@@ -98,7 +98,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where infmquery_id in (
         select distinct infmquery_id
         from dma.o_seller_item_active
-        where event_date::date between :first_date and :last_date
+        where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
     )
 ) ic
@@ -107,7 +107,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = ss.microcat_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls
-    on ls.logical_category_id = nvl(lc.logical_category_id, cm.logical_category_id)
+    on ls.logical_category_id = coalesce(lc.logical_category_id, cm.logical_category_id)
     and ls.is_default
 
 
@@ -129,11 +129,11 @@ left join /*+jtype(h),distrib(l,r)*/ (
         from DMA.user_segment_market
         where true
             and user_id in (select user_id from sia_users)
-            and converting_date <= :last_date::date
+            and converting_date <= :last_date
     ) usm
-    join dict.calendar c on c.event_date between :first_date::date and :last_date::date
+    join dict.calendar c on c.event_date between :first_date and :last_date
     where c.event_date >= usm.from_date and c.event_date < usm.to_date
-        and usm.to_date >= :first_date::date
+        and usm.to_date >= :first_date
 ) usm
     on  ss.user_id = usm.user_id
     and ss.event_date = usm.event_date
@@ -143,7 +143,7 @@ left join /*+distrib(l,a)*/ dma.item_geo_information ig
     on ig.user_id = ss.user_id
     and ig.event_date = ss.event_date
     and ig.item_id = ss.item_id
-    and ig.event_date between :first_date::date and :last_date::date
+    and ig.event_date between :first_date and :last_date
 
 left join /*+distrib(l,a)*/ (
    select
@@ -154,12 +154,12 @@ left join /*+distrib(l,a)*/ (
         asd.active_to_date
     from DMA.am_client_day_versioned asd
     where true
-        and asd.active_from_date <= :last_date::date
-        and asd.active_to_date >= :first_date::date
+        and asd.active_from_date <= :last_date
+        and asd.active_to_date >= :first_date
         and asd.user_id in (select user_id from sia_users)
 ) asd
     on ss.user_id = asd.user_id
-    and ss.event_date::date between asd.active_from_date and asd.active_to_date
+    and cast(ss.event_date as date) between asd.active_from_date and asd.active_to_date
 
 left join /*+distrib(l,r)*/ (
     select
@@ -169,7 +169,7 @@ left join /*+distrib(l,r)*/ (
         idd.subsidy_index
     from DMA.item_day_delivery idd
     join dma.current_item ci on ci.item_id = idd.item_id
-    where idd.event_date between :first_date::date and :last_date::date
+    where idd.event_date between :first_date and :last_date
 ) idd
     on  ss.user_id = idd.user_id
     and ss.item_id = idd.item_id
@@ -179,18 +179,18 @@ left join /*+distrib(l,a)*/ dma.jobs_vacancies_duplicates_daily jvdd
     on jvdd.user_id = ss.user_id
     and jvdd.item_id = ss.item_id
     and jvdd.event_date = ss.event_date
-    and jvdd.event_date between :first_date::date and :last_date::date
+    and jvdd.event_date between :first_date and :last_date
 
 left join /*+distrib(l,r)*/ (
     select
         ci.user_id,
         pld.item_id,
-        pld.event_date::date as event_date,
+        cast(pld.event_date as date) as event_date,
         count(*) as count_services_price_list
     from dma.price_list_day pld
     join dma.current_item ci on ci.item_id = pld.item_id
     where not pld.stoimost is null
-        and pld.event_date between :first_date::date and :last_date::date
+        and pld.event_date between :first_date and :last_date
     group by 1, 2, 3
 ) ipl
     on ipl.user_id = ss.user_id
@@ -204,7 +204,7 @@ left join /*+distrib(l,r)*/ (
         sic.event_date
     from dma.services_active_items_calendar sic
     join dma.current_item ci on ci.item_id = sic.item_id
-    where sic.event_date between :first_date::date and :last_date::date
+    where sic.event_date between :first_date and :last_date
 ) sic
     on sic.user_id = ss.user_id
     and sic.item_id = ss.item_id
@@ -224,17 +224,17 @@ left join /*+distrib(l,r)*/ (
             select
                 user_id,
                 item_id,
-                event_timestamp::date as from_date,
+                cast(event_timestamp as date) as from_date,
                 reputation_class,
-                row_number() over(partition by user_id, item_id, event_timestamp::date order by event_timestamp desc) as rn
+                row_number() over(partition by user_id, item_id, cast(event_timestamp as date) order by event_timestamp desc) as rn
             from DMA.click_stream_item_reputation
-            where event_timestamp::date <= :last_date
+            where cast(event_timestamp as date) <= :last_date
         ) r
         where rn = 1
     ) r
-    join dict.calendar c on c.event_date between :first_date::date and :last_date::date
+    join dict.calendar c on c.event_date between :first_date and :last_date
     where c.event_date >= r.from_date and c.event_date < r.to_date
-        and r.to_date >= :first_date::date
+        and r.to_date >= :first_date
 ) ir
     on  ss.user_id = ir.user_id
     and ss.item_id = ir.item_id

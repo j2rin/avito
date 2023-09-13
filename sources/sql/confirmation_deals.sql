@@ -17,8 +17,8 @@ select
     cm.Param2_microcat_id                                        as param2_id,
     cm.Param3_microcat_id                                        as param3_id,
     cm.Param4_microcat_id                                        as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                          as location_group_id,
     cl.City_Population_Group                                     as population_group,
     cl.Logical_Level                                             as location_level_id
@@ -26,8 +26,8 @@ from dma.confirmation_deals cd
 left join dma.current_item                      as ci on cd.item_id = ci.item_id
 left join dma.current_microcategories           as cm on ci.microcat_id = cm.microcat_id
 left join dma.current_locations                 as cl on ci.location_id = cl.location_id
-where cd.event_time::date between :first_date and :last_date
-    and cd.event_time::date <= '2023-01-16'  -- c 17 января берем данные из другой витрины
+where cast(cd.event_time as date) between :first_date and :last_date
+    and cast(cd.event_time as date) <= date('2023-01-16')  -- c 17 января берем данные из другой витрины
     and not seller_id is null
 
 union all
@@ -51,8 +51,8 @@ select
     cm.Param2_microcat_id                                        as param2_id,
     cm.Param3_microcat_id                                        as param3_id,
     cm.Param4_microcat_id                                        as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                          as location_group_id,
     cl.City_Population_Group                                     as population_group,
     cl.Logical_Level                                             as location_level_id
@@ -60,7 +60,7 @@ from dma.new_confirmation_deals cd
 left join dma.current_item                      as ci on cd.item_id = ci.item_id
 left join dma.current_microcategories           as cm on ci.microcat_id = cm.microcat_id
 left join dma.current_locations                 as cl on ci.location_id = cl.location_id
-where cd.event_time::date between :first_date and :last_date
+where cast(cd.event_time as date) between :first_date and :last_date
 
 union all
 
@@ -83,8 +83,8 @@ select
     cm.Param2_microcat_id                                        as param2_id,
     cm.Param3_microcat_id                                        as param3_id,
     cm.Param4_microcat_id                                        as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                          as location_group_id,
     cl.City_Population_Group                                     as population_group,
     cl.Logical_Level                                             as location_level_id
@@ -92,4 +92,4 @@ from  DMA.deals_confirmation_new_service ns
 left join dma.current_item                      as ci on ns.item_id = ci.item_id
 left join dma.current_microcategories           as cm on ci.microcat_id = cm.microcat_id
 left join dma.current_locations                 as cl on ci.location_id = cl.location_id
-where ns.event_timestamp::date between :first_date and :last_date
+where cast(ns.event_timestamp as date) between :first_date and :last_date

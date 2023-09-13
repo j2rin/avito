@@ -10,4 +10,4 @@ select
     events,
     is_clean_cookie
 from dma.o_clickstream_antibot
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

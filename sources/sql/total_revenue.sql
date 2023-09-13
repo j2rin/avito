@@ -10,11 +10,11 @@ select
     NULL as project_type,
     sum(ur.transaction_amount_net_adj) as amount_net_adj
 from DMA.paying_user_report ur
-join DMA.current_transaction_type ctt using(transactiontype_id)
+join DMA.current_transaction_type ctt on ctt.transactiontype_id = ur.transactiontype_id
 left join dma.current_microcategories miq on ur.microcat_id = miq.microcat_id
-where ur.user_id not in (select cu.user_id from dma.current_user cu where cu.IsTest)
+where ur.user_id not in (select cu.user_id from dma."current_user" cu where cu.IsTest)
     and ctt.IsRevenue
-    and ur.event_date::date between :first_date and :last_date
+    and cast(ur.event_date as date) between :first_date and :last_date
 group by 1,2,3,4,5,6,7,8
 union all 
 select 
@@ -29,11 +29,11 @@ select
     project_type,
     amount_net_adj
 from dma.other_projects_revenue
-where observation_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date
 union all
 select
 	0 as user_id,
-    ps.actual_date::date as status_date,
+    cast(ps.actual_date as date) as status_date,
     cm.vertical_id as vertical_id,
     NULL as transaction_type,
     NULL as transaction_subtype,
@@ -54,7 +54,7 @@ join (
     from dds.s_deliveryorder_platformstatus
     group by 1,2
 ) ps on ps.deliveryorder_id = coi.deliveryorder_id
-where ps.actual_date::date between :first_date and :last_date
+where cast(ps.actual_date as date) between :first_date and :last_date
     --and not co.is_test
     --and not co.is_deleted
     --and not coi.is_deleted
@@ -71,11 +71,11 @@ select
     false                       as is_classified,
     'auto_auction'              as project_type,
     amount_net_adj
-from (select terminated_at::date        as event_date
+from (select cast(terminated_at as date)        as event_date
                 , sum(bt_revenue)       as amount_net_adj
       from dma.qd_auto_report_lots
       where has_buyout = 1
             and buyout_amount > 0
-      group by terminated_at::date
+      group by cast(terminated_at as date)
       ) t
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

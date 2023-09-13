@@ -17,7 +17,7 @@ usm as (
     from DMA.user_segment_market
 )
 select
-    t.event_date::date,
+    cast(t.event_date as date),
     t.platform_id,
     ci.location_id,
     ci.Microcat_id,
@@ -34,14 +34,14 @@ select
     cm.Param2_microcat_id                                        as param2_id,
     cm.Param3_microcat_id                                        as param3_id,
     cm.Param4_microcat_id                                        as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                          as location_group_id,
     cl.City_Population_Group                                     as population_group,
     cl.Logical_Level                                             as location_level_id,
-    nvl(acd.is_asd, False)                                       as is_asd,
+    coalesce(acd.is_asd, False)                                       as is_asd,
     acd.user_group_id                                            as asd_user_group_id,
-    nvl(usm.user_segment, ls.segment)                            as user_segment_market
+    coalesce(usm.user_segment, ls.segment)                            as user_segment_market
 from DMA.messenger_blocks  t
 JOIN dma.current_item as ci
     ON ci.item_id = t.item_id
@@ -51,7 +51,7 @@ JOIN dma.current_microcategories as cm
     ON cm.microcat_id = ci.Microcat_id
 left join am_client_day acd
     on t.user_Id = acd.user_id
-    and t.event_date::date between acd.active_from_date and acd.active_to_date
+    and cast(t.event_date as date) between acd.active_from_date and acd.active_to_date
 left join usm
     on t.user_Id = usm.user_id
     and cm.logical_category_id = usm.logical_category_id
@@ -59,4 +59,4 @@ left join usm
 left join  dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id
     and ls.is_default
-where t.event_date::date between :first_date and :last_date
+where cast(t.event_date as date) between :first_date and :last_date

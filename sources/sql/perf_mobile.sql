@@ -41,4 +41,4 @@ select
     max_event_duration,
     max_session_duration
 from dma.o_perf_mobile m
-where observation_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

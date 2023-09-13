@@ -4,7 +4,7 @@ with delivery_status_date as ( --чтобы побороть дубли стат
         platformstatus,
         min(actual_date) as actual_date
     from dds.s_deliveryorder_platformstatus
-    where actual_date::date <= :last_date
+    where cast(actual_date as date) <= :last_date
     group by 1, 2
     having min(actual_date) >= :first_date
     order by deliveryorder_id
@@ -29,9 +29,9 @@ sellers as (
     from dma.current_order_item
     where deliveryorder_id in (select deliveryorder_id from orders))
 select
-    cbcm.create_date::date as create_date,
+    cast(cbcm.create_date as date) as create_date,
     co.buyer_id as user_id,
-    co.create_date::date < coalesce(du.pay_date, '9999-12-21'::date) as is_delivery_paid_new,
+    cast(co.create_date as date) < coalesce(du.pay_date, cast('9999-12-21' as date)) as is_delivery_paid_new,
     coalesce(has_avito_bindings, FALSE) as has_avito_bindings,
     billing_order_ext,
     cbcm.items_price,
@@ -69,4 +69,4 @@ select
                and co.deliveryorder_id in (select deliveryorder_id from orders)
     group by 1,2
 ) ub on cbcm.billing_order_ext = ub.purchase_ext
-    where cbcm.create_date::date between :first_date and :last_date
+    where cast(cbcm.create_date as date) between :first_date and :last_date

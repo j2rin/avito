@@ -19,4 +19,4 @@ SELECT
     cm.Param4_microcat_id                                        as param4_id
 FROM dma.labor_metric_observation mac
 LEFT JOIN /*+jtype(h)*/ DMA.current_microcategories cm on cm.microcat_id = mac.microcat_id
-where observation_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

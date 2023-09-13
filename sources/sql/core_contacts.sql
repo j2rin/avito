@@ -2,12 +2,12 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
 users as (
     select distinct item_user_id as user_id
     from dma.click_stream_contacts
-    where eventdate::date between :first_date and :last_date
+    where cast(eventdate as date) between :first_date and :last_date
         and item_user_id is not null
 )
 select /*+syntactic_join*/
     csc.item_id,
-    csc.eventdate::date as event_date,
+    cast(csc.eventdate as date) as event_date,
     coalesce(
         csc.platform_id,
         public.platform(csc.apptype_id, csc.clientsideapp_id)
@@ -24,21 +24,19 @@ select /*+syntactic_join*/
     cm.subcategory_id,
     lc.logical_category,
     cm.param1_microcat_id as param1_id,
-    nvl(acd.is_asd, False)                                      as is_asd,
+    coalesce(acd.is_asd, False)                                      as is_asd,
     -- По дефолту ставим SS сегмент - 8383
-    nvl(acd.user_group_id ,8383)                             as asd_user_group_id,
-    decode(
-        csc.eventdate::date,
-        bb.first_contact_event_date::date,true,false)           as is_buyer_new,
-    nvl(usm.user_segment, ls.segment)                           as user_segment_market,
+    coalesce(acd.user_group_id ,8383)                             as asd_user_group_id,
+    cast(csc.eventdate as date) = cast(bb.first_contact_event_date as date) as is_buyer_new,
+    coalesce(usm.user_segment, ls.segment)                           as user_segment_market,
     coalesce(cpg.price_group, 'Undefined')                      as price_group,
     csc.location_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)   as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                   as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                         as location_group_id,
     cl.City_Population_Group                                    as population_group,
     cl.Logical_Level                                            as location_level_id,
-    null::varchar as user_segment,
+    cast(null as varchar) as user_segment,
     csc.user_id,
     hash(lc.logical_category_id, csc.item_id) as logcat_item,
     lc.logical_param1_id,
@@ -56,7 +54,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where infmquery_id in (
         select distinct infmquery_id
         from dma.click_stream_contacts
-        where eventdate::date between :first_date and :last_date
+        where cast(eventdate as date) between :first_date and :last_date
             and infmquery_id is not null
     )
 ) ic
@@ -73,7 +71,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where cookie_id in (
         select distinct cookie_id
         from dma.click_stream_contacts
-        where eventdate::date between :first_date and :last_date
+        where cast(eventdate as date) between :first_date and :last_date
             and cookie_id is not null
     )
 ) bb
@@ -84,7 +82,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     select
         user_id,
         logical_category_id, user_segment,
-        timestampadd('s', 0, converting_date::timestamp(0)) as converting_date,
+        timestampadd('s', 0, cast(converting_date as timestamp(0))) as converting_date,
         lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where user_id in (select user_id from users)
@@ -104,7 +102,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where user_id in (select user_id from users)
 ) acd
     on   acd.user_id = csc.item_user_id
-    and  csc.eventdate::date between acd.active_from_date and acd.active_to_date
+    and  cast(csc.eventdate as date) between acd.active_from_date and acd.active_to_date
 
 left join /*+jtype(h),distrib(l,a)*/ (
     select item_id, price, actual_date from (
@@ -115,7 +113,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         where item_id in (
             select distinct item_id
             from dma.click_stream_contacts
-            where eventdate::date between :first_date and :last_date
+            where cast(eventdate as date) between :first_date and :last_date
                 and item_id is not null
         )
     )t
@@ -129,5 +127,5 @@ left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups cpg
     and  cif.price <  cpg.max_price
 
 where csc.cookie_id is not null
-    and csc.item_user_id not in (select user_id from dma.current_user where istest)
-    and csc.eventdate::date between :first_date and :last_date
+    and csc.item_user_id not in (select user_id from dma."current_user" where istest)
+    and cast(csc.eventdate as date) between :first_date and :last_date

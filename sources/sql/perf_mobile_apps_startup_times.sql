@@ -8,4 +8,4 @@ select
     time_to_interact_sum,
     time_to_interact_count
 from dma.o_perf_mobile_apps_startup_times
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

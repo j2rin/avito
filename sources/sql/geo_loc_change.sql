@@ -9,15 +9,15 @@ select /*+syntactic_join*/
     ss.prev_location_id,
     ss.location_id,
     ss.open_from as open_from_id,
-    ss.close_by::int as close_by,
+    cast(ss.close_by as int) as close_by,
     ss.suspicious_change_threshold,
     ss.after_first_search,
     ss.mechanism_type,
     ss.events_count,
         case
-        when ss.close_by::INT = 0 then 'close'
-        when ss.close_by::INT = 1 then 'accept'
-        when ss.close_by::INT = 2 then 'not accept'
+        when cast(ss.close_by as INT) = 0 then 'close'
+        when cast(ss.close_by as INT) = 1 then 'accept'
+        when cast(ss.close_by as INT) = 2 then 'not accept'
         else 'NA'
         end as
     tooltip_close_type,
@@ -54,13 +54,13 @@ select /*+syntactic_join*/
     cm.Param2_microcat_id                                        as param2_id,
     cm.Param3_microcat_id                                        as param3_id,
     cm.Param4_microcat_id                                        as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                          as location_group_id,
     cl.City_Population_Group                                     as population_group,
     cl.Logical_Level                                             as location_level_id,
-    decode(clp.level, 3, clp.ParentLocation_id, clp.Location_id) as prev_region_id,
-    decode(clp.level, 3, clp.Location_id, null)                  as prev_city_id,
+    case clp.level when 3 then clp.ParentLocation_id else clp.Location_id end as prev_region_id,
+    case clp.level when 3 then clp.Location_id end                            as prev_city_id,
     clp.LocationGroup_id                                         as prev_location_group_id,
     clp.City_Population_Group                                    as prev_population_group,
     clp.Logical_Level                                            as prev_location_level_id
@@ -68,4 +68,4 @@ from dma.location_changings                         ss
 LEFT JOIN /*+jtype(h)*/ DMA.current_microcategories cm on cm.microcat_id = ss.microcat_id
 LEFT JOIN /*+jtype(h)*/ DMA.current_locations       clp ON clp.Location_id = ss.prev_location_id
 LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id = ss.location_id
-where ss.event_date::date between :first_date and :last_date
+where cast(ss.event_date as date) between :first_date and :last_date

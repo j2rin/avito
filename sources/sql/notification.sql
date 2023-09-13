@@ -11,4 +11,4 @@ SELECT
     is_notifications_on, 
     events_count
 FROM dma.notifications_metric_observation_new d
-where observation_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

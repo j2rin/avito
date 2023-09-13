@@ -2,13 +2,13 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
 bs_users as (
     select distinct item_user_id as user_id
     from dma.buyer_stream
-    where event_date::date between :first_date::date and :last_date::date
+    where cast(event_date as date) between :first_date and :last_date
         and item_user_id is not null
 ),
 bs_items as (
     select distinct item_id
     from dma.buyer_stream
-    where event_date::date between :first_date::date and :last_date::date
+    where cast(event_date as date) between :first_date and :last_date
         and item_id is not null
 )
 select
@@ -27,7 +27,7 @@ select
     coalesce(ss.item_count,0) as item_count,
     coalesce(ss.base_item_count,0) as base_item_count,
     ss.page_no,
-    NVL(ss.rec_position, 0) as rec_position,
+    coalesce(ss.rec_position, 0) as rec_position,
     ss.from_page,
     ss.item_vas_flags,
     ss.phone_view_source,
@@ -41,7 +41,7 @@ select
     ss.search_query_type,
     ss.item_serp_flags,
     ss.is_human_dev                                              as is_human,
-    ss.search_radius::varchar                                    as search_radius,
+    cast(ss.search_radius as varchar)                                    as search_radius,
     ss.district_count,
     ss.metro_count,
     hash(ss.item_id, ss.x, ss.eid)                              as item_x,
@@ -61,8 +61,8 @@ select
     cm.Param2_microcat_id                                        as param2_id,
     cm.Param3_microcat_id                                        as param3_id,
     cm.Param4_microcat_id                                        as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                          as location_group_id,
     cl.City_Population_Group                                     as population_group,
     cl.Logical_Level                                             as location_level_id,
@@ -76,8 +76,8 @@ select
     cmx.Param2_microcat_id                                       as x_param2_id,
     cmx.Param3_microcat_id                                       as x_param3_id,
     cmx.Param4_microcat_id                                       as x_param4_id,
-    decode(clx.level, 3, clx.ParentLocation_id, clx.Location_id) as x_region_id,
-    decode(clx.level, 3, clx.Location_id, null)                  as x_city_id,
+    case clx.level when 3 then clx.ParentLocation_id else clx.Location_id end as x_region_id,
+    case clx.level when 3 then clx.Location_id end                            as x_city_id,
     clx.LocationGroup_id                                         as x_location_group_id,
     clx.City_Population_Group                                    as x_population_group,
     clx.Logical_Level                                            as x_location_level_id,
@@ -97,16 +97,16 @@ select
     ((case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end & 16) > 0)::int as onmap,
     (case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end >> 10) & 0xFFFFF as search_features,
     ubb.track_id is not null as new_user_btc,
-    nvl(asd.is_asd,false) is_asd,
+    coalesce(asd.is_asd,false) is_asd,
     -- По дефолту ставим SS сегмент - 8383
-    nvl(asd.asd_user_group_id,8383) as asd_user_group_id,
+    coalesce(asd.asd_user_group_id,8383) as asd_user_group_id,
     coalesce(usm.user_segment_market, ls.segment) as user_segment_market,
     ss.item_rnk,
     ss.boost_class_id,
     3 AS multiplier_3,
     5 AS multiplier_5,
     10 AS multiplier_10,
-    decode((ss.item_flags & ((1 << 32) + (1 << 33))) / power(2, 32), 1, 'medium', 2, 'low', 3, 'high', null) as reputation_class,
+    case (ss.item_flags & ((1 << 32) + (1 << 33))) / power(2, 32) when 1 then 'medium' when 2 then 'low' when 3 then 'high' end as reputation_class,
     case when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) = 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 1
     	 when ((ss.search_flags & (1 << 39) = 0) and (ss.search_flags & (1 << 40) > 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 2
          when ((ss.search_flags & (1 << 39) > 0) and (ss.search_flags & (1 << 40) > 0) and (ss.search_flags & (1 << 41) = 0) and (ss.search_flags & (1 << 42) = 0)) then 3
@@ -137,7 +137,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         where infmquery_id in (
             select distinct infmquery_id
             from dma.o_seller_item_active
-            where event_date::date between :first_date and :last_date
+            where cast(event_date as date) between :first_date and :last_date
                 and infmquery_id is not null
         )
     ) ic on ic.infmquery_id = ss.infmquery_id
@@ -149,7 +149,7 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id 
 left join /*+jtype(fm),distrib(l,a)*/ (
     select first_action_track_id as track_id, first_action_event_no as event_no
     from DMA.user_btc_birthday
-    where first_action_event_date::date between :first_date::date and :last_date::date
+    where cast(first_action_event_date as date) between :first_date and :last_date
         and action_type = 'btc'
 ) ubb on ubb.track_id = ss.track_id and ubb.event_no = ss.event_no
 
@@ -168,12 +168,12 @@ left join /*+jtype(h),distrib(l,a)*/ (
             lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
         from DMA.user_segment_market
         where user_id in (select user_id from bs_users)
-            and converting_date <= :last_date::date
+            and converting_date <= :last_date
     ) usm
-    join dict.calendar c on c.event_date between :first_date::date and :last_date::date
+    join dict.calendar c on c.event_date between :first_date and :last_date
     where c.event_date >= usm.from_date and c.event_date < usm.to_date
-        and usm.to_date >= :first_date::date
-) usm on ss.item_user_id = usm.user_id and cm.logical_category_id = usm.logical_category_id and ss.event_date::date = usm.event_date
+        and usm.to_date >= :first_date
+) usm on ss.item_user_id = usm.user_id and cm.logical_category_id = usm.logical_category_id and cast(ss.event_date as date) = usm.event_date
 
 left join /*+jtype(h),distrib(l,a)*/ (
    select
@@ -184,10 +184,10 @@ left join /*+jtype(h),distrib(l,a)*/ (
         asd.active_to_date
     from DMA.am_client_day_versioned asd
     where true
-        and asd.active_from_date <= :last_date::date
-        and asd.active_to_date >= :first_date::date
+        and asd.active_from_date <= :last_date
+        and asd.active_to_date >= :first_date
         and asd.user_id in (select user_id from bs_users)
-) asd on ss.item_user_id = asd.user_id and ss.event_date::date between asd.active_from_date and asd.active_to_date
+) asd on ss.item_user_id = asd.user_id and cast(ss.event_date as date) between asd.active_from_date and asd.active_to_date
 
 left join /*+jtype(h),distrib(l,b)*/ (
     select
@@ -215,8 +215,8 @@ left join /*+jtype(h),distrib(l,a)*/ (
         and to_date >= :first_date
 ) ial
     on ial.item_id = ss.item_id
-    and ss.event_date::date between ial.from_date and ial.to_date
+    and cast(ss.event_date as date) between ial.from_date and ial.to_date
 left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_category_id=pg.logical_category_id and ial.price>=pg.min_price and ial.price< pg.max_price     
     
 
-where ss.event_date::date between :first_date and :last_date
+where cast(ss.event_date as date) between :first_date and :last_date

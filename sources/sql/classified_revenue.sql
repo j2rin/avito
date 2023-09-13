@@ -9,8 +9,8 @@ am_client_day as (
         aug.group_name
     from DMA.am_client_day_versioned amd
     left join dict.asd_users_group aug on amd.user_group_id = aug.group_id
-    where active_from_date::date <= :last_date
-        and active_to_date::date >= :first_date
+    where cast(active_from_date as date) <= :last_date
+        and cast(active_to_date as date) >= :first_date
 ),
 current_transaction_type as
 (
@@ -28,15 +28,15 @@ select
     ur.user_id,
     ur.event_date,
     ur.location_id,
-    nvl(condition.condition_id, 0) as condition_id, -- 0  = 'Undefined'
+    coalesce(condition.condition_id, 0) as condition_id, -- 0  = 'Undefined'
     l.LocationGroup_id as location_group_id,
     l.Logical_Level as location_level_id,
     l.Region as region,
-    decode(l.level, 3, l.ParentLocation_id, l.Location_id) as region_id,
+    case l.level when 3 then l.ParentLocation_id else l.Location_id end as region_id,
     l.RegionGeo as region_geo,
     l.RegionGroup as region_group,
     l.City as city,
-    decode(l.level, 3, l.Location_id, null) as city_id,
+    case l.level when 3 then l.Location_id end as city_id,
     l.CityGeo as city_geo,
     l.City_Population_Group as city_population_group,
     ur.microcat_id,
@@ -52,9 +52,9 @@ select
     lc.logical_category_id,
     lc.logical_category,
     null as user_segment,
-    nvl(usm.user_segment, ls.segment) as user_segment_market,
-    nvl(aus.is_asd, False) as is_asd,
-    nvl(aus.user_group_id, 8383) as asd_user_group_id,   -- By default is SS group - 8383
+    coalesce(usm.user_segment, ls.segment) as user_segment_market,
+    coalesce(aus.is_asd, False) as is_asd,
+    coalesce(aus.user_group_id, 8383) as asd_user_group_id,   -- By default is SS group - 8383
     aus.group_name as asd_group_name,
     ur.transactiontype_id,
     ctt.transaction_type,
@@ -77,7 +77,7 @@ select
 	cpa_target_action_count,
 	cpt.user_id is not null as is_user_cpt_tariff
 from DMA.paying_user_report ur
-join current_transaction_type ctt using(transactiontype_id)
+join current_transaction_type ctt on ctt.transactiontype_id = ur.transactiontype_id
 
 left join DMA.current_locations l on l.Location_id = ur.location_id and ur.location_id != -1
 
@@ -87,7 +87,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where infmquery_id in (
         select distinct infmquery_id
         from dma.paying_user_report
-        where event_date::date between :first_date and :last_date
+        where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
     )
 ) ci
@@ -104,11 +104,11 @@ left join (
         converting_date,
         lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
-    where converting_date::date <= :last_date
+    where cast(converting_date as date) <= :last_date
 ) usm
     on  ur.user_id = usm.user_id
     and lc.logical_category_id = usm.logical_category_id
-    and ur.event_date::date >= converting_date and ur.event_date::date < next_converting_date
+    and cast(ur.event_date as date) >= converting_date and cast(ur.event_date as date) < next_converting_date
 
 left join am_client_day aus
 	on aus.user_id = ur.user_id
@@ -127,7 +127,7 @@ left join (
     on ur.user_id = udc.user_id
     and ur.event_date = udc.event_date
 
-left join condition using(is_new)
+left join "condition" on "condition".is_new = ur.is_new
 
 left join (
     select distinct event_date, user_id
@@ -138,5 +138,5 @@ left join (
     on ur.user_id = cpt.user_id
     and ur.event_date = cpt.event_date
 
-where ur.user_id not in (select cu.user_id from dma.current_user cu where cu.IsTest)
-    and ur.event_date::date between :first_date and :last_date
+where ur.user_id not in (select cu.user_id from dma."current_user" cu where cu.IsTest)
+    and cast(ur.event_date as date) between :first_date and :last_date
