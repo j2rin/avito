@@ -278,7 +278,7 @@ def validate(filenames=None, limit0=False, n_days=1, validate_trino=True):
             trino_validation_result = trino_validator.validate(path)
             if 'error' in trino_validation_result:
                 print(
-                    f'WARNING: syntax is not valid for Trino. {trino_validation_result["error"].message}'
+                    f'WARNING: syntax is not valid for Trino. {trino_validation_result["error"]}'
                 )
 
         print('')
