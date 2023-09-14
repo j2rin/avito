@@ -158,7 +158,7 @@ class TrinoFileValidator:
             with t_get_con() as con:
                 result = explain_validate(con, sql)
                 if 'error' in result and result['error'].error_name == 'TABLE_NOT_FOUND':
-                    match = re.search(r"Table '\w+\.([\w.]+)'", result['error'])
+                    match = re.search(r"Table '\w+\.([\w.]+)'", result['error'].message)
                     if match:
                         table_name = match.group(1)
                         self.not_found_tables.add(table_name)

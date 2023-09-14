@@ -38,7 +38,7 @@ def explain_validate(con, sql):
     try:
         cur.execute(sql_explain)
     except TrinoUserError as e:
-        return {'error': e.message}
+        return {'error': e}
     except Exception as e:
         raise e
     return {'is_valid': cur.fetchone()[0]}
