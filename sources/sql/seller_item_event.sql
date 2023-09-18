@@ -72,6 +72,12 @@ select
     lc.logical_param2_id,
     coalesce(t.condition_id, 0)                                as condition_id,
     t.is_delivery_active,
+    hash(
+        round(exp(round(ln(t.price), 1))),
+        t.user_id,
+        t.microcat_id,
+        t.profession_id
+        ) as user_microcat_price,
     smartphone_buyout_seen_invitation_cd,
     smartphone_buyout_entered_flow_cd,
     smartphone_buyout_request_screen_cd,
