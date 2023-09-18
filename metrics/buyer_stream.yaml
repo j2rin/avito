@@ -546,6 +546,10 @@ metric.counter:
     btc_perfvas_x5_7: { filter: [*is_btc, *is_item_perfvas_x5_7] }
     btc_perfvas_x10_1: { filter: [*is_btc, *is_item_perfvas_x10_1] }
     btc_perfvas_x10_7: { filter: [*is_btc, *is_item_perfvas_x10_7] }
+    btc_perfvas: { filter: [*is_btc, *is_item_perfvas] }
+    btc_perfvas_serp: { filter: [*is_btc, *is_item_perfvas, *x_is_search] }
+    btc_perfvas_u2i: { filter: [*is_btc, *is_item_perfvas, *x_is_u2i] }
+    btc_perfvas_i2i: { filter: [*is_btc, *is_item_perfvas, *x_is_i2i] }
     btc_xl: { filter: [*is_btc, *is_item_xl] }
     cnt_cities_in_s: { filter: [{ location_level_id: [4, 5, 6] }, *is_1p, *is_search] }
     cnt_create_order_delivery_any_ext_block:
@@ -712,6 +716,7 @@ metric.counter:
     cnt_cs_vertical_main_featured: { filter: [*is_contact_wo_guessing, *featured_widget, *x_is_vertical_main_widget] }
     cnt_cs_shopx: { filter: [*is_contact_wo_guessing, *x_is_search, *x_is_shop] }
     cnt_cs_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_search] }
+    cnt_cs_serp: { filter: [*is_contact_wo_guessing, *x_is_search] }
     cnt_cs_serp_xl: { filter: [*is_contact_wo_guessing, *is_serp_xl, *x_is_search] }
     cnt_cs_serp_perfvas_x2_1: { filter: [*is_contact_wo_guessing, *is_serp_perfvas_x2_1, *x_is_search] }
     cnt_cs_serp_perfvas_x2_7: { filter: [*is_contact_wo_guessing, *is_serp_perfvas_x2_7, *x_is_search] }
@@ -1145,6 +1150,10 @@ metric.counter:
     contact_in_stock: { filter: [*item_in_stock, *is_contact] }
     contact_to_order: { filter: [*item_to_order, *is_contact] }
     contacts_total_vas: { filter: [*is_item_vas, *is_contact] }
+    contacts_perfvas: { filter: [*is_contact, *is_item_perfvas] }
+    contacts_perfvas_serp: { filter: [*is_contact, *is_item_perfvas, *x_is_search] }
+    contacts_perfvas_u2i: { filter: [*is_contact, *is_item_perfvas, *x_is_u2i] }
+    contacts_perfvas_i2i: { filter: [*is_contact, *is_item_perfvas, *x_is_i2i] }
     contacts_total_vas_cpa: { filter: [*is_item_vas, *is_contact, *is_item_cpa] }
     contacts_perfvas_x2_1: { filter: [*is_contact, *is_item_perfvas_x2_1] }
     contacts_perfvas_x2_7: { filter: [*is_contact, *is_item_perfvas_x2_7] }
@@ -1153,7 +1162,6 @@ metric.counter:
     contacts_perfvas_x10_1: { filter: [*is_contact, *is_item_perfvas_x10_1] }
     contacts_perfvas_x10_7: { filter: [*is_contact, *is_item_perfvas_x10_7] }
     contacts_perfvas_map: { filter: [*is_contact, *is_item_perfvas, *x_is_map] }
-    contacts_perfvas: { filter: [*is_contact, *is_item_perfvas] }
     contacts_xl: { filter: [*is_contact, *is_item_xl] }
     contacts_item_pessimized: { filter: [*is_contact, *is_item_pessimized] }
     contacts_seller_pessimized: { filter: [*is_contact, *is_seller_pessimized] }
@@ -1230,8 +1238,11 @@ metric.counter:
     item_views_perfvas_x5_7: { filter: [*is_iv, *is_item_perfvas_x5_7] }
     item_views_perfvas_x10_1: { filter: [*is_iv, *is_item_perfvas_x10_1] }
     item_views_perfvas_x10_7: { filter: [*is_iv, *is_item_perfvas_x10_7] }
-    item_views_perfvas: { filter: [*is_iv, *is_item_perfvas] }
     item_views_perfvas_map: { filter: [*is_iv, *is_item_perfvas, *x_is_map] }
+    iv_perfvas: { filter: [*is_iv, *is_item_perfvas] }
+    iv_perfvas_serp: { filter: [*is_iv, *is_item_perfvas, *x_is_search] }
+    iv_perfvas_u2i: { filter: [*is_iv, *is_item_perfvas, *x_is_u2i] }
+    iv_perfvas_i2i: { filter: [*is_iv, *is_item_perfvas, *x_is_i2i] }
     item_views_xl: { filter: [*is_iv, *is_item_xl] }
     item_views_with_available_msg: { filter: [*is_msg_available, *is_iv] }
     item_views_guarantee: { filter: [*is_iv, *is_guarantee] }
@@ -1865,6 +1876,8 @@ metric.counter:
     total_delivery_confirm_b2c: { filter: [eid: 2749, *is_b2c ]  }
     total_delivery_confirm_c2c_14days_return:  { filter: [ eid: 2749, *is_c2c_return_within_14_days ]  }
     total_delivery_confirm_14days_return:  { filter: [ eid: 2749, *is_return_within_14_days ] }
+
+    total_perfvas: { filter: [*is_item_perfvas] }
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -3294,6 +3307,12 @@ metric.uniq:
     delivery_confirm_c2c_14days_return: { counter: total_delivery_confirm_c2c_14days_return, key: [cookie_item] }
     delivery_confirm_14days_return: { counter: total_delivery_confirm_14days_return, key: [cookie_item] }
 
+    btc_views_serp:                 { counter: cnt_btc_s_item_attr,    key: [item_x] }
+    btc_views_rec_u2i:              { counter: cnt_btc_rec_u2i,        key: [item_x] }
+    btc_views_rec_i2i:              { counter: cnt_btc_rec_i2i,        key: [item_x] }
+
+    cnt_views_serp:                 { counter: cnt_cs_serp_xl,    key: [item_x] }
+
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
     btc_from_witcher_any_per_witcher_any: { num: btc_from_witcher_any, den: searches_witcher_any }
@@ -3301,6 +3320,17 @@ metric.ratio:
     btc_from_witcher_new_auto_per_witcher_new_auto: { num: btc_from_witcher_new_auto, den: searches_witcher_new_auto }
     btc_from_witcher_new_flats_per_witcher_new_flats: { num: btc_from_witcher_new_flats, den: searches_witcher_new_flats }
     btc_from_witcher_regions_per_witcher_regions: { num: btc_from_witcher_regions, den: searches_witcher_regions }
+    btc_perfvas_ratio: { num: btc_perfvas, den: bt_clicks }
+    btc_perfvas_serp_ratio: { num: btc_perfvas_serp, den: btc_views_serp }
+    btc_perfvas_u2i_ratio: { num: btc_perfvas_u2i, den: btc_views_rec_u2i }
+    btc_perfvas_i2i_ratio: { num: btc_perfvas_i2i, den: btc_views_rec_i2i }
+
+    contacts_perfvas_ratio: { num: contacts_perfvas, den: cnt_cs }
+    contacts_perfvas_serp_ratio: { num: contacts_perfvas_serp, den: cnt_views_serp }
+    contacts_perfvas_u2i_ratio: { num: contacts_perfvas_u2i, den: cnt_cs_rec_u2i }
+    contacts_perfvas_i2i_ratio: { num: contacts_perfvas_i2i, den: cnt_cs_rec_i2i }
+
+
     btc_search_filter_any_per_search_filter_any: { num: btc_from_search_filter_any, den: searches_with_filter_any }
     btc_serp_noq_per_s_noq: { num: btc_serp_noquery, den: cnt_s_without_query }
     btc_serp_q_per_s_q: { num: btc_serp_query, den: search_q }
@@ -3370,6 +3400,7 @@ metric.ratio:
     contacts_per_item_views_u2i:        { num: contacts_rec_u2i,    den: item_views_rec_u2i }
     contacts_per_item_views_i2i:        { num: contacts_rec_i2i,    den: item_views_rec_i2i }
     contacts_rec_per_rec_block:         { num: contacts_rec,        den: recblock_shows }
+
     contacts_rec_u2i_vas_per_contacts_rec_u2i: { num: contacts_rec_u2i_vas, den: contacts_rec_u2i }
     contacts_rec_vas_per_contacts_rec: { num: contacts_rec_vas, den: contacts_rec }
     contacts_regions_per_item_views_regions: { num: contacts_regions, den: item_views_regions }
@@ -3451,6 +3482,10 @@ metric.ratio:
     iv_from_witcher_new_auto_per_witcher_new_auto: { num: iv_from_witcher_new_auto, den: searches_witcher_new_auto }
     iv_from_witcher_new_flats_per_witcher_new_flats: { num: iv_from_witcher_new_flats, den: searches_witcher_new_flats }
     iv_from_witcher_regions_per_witcher_reg: { num: iv_from_witcher_regions, den: searches_witcher_regions }
+    iv_perfvas_ratio: { num: iv_perfvas, den: item_views }
+    iv_perfvas_serp_ratio: { num: iv_perfvas_serp, den: item_views_serp }
+    iv_perfvas_u2i_ratio: { num: iv_perfvas_u2i, den: item_views_rec_u2i }
+    iv_perfvas_i2i_ratio: { num: iv_perfvas_i2i, den: item_views_rec_i2i }
     locations_per_search: { num: locations_in_search, den: searches }
     uniq_locations_per_search: { num: uniq_locations_in_search, den: searches }
     uniq_locations_per_user_search: { num: uniq_locations_in_search, den: users_search }
@@ -3575,9 +3610,9 @@ metric.ratio:
     sessions_iv_s_noq_per_s_noq: { num: sessions_iv_s_noq, den: unq_session_s_without_query }
     sessions_iv_s_per_s: { num: sessions_iv_s, den: sessions_s }
     sessions_iv_s_q_per_s_q: { num: sessions_iv_s_q, den: unq_session_s_query }
-    vas_serp_rnk3_per_s: { num: cnt_vas_rnk3, den: searches }
-    vas_serp_rnk10_per_s: { num: cnt_vas_rnk10, den: searches }
-    vas_serp_rnk30_per_s: { num: cnt_vas_rnk30, den: searches }
+    show_perfvas_serp_rnk3: { num: cnt_vas_rnk3, den: searches }
+    show_perfvas_serp_rnk10: { num: cnt_vas_rnk10, den: searches }
+    show_perfvas_serp_rnk30: { num: cnt_vas_rnk30, den: searches }
     shows_item_view_recblock_per_recblock_shows: { num: shows_item_view_recblock, den: recblock_shows }
     user_buyer_target_clicks_per_user_searches_shop: { num: user_buyer_target_clicks_shop, den: user_searches_shop }
     user_buyer_target_clicks_serp_saved_per_user_search_saved: { num: user_buyer_target_clicks_serp_saved, den: users_saved_searches }
