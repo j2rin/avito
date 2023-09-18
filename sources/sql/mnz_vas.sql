@@ -2,7 +2,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
 users as (
     select distinct user_id
     from dma.mnz_vas_seller_metrics
-    where event_date::date between :first_date and :last_date
+    where cast(event_date as date) between :first_date and :last_date
         and user_id is not null
 )
 select
@@ -30,14 +30,14 @@ select
 	cm.Param2_microcat_id                                        as param2_id,
 	cm.Param3_microcat_id                                        as param3_id,
 	cm.Param4_microcat_id                                        as param4_id,
-	decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-	decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
 	cl.LocationGroup_id                                          as location_group_id,
 	cl.City_Population_Group                                     as population_group,
 	cl.Logical_Level                                             as location_level_id,
-    nvl(acd.is_asd, False)                                       as is_asd,
+    coalesce(acd.is_asd, False)                                       as is_asd,
     acd.user_group_id                                            as asd_user_group_id,
-    nvl(usm.user_segment, ls.segment)                            as user_segment_market
+    coalesce(usm.user_segment, ls.segment)                            as user_segment_market
 from dma.mnz_vas_seller_metrics mv
 left join dma.current_microcategories cm on cm.microcat_id = mv.microcat_id
 
@@ -47,7 +47,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where infmquery_id in (
         select distinct infmquery_id
         from dma.mnz_vas_seller_metrics
-        where event_date::date between :first_date and :last_date
+        where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
     )
 ) ic
@@ -74,4 +74,4 @@ left join /*+jtype(h),distrib(l,a)*/ (
     from DMA.am_client_day_versioned
     where user_id in (select user_id from users)
 ) acd on mv.user_id = acd.user_id and mv.event_date between acd.active_from_date and acd.active_to_date
-where mv.event_date::date between :first_date and :last_date
+where cast(mv.event_date as date) between :first_date and :last_date

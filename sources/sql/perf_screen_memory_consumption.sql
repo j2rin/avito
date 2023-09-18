@@ -9,5 +9,5 @@ select
     metric_name,
     bytes_consumed
 from dma.perf_screen_memory_consumption c
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date
 

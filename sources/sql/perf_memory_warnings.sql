@@ -7,4 +7,4 @@ select
     events,
     platform_id
 from dma.o_perf_memory_warnings w
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

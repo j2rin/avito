@@ -9,7 +9,7 @@ with
                 ) then 1 end as is_end_article_event
     from (
     select
-        event_date::date as observation_date,
+        cast(event_date as date) as observation_date,
         platform_id,
         user_id,
         Cookie_id as cookie_id,
@@ -75,7 +75,7 @@ with
             						328682250001, -- 4771 Support / MSG Chat / Create
             						54245750002 -- 802 Helpdesk / Тикет / Создание тикета
             					)
-    		and event_date::date >= '2022-01-01')r)
+    		and cast(event_date as date) >= date('2022-01-01'))r)
     , sessions as (
         select
             ss.session_hash
@@ -216,4 +216,4 @@ select
     , b.helpcenter_phone_moder_block_requests
     , b.helpcenter_phone_moder_reject_requests
 from base b
-where event_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

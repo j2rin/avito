@@ -8,8 +8,7 @@ select     abuse_date,
            cm.logcat_id as logical_category_id,
            cm.vertical_id
     from dma.current_abuses a
-    join dds.l_item_user as iu
-    using(item_id)
+    join dds.l_item_user as iu on iu.item_id = a.item_id
     join dma.v_current_AbuseType cat on cat.AbuseType_id = a.AbuseType_id
     join dma.current_microcategories cm on cm.microcat_id = a.microcat_id
-where abuse_date::date between :first_date and :last_date
+where cast(abuse_date as date) between :first_date and :last_date

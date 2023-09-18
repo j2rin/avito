@@ -29,15 +29,15 @@ select c.event_date
     , cm.Param2_microcat_id as param2_id
     , cm.Param3_microcat_id as param3_id
     , cm.Param4_microcat_id as param4_id
-    , decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id) as region_id
-    , decode(cl.level, 3, cl.Location_id, null) as city_id
+    , case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
+    , case cl.level when 3 then cl.Location_id end                           as city_id
     , cl.LocationGroup_id as location_group_id
     , cl.Logical_Level as location_level_id
-    , nvl(acd.is_asd, False) as is_asd
+    , coalesce(acd.is_asd, False) as is_asd
     , acd.user_group_id      as asd_user_group_id
-    , nvl(usm.user_segment, ls.segment) as user_segment_market
+    , coalesce(usm.user_segment, ls.segment) as user_segment_market
 from dma.cpa_calls_metrics c
-left join dma.current_locations cl using(location_id)
+left join dma.current_locations cl on cl.location_id = c.location_id
 
 left join /*+jtype(h),distrib(l,a)*/ (
     select infmquery_id, logcat_id, microcat_id
@@ -45,13 +45,13 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where infmquery_id in (
         select distinct infmquery_id
         from dma.cpa_calls_metrics
-        where event_date::date between :first_date and :last_date
+        where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
     )
 ) ci
     on ci.infmquery_id = c.infmquery_id
 
-left join dma.current_microcategories cm using(microcat_id)
+left join dma.current_microcategories cm on cm.microcat_id = ci.microcat_id
 left join dma.current_logical_categories lc on ci.logcat_id = lc.logcat_id
 
 left join /*+jtype(h),distrib(l,r)*/ (
@@ -72,14 +72,14 @@ left join /*+jtype(h),distrib(l,r)*/ (
         where true
             and user_id in (
                 select distinct user_id from dma.cpa_calls_metrics
-                where event_date::date between :first_date and :last_date
+                where cast(event_date as date) between :first_date and :last_date
             )
-            and converting_date <= :last_date::date
+            and converting_date <= :last_date
     ) usm
-    where usm.to_date >= :first_date::date
+    where usm.to_date >= :first_date
 ) usm
     on  c.user_id = usm.user_id
-    and c.event_date::date >= usm.from_date and c.event_date::date < usm.to_date
+    and cast(c.event_date as date) >= usm.from_date and cast(c.event_date as date) < usm.to_date
     and lc.logical_category_id = usm.logical_category_id
 
 left join dict.segmentation_ranks ls
@@ -100,4 +100,4 @@ left join (
 	on acd.user_id = c.user_id 
 	and c.event_date between acd.active_from_date and acd.active_to_date
 
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

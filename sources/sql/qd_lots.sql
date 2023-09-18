@@ -30,9 +30,9 @@ select
          when platform = 'mav'      then 2
          when platform = 'desktop'  then 1
          else null end                                           as platform_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
- 	decode(cl.level, 3, cl.Location_id, null)                    as city_id
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id
 from dma.qd_auto_report_lots l
 left join DMA.current_locations cl on cl.location_id = l.location_id
-where created_at::date between :first_date and :last_date
-    or terminated_at::date between :first_date and :last_date
+where cast(created_at as date) between :first_date and :last_date
+    or cast(terminated_at as date) between :first_date and :last_date

@@ -7,4 +7,4 @@
   		   agent_items_day,
   		   agent_line_time_h
 	from dma.moder_metric_observation
-where event_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

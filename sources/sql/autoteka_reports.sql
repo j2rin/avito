@@ -1,6 +1,6 @@
 select
     autoteka_package_history_id,
-    autoteka_package_history_created_at::date,
+    cast(autoteka_package_history_created_at as date),
     user_id,
     cookie_id,
     autoteka_user_id,
@@ -24,4 +24,4 @@ select
     autoteka_car_price_group,
     autoteka_mileage_group
 from DMA.autoteka_report_parameters
-where autoteka_package_history_created_at::date between :first_date and :last_date
+where cast(autoteka_package_history_created_at as date) between :first_date and :last_date

@@ -17,8 +17,8 @@ select
         + bic.del_order * w.del_order
         )                                                           as c_deal_weight,
     --
-    (   1 / (1 + EXP(- (zeroifnull(wl.inter)
-        + zeroifnull(wl.ph_view) *
+    (   1 / (1 + EXP(- (coalesce(wl.inter, 0)
+        + coalesce(wl.ph_view, 0) *
             case
             when (bic.ph_view>0 or bic.ph_chat>0) and (bic.ph_proxy=0 and bic.iac=0)
                 and (bic.msg_first+bic.msg_prep+bic.msg_reply+bic.del_order=0)
@@ -32,13 +32,13 @@ select
             then 1
             else 0
             end
-        + zeroifnull(wl.ph_proxy) * decode(bic.ph_proxy>0 and (bic.ph_anon=0 and bic.iac=0),true,1,0)
-        + zeroifnull(wl.ph_anon) * decode((bic.ph_anon>0 and decode(bic.platform_id=3,true,bic.ph_proxy>0,true)) or bic.iac>0,true,1,0)
-        + zeroifnull(wl.msg) * decode((bic.msg_first>0 or bic.msg_prep>0) and bic.msg_reply=0,true,1,0)
-        + zeroifnull(wl.msg_reply) * decode(bic.msg_reply>0,true,1,0)
-        + zeroifnull(wl.del_click) * decode(bic.del_click>0 and bic.del_order=0,true,1,0)
-        + zeroifnull(wl.del_order) * decode(bic.del_order>0,true,1,0)
-        + zeroifnull(wl.fav) * decode(bic.fav_add-bic.fav_remove>0 or bic.share>0,true,1,0)
+        + coalesce(wl.ph_proxy, 0) * case bic.ph_proxy>0 and (bic.ph_anon=0 and bic.iac=0) when true then 1 else 0 end
+        + coalesce(wl.ph_anon, 0) * case (bic.ph_anon>0 and case bic.platform_id=3 when true then bic.ph_proxy>0 else true end) or bic.iac>0 when true then 1 else 0 end
+        + coalesce(wl.msg, 0) * case (bic.msg_first>0 or bic.msg_prep>0) and bic.msg_reply=0 when true then 1 else 0 end
+        + coalesce(wl.msg_reply, 0) * case bic.msg_reply>0 when true then 1 else 0 end
+        + coalesce(wl.del_click, 0) * case bic.del_click>0 and bic.del_order=0 when true then 1 else 0 end
+        + coalesce(wl.del_order, 0) * case bic.del_order>0 when true then 1 else 0 end
+        + coalesce(wl.fav, 0) * case bic.fav_add-bic.fav_remove>0 or bic.share>0 when true then 1 else 0 end
         ))))
                                                                     as c_deal_logit,
     --
@@ -50,8 +50,8 @@ select
     cm.Param2_microcat_id                                           as param2_id,
     cm.Param3_microcat_id                                           as param3_id,
     cm.Param4_microcat_id                                           as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)       as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                       as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                             as location_group_id,
     cl.City_Population_Group                                        as population_group,
     cl.Logical_Level                                                as location_level_id
@@ -66,4 +66,4 @@ from dma.buyer_item_contact bic
         on wl.logical_category_id=cm.logical_category_id
         and wl.platform_id=bic.platform_id
 where bic.participant_type = 'visitor'
-    and bic.event_date::date between :first_date and :last_date
+    and cast(bic.event_date as date) between :first_date and :last_date

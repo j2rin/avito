@@ -1,5 +1,5 @@
 select
-    created_txtime::date as create_date,
+    cast(created_txtime as date) as create_date,
     payment_transaction_id,
     user_id,
     null as platform_id,
@@ -9,5 +9,5 @@ from dma.current_payment_transactions
 where
     amount > 0
     and transaction_type = 'payout'
-    and created_txtime::date between :first_date and :last_date
+    and cast(created_txtime as date) between :first_date and :last_date
     and payment_project = 'MARKETPLACE'

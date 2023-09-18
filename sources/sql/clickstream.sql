@@ -1,5 +1,5 @@
 select
-    cs.event_date::date                                            as event_date,
+    cast(cs.event_date as date)                                            as event_date,
     cs.cookie_id,
     cs.user_id,
     cs.platform_id,
@@ -17,16 +17,16 @@ select
     max(cm.Param2_microcat_id)                                     as param2_id,
     max(cm.Param3_microcat_id)                                     as param3_id,
     max(cm.Param4_microcat_id)                                     as param4_id,
-    max(decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)) as region_id,
-    max(decode(cl.level, 3, cl.Location_id, null))                 as city_id,
+    max(case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end) as region_id,
+    max(case cl.level when 3 then cl.Location_id end)                           as city_id,
     max(cl.LocationGroup_id)                                       as location_group_id,
     max(cl.City_Population_Group)                                  as population_group,
     max(cl.Logical_Level)                                          as location_level_id,
     count(*)                                                       as event_count
 from DMA.click_stream cs
-join DMA.current_eventTypes et using (eventtype_id)
-left join DMA.current_microcategories cm using (microcat_id)
-left join DMA.current_locations cl using (location_id)
+join DMA.current_eventTypes et on et.eventtype_id = cs.eventtype_id
+left join DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
+left join DMA.current_locations cl on cl.location_id = cs.location_id
 where cs.cookie_id is not null
     and EventType_ext in (
         54,210,212,213,230,299,305,310,333,853,854,856,857,858,2078,2079,2090,2119,2148,2330,
@@ -36,5 +36,5 @@ where cs.cookie_id is not null
       	4414,4434,4467,4468,4512,4513,4520,4670,4675,4741,4748,5069,5184,5557,5879,5881,5887,3178,6606,6607,
       	6608,2664,2443,5752,5756,6434,6832,6053,4298,3183,4795,7186,7187,8108,8109,8179,4731,8675,8676
 		)
-	and cs.event_date::date between :first_date and :last_date
+	and cast(cs.event_date as date) between :first_date and :last_date
 group by 1, 2, 3, 4, 5, 6, 7, 8, 9, track_id

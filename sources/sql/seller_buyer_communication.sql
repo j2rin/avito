@@ -5,14 +5,14 @@ with am_client_day as (
            (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
            user_group_id
     from DMA.am_client_day_versioned
-    where active_from_date::date <= :last_date
-        and active_to_date::date >= :first_date
+    where cast(active_from_date as date) <= :last_date
+        and cast(active_to_date as date) >= :first_date
 )
 , usm as (
     select user_id, logical_category_id, user_segment, converting_date,
         lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
-    where converting_date::date <= :last_date
+    where cast(converting_date as date) <= :last_date
 )
  select
  	sbc.chat_id,
@@ -21,7 +21,7 @@ with am_client_day as (
  	discount_send_date,
 	platform_id,
     answer_platform,
-    answer_time::date,
+    cast(answer_time as date),
     sbc.answer_buyer as answer,
     coalesce(sbc.is_first_message, false) as first_message,
     special_offers,
@@ -36,9 +36,9 @@ with am_client_day as (
 	cm.Param2_microcat_id                                        as param2_id,
 	cm.Param3_microcat_id                                        as param3_id,
 	cm.Param4_microcat_id                                        as param4_id,
-	nvl(acd.is_asd, False)                                       as is_asd,
+	coalesce(acd.is_asd, False)                                       as is_asd,
     acd.user_group_id                                            as asd_user_group_id,
-    nvl(usm.user_segment, ls.segment)                            as user_segment_market
+    coalesce(usm.user_segment, ls.segment)                            as user_segment_market
 from DMA.messenger_seller_buyer_communication sbc
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm
 		on cm.microcat_id = sbc.microcat_id
@@ -51,9 +51,9 @@ left join am_client_day acd
 left join usm
         on sbc.user_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
-		and sbc.discount_send_date::timestamp >= converting_date and sbc.discount_send_date::timestamp < next_converting_date
+		and cast(sbc.discount_send_date as timestamp) >= converting_date and cast(sbc.discount_send_date as timestamp) < next_converting_date
 where (
-           sbc.discount_send_date::date between :first_date and :last_date
-        or sbc.answer_time::date between :first_date and :last_date
+           cast(sbc.discount_send_date as date) between :first_date and :last_date
+        or cast(sbc.answer_time as date) between :first_date and :last_date
     )
 

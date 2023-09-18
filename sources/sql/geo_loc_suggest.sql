@@ -16,4 +16,4 @@ select /*+syntactic_join*/
     cl.Logical_Level                                             as location_level_id
 from dma.location_suggest_click                      ss
 LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id = ss.location_id
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

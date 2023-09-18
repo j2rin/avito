@@ -11,4 +11,4 @@ select
     track_id,
     event_no
 from dma.bs_first_click
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

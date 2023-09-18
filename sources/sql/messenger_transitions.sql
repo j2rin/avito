@@ -40,9 +40,9 @@ from DMA.am_client_day_versioned
 	cm.Param2_microcat_id                                        as param2_id,
 	cm.Param3_microcat_id                                        as param3_id,
 	cm.Param4_microcat_id                                        as param4_id,
-	nvl(acd.is_asd, False)                                       as is_asd,
+	coalesce(acd.is_asd, False)                                       as is_asd,
     acd.user_group_id                                            as asd_user_group_id,
-    nvl(usm.user_segment, ls.segment)                            as user_segment_market
+    coalesce(usm.user_segment, ls.segment)                            as user_segment_market
 from DMA.messenger_online_fraud_observations t
 left join DMA.current_microcategories cm
 		on cm.microcat_id = t.microcat_id
@@ -55,5 +55,5 @@ left join am_client_day acd
 left join usm
         on t.from_user_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
-        and t.trigger_date::timestamp >= converting_date and t.trigger_date::timestamp < next_converting_date
-where trigger_date::date between :first_date and :last_date
+        and cast(t.trigger_date as timestamp) >= converting_date and cast(t.trigger_date as timestamp) < next_converting_date
+where cast(trigger_date as date) between :first_date and :last_date

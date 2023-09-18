@@ -1,5 +1,5 @@
 select 
-    pp.transaction_date::date as event_date,
+    cast(pp.transaction_date as date) as event_date,
     pp.payment_transaction_id,
     pp.cookie_id,
     pp.user_id,
@@ -25,12 +25,12 @@ select
     cpt.provider,
     cpt.provider_preset,
     cpt.payment_plan,
-    nvl(cpt.payment_method,'other') payment_method,
-    nvl(cpt.payment_method,'other') = 'SBP' as is_sbp,
+    coalesce(cpt.payment_method,'other') payment_method,
+    coalesce(cpt.payment_method,'other') = 'SBP' as is_sbp,
     cpt.linked_source_id,
-    nvl(cpt.provider_payment_number, cpt.payment_linked_source) as payment_number,
-    nvl(ec.errorcode,'0') errorcode
+    coalesce(cpt.provider_payment_number, cpt.payment_linked_source) as payment_number,
+    coalesce(ec.errorcode,'0') errorcode
 from dma.payment_page_transaction_funnel pp 
-join dma.current_payment_transactions cpt using(payment_transaction_id)
+join dma.current_payment_transactions cpt on cpt.payment_transaction_id = pp.payment_transaction_id
 left join dds.S_PaymentTransaction_ErrorCode ec on cpt.payment_transaction_id = ec.paymenttransaction_id
-where pp.transaction_date::date between :first_date and :last_date
+where cast(pp.transaction_date as date) between :first_date and :last_date

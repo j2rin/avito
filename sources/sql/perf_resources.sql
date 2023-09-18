@@ -9,4 +9,4 @@ select
     value_raw,
     value
 from dma.performance_resources_web w
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

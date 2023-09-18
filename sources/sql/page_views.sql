@@ -5,12 +5,12 @@ current_infmquery_category as (
     where infmquery_id in (
         select distinct infmquery_id
         from dma.dau_source
-        where event_date::date between :first_date and :last_date
+        where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
     )
 )
 select /*+syntactic_join*/
-    src.event_date::date as event_date,
+    cast(src.event_date as date) as event_date,
     src.cookie_id,
     src.user_id,
     src.platform_id,
@@ -26,8 +26,8 @@ select /*+syntactic_join*/
     cm.Param2_microcat_id as param2_id,
     cm.Param3_microcat_id as param3_id,
     cm.Param4_microcat_id as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)  as region_id,
-    decode(cl.level, 3, cl.Location_id, null)              as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                    as location_group_id,
     cl.City_Population_Group                               as population_group,
     cl.Logical_Level                                       as location_level_id,
@@ -50,4 +50,4 @@ left join  /*+jtype(h),distrib(l,a)*/dma.current_microcategories cm
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl
     on cl.Location_id = src.location_id
 where src.is_human
-    and src.event_date::date between :first_date and :last_date
+    and cast(src.event_date as date) between :first_date and :last_date

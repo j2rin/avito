@@ -6,8 +6,10 @@ PARAM_REGEXP = r'(\:{param})\b'
 
 def bind_sql_params(sql, **params):
     for name, value in params.items():
-        if isinstance(value, (str, date)):
+        if isinstance(value, str):
             value = f"'{value}'"
+        elif isinstance(value, date):
+            value = f"date('{value}')"
         pattern = PARAM_REGEXP.format(param=name)
         sql = re.sub(pattern, value, sql)
     return sql

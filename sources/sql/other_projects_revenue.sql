@@ -4,4 +4,4 @@ select observation_date
     ,project_type
     ,amount_net_adj
 from dma.other_projects_revenue
-where observation_date::date between :first_date and :last_date
+where cast(observation_date as date) between :first_date and :last_date

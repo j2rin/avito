@@ -13,13 +13,13 @@ daily_active_listers as (
         where infmquery_id in (
             select distinct infmquery_id
             from dma.o_seller_item_active
-            where event_date::date between :first_date and :last_date
+            where cast(event_date as date) between :first_date and :last_date
                 and infmquery_id is not null
         )
     ) ic on ic.infmquery_id = sia.infmquery_id
     left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
     left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm on cm.microcat_id = sia.microcat_id
-    where sia.event_date::date between :first_date::date and :last_date::date
+    where cast(sia.event_date as date) between :first_date and :last_date
         and sia.is_active
         and not coalesce(sia.is_marketplace, false)
         and not coalesce(sia.is_user_test, false)
@@ -81,10 +81,10 @@ left join (
         cm.vertical_id,
         sum(pur.transaction_amount_net_adj) as transaction_amount_net_adj
     from dma.paying_user_report pur
-    join dma.current_transaction_type ctt using(TransactionType_id)
+    join dma.current_transaction_type ctt on ctt.TransactionType_id = pur.TransactionType_id
     join dma.current_microcategories cm on pur.microcat_id = cm.microcat_id and cm.microcat_id != -1
     where ctt.IsRevenue
-        and pur.event_date::date between :first_date::date and :last_date::date
+        and cast(pur.event_date as date) between :first_date and :last_date
     group by 1, 2, 3
 ) pur on pur.user_id=t.user_id and pur.event_date=t.event_date and pur.vertical_id=t.vertical_id
 where rnk = 1

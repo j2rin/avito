@@ -15,4 +15,4 @@ select
     hitch_time_ratio_sum,
     events_count
 from dma.performance_fps f
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

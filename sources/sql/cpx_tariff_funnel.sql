@@ -11,7 +11,7 @@ select
     user_id, 
     logical_category_id, 
     user_segment, 
-    timestampadd('s', 86399, converting_date::timestamp(0)) converting_date
+    timestampadd('s', 86399, cast(converting_date as timestamp(0))) converting_date
 from dma.user_segment_market
 )
 select 	
@@ -24,7 +24,7 @@ select
     	configurator_from_page,         
     	ctf.vertical_id,                    
     	ctf.logical_category_id,        
-        nvl(acd.is_asd, False)                                       as is_asd,
+        coalesce(acd.is_asd, False)                                       as is_asd,
         acd.user_group_id                                            as asd_user_group_id,
 		coalesce(usm.user_segment, ls.segment, sid.user_segment_market) as user_segment_market
 from dma.cpx_tariff_funnel ctf 
@@ -37,6 +37,6 @@ left join user_segment_market usm
     and ctf.event_timestamp interpolate previous value usm.converting_date
 left join dma.sellers_info_day sid on ctf.user_id = sid.user_id and ctf.event_date = sid.event_date
 left join am_client_day acd
-    on ctf.event_timestamp::date between acd.active_from_date and acd.active_to_date
+    on cast(ctf.event_timestamp as date) between acd.active_from_date and acd.active_to_date
     and ctf.user_id = acd.user_id
-where ctf.event_date::date between :first_date and :last_date
+where cast(ctf.event_date as date) between :first_date and :last_date

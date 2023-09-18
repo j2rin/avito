@@ -78,19 +78,19 @@ with item_add_chain_metrics as (select
       cross_platform_item_add,
       chain_last_screen_open_time,
       chain_last_screen_open_name,
-      chain_item_create_time::date as item_create_date,
-      chain_start_time::date as event_date,
-      chain_start_time::date as item_add_start_date,
+      cast(chain_item_create_time as date) as item_create_date,
+      cast(chain_start_time as date) as event_date,
+      cast(chain_start_time as date) as item_add_start_date,
       business_platform as platform_id,
       datediff('second', chain_start_time, chain_item_create_time) as duration_sec,
       1 as observation_value,
-      nvl(lc.vertical_id, cm.vertical_id)                       as vertical_id,
-      nvl(lc.logical_category_id, cm.logical_category_id)       as logical_category_id
+      coalesce(lc.vertical_id, cm.vertical_id)                       as vertical_id,
+      coalesce(lc.logical_category_id, cm.logical_category_id)       as logical_category_id
 from dma.item_add_chain_metrics t
 left join infomodel.current_infmquery_category ic on ic.infmquery_id = t.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join DMA.current_microcategories cm on cm.microcat_id = t.microcat_id
-where user_id is not null and chain_start_time::date between :first_date and :last_date)
+where user_id is not null and cast(chain_start_time as date) between :first_date and :last_date)
 select 
       eventchain_id,
       cookie_id,
@@ -179,7 +179,7 @@ select
       observation_value,
       vertical_id,
       t.logical_category_id,
-      nvl(usm.user_segment, ls.segment) as user_segment_market
+      coalesce(usm.user_segment, ls.segment) as user_segment_market
 from item_add_chain_metrics t
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = t.logical_category_id and ls.is_default
 left join /*+distrib(l,a)*/ dma.user_segment_market usm on t.user_id = usm.user_id and t.logical_category_id = usm.logical_category_id

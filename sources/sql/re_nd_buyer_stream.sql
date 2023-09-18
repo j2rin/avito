@@ -17,7 +17,7 @@ select
     ss.catalog_jk_attribute,
     ss.catalog_jk_session,
     ss.objects_count, --items
-    nvl2(ss.item_id, 1, 0) item_id_not_null,
+    case when ss.item_id is not null then 1 else 0 end item_id_not_null,
     -- Dimensions -----------------------------------------------------------------------------------------------------
     cm.vertical_id                                               as vertical_id,
     cm.logical_category_id                                       as logical_category_id,
@@ -27,8 +27,8 @@ select
     cm.Param2_microcat_id                                        as param2_id,
     cm.Param3_microcat_id                                        as param3_id,
     cm.Param4_microcat_id                                        as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id)    as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                    as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                          as location_group_id,
     cl.City_Population_Group                                     as population_group,
     cl.Logical_Level                                             as location_level_id,
@@ -37,4 +37,4 @@ select
 from DMA.re_nd_buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = ss.microcat_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = ss.location_id
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

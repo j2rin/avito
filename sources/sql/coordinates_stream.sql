@@ -22,4 +22,4 @@ select
     cl.Logical_Level                                          as location_level_id
 from dma.coordinates_stream                                 cs
 LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id = cs.city_id
-where cs.event_date::date between :first_date and :last_date
+where cast(cs.event_date as date) between :first_date and :last_date

@@ -11,4 +11,4 @@ select /*+syntactic_join*/
 	   sessions_with_suggest_click_and_contact,
 	   suggest_user_query_len
 from DMA.o_buyer_suggest ss
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

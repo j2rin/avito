@@ -11,4 +11,4 @@ select
     map5,
     map10
 from dma.first_position_click
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

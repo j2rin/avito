@@ -30,6 +30,6 @@ select
     cm.Param3_microcat_id                                      as param3_id,
     cm.Param4_microcat_id                                      as param4_id
 from DMA.clickstream_video cs
-left join DMA.current_microcategories cm using (microcat_id)
+left join DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
 left join cond on (condition = value)
-where cs.event_date::date between :first_date and :last_date
+where cast(cs.event_date as date) between :first_date and :last_date

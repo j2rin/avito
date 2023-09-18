@@ -17,7 +17,7 @@ smartphone_buyout_screens as (
        , max (case when eid = 6769 and buyout_screen_type = 'final' then true else false end) as smartphone_buyout_request_completed_cd
        , max (case when eid = 6519 or (eid = 6703 and banner_type = 'invitation') then event_date end) as smartphone_buyout_seen_invitation_date
     from DMA.smartphone_buyout_screens as sbs
-    where event_date::date between :first_date and :last_date
+    where cast(event_date as date) between :first_date and :last_date
     group by 1,2
 )
 select
@@ -46,31 +46,31 @@ select
     t.close_status_id,
     t.close_reason_id,
     t.lf_amount_net,
-    t.start_time::date                                       as start_date,
-    t.last_activation_time::date                             as last_activation_date,
+    cast(t.start_time as date)                                       as start_date,
+    cast(t.last_activation_time as date)                             as last_activation_date,
     null as user_segment,
     -- Dimensions -----------------------------------------------------------------------------------------------------
-    nvl(lc.vertical_id, cm.vertical_id)                       as vertical_id,
-    nvl(lc.logical_category_id, cm.logical_category_id)       as logical_category_id,
+    coalesce(lc.vertical_id, cm.vertical_id)                       as vertical_id,
+    coalesce(lc.logical_category_id, cm.logical_category_id)       as logical_category_id,
     cm.category_id,
     cm.subcategory_id,
     cm.Param1_microcat_id                                     as param1_id,
     cm.Param2_microcat_id                                     as param2_id,
     cm.Param3_microcat_id                                     as param3_id,
     cm.Param4_microcat_id                                     as param4_id,
-    decode(cl.level, 3, cl.ParentLocation_id, cl.Location_id) as region_id,
-    decode(cl.level, 3, cl.Location_id, null)                 as city_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
     cl.LocationGroup_id                                       as location_group_id,
     cl.City_Population_Group                                  as population_group,
     cl.Logical_Level                                          as location_level_id,
-    nvl(acd.is_asd, False)                                    as is_asd,
+    coalesce(acd.is_asd, False)                                    as is_asd,
     acd.user_group_id                                         as asd_user_group_id,
-    nvl(usm.user_segment, ls.segment)                         as user_segment_market,
+    coalesce(usm.user_segment, ls.segment)                         as user_segment_market,
     t.location_id,
     t.microcat_id,
     lc.logical_param1_id,
     lc.logical_param2_id,
-    ifnull(t.condition_id, 0)                                as condition_id,
+    coalesce(t.condition_id, 0)                                as condition_id,
     t.is_delivery_active,
     smartphone_buyout_seen_invitation_cd,
     smartphone_buyout_entered_flow_cd,
@@ -84,16 +84,16 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where infmquery_id in (
         select distinct infmquery_id
         from dma.o_seller_item_event
-        where event_date::date between :first_date and :last_date
+        where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
     )
 ) ic
     on ic.infmquery_id = t.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = t.microcat_id
-left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = nvl(lc.logical_category_id, cm.logical_category_id) and ls.is_default
+left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = coalesce(lc.logical_category_id, cm.logical_category_id) and ls.is_default
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = t.location_id
-left join /*+distrib(l,a)*/ dma.user_segment_market usm on t.user_id = usm.user_id and nvl(lc.logical_category_id, cm.logical_category_id) = usm.logical_category_id
+left join /*+distrib(l,a)*/ dma.user_segment_market usm on t.user_id = usm.user_id and coalesce(lc.logical_category_id, cm.logical_category_id) = usm.logical_category_id
                                                                 and t.event_date between usm.converting_date and usm.max_valid_date
 left join /*+jtype(h),distrib(l,a)*/ am_client_day acd on t.user_id = acd.user_id and t.event_date between acd.active_from_date and acd.active_to_date
 left join /*+jtype(h),distrib(l,a)*/ smartphone_buyout_screens as sbs on t.item_id = sbs.item_id and t.event_date = sbs.event_date

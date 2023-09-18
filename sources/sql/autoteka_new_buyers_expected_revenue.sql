@@ -10,11 +10,11 @@ das as (
         row_number() over (partition by autotekaorder_id order by event_date desc) as rn_order,
         row_number() over (partition by autotekauser_Id order by event_date)       as rn_user
     from dma.autoteka_stream das
-    where das.user_created_at::date >= getdate() + interval '-395 day'
-        and das.user_created_at::date <= getdate() + interval '-365 day'
+    where cast(das.user_created_at as date) >= now() + interval '-395' day
+        and cast(das.user_created_at as date) <= now() + interval '-365' day
         and autotekauser_id is not null
         and funnel_stage_id = 4
-        and das.event_date::date between :first_date and :last_date
+        and cast(das.event_date as date) between :first_date and :last_date
 ),
 reports_365_grouped as (
     select
@@ -40,7 +40,7 @@ report_price as (
     select sum(amount) / sum(reports_count) as avg_report_price
     from dma.autoteka_stream
     where funnel_stage_id = 4
-        and event_date::date between :first_date and :last_date
+        and cast(event_date as date) between :first_date and :last_date
 ),
 new_users as (
     select
@@ -55,7 +55,7 @@ new_users as (
         row_number() over (partition by autotekauser_id order by event_date) as rn
     from dma.autoteka_stream
     where is_new_user
-        and event_date::date between :first_date and :last_date
+        and cast(event_date as date) between :first_date and :last_date
 ),
 revenue as (
     select
@@ -66,9 +66,9 @@ revenue as (
         user_created_at,
         row_number() over (partition by autotekaorder_id order by das.event_date desc) as rn
     from dma.autoteka_stream das
-    join new_users nu using (autotekauser_id)
+    join new_users nu on nu.autotekauser_id = das.autotekauser_id
     where funnel_stage_id = 4
-        and das.event_date::date between :first_date and :last_date
+        and cast(das.event_date as date) between :first_date and :last_date
 ),
 revenue_grouped as (
     select
@@ -100,5 +100,5 @@ select
     (select avg_report_price from report_price limit 1) -
     coalesce(rev.amount, 0)                                                 as revenue_next_365_days_left
 from (select * from new_users where rn = 1) nu
-left join reports_365_grouped r using (searchtype, autoteka_platform_id)
+left join reports_365_grouped r on r.searchtype = nu.searchtype and r.autoteka_platform_id = nu.autoteka_platform_id
 left join revenue_grouped rev on rev.autotekauser_id = nu.autotekauser_id

@@ -36,7 +36,7 @@ select
     utm_content,
     utm_term
 from dma.autoteka_stream
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date
 union all
 select
     track_id,
@@ -76,4 +76,4 @@ select
     null utm_content,
     null utm_term
 from dma.autoteka_on_avito_stream_and_payments
-where event_date::date between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date

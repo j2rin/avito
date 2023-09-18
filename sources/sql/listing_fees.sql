@@ -2,7 +2,7 @@ with
 lf_users as (
     select distinct user_id
     from dma.o_lf_metrics
-    where event_date::date between :first_date::date and :last_date::date
+    where cast(event_date as date) between :first_date and :last_date
         and user_id is not null
 )
 select /*+direct, syn_join*/
@@ -15,21 +15,21 @@ select /*+direct, syn_join*/
 	, subscriptionlog_id
     , is_cpa
     , tariff_source
-    , nvl(asd.is_asd, False) as is_asd
-    , nvl(asd.asd_user_group_id, 8383) as asd_user_group_id
-    , nvl(usm.user_segment, ls.segment) as user_segment_market
+    , coalesce(asd.is_asd, False) as is_asd
+    , coalesce(asd.asd_user_group_id, 8383) as asd_user_group_id
+    , coalesce(usm.user_segment, ls.segment) as user_segment_market
 	, avito_version
     , lc.vertical
     , lc.vertical_id
     , lc.logical_category
     , lc.logical_category_id
-    , decode(cl.level, 3, cl.parentlocation_id, cl.location_id) as region_id
+    , case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
+    , case cl.level when 3 then cl.Location_id end                           as city_id
     , olf.microcat_id
     , olf.location_id
     , olf.lf_product_level as tariff_subtype
     , case when olf.lf_product in ('subscription 1.0', 'subscription 2.0') then 'subscription' else olf.lf_product end as tariff_type
     , cl.locationgroup_id as location_group_id
-    , decode(cl.level, 3, cl.location_id, null) as city_id
     , cl.city_population_group as population_group
     , cl.logical_level as location_level_id
     , lc.logical_param1_id
@@ -52,7 +52,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where infmquery_id in (
         select distinct infmquery_id
         from dma.o_lf_metrics
-        where event_date::date between :first_date and :last_date
+        where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
     )
 ) ic
@@ -83,11 +83,11 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from DMA.user_segment_market
         where true
             and user_id in (select user_id from lf_users)
-            and converting_date <= :last_date::date
+            and converting_date <= :last_date
     ) usm
-    join dict.calendar c on c.event_date between :first_date::date and :last_date::date
+    join dict.calendar c on c.event_date between :first_date and :last_date
     where c.event_date >= usm.from_date and c.event_date < usm.to_date
-        and usm.to_date >= :first_date::date
+        and usm.to_date >= :first_date
 ) usm
     on  olf.user_id = usm.user_id
     and olf.event_date = usm.event_date
@@ -105,10 +105,10 @@ left join /*+distrib(l,a)*/ (
         asd.active_to_date
     from DMA.am_client_day_versioned asd
     where true
-        and asd.active_from_date <= :last_date::date
-        and asd.active_to_date >= :first_date::date
+        and asd.active_from_date <= :last_date
+        and asd.active_to_date >= :first_date
         and asd.user_id in (select user_id from lf_users)
 ) asd
     on olf.user_id = asd.user_id
-    and olf.event_date::date between asd.active_from_date and asd.active_to_date
+    and cast(olf.event_date as date) between asd.active_from_date and asd.active_to_date
 where olf.event_date between :first_date and :last_date
