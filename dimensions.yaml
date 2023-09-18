@@ -3,8 +3,6 @@
 # is_bool — булев дименшен
 # parent — слаг дименшена-родителя
 # alias — имя дименшена, если не совпадает с ключом. Например, ab_platform -> platform
-# m42_has_any — для дименшена нужно считать значение Any. Дефолт — true
-# m42_cartesian_default — дименшен декартово перемножается со всеми другими дименшенами m42
 
 
 # Информодельные иерархии ----------------------------------------------------------------------------------------------
@@ -58,7 +56,7 @@ is_intercity:             {level: event,       is_bool: true}
 is_cookie_new:            {level: participant, is_bool: true}
 is_user_new:              {level: participant, is_bool: true}
 is_logged_in:             {level: participant, is_bool: true}
-is_human:                 {level: participant, is_bool: true, m42_has_any: false, m42_cartesian_default: true}
+is_human:                 {level: participant, is_bool: true}
 is_delivery_paid_new:     {level: event,       is_bool: true}
 is_delivery_accepted_new: {level: event,       is_bool: true}
 is_pro:                   {level: event, is_bool: true}
@@ -74,7 +72,7 @@ b2c_wo_dbs:               {level: event, is_bool: true}
 c2c_return_within_14_days:  {level: event, is_bool: true}
 
 # event-level ----------------------------------------------------------------------------------------------------------
-platform:                 {level: event, has_id: true, m42_cartesian_default: true}
+platform:                 {level: event, has_id: true}
 asd_user_group:           {level: event, has_id: true}
 condition:                {level: event, has_id: true}
 phone_region:             {level: event, has_id: true}
@@ -140,9 +138,8 @@ traffic_source:           {level: marketing_traffic_source, has_id: true, parent
 re_target_segment:        {level: re_target_segment}
 
 # Специфичные для M42 --------------------------------------------------------------------------------------------------
-#m42_platform:             {level: participant, has_id: true,                alias: platform, m42_cartesian_default: true}
-is_participant_new:       {level: participant,               is_bool: true,                  m42_cartesian_default: true, m42_has_any: false}
-metric_date:              {level: participant,                                               m42_cartesian_default: true, m42_has_any: false}
+is_participant_new:       {level: participant, is_bool: true}
+metric_date:              {level: participant}
 
 # Специфичные для AB ---------------------------------------------------------------------------------------------------
 ab_platform:                 {level: ab_participant,                has_id: true, alias: platform}
