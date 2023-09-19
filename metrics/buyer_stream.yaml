@@ -78,6 +78,7 @@ definitions:
     - &is_iv        { eid: 301 }
     - &is_iv_client { eid: 2649 }
     - &is_btc       { eid: [401, 303, 856, 857, 2013, 2015, 3005, 2581, 2732, 2654, 4066, 2483, 4035, 3461, 4600, 4675, 4198, 4813, 308, 451, 6608, 6154, 5942, 8109] }
+    - &is_btc_2_0  { eid: [308, 451, 2472, 2483, 2610, 2650, 2654, 2732, 3187, 3461, 4198, 4219, 5942, 6154, 6607, 8109] }
 
     - &is_ph_realdev        { eid: *eid_ph_realdev }
     - &is_back_call_item    { eid: 4198, item.isnull: false }
@@ -360,6 +361,10 @@ metric.counter:
     bt_clicks: { filter: [*is_btc] }
     bt_clicks_new: { filter: [*is_btc, *is_new_btc] }
     bt_clicks_returned: { filter: [*is_btc, *is_old_btc] }
+    btc_2_0: { filter: [*is_btc_2_0] }
+    btc_2_0_s: { filter: [*is_btc_2_0, *x_is_search] }
+    btc_2_0_i2i: { filter: [*is_btc_2_0, *x_is_i2i] }
+    btc_2_0_u2i: { filter: [*is_btc_2_0, *x_is_u2i] }
     btc_part_qual_exists: { filter: [*part_qual_exists, *is_btc] }
     btc_part_qual_compab: { filter: [*part_qual_compab, *is_btc] }
     btc_part_qual_unknown: { filter: [*part_qual_unknown, *is_btc] }
@@ -2406,6 +2411,10 @@ metric.uniq:
     seller_buyer_pair_with_iv_s: { counter: cnt_iv_s_item_attr, key: [ item_user_id ] }
     seller_buyer_pair_with_iv_s_q: { counter: cnt_s_query_iv, key: [ item_user_id ] }
     seller_buyer_pair_with_iv_s_noq: { counter: cnt_s_noquery_iv, key: [ item_user_id ] }
+    user_btc_2_0: { counter: btc_2_0, key: [cookie] }
+    user_btc_2_0_s: { counter: btc_2_0_s, key: [cookie] }
+    user_btc_2_0_i2i: { counter: btc_2_0_i2i, key: [cookie] }
+    user_btc_2_0_u2i: { counter: btc_2_0_u2i, key: [cookie] }
     user_btc_developer: { counter: btc_developer, key: [cookie] }
     user_btc_from_map_total: { counter: cnt_btc_from_map_s_area, key: [cookie] }
     user_btc_new_from_map_total: { counter: cnt_btc_new_from_map_s_area, key: [cookie] }
