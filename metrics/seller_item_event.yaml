@@ -187,26 +187,30 @@ metric.uniq:
   users_lf:                                {counter: lf_amount_net,                   key: [user]}
   users_lf_start_date:                     {counter: lf_amount_net_start_date,        key: [user]}
   users_item_moderated:                    {counter: items_moderations,               key: [user]}
-  users_item_manual_moderated:             {counter: items_manual_moderations,          key: [user]}
+  users_item_manual_moderated:             {counter: items_manual_moderations,        key: [user]}
+  items_started_dedup:                     {counter: items_started,                   key: [user_microcat_price]}
+  items_started_net_dedup:                 {counter: items_started_net,               key: [user_microcat_price]}
 
 metric.ratio:
   item_edits_address_per_item:             {num: item_edits_address,              den: items_edited_address}
   item_edits_per_item_edit_starts:         {num: item_edits,                      den: item_edit_starts}
   item_edits_per_item_edit_starts_by_src:  {num: item_edits_by_src,               den: item_edit_starts_by_src}
-  item_edits_per_items_started_net_start_date: {num: item_edits_start_date,           den: cnt_items_started_net}
-  item_reactivated_net_per_items_reactivated: {num: items_reactivated_net,           den: items_reactivated}
+  item_edits_per_items_started_net_start_date: {num: item_edits_start_date,       den: cnt_items_started_net}
+  item_reactivated_net_per_items_reactivated: {num: items_reactivated_net,        den: items_reactivated}
   item_started_net_per_items_started:      {num: items_started_net,               den: items_started}
   items_closed_by_user_per_items_started_net_start_date: {num: cnt_items_closed_by_user,        den: cnt_items_started_net}
   items_edited_address_per_items_edited:   {num: items_edited_address,            den: items_edited}
   items_edited_per_items_edit_started:     {num: items_edited,                    den: items_edit_started}
-  items_edited_per_items_edit_started_by_src: {num: items_edited_by_src,             den: items_edit_started_by_src}
-  items_sold_onavito_per_items_reactivated_net: {num: items_sold_onavito,              den: items_reactivated_net}
+  items_edited_per_items_edit_started_by_src: {num: items_edited_by_src,          den: items_edit_started_by_src}
+  items_sold_onavito_per_items_reactivated_net: {num: items_sold_onavito,         den: items_reactivated_net}
   items_sold_onavito_per_items_started_net_start_date: {num: items_sold_onavito_start_date,   den: cnt_items_started_net}
   sellers_edited_address_per_editor:       {num: sellers_edited_address,          den: users_item_edit}
-  items_dead_per_started:                  {num: items_started_dead,          den: items_started}
+  items_dead_per_started:                  {num: items_started_dead,              den: items_started}
   items_manual_moder_per_moder:            {num: items_manual_moderated,          den: items_moderated}
   items_with_smartphone_buyout_requests_per_seen_invitation:     {num: items_with_smartphone_buyout_request_completed,   den: items_with_smartphone_buyout_seen_bottomsheet}
   items_with_smartphone_buyout_entered_flow_per_seen_invitation: {num: items_with_smartphone_buyout_entered_flow,        den: items_with_smartphone_buyout_seen_bottomsheet}
   items_with_smartphone_buyout_requests_per_seen_request_screen: {num: items_with_smartphone_buyout_request_completed,   den: items_with_smartphone_buyout_request_screen}
   items_with_smartphone_buyout_requests_per_entered_flow: {num: items_with_smartphone_buyout_request_completed,  den: items_with_smartphone_buyout_entered_flow}
   items_with_smartphone_buyout_request_screen_per_entered_flow: {num: items_with_smartphone_buyout_request_screen, den: items_with_smartphone_buyout_entered_flow}
+  items_started_dedup_ratio:               {num: items_started_dedup,             den: items_started}
+  items_started_net_dedup_ratio:           {num: items_started_net_dedup,         den: items_started_net}
