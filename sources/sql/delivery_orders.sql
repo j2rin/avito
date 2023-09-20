@@ -249,6 +249,22 @@ threefirst_subsidies_saved, exmail_subsidies_saved, promocode_subsidies_saved
     from dma.current_delivery_subsidies
         where deliveryorder_id in (select deliveryorder_id from pre)
     order by 1
+),
+pp as (
+    select distinct purchase_id, coalesce(marketplace_purchase_ext, purchase_ext) as purchase_ext
+    from dma.payment_page
+),
+payment_flows as (
+    select billing_order_ext,
+        case
+            when max(payment_service='installments-payment') then 'installment'
+            when max(payment_service='payments-integration-pim') then 'cod'
+            else 'online'
+        end as payment_flow
+    from dma.current_billing_order_item cboi
+    where seller_id != 0
+    group by 1
+    order by 1
 )
 select /*+syntactic_join*/
     pre.*,
@@ -285,7 +301,8 @@ select /*+syntactic_join*/
     exmail_subsidies_saved/items_qty as exmail_subsidies_saved,
     promocode_subsidies_saved/items_qty as promocode_subsidies_saved,
     ------ привязки в контуре авито
-    coalesce(has_avito_bindings, false) as has_avito_bindings
+    coalesce(has_avito_bindings, false) as has_avito_bindings,
+    payment_flow
 from pre
 left join /*+distrib(l,a)*/ usm
     on  pre.seller_id = usm.user_id
@@ -295,3 +312,5 @@ left join /*+distrib(l,a)*/ dict.segmentation_ranks as ls on ls.logical_category
 left join /*+distrib(l,a)*/ cdd3 on pre.deliveryorder_id = cdd3.deliveryorder_id
 left join /*+distrib(l,a)*/ cds on pre.deliveryorder_id = cds.deliveryorder_id
 left join /*+distrib(l,a)*/ ub on pre.purchase_id = ub.purchase_id
+left join /*+distrib(l,a)*/  pp on pre.purchase_id = pp.purchase_id
+left join /*+distrib(l,a)*/ payment_flows pf on purchase_ext = billing_order_ext
