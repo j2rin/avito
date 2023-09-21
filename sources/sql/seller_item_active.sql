@@ -82,7 +82,7 @@ select /*+syntactic_join*/
     ss.is_item_cpa,
     ss.is_user_cpa,
     ss.cpaaction_type,
-    ir.reputation_class,
+    DECODE(ss.reputation_class_id, 1, 'low', 2, 'medium', 3, 'high') as reputation_class,
     hash(
         round(exp(round(ln(ss.price), 1))),
         ss.user_id,
@@ -209,36 +209,6 @@ left join /*+distrib(l,r)*/ (
     on sic.user_id = ss.user_id
     and sic.item_id = ss.item_id
     and sic.event_date = ss.event_date
-
-left join /*+distrib(l,r)*/ (
-    select
-        r.user_id, r.item_id, c.event_date, reputation_class
-    from (
-        select
-            user_id,
-            item_id,
-            reputation_class,
-            from_date,
-            lead(from_date, 1, '20990101') over(partition by item_id order by from_date) as to_date
-        from (
-            select
-                user_id,
-                item_id,
-                cast(event_timestamp as date) as from_date,
-                reputation_class,
-                row_number() over(partition by user_id, item_id, cast(event_timestamp as date) order by event_timestamp desc) as rn
-            from DMA.click_stream_item_reputation
-            where cast(event_timestamp as date) <= :last_date
-        ) r
-        where rn = 1
-    ) r
-    join dict.calendar c on c.event_date between :first_date and :last_date
-    where c.event_date >= r.from_date and c.event_date < r.to_date
-        and r.to_date >= :first_date
-) ir
-    on  ss.user_id = ir.user_id
-    and ss.item_id = ir.item_id
-    and ss.event_date = ir.event_date
 
 where (ss.is_user_test is null or ss.is_user_test is false)
     and ss.event_date between :first_date and :last_date
