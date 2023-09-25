@@ -3519,5 +3519,21 @@ buyout_events:
   primary_subject: user
   dtm: event_date
   segm: user_id
-  
+
+  premium_fashion:
+    metric_configs: [ premium_fashion ]
+    database: vertica
+    sql: premium_fashion
+    column_map:
+      user: user_id
+      item: item_id
+      cookie: cookie_id
+    dimensions:
+      [
+        platform
+      ]
+    participant: { visitor: cookie_id, user: user_id }
+    primary_subject: user
+    dtm: event_date
+    segm: user_id
   
