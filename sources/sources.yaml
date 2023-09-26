@@ -3537,3 +3537,20 @@ premium_fashion:
   dtm: event_date
   segm: user_id
   
+  
+tab_bar_stream:
+  metric_configs: [ tab_bar_stream ]
+  database: vertica
+  sql: tab_bar_stream
+  column_map:
+    user: user_id
+    cookie: cookie_id
+  dimensions:
+    [
+      platform
+    ]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+  
+  
