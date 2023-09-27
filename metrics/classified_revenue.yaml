@@ -78,6 +78,9 @@ metric.counter:
   cpa_advance_refunded_amount:                        {obs: [transaction_amount],          filter: [is_revenue: false, product_type: 'cpa', transaction_subtype: 'cpaAdvanceRefunded']} 
   cpa_advance_refunded_amount_clicks:                 {obs: [transaction_amount],          filter: [is_revenue: false, product_type: 'cpa', transaction_subtype: 'cpaAdvanceRefunded', cpaaction_type: 5]}
   cpa_advance_refunded_amount_contacts:               {obs: [transaction_amount],          filter: [is_revenue: false, product_type: 'cpa', transaction_subtype: 'cpaAdvanceRefunded', cpaaction_type: 6]}
+  cpa_advance_transactions:                           {obs: [transaction_count],           filter: [is_revenue: false, product_type: 'cpa', transaction_subtype: 'cpaAdvanced']} 
+  cpa_advance_transactions_clicks:                    {obs: [transaction_count],           filter: [is_revenue: false, product_type: 'cpa', transaction_subtype: 'cpaAdvanced', cpaaction_type: 5]}
+  cpa_advance_transactions_contacts:                  {obs: [transaction_count],           filter: [is_revenue: false, product_type: 'cpa', transaction_subtype: 'cpaAdvanced', cpaaction_type: 6]}
   cpa_action_count:                                   {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa']} 
   cpa_action_count_calls:                             {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'calls']} 
   cpa_action_count_calendars_leads:                   {obs: [cpa_target_action_count],     filter: [*revenue, product_type: 'cpa', product_subtype: 'calendars_leads']} 
@@ -246,3 +249,6 @@ metric.ratio:
   cpa_advance_amount_per_user:                {num: cpa_advance_amount,                     den: cpa_advance_users}
   cpa_advance_amount_per_user_clicks:         {num: cpa_advance_amount_clicks,              den: cpa_advance_users_clicks}
   cpa_advance_amount_per_user_contacts:       {num: cpa_advance_amount_contacts,            den: cpa_advance_users_contacts}
+  cpa_advance_transactions_per_user:          {num: cpa_advance_transactions,               den: cpa_advance_users}
+  cpa_advance_transactions_per_user_clicks:   {num: cpa_advance_transactions_clicks,        den: cpa_advance_users_clicks}
+  cpa_advance_transactions_per_user_contacts: {num: cpa_advance_transactions_contacts,      den: cpa_advance_users_contacts}
