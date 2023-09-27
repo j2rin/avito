@@ -2,15 +2,16 @@
 # has_id — в источниках дименшен представлен в виде id, столбец имеет имя <slug>_id
 # is_bool — булев дименшен
 # parent — слаг дименшена-родителя
-# alias — имя дименшена, если не совпадает с ключом. Например, ab_platform -> platform
+# description — краткое описание дименшена
+# slug — краткое описание дименшена
 
 
 # Информодельные иерархии ----------------------------------------------------------------------------------------------
 microcat:                 {level: event, has_id: true}
-vertical:                 {level: event, has_id: true}
-logical_category:         {level: event, has_id: true, parent: vertical}
-category:                 {level: event, has_id: true}
-subcategory:              {level: event, has_id: true, parent: category}
+vertical:                 {level: event, has_id: true, description: "Вертикаль"}
+logical_category:         {level: event, has_id: true, parent: vertical, slug: logcat, description: "Логическая категория"}
+category:                 {level: event, has_id: true, slug: cat, description: "Категория"}
+subcategory:              {level: event, has_id: true, parent: category, slug: subcat, description: "Подкатегория"}
 param1:                   {level: event, has_id: true, parent: subcategory}
 param2:                   {level: event, has_id: true, parent: param1}
 param3:                   {level: event, has_id: true, parent: param2}
@@ -19,28 +20,28 @@ logical_param1:           {level: event, has_id: true, parent: logical_category}
 logical_param2:           {level: event, has_id: true, parent: logical_param1}
 
 location:                 {level: event, has_id: true}
-region:                   {level: event, has_id: true}
+region:                   {level: event, has_id: true, description: "Регион"}
 city:                     {level: event, has_id: true, parent: region}
-location_group:           {level: event, has_id: true}
-location_level:           {level: event, has_id: true}
-population_group:         {level: event}
+location_group:           {level: event, has_id: true, slug: loc_group}
+location_level:           {level: event, has_id: true, slug: loc_level}
+population_group:         {level: event, slug: pop_group}
 
 x_microcat:               {level: event, has_id: true}
-x_vertical:               {level: event, has_id: true}
-x_logical_category:       {level: event, has_id: true, parent: x_vertical}
-x_category:               {level: event, has_id: true}
-x_subcategory:            {level: event, has_id: true, parent: x_category}
-x_param1:                 {level: event, has_id: true, parent: x_subcategory}
-x_param2:                 {level: event, has_id: true, parent: x_param1}
-x_param3:                 {level: event, has_id: true, parent: x_param3}
-x_param4:                 {level: event, has_id: true, parent: x_param4}
+x_vertical:               {level: event, has_id: true, slug: vertical_x}
+x_logical_category:       {level: event, has_id: true, parent: x_vertical, slug: logcat_x}
+x_category:               {level: event, has_id: true, slug: cat_x}
+x_subcategory:            {level: event, has_id: true, parent: x_category, slug: subcat_x}
+x_param1:                 {level: event, has_id: true, parent: x_subcategory, slug: param1_x}
+x_param2:                 {level: event, has_id: true, parent: x_param1, slug: param2_x}
+x_param3:                 {level: event, has_id: true, parent: x_param3, slug: param3_x}
+x_param4:                 {level: event, has_id: true, parent: x_param4, slug: param4_x}
 
 x_location:               {level: event, has_id: true}
-x_region:                 {level: event, has_id: true}
-x_city:                   {level: event, has_id: true, parent: x_region}
-x_location_group:         {level: event, has_id: true}
-x_location_level:         {level: event, has_id: true}
-x_population_group:       {level: event}
+x_region:                 {level: event, has_id: true, slug: region_x}
+x_city:                   {level: event, has_id: true, parent: x_region, slug: city_x}
+x_location_group:         {level: event, has_id: true, slug: location_group_x}
+x_location_level:         {level: event, has_id: true, slug: location_level_x}
+x_population_group:       {level: event, slug: pop_group_x}
 
 buyer_location:               {level: event, has_id: true}
 buyer_region:                 {level: event, has_id: true}
@@ -51,11 +52,11 @@ buyer_population_group:       {level: event}
 
 # Булевы дименшены -----------------------------------------------------------------------------------------------------
 is_asd:                   {level: event,       is_bool: true}
-is_core_content:          {level: event,       is_bool: true}
+is_core_content:          {level: event,       is_bool: true, slug: is_core}
 is_intercity:             {level: event,       is_bool: true}
-is_cookie_new:            {level: participant, is_bool: true}
+is_cookie_new:            {level: participant, is_bool: true, slug: new, description: "Новая кука"}
 is_user_new:              {level: participant, is_bool: true}
-is_logged_in:             {level: participant, is_bool: true}
+is_logged_in:             {level: participant, is_bool: true, slug: auth, description: "Пользователь залогинен"}
 is_human:                 {level: participant, is_bool: true}
 is_delivery_paid_new:     {level: event,       is_bool: true}
 is_delivery_accepted_new: {level: event,       is_bool: true}
@@ -72,25 +73,25 @@ b2c_wo_dbs:               {level: event, is_bool: true}
 c2c_return_within_14_days:  {level: event, is_bool: true}
 
 # event-level ----------------------------------------------------------------------------------------------------------
-platform:                 {level: event, has_id: true}
+platform:                 {level: event, has_id: true, description: "Платформа"}
 asd_user_group:           {level: event, has_id: true}
 condition:                {level: event, has_id: true}
 phone_region:             {level: event, has_id: true}
 phone_city:               {level: event, has_id: true}
 phone_location_group:     {level: event, has_id: true}
 phone_location_level:     {level: event, has_id: true}
-rec_engine:               {level: event, has_id: true}
+rec_engine:               {level: event, has_id: true, slug: engine}
 user_segment_market:      {level: event}
-user_segment:             {level: event}
+user_segment:             {level: event, slug: iseg, description: "Тип пользователя рассчитываемый на каждый день"}
 price_group:              {level: event}
 appversion:               {level: event}
-content_type:             {level: event}
+content_type:             {level: event, slug: content, description: "Тип контента"}
 from_page:                {level: event}
 logical_region:           {level: event}
-network_type:             {level: event}
-page_from:                {level: event}
+network_type:             {level: event, slug: network, description: "Тип сети"}
+page_from:                {level: event, slug: vas, description: "Страница размещеня сценария покупки VAS-услуги"}
 phone_population_group:   {level: event}
-screen_name:              {level: event}
+screen_name:              {level: event, slug: screen, description: "Имя экрана"}
 sphinx_context:           {level: event}
 stage_name:               {level: event}
 tariff_subtype:           {level: event}
@@ -109,19 +110,19 @@ chat_role:                {level: event}
 payment_flow:             {level: event}
 
 # participant platform (useragent) ---------------------------------------------
-app_version:              {level: participant_platform}
+app_version:              {level: participant_platform, slug: app_ver}
 vendor:                   {level: participant_platform}
-type_device:              {level: participant_platform}
-os_version:               {level: participant_platform}
-os_name:                  {level: participant_platform}
+type_device:              {level: participant_platform, slug: device}
+os_version:               {level: participant_platform, slug: os_ver}
+os_name:                  {level: participant_platform, slug: os}
 model:                    {level: participant_platform}
 browser:                  {level: participant_platform}
-app_category:             {level: participant_platform}
+app_category:             {level: participant_platform, slug: app_c}
 app:                      {level: participant_platform}
-display_size:             {level: participant_platform}
-display_X:                {level: participant_platform}
-display_Y:                {level: participant_platform}
-browser_version:          {level: participant_platform}
+display_size:             {level: participant_platform, slug: disp_s}
+display_X:                {level: participant_platform, slug: disp_x}
+display_Y:                {level: participant_platform, slug: disp_y}
+browser_version:          {level: participant_platform, slug: browser_ver}
 user_experience:          {level: participant_platform}
 
 # other ------------------------------------------------------------------------
@@ -135,7 +136,7 @@ quantity_iv:              {level: buyer_segment}
 buyer_order_group:        {level: buyer_orders}
 traffic_source_paid_free: {level: marketing_traffic_source, has_id: true}
 traffic_source_agg:       {level: marketing_traffic_source, has_id: true, parent: traffic_source_paid_free}
-traffic_source:           {level: marketing_traffic_source, has_id: true, parent: traffic_source_agg}
+traffic_source:           {level: marketing_traffic_source, has_id: true, parent: traffic_source_agg, slug: traffic, description: "Верхнеуровневый источник куки"}
 re_target_segment:        {level: re_target_segment}
 
 # Специфичные для M42 --------------------------------------------------------------------------------------------------
@@ -143,12 +144,12 @@ is_participant_new:       {level: participant, is_bool: true}
 metric_date:              {level: participant}
 
 # Специфичные для AB ---------------------------------------------------------------------------------------------------
-ab_platform:                 {level: ab_participant,                has_id: true, alias: platform}
-ab_is_logged_in:             {level: ab_participant, is_bool: true,               alias: is_logged_in}
-ab_is_cookie_new:            {level: ab_participant, is_bool: true,               alias: is_cookie_new}
-ab_app_version:              {level: ab_participant,                              alias: app_version}
-initial_user_segment:        {level: ab_participant}
-initial_user_experience:     {level: ab_participant}
+ab_platform:                 {level: ab_participant,                has_id: true}
+ab_is_logged_in:             {level: ab_participant, is_bool: true}
+ab_is_cookie_new:            {level: ab_participant, is_bool: true}
+ab_app_version:              {level: ab_participant}
+initial_user_segment:        {level: ab_participant, slug: useg, description: "Тип пользователя на момент старта АБ-теста"}
+initial_user_experience:     {level: ab_participant, slug: exp, description: "Кол-во успешно размещенных объявлений на момент старта АБ-теста"}
 user_location_level:         {level: users_home_location_segment, has_id: true}
 user_location_group:         {level: users_home_location_segment, has_id: true}
 user_population_group:       {level: users_home_location_segment}
@@ -158,3 +159,14 @@ user_city:                   {level: users_home_location_segment, has_id: true}
 # Дименшены внутренних инструментов
 ldap_user:                   {level: event, has_id: false, is_bool: false}
 picked_metric:               {level: event, has_id: true, is_bool: false}
+
+engine_recommendation:  {level: event, has_id: false, is_bool: false, slug: engine, description: "Наименование способа рекомендации Item"} # todo add sql
+is_first_page:          {level: event, has_id: false, is_bool: true, slug: is_1p, description: "Первая страница экрана"}
+item_user_segment:      {level: event, has_id: false, is_bool: false, slug: iseg}
+x_rec_engine:           {level: event, has_id: true, slug: engine_x} # todo add sql
+x_logical_param1:       {level: event, has_id: true}
+x_logical_param2:       {level: event, has_id: true}
+x_param5:               {level: event, has_id: true}
+param5:                 {level: event, has_id: true}
+vas_path:               {level: event, has_id: false, is_bool: false}
+messenger_role:         {level: event, has_id: false, is_bool: false} # todo add sql
