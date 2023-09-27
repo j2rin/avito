@@ -43,7 +43,7 @@ select /*+syntactic_join*/
     lc.logical_param2_id
 from dma.click_stream_contacts csc
 
-join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm
+left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm
     on csc.microcat_id = cm.microcat_id
 left join /*+jtype(h),distrib(l,a)*/ dma.current_locations cl
     ON  csc.Location_id = cl.location_id
