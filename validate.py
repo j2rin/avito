@@ -33,7 +33,8 @@ CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 CONFIGS = [
     ('sources', os.path.join(CUR_DIR_PATH, 'sources/sources.yaml'), False),
     ('sources_sql', os.path.join(CUR_DIR_PATH, 'sources/sql'), True),
-    ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions.yaml'), False),
+    ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions/dimensions.yaml'), False),
+    ('dimensions_sql', os.path.join(CUR_DIR_PATH, 'dimensions/sql'), True),
     ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
     ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
@@ -112,7 +113,7 @@ def process():
 def publish():
     key = os.getenv('API_KEY')
 
-    if not key:
+    if not key and False:
         print('No API_KEY in the env')
         exit(2)
 
@@ -150,8 +151,8 @@ def send_all(url, api_key=None):
 
 def post(url, data):
     def _post():
-        # conn = httplib.HTTPConnection('127.0.0.1', 5000)
-        conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
+        conn = httplib.HTTPConnection('127.0.0.1', 5000)
+        # conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
 
         conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
 
