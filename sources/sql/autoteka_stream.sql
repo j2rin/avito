@@ -1,3 +1,4 @@
+with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ autoteka as (
 select
     track_id,
     event_no,
@@ -34,8 +35,10 @@ select
     autoteka_cookie_id,
     is_pro,
     utm_content,
-    utm_term
-from dma.autoteka_stream
+    utm_term,
+    'standalone' as source,
+    0 as fake_user_id
+from dma.autoteka_stream 
 where cast(event_date as date) between :first_date and :last_date
 union all
 select
@@ -44,16 +47,16 @@ select
     event_date,
     cookie_id,
     user_id,
-    cookie_id as additionalcookie_id,
-    user_id as autotekauser_id,
+    null as additionalcookie_id,
+    null as autotekauser_id,
     is_authorized,
     null as searchkey,
-    1 as searchtype,
+    coalesce(search_type, 1) as searchtype,
     item_id,
     null platenumber,
     null vin,
     null autoteka_platform_id,
-    order_items_id as autotekaorder_id,
+    null as autotekaorder_id,
     reports_count,
     amount,
     amount_net,
@@ -71,9 +74,59 @@ select
     null utm_source,
     null utm_medium,
     platform_id,
-    cookie_id as autoteka_cookie_id,
+    null as autoteka_cookie_id,
     is_pro,
     null utm_content,
-    null utm_term
+    null utm_term,
+    'avito' as source,
+    0 as fake_user_id
 from dma.autoteka_on_avito_stream_and_payments
 where cast(event_date as date) between :first_date and :last_date
+)
+select 
+    autoteka.track_id,
+    autoteka.event_no,
+    autoteka.event_date,
+    autoteka.cookie_id,
+    autoteka.user_id,
+    autoteka.additionalcookie_id,
+    autoteka.autotekauser_id,
+    autoteka.is_authorized,
+    autoteka.searchkey,
+    autoteka.searchtype,
+    autoteka.item_id,
+    autoteka.platenumber,
+    autoteka.vin,
+    autoteka.autoteka_platform_id,
+    autoteka.autotekaorder_id,
+    autoteka.reports_count,
+    autoteka.amount,
+    autoteka.amount_net,
+    autoteka.payment_method,
+    autoteka.user_created_at,
+    autoteka.is_new_user,
+    autoteka.b_track_id,
+    autoteka.b_event_no,
+    autoteka.b_event_date,
+    autoteka.f_track_id,
+    autoteka.f_event_no,
+    autoteka.f_event_date,
+    autoteka.funnel_stage_id,
+    autoteka.utm_campaign,
+    autoteka.utm_source,
+    autoteka.utm_medium,
+    autoteka.platform_id,
+    autoteka.autoteka_cookie_id,
+    autoteka.is_pro,
+    autoteka.utm_content,
+    autoteka.utm_term,
+    autoteka.source,
+    autoteka.fake_user_id,
+    coalesce(mc.logical_category_id, 24144500001) as logical_category_id,
+    coalesce(mc.vertical_id, 500012) as vertical_id
+from autoteka
+left join dma.current_item ci 
+    on autoteka.item_id = ci.item_id
+left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories mc
+    on mc.microcat_id = ci.microcat_id
+    and mc.vertical='Transport'

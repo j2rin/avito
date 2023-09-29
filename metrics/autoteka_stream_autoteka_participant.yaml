@@ -1,27 +1,27 @@
 metric.counter:
-  autoteka_revenue_ap: {filter: [funnel_stage_id: 4], obs: [amount]}
-  autoteka_revenue_new_users_ap: {filter: [funnel_stage_id: 4, is_new_user: true], obs: [amount]}
-  autoteka_cnt_reports_ap: {filter: [funnel_stage_id: 4], obs: [reports_count]}
-  autoteka_cnt_reports_new_users_ap: {filter: [funnel_stage_id: 4, is_new_user: true], obs: [reports_count]}
-  autoteka_cnt_one_report_ap: {filter: [funnel_stage_id: 4, reports_count: 1], obs: [reports_count]}
-  autoteka_cnt_big_package_ap: {filter: [funnel_stage_id: 4, reports_count.>=: 20], obs: [reports_count]}
-  autoteka_cnt_small_package_ap: {filter: [funnel_stage_id: 4, reports_count.>: 1, reports_count.<: 20], obs: [reports_count]}
-  autoteka_cnt_paypage_loads_ap: {filter: [funnel_stage_id: 3]}
-  autoteka_cnt_product_selections_ap: {filter: [funnel_stage_id: 2]}
-  autoteka_cnt_previews_ap: {filter: [funnel_stage_id: 1]}
-  autoteka_cnt_main_page_ap: {filter: [funnel_stage_id: 0]}
-  autoteka_cnt_card_ap: {filter: [funnel_stage_id: 4, payment_method: card]}
-  autoteka_cnt_apple_in_app_ap: {filter: [funnel_stage_id: 4, payment_method: appleInAppPurchase]}
-  autoteka_cnt_gpay_ap: {filter: [funnel_stage_id: 4, payment_method: googlePay]}
-  autoteka_cnt_apple_pay_ap: {filter: [funnel_stage_id: 4, payment_method: applePay]}
-  autoteka_cnt_sms_ap: {filter: [funnel_stage_id: 4, payment_method: sms]}
-  autoteka_revenue_pro_users_ap: {filter: [funnel_stage_id: 4,is_pro: true], obs: [amount]}
-  autoteka_revenue_nonpro_users_ap: {filter: [funnel_stage_id: 4,is_pro: false], obs: [amount]}
-  autoteka_cnt_reports_pro_users_ap: { filter: [ funnel_stage_id: 4,is_pro: true ], obs: [ reports_count ] }
-  autoteka_cnt_reports_nonpro_users_ap: { filter: [ funnel_stage_id: 4,is_pro: false ], obs: [ reports_count ] }
-  autoteka_revenue_search_item_ap: {filter: [funnel_stage_id: 4, searchtype: 1], obs: [amount]}
-  autoteka_cnt_reports_search_item_ap: {filter: [funnel_stage_id: 4, searchtype: 1], obs: [reports_count]}
-  autoteka_cnt_previews_search_item_ap: {filter: [funnel_stage_id: 1, searchtype: 1]}
+  autoteka_revenue_ap: {filter: [funnel_stage_id: 4, source: standalone], obs: [amount]}
+  autoteka_revenue_new_users_ap: {filter: [funnel_stage_id: 4, is_new_user: true, source: standalone], obs: [amount]}
+  autoteka_cnt_reports_ap: {filter: [funnel_stage_id: 4, source: standalone], obs: [reports_count]}
+  autoteka_cnt_reports_new_users_ap: {filter: [funnel_stage_id: 4, is_new_user: true, source: standalone], obs: [reports_count]}
+  autoteka_cnt_one_report_ap: {filter: [funnel_stage_id: 4, reports_count: 1, source: standalone], obs: [reports_count]}
+  autoteka_cnt_big_package_ap: {filter: [funnel_stage_id: 4, reports_count.>=: 20, source: standalone], obs: [reports_count]}
+  autoteka_cnt_small_package_ap: {filter: [funnel_stage_id: 4, reports_count.>: 1, reports_count.<: 20, source: standalone], obs: [reports_count]}
+  autoteka_cnt_paypage_loads_ap: {filter: [funnel_stage_id: 3, source: standalone]}
+  autoteka_cnt_product_selections_ap: {filter: [funnel_stage_id: 2, source: standalone]}
+  autoteka_cnt_previews_ap: {filter: [funnel_stage_id: 1, source: standalone]}
+  autoteka_cnt_main_page_ap: {filter: [funnel_stage_id: 0, source: standalone]}
+  autoteka_cnt_card_ap: {filter: [funnel_stage_id: 4, payment_method: card, source: standalone]}
+  autoteka_cnt_apple_in_app_ap: {filter: [funnel_stage_id: 4, payment_method: appleInAppPurchase, source: standalone]}
+  autoteka_cnt_gpay_ap: {filter: [funnel_stage_id: 4, payment_method: googlePay, source: standalone]}
+  autoteka_cnt_apple_pay_ap: {filter: [funnel_stage_id: 4, payment_method: applePay, source: standalone]}
+  autoteka_cnt_sms_ap: {filter: [funnel_stage_id: 4, payment_method: sms, source: standalone]}
+  autoteka_revenue_pro_users_ap: {filter: [funnel_stage_id: 4,is_pro: true, source: standalone], obs: [amount]}
+  autoteka_revenue_nonpro_users_ap: {filter: [funnel_stage_id: 4,is_pro: false, source: standalone], obs: [amount]}
+  autoteka_cnt_reports_pro_users_ap: { filter: [ funnel_stage_id: 4,is_pro: true, source: standalone], obs: [ reports_count ] }
+  autoteka_cnt_reports_nonpro_users_ap: { filter: [ funnel_stage_id: 4,is_pro: false, source: standalone], obs: [ reports_count ] }
+  autoteka_revenue_search_item_ap: {filter: [funnel_stage_id: 4, searchtype: 1, source: standalone], obs: [amount]}
+  autoteka_cnt_reports_search_item_ap: {filter: [funnel_stage_id: 4, searchtype: 1, source: standalone], obs: [reports_count]}
+  autoteka_cnt_previews_search_item_ap: {filter: [funnel_stage_id: 1, searchtype: 1, source: standalone]}
 
 metric.uniq:
   autoteka_unique_report_buyers_ap: {counter: autoteka_cnt_reports_ap, key: [autotekauser_id]}
