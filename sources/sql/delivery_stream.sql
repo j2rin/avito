@@ -9,7 +9,7 @@ select
     ds.items_qty,
     ds.status,
     ds.cart_flow_type,
-    ds.is_cart
+    ds.is_cart,
 ---------- DIMENTIONS ------------------
     -- about item
     cm.vertical_id                                              as vertical_id,
