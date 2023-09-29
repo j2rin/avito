@@ -1069,6 +1069,8 @@ autoteka_stream:
       is_authorized,
       is_new_user,
       is_pro,
+      vertical,
+      logical_category,
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
@@ -1750,6 +1752,8 @@ autoteka_stream_autoteka_participant:
       is_authorized,
       is_new_user,
       is_pro,
+      vertical,
+      logical_category,
     ]
   participant:
     { autoteka_visitor: autoteka_cookie_id, autoteka_user: autotekauser_id }
@@ -3553,4 +3557,22 @@ tab_bar_stream:
   primary_subject: visitor
   dtm: event_date
   
-  
+  autoteka_total:
+  metric_configs: [autoteka_total]
+  database: vertica
+  sql: autoteka_stream
+  dimensions:
+    [
+      platform,
+      payment_method,
+      reports_count,
+      searchtype,
+      is_authorized,
+      is_new_user,
+      is_pro,
+      vertical,
+      logical_category,
+    ]
+  participant: { visitor: cookie_id, user: fake_user_id }
+  primary_subject: user
+  dtm: event_date
