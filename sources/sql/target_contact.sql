@@ -14,7 +14,7 @@ select
     ,reply_platform_id
     ,first_message_cookie_id as buyer_cookie_id
     ,case
-        when class in (3,4,5) or orders>=1 or is_contact_exchange = true then 'target'
+        when class in (3,4,5) or orders>=1 then 'target'
         when class in (1,2,6,7,8) and with_reply = true then 'preliminary'
         when is_spam = true then 'trash'
         when with_reply = false then 'not_answered'
