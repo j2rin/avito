@@ -14,7 +14,7 @@ select
     ,reply_platform_id
     ,first_message_cookie_id as buyer_cookie_id
     ,case
-        when class in (3,4,5) or orders>=1 then 'target'
+        when class in (3,4,5) or orders>=1 or is_contact_exchange then 'target'
         when class in (1,2,6,7,8) and with_reply = true then 'preliminary'
         when is_spam = true then 'trash'
         when with_reply = false then 'not_answered'
@@ -40,21 +40,9 @@ select
     ,cast(null as int) as reply_platform_id
     ,buyer_cookie_id
     ,case  
-        when is_target = true then 'target'
-        when maplookup(mapjsonextractor(prob_distrib), 'already_sold') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'item_deal_discussion') >0.5
-                or maplookup(mapjsonextractor(prob_distrib), 'irrelevant_applicant') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'reject_by_employer') >0.5 
-                or maplookup(mapjsonextractor(prob_distrib), 'closed_vacancy') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'applicant_refused') >0.5 
-                or maplookup(mapjsonextractor(prob_distrib), 'refused_by_employer') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'failed_agreement') >0.5  
-                    or maplookup(mapjsonextractor(prob_distrib), 'call_later_no_meeting') >0.5  
-    then 'preliminary'
-        when maplookup(mapjsonextractor(prob_distrib), 'spam') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'autoreply') >0.5
-            or maplookup(mapjsonextractor(prob_distrib), 'agent_call') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5 
-      or maplookup(mapjsonextractor(prob_distrib), 'unclear') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'dispatcher_call') >0.5 
-      or maplookup(mapjsonextractor(prob_distrib), 'auto_ru') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'failed_call') >0.5 
-      or maplookup(mapjsonextractor(prob_distrib), 'mistake') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'different_number') >0.5 
-      or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'illegal_vacancy') >0.5  
-      or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
-    then 'trash'
+        when is_target_call = true then 'target'
+        when is_preliminary_call = true then 'preliminary'
+        when is_trash_call = true then 'trash'
     end as type,    
       ' '|| case when first_tag_prob > 0.5 then first_tag else '' end
     ||' '|| case when second_tag_prob > 0.5 then second_tag else '' end

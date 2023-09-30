@@ -19,6 +19,7 @@
 	case 
 	    when orders > 0 then 1 
 	    when class in (3,4,5) then 1
+	    when is_contact_exchange then 1
         else 0 
     end as is_target_chat,
 -- Dimensions -------------------------------------------------------------------
