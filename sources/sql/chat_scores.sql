@@ -41,13 +41,13 @@
     coalesce(usm.user_segment, ls.segment)                            as user_segment_market
 from DMA.messenger_chat_scores t
 join DMA.messenger_chat_report chr on (chr.chat_id = t.chat_id and t.first_message_event_date between :first_date and :last_date and chr.first_message_event_date between :first_date and :last_date)
-left join /*+jtype(h),distrib(l,a)*/  DMA.current_microcategories cm on cm.microcat_id = chr.microcat_id
-left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls
+left join /*+jtype(h)*/  DMA.current_microcategories cm on cm.microcat_id = chr.microcat_id
+left join /*+jtype(h)*/ dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id
     and ls.is_default  
 left join DMA.current_locations cl on cl.Location_id = chr.Location_id
 
-left join /*+jtype(h),distrib(l,a)*/ 
+left join /*+jtype(h)*/ 
     (
     select 
       user_id,
@@ -58,7 +58,7 @@ left join /*+jtype(h),distrib(l,a)*/
 from DMA.am_client_day_versioned
     ) acd on chr.user_id = acd.user_id and cast(chr.first_message_event_date as date) between acd.active_from_date and acd.active_to_date
     
-left join /*+jtype(h),distrib(l,b)*/ 
+left join /*+jtype(h)*/ 
     (
     select user_id, logical_category_id, user_segment, converting_date,
         lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
