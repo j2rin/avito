@@ -33,7 +33,8 @@ CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 CONFIGS = [
     ('sources', os.path.join(CUR_DIR_PATH, 'sources/sources.yaml'), False),
     ('sources_sql', os.path.join(CUR_DIR_PATH, 'sources/sql'), True),
-    ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions.yaml'), False),
+    ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions/dimensions.yaml'), False),
+    ('dimensions_sql', os.path.join(CUR_DIR_PATH, 'dimensions/sql'), True),
     ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
     ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
