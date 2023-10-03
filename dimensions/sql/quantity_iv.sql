@@ -1,0 +1,1 @@
+select value from dict.buyer_segments where dimension = 'quantity_iv'
