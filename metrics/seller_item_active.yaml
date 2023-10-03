@@ -7,6 +7,7 @@ definitions:
   - &is_reputation_high {reputation_class: "high"}
   - &is_reputation_medium {reputation_class: "medium"}
   - &is_reputation_low {reputation_class: "low"}
+  - &is_reputation_grey {reputation_class.!in: ["high", "medium", "low"]}
 
 metric.counter:
   active_items_marketplace:                {filter: [is_active: True, is_marketplace: True]}
@@ -34,6 +35,7 @@ metric.counter:
   cnt_active_items_reputation_high:        {filter: [{is_active: True}, *is_reputation_high]}
   cnt_active_items_reputation_medium:      {filter: [{is_active: True}, *is_reputation_medium]}
   cnt_active_items_reputation_low:         {filter: [{is_active: True}, *is_reputation_low]}
+  cnt_active_items_reputation_grey:        {filter: [{is_active: True}, *is_reputation_grey]}
   cnt_item_address_length:                 {filter: [{is_active: True}], obs: [address_length]}
   cnt_item_address_length_new:             {filter: [{is_active: True}, {start_date: $event_date}], obs: [address_length]}
   cnt_item_address_length_reactivated:     {filter: [{activations_count.>: 1}, {is_active: True}, {last_activation_date: $event_date}], obs: [address_length]}
@@ -247,6 +249,7 @@ metric.uniq:
   active_items_reputation_high:            {counter: cnt_active_items_reputation_high,   key: [item]}
   active_items_reputation_medium:          {counter: cnt_active_items_reputation_medium, key: [item]}
   active_items_reputation_low:             {counter: cnt_active_items_reputation_low,    key: [item]}
+  active_items_reputation_grey:            {counter: cnt_active_items_reputation_grey,   key: [item]}
   active_listers:                          {counter: cnt_active_items,                    key: [user_logcat]}
   active_listers_cpa:                      {counter: cnt_active_items_cpa,            key: [user_logcat]}
   active_listers_cpa_lf:                   {counter: cnt_active_items_cpa_lf,         key: [user_logcat]}

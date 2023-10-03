@@ -322,6 +322,7 @@ definitions:
     - &is_reputation_high {reputation_class: "high"}
     - &is_reputation_medium {reputation_class: "medium"}
     - &is_reputation_low {reputation_class: "low"}
+    - &is_reputation_grey {reputation_class.!in: ["high", "medium", "low"]}
 
     - &x_is_s_kmt { x_eid: 300, x_from_page.ilike: '%model_card%' }
     - &x_is_mini_s_kmt { x_eid: 5184 }
@@ -626,6 +627,7 @@ metric.counter:
     cnt_cs_rec_u2i_reputation_high: { filter: [*is_reputation_high, *is_contact_wo_guessing, *x_is_u2i] }
     cnt_cs_rec_u2i_reputation_medium: { filter: [*is_reputation_medium, *is_contact_wo_guessing, *x_is_u2i] }
     cnt_cs_rec_u2i_reputation_low: { filter: [*is_reputation_low, *is_contact_wo_guessing, *x_is_u2i] }
+    cnt_cs_rec_u2i_reputation_grey: { filter: [*is_reputation_grey, *is_contact_wo_guessing, *x_is_u2i] }
     cnt_cs_rec_u2i_collab:      { filter: [*is_contact_wo_guessing, *x_is_u2i, *collab]     }
     cnt_cs_rec_u2i_user2vec:    { filter: [*is_contact_wo_guessing, *x_is_u2i, *user2vec]   }
     cnt_cs_rec_u2i_similars:    { filter: [*is_contact_wo_guessing, *x_is_u2i, *similars]   }
@@ -681,6 +683,7 @@ metric.counter:
     cnt_cs_s_item_attr_reputation_high:   { filter: [*is_reputation_high, *is_contact_wo_guessing, *x_is_search] }
     cnt_cs_s_item_attr_reputation_medium: { filter: [*is_reputation_medium, *is_contact_wo_guessing, *x_is_search] }
     cnt_cs_s_item_attr_reputation_low:    { filter: [*is_reputation_low, *is_contact_wo_guessing, *x_is_search] }
+    cnt_cs_s_item_attr_reputation_grey:   { filter: [*is_reputation_grey, *is_contact_wo_guessing, *x_is_search] }
     cnt_cs_no_item_attr: { filter: [*is_contact, *x_no] }
     cnt_cs_s_item_part_qual_exists: { filter: [*is_contact, *x_is_search, *part_qual_exists] }
     cnt_cs_s_item_part_qual_compab: { filter: [*is_contact, *x_is_search, *part_qual_compab] }
@@ -860,6 +863,7 @@ metric.counter:
     cnt_iv_rec_u2i_reputation_high: { filter: [*is_reputation_high, *is_iv_wo_guessing, *x_is_u2i] }
     cnt_iv_rec_u2i_reputation_medium: { filter: [*is_reputation_medium, *is_iv_wo_guessing, *x_is_u2i] }
     cnt_iv_rec_u2i_reputation_low: { filter: [*is_reputation_low, *is_iv_wo_guessing, *x_is_u2i] }
+    cnt_iv_rec_u2i_reputation_grey: { filter: [*is_reputation_grey, *is_iv_wo_guessing, *x_is_u2i] }
     cnt_iv_rec_u2i_collab:      { filter: [*is_iv_wo_guessing, *x_is_u2i, *collab]      }
     cnt_iv_rec_u2i_user2vec:    { filter: [*is_iv_wo_guessing, *x_is_u2i, *user2vec]    }
     cnt_iv_rec_u2i_similars:    { filter: [*is_iv_wo_guessing, *x_is_u2i, *similars]    }
@@ -885,6 +889,7 @@ metric.counter:
     cnt_iv_s_item_attr_reputation_high: { filter: [*is_reputation_high, *is_iv_wo_guessing, *x_is_search] }
     cnt_iv_s_item_attr_reputation_medium: { filter: [*is_reputation_medium, *is_iv_wo_guessing, *x_is_search] }
     cnt_iv_s_item_attr_reputation_low: { filter: [*is_reputation_low, *is_iv_wo_guessing, *x_is_search] }
+    cnt_iv_s_item_attr_reputation_grey: { filter: [*is_reputation_grey, *is_iv_wo_guessing, *x_is_search] }
     cnt_iv_s_item_attr_guarantee: { filter: [*is_iv_wo_guessing, *x_is_search, *is_guarantee] }
     cnt_iv_s_item_attr_sum_rnk: { filter: [*is_iv_wo_guessing, *x_is_search, *is_1p], obs: [item_rnk] }
     cnt_iv_s_item_attr_rnk3: { filter: [*is_iv_wo_guessing, *x_is_search, *is_1p, item_rnk.<=: 3] }
@@ -1141,6 +1146,7 @@ metric.counter:
     contacts_reputation_high: { filter: [*is_reputation_high, *is_contact] }
     contacts_reputation_medium: { filter: [*is_reputation_medium, *is_contact] }
     contacts_reputation_low: { filter: [*is_reputation_low, *is_contact] }
+    contacts_reputation_grey: { filter: [*is_reputation_grey, *is_contact] }
     contacts_story: { filter: [*is_contact, *is_story] }
     btc_story: { filter: [*is_btc, *is_story] }
     contacts_items: { filter: [*is_contact_item]}
@@ -1226,6 +1232,7 @@ metric.counter:
     item_views_reputation_high: { filter: [*is_reputation_high, *is_iv] }
     item_views_reputation_medium: { filter: [*is_reputation_medium, *is_iv] }
     item_views_reputation_low: { filter: [*is_reputation_low, *is_iv] }
+    item_views_reputation_grey: { filter: [*is_reputation_grey, *is_iv] }
     item_views_story: { filter: [*is_iv, *is_story] }
     item_views_from_jk_card: { filter: [*is_iv, from_page: catalog_jk_card] }
     item_views_part_qual_exists: { filter: [*part_qual_exists, *is_iv] }
@@ -2078,6 +2085,7 @@ metric.uniq:
     contacts_rec_u2i_reputation_high: { counter: cnt_cs_rec_u2i_reputation_high, key: [item_x] }
     contacts_rec_u2i_reputation_medium: { counter: cnt_cs_rec_u2i_reputation_medium, key: [item_x] }
     contacts_rec_u2i_reputation_low: { counter: cnt_cs_rec_u2i_reputation_low, key: [item_x] }
+    contacts_rec_u2i_reputation_grey: { counter: cnt_cs_rec_u2i_reputation_grey, key: [item_x] }
     contacts_rec_u2i_collab:    { counter: cnt_cs_rec_u2i_collab,   key: [item_x] }
     contacts_rec_u2i_user2vec:  { counter: cnt_cs_rec_u2i_user2vec, key: [item_x] }
     contacts_rec_u2i_similars:  { counter: cnt_cs_rec_u2i_similars, key: [item_x] }
@@ -2130,6 +2138,7 @@ metric.uniq:
     contacts_serp_reputation_high:      { counter: cnt_cs_s_item_attr_reputation_high,  key: [item_x] }
     contacts_serp_reputation_medium:    { counter: cnt_cs_s_item_attr_reputation_medium,key: [item_x] }
     contacts_serp_reputation_low:       { counter: cnt_cs_s_item_attr_reputation_low,   key: [item_x] }
+    contacts_serp_reputation_grey:      { counter: cnt_cs_s_item_attr_reputation_grey,  key: [item_x] }
     contacts_nox: { counter: cnt_cs_no_item_attr, key: [item_x] }
     contacts_serp_district: { counter: cnt_cs_s_distr, key: [item_x] }
     contacts_serp_local_geo: { counter: cnt_cs_s_distr_metro_road, key: [item_x] }
@@ -2281,6 +2290,7 @@ metric.uniq:
     item_views_rec_u2i_reputation_high:   { counter: cnt_iv_rec_u2i_reputation_high,   key: [item_x] }
     item_views_rec_u2i_reputation_medium: { counter: cnt_iv_rec_u2i_reputation_medium, key: [item_x] }
     item_views_rec_u2i_reputation_low:    { counter: cnt_iv_rec_u2i_reputation_low,    key: [item_x] }
+    item_views_rec_u2i_reputation_grey:   { counter: cnt_iv_rec_u2i_reputation_grey,   key: [item_x] }
     item_views_rec_u2i_collab:    { counter: cnt_iv_rec_u2i_collab,     key: [item_x] }
     item_views_rec_u2i_user2vec:  { counter: cnt_iv_rec_u2i_user2vec,   key: [item_x] }
     item_views_rec_u2i_similars:  { counter: cnt_iv_rec_u2i_similars,   key: [item_x] }
@@ -2303,6 +2313,7 @@ metric.uniq:
     item_views_serp_reputation_high:    { counter: cnt_iv_s_item_attr_reputation_high,       key: [item_x] }
     item_views_serp_reputation_medium:  { counter: cnt_iv_s_item_attr_reputation_medium,     key: [item_x] }
     item_views_serp_reputation_low:     { counter: cnt_iv_s_item_attr_reputation_low,        key: [item_x] }
+    item_views_serp_reputation_grey:    { counter: cnt_iv_s_item_attr_reputation_grey,       key: [item_x] }
     item_views_serp_dedup:        { counter: cnt_iv_s_item_attr,           key: [seller_microcat_price_x] }
     item_views_serp_guarantee:    { counter: cnt_iv_s_item_attr_guarantee, key: [item_x] }
     item_views_nox:               { counter: cnt_iv_no_item_attr,       key: [item_x] }
