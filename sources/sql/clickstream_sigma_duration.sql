@@ -52,6 +52,6 @@ from (
             8747, 9206, -- portfolio
             9204, 9205  -- calendar slot
             )
+        ) _
     ) _
-) _;
 
