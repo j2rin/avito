@@ -11,6 +11,8 @@ select
     event_time,
     url,
     properties,
-    maplookup(mapjsonextractor(properties), 'field') as properties_field
+    case
+        when eid in (9248, 9249) maplookup(mapjsonextractor(properties), 'field')
+    else null end as as properties_field
 from dwhcs.clickstream_data_platform
 where date(dtm) between :first_date and :last_date
