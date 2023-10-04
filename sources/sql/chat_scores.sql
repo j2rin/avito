@@ -40,7 +40,7 @@
     acd.user_group_id                                            as asd_user_group_id,
     coalesce(usm.user_segment, ls.segment)                            as user_segment_market
 from DMA.messenger_chat_scores t
-join DMA.messenger_chat_report chr on (chr.chat_id = t.chat_id and t.first_message_event_date between :first_date and :last_date and chr.first_message_event_date between :first_date and :last_date)
+join DMA.messenger_chat_report chr on (chr.chat_id = t.chat_id)
 left join /*+jtype(h)*/  DMA.current_microcategories cm on cm.microcat_id = chr.microcat_id
 left join /*+jtype(h)*/ dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id
