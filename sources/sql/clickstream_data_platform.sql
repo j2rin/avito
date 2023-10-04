@@ -10,6 +10,7 @@ select
     m42_filters,
     event_time,
     url,
-    properties
+    properties,
+    maplookup(mapjsonextractor(properties), 'field') as properties_field
 from dwhcs.clickstream_data_platform
 where date(dtm) between :first_date and :last_date
