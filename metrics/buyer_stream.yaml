@@ -553,9 +553,9 @@ metric.counter:
     btc_perfvas_x10_1: { filter: [*is_btc, *is_item_perfvas_x10_1] }
     btc_perfvas_x10_7: { filter: [*is_btc, *is_item_perfvas_x10_7] }
     btc_perfvas: { filter: [*is_btc, *is_item_perfvas] }
-    btc_perfvas_serp: { filter: [*is_btc, *is_item_perfvas, *x_is_search] }
-    btc_perfvas_u2i: { filter: [*is_btc, *is_item_perfvas, *x_is_u2i] }
-    btc_perfvas_i2i: { filter: [*is_btc, *is_item_perfvas, *x_is_i2i] }
+    btc_perfvas_serp: { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_search] }
+    btc_perfvas_u2i: { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_u2i] }
+    btc_perfvas_i2i: { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_i2i] }
     btc_xl: { filter: [*is_btc, *is_item_xl] }
     cnt_cities_in_s: { filter: [{ location_level_id: [4, 5, 6] }, *is_1p, *is_search] }
     cnt_create_order_delivery_any_ext_block:
@@ -1118,9 +1118,9 @@ metric.counter:
                 ],
 
         }
-    cnt_vas_rnk3: { filter: [*is_item_vas, *x_is_search, *is_1p, item_rnk.<=: 3] }
-    cnt_vas_rnk10: { filter: [*is_item_vas, *x_is_search, *is_1p, item_rnk.<=: 10] }
-    cnt_vas_rnk30: { filter: [*is_item_vas, *x_is_search, *is_1p, item_rnk.<=: 30] }
+    cnt_perfvas_rnk3: { filter: [*is_item_perfvas, *x_is_search, *is_1p, item_rnk.<=: 3] }
+    cnt_perfvas_rnk10: { filter: [*is_item_perfvas, *x_is_search, *is_1p, item_rnk.<=: 10] }
+    cnt_perfvas_rnk30: { filter: [*is_item_perfvas, *x_is_search, *is_1p, item_rnk.<=: 30] }
     cnt_active: { filter: [{ $or: [[*is_1p, *is_search], [*is_vertical_main], [*is_iv], [*is_btc]] }] }
     cnt_active_search:
         { filter:
@@ -1162,9 +1162,9 @@ metric.counter:
     contact_to_order: { filter: [*item_to_order, *is_contact] }
     contacts_total_vas: { filter: [*is_item_vas, *is_contact] }
     contacts_perfvas: { filter: [*is_contact, *is_item_perfvas] }
-    contacts_perfvas_serp: { filter: [*is_contact, *is_item_perfvas, *x_is_search] }
-    contacts_perfvas_u2i: { filter: [*is_contact, *is_item_perfvas, *x_is_u2i] }
-    contacts_perfvas_i2i: { filter: [*is_contact, *is_item_perfvas, *x_is_i2i] }
+    contacts_perfvas_serp: { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_search] }
+    contacts_perfvas_u2i: { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_u2i] }
+    contacts_perfvas_i2i: { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_i2i] }
     contacts_total_vas_cpa: { filter: [*is_item_vas, *is_contact, *is_item_cpa] }
     contacts_perfvas_x2_1: { filter: [*is_contact, *is_item_perfvas_x2_1] }
     contacts_perfvas_x2_7: { filter: [*is_contact, *is_item_perfvas_x2_7] }
@@ -1252,9 +1252,9 @@ metric.counter:
     item_views_perfvas_x10_7: { filter: [*is_iv, *is_item_perfvas_x10_7] }
     item_views_perfvas_map: { filter: [*is_iv, *is_item_perfvas, *x_is_map] }
     iv_perfvas: { filter: [*is_iv, *is_item_perfvas] }
-    iv_perfvas_serp: { filter: [*is_iv, *is_item_perfvas, *x_is_search] }
-    iv_perfvas_u2i: { filter: [*is_iv, *is_item_perfvas, *x_is_u2i] }
-    iv_perfvas_i2i: { filter: [*is_iv, *is_item_perfvas, *x_is_i2i] }
+    iv_perfvas_serp: { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_search] }
+    iv_perfvas_u2i: { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_u2i] }
+    iv_perfvas_i2i: { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_i2i] }
     item_views_xl: { filter: [*is_iv, *is_item_xl] }
     item_views_with_available_msg: { filter: [*is_msg_available, *is_iv] }
     item_views_guarantee: { filter: [*is_iv, *is_guarantee] }
@@ -3503,9 +3503,9 @@ metric.ratio:
     iv_from_witcher_new_flats_per_witcher_new_flats: { num: iv_from_witcher_new_flats, den: searches_witcher_new_flats }
     iv_from_witcher_regions_per_witcher_reg: { num: iv_from_witcher_regions, den: searches_witcher_regions }
     iv_perfvas_ratio: { num: iv_perfvas, den: item_views }
-    iv_perfvas_serp_ratio: { num: iv_perfvas_serp, den: item_views_serp }
-    iv_perfvas_u2i_ratio: { num: iv_perfvas_u2i, den: item_views_rec_u2i }
-    iv_perfvas_i2i_ratio: { num: iv_perfvas_i2i, den: item_views_rec_i2i }
+    iv_perfvas_serp_ratio: { num: iv_perfvas_serp, den: cnt_iv_s_item_attr }
+    iv_perfvas_u2i_ratio: { num: iv_perfvas_u2i, den: cnt_iv_rec_u2i }
+    iv_perfvas_i2i_ratio: { num: iv_perfvas_i2i, den: cnt_iv_rec_u2i }
     locations_per_search: { num: locations_in_search, den: searches }
     uniq_locations_per_search: { num: uniq_locations_in_search, den: searches }
     uniq_locations_per_user_search: { num: uniq_locations_in_search, den: users_search }
@@ -3630,9 +3630,9 @@ metric.ratio:
     sessions_iv_s_noq_per_s_noq: { num: sessions_iv_s_noq, den: unq_session_s_without_query }
     sessions_iv_s_per_s: { num: sessions_iv_s, den: sessions_s }
     sessions_iv_s_q_per_s_q: { num: sessions_iv_s_q, den: unq_session_s_query }
-    show_perfvas_serp_rnk3: { num: cnt_vas_rnk3, den: searches }
-    show_perfvas_serp_rnk10: { num: cnt_vas_rnk10, den: searches }
-    show_perfvas_serp_rnk30: { num: cnt_vas_rnk30, den: searches }
+    show_perfvas_serp_rnk3: { num: cnt_perfvas_rnk3, den: searches }
+    show_perfvas_serp_rnk10: { num: cnt_perfvas_rnk10, den: searches }
+    show_perfvas_serp_rnk30: { num: cnt_perfvas_rnk30, den: searches }
     shows_item_view_recblock_per_recblock_shows: { num: shows_item_view_recblock, den: recblock_shows }
     user_buyer_target_clicks_per_user_searches_shop: { num: user_buyer_target_clicks_shop, den: user_searches_shop }
     user_buyer_target_clicks_serp_saved_per_user_search_saved: { num: user_buyer_target_clicks_serp_saved, den: users_saved_searches }
