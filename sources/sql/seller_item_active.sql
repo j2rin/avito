@@ -88,7 +88,8 @@ select /*+syntactic_join*/
         ss.user_id,
         ss.microcat_id,
         ss.profession_id
-        ) as user_microcat_price
+        ) as user_microcat_price,
+    NVL(ss.group_id, ss.item_id) as seller_group
 
 from DMA.o_seller_item_active ss
 
