@@ -211,5 +211,5 @@ left join /*+distrib(l,r)*/ (
     and sic.item_id = ss.item_id
     and sic.event_date = ss.event_date
 
-where (ss.is_user_test is null or ss.is_user_test is FALSE)
+where (ss.is_user_test is null or ss.is_user_test = false)
     and ss.event_date between :first_date and :last_date
