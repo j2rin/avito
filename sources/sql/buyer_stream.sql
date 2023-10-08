@@ -44,11 +44,19 @@ select
     cast(ss.search_radius as varchar)                                    as search_radius,
     ss.district_count,
     ss.metro_count,
-    from_big_endian_64(xxhash64(to_big_endian_64(ss.item_id) || to_big_endian_64(ss.x) || to_big_endian_64(ss.eid))) as item_x,
+    from_big_endian_64(xxhash64(
+        to_big_endian_64(coalesce(ss.item_id, 0)) ||
+        to_big_endian_64(coalesce(ss.x, 0)) ||
+        to_big_endian_64(coalesce(ss.eid, 0))
+    )) as item_x,
     ss.location_id,
     ss.microcat_id,
     ss.item_engines,
-    from_big_endian_64(xxhash64(to_big_endian_64(ss.location_id) || to_big_endian_64(ss.session_no) || to_big_endian_64(ss.microcat_id))) as location_session_microcat,
+    from_big_endian_64(xxhash64(
+        to_big_endian_64(coalesce(ss.location_id, 0)) ||
+        to_big_endian_64(coalesce(ss.session_no, 0)) ||
+        to_big_endian_64(coalesce(ss.microcat_id, 0))
+    )) as location_session_microcat,
     acc.SFAccount_Type as SFAccount_Type,
     case when ss.eid in (401, 2574, 2732) then 1 when ss.eid = 402 then -1 end as favorites_net,
     case when ss.eid in (451) then 1 when ss.eid = 452 then -1 end as comparisons_net,
@@ -118,11 +126,11 @@ select
     date_diff('hour', ial.start_time, ss.event_date) as item_start_hours,
     pg.price_group,
     from_big_endian_64(xxhash64(
-        to_big_endian_64(cast(round(exp(round(ln(ial.price), 1))) as int)) ||
-        to_big_endian_64(ss.item_user_id) ||
-        to_big_endian_64(ss.microcat_id) ||
-        to_big_endian_64(ss.x) ||
-        to_big_endian_64(ss.eid)
+        to_big_endian_64(cast(round(exp(round(ln(coalesce(ial.price, 0)), 1))) as int)) ||
+        to_big_endian_64(coalesce(ss.item_user_id, 0)) ||
+        to_big_endian_64(coalesce(ss.microcat_id, 0)) ||
+        to_big_endian_64(coalesce(ss.x, 0)) ||
+        to_big_endian_64(coalesce(ss.eid, 0))
     )) as seller_microcat_price_x,
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 34)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as b2c_wo_dbs,
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 35)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as c2c_return_within_14_days,
