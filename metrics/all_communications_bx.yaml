@@ -11,6 +11,8 @@ definitions:
   - &is_target                    {type: target}
   - &reply_time_not_zero          {reply_time_minutes.>=: 0} # порог для месенджера
   - &reply_3days                  {reply_time_minutes.<=: 4320} # порог для месенджера
+  - &communications               [iac, gsm, msg]
+   - &is_comns                     {communication: *communications}
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
@@ -38,11 +40,15 @@ metric.counter:
   calls_bx_outgoing_call_dur:                            {filter: [*is_call, *is_common_funnel], obs: [call_duration]}
   calls_bx_outgoing_talk_dur:                            {filter: [*is_call, *is_common_funnel], obs: [talk_duration]}
 
-  comns_bx_outgoing:                                     {filter: [*is_common_funnel]}
-  comns_bx_outgoing_answered:                            {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
-  comns_bx_outgoing_trash:                               {filter: [*is_common_funnel, *is_trash]}
-  comns_bx_outgoing_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
-  comns_bx_outgoing_target:                              {filter: [*is_common_funnel, *is_target]}
+  comns_bx_outgoing:                                     {filter: [*is_common_funnel, *is_comns]}
+  comns_bx_outgoing_answered:                            {filter: [*is_common_funnel, *is_comns, *is_answered, *reply_time_not_zero, *reply_3days]}
+  comns_bx_outgoing_trash:                               {filter: [*is_common_funnel, *is_comns, *is_trash]}
+  comns_bx_outgoing_preliminary:                         {filter: [*is_common_funnel, *is_comns, *is_preliminary]}
+  comns_bx_outgoing_target:                              {filter: [*is_common_funnel, *is_comns, *is_target]}
+  
+  contacts_all_2_0:                                      {filter: [*is_common_funnel]}
+  answered_contacts_2_0:                                 {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
+  target_contact_all_2_0:                                {filter: [*is_common_funnel, *is_target]}
 
 metric.uniq:
   calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [logcat_item]}
@@ -56,6 +62,14 @@ metric.uniq:
   comns_bx_outgoing_trash_canonical:                     {counter: comns_bx_outgoing_trash,        key: [logcat_item]}
   comns_bx_outgoing_preliminary_canonical:               {counter: comns_bx_outgoing_preliminary,  key: [logcat_item]}
   comns_bx_outgoing_target_canonical:                    {counter: comns_bx_outgoing_target,       key: [logcat_item]}
+  
+  
+  contact_canonical_2_0:                                 {counter: contacts_all_2_0,               key: [logcat_item]}
+  buyers_canonical_2_0:                                  {counter: contacts_all_2_0,               key: [user_logcat]}
+  user_contact_2_0:                                      {counter: contacts_all_2_0,               key: [user]}
+  target_contact_canonical_2_0:                          {counter: target_contact_all_2_0,         key: [logcat_item]}
+  target_buyers_canonical_2_0:                           {counter: target_contact_all_2_0,         key: [user_logcat]}
+  user_target_contact_2_0:                               {counter: target_contact_all_2_0,         key: [user]}
 
 metric.ratio:
   gsm_bx_outgoing_call_dur_per_call:                     {num: gsm_bx_outgoing_call_dur,            den: gsm_bx}
@@ -63,4 +77,5 @@ metric.ratio:
   calls_bx_outgoing_call_dur_per_call:                   {num: calls_bx_outgoing_call_dur,          den: calls_bx_outgoing}
   gsm_bx_outgoing_talk_dur_per_call:                     {num: gsm_bx_outgoing_talk_dur,            den: gsm_bx}
   iac_bx_outgoing_talk_dur_per_call:                     {num: iac_bx_outgoing_talk_dur,            den: iac_bx_outgoing}
-  calls_bx_outgoing_talk_dur_per_call:                   {num: calls_bx_outgoing_talk_dur,          den: calls_bx_outgoing}
+  calls_bx_outgoing_talk_dur_per_call:                   {num: calls_bx_outgoing_talk_dur,          den: calls_bx_outgoing} 
+ 

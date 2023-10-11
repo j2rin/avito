@@ -8,20 +8,8 @@ calls_scores as
         ,is_target_call as is_target
         ,case                       -- МОЖЕТ СТОИТ ДОБАВИТЬ not_andswered как в чатах?
                 when is_target = True then 'target'
-                when maplookup(mapjsonextractor(prob_distrib), 'already_sold') >0.5                 or maplookup(mapjsonextractor(prob_distrib), 'item_deal_discussion') >0.5
-                        or maplookup(mapjsonextractor(prob_distrib), 'irrelevant_applicant') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'reject_by_employer') >0.5 
-                        or maplookup(mapjsonextractor(prob_distrib), 'closed_vacancy') >0.5         or maplookup(mapjsonextractor(prob_distrib), 'applicant_refused') >0.5 
-                        or maplookup(mapjsonextractor(prob_distrib), 'refused_by_employer') >0.5    or maplookup(mapjsonextractor(prob_distrib), 'failed_agreement') >0.5  
-                        or maplookup(mapjsonextractor(prob_distrib), 'call_later_no_meeting') >0.5  
-            then 'preliminary'
-                when maplookup(mapjsonextractor(prob_distrib), 'spam') >0.5                 or maplookup(mapjsonextractor(prob_distrib), 'autoreply') >0.5
-                    or maplookup(mapjsonextractor(prob_distrib), 'agent_call') >0.5         or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5 
-                    or maplookup(mapjsonextractor(prob_distrib), 'unclear') >0.5            or maplookup(mapjsonextractor(prob_distrib), 'dispatcher_call') >0.5 
-                    or maplookup(mapjsonextractor(prob_distrib), 'auto_ru') >0.5            or maplookup(mapjsonextractor(prob_distrib), 'failed_call') >0.5 
-                    or maplookup(mapjsonextractor(prob_distrib), 'mistake') >0.5            or maplookup(mapjsonextractor(prob_distrib), 'different_number') >0.5 
-                    or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5     or maplookup(mapjsonextractor(prob_distrib), 'illegal_vacancy') >0.5  
-                    or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
-            then 'trash'
+                when is_preliminary_call = True then 'preliminary'
+                when is_trash_call = True then 'trash'
         end as type
     from
         dma.target_call
@@ -284,6 +272,115 @@ calls_scores as
             or  cast(reply_time as date) between :first_date and :last_date
         )
 )
+, delivery_orders as (
+with  delivery_voided_status as (
+                    select
+                        deliveryorder_id,
+                        platformstatus,
+                        min(actual_date) as voided_date
+                    from dds.s_deliveryorder_platformstatus
+                    where cast(actual_date as date) <= :last_date 
+                        and platformstatus in ( 'voided','rejected')
+                   --     and deliveryorder_id = 488840500001
+                    group by 1, 2
+                    having min(actual_date) >= :first_date
+                    order by 1
+)
+select  
+        cast(co.pay_date as date) as event_date
+        ,'delivery_order' as communication
+        ,'' as communication_type
+        ,'' as communication_subtype
+        ,co.deliveryorder_id as communication_id
+        ,buyer_id
+        ,coi.seller_id
+        ,True as caller_is_buyer
+        ,cast (case when not (  (co.workflow = 'delivery-c2c'and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then create_date end as date ) as reply_date 
+        ,case when not ((co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then datediff ('minute', co.create_date, confirm_date ) end as reply_time_minutes
+        ,coi.item_id
+        ,0 as call_duration
+        ,0 as talk_duration
+        ,True is_common_funnel
+        ,case when not (  (co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then True else False end as is_answered
+        ,co.platform_id as platform_id -- платформа баера
+        ,null::int seller_platform_id -- платформа селлера
+        ,null::int  as buyer_cookie_id
+        ,coi.microcat_id
+        ,cm.category_id as category_id
+        ,coi.location_id
+        ,cm.vertical_id
+        ,cm.vertical
+        ,cm.logical_category_id
+        ,cm.logical_category
+        ,cm.subcategory_id
+        ,cm.Param1_microcat_id as param1_id
+        ,cm.Param2_microcat_id as param2_id
+        ,cm.Param3_microcat_id as param3_id
+        ,cm.Param4_microcat_id as param4_id
+        ,case when not (  (co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then True else False end is_target
+        ,case when not (  (co.workflow = 'delivery-c2c'and  platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then 'target' else 'preliminary' end as type
+        ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
+        ,case cl.level when 3 then cl.Location_id end                           as city_id
+	    ,cl.LocationGroup_id                                          as location_group_id
+	    ,cl.City_Population_Group                                     as population_group
+	    ,cl.Logical_Level                                             as location_level_id
+from dma.current_order co
+join dma.current_order_item coi using (deliveryorder_id)
+left join /*+distrib(l,a)*/ dma.current_microcategories as cm 
+    on coi.microcat_id = cm.microcat_id
+left join /*+distrib(l,a)*/ dma.current_locations as cl 
+    on co.warehouse_location_id = cl.location_id
+left join delivery_voided_status using (deliveryorder_id)
+where true 
+        and cast(create_date as date) between :first_date and :last_date 
+        and pay_date is not null  
+)
+,service_orders as (
+select 
+        cast(sco.create_timestamp as date) as event_date
+        ,'service_order' as communication
+        ,'' as communication_type
+        ,'' as communication_subtype
+        ,sco.orderid as communication_id
+        ,buyer_id
+        ,sco.seller_id
+        ,True as caller_is_buyer
+        ,cast(sco.accept_timestamp as date) as reply_date
+        ,datediff ('minute',create_timestamp, accept_timestamp ) as reply_time_minutes
+        ,sco.item_id as item_id
+        ,0 as call_duration
+        ,0 as talk_duration
+        ,True is_common_funnel
+        ,case when accepted_flg = 1 then true else false end as is_answered
+        ,null::int as platform_id-- платформа баера ?
+        ,null::int seller_platform_id -- платформа селлера??
+        ,null::int as buyer_cookie_id 
+        ,ci.microcat_id
+        ,cm.category_id as category_id
+        ,ci.location_id
+        ,cm.vertical_id
+        ,cm.vertical
+        ,cm.logical_category_id
+        ,cm.logical_category
+        ,cm.subcategory_id
+        ,cm.Param1_microcat_id as param1_id
+        ,cm.Param2_microcat_id as param2_id
+        ,cm.Param3_microcat_id as param3_id
+        ,cm.Param4_microcat_id as param4_id
+        ,case when accepted_flg = 1 and canceled_flg = 0 then true else false end  as is_target
+        ,case when accepted_flg = 1 and canceled_flg = 0 then 'target' else 'preliminary' end as type
+        ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
+        ,case cl.level when 3 then cl.Location_id end                           as city_id
+	    ,cl.LocationGroup_id                                          as location_group_id
+	    ,cl.City_Population_Group                                     as population_group
+	    ,cl.Logical_Level                                             as location_level_id
+from dma.services_calendar_orders sco
+left join dma.current_item ci on ci.item_id = sco.item_id
+left join dma.current_microcategories cm on cm.microcat_id = ci.microcat_id
+left join dma.current_locations cl on cl.location_id = ci.location_id
+where true 
+        and cast(create_timestamp as date) between :first_date and :last_date 
+)
 select 
     a.*
     ,coalesce(asd.is_asd, False) as is_asd
@@ -299,6 +396,12 @@ from
         union all 
         select *
         from chats
+        union all 
+        select *
+        from delivery_orders
+        union all 
+        select * 
+        from service_orders
     ) as a 
     left join asd on a.seller_id = asd.user_id 
                     and asd.active_from_date interpolate previous value a.event_date
@@ -306,4 +409,4 @@ from
                     and ls.is_default
     left join usm on a.seller_id = usm.user_id
                     and a.logical_category_id = usm.logical_category_id
-                    and usm.converting_date interpolate previous value a.event_date
+                    and usm.converting_date interpolate previous value a.event_date     
