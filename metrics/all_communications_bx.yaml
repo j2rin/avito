@@ -1,4 +1,7 @@
 definitions:
+
+  - &communications               [iac, gsm, msg]
+
   - &call                         [iac, gsm]
   - &is_msg                       {communication: msg}
   - &is_iac                       {communication: iac}
@@ -11,8 +14,7 @@ definitions:
   - &is_target                    {type: target}
   - &reply_time_not_zero          {reply_time_minutes.>=: 0} # порог для месенджера
   - &reply_3days                  {reply_time_minutes.<=: 4320} # порог для месенджера
-  - &communications               [iac, gsm, msg]
-   - &is_comns                     {communication: *communications}
+  - &is_comns                     {communication: *communications}
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
