@@ -381,6 +381,86 @@ left join dma.current_locations cl on cl.location_id = ci.location_id
 where true 
         and cast(create_timestamp as date) between :first_date and :last_date 
 )
+,  str_orders as (
+with confirmed_str_orders as (
+with t as(
+    select  
+        StrBooking_id, 
+        CreatedAt as Actual_date, 
+        ROW_NUMBER() OVER(PARTITION BY strbooking_id, actual_date::date ORDER BY actual_date desc )  as rn
+    from dds.L_STROrderEventname_StrBooking l
+        left join dds.S_STROrderEventname_STREventName s1 using (STROrderEventname_id)
+        left join dds.S_STROrderEventname_CreatedAt s2 using (STROrderEventname_id)
+    where STREventName  = 'confirmed'
+)
+select 
+    distinct strbooking_id  
+    , Actual_date  as confirmed_time
+from t 
+where rn = 1 
+and  date(actual_date) between :first_date and :last_date
+)
+,  paid_str_orders  as(
+        select
+			distinct StrBooking_id as StrBooking_id, CreatedAt as pay_date
+        from dds.L_STROrderEventname_StrBooking l
+        left join dds.S_STROrderEventname_STREventName s1 using (STROrderEventname_id)
+        left join dds.S_STROrderEventname_CreatedAt s2 using (STROrderEventname_id)
+		where STREventName = 'paid'
+		    and date(CreatedAt) between :first_date and :last_date
+)
+select 
+        cast(stro.order_create_time as date) as event_date
+        ,'str_order' as communication
+        ,'' as communication_type
+        ,'' as communication_subtype
+        ,stro.order_id as communication_id
+        ,buyer_id
+        ,ci.user_id as seller_id
+        ,True as caller_is_buyer
+        ,cast(c.confirmed_time as date) as reply_date
+        ,datediff ('minute',order_create_time, c.confirmed_time ) as reply_time_minutes
+        ,stro.item_id as item_id
+        ,0 as call_duration
+        ,0 as talk_duration
+        ,True is_common_funnel
+        ,case when c.confirmed_time is not null then true else false end as is_answered
+        ,null::int as platform_id-- платформа баера ?
+        ,null::int seller_platform_id -- платформа селлера??
+        ,null::int as buyer_cookie_id 
+        ,ci.microcat_id
+        ,cm.category_id as category_id
+        ,ci.location_id
+        ,cm.vertical_id
+        ,cm.vertical
+        ,cm.logical_category_id
+        ,cm.logical_category
+        ,cm.subcategory_id
+        ,cm.Param1_microcat_id as param1_id
+        ,cm.Param2_microcat_id as param2_id
+        ,cm.Param3_microcat_id as param3_id
+        ,cm.Param4_microcat_id as param4_id
+        ,case when  pay_date  is not null  then true else false end  as is_target
+        ,case when pay_date  is not null  then 'target' else 'preliminary' end as type
+        ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
+        ,case cl.level when 3 then cl.Location_id end                           as city_id
+	    ,cl.LocationGroup_id                                          as location_group_id
+	    ,cl.City_Population_Group                                     as population_group
+	    ,cl.Logical_Level                                             as location_level_id
+from dma.short_term_rent_orders stro
+left join confirmed_str_orders as c 
+    on c.strbooking_id = stro.order_id
+left join paid_str_orders as po 
+    on po.strbooking_id = stro.order_id
+join dma.current_item ci 
+    on stro.item_id = ci.item_id
+join dma.current_microcategories cm
+    on ci.microcat_id = cm.microcat_id
+join dma.current_locations cl 
+    on ci.location_id  = cl.location_id
+where true 
+        and cast(order_create_time as date) between :first_date and :last_date 
+)
 select 
     a.*
     ,coalesce(asd.is_asd, False) as is_asd
@@ -402,6 +482,9 @@ from
         union all 
         select * 
         from service_orders
+        union all 
+        select * 
+        from str_orders
     ) as a 
     left join asd on a.seller_id = asd.user_id 
                     and asd.active_from_date interpolate previous value a.event_date
@@ -409,4 +492,4 @@ from
                     and ls.is_default
     left join usm on a.seller_id = usm.user_id
                     and a.logical_category_id = usm.logical_category_id
-                    and usm.converting_date interpolate previous value a.event_date     
+                    and usm.converting_date interpolate previous value a.event_date
