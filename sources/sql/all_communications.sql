@@ -392,6 +392,7 @@ with t as(
         left join dds.S_STROrderEventname_STREventName s1 using (STROrderEventname_id)
         left join dds.S_STROrderEventname_CreatedAt s2 using (STROrderEventname_id)
     where STREventName  = 'confirmed'
+  	and  date(actual_date) between :first_date and :last_date 
 )
 select 
     distinct strbooking_id  
