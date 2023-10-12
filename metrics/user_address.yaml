@@ -17,6 +17,7 @@ definitions:
   - &updated_today      {updated_today: true}
 
   - &active_user        {pv_count.>: 0 }
+  - &is_buyer           {contacts.>: 0 }
 
 metric.counter:
   address_cnt:                     {}
@@ -50,6 +51,9 @@ metric.counter:
   user_active_address_active_has_comment_cnt:          {filter: [*active, *has_comment, *active_user]}
   user_active_address_active_has_afe_cnt:              {filter: [*active, *has_ent, *has_floor, *has_apt, *active_user]}
   user_active_address_active_has_afec_cnt:              {filter: [*active, *has_ent, *has_floor, *has_apt, *has_comment, *active_user]}
+
+
+  user_c_address_active_cnt:                          {filter: [*active, *is_buyer]}
 
 
 metric.uniq:
@@ -111,3 +115,10 @@ metric.uniq:
   user_active_address_active_has_comment:          { counter: user_active_address_active_has_comment_cnt, key: [user_id] }
   user_active_address_active_has_afe:              { counter: user_active_address_active_has_afe_cnt, key: [user_id] }
   user_active_address_active_has_afec:             { counter: user_active_address_active_has_afec_cnt, key: [user_id] }
+
+  user_c_address_active:                           { counter: user_c_address_active_cnt, key: [user_id] }
+
+  user_address_active_1plus: { counter: address_active_cnt, key: [{user_id: 1, useraddress_id: 0}] }
+  user_address_active_2plus: { counter: address_active_cnt, key: [{user_id: 2, useraddress_id: 0}] }
+  user_address_active_3plus: { counter: address_active_cnt, key: [{user_id: 3, useraddress_id: 0}] }
+  user_address_active_10plus: { counter: address_active_cnt, key: [{user_id: 9, useraddress_id: 0}] }
