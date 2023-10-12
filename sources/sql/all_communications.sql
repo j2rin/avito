@@ -295,13 +295,13 @@ select
         ,buyer_id
         ,coi.seller_id
         ,True as caller_is_buyer
-        ,cast (case when not (  (co.workflow = 'delivery-c2c'and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then create_date end as date ) as reply_date 
-        ,case when not ((co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then datediff ('minute', co.create_date, confirm_date ) end as reply_time_minutes
+        ,cast (case when ((  (co.workflow = 'delivery-c2c'and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) or confirm_date is  null ) then null else  create_date end as date ) as reply_date 
+        ,case when (((co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) or confirm_date is  null) then null else datediff ('minute', co.create_date, confirm_date )  end as reply_time_minutes
         ,coi.item_id
         ,0 as call_duration
         ,0 as talk_duration
         ,True is_common_funnel
-        ,case when not (  (co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then True else False end as is_answered
+        ,case when  (((  (co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) or confirm_date is null)) then False else True end as is_answered
         ,co.platform_id as platform_id -- платформа баера
         ,null::int seller_platform_id -- платформа селлера
         ,null::int  as buyer_cookie_id
@@ -317,8 +317,8 @@ select
         ,cm.Param2_microcat_id as param2_id
         ,cm.Param3_microcat_id as param3_id
         ,cm.Param4_microcat_id as param4_id
-        ,case when not (  (co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then True else False end is_target
-        ,case when not (  (co.workflow = 'delivery-c2c'and  platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) and confirm_date is not null then 'target' else 'preliminary' end as type
+        ,case when ((co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')  or confirm_date is null) then False else True end is_target
+        ,case when ((  (co.workflow = 'delivery-c2c'and  platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) or confirm_date is null) then  'preliminary' else 'target' end as type
         ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
         ,case cl.level when 3 then cl.Location_id end                           as city_id
 	    ,cl.LocationGroup_id                                          as location_group_id
