@@ -24,7 +24,7 @@ SQL_PRIMARY_SUBJECT_MAP = {}
 
 METRIC_LIMITS = {
     'cpu': 17000000000,
-    'duration': 3600,
+    'duration': 1200,
     'duration_ch': 600,
     'duration_min': 60,
     'input_rows': 1000000000000,
@@ -215,23 +215,6 @@ from (
             result['output_rows'] = output_rows
 
             return result
-
-    @staticmethod
-    def _adjust_metrics(report: dict):
-        new_report = report.copy()
-        output_data_size = report['output_rows'] * report['output_columns']
-
-        network_received = report['network_received_gb']
-        # Для очень больших источников лимит network_received пробивается легко
-        if network_received <= 100 and output_data_size >= 10**10:
-            new_report['network_received_exceed'] = ''
-        new_report['thread_count_exceed'] = ''
-
-        spilled = report['spilled_gb']
-        if spilled <= 300 and report['output_rows'] > 10**6:
-            new_report['spilled_exceed'] = ''
-
-        return new_report
 
     def validate(self, filepath, primary_subject, report: Report):
 
