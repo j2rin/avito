@@ -88,7 +88,7 @@ class Report:
     def print_exceed(self):
         exceed_metrics = self.get_exceed_metrics()
         if exceed_metrics:
-            print(f'ERRORS: {self._path}')
+            print(f'ERROR: {self._path}')
             for m in exceed_metrics:
                 self.print_metric(m)
             print('')
