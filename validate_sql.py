@@ -174,7 +174,7 @@ class VerticaFileValidator:
         return {'output_columns': len(columns)}
 
     @staticmethod
-    def _execute_sql_and_collect_metrics(con, sql, table_name, subject):
+    def _execute_sql_and_collect_metrics(con, sql, table_name):
         sql = uncomment_keyword_lines(sql, '@vertica')
 
         sql_wrapped = f'''
@@ -183,7 +183,7 @@ select /*+syntactic_join*/ *
 from (
 {sql}
 ) _
-) order by {subject} segmented by hash({subject}) all nodes
+)
 '''
 
         with con.cursor() as cur:
@@ -216,7 +216,7 @@ from (
 
             return result
 
-    def validate(self, filepath, primary_subject, report: Report):
+    def validate(self, filepath, report: Report):
 
         try:
             sql_raw = Path(filepath).read_text()
@@ -229,9 +229,7 @@ from (
 
                 filename = parse_sql_filename(filepath)
 
-                metrics = self._execute_sql_and_collect_metrics(
-                    con, sql_bind, filename, primary_subject
-                )
+                metrics = self._execute_sql_and_collect_metrics(con, sql_bind, filename)
 
                 # adjusted = self._adjust_metrics(metrics)
 
@@ -336,7 +334,7 @@ def validate(filenames=None, limit0=False, n_days=1, validate_all=False, vertica
 
         if meta['database'] == 'vertica':
             if vertica_trino_flags & 1:
-                vertica_validator.validate(path, meta['primary_subject'], report)
+                vertica_validator.validate(path, report)
             if vertica_trino_flags & 2:
                 trino_validator.validate(path, report)
         elif meta['database'] == 'clickhouse':
