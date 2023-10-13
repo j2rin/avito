@@ -3,6 +3,7 @@ import re
 from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
+from typing import Union
 
 import click
 
@@ -50,7 +51,7 @@ class InfoMessage:
 class MetricMessage:
     kind: str
     metric: str
-    value: str | int
+    value: Union[str, int]
     ok: bool
 
 
