@@ -122,31 +122,11 @@ calls_scores as
     )
     select
         a.*
-        ,b.microcat_id
-        ,b.category_id
-        ,b.location_id
-        ,c.vertical_id
-        ,c.vertical
-        ,c.logical_category_id
-        ,c.logical_category
-        ,c.subcategory_id
-        ,c.Param1_microcat_id as param1_id
-        ,c.Param2_microcat_id as param2_id
-        ,c.Param3_microcat_id as param3_id
-        ,c.Param4_microcat_id as param4_id
         ,d.is_target
         ,d.type
-        ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
-        ,case cl.level when 3 then cl.Location_id end                           as city_id
-	    ,cl.LocationGroup_id                                          as location_group_id
-	    ,cl.City_Population_Group                                     as population_group
-	    ,cl.Logical_Level                                             as location_level_id
     from 
         gsm_with_matching as a
-        left join dma.current_item as b on b.Item_id = a.Item_id
-        left join dma.current_microcategories as c on c.microcat_id = b.microcat_id
         left join calls_scores as d on d.call_type = 'ct' and d.call_id = a.communication_id
-        left join dma.current_locations as cl on cl.location_id = b.location_id
 )
 -- звонки через приложение
 , iac_calls as 
@@ -355,29 +335,9 @@ select
         ,null::int as platform_id-- платформа баера ?
         ,null::int seller_platform_id -- платформа селлера??
         ,null::int as buyer_cookie_id 
-        ,ci.microcat_id
-        ,cm.category_id as category_id
-        ,ci.location_id
-        ,cm.vertical_id
-        ,cm.vertical
-        ,cm.logical_category_id
-        ,cm.logical_category
-        ,cm.subcategory_id
-        ,cm.Param1_microcat_id as param1_id
-        ,cm.Param2_microcat_id as param2_id
-        ,cm.Param3_microcat_id as param3_id
-        ,cm.Param4_microcat_id as param4_id
         ,case when accepted_flg = 1 and canceled_flg = 0 then true else false end  as is_target
         ,case when accepted_flg = 1 and canceled_flg = 0 then 'target' else 'preliminary' end as type
-        ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
-        ,case cl.level when 3 then cl.Location_id end                           as city_id
-	    ,cl.LocationGroup_id                                          as location_group_id
-	    ,cl.City_Population_Group                                     as population_group
-	    ,cl.Logical_Level                                             as location_level_id
 from dma.services_calendar_orders sco
-left join dma.current_item ci on ci.item_id = sco.item_id
-left join dma.current_microcategories cm on cm.microcat_id = ci.microcat_id
-left join dma.current_locations cl on cl.location_id = ci.location_id
 where true 
         and cast(create_timestamp as date) between :first_date and :last_date 
 )
@@ -417,7 +377,7 @@ select
         ,'' as communication_subtype
         ,stro.order_id as communication_id
         ,buyer_id
-        ,ci.user_id as seller_id
+        ,null::int as seller_id
         ,True as caller_is_buyer
         ,cast(c.confirmed_time as date) as reply_date
         ,datediff ('minute',order_create_time, c.confirmed_time ) as reply_time_minutes
@@ -429,38 +389,68 @@ select
         ,null::int as platform_id-- платформа баера ?
         ,null::int seller_platform_id -- платформа селлера??
         ,null::int as buyer_cookie_id 
-        ,ci.microcat_id
-        ,cm.category_id as category_id
-        ,ci.location_id
-        ,cm.vertical_id
-        ,cm.vertical
-        ,cm.logical_category_id
-        ,cm.logical_category
-        ,cm.subcategory_id
-        ,cm.Param1_microcat_id as param1_id
-        ,cm.Param2_microcat_id as param2_id
-        ,cm.Param3_microcat_id as param3_id
-        ,cm.Param4_microcat_id as param4_id
         ,case when  pay_date  is not null  then true else false end  as is_target
         ,case when pay_date  is not null  then 'target' else 'preliminary' end as type
-        ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
-        ,case cl.level when 3 then cl.Location_id end                           as city_id
-	    ,cl.LocationGroup_id                                          as location_group_id
-	    ,cl.City_Population_Group                                     as population_group
-	    ,cl.Logical_Level                                             as location_level_id
 from dma.short_term_rent_orders stro
 left join confirmed_str_orders as c 
     on c.strbooking_id = stro.order_id
 left join paid_str_orders as po 
     on po.strbooking_id = stro.order_id
-join dma.current_item ci 
-    on stro.item_id = ci.item_id
-join dma.current_microcategories cm
-    on ci.microcat_id = cm.microcat_id
-join dma.current_locations cl 
-    on ci.location_id  = cl.location_id
 where true 
         and cast(order_create_time as date) between :first_date and :last_date 
+)
+, se_str_orders as (
+select 
+    event_date
+    ,communication
+    ,communication_type
+    ,communication_subtype
+    ,communication_id
+    ,buyer_id
+    ,coalesce (seller_id, ci.user_Id) as seller_id
+    ,caller_is_buyer
+    ,reply_date
+    ,reply_time_minutes
+    ,t.item_id
+    ,call_duration
+    ,talk_duration
+    ,is_common_funnel
+    ,is_answered
+    ,platform_id
+    ,seller_platform_id
+    ,buyer_cookie_id
+    ,cm.microcat_id
+    ,cm.category_id
+    ,cl.location_id
+    ,cm.vertical_id
+    ,cm.vertical
+    ,cm.logical_category_id
+    ,cm.logical_category
+    ,cm.subcategory_id
+    ,cm.Param1_microcat_id as param1_id 
+    ,cm.Param2_microcat_id as param2_id
+    ,cm.Param3_microcat_id as param3_id
+    ,cm.Param4_microcat_id as param4_id
+    ,is_target
+    ,type
+    ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
+    ,case cl.level when 3 then cl.Location_id end                           as city_id
+	,cl.LocationGroup_id                                          as location_group_id
+	,cl.City_Population_Group                                     as population_group
+	,cl.Logical_Level                                             as location_level_id
+from (
+    select * 
+        from service_orders
+    union all 
+    select * 
+        from str_orders
+    union all 
+    select * 
+    from gsm_calls
+    )t  
+join dma.current_item ci using (Item_id)
+join dma.current_microcategories cm using (microcat_id)
+join dma.current_locations cl using (Location_id)
 )
 select 
     a.*
@@ -469,9 +459,6 @@ select
     ,coalesce(usm.user_segment, ls.segment) as user_segment_market
 from 
     (
-        select *
-        from gsm_calls
-        union all 
         select *
         from iac_calls
         union all 
@@ -482,10 +469,7 @@ from
         from delivery_orders
         union all 
         select * 
-        from service_orders
-        union all 
-        select * 
-        from str_orders
+        from se_str_orders
     ) as a 
     left join asd on a.seller_id = asd.user_id 
                     and asd.active_from_date interpolate previous value a.event_date
