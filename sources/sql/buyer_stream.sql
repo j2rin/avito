@@ -181,7 +181,6 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from DMA.user_segment_market
         where user_id in (select user_id from bs_users)
             and converting_date <= :last_date
---             and converting_year <= :last_date -- @trino
     ) usm
     join dict.calendar c on c.event_date between :first_date and :last_date
     where c.event_date >= usm.from_date and c.event_date < usm.to_date
