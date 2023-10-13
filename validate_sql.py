@@ -232,9 +232,11 @@ REPORT_CONFIG = {
 }
 
 
-def validate(filenames=None, limit0=False, n_days=1, validate_trino=True):
+def validate(filenames=None, limit0=False, n_days=1, validate_trino=True, validate_all=False):
     if filenames:
         modified_files = [f'{SQL_DIR}{fn}.sql' for fn in filenames]
+    elif validate_all:
+        modified_files = [f'{SQL_DIR}{fn}' for fn in os.listdir(SQL_DIR)]
     else:
         modified_files = filter(is_sql_file, list_modified_files())
 
@@ -300,10 +302,11 @@ def validate(filenames=None, limit0=False, n_days=1, validate_trino=True):
 
 @click.command()
 @click.option('--filename', '-n', 'filenames', type=str, multiple=True)
+@click.option('--all', '-a', 'validate_all', is_flag=True, default=False)
 @click.option('--limit0', '-0', 'limit0', type=str, is_flag=True, default=False)
 @click.option('--n-days', '-d', 'n_days', type=int, default=1)
-def main(filenames, limit0, n_days):
-    validate(filenames, limit0, n_days)
+def main(filenames, limit0, n_days, validate_all):
+    validate(filenames, limit0, n_days, True, validate_all)
 
 
 if __name__ == '__main__':
