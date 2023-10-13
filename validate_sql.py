@@ -1,5 +1,6 @@
 import os
 import re
+from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -23,15 +24,15 @@ REQUIRED_PARAMS = ['first_date', 'last_date']
 SQL_PRIMARY_SUBJECT_MAP = {}
 
 METRIC_LIMITS = {
-    'cpu': 17000000000,
+    'cpu_cycles_us': 17_000_000_000,
     'duration': 1200,
     'duration_ch': 600,
     'duration_min': 60,
-    'input_rows': 1000000000000,
+    'input_rows': 1_000_000_000_000,
     'max_memory_gb': 20,
     'network_gb_received': 50,
     'network_gb_sent': 90,
-    'output_rows': 1000000000000,
+    'output_rows': 1_000_000_000_000,
     'read_gb': 200,
     'spilled_gb': 100,
     'thread_count': 30000,
@@ -39,18 +40,32 @@ METRIC_LIMITS = {
 }
 
 
+@dataclass
+class InfoMessage:
+    kind: str
+    message: str
+
+
+@dataclass
+class MetricMessage:
+    kind: str
+    metric: str
+    value: str | int
+    ok: bool
+
+
 class Report:
     def __init__(self, path):
-        self._metrics = []
-        self._errors = []
-        self._warnings = []
+        self._metrics: list[MetricMessage] = []
+        self._errors: list[InfoMessage] = []
+        self._warnings: list[InfoMessage] = []
         self._path = path
 
     def add_error(self, kind, message):
-        self._errors.append(dict(kind=kind, message=message))
+        self._errors.append(InfoMessage(kind=kind, message=message))
 
     def add_warning(self, kind, message):
-        self._warnings.append(dict(kind=kind, message=message))
+        self._warnings.append(InfoMessage(kind=kind, message=message))
 
     def add_metrics(self, kind, metrics):
         for m, v in metrics.items():
@@ -58,32 +73,27 @@ class Report:
             ok = True
             if limit:
                 ok = v <= limit
-            self._metrics.append(dict(kind=kind, metric=m, value=v, ok=ok))
+            self._metrics.append(MetricMessage(kind=kind, metric=m, value=v, ok=ok))
 
     def print_errors(self):
         if self._errors:
             print(f'ERROR: {self._path}')
             for error in self._errors:
-                print('{kind}: {message}'.format(**error))
+                print(f'{error.kind}: {error.message}')
             print('')
             return True
         return False
 
-    def get_metric(self, kind, metric):
-        for m in self._metrics:
-            if m['metric'] == metric and m['kind'] == kind:
-                return m
-
     def get_exceed_metrics(self):
-        return [m for m in self._metrics if not m['ok']]
+        return [m for m in self._metrics if not m.ok]
 
     @staticmethod
-    def print_metric(m):
-        value = m['value']
-        limit = METRIC_LIMITS.get(m['metric'], '')
+    def print_metric(m: MetricMessage):
+        value = m.value
+        limit = METRIC_LIMITS.get(m.metric, '')
         if limit:
             limit = f' (limit {limit})'
-        print(f"[{m['kind']}] {m['metric']}: {value}{limit}")
+        print(f'[{m.kind}] {m.metric}: {value}{limit}')
 
     def print_exceed(self):
         exceed_metrics = self.get_exceed_metrics()
@@ -106,7 +116,7 @@ class Report:
         if self._warnings:
             print(f'WARNING: {self._path}')
             for warning in self._warnings:
-                print(f"[{warning['kind']}] {warning['message']}")
+                print(f'[{warning.kind}] {warning.message}')
             print('')
 
 
