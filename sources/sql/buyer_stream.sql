@@ -4,12 +4,15 @@ bs_users as (
     from dma.buyer_stream
     where cast(event_date as date) between :first_date and :last_date
         and item_user_id is not null
+--         and date between :first_date and :last_date -- @trino
+
 ),
 bs_items as (
     select distinct item_id
     from dma.buyer_stream
     where cast(event_date as date) between :first_date and :last_date
         and item_id is not null
+--         and date between :first_date and :last_date -- @trino
 )
 select
     ss.platform_id,
@@ -126,7 +129,8 @@ select
     date_diff('hour', ial.start_time, ss.event_date) as item_start_hours,
     pg.price_group,
     from_big_endian_64(xxhash64(
-        to_big_endian_64(cast(round(exp(round(ln(coalesce(ial.price, 0)), 1))) as int)) ||
+        to_ieee754_64(round(exp(round(ln(coalesce(ial.price, 0)), 1)))) ||
+--         to_big_endian_64(cast(round(exp(round(ln(coalesce(ial.price, 0)), 1))) as bigint)) ||
         to_big_endian_64(coalesce(ss.item_user_id, 0)) ||
         to_big_endian_64(coalesce(ss.microcat_id, 0)) ||
         to_big_endian_64(coalesce(ss.x, 0)) ||
@@ -159,6 +163,7 @@ left join /*+jtype(fm),distrib(l,a)*/ (
     from DMA.user_btc_birthday
     where cast(first_action_event_date as date) between :first_date and :last_date
         and action_type = 'btc'
+        -- and first_action_event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 ) ubb on ubb.track_id = ss.track_id and ubb.event_no = ss.event_no
 
 left join /*+jtype(h),distrib(l,a)*/ (
@@ -177,6 +182,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from DMA.user_segment_market
         where user_id in (select user_id from bs_users)
             and converting_date <= :last_date
+--             and converting_year <= :last_date -- @trino
     ) usm
     join dict.calendar c on c.event_date between :first_date and :last_date
     where c.event_date >= usm.from_date and c.event_date < usm.to_date
@@ -221,10 +227,11 @@ left join /*+jtype(h),distrib(l,a)*/ (
         )
         and from_date <= :last_date
         and to_date >= :first_date
+--         and from_year <= :last_date -- @trino
 ) ial
     on ial.item_id = ss.item_id
     and cast(ss.event_date as date) between ial.from_date and ial.to_date
-left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_category_id=pg.logical_category_id and ial.price>=pg.min_price and ial.price< pg.max_price     
-    
+left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_category_id=pg.logical_category_id and ial.price>=pg.min_price and ial.price< pg.max_price
 
 where cast(ss.event_date as date) between :first_date and :last_date
+--     and ss.date between :first_date and :last_date -- @trino
