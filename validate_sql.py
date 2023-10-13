@@ -241,9 +241,6 @@ from (
                 filename = parse_sql_filename(filepath)
 
                 metrics = self._execute_sql_and_collect_metrics(con, sql_bind, filename)
-
-                # adjusted = self._adjust_metrics(metrics)
-
                 report.add_metrics('vertica', metrics)
 
         except Exception as e:
@@ -311,7 +308,7 @@ def is_sql_file(filepath):
     return re.match(SQL_FILES_PATTERN, filepath) is not None
 
 
-def validate(filenames=None, limit0=False, n_days=1, validate_all=False, vertica_trino_flags=1):
+def validate(filenames=None, limit0=False, n_days=1, validate_all=False, vertica_trino_flags=3):
     if filenames:
         modified_files = [f'{SQL_DIR}{fn}.sql' for fn in filenames]
     elif validate_all:
