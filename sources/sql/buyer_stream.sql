@@ -130,7 +130,6 @@ select
     pg.price_group,
     from_big_endian_64(xxhash64(
         to_ieee754_64(round(exp(round(ln(coalesce(ial.price, 0)), 1)))) ||
---         to_big_endian_64(cast(round(exp(round(ln(coalesce(ial.price, 0)), 1))) as bigint)) ||
         to_big_endian_64(coalesce(ss.item_user_id, 0)) ||
         to_big_endian_64(coalesce(ss.microcat_id, 0)) ||
         to_big_endian_64(coalesce(ss.x, 0)) ||
