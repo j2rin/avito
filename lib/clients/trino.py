@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 import trino
 from trino.exceptions import TrinoUserError
@@ -42,3 +43,17 @@ def explain_validate(con, sql):
     except Exception as e:
         raise e
     return {'is_valid': cur.fetchone()[0]}
+
+
+def explain_analyze(con, sql):
+    sql_explain = f'EXPLAIN ANALYZE {sql}'
+    cur = con.cursor()
+    try:
+        start = datetime.now()
+        cur.execute(sql_explain)
+        duration = (datetime.now() - start).total_seconds()
+    except TrinoUserError as e:
+        return {'error': e}
+    except Exception as e:
+        raise e
+    return {'duration': duration}
