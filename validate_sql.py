@@ -95,20 +95,21 @@ class Report:
             limit = f' (limit {limit})'
         print(f'[{m.kind}] {m.metric}: {value}{limit}')
 
-    def print_exceed(self):
-        exceed_metrics = self.get_exceed_metrics()
-        if exceed_metrics:
+    def print_failed_metrics(self) -> bool:
+        failed_metrics = [m for m in self._metrics if not m.ok]
+        if failed_metrics:
             print(f'ERROR: {self._path}')
-            for m in exceed_metrics:
+            for m in failed_metrics:
                 self.print_metric(m)
             print('')
             return True
         return False
 
-    def print_metrics(self):
-        if self._metrics:
+    def print_passed_metrics(self) -> None:
+        passed_metrics = [m for m in self._metrics if m.ok]
+        if passed_metrics:
             print(f'INFO: {self._path}')
-            for metric in self._metrics:
+            for metric in passed_metrics:
                 self.print_metric(metric)
             print('')
 
@@ -355,13 +356,14 @@ def validate(filenames=None, limit0=False, n_days=1, validate_all=False, vertica
             print(f'FAILED: {path}')
             continue
 
-        report.print_metrics()
+        report.print_passed_metrics()
         report.print_warnings()
 
-        if not report.print_exceed():
+        if not report.print_failed_metrics():
             print(f'PASSED: {path}')
         else:
             print(f'FAILED: {path}')
+            success = False
 
     if success:
         print('SQL validation PASSED')
