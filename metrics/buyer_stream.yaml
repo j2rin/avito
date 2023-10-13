@@ -217,12 +217,6 @@ definitions:
     - &x_is_catalog         { x_from_page: catalog}
 
     - &is_serp_xl           { item_serp_flags.bit: [8] }
-    - &is_serp_perfvas_x2_1 { item_serp_flags.bit: [9] }
-    - &is_serp_perfvas_x2_7 { item_serp_flags.bit: [10] }
-    - &is_serp_perfvas_x5_1 { item_serp_flags.bit: [11] }
-    - &is_serp_perfvas_x5_7 { item_serp_flags.bit: [12] }
-    - &is_serp_perfvas_x10_1 { item_serp_flags.bit: [13] }
-    - &is_serp_perfvas_x10_7 { item_serp_flags.bit: [14] }
     - &is_multiloc          { item_serp_flags.bit: [15] }
     - &is_not_multiloc      { item_serp_flags.!bit: [15] }
     - &is_item_vas          { item_vas_flags.bit: [0, 1, 2, 3, 5, 6, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22] }
@@ -234,6 +228,10 @@ definitions:
     - &is_item_perfvas_x5_7 { item_vas_flags.bit: [15] }
     - &is_item_perfvas_x10_1 { item_vas_flags.bit: [16] }
     - &is_item_perfvas_x10_7 { item_vas_flags.bit: [17] }
+    - &is_item_perfvas_x15_1 { item_vas_flags.bit: [18] }
+    - &is_item_perfvas_x15_7 { item_vas_flags.bit: [19] }
+    - &is_item_perfvas_x20_1 { item_vas_flags.bit: [20] }
+    - &is_item_perfvas_x20_7 { item_vas_flags.bit: [21] }
 
     - &is_s_sort_date       { search_sort: *sort_date }
     - &is_s_sort_price      { search_sort: *sort_price }
@@ -452,6 +450,10 @@ metric.counter:
     cnt_btc_rec_perfvas_x5_7:   { filter: [*is_btc_wo_guessing, *is_item_perfvas_x5_7, *x_is_rec] }
     cnt_btc_rec_perfvas_x10_1:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x10_1, *x_is_rec] }
     cnt_btc_rec_perfvas_x10_7:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x10_7, *x_is_rec] }
+    cnt_btc_rec_perfvas_x15_1:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x15_1, *x_is_rec] }
+    cnt_btc_rec_perfvas_x15_7:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x15_7, *x_is_rec] }
+    cnt_btc_rec_perfvas_x20_1:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x20_1, *x_is_rec] }
+    cnt_btc_rec_perfvas_x20_7:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x20_7, *x_is_rec] }
     cnt_btc_reg: { filter: [*is_btc_wo_guessing, *is_serp_regions, *x_is_search] }
     cnt_btc_new_reg: { filter: [*is_new_btc, *is_btc_wo_guessing, *is_serp_regions, *x_is_search] }
     cnt_btc_reg_mix: { filter: [*is_btc_wo_guessing, *is_serp_regions_mix, *x_is_search] }
@@ -513,12 +515,16 @@ metric.counter:
     cnt_btc_vas: { filter: [*is_btc_wo_guessing, *is_item_vas, *x_is_search] }
     cnt_btc_vas_cpa: { filter: [*is_btc_wo_guessing, *is_item_vas, *x_is_search, *is_item_cpa] }
     cnt_btc_serp_xl: { filter: [*is_btc_wo_guessing, *is_serp_xl, *x_is_search] }
-    cnt_btc_serp_perfvas_x2_1: { filter: [*is_btc_wo_guessing, *is_serp_perfvas_x2_1, *x_is_search] }
-    cnt_btc_serp_perfvas_x2_7: { filter: [*is_btc_wo_guessing, *is_serp_perfvas_x2_7, *x_is_search] }
-    cnt_btc_serp_perfvas_x5_1: { filter: [*is_btc_wo_guessing, *is_serp_perfvas_x5_1, *x_is_search] }
-    cnt_btc_serp_perfvas_x5_7: { filter: [*is_btc_wo_guessing, *is_serp_perfvas_x5_7, *x_is_search] }
-    cnt_btc_serp_perfvas_x10_1: { filter: [*is_btc_wo_guessing, *is_serp_perfvas_x10_1, *x_is_search] }
-    cnt_btc_serp_perfvas_x10_7: { filter: [*is_btc_wo_guessing, *is_serp_perfvas_x10_7, *x_is_search] }
+    cnt_btc_serp_perfvas_x2_1: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_1, *x_is_search] }
+    cnt_btc_serp_perfvas_x2_7: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x2_7, *x_is_search] }
+    cnt_btc_serp_perfvas_x5_1: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x5_1, *x_is_search] }
+    cnt_btc_serp_perfvas_x5_7: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x5_7, *x_is_search] }
+    cnt_btc_serp_perfvas_x10_1: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x10_1, *x_is_search] }
+    cnt_btc_serp_perfvas_x10_7: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x10_7, *x_is_search] }
+    cnt_btc_serp_perfvas_x15_1: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x15_1, *x_is_search] }
+    cnt_btc_serp_perfvas_x15_7: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x15_7, *x_is_search] }
+    cnt_btc_serp_perfvas_x20_1: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x20_1, *x_is_search] }
+    cnt_btc_serp_perfvas_x20_7: { filter: [*is_btc_wo_guessing, *is_item_perfvas_x20_7, *x_is_search] }
     cnt_btc_views_s_filter_price:
         { filter: [*is_btc_wo_guessing, *x_is_search, { $or: [[*x_is_filter_search], [*x_is_price_filter_search]] }] }
     cnt_btc_wtc_dlv: { filter: [*is_btc_wo_guessing, *is_serp_witcher_delivery, *x_is_search] }
@@ -552,6 +558,10 @@ metric.counter:
     btc_perfvas_x5_7: { filter: [*is_btc, *is_item_perfvas_x5_7] }
     btc_perfvas_x10_1: { filter: [*is_btc, *is_item_perfvas_x10_1] }
     btc_perfvas_x10_7: { filter: [*is_btc, *is_item_perfvas_x10_7] }
+    btc_perfvas_x15_1: { filter: [*is_btc, *is_item_perfvas_x15_1] }
+    btc_perfvas_x15_7: { filter: [*is_btc, *is_item_perfvas_x15_7] }
+    btc_perfvas_x20_1: { filter: [*is_btc, *is_item_perfvas_x20_1] }
+    btc_perfvas_x20_7: { filter: [*is_btc, *is_item_perfvas_x20_7] }
     btc_perfvas: { filter: [*is_btc, *is_item_perfvas] }
     btc_perfvas_serp: { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_search] }
     btc_perfvas_u2i: { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_u2i] }
@@ -645,6 +655,10 @@ metric.counter:
     cnt_cs_rec_perfvas_x5_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_7, *x_is_rec] }
     cnt_cs_rec_perfvas_x10_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_1, *x_is_rec] }
     cnt_cs_rec_perfvas_x10_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_7, *x_is_rec] }
+    cnt_cs_rec_perfvas_x15_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x15_1, *x_is_rec] }
+    cnt_cs_rec_perfvas_x15_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x15_7, *x_is_rec] }
+    cnt_cs_rec_perfvas_x20_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x20_1, *x_is_rec] }
+    cnt_cs_rec_perfvas_x20_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x20_7, *x_is_rec] }
     cnt_cs_reg: { filter: [*is_contact_wo_guessing, *is_serp_regions, *x_is_search] }
     cnt_cs_reg_mix: { filter: [*is_contact_wo_guessing, *is_serp_regions_mix, *x_is_search] }
     cnt_cs_reg_any: { filter: [*is_contact_wo_guessing, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
@@ -726,12 +740,16 @@ metric.counter:
     cnt_cs_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_search] }
     cnt_cs_serp: { filter: [*is_contact_wo_guessing, *x_is_search] }
     cnt_cs_serp_xl: { filter: [*is_contact_wo_guessing, *is_serp_xl, *x_is_search] }
-    cnt_cs_serp_perfvas_x2_1: { filter: [*is_contact_wo_guessing, *is_serp_perfvas_x2_1, *x_is_search] }
-    cnt_cs_serp_perfvas_x2_7: { filter: [*is_contact_wo_guessing, *is_serp_perfvas_x2_7, *x_is_search] }
-    cnt_cs_serp_perfvas_x5_1: { filter: [*is_contact_wo_guessing, *is_serp_perfvas_x5_1, *x_is_search] }
-    cnt_cs_serp_perfvas_x5_7: { filter: [*is_contact_wo_guessing, *is_serp_perfvas_x5_7, *x_is_search] }
-    cnt_cs_serp_perfvas_x10_1: { filter: [*is_contact_wo_guessing, *is_serp_perfvas_x10_1, *x_is_search] }
-    cnt_cs_serp_perfvas_x10_7: { filter: [*is_contact_wo_guessing, *is_serp_perfvas_x10_7, *x_is_search] }
+    cnt_cs_serp_perfvas_x2_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_1, *x_is_search] }
+    cnt_cs_serp_perfvas_x2_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_7, *x_is_search] }
+    cnt_cs_serp_perfvas_x5_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_1, *x_is_search] }
+    cnt_cs_serp_perfvas_x5_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_7, *x_is_search] }
+    cnt_cs_serp_perfvas_x10_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_1, *x_is_search] }
+    cnt_cs_serp_perfvas_x10_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_7, *x_is_search] }
+    cnt_cs_serp_perfvas_x15_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x15_1, *x_is_search] }
+    cnt_cs_serp_perfvas_x15_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x15_7, *x_is_search] }
+    cnt_cs_serp_perfvas_x20_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x20_1, *x_is_search] }
+    cnt_cs_serp_perfvas_x20_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x20_7, *x_is_search] }
     cnt_cs_wtc_dlv: { filter: [*is_contact_wo_guessing, *is_serp_witcher_delivery, *x_is_search] }
     cnt_cs_wtc_dlv_new_auto_flats_reg:
         {
@@ -877,6 +895,10 @@ metric.counter:
     cnt_iv_rec_perfvas_x5_7: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x5_7, *x_is_rec] }
     cnt_iv_rec_perfvas_x10_1: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x10_1, *x_is_rec] }
     cnt_iv_rec_perfvas_x10_7: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x10_7, *x_is_rec] }
+    cnt_iv_rec_perfvas_x15_1: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x15_1, *x_is_rec] }
+    cnt_iv_rec_perfvas_x15_7: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x15_7, *x_is_rec] }
+    cnt_iv_rec_perfvas_x20_1: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x20_1, *x_is_rec] }
+    cnt_iv_rec_perfvas_x20_7: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x20_7, *x_is_rec] }
     cnt_iv_reg: { filter: [*is_iv_wo_guessing, *is_serp_regions, *x_is_search] }
     cnt_iv_reg_mix: { filter: [*is_iv_wo_guessing, *is_serp_regions_mix, *x_is_search] }
     cnt_iv_reg_any: { filter: [*is_iv_wo_guessing, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
@@ -974,12 +996,16 @@ metric.counter:
     cnt_iv_shopx: { filter: [*is_iv_wo_guessing, *x_is_search, *x_is_shop] }
     cnt_iv_vas: { filter: [*is_iv_wo_guessing, *is_item_vas, *x_is_search] }
     cnt_iv_serp_xl: { filter: [*is_iv_wo_guessing, *is_serp_xl, *x_is_search] }
-    cnt_iv_serp_perfvas_x2_1: { filter: [*is_iv_wo_guessing, *is_serp_perfvas_x2_1, *x_is_search] }
-    cnt_iv_serp_perfvas_x2_7: { filter: [*is_iv_wo_guessing, *is_serp_perfvas_x2_7, *x_is_search] }
-    cnt_iv_serp_perfvas_x5_1: { filter: [*is_iv_wo_guessing, *is_serp_perfvas_x5_1, *x_is_search] }
-    cnt_iv_serp_perfvas_x5_7: { filter: [*is_iv_wo_guessing, *is_serp_perfvas_x5_7, *x_is_search] }
-    cnt_iv_serp_perfvas_x10_1: { filter: [*is_iv_wo_guessing, *is_serp_perfvas_x10_1, *x_is_search] }
-    cnt_iv_serp_perfvas_x10_7: { filter: [*is_iv_wo_guessing, *is_serp_perfvas_x10_7, *x_is_search] }
+    cnt_iv_serp_perfvas_x2_1: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x2_1, *x_is_search] }
+    cnt_iv_serp_perfvas_x2_7: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x2_7, *x_is_search] }
+    cnt_iv_serp_perfvas_x5_1: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x5_1, *x_is_search] }
+    cnt_iv_serp_perfvas_x5_7: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x5_7, *x_is_search] }
+    cnt_iv_serp_perfvas_x10_1: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x10_1, *x_is_search] }
+    cnt_iv_serp_perfvas_x10_7: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x10_7, *x_is_search] }
+    cnt_iv_serp_perfvas_x15_1: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x15_1, *x_is_search] }
+    cnt_iv_serp_perfvas_x15_7: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x15_7, *x_is_search] }
+    cnt_iv_serp_perfvas_x20_1: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x20_1, *x_is_search] }
+    cnt_iv_serp_perfvas_x20_7: { filter: [*is_iv_wo_guessing, *is_item_perfvas_x20_7, *x_is_search] }
     cnt_iv_wtc_dlv: { filter: [*is_iv_wo_guessing, *is_serp_witcher_delivery, *x_is_search] }
     cnt_iv_wtc_dlv_new_auto_flats_reg:
         {
@@ -1172,6 +1198,10 @@ metric.counter:
     contacts_perfvas_x5_7: { filter: [*is_contact, *is_item_perfvas_x5_7] }
     contacts_perfvas_x10_1: { filter: [*is_contact, *is_item_perfvas_x10_1] }
     contacts_perfvas_x10_7: { filter: [*is_contact, *is_item_perfvas_x10_7] }
+    contacts_perfvas_x15_1: { filter: [*is_contact, *is_item_perfvas_x15_1] }
+    contacts_perfvas_x15_7: { filter: [*is_contact, *is_item_perfvas_x15_7] }
+    contacts_perfvas_x20_1: { filter: [*is_contact, *is_item_perfvas_x20_1] }
+    contacts_perfvas_x20_7: { filter: [*is_contact, *is_item_perfvas_x20_7] }
     contacts_perfvas_map: { filter: [*is_contact, *is_item_perfvas, *x_is_map] }
     contacts_xl: { filter: [*is_contact, *is_item_xl] }
     contacts_item_pessimized: { filter: [*is_contact, *is_item_pessimized] }
@@ -1250,6 +1280,10 @@ metric.counter:
     item_views_perfvas_x5_7: { filter: [*is_iv, *is_item_perfvas_x5_7] }
     item_views_perfvas_x10_1: { filter: [*is_iv, *is_item_perfvas_x10_1] }
     item_views_perfvas_x10_7: { filter: [*is_iv, *is_item_perfvas_x10_7] }
+    item_views_perfvas_x15_1: { filter: [*is_iv, *is_item_perfvas_x15_1] }
+    item_views_perfvas_x15_7: { filter: [*is_iv, *is_item_perfvas_x15_7] }
+    item_views_perfvas_x20_1: { filter: [*is_iv, *is_item_perfvas_x20_1] }
+    item_views_perfvas_x20_7: { filter: [*is_iv, *is_item_perfvas_x20_7] }
     item_views_perfvas_map: { filter: [*is_iv, *is_item_perfvas, *x_is_map] }
     iv_perfvas: { filter: [*is_iv, *is_item_perfvas] }
     iv_perfvas_serp: { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_search] }
@@ -1890,6 +1924,8 @@ metric.counter:
     total_delivery_confirm_14days_return:  { filter: [ eid: 2749, *is_return_within_14_days ] }
 
     total_perfvas: { filter: [*is_item_perfvas] }
+    
+    search_onboarding: {filter: [eid: 300, from_page.ilike: 'onboarding_%']}
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie_item] }
@@ -2000,6 +2036,10 @@ metric.uniq:
     buyer_target_clicks_rec_perfvas_x5_7: { counter: cnt_btc_rec_perfvas_x5_7, key: [item_x] }
     buyer_target_clicks_rec_perfvas_x10_1: { counter: cnt_btc_rec_perfvas_x10_1, key: [item_x] }
     buyer_target_clicks_rec_perfvas_x10_7: { counter: cnt_btc_rec_perfvas_x10_7, key: [item_x] }
+    buyer_target_clicks_rec_perfvas_x15_1: { counter: cnt_btc_rec_perfvas_x15_1, key: [item_x] }
+    buyer_target_clicks_rec_perfvas_x15_7: { counter: cnt_btc_rec_perfvas_x15_7, key: [item_x] }
+    buyer_target_clicks_rec_perfvas_x20_1: { counter: cnt_btc_rec_perfvas_x20_1, key: [item_x] }
+    buyer_target_clicks_rec_perfvas_x20_7: { counter: cnt_btc_rec_perfvas_x20_7, key: [item_x] }
     buyer_target_clicks_push_land: { counter: cnt_btc_push_land, key: [item_x] }
     buyer_target_clicks_rec_i2i: { counter: cnt_btc_rec_i2i, key: [item_x] }
     buyer_target_clicks_new_rec_i2i: { counter: cnt_btc_new_rec_i2i, key: [item_x] }
@@ -2032,6 +2072,10 @@ metric.uniq:
     buyer_target_clicks_serp_perfvas_x5_7: { counter: cnt_btc_serp_perfvas_x5_7, key: [item_x] }
     buyer_target_clicks_serp_perfvas_x10_1: { counter: cnt_btc_serp_perfvas_x10_1, key: [item_x] }
     buyer_target_clicks_serp_perfvas_x10_7: { counter: cnt_btc_serp_perfvas_x10_7, key: [item_x] }
+    buyer_target_clicks_serp_perfvas_x15_1: { counter: cnt_btc_serp_perfvas_x15_1, key: [item_x] }
+    buyer_target_clicks_serp_perfvas_x15_7: { counter: cnt_btc_serp_perfvas_x15_7, key: [item_x] }
+    buyer_target_clicks_serp_perfvas_x20_1: { counter: cnt_btc_serp_perfvas_x20_1, key: [item_x] }
+    buyer_target_clicks_serp_perfvas_x20_7: { counter: cnt_btc_serp_perfvas_x20_7, key: [item_x] }
     buyer_target_clicks_serp_district: { counter: cnt_btc_s_distr, key: [item_x] }
     buyer_target_clicks_serp_metro: { counter: cnt_btc_s_metro, key: [item_x] }
     buyer_target_clicks_serp_radius: { counter: cnt_btc_s_radius, key: [item_x] }
@@ -2100,6 +2144,10 @@ metric.uniq:
     contacts_rec_perfvas_x5_7:  { counter: cnt_cs_rec_perfvas_x5_7, key: [item_x] }
     contacts_rec_perfvas_x10_1: { counter: cnt_cs_rec_perfvas_x10_1, key: [item_x] }
     contacts_rec_perfvas_x10_7: { counter: cnt_cs_rec_perfvas_x10_7, key: [item_x] }
+    contacts_rec_perfvas_x15_1: { counter: cnt_cs_rec_perfvas_x15_1, key: [item_x] }
+    contacts_rec_perfvas_x15_7: { counter: cnt_cs_rec_perfvas_x15_7, key: [item_x] }
+    contacts_rec_perfvas_x20_1: { counter: cnt_cs_rec_perfvas_x20_1, key: [item_x] }
+    contacts_rec_perfvas_x20_7: { counter: cnt_cs_rec_perfvas_x20_7, key: [item_x] }
     contacts_msg_rec_u2i: { counter: cnt_cs_msg_rec_u2i, key: [item_x] }
     contacts_ph_rec_u2i: { counter: cnt_cs_ph_rec_u2i, key: [item_x] }
     contacts_regions: { counter: cnt_cs_reg, key: [item_x] }
@@ -2179,6 +2227,10 @@ metric.uniq:
     contacts_serp_perfvas_x5_7: { counter: cnt_cs_serp_perfvas_x5_7, key: [item_x] }
     contacts_serp_perfvas_x10_1: { counter: cnt_cs_serp_perfvas_x10_1, key: [item_x] }
     contacts_serp_perfvas_x10_7: { counter: cnt_cs_serp_perfvas_x10_7, key: [item_x] }
+    contacts_serp_perfvas_x15_1: { counter: cnt_cs_serp_perfvas_x15_1, key: [item_x] }
+    contacts_serp_perfvas_x15_7: { counter: cnt_cs_serp_perfvas_x15_7, key: [item_x] }
+    contacts_serp_perfvas_x20_1: { counter: cnt_cs_serp_perfvas_x20_1, key: [item_x] }
+    contacts_serp_perfvas_x20_7: { counter: cnt_cs_serp_perfvas_x20_7, key: [item_x] }
     contacts_perfvas_weighted: { counter: cnt_cs_perfvas_w, key: [item_x] }
     contact_delivery_any_ext_block: { counter: cnt_contact_delivery_any_ext_block, key: [item_x] }
     contacts_delivery_grouped: { counter: cnt_contacts_delivery, key: [cookie_item] }
@@ -2304,6 +2356,10 @@ metric.uniq:
     item_views_rec_perfvas_x5_7:  { counter: cnt_iv_rec_perfvas_x5_7,   key: [item_x] }
     item_views_rec_perfvas_x10_1: { counter: cnt_iv_rec_perfvas_x10_1,  key: [item_x] }
     item_views_rec_perfvas_x10_7: { counter: cnt_iv_rec_perfvas_x10_7,  key: [item_x] }
+    item_views_rec_perfvas_x15_1: { counter: cnt_iv_rec_perfvas_x15_1,  key: [item_x] }
+    item_views_rec_perfvas_x15_7: { counter: cnt_iv_rec_perfvas_x15_7,  key: [item_x] }
+    item_views_rec_perfvas_x20_1: { counter: cnt_iv_rec_perfvas_x20_1,  key: [item_x] }
+    item_views_rec_perfvas_x20_7: { counter: cnt_iv_rec_perfvas_x20_7,  key: [item_x] }
     item_views_regions:           { counter: cnt_iv_reg,                key: [item_x] }
     item_views_regions_mix:       { counter: cnt_iv_reg_mix,            key: [item_x] }
     item_views_regions_any:       { counter: cnt_iv_reg_any,            key: [item_x] }
@@ -2338,6 +2394,10 @@ metric.uniq:
     item_views_serp_perfvas_x5_7: { counter: cnt_iv_serp_perfvas_x5_7, key: [item_x] }
     item_views_serp_perfvas_x10_1: { counter: cnt_iv_serp_perfvas_x10_1, key: [item_x] }
     item_views_serp_perfvas_x10_7: { counter: cnt_iv_serp_perfvas_x10_7, key: [item_x] }
+    item_views_serp_perfvas_x15_1: { counter: cnt_iv_serp_perfvas_x15_1, key: [item_x] }
+    item_views_serp_perfvas_x15_7: { counter: cnt_iv_serp_perfvas_x15_7, key: [item_x] }
+    item_views_serp_perfvas_x20_1: { counter: cnt_iv_serp_perfvas_x20_1, key: [item_x] }
+    item_views_serp_perfvas_x20_7: { counter: cnt_iv_serp_perfvas_x20_7, key: [item_x] }
     iv_developer_map: { counter: cnt_iv_developer_from_map, key: [item_x] }
     iv_developer_rec: { counter: cnt_iv_developer_rec, key: [item_x] }
     iv_developer_rec_i2i: { counter: cnt_iv_developer_rec_i2i, key: [item_x] }
