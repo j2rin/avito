@@ -31,12 +31,12 @@ metric.uniq:
   user_map_price_rubricator_filters:       {counter: map_price_rubricator_filters,    key: [cookie]}
   map_searches_sessions:                   {counter: map_searches,                    key: [session]}
   pin_clicks_sessions:                     {counter: pin_clicks,                      key: [session]}
-  map_users_1plus_maps:                    {counter: map_searches,                    key: [{cookie: 1}]}
-  map_users_2plus_maps:                    {counter: map_searches,                    key: [{cookie: 2}]}
-  map_users_3plus_maps:                    {counter: map_searches,                    key: [{cookie: 3}]}
-  map_sessions_1plus_maps:                 {counter: map_searches,                    key: [{session: 1}]}
-  map_sessions_2plus_maps:                 {counter: map_searches,                    key: [{session: 2}]}
-  map_sessions_3plus_maps:                 {counter: map_searches,                    key: [{session: 3}]}
+  map_users_1plus_maps:                    {counter: map_searches,                    key: [cookie], thresholds: [1]}
+  map_users_2plus_maps:                    {counter: map_searches,                    key: [cookie], thresholds: [2]}
+  map_users_3plus_maps:                    {counter: map_searches,                    key: [cookie], thresholds: [3]}
+  map_sessions_1plus_maps:                 {counter: map_searches,                    key: [session], thresholds: [1]}
+  map_sessions_2plus_maps:                 {counter: map_searches,                    key: [session], thresholds: [2]}
+  map_sessions_3plus_maps:                 {counter: map_searches,                    key: [session], thresholds: [3]}
 
 metric.ratio:
   errors_map_per_map:                      {num: errors_map,                      den: map_searches}

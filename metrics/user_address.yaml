@@ -114,7 +114,7 @@ metric.uniq:
 
   user_c_address_active:                           { counter: user_c_address_active_cnt, key: [user_id] }
 
-  user_address_active_1_plus: { counter: address_active_cnt, key: [user_id: 1, useraddress_id: 0] }
-  user_address_active_2_plus: { counter: address_active_cnt, key: [user_id: 2, useraddress_id: 0] }
-  user_address_active_3_plus: { counter: address_active_cnt, key: [user_id: 3, useraddress_id: 0] }
-  user_address_active_10_plus: { counter: address_active_cnt, key: [user_id: 9, useraddress_id: 0] }
+  user_address_active_1_plus: { counter: address_active_cnt, key_seq: [user_id, useraddress_id], thresholds: [1, 0] }
+  user_address_active_2_plus: { counter: address_active_cnt, key_seq: [user_id, useraddress_id], thresholds: [2, 0] }
+  user_address_active_3_plus: { counter: address_active_cnt, key_seq: [user_id, useraddress_id], thresholds: [3, 0] }
+  user_address_active_10_plus: { counter: address_active_cnt, key_seq: [user_id, useraddress_id], thresholds: [9, 0] }

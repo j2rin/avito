@@ -346,14 +346,14 @@ metric.uniq:
   users_new_item_more_40_description_word:          {counter: cnt_new_items_more_40_description_word, key: [user]}
   users_new_item_more_5_description_word:           {counter: cnt_new_items_more_5_description_word, key: [user]}
   users_new_item_more_5_photo:                      {counter: cnt_new_items_more_5_photo,      key: [user]}
-  user_active_items_1plus_locations:                {counter: cnt_active_items,   key: [user: 1, city_id: 0]}
-  user_active_items_2plus_locations:                {counter: cnt_active_items,   key: [user: 2, city_id: 0]}
-  user_active_items_5plus_locations:                {counter: cnt_active_items,   key: [user: 5, city_id: 0]}
-  user_active_items_10plus_locations:               {counter: cnt_active_items,   key: [user: 10, city_id: 0]}
-  user_active_items_1plus_locations_microcat:       {counter: cnt_active_items,                 key: [user: 0, microcat_id: 1, location_id: 0]}
-  user_active_items_2plus_locations_microcat:       {counter: cnt_active_items,                 key: [user: 0, microcat_id: 2, location_id: 0]}
-  user_active_items_5plus_locations_microcat:       {counter: cnt_active_items,                 key: [user: 0, microcat_id: 5, location_id: 0]}
-  user_active_items_10plus_locations_microcat:      {counter: cnt_active_items,                 key: [user: 0, microcat_id: 10, location_id: 0]}
+  user_active_items_1plus_locations:                {counter: cnt_active_items,   key_seq: [user, city_id], thresholds: [1, 0]}
+  user_active_items_2plus_locations:                {counter: cnt_active_items,   key_seq: [user, city_id], thresholds: [2, 0]}
+  user_active_items_5plus_locations:                {counter: cnt_active_items,   key_seq: [user, city_id], thresholds: [5, 0]}
+  user_active_items_10plus_locations:               {counter: cnt_active_items,   key_seq: [user, city_id], thresholds: [10, 0]}
+  user_active_items_1plus_locations_microcat:       {counter: cnt_active_items,                 key_seq: [user, microcat_id, location_id], thresholds: [0, 1, 0]}
+  user_active_items_2plus_locations_microcat:       {counter: cnt_active_items,                 key_seq: [user, microcat_id, location_id], thresholds: [0, 2, 0]}
+  user_active_items_5plus_locations_microcat:       {counter: cnt_active_items,                 key_seq: [user, microcat_id, location_id], thresholds: [0, 5, 0]}
+  user_active_items_10plus_locations_microcat:      {counter: cnt_active_items,                 key_seq: [user, microcat_id, location_id], thresholds: [0, 10, 0]}
   user_active_items_locations:                      {counter: cnt_active_items,                 key: [location_id]}
   seller_items_with_delivery_contacts:              {counter: seller_delivery_contacts,         key: [item]}
   seller_items_with_delivery_clicks:                {counter: seller_delivery_clicks,           key: [item]}

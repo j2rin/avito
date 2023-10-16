@@ -2719,9 +2719,9 @@ metric.uniq:
     users_first_messages: { counter: first_messages, key: [cookie] }
     users_item_view_client_daily: { counter: item_views_client, key: [cookie] }
     users_item_view_daily: { counter: item_views, key: [cookie] }
-    users_item_view_4plus: { counter: item_views, key: [{ cookie: 3 }] }
-    users_item_view_8plus: { counter: item_views, key: [{ cookie: 7 }] }
-    users_item_view_16plus: { counter: item_views, key: [{ cookie: 15 }] }
+    users_item_view_4plus: { counter: item_views, key: [cookie], thresholds: [3] }
+    users_item_view_8plus: { counter: item_views, key: [cookie], thresholds: [7] }
+    users_item_view_16plus: { counter: item_views, key: [cookie], thresholds: [15] }
     users_item_view_rec_daily: { counter: cnt_iv_rec, key: [cookie] }
     users_item_view_rec_daily_vas: { counter: cnt_iv_rec_vas, key: [cookie] }
     users_item_view_push_land: { counter: cnt_iv_push_land, key: [cookie] }
@@ -3041,18 +3041,18 @@ metric.uniq:
     unq_x_s_noquery_iv: { counter: cnt_s_noquery_iv, key: [x] }
     sq_c: { counter: cnt_s_query_c, key: [x] }
     unq_x_s_query_iv: { counter: cnt_s_query_iv, key: [x] }
-    users_1plus_actions: { counter: cnt_active, key: [{ cookie: 1 }] }
-    users_2plus_actions: { counter: cnt_active, key: [{ cookie: 2 }] }
-    user_search_1_plus_locations: { counter: searches, key: [cookie, microcat_id: 1, location_id: 0] }
-    user_search_1_plus_cities: { counter: cnt_cities_in_s, key: [cookie, microcat_id: 1, location_id: 0] }
-    user_search_1_plus_regions: { counter: cnt_reg_in_s, key: [cookie, microcat_id: 1, location_id: 0] }
-    multiloc_users: { counter: searches, key: [cookie, microcat_id: 2, location_id: 0] }
-    sess_search_1_plus_locations: { counter: searches, key: [session, microcat_id: 1, location_id: 0] }
-    sess_search_1_plus_cities: { counter: cnt_cities_in_s, key: [session, microcat_id: 1, location_id: 0] }
-    sess_search_1_plus_regions: { counter: cnt_reg_in_s, key: [session, microcat_id: 1, location_id: 0] }
-    multi_city_sess: { counter: cnt_cities_in_s, key: [session, microcat_id: 2, location_id: 0] }
-    multi_region_sess: { counter: cnt_reg_in_s, key: [session, microcat_id: 2, location_id: 0] }
-    multiloc_sess: { counter: searches, key: [session, microcat_id: 2, location_id: 0] }
+    users_1plus_actions: { counter: cnt_active, key: [cookie], thresholds: [1] }
+    users_2plus_actions: { counter: cnt_active, key: [cookie], thresholds: [2] }
+    user_search_1_plus_locations: { counter: searches, key_seq: [cookie, microcat_id, location_id], thresholds: [0, 1, 0] }
+    user_search_1_plus_cities: { counter: cnt_cities_in_s, key_seq: [cookie, microcat_id, location_id], thresholds: [0, 1, 0] }
+    user_search_1_plus_regions: { counter: cnt_reg_in_s, key_seq: [cookie, microcat_id, location_id], thresholds: [0, 1, 0] }
+    multiloc_users: { counter: searches, key_seq: [cookie, microcat_id, location_id], thresholds: [0, 2, 0] }
+    sess_search_1_plus_locations: { counter: searches, key_seq: [session, microcat_id, location_id], thresholds: [0, 1, 0] }
+    sess_search_1_plus_cities: { counter: cnt_cities_in_s, key_seq: [session, microcat_id, location_id], thresholds: [0, 1, 0] }
+    sess_search_1_plus_regions: { counter: cnt_reg_in_s, key_seq: [session, microcat_id, location_id], thresholds: [0, 1, 0] }
+    multi_city_sess: { counter: cnt_cities_in_s, key_seq: [session, microcat_id, location_id], thresholds: [0, 2, 0] }
+    multi_region_sess: { counter: cnt_reg_in_s, key_seq: [session, microcat_id, location_id], thresholds: [0, 2, 0] }
+    multiloc_sess: { counter: searches, key_seq: [session, microcat_id, location_id], thresholds: [0, 2, 0] }
     users_contact_metageo: { counter: contacts_metageo, key: [cookie] }
     users_btc_metageo: { counter: buyer_target_clicks_metageo, key: [cookie] }
     users_iv_metageo: { counter: item_views_metageo, key: [cookie] }
