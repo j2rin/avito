@@ -14,13 +14,16 @@ where user_id not in (select user_id from dma."current_user" where isTest)
 ),
 dau as
 (select
-	event_date, 
-	user_id, 
-	platform_id, 
-	infmquery_id,  
-	location_id, 
+	event_date,
+	user_id,
+	platform_id,
+	infmquery_id,
+	location_id,
 	sum(pv_count) pv_count,
-	sum(contact) contacts 
+	sum(iv_count) iv_count,
+	sum(serp_count) serp_count,
+	sum(btc_count) btc_count,
+	sum(contact) contacts
 from
 	dma.dau_source
 where pv_count>0 and cast(event_date as date) between :first_date and :last_date
@@ -70,10 +73,13 @@ select
     cl.City_Population_Group                               as population_group,
     cl.Logical_Level                                       as location_level_id,
     coalesce(pv_count, 0) as pv_count,
+		coalesce(iv_count, 0) as iv_count,
+		coalesce(serp_count, 0) as serp_count,
+		coalesce(btc_count, 0) as btc_count,
     coalesce(contacts, 0) as contacts
 from
     user_address t
-        left join dau on dau.event_date = t.event_date and dau.user_id = t.user_id    
+        left join dau on dau.event_date = t.event_date and dau.user_id = t.user_id
         left join /*+jtype(h),distrib(l,a)*/ current_infmquery_category ic on ic.infmquery_id = dau.infmquery_id
         left join /*+jtype(h),distrib(l,a)*/ dma.current_logical_categories lc  on lc.logcat_id = ic.logcat_id
         left join  /*+jtype(h),distrib(l,a)*/dma.current_microcategories cm   on cm.microcat_id = ic.microcat_id
