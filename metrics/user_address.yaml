@@ -18,7 +18,7 @@ definitions:
 
   - &active_user        {pv_count.>: 0 }
   - &is_buyer           {contacts.>: 0 }
-  - &is_user_bx_active  {$or: [serp_count.>:0, iv_count.>:0, btc_count.>:0, contacts.>: 0]}
+  - &is_user_bx_active  {$or: [{serp_count.>:0}, {iv_count.>:0}, {btc_count.>:0}, {contacts.>: 0}]}
 
 metric.counter:
   address_cnt:                     {}
