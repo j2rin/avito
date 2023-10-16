@@ -51,7 +51,7 @@ metric.counter:
   
   contacts_all_2_0:                                      {filter: [*is_common_funnel]}
   answered_contacts_2_0:                                 {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
-  target_contact_all_2_0:                                {filter: [*is_common_funnel, *is_target]}
+  target_contacts_all_2_0:                               {filter: [*is_common_funnel, *is_target]}
 
 metric.uniq:
   calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [logcat_item]}
@@ -67,12 +67,13 @@ metric.uniq:
   comns_bx_outgoing_target_canonical:                    {counter: comns_bx_outgoing_target,       key: [logcat_item]}
   
   
-  contact_canonical_2_0:                                 {counter: contacts_all_2_0,               key: [logcat_item]}
+  contacts_canonical_2_0:                                {counter: contacts_all_2_0,               key: [logcat_item]}
   buyers_canonical_2_0:                                  {counter: contacts_all_2_0,               key: [user_logcat]}
-  user_contact_2_0:                                      {counter: contacts_all_2_0,               key: [user]}
-  target_contact_canonical_2_0:                          {counter: target_contact_all_2_0,         key: [logcat_item]}
-  target_buyers_canonical_2_0:                           {counter: target_contact_all_2_0,         key: [user_logcat]}
-  user_target_contact_2_0:                               {counter: target_contact_all_2_0,         key: [user]}
+  user_contacts_2_0:                                     {counter: contacts_all_2_0,               key: [user]}
+  target_contacts_canonical_2_0:                         {counter: target_contacts_all_2_0,         key: [logcat_item]}
+  target_buyers_canonical_2_0:                           {counter: target_contacts_all_2_0,         key: [user_logcat]}
+  user_target_contacts_2_0:                              {counter: target_contacts_all_2_0,         key: [user]}
+  user_asnwered_contacts_2_0:                            {counter: answered_contacts_2_0,         key: [user]}
 
 metric.ratio:
   gsm_bx_outgoing_call_dur_per_call:                     {num: gsm_bx_outgoing_call_dur,            den: gsm_bx}
