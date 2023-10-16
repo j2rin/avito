@@ -3454,7 +3454,17 @@ user_address:
   metric_configs: [user_address]
   database: vertica
   sql: user_address
-  dimensions: [platform]
+  dimensions:
+        [
+          platform,
+          vertical,
+          logical_category,
+          region,
+          city,
+          location_group,
+          population_group,
+          location_level
+        ]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
@@ -3480,7 +3490,7 @@ passport_coverage_m42:
   participant: { user: _ } # No participants in table, just value by date.
   primary_subject: user
   dtm: calc_date
-  
+
 clickstream_video:
   metric_configs: [clickstream_video]
   database: vertica
@@ -3534,8 +3544,8 @@ premium_fashion:
   primary_subject: user
   dtm: event_date
   segm: user_id
-  
-  
+
+
 tab_bar_stream:
   metric_configs: [ tab_bar_stream ]
   database: vertica
@@ -3550,7 +3560,7 @@ tab_bar_stream:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  
+
 autoteka_total:
   metric_configs: [autoteka_total]
   database: vertica
