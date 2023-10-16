@@ -18,7 +18,7 @@ definitions:
 
   - &active_user        {pv_count.>: 0 }
   - &is_buyer           {contacts.>: 0 }
-  #- &is_user_bx_active  {$or: [{serp_count.>: 0}, {iv_count.>: 0}, {btc_count.>: 0}, {contacts.>: 0}]}
+  - &is_user_bx_active  {$or: [{serp_count.>: 0}, {iv_count.>: 0}, {btc_count.>: 0}, {contacts.>: 0}]}
 
 metric.counter:
   address_cnt:                     {}
@@ -55,7 +55,7 @@ metric.counter:
 
 
   user_c_address_active_cnt:                          {filter: [*active, *is_buyer]}
-  #user_bx_active_address_active_cnt:                  {filter: [*active, *is_user_bx_active]}
+  user_bx_active_address_active_cnt:                  {filter: [*active, *is_user_bx_active]}
 
 
 metric.uniq:
@@ -115,7 +115,7 @@ metric.uniq:
   user_active_address_active_has_afec:             { counter: user_active_address_active_has_afec_cnt, key: [user_id] }
 
   user_c_address_active:                           { counter: user_c_address_active_cnt, key: [user_id] }
-  #user_bx_active_address_active:                   { counter: user_bx_active_address_active_cnt, key: [user_id] }
+  user_bx_active_address_active:                   { counter: user_bx_active_address_active_cnt, key: [user_id] }
 
   user_address_active_1_plus: { counter: address_active_cnt, key: [user_id: 1, useraddress_id: 0] }
   user_address_active_2_plus: { counter: address_active_cnt, key: [user_id: 2, useraddress_id: 0] }

@@ -20,6 +20,9 @@ dau as
 	infmquery_id,
 	location_id,
 	sum(pv_count) pv_count,
+	sum(iv_count) iv_count,
+	sum(serp_count) serp_count,
+	sum(btc_count) btc_count,
 	sum(contact) contacts
 from
 	dma.dau_source
