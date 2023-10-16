@@ -1,12 +1,15 @@
 import os
 import re
+from dataclasses import dataclass
 from datetime import date, timedelta
+from pathlib import Path
+from typing import Union
 
 import click
 
 from lib.clients.clickhouse import get_connection as ch_get_con
 from lib.clients.clickhouse import get_query_columns as ch_get_query_columns
-from lib.clients.trino import explain_validate
+from lib.clients.trino import explain_analyze, explain_validate
 from lib.clients.trino import get_connection as t_get_con
 from lib.clients.vertica import get_connection as v_get_con
 from lib.clients.vertica import get_query_columns as v_get_query_columns
@@ -20,6 +23,103 @@ MODIFIED_FILES_PATH = os.getenv('MODIFIED_FILES')
 DURATION_SECONDS_LIMIT = 300
 REQUIRED_PARAMS = ['first_date', 'last_date']
 SQL_PRIMARY_SUBJECT_MAP = {}
+
+METRIC_LIMITS = {
+    'cpu_cycles_us': 17_000_000_000,
+    'duration': 1200,
+    'duration_ch': 600,
+    'duration_min': 60,
+    'input_rows': 1_000_000_000_000,
+    'max_memory_gb': 20,
+    'network_gb_received': 50,
+    'network_gb_sent': 90,
+    'output_rows': 1_000_000_000_000,
+    'read_gb': 200,
+    'spilled_gb': 100,
+    'thread_count': 30000,
+    'written_gb': 100,
+}
+
+
+@dataclass
+class InfoMessage:
+    kind: str
+    message: str
+
+
+@dataclass
+class MetricMessage:
+    kind: str
+    metric: str
+    value: Union[str, int]
+    ok: bool
+
+
+class Report:
+    def __init__(self, path):
+        self._metrics: list[MetricMessage] = []
+        self._errors: list[InfoMessage] = []
+        self._warnings: list[InfoMessage] = []
+        self._path = path
+
+    def add_error(self, kind, message):
+        self._errors.append(InfoMessage(kind=kind, message=message))
+
+    def add_warning(self, kind, message):
+        self._warnings.append(InfoMessage(kind=kind, message=message))
+
+    def add_metrics(self, kind, metrics):
+        for m, v in metrics.items():
+            limit = METRIC_LIMITS.get(m)
+            ok = True
+            if limit:
+                ok = v <= limit
+            self._metrics.append(MetricMessage(kind=kind, metric=m, value=v, ok=ok))
+
+    def print_errors(self):
+        if self._errors:
+            print(f'ERROR: {self._path}')
+            for error in self._errors:
+                print(f'{error.kind}: {error.message}')
+            print('')
+            return True
+        return False
+
+    def get_exceed_metrics(self):
+        return [m for m in self._metrics if not m.ok]
+
+    @staticmethod
+    def print_metric(m: MetricMessage):
+        value = m.value
+        limit = METRIC_LIMITS.get(m.metric, '')
+        if limit:
+            limit = f' (limit {limit})'
+        print(f'[{m.kind}] {m.metric}: {value}{limit}')
+
+    def print_failed_metrics(self) -> bool:
+        failed_metrics = [m for m in self._metrics if not m.ok]
+        if failed_metrics:
+            print(f'ERROR: {self._path}')
+            for m in failed_metrics:
+                self.print_metric(m)
+            print('')
+            return True
+        return False
+
+    def print_passed_metrics(self) -> None:
+        passed_metrics = [m for m in self._metrics if m.ok]
+        if passed_metrics:
+            print(f'INFO: {self._path}')
+            for metric in passed_metrics:
+                self.print_metric(metric)
+            print('')
+
+    def print_warnings(self):
+        if self._warnings:
+            print(f'WARNING: {self._path}')
+            for warning in self._warnings:
+                print(f'[{warning.kind}] {warning.message}')
+            print('')
 
 
 def parse_sql_filename(path):
@@ -54,11 +154,31 @@ def _bind_date_period(sql, n_days):
     return sql
 
 
+def uncomment_keyword_lines(sql, keyword):
+    # Create a pattern to uncomment line comments where the specified keyword is at the end
+    pattern = r'^\s*--\s*(.*?)\s*{}\s*$'.format(re.escape(keyword))
+    return re.sub(pattern, r'\1', sql, flags=re.MULTILINE).strip()
+
+
+class SyntaxFileValidator:
+    def validate(self, filepath, report: Report):
+
+        sql_raw = Path(filepath).read_text()
+
+        missing_params = get_missing_sql_params(sql_raw, REQUIRED_PARAMS)
+
+        if missing_params:
+            report.add_error('syntax', f"Missing required params: `{', '.join(missing_params)}`")
+
+        n_statements = len(split_statements(sql_raw))
+        if n_statements != 1:
+            report.add_error('syntax', f'Number of statements must be exactly one')
+
+
 class VerticaFileValidator:
-    def __init__(self, sql_metadata, limit0, n_days=1):
+    def __init__(self, limit0, n_days=1):
         self.limit0 = limit0
         self.n_days = n_days
-        self._sql_metadata = sql_metadata
 
     @staticmethod
     def _execute_limit0(con, sql):
@@ -66,21 +186,37 @@ class VerticaFileValidator:
         return {'output_columns': len(columns)}
 
     @staticmethod
-    def _execute_sql_and_collect_metrics(con, sql, table_name, subject):
+    def _execute_sql_and_collect_metrics(con, sql, table_name):
+        sql = uncomment_keyword_lines(sql, '@vertica')
+
         sql_wrapped = f'''
 create local temp table {table_name} on commit preserve rows as /*+direct*/ (
 select /*+syntactic_join*/ *
 from (
 {sql}
 ) _
-) order by {subject} segmented by hash({subject}) all nodes
+)
 '''
 
         with con.cursor() as cur:
             cur.execute(sql_wrapped)
 
             cur.execute(
-                'select * from dma.vw_dm_test_limit_exceed order by start_time desc limit 1;'
+                '''
+                select
+                        duration,
+                        input_rows,
+                        max_memory_gb,
+                        network_received_gb,
+                        network_sent_gb,
+                        read_gb,
+                        written_gb,
+                        spilled_gb,
+                        cpu_cycles_us,
+                        thread_count,
+                        session_id
+                 from dma.vw_dm_test_limit_exceed
+                 order by start_time desc limit 1;'''
             )
             row = cur.fetchone()
             columns = [col.name for col in cur.description]
@@ -92,200 +228,140 @@ from (
 
             return result
 
-    @staticmethod
-    def _adjust_report(report: dict):
-        new_report = report.copy()
-        output_data_size = report['output_rows'] * report['output_columns']
-
-        network_received = report['network_received_gb']
-        # Для очень больших источников лимит network_received пробивается легко
-        if network_received <= 100 and output_data_size >= 10**10:
-            new_report['network_received_exceed'] = ''
-        new_report['thread_count_exceed'] = ''
-
-        spilled = report['spilled_gb']
-        if spilled <= 300 and report['output_rows'] > 10**6:
-            new_report['spilled_exceed'] = ''
-
-        return new_report
-
-    def validate(self, filepath, primary_subject):
+    def validate(self, filepath, report: Report):
 
         try:
-
-            with open(filepath, 'r') as f:
-                sql_raw = f.read()
-
-            missing_params = get_missing_sql_params(sql_raw, REQUIRED_PARAMS)
-
-            if missing_params:
-                return {'error': f"Missing required params: `{', '.join(missing_params)}`"}
-
+            sql_raw = Path(filepath).read_text()
             sql_bind = _bind_date_period(sql_raw, self.n_days)
-
-            n_statements = len(split_statements(sql_bind))
-            if n_statements != 1:
-                return {'error': f'Number of statements must be exactly one'}
-
             with v_get_con() as con:
-                report = self._execute_limit0(con, sql_bind)
+
+                report.add_metrics('vertica', self._execute_limit0(con, sql_bind))
                 if self.limit0:
-                    return report
+                    return
 
                 filename = parse_sql_filename(filepath)
 
-                report |= self._execute_sql_and_collect_metrics(
-                    con, sql_bind, filename, primary_subject
-                )
-
-                return self._adjust_report(report)
+                metrics = self._execute_sql_and_collect_metrics(con, sql_bind, filename)
+                report.add_metrics('vertica', metrics)
 
         except Exception as e:
-            return {'error': str(e)}
+            return report.add_error('vertica', str(e))
 
 
 class TrinoFileValidator:
-    def __init__(self):
+    def __init__(self, limit0=True, n_days=1):
         self.not_found_tables = set()
+        self.limit0 = limit0
+        self.n_days = n_days
 
-    def validate(self, filepath):
+    def validate(self, filepath, report):
         try:
 
-            with open(filepath, 'r') as f:
-                sql_raw = f.read()
+            sql_raw = Path(filepath).read_text()
 
             sql = _bind_date_period(sql_raw, 1)
+            sql = uncomment_keyword_lines(sql, '@trino')
+
             with t_get_con() as con:
                 result = explain_validate(con, sql)
-                if 'error' in result and result['error'].error_name == 'TABLE_NOT_FOUND':
-                    match = re.search(r"Table '\w+\.([\w.]+)'", result['error'].message)
-                    if match:
-                        table_name = match.group(1)
-                        self.not_found_tables.add(table_name)
-                return result
+                if 'error' in result:
+                    message = result['error'].message
+                    if result['error'].error_name == 'TABLE_NOT_FOUND':
+                        match = re.search(r"Table '\w+\.([\w.]+)'", message)
+                        if match:
+                            table_name = match.group(1)
+                            self.not_found_tables.add(table_name)
+                    report.add_warning('trino', message)
+
+                    return
+
+                if self.limit0:
+                    return
+
+                result = explain_analyze(con, sql)
+                if 'error' in result:
+                    report.add_warning('trino', result['error'].message)
+                    return
+                report.add_metrics('trino', result)
 
         except Exception as e:
-            return {'error': str(e)}
+            return report.add_error('trino', str(e))
 
 
 class ClickhouseFileValidator:
-    def validate(self, filepath):
+    def validate(self, filepath, report: Report):
 
         try:
 
             with open(filepath, 'r') as f:
                 sql_raw = f.read()
-
-            n_statements = len(split_statements(sql_raw))
-            if n_statements != 1:
-                return {'error': f'Number of statements must be exactly one'}
 
             sql = _bind_date_period(sql_raw, 1)
             with ch_get_con() as con:
                 columns = ch_get_query_columns(con, sql)
-                return {'output_columns': len(columns)}
+                report.add_metrics('clickhouse', {'output_columns': len(columns)})
 
         except Exception as e:
-            return {'error': str(e)}
+            report.add_error('clickhouse', str(e))
 
 
 def is_sql_file(filepath):
     return re.match(SQL_FILES_PATTERN, filepath) is not None
 
 
-def get_exceed_metrics(execution_result):
-    result = {}
-    for field, value in execution_result.items():
-        if field.endswith('_exceed') and value:
-            result[field] = value
-        elif field == 'duration_exceed':
-            fact_dur = execution_result['duration']
-            if fact_dur > DURATION_SECONDS_LIMIT:
-                result[field] = f'{fact_dur}>{DURATION_SECONDS_LIMIT}'
-    return result
-
-
-REPORT_CONFIG = {
-    'duration': 'duration: {value} s',
-    'output_rows': 'output_rows: {value}',
-    'output_columns': 'output_columns: {value}',
-    'input_rows': 'input_rows: {value}',
-    'max_memory_gb': 'max_memory: {value} GB',
-    'network_received_gb': 'network_received: {value} GB',
-    'network_sent_gb': 'network_sent: {value} GB',
-    'read_gb': 'read: {value} GB',
-    'written_gb': 'written: {value} GB',
-    'spilled_gb': 'spilled: {value} GB',
-    'cpu_cycles_us': 'cpu_cycles_us: {value}',
-    'thread_count': 'thread_count: {value}',
-    'session_id': 'session_id: {value}',
-    # 'start_time': 'start_time: {value}',
-    # 'request': 'request: {value}',
-    # 'request_id': 'request_id: {value}',
-    # 'tablename': 'tablename: {value}',
-    # 'duration_exceed': 'duration_exceed: {value}',
-    # 'thread_count_exceed': 'thread_count_exceed: {value}',
-    # 'max_memory_exceed': 'max_memory_exceed: {value}',
-    # 'network_received_exceed': 'network_received_exceed: {value}',
-    # 'network_sent_exceed': 'network_sent_exceed: {value}',
-    # 'spilled_exceed': 'spilled_exceed: {value}',
-}
-
-
-def validate(filenames=None, limit0=False, n_days=1, validate_trino=True):
+def validate(filenames=None, limit0=False, n_days=1, validate_all=False, vertica_trino_flags=3):
     if filenames:
         modified_files = [f'{SQL_DIR}{fn}.sql' for fn in filenames]
+    elif validate_all:
+        modified_files = [f'{SQL_DIR}{fn}' for fn in os.listdir(SQL_DIR)]
     else:
         modified_files = filter(is_sql_file, list_modified_files())
 
     success = True
     sql_metadata = get_sql_metadata()
-    vertica_validator = VerticaFileValidator(sql_metadata, limit0, n_days)
+
+    syntax_validator = SyntaxFileValidator()
+    vertica_validator = VerticaFileValidator(limit0, n_days)
     clickhouse_validator = ClickhouseFileValidator()
-    trino_validator = TrinoFileValidator()
+    trino_validator = TrinoFileValidator(limit0, n_days)
 
     for path in modified_files:
 
-        report = {}
+        report = Report(path)
         filename = parse_sql_filename(path)
         meta = sql_metadata.get(filename)
 
         if not meta:
-            report |= {'error': f'No config in `sources.yaml` found for `{filename}`'}
+            report.add_error('repo', f'No config in `sources.yaml` found for `{filename}`')
 
-        elif meta['database'] == 'vertica':
-            report |= vertica_validator.validate(path, meta['primary_subject'])
-        elif meta['database'] == 'clickhouse':
-            report |= clickhouse_validator.validate(path)
+        syntax_validator.validate(path, report)
 
-        if 'error' in report:
-            print(f'FAILED: {path}')
-            print(report['error'])
+        if report.print_errors():
             success = False
+            print(f'FAILED: {path}')
             continue
 
-        exceed = get_exceed_metrics(report)
-        if not exceed:
-            print(f'PASSED: {path}')
+        if meta['database'] == 'vertica':
+            if vertica_trino_flags & 1:
+                vertica_validator.validate(path, report)
+            if vertica_trino_flags & 2:
+                trino_validator.validate(path, report)
+        elif meta['database'] == 'clickhouse':
+            clickhouse_validator.validate(path, report)
 
+        if report.print_errors():
+            success = False
+            print(f'FAILED: {path}')
+            continue
+
+        report.print_passed_metrics()
+        report.print_warnings()
+
+        if not report.print_failed_metrics():
+            print(f'PASSED: {path}')
         else:
             print(f'FAILED: {path}')
-            for metric, value in exceed.items():
-                print(f'{metric}: {value}')
-                success = False
-
-        if validate_trino:
-            trino_validation_result = trino_validator.validate(path)
-            if 'error' in trino_validation_result:
-                print(
-                    f'WARNING: syntax is not valid for Trino. {trino_validation_result["error"]}'
-                )
-
-        print('')
-        for metric, template in REPORT_CONFIG.items():
-            if metric in report:
-                print(template.format(value=report[metric]))
-        print('')
+            success = False
 
     if success:
         print('SQL validation PASSED')
@@ -300,10 +376,12 @@ def validate(filenames=None, limit0=False, n_days=1, validate_trino=True):
 
 @click.command()
 @click.option('--filename', '-n', 'filenames', type=str, multiple=True)
+@click.option('--all', '-a', 'validate_all', is_flag=True, default=False)
 @click.option('--limit0', '-0', 'limit0', type=str, is_flag=True, default=False)
 @click.option('--n-days', '-d', 'n_days', type=int, default=1)
-def main(filenames, limit0, n_days):
-    validate(filenames, limit0, n_days)
+@click.option('--vertica-trino-flags', '-vt', 'vertica_trino_flags', type=int, default=3)
+def main(filenames, limit0, n_days, validate_all, vertica_trino_flags):
+    validate(filenames, limit0, n_days, validate_all, vertica_trino_flags)
 
 
 if __name__ == '__main__':

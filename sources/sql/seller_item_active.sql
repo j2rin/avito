@@ -88,7 +88,8 @@ select /*+syntactic_join*/
         ss.user_id,
         ss.microcat_id,
         ss.profession_id
-        ) as user_microcat_price
+        ) as user_microcat_price,
+    COALESCE(ss.group_id, ss.item_id) as seller_group
 
 from DMA.o_seller_item_active ss
 
@@ -210,5 +211,5 @@ left join /*+distrib(l,r)*/ (
     and sic.item_id = ss.item_id
     and sic.event_date = ss.event_date
 
-where (ss.is_user_test is null or ss.is_user_test is false)
+where (ss.is_user_test is null or ss.is_user_test = false)
     and ss.event_date between :first_date and :last_date
