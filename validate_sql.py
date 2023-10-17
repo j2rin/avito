@@ -106,7 +106,7 @@ class Report:
         if self._errors:
             print(f'{"FAILED:":10}{self._path}')
             for error in self._errors:
-                print(f'{"":10}[{error.kind}] {error.message}')
+                print(f'{"":10}{f"[{error.kind}]":10}{error.message}')
             return True
         return False
 
@@ -118,12 +118,12 @@ class Report:
         limit = self._metric_limits.get(m.metric, '')
         if limit:
             limit = f' (limit {limit})'
-        print(f'{"":10}[{m.kind}] {m.metric}: {value}{limit}')
+        print(f'{"":10}{f"[{m.kind}]":10}{m.metric}: {value}{limit}')
 
     def print_failed_metrics(self) -> bool:
         failed_metrics = [m for m in self._metrics if not m.ok]
         if failed_metrics:
-            print(f'{"FAILED:":10}{self._path}')
+            print(f'{"FAILED:":8}{self._path}')
             for m in failed_metrics:
                 self.print_metric(m)
             return True
@@ -132,15 +132,15 @@ class Report:
     def print_passed_metrics(self) -> None:
         passed_metrics = [m for m in self._metrics if m.ok]
         if passed_metrics:
-            print(f'{"PASSED:":10}{self._path}')
+            print(f'{"PASSED:":8}{self._path}')
             for metric in passed_metrics:
                 self.print_metric(metric)
 
     def print_warnings(self):
         if self._warnings:
-            print(f'{"WARNING:":10}{self._path}')
+            print(f'{"WARNING:":8}{self._path}')
             for warning in self._warnings:
-                print(f'{"":10}[{warning.kind}] {warning.message}')
+                print(f'{"":10}{f"[{warning.kind}]":10}{warning.message}')
 
 
 def parse_sql_filename(path):
