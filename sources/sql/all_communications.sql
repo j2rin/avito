@@ -284,8 +284,8 @@ select
         ,True is_common_funnel
         ,case when  (((  (co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) or confirm_date is null)) then False else True end as is_answered
         ,co.platform_id as platform_id -- платформа баера
-        ,null::int seller_platform_id -- платформа селлера
-        ,null::int  as buyer_cookie_id
+        ,cast(null as int) as seller_platform_id -- платформа селлера
+        ,cast(null as int) as buyer_cookie_id
         ,coi.microcat_id
         ,cm.category_id as category_id
         ,coi.location_id
@@ -333,9 +333,9 @@ select
         ,0 as talk_duration
         ,True is_common_funnel
         ,case when accepted_flg = 1 then true else false end as is_answered
-        ,null::int as platform_id-- платформа баера ?
-        ,null::int seller_platform_id -- платформа селлера??
-        ,null::int as buyer_cookie_id 
+        ,cast(null as int) as platform_id-- платформа баера ?
+        ,cast(null as int) seller_platform_id -- платформа селлера??
+        ,cast(null as int) as buyer_cookie_id 
         ,case when accepted_flg = 1 and canceled_flg = 0 then true else false end  as is_target
         ,case when accepted_flg = 1 and canceled_flg = 0 then 'target' else 'preliminary' end as type
 from dma.services_calendar_orders sco
@@ -378,7 +378,7 @@ select
         ,'' as communication_subtype
         ,stro.order_id as communication_id
         ,buyer_id
-        ,null::int as seller_id
+        ,cast(null as int) as seller_id
         ,True as caller_is_buyer
         ,cast(c.confirmed_time as date) as reply_date
         ,datediff ('minute',order_create_time, c.confirmed_time ) as reply_time_minutes
@@ -387,9 +387,9 @@ select
         ,0 as talk_duration
         ,True is_common_funnel
         ,case when c.confirmed_time is not null then true else false end as is_answered
-        ,null::int as platform_id-- платформа баера ?
-        ,null::int seller_platform_id -- платформа селлера??
-        ,null::int as buyer_cookie_id 
+        ,cast(null as int) as platform_id-- платформа баера ?
+        ,cast(null as int) seller_platform_id -- платформа селлера??
+        ,cast(null as int) buyer_cookie_id 
         ,case when  pay_date  is not null  then true else false end  as is_target
         ,case when pay_date  is not null  then 'target' else 'preliminary' end as type
 from dma.short_term_rent_orders stro
