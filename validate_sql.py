@@ -36,7 +36,7 @@ METRIC_LIMITS = {
     'output_rows': 1_000_000_000_000,
     'read_gb': 200,
     'spilled_gb': 100,
-    'thread_count': 30000,
+    'thread_count': 50000,
     'written_gb': 100,
 }
 
