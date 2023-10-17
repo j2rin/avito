@@ -54,3 +54,4 @@ from DMA.click_stream_counters cs
 left join DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
 left join DMA.current_locations cl on cl.location_id = cs.location_id
 where cast(cs.event_date as date) between :first_date and :last_date
+    --and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino

@@ -31,3 +31,4 @@ FROM dma.matched_anonymous_calls_metric_observation mac
 LEFT JOIN /*+jtype(h)*/ DMA.current_microcategories cm on cm.microcat_id   = mac.microcat_id
 LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id   = mac.location_id
 where mac.observation_date between :first_date and :last_date
+    --and observation_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) --@trino

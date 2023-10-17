@@ -36,11 +36,17 @@ METRIC_LIMITS = {
     'output_rows': 1_000_000_000_000,
     'read_gb': 200,
     'spilled_gb': 100,
-    'thread_count': 30000,
+    'thread_count': 50000,
     'written_gb': 100,
 }
 
-TRINO_VALIDATED_SOURCES = ['buyer_stream']
+TRINO_VALIDATED_SOURCES = [
+    'buyer_stream',
+    'buyer_call',
+    'classified_revenue',
+    'total_revenue',
+    'support',
+]
 
 
 @dataclass
@@ -98,10 +104,9 @@ class Report:
 
     def print_errors(self):
         if self._errors:
-            print(f'ERROR: {self._path}')
+            print(f'{"FAILED:":10}{self._path}')
             for error in self._errors:
-                print(f'{error.kind}: {error.message}')
-            print('')
+                print(f'{"":10}{f"[{error.kind}]":10}{error.message}')
             return True
         return False
 
@@ -113,32 +118,29 @@ class Report:
         limit = self._metric_limits.get(m.metric, '')
         if limit:
             limit = f' (limit {limit})'
-        print(f'[{m.kind}] {m.metric}: {value}{limit}')
+        print(f'{"":10}{f"[{m.kind}]":10}{m.metric}: {value}{limit}')
 
     def print_failed_metrics(self) -> bool:
         failed_metrics = [m for m in self._metrics if not m.ok]
         if failed_metrics:
-            print(f'ERROR: {self._path}')
+            print(f'{"FAILED:":10}{self._path}')
             for m in failed_metrics:
                 self.print_metric(m)
-            print('')
             return True
         return False
 
     def print_passed_metrics(self) -> None:
         passed_metrics = [m for m in self._metrics if m.ok]
         if passed_metrics:
-            print(f'INFO: {self._path}')
+            print(f'{"PASSED:":10}{self._path}')
             for metric in passed_metrics:
                 self.print_metric(metric)
-            print('')
 
     def print_warnings(self):
         if self._warnings:
-            print(f'WARNING: {self._path}')
+            print(f'{"WARNING:":10}{self._path}')
             for warning in self._warnings:
-                print(f'[{warning.kind}] {warning.message}')
-            print('')
+                print(f'{"":10}{f"[{warning.kind}]":10}{warning.message}')
 
 
 def parse_sql_filename(path):
@@ -379,16 +381,12 @@ def validate(filenames=None, limit0=False, n_days=1, validate_all=False, vertica
 
         if report.print_errors():
             success = False
-            print(f'FAILED: {path}')
             continue
 
         report.print_passed_metrics()
         report.print_warnings()
 
-        if not report.print_failed_metrics():
-            print(f'PASSED: {path}')
-        else:
-            print(f'FAILED: {path}')
+        if report.print_failed_metrics():
             success = False
 
     if success:

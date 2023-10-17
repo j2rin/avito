@@ -15,6 +15,7 @@ left join dma.current_microcategories miq on ur.microcat_id = miq.microcat_id
 where ur.user_id not in (select cu.user_id from dma."current_user" cu where cu.IsTest)
     and ctt.IsRevenue
     and cast(ur.event_date as date) between :first_date and :last_date
+    --and ur.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 group by 1,2,3,4,5,6,7,8
 union all 
 select 
