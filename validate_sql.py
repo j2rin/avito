@@ -40,6 +40,8 @@ METRIC_LIMITS = {
     'written_gb': 100,
 }
 
+TRINO_VALIDATED_SOURCES = ['buyer_stream']
+
 
 @dataclass
 class InfoMessage:
@@ -61,6 +63,20 @@ class Report:
         self._errors: list[InfoMessage] = []
         self._warnings: list[InfoMessage] = []
         self._path = path
+        self._filename = parse_sql_filename(path)
+
+        self._metric_limits = METRIC_LIMITS.copy()
+        if parse_sql_filename(path) == 'buyer_stream':
+            self._metric_limits.update(
+                {
+                    'duration': 1500,
+                    'max_memory_gb': 30,
+                    'written_gb': 1300,
+                    'spilled_gb': 1500,
+                    'cpu_cycles_us': 80_000_000_000,
+                    'thread_count': 70000,
+                }
+            )
 
     def add_error(self, kind, message):
         self._errors.append(InfoMessage(kind=kind, message=message))
@@ -68,13 +84,17 @@ class Report:
     def add_warning(self, kind, message):
         self._warnings.append(InfoMessage(kind=kind, message=message))
 
+    def is_limit_ok(self, metric_name, metric_value):
+        limit = self._metric_limits.get(metric_name)
+        if limit:
+            return metric_value <= limit
+        return True
+
     def add_metrics(self, kind, metrics):
         for m, v in metrics.items():
-            limit = METRIC_LIMITS.get(m)
-            ok = True
-            if limit:
-                ok = v <= limit
-            self._metrics.append(MetricMessage(kind=kind, metric=m, value=v, ok=ok))
+            self._metrics.append(
+                MetricMessage(kind=kind, metric=m, value=v, ok=self.is_limit_ok(m, v))
+            )
 
     def print_errors(self):
         if self._errors:
@@ -88,10 +108,9 @@ class Report:
     def get_exceed_metrics(self):
         return [m for m in self._metrics if not m.ok]
 
-    @staticmethod
-    def print_metric(m: MetricMessage):
+    def print_metric(self, m: MetricMessage):
         value = m.value
-        limit = METRIC_LIMITS.get(m.metric, '')
+        limit = self._metric_limits.get(m.metric, '')
         if limit:
             limit = f' (limit {limit})'
         print(f'[{m.kind}] {m.metric}: {value}{limit}')
@@ -255,6 +274,7 @@ class TrinoFileValidator:
         self.n_days = n_days
 
     def validate(self, filepath, report):
+        filename = parse_sql_filename(filepath)
         try:
 
             sql_raw = Path(filepath).read_text()
@@ -271,7 +291,11 @@ class TrinoFileValidator:
                         if match:
                             table_name = match.group(1)
                             self.not_found_tables.add(table_name)
-                    report.add_warning('trino', message)
+
+                    if filename in TRINO_VALIDATED_SOURCES:
+                        report.add_error('trino', message)
+                    else:
+                        report.add_warning('trino', message)
 
                     return
 
@@ -280,7 +304,11 @@ class TrinoFileValidator:
 
                 result = explain_analyze(con, sql)
                 if 'error' in result:
-                    report.add_warning('trino', result['error'].message)
+                    message = result['error'].message
+                    if filename in TRINO_VALIDATED_SOURCES:
+                        report.add_error('trino', message)
+                    else:
+                        report.add_warning('trino', message)
                     return
                 report.add_metrics('trino', result)
 
