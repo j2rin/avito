@@ -123,7 +123,7 @@ class Report:
     def print_failed_metrics(self) -> bool:
         failed_metrics = [m for m in self._metrics if not m.ok]
         if failed_metrics:
-            print(f'{"FAILED:":8}{self._path}')
+            print(f'{"FAILED:":10}{self._path}')
             for m in failed_metrics:
                 self.print_metric(m)
             return True
@@ -132,13 +132,13 @@ class Report:
     def print_passed_metrics(self) -> None:
         passed_metrics = [m for m in self._metrics if m.ok]
         if passed_metrics:
-            print(f'{"PASSED:":8}{self._path}')
+            print(f'{"PASSED:":10}{self._path}')
             for metric in passed_metrics:
                 self.print_metric(metric)
 
     def print_warnings(self):
         if self._warnings:
-            print(f'{"WARNING:":8}{self._path}')
+            print(f'{"WARNING:":10}{self._path}')
             for warning in self._warnings:
                 print(f'{"":10}{f"[{warning.kind}]":10}{warning.message}')
 
