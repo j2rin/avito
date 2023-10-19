@@ -89,6 +89,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from dma.paying_user_report
         where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
+            --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     )
 ) ci
     on ci.infmquery_id = ur.infmquery_id and ur.infmquery_id != -1
@@ -102,7 +103,7 @@ left join (
         logical_category_id,
         user_segment,
         converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where cast(converting_date as date) <= :last_date
 ) usm
@@ -122,6 +123,7 @@ left join (
     select event_date, user_id, max(cpaaction_type) as cpaaction_type
     from dma.user_day_cpa
     where event_date between :first_date and :last_date
+        --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     group by 1,2
 ) udc
     on ur.user_id = udc.user_id
@@ -134,9 +136,11 @@ left join (
     from dma.presence_users_distribution
     where event_date between :first_date and :last_date
         and tariff_scenario in ('mvp_cpt', 'ss_cpt')
+        --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 ) cpt
     on ur.user_id = cpt.user_id
     and ur.event_date = cpt.event_date
 
 where ur.user_id not in (select cu.user_id from dma."current_user" cu where cu.IsTest)
     and cast(ur.event_date as date) between :first_date and :last_date
+    --and ur.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
