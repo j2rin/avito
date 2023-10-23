@@ -24,5 +24,6 @@
 	       cl.Logical_Level                                             as location_level_id
      FROM dma.str_metric_observation mac
     LEFT JOIN /*+jtype(h)*/ DMA.current_microcategories cm on cm.microcat_id   = mac.microcat_id
-	LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id   = mac.location_id
-where cast(observation_date as date) between :first_date and :last_date
+    LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id   = mac.location_id
+    where cast(observation_date as date) between :first_date and :last_date
+        -- and observation_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) --@trino
