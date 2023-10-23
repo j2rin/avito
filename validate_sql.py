@@ -60,6 +60,7 @@ TRINO_VALIDATED_SOURCES = [
     'classified_revenue',
     'total_revenue',
     'support',
+    'seller_item_active',
 ]
 
 
