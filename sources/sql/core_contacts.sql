@@ -4,14 +4,12 @@ users as (
     from dma.click_stream_contacts
     where cast(eventdate as date) between :first_date and :last_date
         and item_user_id is not null
+        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 )
 select /*+syntactic_join*/
     csc.item_id,
     cast(csc.eventdate as date) as event_date,
-    coalesce(
-        csc.platform_id,
-        public.platform(csc.apptype_id, csc.clientsideapp_id)
-    )                                                           as platform_id,
+    csc.platform_id,
     csc.last_nondirect_session_source_id as traffic_source_id,
     csc.eventdate as action_dttm,
     item_user_id,
@@ -38,7 +36,6 @@ select /*+syntactic_join*/
     cl.Logical_Level                                            as location_level_id,
     cast(null as varchar) as user_segment,
     csc.user_id,
-    hash(lc.logical_category_id, csc.item_id) as logcat_item,
     lc.logical_param1_id,
     lc.logical_param2_id
 from dma.click_stream_contacts csc
@@ -56,6 +53,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from dma.click_stream_contacts
         where cast(eventdate as date) between :first_date and :last_date
             and infmquery_id is not null
+            -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
     )
 ) ic
     on ic.infmquery_id = csc.infmquery_id
@@ -73,7 +71,9 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from dma.click_stream_contacts
         where cast(eventdate as date) between :first_date and :last_date
             and cookie_id is not null
+            -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
     )
+        -- and first_contact_event_year > date('2000-01-01') -- @trino
 ) bb
     on   csc.cookie_id = bb.cookie_id
     and  lc.logical_category_id = bb.logical_category_id
@@ -82,8 +82,8 @@ left join /*+jtype(h),distrib(l,a)*/ (
     select
         user_id,
         logical_category_id, user_segment,
-        timestampadd('s', 0, cast(converting_date as timestamp(0))) as converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        date_trunc('second', cast(converting_date as timestamp)) as converting_date,
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where user_id in (select user_id from users)
 ) usm
@@ -115,6 +115,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
             from dma.click_stream_contacts
             where cast(eventdate as date) between :first_date and :last_date
                 and item_id is not null
+                -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
         )
     )t
     where rn = 1
@@ -129,3 +130,4 @@ left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups cpg
 where csc.cookie_id is not null
     and csc.item_user_id not in (select user_id from dma."current_user" where istest)
     and cast(csc.eventdate as date) between :first_date and :last_date
+    -- and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
