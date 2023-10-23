@@ -61,6 +61,14 @@ TRINO_VALIDATED_SOURCES = [
     'total_revenue',
     'support',
     'seller_item_active',
+    'core_contacts',
+    'autoteka_reports',
+    'buyer_call',
+    'broker_events_revenue',
+    'other_projects_revenue',
+    'delivery_orders',
+    'page_views',
+    'qd_lots',
 ]
 
 
