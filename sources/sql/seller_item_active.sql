@@ -82,7 +82,7 @@ select /*+syntactic_join*/
     ss.is_item_cpa,
     ss.is_user_cpa,
     ss.cpaaction_type,
-    DECODE(ss.reputation_class_id, 1, 'low', 2, 'medium', 3, 'high') as reputation_class,
+    case ss.reputation_class_id when 1 then 'low' when 2 then 'medium' when 3 then 'high' end as reputation_class,
     hash(
         round(exp(round(ln(ss.price), 1))),
         ss.user_id,
@@ -126,7 +126,7 @@ left join /*+jtype(h),distrib(l,r)*/ (
             logical_category_id,
             user_segment,
             converting_date as from_date,
-            lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
+            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
         from DMA.user_segment_market
         where true
             and user_id in (select user_id from sia_users)
