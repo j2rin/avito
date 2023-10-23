@@ -5,13 +5,8 @@ buyer_stream:
   column_map:
     query: query_id
     item: item_id
-    session: [cookie_id, session_no]
     cookie: cookie_id
     user: user_id
-    cookie_item: [cookie_id, item_id]
-    item_x: [item_id, x]
-    x: [cookie_id, x]
-    cookie_logcat: [cookie_id, logical_category_id]
   dimensions:
     - platform
     - vertical
@@ -109,7 +104,6 @@ seller_item_active:
   column_map:
     item: item_id
     user: user_id
-    user_logcat: [user_id, logical_category_id]
   dimensions:
     - platform
     - vertical
@@ -283,8 +277,6 @@ core_contacts:
   metric_configs: [core_contacts]
   column_map:
     cookie: cookie_id
-    logcat_item: [item_id, logical_category_id]
-    cookie_logcat: [cookie_id, logical_category_id]
   database: vertica
   sql: core_contacts
   dimensions:
@@ -465,7 +457,6 @@ delivery_orders_buyer:
   sql: delivery_orders
   column_map:
     deliveryorder: deliveryorder_id
-    buyer_item: [buyer_id, item_id]
   dimensions:
     - platform
     - vertical
@@ -1243,8 +1234,6 @@ clickstream_counters:
   sql: clickstream_counters
   column_map:
     cookie: cookie_id
-    cookie_order: [cookie_id, orderid]
-    cookie_item: [cookie_id, item_id]
   dimensions:
     [
       platform,
@@ -1301,10 +1290,8 @@ clickstream_sparse.clickhouse:
   sql: clickstream_sparse
   column_map:
     platform_id: business_platform
-    cookie_item: [u, iid]
     cookie: u
     item: iid
-    item_x: [iid, x]
     x_eid: __x_eid
     q: __x_q
     engine: _x__engine
@@ -1998,8 +1985,6 @@ autoload_package_info:
 
 user_cohort:
   metric_configs: [user_cohort]
-  column_map:
-    user_logcat: [user_id, logical_category_id]
   database: vertica
   sql: user_cohort
   dimensions: [vertical, logical_category, region, city, category, subcategory]
@@ -2126,7 +2111,6 @@ re_nd_buyer_stream:
     item: item_id
     cookie: cookie_id
     user: user_id
-    cookie_item: [cookie_id, item_id]
   dimensions:
     - platform
     - vertical
@@ -2345,7 +2329,6 @@ cpa_calls_metrics:
   sql: cpa_calls_metrics
   column_map:
     user: user_id
-    user_logcat: [user_id, logical_category_id]
   dimensions:
     [
       vertical,
@@ -2369,9 +2352,7 @@ new_pro_listers:
   database: vertica
   sql: new_pro_listers
   column_map:
-    user_logcat: [user_id, logical_category_id]
     user: user_id
-    user_vertical: [user_id, vertical_id]
   dimensions: [vertical, logical_category, is_asd, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
@@ -2504,7 +2485,6 @@ short_rent_item_trx:
   column_map:
     item: item_id
     user: user_id
-    user_logcat: [user_id, logical_category_id]
   dimensions:
     - platform
     - vertical
@@ -2525,7 +2505,6 @@ deal_confirmed:
   column_map:
     item: item_id
     user: user_id
-    user_logcat: [user_id, logical_category_id]
   dimensions:
     - vertical
     - logical_category
@@ -2819,8 +2798,6 @@ target_contact:
   column_map:
     cookie: buyer_cookie_id
     user: buyer_id
-    logcat_item: [item_id, logical_category_id]
-    cookie_logcat: [buyer_cookie_id, logical_category_id]
   dimensions:
     [
       platform,
@@ -2848,8 +2825,6 @@ target_contact_seller:
   sql: target_contact
   column_map:
     user: seller_id
-    logcat_item: [item_id, logical_category_id]
-    user_logcat: [seller_id, logical_category_id]
   dimensions:
     [
       vertical,
@@ -2876,8 +2851,6 @@ cart_stream:
   metric_configs: [cart_stream]
   database: vertica
   sql: cart_stream
-  column_map:
-    cookie_item: [cookie_id, item_id]
   dimensions:
     - platform
     - vertical
@@ -2997,7 +2970,6 @@ operating_model_asd_user:
   sql: operating_model_asd_user
   column_map:
     user: user_id
-    user_vertical: [user_id, vertical_id]
   dimensions: [vertical, logical_category, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
@@ -3009,7 +2981,6 @@ operating_model_asd_revenue:
   sql: operating_model_asd_revenue
   column_map:
     user: user_id
-    user_vertical: [user_id, vertical_id]
   dimensions: [vertical, logical_category, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
@@ -3179,8 +3150,6 @@ all_communications_bx:
   column_map:
     cookie: buyer_cookie_id
     user: buyer_id
-    logcat_item: [item_id, logical_category_id]
-    user_logcat: [buyer_id, logical_category_id]
   dimensions:
     [
       platform,
@@ -3209,7 +3178,6 @@ all_communications_sx:
   column_map:
     user: seller_id
     platform_id: seller_platform_id
-    logcat_item: [item_id, logical_category_id]
   dimensions:
     [
       platform,
@@ -3362,7 +3330,6 @@ active_pro_sellers:
   sql: active_pro_sellers
   column_map:
     user: user_id
-    user_vertical: [user_id, vertical_id]
   dimensions: [vertical, logical_category, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
@@ -3473,7 +3440,6 @@ delivery_stream:
       item: item_id
       cookie: cookie_id
       user: user_id
-      cookie_item: [ cookie_id, item_id ]
     dimensions:
       - platform
       - vertical
