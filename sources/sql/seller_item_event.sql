@@ -18,6 +18,7 @@ smartphone_buyout_screens as (
        , max (case when eid = 6519 or (eid = 6703 and banner_type = 'invitation') then event_date end) as smartphone_buyout_seen_invitation_date
     from DMA.smartphone_buyout_screens as sbs
     where cast(event_date as date) between :first_date and :last_date
+        -- and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
     group by 1,2
 )
 select
@@ -72,12 +73,12 @@ select
     lc.logical_param2_id,
     coalesce(t.condition_id, 0)                                as condition_id,
     t.is_delivery_active,
-    hash(
-        round(exp(round(ln(t.price), 1))),
-        t.user_id,
-        t.microcat_id,
-        t.profession_id
-        ) as user_microcat_price,
+    from_big_endian_64(xxhash64(
+        to_big_endian_64(cast(round(exp(round(ln(abs(coalesce(t.price, 0)) + 1), 1))) as bigint)) ||
+        to_big_endian_64(coalesce(t.user_id, 0)) ||
+        to_big_endian_64(coalesce(t.microcat_id, 0)) ||
+        to_big_endian_64(coalesce(t.profession_id, 0))
+    )) as user_microcat_price,
     smartphone_buyout_seen_invitation_cd,
     smartphone_buyout_entered_flow_cd,
     smartphone_buyout_request_screen_cd,
@@ -92,6 +93,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from dma.o_seller_item_event
         where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
+            -- and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
     )
 ) ic
     on ic.infmquery_id = t.infmquery_id
@@ -104,3 +106,4 @@ left join /*+distrib(l,a)*/ dma.user_segment_market usm on t.user_id = usm.user_
 left join /*+jtype(h),distrib(l,a)*/ am_client_day acd on t.user_id = acd.user_id and t.event_date between acd.active_from_date and acd.active_to_date
 left join /*+jtype(h),distrib(l,a)*/ smartphone_buyout_screens as sbs on t.item_id = sbs.item_id and t.event_date = sbs.event_date
 where t.event_date between :first_date and :last_date
+    -- and t.event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino

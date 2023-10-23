@@ -69,6 +69,8 @@ TRINO_VALIDATED_SOURCES = [
     'delivery_orders',
     'page_views',
     'qd_lots',
+    'seller_item_event',
+    'str',
 ]
 
 
