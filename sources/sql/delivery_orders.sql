@@ -195,8 +195,11 @@ pre as (
         case when original.status = 'verified' then true else false end as is_original,
         -- has_short_video
         case when sv.video is not null then true else false end      as has_short_video,
-        date_diff('SECOND', co.create_date, case when ps.platformstatus = 'paid' then ps.actual_date end)/60 as time_to_payment,cast(
-        (co.items_price >= 20000) as boolean) as is_high_price,
+        date_diff('SECOND', co.create_date, case when ps.platformstatus = 'paid' then ps.actual_date end)/60 as time_to_payment,
+  		cast((co.items_price >= 20000) as boolean) as is_high_price,
+  		cast(((co.items_price >= 15000) and (co.items_price < 20000)) as boolean) as is_between_15k_and_20k_price,
+        cast(((co.items_price >= 10000) and (co.items_price < 15000)) as boolean) as is_between_10k_and_15k_price,
+        cast((co.items_price < 10000) as boolean) as is_less_than_10k_price,
         -- есть ли возможность возврата в течение 14 дней
         case when co.workflow in ('delivery-b2c', 'delivery-b2c-courier') then True else False end b2c_wo_dbs,
         co.return_within_14_days as c2c_return_within_14_days,
