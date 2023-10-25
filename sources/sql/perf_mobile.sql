@@ -39,6 +39,7 @@ select
     screen_is_frequent,
     frequent_screens_enabled,
     max_event_duration,
-    max_session_duration
+    max_session_duration,
+    vertical
 from dma.o_perf_mobile m
 where cast(observation_date as date) between :first_date and :last_date
