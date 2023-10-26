@@ -303,6 +303,36 @@ core_contacts:
   primary_subject: visitor
   dtm: event_date
 
+core_contact_user:
+  metric_configs: [core_contact_user]
+  column_map:
+    user: user_id
+  database: vertica
+  sql: core_contacts
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      logical_param1,
+      logical_param2,
+      category,
+      subcategory,
+      param1,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      price_group,
+      is_asd,
+      user_segment_market,
+      asd_user_group,
+    ]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
 advert_funnel:
   metric_configs: [advert_funnel]
   column_map:
