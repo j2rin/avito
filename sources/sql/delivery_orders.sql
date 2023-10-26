@@ -10,31 +10,13 @@ delivery_status_date as ( --чтобы побороть дубли статус�
     having min(actual_date) >= :first_date
     order by 1
 ),
-orders as (
-    select distinct deliveryorder_id
-    from delivery_status_date
-    order by 1
-),
-buyers as (
-    select distinct buyer_id
-    from dma.current_order
-    where deliveryorder_id in (select deliveryorder_id from orders)
-    order by 1
-),
-sellers as (
-    select distinct seller_id
-    from dma.current_order_item
-    where deliveryorder_id in (select deliveryorder_id from orders)
-    order by 1
-),
 cic as (
         select infmquery_id, logcat_id
         from infomodel.current_infmquery_category
         where infmquery_id in (
             select distinct infmquery_id
             from dma.current_order_item
-            where deliveryorder_id in (select deliveryorder_id from orders)
-                and infmquery_id is not null
+            where infmquery_id is not null
         )
     order by 1,2),
 acd as (
@@ -47,7 +29,6 @@ acd as (
         from DMA.am_client_day_versioned
         where active_from_date <= :last_date
             and active_to_date >= :first_date
-            and user_id in (select seller_id from sellers)
     order by 1,2),
 du as (
         select
@@ -59,7 +40,6 @@ du as (
             --and is_test is false
             --and not is_deleted
             and (coalesce(pay_date, confirm_date) <= :last_date or accept_date <= :last_date)
-            and buyer_id in (select buyer_id from buyers)
         group by 1
         order by 1
     ),
@@ -69,34 +49,37 @@ usm as (
         logical_category_id,
         user_segment,
         converting_date as from_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
     from DMA.user_segment_market
     where true
         and converting_date <= :last_date
-        and user_id in (select seller_id from sellers)
     order by 1
 ),
 ub as (
     select
         co.purchase_id,
-        MAX(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
-        SUM(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
+        MAX(case when expired_date >= date('2022-03-01') and expired_date >= (date(now()) - INTERVAL '5' YEAR) and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
+        SUM(case when expired_date >= date('2022-03-01') and expired_date >= (date(now()) - INTERVAL '5' YEAR) and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
     from dma.current_order co
     left join dma.user_payment_bindings pb on pb.user_id = co.buyer_id
     where true
         and pb.external_source_provider_id in (18)
         and pb.is_available = True
-        and co.deliveryorder_id in (select deliveryorder_id from orders)
     group by 1
     order by 1
 ),
 original as(
   select ich.item_id, 
        actual_date,
+       lead(actual_date, 1, cast('2099-01-01' as date)) over(partition by ich.item_id order by actual_date) as actual_date_next,
        status
 from DDS.L_Item_AuthCheck ich
     join DDS.S_AuthCheck_Status ch
         on ich.AuthCheck_id = ch.AuthCheck_id
+),
+s_item_video as (
+    select *, lead(actual_date,1,cast('2099-01-01' as date)) over(partition by item_id order by actual_date) as actual_date_next
+    from DDS.s_item_video
 ),
 pre as (
     select
@@ -120,16 +103,16 @@ pre as (
         co.real_delivery_provider_cost/co.items_qty/1.2 as real_delivery_provider_cost_no_vat, --нормируем на кол-во айтемов в заказе, чтобы не дублировать стоимость доставки
         co.delivery_discount/co.items_qty/1.2 as delivery_discount_no_vat, --нормируем на кол-во айтемов в заказе, чтобы не дублировать стоимость скидку на доставку
         case
-            when cast(create_date as date) >= '2020-08-01' --просто мы начали писать approximate_delivery_provider_cost только в середине июля
+            when cast(create_date as date) >= date('2020-08-01') --просто мы начали писать approximate_delivery_provider_cost только в середине июля
             then (co.delivery_revenue/1.2 - co.safedeal_comission - co.delivery_comission - co.approximate_delivery_provider_cost/1.2)/co.items_qty
         end as approximate_delivery_margin,
         case
-            when cast(create_date as date) >= '2020-08-01' --просто мы начали писать approximate_delivery_provider_cost только в середине июля
+            when cast(create_date as date) >= date('2020-08-01') --просто мы начали писать approximate_delivery_provider_cost только в середине июля
             then (co.delivery_revenue/1.2 - co.safedeal_comission - co.delivery_comission - coalesce(co.real_delivery_provider_cost, co.approximate_delivery_provider_cost)/1.2)/co.items_qty
         end as real_delivery_margin,
         coi.seller_commission,
         coi.seller_commission/1.2 as seller_commission_no_vat,
-  		case when lower(co.workflow) like '%b2c%' then coi.seller_commission/1.2 end as b2c_white_commission_no_vat,
+        case when lower(co.workflow) like '%b2c%' then coi.seller_commission/1.2 end as b2c_white_commission_no_vat,
         coi.trx_commission/1.2 as trx_commission_no_vat,
         case when lower(co.workflow) like '%b2c%' then coi.seller_commission end as b2c_white_commission,
         coi.trx_commission as trx_commission,
@@ -212,12 +195,18 @@ pre as (
         case when original.status = 'verified' then true else false end as is_original,
         -- has_short_video
         case when sv.video is not null then true else false end      as has_short_video,
-        TIMESTAMPDIFF(SECOND, co.create_date, case when ps.platformstatus = 'paid' then ps.actual_date end)/60 as time_to_payment,cast(
-  		(co.items_price >= 20000) as boolean) as is_high_price,
+        date_diff('SECOND', co.create_date, case when ps.platformstatus = 'paid' then ps.actual_date end)/60 as time_to_payment,
+  		cast((co.items_price >= 20000) as boolean) as is_high_price,
+  		cast(((co.items_price >= 15000) and (co.items_price < 20000)) as boolean) as is_between_15k_and_20k_price,
+        cast(((co.items_price >= 10000) and (co.items_price < 15000)) as boolean) as is_between_10k_and_15k_price,
+        cast((co.items_price < 10000) as boolean) as is_less_than_10k_price,
         -- есть ли возможность возврата в течение 14 дней
         case when co.workflow in ('delivery-b2c', 'delivery-b2c-courier') then True else False end b2c_wo_dbs,
         co.return_within_14_days as c2c_return_within_14_days,
-        coalesce(b2c_wo_dbs, c2c_return_within_14_days) as return_within_14_days
+        coalesce(
+            case when co.workflow in ('delivery-b2c', 'delivery-b2c-courier') then True else False end,
+            co.return_within_14_days
+        ) as return_within_14_days
     from dma.current_order_item as coi
     join /*+distrib(l,a)*/ delivery_status_date as ps on ps.deliveryorder_id = coi.deliveryorder_id
     left join /*+distrib(l,a)*/ cic
@@ -229,14 +218,15 @@ pre as (
     left join /*+distrib(l,a)*/ dma.current_locations as bl on co.buyer_location_id = bl.location_id
     left join /*+distrib(l,a)*/ acd on acd.user_id = coi.seller_id and cast(co.create_date as date) between acd.active_from_date and acd.active_to_date
     left join /*+distrib(l,a)*/ du on du.buyer_id = co.buyer_id
-  	left join /*+distrib(l,a)*/ original on coi.item_id = original.item_id and co.create_date interpolate previous value original.Actual_date
-    left join /*+distrib(l,a)*/ dds.s_item_video sv on coi.item_id = sv.item_id and co.create_date interpolate previous value sv.Actual_date
+    left join /*+distrib(l,a)*/ original on coi.item_id = original.item_id and co.create_date >= original.Actual_date and co.create_date < original.Actual_date_next
+    left join /*+distrib(l,a)*/ s_item_video sv on coi.item_id = sv.item_id and co.create_date >= sv.Actual_date and co.create_date < sv.Actual_date_next
     order by seller_id, create_date, logical_category_id
 ),
 cdd3 as (
     select deliveryorder_id, discount_value
     from dma.delivery_discounts
         where lower(campaign_name) like '%bonus_cashback%' and deliveryorder_id in (select deliveryorder_id from pre)
+        -- and create_year >= date('2000-01-01') -- @trino
     order by 1
 ),
 cds as (
@@ -253,6 +243,7 @@ threefirst_subsidies_saved, exmail_subsidies_saved, promocode_subsidies_saved
 pp as (
     select distinct purchase_id, coalesce(marketplace_purchase_ext, purchase_ext) as purchase_ext
     from dma.payment_page
+    -- where order_created_year >= date('2000-01-01') -- @trino
 ),
 payment_flows as (
     select billing_order_ext,

@@ -22,7 +22,6 @@ load_dotenv()
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
 PUBLISH_URL = '/api/publishMetricsRepo'
-PROCESS_URL = '/api/processMetricsConfigs'
 
 
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -103,11 +102,6 @@ def validate():
         print('\nValidation FAILED')
         exit(1)
 
-
-def process():
-    result, _ = send_all(PROCESS_URL)
-    del result['success']
-    print(json.dumps(result, indent=4))
 
 
 def publish():
@@ -257,17 +251,13 @@ def get_short_name(file_name):
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        if sys.argv[1] == '--process':
-            process()
-            exit(0)
-        elif sys.argv[1] == '--publish':
+        if sys.argv[1] == '--publish':
             publish()
             exit(0)
         elif sys.argv[1] == '--publish-staging':
             AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
             VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
             PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
-            PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
 
             os.environ['API_KEY'] = 'api_key'
 
@@ -277,7 +267,6 @@ if __name__ == '__main__':
             AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
             VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
             PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
-            PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
 
             validate()
             exit(0)

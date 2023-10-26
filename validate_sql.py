@@ -40,12 +40,37 @@ METRIC_LIMITS = {
     'written_gb': 100,
 }
 
+METRIC_LIMITS_ALTERS = {
+    'buyer_stream': {
+        'duration': 1500,
+        'max_memory_gb': 30,
+        'written_gb': 1300,
+        'spilled_gb': 1500,
+        'cpu_cycles_us': 80_000_000_000,
+        'thread_count': 70000,
+    },
+    'all_communications': {
+        'thread_count': 70000,
+    },
+}
+
 TRINO_VALIDATED_SOURCES = [
     'buyer_stream',
     'buyer_call',
     'classified_revenue',
     'total_revenue',
     'support',
+    'seller_item_active',
+    'core_contacts',
+    'autoteka_reports',
+    'buyer_call',
+    'broker_events_revenue',
+    'other_projects_revenue',
+    'delivery_orders',
+    'page_views',
+    'qd_lots',
+    'seller_item_event',
+    'str',
 ]
 
 
@@ -72,17 +97,7 @@ class Report:
         self._filename = parse_sql_filename(path)
 
         self._metric_limits = METRIC_LIMITS.copy()
-        if parse_sql_filename(path) == 'buyer_stream':
-            self._metric_limits.update(
-                {
-                    'duration': 1500,
-                    'max_memory_gb': 30,
-                    'written_gb': 1300,
-                    'spilled_gb': 1500,
-                    'cpu_cycles_us': 80_000_000_000,
-                    'thread_count': 70000,
-                }
-            )
+        self._metric_limits.update(METRIC_LIMITS_ALTERS.get(self._filename, {}))
 
     def add_error(self, kind, message):
         self._errors.append(InfoMessage(kind=kind, message=message))
