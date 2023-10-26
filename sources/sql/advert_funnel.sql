@@ -20,7 +20,8 @@ select  /*+syntactic_join*/
 	ss.business_platform,
 	ss.site,
 	ss.banner_code,
-	ss.page_type
+	ss.page_type,
+	lower(ss.selling_system) as selling_system
 from dma.ad_metric_funnel ss
 left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm on cm.microcat_id = ss.microcat_id
 where cast(ss.event_date as date) between :first_date and :last_date
