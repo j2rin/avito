@@ -225,7 +225,6 @@ left join /*+jtype(h),distrib(l,a)*/ (
         )
         and from_date <= :last_date
         and to_date >= :first_date
---         and from_year <= :last_date -- @trino
 ) ial
     on ial.item_id = ss.item_id
     and cast(ss.event_date as date) between ial.from_date and ial.to_date
