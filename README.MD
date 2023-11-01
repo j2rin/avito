@@ -96,7 +96,7 @@ SQL должен содержать параметры `:first_date` и `:last_d
 - `participant` — маппинг, какой столбец отвечает за visitor, а какое за user (обычно cookie_id и user_id). Обязательное поле
 - `primary_subject` — какой participant считать за основной. Обычно это visitor, если он есть
 - `dtm` — колонка с датой/таймстампом. Обязательное поле
-- `database` — vertica или clickhouse
+- `connections` — список подключений к СУБД с которыми может работать источник. Поддерживаются vertica, trino и clickhouse
 
 
 ### Метрики
