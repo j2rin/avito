@@ -10,22 +10,22 @@ metric.counter:
 
 metric.uniq:
       pp_profile_visits_unique:                {counter: pp_profile_visits,          key: [user_id]}
-      pp_item_views_unique:                    {counter: pp_item_views,              key: [user_id]}
+      pp_item_views_unique:                    {counter: pp_item_views,              key: [user_id, item_id]}
       pp_subs_unique:                          {counter: pp_subs,                    key: [user_id]}
-      pp_item_contacts_unique:                 {counter: pp_item_contacts,           key: [user_id]}
+      pp_item_contacts_unique:                 {counter: pp_item_contacts,           key: [user_id, item_id]}
       pp_profile_contacts_unique:              {counter: pp_profile_contacts,        key: [user_id]}
-      pp_contacts_all_unique:                  {counter: pp_contacts_all,            key: [user_id]}
+      pp_contacts_all_unique:                  {counter: pp_contacts_all,            key: [user_id, item_id]}
       pp_target_actions_unique:                {counter: pp_target_actions,          key: [user_id]}
       pp_adv_clicks_unique:                    {counter: pp_adv_clicks,              key: [user_id]}
 
 metric.ratio:
-      pp_profile_visits_rate:                  {num: pp_profile_visits,            den: pp_adv_clicks_unique }
-      pp_item_views_rate:                      {num: pp_item_views,                den: pp_adv_clicks_unique }
-      pp_subs_rate:                            {num: pp_subs,                      den: pp_adv_clicks_unique }
-      pp_item_contacts_rate:                   {num: pp_item_contacts,             den: pp_adv_clicks_unique }
-      pp_profile_contacts_rate:                {num: pp_profile_contacts,          den: pp_adv_clicks_unique }
-      pp_contacts_all_rate:                    {num: pp_contacts_all,              den: pp_adv_clicks_unique }
-      pp_target_actions_rate:                  {num: pp_target_actions,            den: pp_adv_clicks_unique }
+      pp_profile_visits_rate:                  {num: pp_profile_visits,            den: pp_adv_clicks }
+      pp_item_views_rate:                      {num: pp_item_views,                den: pp_adv_clicks }
+      pp_subs_rate:                            {num: pp_subs,                      den: pp_adv_clicks }
+      pp_item_contacts_rate:                   {num: pp_item_contacts,             den: pp_adv_clicks }
+      pp_profile_contacts_rate:                {num: pp_profile_contacts,          den: pp_adv_clicks }
+      pp_contacts_all_rate:                    {num: pp_contacts_all,              den: pp_adv_clicks }
+      pp_target_actions_rate:                  {num: pp_target_actions,            den: pp_adv_clicks }
       pp_profile_visits_rate_unique:           {num: pp_profile_visits_unique,     den: pp_adv_clicks_unique }
       pp_item_views_rate_unique:               {num: pp_item_views_unique,         den: pp_adv_clicks_unique }
       pp_subs_rate_unique:                     {num: pp_subs_unique,               den: pp_adv_clicks_unique }
