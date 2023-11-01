@@ -307,7 +307,7 @@ core_contact_user:
   metric_configs: [core_contact_user]
   column_map:
     user: user_id
-  database: vertica
+  connections: [vertica]
   sql: core_contacts
   dimensions:
     [
@@ -3469,55 +3469,55 @@ autoteka_total:
 
 
 delivery_stream:
-    metric_configs: [ delivery_stream ]
-    connections: [vertica]
-    sql: delivery_stream
-    column_map:
-      item: item_id
-      cookie: cookie_id
-      user: user_id
-    dimensions:
-      - platform
-      - vertical
-      - logical_category
-      - category
-      - subcategory
-      - param1
-      - param2
-      - param3
-      - param4
-      - is_intercity
-      - is_asd
-      - asd_user_group
-      - buyer_location
-      - buyer_region
-      - buyer_city
-      - buyer_location_group
-      - buyer_location_level
-      - buyer_population_group
-      - location
-      - region
-      - city
-      - location_group
-      - population_group
-      - location_level
-      - is_cart
-    participant: { visitor: cookie_id, user: user_id }
-    primary_subject: visitor
-    dtm: event_date
+  metric_configs: [ delivery_stream ]
+  connections: [vertica]
+  sql: delivery_stream
+  column_map:
+    item: item_id
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - is_intercity
+    - is_asd
+    - asd_user_group
+    - buyer_location
+    - buyer_region
+    - buyer_city
+    - buyer_location_group
+    - buyer_location_level
+    - buyer_population_group
+    - location
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - is_cart
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
 
 
 profilepromo_funnel:
-      metric_configs: [ profilepromo_funnel ]
-      database: vertica
-      sql: profilepromo_funnel
-      dimensions:
-          [
-            platform,
-            vertical,
-            logical_category,
-            region ]
-      participant: { visitor: cookie_id, user: user_id }
-      primary_subject: visitor
-      dtm: event_date
+  metric_configs: [ profilepromo_funnel ]
+  connections: [vertica]
+  sql: profilepromo_funnel
+  dimensions:
+      [
+        platform,
+        vertical,
+        logical_category,
+        region ]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
 
