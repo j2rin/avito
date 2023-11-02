@@ -147,7 +147,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from infomodel.current_infmquery_category
         where infmquery_id in (
             select distinct infmquery_id
-            from dma.o_seller_item_active
+            from dma.buyer_stream
             where cast(event_date as date) between :first_date and :last_date
                 and infmquery_id is not null
         )
