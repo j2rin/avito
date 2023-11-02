@@ -150,6 +150,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
             from dma.buyer_stream
             where cast(event_date as date) between :first_date and :last_date
                 and infmquery_id is not null
+                -- and date between :first_date and :last_date
         )
     ) ic on ic.infmquery_id = ss.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
