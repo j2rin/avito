@@ -147,9 +147,10 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from infomodel.current_infmquery_category
         where infmquery_id in (
             select distinct infmquery_id
-            from dma.o_seller_item_active
+            from dma.buyer_stream
             where cast(event_date as date) between :first_date and :last_date
                 and infmquery_id is not null
+                -- and date between :first_date and :last_date -- @trino
         )
     ) ic on ic.infmquery_id = ss.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
@@ -225,7 +226,6 @@ left join /*+jtype(h),distrib(l,a)*/ (
         )
         and from_date <= :last_date
         and to_date >= :first_date
---         and from_year <= :last_date -- @trino
 ) ial
     on ial.item_id = ss.item_id
     and cast(ss.event_date as date) between ial.from_date and ial.to_date
