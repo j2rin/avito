@@ -65,7 +65,10 @@ select
     ,chat_id
     ,call_id
     ,contact_type
-    ,case when vertical in ('Jobs') then (is_target or is_contact_exchange) else (is_target or is_contact_exchange or is_seller_contact_exchange) end as is_target
+    ,case 
+        when vertical in ('Jobs') then (is_target or is_contact_exchange)
+        else (is_target or is_contact_exchange or is_seller_contact_exchange)
+    end as is_target
     ,platform_id
     ,reply_platform_id
     ,buyer_cookie_id
