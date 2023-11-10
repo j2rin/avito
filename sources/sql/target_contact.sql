@@ -66,7 +66,7 @@ select
     ,call_id
     ,contact_type
     ,case 
-        when vertical in ('Jobs') then (is_target or is_contact_exchange)
+        when vertical in ('Jobs') then is_target
         else (is_target or is_contact_exchange or is_seller_contact_exchange)
     end as is_target
     ,platform_id
@@ -76,7 +76,6 @@ select
     ,cl.location_id
     -- ,type   
     ,case 
-        when (vertical in ('Jobs') and is_contact_exchange = true) then 'target'
         when (vertical not in ('Jobs') and ((is_contact_exchange = true) or (is_seller_contact_exchange = true))) then 'target'
         else type
     end as type
