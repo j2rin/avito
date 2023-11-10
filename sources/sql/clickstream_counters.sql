@@ -49,7 +49,9 @@ select
     item_id,
     source_click_page,
     orderid_string,
-    orderid
+    orderid,
+    msg_is_pin,
+    msg_chat
 from DMA.click_stream_counters cs
 left join DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
 left join DMA.current_locations cl on cl.location_id = cs.location_id
