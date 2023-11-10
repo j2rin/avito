@@ -19,7 +19,8 @@
 	case 
 	    when orders > 0 then 1 
 	    when class in (3,4,5) then 1
-	    when is_contact_exchange = true then 1
+	    when (vertical in ('Jobs') and is_contact_exchange = true) then 1
+	    when (vertical not in ('Jobs') and ((is_contact_exchange = true) and (is_seller_contact_exchange = true))) then 1
         else 0 
     end as is_target_chat,
 -- Dimensions -------------------------------------------------------------------
