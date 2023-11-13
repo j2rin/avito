@@ -292,7 +292,9 @@ definitions:
     - &is_extended_profile              { from_page.ilike: '%extended_profile%' }
     - &is_extended_profile_services     { from_page: ["profile_services", "ps"] }
     - &x_is_public_profile              { x_eid: [300, 2017], x_from_page: "public_profile" }
-    - &x_is_extended_profile            { x_eid: [300, 2017], x_from_page.ilike: '%extended_profile%' }
+    - &x_is_extended_profile            { x_eid: [300, 2017, 6006], x_from_page.ilike: '%extended_profile%' }
+    - &x_is_extended_profile_search     { x_eid: [300, 2017], x_from_page.ilike: '%extended_profile%' }
+    - &x_is_extended_profile_window     { x_eid: 6006, x_from_page.ilike: '%extended_profile%' }
     - &x_is_extended_profile_services   { x_eid: [300, 2017], x_from_page: "profile_services" }
 
     - &is_item_str_flat_verified_badge { item_flags.bit: 24 }
@@ -1701,6 +1703,8 @@ metric.counter:
     total_delivery_item_contact: { filter: [*is_not_item_marketplace, *is_contact, *is_delivery_active] }
     cnt_iv_public_profile: { filter: [*is_iv_wo_guessing, { $or: [[*x_is_public_profile], [*is_public_profile]] }] }
     cnt_iv_extended_profile: { filter: [*is_iv_wo_guessing, { $or: [[*x_is_extended_profile], [*is_extended_profile]] }] }
+    cnt_iv_extended_profile_search: { filter: [*is_iv_wo_guessing, *x_is_extended_profile_search] }
+    cnt_iv_extended_profile_window: { filter: [*is_iv_wo_guessing, *x_is_extended_profile_window] }
     cnt_iv_extended_profile_services:
         { filter: [*is_iv_wo_guessing, { $or: [[*x_is_extended_profile_services], [*is_extended_profile_services]] }] }
     cnt_iv_profile_shop:
@@ -1723,6 +1727,8 @@ metric.counter:
         }
     cnt_cs_public_profile: { filter: [*is_contact_wo_guessing, *x_is_public_profile] }
     cnt_cs_extended_profile: { filter: [*is_contact_wo_guessing, { $or: [[*x_is_extended_profile], [*is_extended_profile]] }] }
+    cnt_cs_extended_profile_search: { filter: [*is_contact_wo_guessing, *x_is_extended_profile_search] }
+    cnt_cs_extended_profile_window: { filter: [*is_contact_wo_guessing, *x_is_extended_profile_window] }
     cnt_cs_extended_profile_services:
         { filter: [*is_contact_wo_guessing, { $or: [[*x_is_extended_profile_services], [*is_extended_profile_services]] }] }
     cnt_cs_profile_shop:
@@ -2216,6 +2222,8 @@ metric.uniq:
     contacts_shop: { counter: cnt_cs_shopx, key: [item, x] }
     contacts_public_profile: { counter: cnt_cs_public_profile, key: [item, x] }
     contacts_extended_profile: { counter: cnt_cs_extended_profile, key: [item, x] }
+    contacts_extended_profile_search: { counter: cnt_cs_extended_profile_search, key: [item, x] }
+    contacts_extended_profile_window: { counter: cnt_cs_extended_profile_window, key: [item, x] }
     contacts_extended_profile_services: { counter: cnt_cs_extended_profile_services, key: [item, x] }
     contacts_profile_shop: { counter: cnt_cs_profile_shop, key: [item, x] }
     contacts_vas: { counter: cnt_cs_vas, key: [item, x] }
@@ -2386,6 +2394,8 @@ metric.uniq:
     item_views_shop:              { counter: cnt_iv_shopx,              key: [item, x] }
     item_views_public_profile:    { counter: cnt_iv_public_profile,     key: [item, x] }
     item_views_extended_profile:  { counter: cnt_iv_extended_profile,   key: [item, x] }
+    item_views_extended_profile_search:  { counter: cnt_iv_extended_profile_search,   key: [item, x] }
+    item_views_extended_profile_window:  { counter: cnt_iv_extended_profile_window,   key: [item, x] }
     item_views_extended_profile_services: { counter: cnt_iv_extended_profile_services, key: [item, x] }
     item_views_profile_shop: { counter: cnt_iv_profile_shop, key: [item, x] }
     item_views_vas: { counter: cnt_iv_vas, key: [item, x] }
@@ -3212,11 +3222,15 @@ metric.uniq:
     item_views_shop_uniq: { counter: cnt_iv_shopx, key: [cookie, item] }
     item_views_public_profile_uniq: { counter: cnt_iv_public_profile, key: [cookie, item] }
     item_views_extended_profile_uniq: { counter: cnt_iv_extended_profile, key: [cookie, item] }
+    item_views_extended_profile_search_uniq: { counter: cnt_iv_extended_profile_search, key: [cookie, item] }
+    item_views_extended_profile_window_uniq: { counter: cnt_iv_extended_profile_window, key: [cookie, item] }
     item_views_extended_profile_services_uniq: { counter: cnt_iv_extended_profile_services, key: [cookie, item] }
     item_views_profile_shop_uniq: { counter: cnt_iv_profile_shop, key: [cookie, item] }
     contacts_shop_uniq: { counter: cnt_cs_shopx, key: [cookie, item] }
     contacts_public_profile_uniq: { counter: cnt_cs_public_profile, key: [cookie, item] }
     contacts_extended_profile_uniq: { counter: cnt_cs_extended_profile, key: [cookie, item] }
+    contacts_extended_profile_search_uniq: { counter: cnt_cs_extended_profile_search, key: [cookie, item] }
+    contacts_extended_profile_window_uniq: { counter: cnt_cs_extended_profile_window, key: [cookie, item] }
     contacts_extended_profile_services_uniq: { counter: cnt_cs_extended_profile_services, key: [cookie, item] }
     contacts_profile_shop_uniq: { counter: cnt_cs_profile_shop, key: [cookie, item] }
     user_btc_str_flat_verified_badge: { counter: btc_str_flat_verified_badge, key: [cookie] }
