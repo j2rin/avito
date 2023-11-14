@@ -226,10 +226,15 @@ calls_scores as
         ,cm.Param2_microcat_id as param2_id
         ,cm.Param3_microcat_id as param3_id
         ,cm.Param4_microcat_id as param4_id
-        ,case when cs.class in (3,4,5) or is_contact_exchange then True else False end as is_target
+        ,case 
+            when vertical in ('Jobs') and cs.class in (3,4,5) then True
+            when vertical not in ('Jobs') and (cs.class in (3,4,5) or is_contact_exchange or is_seller_contact_exchange) then True
+            else False
+        end as is_target
         ,case
-            when class in (3,4,5) or is_contact_exchange then 'target'
-            when class in (1,2,6,7,8) and with_reply = True then 'preliminary'
+            when vertical in ('Jobs') and cs.class in (3,4,5) then 'target'
+            when vertical not in ('Jobs') and (cs.class in (3,4,5) or is_contact_exchange or is_seller_contact_exchange) then 'target'
+            when cs.class in (1,2,6,7,8) and with_reply = True then 'preliminary'
             when is_spam = True then 'trash'
             when with_reply = False then 'not_answered'
         end as type
