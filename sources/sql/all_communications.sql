@@ -190,6 +190,7 @@ calls_scores as
             ,item_id
             ,class
       		,is_contact_exchange
+            ,is_seller_contact_exchange
         from 
             dma.messenger_chat_scores
         where 
