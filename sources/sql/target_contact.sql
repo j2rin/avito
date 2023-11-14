@@ -7,7 +7,7 @@ select
     ,t.chat_id
     ,cast(null as int) as call_id
     ,'messenger' as contact_type
-    ,case when class in (3,4,5) or orders>=1 then true else false end as is_target,
+    ,case when class in (3,4,5) or orders>=1 then true else false end as is_target
     ,is_contact_exchange
     ,is_seller_contact_exchange
     ,microcat_id
@@ -66,7 +66,7 @@ select
     ,call_id
     ,contact_type
     ,case 
-        when vertical in ('Jobs') then is_target
+        when cm.vertical in ('Jobs') then is_target
         else (is_target or is_contact_exchange or is_seller_contact_exchange)
     end as is_target
     ,platform_id
@@ -76,7 +76,7 @@ select
     ,cl.location_id
     -- ,type   
     ,case 
-        when (vertical not in ('Jobs') and ((is_contact_exchange = true) or (is_seller_contact_exchange = true))) then 'target'
+        when (cm.vertical not in ('Jobs') and ((is_contact_exchange = true) or (is_seller_contact_exchange = true))) then 'target'
         else type
     end as type
     -- Dimensions -------------------------------------------------------------------
