@@ -123,4 +123,4 @@ left join dma.current_logical_categories clc using(logical_category_id)
 left join dma.current_microcategories cm using(microcat_id)
 left join dma.current_locations as cl on co.warehouse_location_id = cl.location_id
 left join dma.current_locations as bl on co.buyer_location_id = bl.location_id
-where co.status_date::date between :first_date::date and :last_date::date
+where date(co.status_date) between date(:first_date) and date(:last_date)
