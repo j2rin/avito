@@ -129,3 +129,4 @@ left join dma.current_locations as bl on co.buyer_location_id = bl.location_id
 where true 
 	and year(status_date) between year(:first_date) and year(:last_date)
     and date(co.status_date) between date(:first_date) and date(:last_date)
+    -- and status_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
