@@ -37,7 +37,7 @@ METRIC_LIMITS = {
     'read_gb': 200,
     'spilled_gb': 100,
     'thread_count': 50000,
-    'written_gb': 100,
+    'written_gb': 200,
 }
 
 METRIC_LIMITS_ALTERS = {
