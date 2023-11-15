@@ -37,7 +37,7 @@ METRIC_LIMITS = {
     'read_gb': 200,
     'spilled_gb': 100,
     'thread_count': 50000,
-    'written_gb': 200,
+    'written_gb': 100,
 }
 
 METRIC_LIMITS_ALTERS = {
@@ -51,6 +51,9 @@ METRIC_LIMITS_ALTERS = {
     },
     'all_communications': {
         'thread_count': 70000,
+    },
+    'search_items': {
+        'written_gb': 200,
     },
 }
 
