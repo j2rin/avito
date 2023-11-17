@@ -52,6 +52,7 @@ select
     items_qty,
     is_cart,
     is_original,
+    is_mall,
     has_short_video,
     time_to_payment,
   	is_high_price,
