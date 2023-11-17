@@ -97,6 +97,12 @@ select
     ------ привязки в контуре авито
     has_avito_bindings,
     payment_flow,
+    ------ метрики OPR и PCR
+    co.is_finally_paid,
+    co.is_paid_purchase,
+    co.purchase_equal_final_purchase,
+    co.paylink_not_null,
+    co.is_cod,
 -- Dimensions -----------------------------------------------------------------------------------------------------
     clc.vertical_id                                              as vertical_id,
     cm.category_id                                               as category_id,
