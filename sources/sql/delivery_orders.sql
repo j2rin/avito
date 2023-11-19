@@ -102,7 +102,7 @@ select
     co.is_paid_purchase,
     co.purchase_equal_final_purchase,
     co.paylink_not_null,
-    co.is_cod,
+    co.is_cod, -- restart tests
 -- Dimensions -----------------------------------------------------------------------------------------------------
     clc.vertical_id                                              as vertical_id,
     cm.category_id                                               as category_id,
