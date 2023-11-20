@@ -6,4 +6,4 @@ select
     user_id
 from DMA.charity_donations_events
 where eid = 5059
-where cast(event_date as date) between :first_date and :last_date
+and cast(event_date as date) between :first_date and :last_date
