@@ -52,6 +52,9 @@ METRIC_LIMITS_ALTERS = {
     'all_communications': {
         'thread_count': 70000,
     },
+    'search_items': {
+        'written_gb': 200,
+    },
 }
 
 

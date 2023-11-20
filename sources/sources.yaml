@@ -531,7 +531,7 @@ delivery_orders_buyer:
 
 delivery_orders_seller:
   metric_configs: [delivery_orders_seller]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: delivery_orders
   dimensions:
     - platform
@@ -2794,16 +2794,6 @@ perf_clickstream_counters:
   dimensions: [platform, screen_name]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
-  dtm: event_date
-
-chatbot_chats_delete:
-  metric_configs: [chatbot_chats_delete]
-  connections: [vertica]
-  sql: chatbot_chats_delete
-  column_map:
-    user: user_id
-  participant: { user: user_id }
-  primary_subject: user
   dtm: event_date
 
 payment_page_trx:

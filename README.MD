@@ -19,6 +19,7 @@
 3. `decode` → `case ... when ... then ... end`
 4. `hash(col1, col2)` → `from_big_endian_64(xxhash64(to_big_endian_64(coalesce(col1, 0)) || to_big_endian_64(coalesce(col2, 0))))`
 5. `&` → `bitwise_and`, `<<`, `>>`,  → `bitwise_left_shift`, `bitwise_right_shift`
+6. `from ... t1 join ... t2 using(col)` → `from ... t1 join ... t2 on t1.col = t2.col` 
 
 Если невозможно написать запрос так, чтобы он работал одинаково
 и в Vertica, и в Trino, то специфичное для каждой базы выражение можно закомментировать

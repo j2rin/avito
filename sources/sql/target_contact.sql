@@ -7,14 +7,16 @@ select
     ,t.chat_id
     ,cast(null as int) as call_id
     ,'messenger' as contact_type
-    ,case when class in (3,4,5) or orders>=1 or is_contact_exchange = true then true else false end as is_target
+    ,case when class in (3,4,5) or orders>=1 then true else false end as is_target
+    ,is_contact_exchange
+    ,is_seller_contact_exchange
     ,microcat_id
     ,location_id
     ,platform_id
     ,reply_platform_id
     ,first_message_cookie_id as buyer_cookie_id
     ,case
-        when class in (3,4,5) or orders>=1 or is_contact_exchange = true then 'target'
+        when class in (3,4,5) or orders>=1 then 'target'
         when class in (1,2,6,7,8) and with_reply = true then 'preliminary'
         when is_spam = true then 'trash'
         when with_reply = false then 'not_answered'
@@ -34,6 +36,8 @@ select
     ,call_id
     ,call_type as contact_type
     ,is_target_call as is_target
+    ,false as is_contact_exchange
+    ,false as is_seller_contact_exchange
     ,microcat_id
     ,location_id
     ,platform_id
@@ -61,13 +65,20 @@ select
     ,chat_id
     ,call_id
     ,contact_type
-    ,is_target
+    ,case 
+        when cm.vertical in ('Jobs') then is_target
+        else (is_target or is_contact_exchange or is_seller_contact_exchange)
+    end as is_target
     ,platform_id
     ,reply_platform_id
     ,buyer_cookie_id
     ,cm.microcat_id
     ,cl.location_id
-    ,type
+    -- ,type   
+    ,case 
+        when (cm.vertical not in ('Jobs') and ((is_contact_exchange = true) or (is_seller_contact_exchange = true))) then 'target'
+        else type
+    end as type
     -- Dimensions -------------------------------------------------------------------
     ,cm.vertical_id
 	,cm.category_id
