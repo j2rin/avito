@@ -106,7 +106,7 @@ select
         else 0 --Undefined
     end                                                          as condition_id,
     cast(bitwise_and(case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end, 16) > 0 as int) as onmap,
-    bitwise_and(bitwise_left_shift(case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end, 10), 0xFFFFF) as search_features,
+    bitwise_and(bitwise_right_shift(case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end, 10), 0xFFFFF) as search_features,
     ubb.track_id is not null as new_user_btc,
     coalesce(asd.is_asd,false) is_asd,
     -- По дефолту ставим SS сегмент - 8383
