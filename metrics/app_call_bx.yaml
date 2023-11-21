@@ -16,8 +16,9 @@ definitions:
 
   # Logical Groups
   - &callback_scenario    [deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, call_log_callback, notification_call_back, gsm_messenger_bubble_callback, avito_call_log_callback]
-  - &direct_scenario      [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, web_redirect]
-  - &any_scenario         [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, call_log_callback, notification_call_back, web_redirect, gsm_messenger_bubble_callback, avito_call_log_callback]
+  - &direct_scenario      [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, web_redirect, gsm2iac]
+  - &gsm2iac_scenario     [gsm2iac]
+  - &any_scenario         [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, call_log_callback, notification_call_back, web_redirect, gsm_messenger_bubble_callback, avito_call_log_callback, gsm2iac]
 
   
   # Filters
@@ -31,6 +32,7 @@ definitions:
 
   - &is_callback_c        {communication_type: *callback_scenario}
   - &is_direct_c          {communication_type: *direct_scenario}
+  - &is_gsm2iac_c         {communication_type: *gsm2iac_scenario}
   - &is_c                 {communication_type: *any_scenario}
 
   - &is_outgoing          {caller_is_buyer: true}
@@ -81,6 +83,10 @@ metric.counter:
   appcall_bx_incoming_direct:                   {filter: [*is_iac, *is_incoming, *is_direct_c]}
   appcall_bx_incoming_direct_answered:          {filter: [*is_iac, *is_incoming, *is_direct_c, *is_answered]}
   appcall_bx_incoming_direct_talkseconds:       {filter: [*is_iac, *is_incoming, *is_direct_c, *is_answered], obs: [talk_duration]}
+
+  appcall_bx_outgoing_gsm2iac:                 {filter: [*is_iac, *is_outgoing, *is_gsm2iac_c]}
+  appcall_bx_outgoing_gsm2iac_answered:        {filter: [*is_iac, *is_outgoing, *is_gsm2iac_c, *is_answered]}
+  appcall_bx_outgoing_gsm2iac_talkseconds:     {filter: [*is_iac, *is_outgoing, *is_gsm2iac_c, *is_answered], obs: [talk_duration]}
 
   # By screen
   appcall_bx_outgoing_item:                     {filter: [*is_iac, *is_outgoing, *is_item_c]}
