@@ -178,7 +178,7 @@ calls_scores as
         and cast(AppCallStart as date) between :first_date and :last_date
         and AppCallScenario is not null
         and CallerIsBuyer is not null
-        and AppCallScenario not in ('demo', 'messenger_chat_long_answer', 'messenger_empty_chat', 'support')
+        and AppCallScenario not in ('demo', 'messenger_chat_long_answer', 'messenger_empty_chat', 'support', 'gsm_fallback')
 )
 -- чаты
 , chats as 
