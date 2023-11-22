@@ -2209,34 +2209,6 @@ messenger_transitions:
   primary_subject: user
   dtm: trigger_date
 
-messenger_chat_leads:
-  metric_configs: [chat_leads]
-  connections: [vertica]
-  sql: chat_scores
-  column_map:
-    cookie: cookie_id
-    user: user_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      category,
-      subcategory,
-      logical_category,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      location_group,
-      population_group,
-      location_level,
-    ]
-  participant: { visitor: cookie_id, user: user_id }
-  primary_subject: user
-  dtm: first_message_event_date
-
 messenger_inbox_chat_leads:
   metric_configs: [inbox_chat_leads]
   connections: [vertica]
