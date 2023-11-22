@@ -11,9 +11,10 @@ definitions:
   - &chatbots           {product_type: 'JOB ChatBot'}
   - &auto_auction       {project_type: 'auto_auction'}
   - &auto_paid_contact  {product_type: 'auto_paid_contact'}
+  - &trx_promo          {product_type: 'promo', transaction_subtype: 'trx promo'}
 
 metric.counter:
   avito_amount_net_adj:                {obs: [amount_net_adj],  filter: [$or: [*advertisement, *classified, *paid_contact]]}
-  other_projects_amount_net_adj:       {obs: [amount_net_adj],  filter: [$or: [*autoteka, *delivery, *domofond, *domoteka, *str, *chatbots, *cpt, *auto_auction]]}
+  other_projects_amount_net_adj:       {obs: [amount_net_adj],  filter: [$or: [*autoteka, *delivery, *domofond, *domoteka, *str, *chatbots, *cpt, *auto_auction, *trx_promo]]}
   total_amount_net_adj:                {obs: [amount_net_adj],  filter: [$or: [*advertisement, *classified, *paid_contact,
                                                                                *autoteka, *delivery, *domofond, *domoteka, *str, *chatbots, *cpt, *auto_auction, *auto_paid_contact]]}
