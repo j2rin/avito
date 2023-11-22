@@ -179,6 +179,7 @@ calls_scores as
         and AppCallScenario is not null
         and CallerIsBuyer is not null
         and AppCallScenario not in ('demo', 'messenger_chat_long_answer', 'messenger_empty_chat', 'support')
+        and (AppCallResult is null or AppCallResult not in ('gsm_fallback')) -- безуспешно перенаправленные из gsm в iac и отправленные обратно в gsm
 )
 -- чаты
 , chats as 
