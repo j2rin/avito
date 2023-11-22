@@ -16,6 +16,8 @@ definitions:
   - &reply_3days                  {reply_time_minutes.<=: 4320} # порог для месенджера
   - &is_comns                     {communication: *communications}
   - &is_trx                       {communication.!in: ["iac", "gsm", "msg"]}
+  - &is_success_call              {talk_duration.>: 30}
+  - &is_answered_call             {talk_duration.>: 0}
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
@@ -36,12 +38,17 @@ metric.counter:
   iac_bx_outgoing_talk_dur:                              {filter: [*is_iac, *is_common_funnel], obs: [talk_duration]}
 
   calls_bx_outgoing:                                     {filter: [*is_call, *is_common_funnel]}
+  call_bx:                                               {filter: [*is_call, *is_common_funnel]} #old
   calls_bx_outgoing_answered:                            {filter: [*is_call, *is_common_funnel, *is_answered]}
+  answered_call_bx:                                      {filter: [*is_call, *is_common_funnel, *is_answered]} #old
   calls_bx_outgoing_trash:                               {filter: [*is_call, *is_common_funnel, *is_trash]}
   calls_bx_outgoing_preliminary:                         {filter: [*is_call, *is_common_funnel, *is_preliminary]}
   calls_bx_outgoing_target:                              {filter: [*is_call, *is_common_funnel, *is_target]}
+  target_contact_call_bx:                                {filter: [*is_call, *is_common_funnel, *is_target]} # old
   calls_bx_outgoing_call_dur:                            {filter: [*is_call, *is_common_funnel], obs: [call_duration]}
   calls_bx_outgoing_talk_dur:                            {filter: [*is_call, *is_common_funnel], obs: [talk_duration]}
+  target_contact_call_bx_talkseconds:                    {filter: [*is_call, *is_common_funnel, *is_target], obs: [talk_duration]} #old
+  target_contact_call_bx_success:                        {filter: [*is_target, *is_success_call]} # old
 
   comns_bx_outgoing:                                     {filter: [*is_common_funnel, *is_comns]}
   comns_bx_outgoing_answered:                            {filter: [*is_common_funnel, *is_comns, *is_answered, *reply_time_not_zero, *reply_3days]}
@@ -77,6 +84,11 @@ metric.uniq:
   user_target_contacts_2_0:                              {counter: target_contacts_all_2_0,         key: [user]}
   user_asnwered_contacts_2_0:                            {counter: answered_contacts_2_0,         key: [user]}
 
+  user_target_contact_call_bx:                           {counter: target_contact_call_bx, key: [user]} #old
+  user_target_contact_call_bx_success:                   {counter: target_contact_call_bx_success, key: [user]} #old
+  user_answered_call_bx:                                 {counter: answered_call_bx, key: [user]} #old
+  user_call_bx:                                          {counter: call_bx, key: [user]} #old
+
 
 metric.ratio:
   gsm_bx_outgoing_call_dur_per_call:                     {num: gsm_bx_outgoing_call_dur,            den: gsm_bx}
@@ -86,3 +98,6 @@ metric.ratio:
   iac_bx_outgoing_talk_dur_per_call:                     {num: iac_bx_outgoing_talk_dur,            den: iac_bx_outgoing}
   calls_bx_outgoing_talk_dur_per_call:                   {num: calls_bx_outgoing_talk_dur,          den: calls_bx_outgoing}
 
+  target_contact_call_bx_ratio:           {num: target_contact_call_bx, den: call_bx} #old
+  user_target_contact_call_bx_ratio:      {num: user_target_contact_call_bx, den: user_call_bx} #old
+  target_contact_call_bx_ratio_answered:  {num: target_contact_call_bx, den: answered_call_bx} #old
