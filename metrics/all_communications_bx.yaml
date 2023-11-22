@@ -59,11 +59,64 @@ metric.counter:
   contacts_all_2_0:                                      {filter: [*is_common_funnel]}
   answered_contacts_2_0:                                 {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
   target_contacts_all_2_0:                               {filter: [*is_common_funnel, *is_target]}
+  target_contact_all:                                    {filter: [*is_common_funnel, *is_target]} #old
   contacts_transactions:                                 {filter: [*is_common_funnel,*is_trx]}
   answered_transactions:                                 {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days, *is_trx]}
   target_transactions:                                   {filter: [*is_common_funnel, *is_target, *is_trx]}
 
   target_contact_chat:                                   {filter: [*is_msg, *is_common_funnel, *is_target]} #old
+  trash_contact:                                         {filter: [*is_common_funnel, *is_comns, *is_trash]} #old
+  preliminary_contact:                                   {filter: [*is_common_funnel, *is_comns, *is_preliminary]} #old
+  trash_contact_chat:                                    {filter: [*is_common_funnel, *is_msg, *is_trash]} #old
+  preliminary_contact_chat:                              {filter: [*is_common_funnel, *is_msg, *is_preliminary]} #old
+  trash_contact_call:                                    {filter: [*is_common_funnel, *is_call *is_trash]} #old
+  preliminary_contact_call:                              {filter: [*is_common_funnel, *is_call, *is_preliminary]} #old
+  trash_contact_iac:                                     {filter: [*is_common_funnel, *is_iac *is_trash]} #old
+  preliminary_contact_iac:                               {filter: [*is_common_funnel, *is_iac, *is_preliminary]} #old
+  trash_contact_ct:                                      {filter: [*is_common_funnel, *is_gsm *is_trash]} #old
+  preliminary_contact_ct:                                {filter: [*is_common_funnel, *is_gsm, *is_preliminary]} #old
+
+  call_delivery_agreement:                              {filter: [{tags.ilike: 'delivery_agreement'} , *is_call]} #old
+  call_sending_docs:                                    {filter: [{tags.ilike: 'sending_docs'} , *is_call]} #old
+  call_item_deal_discussion:                            {filter: [{tags.ilike: 'item_deal_discussion'} , *is_call]} #old
+  call_agent_call:                                      {filter: [{tags.ilike: 'agent_call'} , *is_call]} #old
+  call_refused_by_employer:                             {filter: [{tags.ilike: 'refused_by_employer'} , *is_call]} #old
+  call_call_later_no_meeting:                           {filter: [{tags.ilike: 'call_later_no_meeting'} , *is_call]} #old
+  call_mistake:                                         {filter: [{tags.ilike: 'mistake'} , *is_call]} #old
+  call_different_number:                                {filter: [{tags.ilike: 'different_number'} , *is_call]} #old
+  call_dispatcher_call:                                 {filter: [{tags.ilike: 'dispatcher_call'} , *is_call]} #old
+  call_meeting_moment:                                  {filter: [{tags.ilike: 'meeting_moment'} , *is_call]} #old
+  call_going_for_interview:                             {filter: [{tags.ilike: 'going_for_interview'} , *is_call]} #old
+  call_fast_hiring:                                     {filter: [{tags.ilike: 'fast_hiring'} , *is_call]} #old
+  call_spam:                                            {filter: [{tags.ilike: 'spam'} , *is_call]} #old
+  call_contact_exchange:                                {filter: [{tags.ilike: 'contact_exchange'} , *is_call]} #old
+  call_auto_ru:                                         {filter: [{tags.ilike: 'auto_ru'} , *is_call]} #old
+  call_discrimination:                                  {filter: [{tags.ilike: 'discrimination'} , *is_call]} #old
+  call_illegal_vacancy:                                 {filter: [{tags.ilike: 'illegal_vacancy'} , *is_call]} #old
+  call_unclear:                                         {filter: [{tags.ilike: 'unclear'} , *is_call]} #old
+  call_delivery_discussion:                             {filter: [{tags.ilike: 'delivery_discussion'} , *is_call]} #old
+  call_ask_for_resume:                                  {filter: [{tags.ilike: 'ask_for_resume'} , *is_call]} #old
+  call_applicant_refused:                               {filter: [{tags.ilike: 'applicant_refused'} , *is_call]} #old
+  call_different_offer:                                 {filter: [{tags.ilike: 'different_offer'} , *is_call]} #old
+  call_agreed_on_booking:                               {filter: [{tags.ilike: 'agreed_on_booking'} , *is_call]} #old
+  call_already_sold:                                    {filter: [{tags.ilike: 'already_sold'} , *is_call]} #old
+  call_irrelevant_applicant:                            {filter: [{tags.ilike: 'irrelevant_applicant'} , *is_call]} #old
+  call_autoreply:                                       {filter: [{tags.ilike: 'autoreply'} , *is_call]} #old
+  call_failed_call:                                     {filter: [{tags.ilike: 'failed_call'} , *is_call]} #old
+  call_failed_agreement:                                {filter: [{tags.ilike: 'failed_agreement'} , *is_call]} #old
+  call_closed_vacancy:                                  {filter: [{tags.ilike: 'closed_vacancy'} , *is_call]} #old
+  call_going_to_meet:                                   {filter: [{tags.ilike: 'going_to_meet'} , *is_call]} #old
+
+  chat_first_class:                                     {filter: [{tags.ilike: '1'} , *is_msg]} #old
+  chat_second_class:                                    {filter: [{tags.ilike: '2'} , *is_msg]} #old
+  chat_third_class:                                     {filter: [{tags.ilike: '3'} , *is_msg]} #old
+  chat_fourth_class:                                    {filter: [{tags.ilike: '4'} , *is_msg]} #old
+  chat_fifth_class:                                     {filter: [{tags.ilike: '5'} , *is_msg]} #old
+  chat_sixth_class:                                     {filter: [{tags.ilike: '6'} , *is_msg]} #old
+  chat_seventh_class:                                   {filter: [{tags.ilike: '7'} , *is_msg]} #old
+  chat_eighth_class:                                    {filter: [{tags.ilike: '8'} , *is_msg]} #old
+  chat_buyer_contact_exchange:                          {filter: [{tags.ilike: '9_1_contact_exchange_buyer'} , *is_msg]} #old
+  chat_seller_contact_exchange:                         {filter: [{tags.ilike: '9_2_contact_exchange_seller'} , *is_msg]} #old
 
 metric.uniq:
   calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [item_id, logical_category_id]}
@@ -93,6 +146,11 @@ metric.uniq:
 
   user_target_contact_chat:                              {counter: target_contact_chat,            key: [user]} #old
 
+  target_buyers_any:                                     {counter: target_contact_all,     key: [cookie]} #old
+  user_target_contact:                                   {counter: target_contact_all,     key: [user]} #old
+  target_contact_canonical:                              {counter: target_contact_all,      key: [item_id, logical_category_id]} #old
+  target_buyers_canonical:                               {counter: target_contact_all,      key: [buyer_cookie_id, logical_category_id]} #old
+
 
 metric.ratio:
   gsm_bx_outgoing_call_dur_per_call:                     {num: gsm_bx_outgoing_call_dur,            den: gsm_bx}
@@ -102,6 +160,6 @@ metric.ratio:
   iac_bx_outgoing_talk_dur_per_call:                     {num: iac_bx_outgoing_talk_dur,            den: iac_bx_outgoing}
   calls_bx_outgoing_talk_dur_per_call:                   {num: calls_bx_outgoing_talk_dur,          den: calls_bx_outgoing}
 
-  target_contact_call_bx_ratio:           {num: target_contact_call_bx, den: call_bx} #old
-  user_target_contact_call_bx_ratio:      {num: user_target_contact_call_bx, den: user_call_bx} #old
-  target_contact_call_bx_ratio_answered:  {num: target_contact_call_bx, den: answered_call_bx} #old
+  target_contact_call_bx_ratio:                          {num: target_contact_call_bx, den: call_bx} #old
+  user_target_contact_call_bx_ratio:                     {num: user_target_contact_call_bx, den: user_call_bx} #old
+  target_contact_call_bx_ratio_answered:                  {num: target_contact_call_bx, den: answered_call_bx} #old
