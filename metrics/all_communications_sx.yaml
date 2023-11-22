@@ -44,6 +44,8 @@ metric.counter:
   comns_sx_incoming_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
   comns_sx_incoming_target:                              {filter: [*is_common_funnel, *is_target]}
 
+  target_contact_chat_inbox:                             {filter: [*is_msg, *is_common_funnel, *is_target]} #old
+
 metric.uniq:
   calls_sx_incoming_canonical:                           {counter: calls_sx_incoming,              key: [item_id, logical_category_id]}
   calls_sx_incoming_answered_canonical:                  {counter: calls_sx_incoming_answered,     key: [item_id, logical_category_id]}
@@ -56,6 +58,8 @@ metric.uniq:
   comns_sx_incoming_trash_canonical:                     {counter: comns_sx_incoming_trash,        key: [item_id, logical_category_id]}
   comns_sx_incoming_preliminary_canonical:               {counter: comns_sx_incoming_preliminary,  key: [item_id, logical_category_id]}
   comns_sx_incoming_target_canonical:                    {counter: comns_sx_incoming_target,       key: [item_id, logical_category_id]}
+  
+  user_target_contact_chat_inbox:                        {counter: target_contact_chat_inbox,            key: [user]} #old
 
 metric.ratio:
   gsm_sx_incoming_call_dur_per_call:                     {num: gsm_sx_incoming_call_dur,            den: gsm_sx}
