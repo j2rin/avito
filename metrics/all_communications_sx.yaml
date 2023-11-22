@@ -51,6 +51,7 @@ metric.counter:
   target_contact_call_sx_talkseconds:                    {filter: [*is_call, *is_common_funnel], obs: [talk_duration]} #old
   answered_call_sx:                                      {filter: [*is_call, *is_common_funnel, *is_answered]} #old
   call_sx:                                               {filter: [*is_call, *is_common_funnel]} #old
+  seller_target_contact_all:                             {filter: [*is_common_funnel, *is_target]} #old
 
 metric.uniq:
   calls_sx_incoming_canonical:                           {counter: calls_sx_incoming,              key: [item_id, logical_category_id]}
@@ -84,3 +85,7 @@ metric.ratio:
   user_target_contact_call_sx_ratio:                     {num: user_target_contact_call_sx, den: user_call_sx} #old
 
   target_contact_call_sx_ratio_answered:                 {num: target_contact_call_sx, den: answered_call_sx} #old
+
+  user_seller_target_contact:                            {counter: seller_target_contact_all,      key: [user]} #old
+  seller_target_contact:                                 {counter: seller_target_contact_all,      key: [item_id, logical_category_id]} #old
+  seller_target_buyers:                                  {counter: seller_target_contact_all,      key: [seller_id, logical_category_id]} #old
