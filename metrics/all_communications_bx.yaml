@@ -63,6 +63,8 @@ metric.counter:
   answered_transactions:                                 {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days, *is_trx]}
   target_transactions:                                   {filter: [*is_common_funnel, *is_target, *is_trx]}
 
+  target_contact_chat:                                   {filter: [*is_msg, *is_common_funnel, *is_target]} #old
+
 metric.uniq:
   calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [item_id, logical_category_id]}
   calls_bx_outgoing_answered_canonical:                  {counter: calls_bx_outgoing_answered,     key: [item_id, logical_category_id]}
@@ -88,6 +90,8 @@ metric.uniq:
   user_target_contact_call_bx_success:                   {counter: target_contact_call_bx_success, key: [user]} #old
   user_answered_call_bx:                                 {counter: answered_call_bx, key: [user]} #old
   user_call_bx:                                          {counter: call_bx, key: [user]} #old
+
+  user_target_contact_chat:                              {counter: target_contact_chat,            key: [user]} #old
 
 
 metric.ratio:
