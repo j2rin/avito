@@ -242,10 +242,10 @@ calls_scores as
             when is_spam = True then 'trash'
             when with_reply = False then 'not_answered'
         end as type
-        ,case 
-            when class in (3, 4, 5) then to_char(class)
-            when is_contact_exchange then '9_1_contact_exchange_buyer'
-            when is_seller_contact_exchange then '9_2_contact_exchange_seller' 
+        -- ,case 
+        --     when class in (3, 4, 5) then to_char(class)
+        --     when is_contact_exchange then '9_1_contact_exchange_buyer'
+        --     when is_seller_contact_exchange then '9_2_contact_exchange_seller' 
             -- else to_char(class) end as tags
         ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
         ,case cl.level when 3 then cl.Location_id end                           as city_id
