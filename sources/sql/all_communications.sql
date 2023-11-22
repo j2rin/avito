@@ -125,6 +125,7 @@ calls_scores as
         a.*
         ,d.is_target
         ,d.type
+        ,d.tags
     from 
         gsm_with_matching as a
         left join calls_scores as d on d.call_type = 'ct' and d.call_id = a.communication_id
@@ -165,6 +166,7 @@ calls_scores as
         ,c.Param4_microcat_id as param4_id
         ,d.is_target
         ,d.type
+        ,d.tags
         ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
         ,case cl.level when 3 then cl.Location_id end                           as city_id
 	    ,cl.LocationGroup_id                                          as location_group_id
@@ -449,6 +451,7 @@ select
     ,cm.Param4_microcat_id as param4_id
     ,is_target
     ,type
+    ,tags
     ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
     ,case cl.level when 3 then cl.Location_id end                           as city_id
 	,cl.LocationGroup_id                                          as location_group_id
