@@ -6,6 +6,7 @@ definitions:
   - &is_call                      {communication: *call}
   - &is_common_funnel             {is_common_funnel: True} # коммуникации, считающиеся в воронке. Только исходящие от баера, без заблокированных
   - &is_answered                  {is_answered: True} # отвеченные (для GSM подобраны пороги, а не просто talk_duration > 0)
+  - &is_success_call              {talk_duration.>: 30}
   - &is_trash                     {type: trash}
   - &is_preliminary               {type: preliminary}
   - &is_target                    {type: target}
@@ -44,6 +45,14 @@ metric.counter:
   comns_sx_incoming_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
   comns_sx_incoming_target:                              {filter: [*is_common_funnel, *is_target]}
 
+  target_contact_chat_inbox:                             {filter: [*is_msg, *is_common_funnel, *is_target]} #old
+  target_contact_call_sx:                                {filter: [*is_call, *is_common_funnel, *is_target]} #old
+  target_contact_call_sx_success:                        {filter: [*is_call, *is_common_funnel, *is_target, *is_success_call]} #old
+  target_contact_call_sx_talkseconds:                    {filter: [*is_call, *is_common_funnel], obs: [talk_duration]} #old
+  answered_call_sx:                                      {filter: [*is_call, *is_common_funnel, *is_answered]} #old
+  call_sx:                                               {filter: [*is_call, *is_common_funnel]} #old
+  seller_target_contact_all:                             {filter: [*is_common_funnel, *is_target]} #old
+
 metric.uniq:
   calls_sx_incoming_canonical:                           {counter: calls_sx_incoming,              key: [item_id, logical_category_id]}
   calls_sx_incoming_answered_canonical:                  {counter: calls_sx_incoming_answered,     key: [item_id, logical_category_id]}
@@ -56,6 +65,17 @@ metric.uniq:
   comns_sx_incoming_trash_canonical:                     {counter: comns_sx_incoming_trash,        key: [item_id, logical_category_id]}
   comns_sx_incoming_preliminary_canonical:               {counter: comns_sx_incoming_preliminary,  key: [item_id, logical_category_id]}
   comns_sx_incoming_target_canonical:                    {counter: comns_sx_incoming_target,       key: [item_id, logical_category_id]}
+  
+  user_target_contact_chat_inbox:                        {counter: target_contact_chat_inbox,            key: [user]} #old
+
+  user_target_contact_call_sx:                           {counter: target_contact_call_sx, key: [user]} #old
+  user_target_contact_call_sx_success:                   {counter: target_contact_call_sx_success, key: [user]} #old
+  user_answered_call_sx:                                 {counter: answered_call_sx, key: [user]} #old
+  user_call_sx:                                          {counter: call_sx, key: [user]} #old
+  
+  user_seller_target_contact:                            {counter: seller_target_contact_all,      key: [user]} #old
+  seller_target_contact:                                 {counter: seller_target_contact_all,      key: [item_id, logical_category_id]} #old
+  seller_target_buyers:                                  {counter: seller_target_contact_all,      key: [seller_id, logical_category_id]} #old
 
 metric.ratio:
   gsm_sx_incoming_call_dur_per_call:                     {num: gsm_sx_incoming_call_dur,            den: gsm_sx}
@@ -64,3 +84,8 @@ metric.ratio:
   gsm_sx_incoming_talk_dur_per_call:                     {num: gsm_sx_incoming_talk_dur,            den: gsm_sx}
   iac_sx_incoming_talk_dur_per_call:                     {num: iac_sx_incoming_talk_dur,            den: iac_sx_incoming}
   calls_sx_incoming_talk_dur_per_call:                   {num: calls_sx_incoming_talk_dur,          den: calls_sx_incoming}
+
+  target_contact_call_sx_ratio:                          {num: target_contact_call_sx, den: call_sx} #old
+  user_target_contact_call_sx_ratio:                     {num: user_target_contact_call_sx, den: user_call_sx} #old
+
+  target_contact_call_sx_ratio_answered:                 {num: target_contact_call_sx, den: answered_call_sx} #old

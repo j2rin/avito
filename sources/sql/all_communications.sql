@@ -11,6 +11,7 @@ calls_scores as
                 when is_preliminary_call = True then 'preliminary'
                 when is_trash_call = True then 'trash'
         end as type
+        ,case when first_tag_prob > 0.4 then first_tag else 'empty_call' end as tags
     from
         dma.target_call
     where True
@@ -124,6 +125,7 @@ calls_scores as
         a.*
         ,d.is_target
         ,d.type
+        ,d.tags
     from 
         gsm_with_matching as a
         left join calls_scores as d on d.call_type = 'ct' and d.call_id = a.communication_id
@@ -164,6 +166,7 @@ calls_scores as
         ,c.Param4_microcat_id as param4_id
         ,d.is_target
         ,d.type
+        ,d.tags
         ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
         ,case cl.level when 3 then cl.Location_id end                           as city_id
 	    ,cl.LocationGroup_id                                          as location_group_id
@@ -240,6 +243,11 @@ calls_scores as
             when is_spam = True then 'trash'
             when with_reply = False then 'not_answered'
         end as type
+        ,case 
+            when class in (3, 4, 5) then to_char(class)
+            when is_contact_exchange then '9_contact_exchange_buyer'
+            when is_seller_contact_exchange then '10_contact_exchange_seller' 
+            else to_char(class) end as tags
         ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
         ,case cl.level when 3 then cl.Location_id end                           as city_id
 	    ,cl.LocationGroup_id                                            as location_group_id
@@ -307,6 +315,7 @@ select
         ,cm.Param4_microcat_id as param4_id
         ,case when ((co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')  or confirm_date is null) then False else True end is_target
         ,case when ((  (co.workflow = 'delivery-c2c'and  platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) or confirm_date is null) then  'preliminary' else 'target' end as type
+        ,'transactions_order' as tags
         ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
         ,case cl.level when 3 then cl.Location_id end                           as city_id
 	    ,cl.LocationGroup_id                                          as location_group_id
@@ -345,6 +354,7 @@ select
         ,cast(null as int) as buyer_cookie_id 
         ,case when accepted_flg = 1 and canceled_flg = 0 then true else false end  as is_target
         ,case when accepted_flg = 1 and canceled_flg = 0 then 'target' else 'preliminary' end as type
+        ,'transactions_services_calendar' as tags
 from dma.services_calendar_orders sco
 where true 
         and cast(create_timestamp as date) between :first_date and :last_date 
@@ -399,6 +409,7 @@ select
         ,cast(null as int) buyer_cookie_id 
         ,case when  pay_date  is not null  then true else false end  as is_target
         ,case when pay_date  is not null  then 'target' else 'preliminary' end as type
+        ,'transactions_str' as tags
 from dma.short_term_rent_orders stro
 left join confirmed_str_orders as c 
     on c.strbooking_id = stro.order_id
@@ -441,6 +452,7 @@ select
     ,cm.Param4_microcat_id as param4_id
     ,is_target
     ,type
+    ,tags
     ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
     ,case cl.level when 3 then cl.Location_id end                           as city_id
 	,cl.LocationGroup_id                                          as location_group_id
