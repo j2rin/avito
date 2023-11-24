@@ -188,6 +188,7 @@ definitions:
     - &is_serp_quorum       { search_query_type: 15 }
     - &is_serp_vector       { search_query_type: 18 }
     - &is_serp_witcher_mp   { search_query_type: 16 }
+    - &is_serp_base_block   { search_query_type.!in: [9,10,20,11,12,13,14,15,18,16], x_from_page.!=: items_ungrouped}
 
     - &is_fp_witcher_regions    { from_page: witcher-extra-regions }
     - &is_fp_witcher_delivery   { from_page: witcher-extra-delivery }
@@ -1946,6 +1947,11 @@ metric.counter:
     
     search_onboarding: {filter: [eid: 300, from_page.ilike: 'onboarding_%']}
 
+    iv_base_block: { filter: [*x_is_search, *is_serp_base_block, *is_iv_wo_guessing] }
+    c_base_block: { filter: [*x_is_search, *is_serp_base_block, *is_contact_wo_guessing] }
+    fav_base_block: { filter: [*x_is_search, *is_serp_base_block, *is_fav] }
+    btc_base_block: { filter: [*x_is_search, *is_serp_base_block, *is_btc_wo_guessing] }
+
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie, item] }
     bt_clicks_grouped: { counter: bt_clicks, key: [cookie, item] }
@@ -3448,6 +3454,11 @@ metric.uniq:
     cnt_views_serp:                 { counter: cnt_cs_serp_xl,    key: [item, x] }
     
     user_search_onboarding: {counter: search_onboarding,    key: [cookie]}
+
+    user_iv_base_block: { counter: iv_base_block, key: [cookie] }
+    user_c_base_block: { counter: c_base_block, key: [cookie] }
+    user_fav_base_block: { counter: fav_base_block, key: [cookie] }
+    user_btc_base_block: { counter: btc_base_block, key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
