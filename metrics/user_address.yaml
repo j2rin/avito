@@ -41,7 +41,7 @@ metric.counter:
   address_delete_cnt:        {filter: [*deleted_today]}
   address_update_cnt:        {filter: [*updated_today]}
 
-  user_active_address_active_cnt:              {filter: [*active, *active_user]}
+  #user_active_address_active_cnt:              {filter: [*active, *active_user]}
   user_active_address_active_home_cnt:              {filter: [*active, *home, *active_user]}
   user_active_address_active_work_cnt:              {filter: [*active, *work, *active_user]}
   user_active_address_active_other_cnt:             {filter: [*active, *other, *active_user]}
@@ -54,8 +54,8 @@ metric.counter:
   user_active_address_active_has_afec_cnt:              {filter: [*active, *has_ent, *has_floor, *has_apt, *has_comment, *active_user]}
 
 
-  user_c_address_active_cnt:                          {filter: [*active, *is_buyer]}
-  user_bx_active_address_active_cnt:                  {filter: [*active, *is_user_bx_active]}
+  #user_c_address_active_cnt:                          {filter: [*active, *is_buyer]}
+  #user_bx_active_address_active_cnt:                  {filter: [*active, *is_user_bx_active]}
 
 
 metric.uniq:
@@ -102,7 +102,7 @@ metric.uniq:
   user_address_del: { counter: address_delete_cnt, key: [user_id] }
   user_address_upd: { counter: address_update_cnt, key: [user_id] }
 
-  user_active_address_active:                   { counter: user_active_address_active_cnt, key: [user_id] }
+  #user_active_address_active:                   { counter: user_active_address_active_cnt, key: [user_id] }
   user_active_address_active_home:              { counter: user_active_address_active_home_cnt, key: [user_id] }
   user_active_address_active_work:              { counter: user_active_address_active_work_cnt, key: [user_id] }
   user_active_address_active_other:             { counter: user_active_address_active_other_cnt, key: [user_id] }
@@ -114,8 +114,8 @@ metric.uniq:
   user_active_address_active_has_afe:              { counter: user_active_address_active_has_afe_cnt, key: [user_id] }
   user_active_address_active_has_afec:             { counter: user_active_address_active_has_afec_cnt, key: [user_id] }
 
-  user_c_address_active:                           { counter: user_c_address_active_cnt, key: [user_id] }
-  user_bx_active_address_active:                   { counter: user_bx_active_address_active_cnt, key: [user_id] }
+  #user_c_address_active:                           { counter: user_c_address_active_cnt, key: [user_id] }
+  #user_bx_active_address_active:                   { counter: user_bx_active_address_active_cnt, key: [user_id] }
 
   user_address_active_1_plus: { counter: address_active_cnt, key_seq: [user_id, useraddress_id], thresholds: [1, 0] }
   user_address_active_2_plus: { counter: address_active_cnt, key_seq: [user_id, useraddress_id], thresholds: [2, 0] }
