@@ -38,11 +38,7 @@ CONFIGS = [
     ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
     ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
     ('metrics_lists', os.path.join(CUR_DIR_PATH, 'presets/metrics'), True),
-    (
-        'm42_cartesian_groups',
-        os.path.join(CUR_DIR_PATH, 'config/m42_cartesian_groups.yaml'),
-        False,
-    ),
+    ('m42_cartesian_groups', os.path.join(CUR_DIR_PATH, 'm42_cartesian_groups'), True),
 ]
 
 DEPRECATED_CONFIGS = ['breakdown_presets', 'ab_config_presets', 'metrics_lists']

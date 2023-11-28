@@ -52,26 +52,10 @@ METRIC_LIMITS_ALTERS = {
     'all_communications': {
         'thread_count': 70000,
     },
+    'search_items': {
+        'written_gb': 200,
+    },
 }
-
-TRINO_VALIDATED_SOURCES = [
-    'buyer_stream',
-    'buyer_call',
-    'classified_revenue',
-    'total_revenue',
-    'support',
-    'seller_item_active',
-    'core_contacts',
-    'autoteka_reports',
-    'buyer_call',
-    'broker_events_revenue',
-    'other_projects_revenue',
-    'delivery_orders',
-    'page_views',
-    'qd_lots',
-    'seller_item_event',
-    'str',
-]
 
 
 @dataclass
@@ -309,10 +293,7 @@ class TrinoFileValidator:
                             table_name = match.group(1)
                             self.not_found_tables.add(table_name)
 
-                    if filename in TRINO_VALIDATED_SOURCES:
-                        report.add_error('trino', message)
-                    else:
-                        report.add_warning('trino', message)
+                    report.add_error('trino', message)
 
                     return
 
@@ -322,10 +303,7 @@ class TrinoFileValidator:
                 result = explain_analyze(con, sql)
                 if 'error' in result:
                     message = result['error'].message
-                    if filename in TRINO_VALIDATED_SOURCES:
-                        report.add_error('trino', message)
-                    else:
-                        report.add_warning('trino', message)
+                    report.add_error('trino', message)
                     return
                 report.add_metrics('trino', result)
 
@@ -354,7 +332,7 @@ def is_sql_file(filepath):
     return re.match(SQL_FILES_PATTERN, filepath) is not None
 
 
-def validate(filenames=None, limit0=False, n_days=1, validate_all=False, vertica_trino_flags=3):
+def validate(filenames=None, limit0=False, n_days=1, validate_all=False):
     if filenames:
         modified_files = [f'{SQL_DIR}{fn}.sql' for fn in filenames]
     elif validate_all:
@@ -386,12 +364,11 @@ def validate(filenames=None, limit0=False, n_days=1, validate_all=False, vertica
             print(f'FAILED: {path}')
             continue
 
-        if meta['database'] == 'vertica':
-            if vertica_trino_flags & 1:
-                vertica_validator.validate(path, report)
-            if vertica_trino_flags & 2:
-                trino_validator.validate(path, report)
-        elif meta['database'] == 'clickhouse':
+        if 'vertica' in meta['connections']:
+            vertica_validator.validate(path, report)
+        if 'trino' in meta['connections']:
+            trino_validator.validate(path, report)
+        if 'clickhouse' in meta['connections']:
             clickhouse_validator.validate(path, report)
 
         if report.print_errors():
@@ -420,9 +397,8 @@ def validate(filenames=None, limit0=False, n_days=1, validate_all=False, vertica
 @click.option('--all', '-a', 'validate_all', is_flag=True, default=False)
 @click.option('--limit0', '-0', 'limit0', type=str, is_flag=True, default=False)
 @click.option('--n-days', '-d', 'n_days', type=int, default=1)
-@click.option('--vertica-trino-flags', '-vt', 'vertica_trino_flags', type=int, default=3)
-def main(filenames, limit0, n_days, validate_all, vertica_trino_flags):
-    validate(filenames, limit0, n_days, validate_all, vertica_trino_flags)
+def main(filenames, limit0, n_days, validate_all):
+    validate(filenames, limit0, n_days, validate_all)
 
 
 if __name__ == '__main__':
