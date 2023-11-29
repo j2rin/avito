@@ -1,3 +1,6 @@
+definitions:
+  - &is_contact        { eid: [303,856,857,2581,3005,3461,3517,4066,4198,4600,4675,4813,6154,6608] }
+
 metric.counter:
   watch_short_video:                    {filter: [eid: 6304], obs: [metric_value]}
   watch_short_video_gallery:            {filter: [eid: 6304, from_page.ilike: '%gallery%'], obs: [metric_value]}
@@ -13,6 +16,20 @@ metric.counter:
   add_video_btn:                        {filter: [eid: 6828], obs: [metric_value]}
 
   iv_avl:                               {filter: [eid: 2649], obs: [metric_value]}
+  
+  show_video_lenta_full:        {filter: [eid: 7723, avl_entry_type.ilike: '%full%'], obs: [metric_value]}
+  show_video_lenta_half:        {filter: [eid: 7723, avl_entry_type.ilike: '%half%'], obs: [metric_value]}
+  
+  click_video_lenta_full:       {filter: [eid: 7724, avl_entry_type.ilike: '%full%'], obs: [metric_value]}
+  click_video_lenta_half:       {filter: [eid: 7724, avl_entry_type.ilike: '%half%'], obs: [metric_value]}
+  
+  watch_video_avl:              {filter: [eid: 6304, x_avl_hash.isnull: False], obs: [metric_value]}
+  
+  iv_video_lenta_half:          {filter: [eid: 301, avl_entry_type.ilike: '%half%'], obs: [metric_value]}
+  iv_video_lenta_full:          {filter: [eid: 301, avl_entry_type.ilike: '%full%'], obs: [metric_value]}
+  c_video_lenta_half:           {filter: [*is_contact, avl_entry_type.ilike: '%half%'], obs: [metric_value]}
+  c_video_lenta_full:           {filter: [*is_contact, avl_entry_type.ilike: '%full%'], obs: [metric_value]}
+  
 
 metric.uniq:
   user_watch_short_video:               {counter: watch_short_video, key: [cookie]}
@@ -36,3 +53,22 @@ metric.uniq:
 
   user_iv_avl:                          {counter: iv_avl, key: [cookie]}
   item_iv_avl:                          {counter: iv_avl, key: [item_id]}
+
+  user_show_video_lenta_full:     {counter: show_video_lenta_full, key: [cookie]}
+  user_show_video_lenta_half:     {counter: show_video_lenta_half, key: [cookie]}
+  user_click_video_lenta_full:    {counter: click_video_lenta_full, key: [cookie]}
+  user_click_video_lenta_half:    {counter: click_video_lenta_half, key: [cookie]}
+  user_watch_video_avl:           {counter: watch_video_avl, key: [cookie]}
+  session_watch_video_avl:        {counter: watch_video_avl, key: [x_avl_hash]}
+  item_watch_video_avl:           {counter: watch_video_avl, key: [item_id, x_avl_hash]}
+  user_iv_video_lenta_half:       {counter: iv_video_lenta_half, key: [cookie]}
+  user_iv_video_lenta_full:       {counter: iv_video_lenta_full, key: [cookie]}
+  user_c_video_lenta_half:        {counter: c_video_lenta_half, key: [cookie]}
+  user_c_video_lenta_full:        {counter: c_video_lenta_full, key: [cookie]}
+  
+metric.ratio:
+  avl_watch_per_session:        {num: watch_video_avl, den: session_watch_video_avl}
+  item_watch_per_session:       {num: item_watch_video_avl, den: session_watch_video_avl}
+  
+  
+  
