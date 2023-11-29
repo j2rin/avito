@@ -152,6 +152,7 @@ calls_scores as
         ,case when CallerIsBuyer then CallerPlatform else RecieverPlatform end as platform_id -- платформа баера
         ,case when CallerIsBuyer then RecieverPlatform else CallerPlatform end as seller_platform_id -- платформа селлера
         ,case when CallerIsBuyer then CallerDevice else RecieverDevice end as buyer_cookie_id
+        ,NVL(a.is_video_call,) as is_video_call
         ,a.Microcat_id
         ,c.category_id
         ,a.location_id
@@ -219,6 +220,7 @@ calls_scores as
         ,platform_id -- платформа баера
         ,reply_platform_id as seller_platform_id -- платформа селлера
         ,first_message_cookie_id as buyer_cookie_id
+        ,cast(NULL as boolean) as is_video_call
         ,chr.microcat_id
         ,chr.category_id
         ,chr.item_location_id as location_id
@@ -301,6 +303,7 @@ select
         ,co.platform_id as platform_id -- платформа баера
         ,cast(null as int) as seller_platform_id -- платформа селлера
         ,cast(null as int) as buyer_cookie_id
+        ,cast(NULL as boolean) as is_video_call
         ,coi.microcat_id
         ,cm.category_id as category_id
         ,coi.location_id
@@ -438,6 +441,7 @@ select
     ,platform_id
     ,seller_platform_id
     ,buyer_cookie_id
+    ,cast(NULL as boolean) as is_video_call
     ,cm.microcat_id
     ,cm.category_id
     ,cl.location_id
@@ -466,7 +470,7 @@ from (
         from str_orders
     union all 
     select * 
-    from gsm_calls
+        from gsm_calls
     )t  
 join dma.current_item ci using (Item_id)
 join dma.current_microcategories cm using (microcat_id)
