@@ -152,7 +152,7 @@ calls_scores as
         ,case when CallerIsBuyer then CallerPlatform else RecieverPlatform end as platform_id -- платформа баера
         ,case when CallerIsBuyer then RecieverPlatform else CallerPlatform end as seller_platform_id -- платформа селлера
         ,case when CallerIsBuyer then CallerDevice else RecieverDevice end as buyer_cookie_id
-        ,NVL(a.is_video_call,) as is_video_call
+        ,NVL(a.is_video_call, False) as is_video_call
         ,a.Microcat_id
         ,c.category_id
         ,a.location_id
