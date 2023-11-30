@@ -2,6 +2,7 @@
 
 definitions:
   - &is_iac               {communication: iac}
+  - &is_video             {is_video_call: true}
 
 
   # Screens
@@ -113,16 +114,21 @@ metric.counter:
   # appcall_sx_incoming_direct_initiated:         {filter: [*is_iac, *is_incoming, *is_direct_c, *is_initiated]}
   # appcall_sx_incoming_direct_ringing:           {filter: [*is_iac, *is_incoming, *is_direct_c, *is_ringing]}
 
+  # Success
   appcall_sx_outgoing_success:                  {filter: [*is_iac, *is_outgoing, *is_c, *is_success]}
   appcall_sx_incoming_success:                  {filter: [*is_iac, *is_incoming, *is_c, *is_success]}
   appcall_sx_incoming_direct_success:           {filter: [*is_iac, *is_incoming, *is_direct_c, *is_success]}
   appcall_sx_any_success:                       {filter: [*is_iac, *is_c, *is_success]}
 
+  # Video calls
+  appcall_sx_video_calls:                       {filter: [*is_iac, *is_c, *is_video]}
+  appcall_sx_video_answered:                    {filter: [*is_iac, *is_c, *is_answered, *is_video]}
+  appcall_sx_video_talkseconds:                 {filter: [*is_iac, *is_c, *is_answered, *is_video], obs: [talk_duration]}
+
 
 
 metric.uniq:
   appcall_sx_any_canonical:                 {counter: appcall_sx_any_calls, key: [item_id, logical_category_id]}
-
 
 
 
