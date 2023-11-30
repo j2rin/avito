@@ -24,6 +24,9 @@ metric.counter:
   click_video_lenta_half:       {filter: [eid: 7724, avl_entry_type.ilike: '%half%'], obs: [metric_value]}
   
   watch_video_avl:              {filter: [eid: 6304, x_avl_hash.isnull: False], obs: [metric_value]}
+  watch_video_avl_full:         {filter: [eid: 6304, x_avl_hash.isnull: False, avl_entry_type.ilike: '%full%'], obs: [metric_value]}
+  watch_video_avl_half:          {filter: [eid: 6304, x_avl_hash.isnull: False, avl_entry_type.ilike: '%half%'], obs: [metric_value]}
+  
   
   iv_video_lenta_half:          {filter: [eid: 301, avl_entry_type.ilike: '%half%'], obs: [metric_value]}
   iv_video_lenta_full:          {filter: [eid: 301, avl_entry_type.ilike: '%full%'], obs: [metric_value]}
@@ -58,9 +61,19 @@ metric.uniq:
   user_show_video_lenta_half:     {counter: show_video_lenta_half, key: [cookie]}
   user_click_video_lenta_full:    {counter: click_video_lenta_full, key: [cookie]}
   user_click_video_lenta_half:    {counter: click_video_lenta_half, key: [cookie]}
+
   user_watch_video_avl:           {counter: watch_video_avl, key: [cookie]}
   session_watch_video_avl:        {counter: watch_video_avl, key: [x_avl_hash]}
   item_watch_video_avl:           {counter: watch_video_avl, key: [item_id, x_avl_hash]}
+
+  user_watch_video_avl_full:           {counter: watch_video_avl_full, key: [cookie]}
+  session_watch_video_avl_full:        {counter: watch_video_avl_full, key: [x_avl_hash]}
+  item_watch_video_avl_full:           {counter: watch_video_avl_full, key: [item_id, x_avl_hash]}
+
+  user_watch_video_avl_half:           {counter: watch_video_avl_half, key: [cookie]}
+  session_watch_video_avl_half:        {counter: watch_video_avl_half, key: [x_avl_hash]}
+  item_watch_video_avl_half:           {counter: watch_video_avl_half, key: [item_id, x_avl_hash]}
+
   user_iv_video_lenta_half:       {counter: iv_video_lenta_half, key: [cookie]}
   user_iv_video_lenta_full:       {counter: iv_video_lenta_full, key: [cookie]}
   user_c_video_lenta_half:        {counter: c_video_lenta_half, key: [cookie]}
@@ -69,6 +82,14 @@ metric.uniq:
 metric.ratio:
   avl_watch_per_session:        {num: watch_video_avl, den: session_watch_video_avl}
   item_watch_per_session:       {num: item_watch_video_avl, den: session_watch_video_avl}
+
+  avl_watch_per_session_full:   {num: watch_video_avl_full, den: session_watch_video_avl_full}
+  item_watch_per_session_full:  {num: item_watch_video_avl_full, den: session_watch_video_avl_full}
+
+  avl_watch_per_session_half:   {num: watch_video_avl_half, den: session_watch_video_avl_half}
+  item_watch_per_session_half:  {num: item_watch_video_avl_half, den: session_watch_video_avl_half}
+
+
   
   
   
