@@ -1,6 +1,6 @@
 metric.counter:
   # auth attempts
-  auth_attempts:                           {obs: [auth_attempts]}
+  total_auth_attempts:                     {obs: [auth_attempts]}
   direct_auth_attempts:                    {obs: [auth_attempts], filter: [auth_source: 'auth']}
   restore_phone_attempts:                  {obs: [auth_attempts], filter: [auth_source: 'restore_phone']}
   restore_email_attempts:                  {obs: [auth_attempts], filter: [auth_source: 'restore_phone']}
@@ -32,7 +32,7 @@ metric.counter:
   not_susp_restore_email_attempts_with_check:     {obs: [not_susp_auth_attempts_with_sheck], filter: [auth_source: 'restore_phone']}
 
   # auth success by auth source
-  auth_success:                    {obs: [auth_success]}
+  total_auth_success:                    {obs: [auth_success]}
   direct_auth_success:             {obs: [auth_success], filter: [auth_source: 'auth']}
   restore_phone_success:           {obs: [auth_success], filter: [auth_source: 'restore_phone']}
   restore_email_success:           {obs: [auth_success], filter: [auth_source: 'restore_phone']}
@@ -106,7 +106,7 @@ metric.counter:
 
 metric.uniq:
   # user auth attempts
-  user_auth_attempts:                           {counter: auth_attempts, key: [user_id]}
+  user_total_auth_attempts:                     {counter: total_auth_attempts, key: [user_id]}
   user_direct_auth_attempts:                    {counter: direct_auth_attempts, key: [user_id]}
   user_restore_phone_attempts:                  {counter: restore_phone_attempts, key: [user_id]}
   user_restore_email_attempts:                  {counter: restore_email_attempts, key: [user_id]}
@@ -138,7 +138,7 @@ metric.uniq:
   user_not_susp_restore_email_attempts_with_check:      {counter: not_susp_restore_email_attempts_with_check,   key: [user_id]}     
   
   # user auth success
-  user_auth_success:                    {counter: auth_success, key: [user_id]}
+  user_auth_success:                    {counter: total_auth_success, key: [user_id]}
   user_direct_auth_success:             {counter: direct_auth_success, key: [user_id]}
   user_restore_phone_success:           {counter: restore_phone_success, key: [user_id]}
   user_restore_email_success:           {counter: restore_email_success, key: [user_id]}
@@ -268,7 +268,7 @@ metric.ratio:
   # conversion from auth attempt to success auth 
   conv_from_auth_attempt_to_succ:                    
     num: auth_success                    
-    den: auth_attempts           
+    den: total_auth_attempts           
   conv_from_direct_auth_attempt_to_succ:             
     num: direct_auth_success                
     den: direct_auth_attempts        
@@ -348,7 +348,7 @@ metric.ratio:
   # share of auth attempts with check
   auth_attemps_with_check_share:                             
     num: auth_attempts_with_check               
-    den: auth_attempts
+    den: total_auth_attempts
   direct_auth_attempts_with_check_share:                     
     num: direct_auth_with_check               
     den: direct_auth_attempts
