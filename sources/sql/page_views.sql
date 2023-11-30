@@ -1,3 +1,4 @@
+select 1;
 with
 current_infmquery_category as (
     select infmquery_id, logcat_id, microcat_id
