@@ -1,0 +1,31 @@
+definitions:
+    - &auto       {$or: [x_from_page.isnull: true, x_from_page.in: [c2c_item_card]]}
+    - &usp_banner   {x_from_page.in: [c2c_usp_banner]}
+    - &tinkoff_flow     {x_from_page.in: [c2c_tinkoff_flow]}
+
+
+metric.counter:
+    c2c_credit_auto_full_renders:                         {filter: [eventtype_ext.in: 9651, *auto], obs: [event_count]}
+    c2c_credit_auto_full_clicks:                          {filter: [eventtype_ext: 4498, *auto], obs: [event_count]}
+    c2c_credit_auto_full_usp_renders:                     {filter: [eventtype_ext: 9651, *usp_banner], obs: [event_count]}
+    c2c_credit_auto_full_usp_clicks:                      {filter: [eventtype_ext: 4498, *usp_banner], obs: [event_count]}
+    c2c_credit_auto_full_tinkoff_flow_renders:            {filter: [eventtype_ext: 9651, *tinkoff_flow], obs: [event_count]}
+    c2c_credit_auto_full_tinkoff_flow_clicks:             {filter: [eventtype_ext: 4498, *tinkoff_flow], obs: [event_count]}
+    c2c_credit_auto_full_tinkoff_flow_wait_clicks:        {filter: [eventtype_ext: 9632, *tinkoff_flow], obs: [event_count]}
+
+
+metric.uniq:
+    c2c_credit_auto_renders:                              {counter: c2c_credit_auto_full_renders,     key: [cookie_id]}
+    c2c_credit_auto_clicks:                               {counter: c2c_credit_auto_full_clicks,      key: [cookie_id]}
+    c2c_credit_auto_usp_renders:                          {counter: c2c_credit_auto_full_usp_renders, key: [cookie_id]}
+    c2c_credit_auto_usp_clicks:                           {counter: c2c_credit_auto_full_usp_clicks,  key: [cookie_id]}
+    c2c_credit_auto_tinkoff_flow_renders:                 {counter: c2c_credit_auto_full_tinkoff_flow_renders, key: [cookie_id]}
+    c2c_credit_auto_tinkoff_flow_clicks:                  {counter: c2c_credit_auto_full_tinkoff_flow_clicks,  key: [cookie_id]}
+    c2c_credit_auto_tinkoff_flow_wait_clicks:             {counter: c2c_credit_auto_full_tinkoff_flow_wait_clicks, key: [cookie_id]}
+
+
+metric.ratio:
+    c2c_credit_auto_ctr:                                  {num: c2c_credit_auto_clicks,     den: c2c_credit_auto_renders}
+    c2c_credit_auto_usp_ctr:                              {num: c2c_credit_auto_usp_clicks, den: c2c_credit_auto_usp_renders}
+    c2c_credit_auto_tinkoff_flow_tinkoff_ctr:             {num: c2c_credit_auto_tinkoff_flow_clicks,  den: c2c_credit_auto_tinkoff_flow_renders}
+    c2c_credit_auto_tinkoff_flow_wait_ctr:                {num: c2c_credit_auto_tinkoff_flow_wait_clicks,  den: c2c_credit_auto_tinkoff_flow_renders}
