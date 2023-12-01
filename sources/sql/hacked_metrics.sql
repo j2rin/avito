@@ -34,6 +34,6 @@ SELECT
     ,auth_attempts_31_days             
     ,auth_attempts_with_check_31_days     
     ,auth_success_31_days              
-    auth_success_with_check_31_days
+    ,auth_success_with_check_31_days
 FROM dma.hacked_metrics 
 WHERE event_date BETWEEN :first_date AND :last_date
