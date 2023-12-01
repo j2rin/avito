@@ -34,6 +34,13 @@ metric.counter:
     cnt_chat_list_views:             {filter: [$or: [eid: 2920, eid: 2919]],  obs: [event_count]}
     items_closed_from_messenger:     {filter: [eid: 313, action_type_id: 1], obs: [event_count]}
     items_sold_onavito_from_messenger: {filter: [eid: 313, action_type_id: 1, report_reason: ['22']],  obs: [event_count]}
+   
+    msg_make_read:                   {filter: [eid: 5229, $or: [source: 'chatlist', source: 'group']],   obs: [event_count]}
+    msg_make_read_chatlist:          {filter: [eid: 5229, source: 'chatlist'], obs: [event_count]}
+    msg_make_read_group:             {filter: [eid: 5229, source: 'group'],    obs: [event_count]}
+    msg_filter_my_items:             {filter: [eid: 2686], obs: [event_count]}
+    msg_filter_item:                 {filter: [eid: 2687], obs: [event_count]}
+    msg_filter_unread:               {filter: [eid: 2689], obs: [event_count]}
 
  
  
@@ -42,5 +49,6 @@ metric.uniq:
   users_chat_open_errors:                  {counter: chat_open_errors,                   key: [user_id]}
   users_item_sold_onavito_from_messenger:  {counter: items_sold_onavito_from_messenger,  key: [user_id]}
   users_item_closed_from_messenger:        {counter: items_closed_from_messenger,        key: [user_id]}
+  user_msg_make_read:                      {counter: msg_make_read,                   key: [user_id]}
 
   
