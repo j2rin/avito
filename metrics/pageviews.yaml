@@ -1,9 +1,3 @@
-definitions:
-  - &has_active_address {active_addresses.>: 0 }
-  - &active_user        {events_count.>: 0 }
-  - &is_buyer           {contact_count.>: 0 }
-  - &is_user_bx_active  {$or: [{serp_count.>: 0}, {itemviews_count.>: 0}, {btc_count.>: 0}, {contact_count.>: 0}]}
-
 metric.counter:
   authorized_page_views:                   {filter: [user_id.isnull: false],  obs: [events_count]}
   page_views:                              {                                  obs: [events_count]}
@@ -12,11 +6,6 @@ metric.counter:
   serp_count:                              {                                  obs: [serp_count]}
   btc_count:                               {                                  obs: [btc_count]}
   c_count:                                 {                                  obs: [contact_count]}
-
-#метрики активных юзеров с адресами
-  user_active_address_active_cnt:          {filter: [*has_active_address, *active_user]}
-  user_c_address_active_cnt:               {filter: [*has_active_address, *is_buyer]}
-  user_bx_active_address_active_cnt:       {filter: [*has_active_address, *is_user_bx_active]}
 
 metric.uniq:
   daily_active_authorized_users:           {counter: authorized_page_views,   key: [user]}
@@ -33,12 +22,6 @@ metric.uniq:
   user_month_c:                            {counter: c_count,                 key: [cookie_month_hash]}
   user_day_page_view:                      {counter: page_views,              key: [cookie_day_hash]}
   user_month_page_view:                    {counter: page_views,              key: [cookie_month_hash]}
-
-
-#юзеры с адресами
-  user_active_address_active:              {counter: user_active_address_active_cnt,    key: [user]}
-  user_c_address_active:                   {counter: user_c_address_active_cnt,         key: [user]}
-  user_bx_active_address_active:           {counter: user_bx_active_address_active_cnt, key: [user]}
 
 metric.ratio:
   authorized_visitors_share:               {num: daily_active_authorized_users,   den: daily_active_users}
