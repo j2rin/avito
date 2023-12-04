@@ -11,8 +11,10 @@ select
     cs.event_type_id as eventtype_id,
     cs.eid as eventtype_ext,
     cs.from_page,
+    cs.from_page as x_from_page,
     cs.is_human,
-    cl.Region as region
+    cl.Region as region,
+    1 as event_count
 from dwhcs.clickstream_canon cs
 left join DMA.current_item ci on ci.item_id = cs.item_id
 left join dma.current_locations cl on cl.Location_id = ci.location_id
