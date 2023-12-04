@@ -12,8 +12,10 @@ select
     nvl(cbr.boughtout_price,cbr.suggested_price)                                as boughtout_price,
     cast ((nvl(cbr.boughtout_price,cbr.suggested_price) * 0.1) as int)          as boughtout_revenue,
     nvl(cbr.boughtout_price,cbr.suggested_price) + nvl(subsidy_size , 0)        as boughtout_price_subsidized,
+    0                                                                           as platform_id, -- Undefined  
 --- Dimensions --------------------------------------------------------------------------------------------
     500005                                                                      as vertical_id, --Goods
+    267188500001                                                                as logical_category_id, --Goods.Smartphones
 --- Location ----------------------------------------------------------------------------------------------
     cl.location_id                                                              as location_id,
     case when cl.level = 3 then cl.ParentLocation_id else cl.Location_id end    as region_id,
