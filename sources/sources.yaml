@@ -531,7 +531,7 @@ delivery_orders_buyer:
 
 delivery_orders_seller:
   metric_configs: [delivery_orders_seller]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: delivery_orders
   dimensions:
     - platform
@@ -1270,6 +1270,8 @@ clickstream_counters:
   sql: clickstream_counters
   column_map:
     cookie: cookie_id
+    user:   user_id
+    chat:   msg_chat
   dimensions:
     [
       platform,
@@ -2207,62 +2209,6 @@ messenger_transitions:
   primary_subject: user
   dtm: trigger_date
 
-messenger_chat_leads:
-  metric_configs: [chat_leads]
-  connections: [vertica]
-  sql: chat_scores
-  column_map:
-    cookie: cookie_id
-    user: user_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      category,
-      subcategory,
-      logical_category,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      location_group,
-      population_group,
-      location_level,
-    ]
-  participant: { visitor: cookie_id, user: user_id }
-  primary_subject: user
-  dtm: first_message_event_date
-
-messenger_inbox_chat_leads:
-  metric_configs: [inbox_chat_leads]
-  connections: [vertica]
-  sql: chat_scores
-  column_map:
-    user: seller_id
-  dimensions:
-    [
-      vertical,
-      category,
-      subcategory,
-      logical_category,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      location_group,
-      population_group,
-      location_level,
-      is_asd,
-      user_segment_market,
-    ]
-  participant: { user: seller_id }
-  primary_subject: user
-  dtm: first_message_event_date
-
 contact_deal:
   metric_configs: [contact_deal]
   connections: [vertica]
@@ -2552,57 +2498,6 @@ deal_confirmed:
   primary_subject: user
   dtm: event_date
 
-target_call_bx:
-  metric_configs: [target_call_bx]
-  connections: [vertica]
-  sql: target_call
-  column_map:
-    cookie: buyer_cookie_id
-    user: buyer_id
-  dimensions:
-    - platform
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  participant: { visitor: buyer_cookie_id, user: buyer_id }
-  primary_subject: user
-  dtm: call_time
-
-target_call_sx:
-  metric_configs: [target_call_sx]
-  connections: [vertica]
-  sql: target_call
-  column_map:
-    user: seller_id
-  dimensions:
-    - platform
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  participant: { user: seller_id }
-  primary_subject: user
-  dtm: call_time
-
 sbc_special_offers:
   metric_configs: [sbc_special_offers]
   connections: [vertica]
@@ -2794,16 +2689,6 @@ perf_clickstream_counters:
   primary_subject: visitor
   dtm: event_date
 
-chatbot_chats_delete:
-  metric_configs: [chatbot_chats_delete]
-  connections: [vertica]
-  sql: chatbot_chats_delete
-  column_map:
-    user: user_id
-  participant: { user: user_id }
-  primary_subject: user
-  dtm: event_date
-
 payment_page_trx:
   metric_configs: [payment_page_trx]
   connections: [vertica]
@@ -2824,62 +2709,6 @@ jobs_chatbot:
     user: user_id
   dimensions: [platform]
   participant: { user: user_id }
-  primary_subject: user
-  dtm: event_date
-
-target_contact:
-  metric_configs: [target_contact]
-  connections: [vertica]
-  sql: target_contact
-  column_map:
-    cookie: buyer_cookie_id
-    user: buyer_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      category,
-      subcategory,
-      logical_category,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      location_group,
-      population_group,
-      location_level,
-    ]
-  participant: { visitor: buyer_cookie_id, user: buyer_id }
-  primary_subject: user
-  dtm: event_date
-
-target_contact_seller:
-  metric_configs: [target_contact_seller]
-  connections: [vertica]
-  sql: target_contact
-  column_map:
-    user: seller_id
-  dimensions:
-    [
-      vertical,
-      category,
-      subcategory,
-      logical_category,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      location_group,
-      population_group,
-      location_level,
-      is_asd,
-      user_segment_market,
-    ]
-  participant: { user: seller_id }
   primary_subject: user
   dtm: event_date
 
@@ -3202,6 +3031,7 @@ all_communications_bx:
       location_group,
       population_group,
       location_level,
+      user_segment_market,
     ]
   participant: { visitor: buyer_cookie_id, user: buyer_id }
   primary_subject: user
@@ -3522,13 +3352,40 @@ profilepromo_funnel:
   dtm: event_date
 
 
-credit_с2с:
-  metric_configs: [credit_c2cloans]
+charity_donations:
+  metric_configs: [ charity_donations ]
   connections: [vertica]
+  sql: charity_donations
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+profile_coverage_m42:
+  metric_configs: [profile_coverage_m42]
+  connections: [vertica]
+  sql: profile_coverage_m42
+  participant: { user: _ } # No participants in table, just value by date.
+  primary_subject: user
+  dtm: event_date
+
+
+buyout_requests:
+  metric_configs: [buyout_requests]
+  connections: [vertica]
+  sql: buyout_requests
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+credit_с2с:
+  metric_configs: [ credit_c2cloans ]
+  connections: [ vertica ]
   sql: clickstream_c2c_counters
   column_map:
     cookie: cookie_id
-  dimensions: [platform, location]
+  dimensions: [ platform, location ]
   dtm: event_date
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
