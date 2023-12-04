@@ -129,7 +129,7 @@ select
     bl.LocationGroup_id                                          as buyer_location_group_id,
     bl.City_Population_Group                                     as buyer_population_group,
     bl.Logical_Level                                             as buyer_location_level_id,
-    co.in_sale
+    co.in_sale 
 from dma.delivery_metric_for_ab co
 left join dma.current_logical_categories clc on clc.logcat_id = co.logical_category_id
 left join dma.current_microcategories cm on cm.microcat_id = co.microcat_id
