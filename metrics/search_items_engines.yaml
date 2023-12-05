@@ -1,0 +1,23 @@
+definitions:
+    - &eid_u2i      [30204750001]               # [2012]
+    - &eid_i2i      [109161500001]              # [2437]
+    - &eid_cv2vac   [290081000001]              # [4386]
+    - &eid_serp     [10]                        # [300]
+    - &eid_push     [389119750001]              # [5354]
+    - &is_u2i       {eventtype_id: *eid_u2i     }
+    - &is_i2i       {eventtype_id: *eid_i2i     }
+    - &is_cv2vac    {eventtype_id: *eid_cv2vac  }
+    - &is_serp      {eventtype_id: *eid_serp    }
+    - &is_push      {eventtype_id: *eid_push    }
+    - &collab       {item_engines.bit: 0        }
+    - &user2vec     {item_engines.bit: 1        }
+    - &similars     {item_engines.bit: 3        }
+    - &graph        {item_engines.bit: 4        }
+    - &crosscat     {item_engines.bit: 5        }
+
+metric.counter:
+    show_u2i_collab:                    {filter: [*is_u2i, *collab],    obs: [items_count]          }
+    show_u2i_user2vec:                  {filter: [*is_u2i, *user2vec],  obs: [items_count]          }
+    show_u2i_similars:                  {filter: [*is_u2i, *similars],  obs: [items_count]          }
+    show_u2i_graph:                     {filter: [*is_u2i, *graph],     obs: [items_count]          }
+    show_u2i_crosscat:                  {filter: [*is_u2i, *crosscat],  obs: [items_count]          }

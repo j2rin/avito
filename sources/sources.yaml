@@ -1210,6 +1210,23 @@ search_items:
   primary_subject: visitor
   dtm: event_date
 
+search_items_engines:
+  metric_configs: [search_items_engines]
+  connections: [vertica]
+  sql: search_items_engines
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - region
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
+
 production_errors:
   metric_configs: [production_errors]
   connections: [vertica]
