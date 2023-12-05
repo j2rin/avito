@@ -138,7 +138,7 @@ select
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 34)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as b2c_wo_dbs,
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 35)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as c2c_return_within_14_days,
     cast((bitwise_and(ss.item_flags, bitwise_left_shift(1, 34)) > 0 or bitwise_and(ss.item_flags, bitwise_left_shift(1, 35)) > 0) and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as return_within_14_days,
-    cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as is_delivery_active_in_sale
+    cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as is_delivery_active_in_sale 
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
