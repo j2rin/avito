@@ -551,10 +551,12 @@ metric.counter:
         }
     cnt_btc_wtc_new_auto: { filter: [*is_btc_wo_guessing, *is_serp_witcher_new_auto, *x_is_search] }
     cnt_btc_wtc_new_flats: { filter: [*is_btc_wo_guessing, *is_serp_witcher_new_flats, *x_is_search] }
-    cnt_btc_wtc_reg: { filter: [*is_btc_wo_guessing, *is_serp_witcher_regions, *x_is_search] }
-    cnt_btc_cpa: { filter: [*is_btc, *is_item_cpa] }
-    cnt_btc_s_cpa: { filter: [*is_btc_wo_guessing, *x_is_search, *is_item_cpa] }
-    cnt_btc_rec_cpa: { filter: [*is_btc_wo_guessing, *x_is_rec, *is_item_cpa] }
+    cnt_btc_wtc_reg:  { filter: [*is_btc_wo_guessing, *is_serp_witcher_regions, *x_is_search] }
+    cnt_btc_cpa:      { filter: [*is_btc, *is_item_cpa] }
+    cnt_btc_s_cpa:    { filter: [*is_btc_wo_guessing, *x_is_search, *is_item_cpa] }
+    cnt_btc_rec_cpa:  { filter: [*is_btc_wo_guessing, *x_is_rec, *is_item_cpa] }
+    cnt_btc_u2i_cpa:  { filter: [*is_btc_wo_guessing, *x_is_u2i, *is_item_cpa] }
+    cnt_btc_i2i_cpa:  { filter: [*is_btc_wo_guessing, *x_is_i2i, *is_item_cpa] }
     btc_perfvas_x2_1: { filter: [*is_btc, *is_item_perfvas_x2_1] }
     btc_perfvas_x2_7: { filter: [*is_btc, *is_item_perfvas_x2_7] }
     btc_perfvas_x5_1: { filter: [*is_btc, *is_item_perfvas_x5_1] }
@@ -781,6 +783,8 @@ metric.counter:
     cnt_cs_cpa: { filter: [*is_contact, *is_item_cpa] }
     cnt_cs_s_cpa: { filter: [*is_contact_wo_guessing, *x_is_search, *is_item_cpa] }
     cnt_cs_rec_cpa: { filter: [*is_contact_wo_guessing, *x_is_rec, *is_item_cpa] }
+    cnt_cs_u2i_cpa: { filter: [*is_contact_wo_guessing, *x_is_u2i, *is_item_cpa] }
+    cnt_cs_i2i_cpa: { filter: [*is_contact_wo_guessing, *x_is_i2i, *is_item_cpa] }
     cnt_dlv_flow_beginings: { filter: [*is_delivery_btn] }
     cnt_fav_dlv: { filter: [*is_fav, *is_serp_delivery, *x_is_search] }
     cnt_fav_from_map: { filter: [*is_fav, *x_is_map] }
@@ -1076,10 +1080,12 @@ metric.counter:
             filter: [{ $or: [[*is_fp_witcher_regions, *is_search], [*is_iv_wo_guessing, *is_serp_witcher_regions, *x_is_search]] }],
 
         }
-    cnt_iv_cpa: { filter: [*is_iv, *is_item_cpa] }
-    cnt_iv_s_cpa: { filter: [*is_iv_wo_guessing, *x_is_search, *is_item_cpa] }
+    cnt_iv_cpa:     { filter: [*is_iv, *is_item_cpa] }
+    cnt_iv_s_cpa:   { filter: [*is_iv_wo_guessing, *x_is_search, *is_item_cpa] }
     cnt_iv_rec_cpa: { filter: [*is_iv_wo_guessing, *x_is_rec, *is_item_cpa] }
-    cnt_iv_seen: { filter: [*is_iv, *is_seen_item] }
+    cnt_iv_u2i_cpa: { filter: [*is_iv_wo_guessing, *x_is_u2i, *is_item_cpa] }
+    cnt_iv_i2i_cpa: { filter: [*is_iv_wo_guessing, *x_is_i2i, *is_item_cpa] }
+    cnt_iv_seen:    { filter: [*is_iv, *is_seen_item] }
     cnt_ph_item_right_top_snippet_xlvas:
         { filter: [*is_ph, { $or: [[*is_ph_right], [*is_ph_snip], [*is_ph_top], [*is_ph_xlvas]] }] }
     cnt_ph_realty_development: { filter: [{ $or: [[*is_ph_realdev], [*is_ph_tot]] }] }
@@ -2055,9 +2061,11 @@ metric.uniq:
     buyer_target_clicks_returned_any_ext_block: { counter: cnt_btc_old_any_ext_block, key: [item, x] }
     buyer_target_clicks_delivery: { counter: cnt_btc_dlv, key: [item, x] }
     buyer_target_clicks_new_delivery: { counter: cnt_btc_new_dlv, key: [item, x] }
-    buyer_target_clicks_cpa: { counter: cnt_btc_cpa, key: [item, x] }
-    buyer_target_clicks_s_cpa: { counter: cnt_btc_s_cpa, key: [item, x] }
-    buyer_target_clicks_rec_cpa: { counter: cnt_btc_rec_cpa, key: [item, x] }
+    buyer_target_clicks_cpa:      { counter: cnt_btc_cpa,     key: [item, x] }
+    buyer_target_clicks_s_cpa:    { counter: cnt_btc_s_cpa,   key: [item, x] }
+    buyer_target_clicks_rec_cpa:  { counter: cnt_btc_rec_cpa, key: [item, x] }
+    buyer_target_clicks_u2i_cpa:  { counter: cnt_btc_u2i_cpa, key: [item, x] }
+    buyer_target_clicks_i2i_cpa:  { counter: cnt_btc_i2i_cpa, key: [item, x] }
     buyer_target_clicks_from_map: { counter: cnt_btc_from_map, key: [item, x] }
     buyer_target_clicks_from_map_area: { counter: cnt_btc_s_map_area, key: [item, x] }
     buyer_target_clicks_serp_wo_map_area: { counter: cnt_btc_s_wo_map_area, key: [item, x] }
@@ -2275,6 +2283,8 @@ metric.uniq:
     contacts_cpa: { counter: cnt_cs_cpa, key: [item, x] }
     contacts_s_cpa: { counter: cnt_cs_s_cpa, key: [item, x] }
     contacts_rec_cpa: { counter: cnt_cs_rec_cpa, key: [item, x] }
+    contacts_u2i_cpa: { counter: cnt_cs_u2i_cpa, key: [item, x] }
+    contacts_i2i_cpa: { counter: cnt_cs_i2i_cpa, key: [item, x] }
     contacts_serp_xl: { counter: cnt_cs_serp_xl, key: [item, x] }
     contacts_serp_perfvas_x2_1: { counter: cnt_cs_serp_perfvas_x2_1, key: [item, x] }
     contacts_serp_perfvas_x2_7: { counter: cnt_cs_serp_perfvas_x2_7, key: [item, x] }
@@ -2379,6 +2389,8 @@ metric.uniq:
     item_views_cpa:               { counter: cnt_iv_cpa,                  key: [item, x] }
     item_views_s_cpa:             { counter: cnt_iv_s_cpa,                key: [item, x] }
     item_views_rec_cpa:           { counter: cnt_iv_rec_cpa,              key: [item, x] }
+    item_views_u2i_cpa:           { counter: cnt_iv_u2i_cpa,              key: [item, x] }
+    item_views_i2i_cpa:           { counter: cnt_iv_i2i_cpa,              key: [item, x] }
     item_views_fav_list:          { counter: cnt_fav_list_iv,             key: [item, x] }
     item_views_comp_list:         { counter: cnt_comp_list_iv,            key: [item, x] }
     item_views_from_map:          { counter: cnt_iv_from_map,             key: [item, x] }
@@ -2563,9 +2575,11 @@ metric.uniq:
     user_buyer_target_clicks_returned_any_ext_block: { counter: cnt_btc_old_any_ext_block, key: [cookie] }
     user_buyer_target_clicks_delivery: { counter: cnt_btc_dlv, key: [cookie] }
     user_buyer_target_clicks_new_delivery: { counter: cnt_btc_new_dlv, key: [cookie] }
-    user_buyer_target_clicks_cpa: { counter: cnt_btc_cpa, key: [cookie] }
-    user_buyer_target_clicks_s_cpa: { counter: cnt_btc_s_cpa, key: [cookie] }
+    user_buyer_target_clicks_cpa:     { counter: cnt_btc_cpa,     key: [cookie] }
+    user_buyer_target_clicks_s_cpa:   { counter: cnt_btc_s_cpa,   key: [cookie] }
     user_buyer_target_clicks_rec_cpa: { counter: cnt_btc_rec_cpa, key: [cookie] }
+    user_buyer_target_clicks_u2i_cpa: { counter: cnt_btc_u2i_cpa, key: [cookie] }
+    user_buyer_target_clicks_i2i_cpa: { counter: cnt_btc_i2i_cpa, key: [cookie] }
     user_buyer_target_clicks_regions: { counter: cnt_btc_reg, key: [cookie] }
     user_buyer_target_clicks_new_regions: { counter: cnt_btc_new_reg, key: [cookie] }
     user_buyer_target_clicks_regions_mix: { counter: cnt_btc_reg_mix, key: [cookie] }
@@ -2587,10 +2601,12 @@ metric.uniq:
     user_item_views_story: { counter:  item_views_story, key: [cookie] }
     user_contacts_story: { counter:  contacts_story, key: [cookie] }
     user_btc_story: { counter:  btc_story, key: [cookie] }
-    user_iv_cpa: { counter: cnt_iv_cpa, key: [cookie] }
-    user_iv_s_cpa: { counter: cnt_iv_s_cpa, key: [cookie] }
-    user_iv_rec_cpa: { counter: cnt_iv_rec_cpa, key: [cookie] }
-    user_iv_vas_cpa: { counter: item_views_total_vas_cpa, key: [cookie] }
+    user_iv_cpa:      { counter: cnt_iv_cpa, key: [cookie] }
+    user_iv_s_cpa:    { counter: cnt_iv_s_cpa, key: [cookie] }
+    user_iv_rec_cpa:  { counter: cnt_iv_rec_cpa, key: [cookie] }
+    user_iv_u2i_cpa:  { counter: cnt_iv_u2i_cpa, key: [cookie] }
+    user_iv_i2i_cpa:  { counter: cnt_iv_i2i_cpa, key: [cookie] }
+    user_iv_vas_cpa:  { counter: item_views_total_vas_cpa, key: [cookie] }
     user_c_developer: { counter: c_developer, key: [cookie] }
     user_c_developer_map: { counter: cnt_cs_developer_from_map, key: [cookie] }
     user_c_developer_rec: { counter: cnt_cs_developer_rec, key: [cookie] }
@@ -2604,6 +2620,8 @@ metric.uniq:
     user_contacts_cpa: { counter: cnt_cs_cpa, key: [cookie] }
     user_contacts_s_cpa: { counter: cnt_cs_s_cpa, key: [cookie] }
     user_contacts_rec_cpa: { counter: cnt_cs_rec_cpa, key: [cookie] }
+    user_contacts_u2i_cpa: { counter: cnt_cs_u2i_cpa, key: [cookie] }
+    user_contacts_i2i_cpa: { counter: cnt_cs_i2i_cpa, key: [cookie] }
     user_contacts_vas_cpa: { counter: contacts_total_vas_cpa, key: [cookie] }
     user_contacts_delivery: { counter: cnt_cs_dlv, key: [cookie] }
     user_contacts_regions: { counter: cnt_cs_reg, key: [cookie] }
@@ -3044,13 +3062,13 @@ metric.uniq:
     searches_contact_regions: { counter: cnt_cs_reg, key: [cookie, x] }
     searches_contact_regions_mix: { counter: cnt_cs_reg_mix, key: [cookie, x] }
     searches_contact_regions_any: { counter: cnt_cs_reg_any, key: [cookie, x] }
-    searches_contact_quorum: { counter: cnt_cs_qrm, key: [cookie, x] }
-    searches_contact_vector: { counter: cnt_cs_vec, key: [cookie, x] }
-    searches_contact_serp: { counter: cnt_cs_s_item_attr, key: [cookie, x] }
-    searches_contact_vas: { counter: cnt_cs_vas, key: [cookie, x] }
-    searches_contact_cpa: { counter: cnt_cs_cpa, key: [cookie, x] }
-    searches_contact_s_cpa: { counter: cnt_cs_s_cpa, key: [cookie, x] }
-    searches_contact_rec_cpa: { counter: cnt_cs_rec_cpa, key: [cookie, x] }
+    searches_contact_quorum:    { counter: cnt_cs_qrm, key: [cookie, x] }
+    searches_contact_vector:    { counter: cnt_cs_vec, key: [cookie, x] }
+    searches_contact_serp:      { counter: cnt_cs_s_item_attr, key: [cookie, x] }
+    searches_contact_vas:       { counter: cnt_cs_vas, key: [cookie, x] }
+    searches_contact_cpa:       { counter: cnt_cs_cpa, key: [cookie, x] }
+    searches_contact_s_cpa:     { counter: cnt_cs_s_cpa, key: [cookie, x] }
+    searches_contact_rec_cpa:   { counter: cnt_cs_rec_cpa, key: [cookie, x] }
     searches_district_with_btc: { counter: cnt_btc_s_distr, key: [cookie, x] }
     searches_district_with_contact: { counter: cnt_cs_s_distr, key: [cookie, x] }
     searches_district_with_item_view: { counter: cnt_iv_s_distr, key: [cookie, x] }
