@@ -16,8 +16,21 @@ definitions:
     - &crosscat     {item_engines.bit: 5        }
 
 metric.counter:
-    show_u2i_collab:                    {filter: [*is_u2i, *collab],    obs: [items_count]          }
-    show_u2i_user2vec:                  {filter: [*is_u2i, *user2vec],  obs: [items_count]          }
-    show_u2i_similars:                  {filter: [*is_u2i, *similars],  obs: [items_count]          }
-    show_u2i_graph:                     {filter: [*is_u2i, *graph],     obs: [items_count]          }
-    show_u2i_crosscat:                  {filter: [*is_u2i, *crosscat],  obs: [items_count]          }
+    show_u2i_collab:                    {filter: [*is_u2i, *collab],            obs: [items_count]      }
+    show_u2i_user2vec:                  {filter: [*is_u2i, *user2vec],          obs: [items_count]      }
+    show_u2i_similars:                  {filter: [*is_u2i, *similars],          obs: [items_count]      }
+    show_u2i_graph:                     {filter: [*is_u2i, *graph],             obs: [items_count]      }
+    show_u2i_crosscat:                  {filter: [*is_u2i, *crosscat],          obs: [items_count]      }
+    cnt_rec_score_u2i_collab:           {filter: [*is_u2i, *collab],            obs: [score]            }
+    cnt_rec_score_u2i_user2vec:         {filter: [*is_u2i, *user2vec],          obs: [score]            }
+    cnt_rec_score_u2i_similars:         {filter: [*is_u2i, *similars],          obs: [score]            }
+    cnt_rec_score_u2i_graph:            {filter: [*is_u2i, *graph],             obs: [score]            }
+    cnt_rec_score_u2i_crosscat:         {filter: [*is_u2i, *crosscat],          obs: [score]            }
+
+metric.ratio:
+    rec_score_u2i_collab:               {num: cnt_rec_score_u2i_collab,         den: show_u2i_collab    }
+    rec_score_u2i_user2vec:             {num: cnt_rec_score_u2i_user2vec,       den: show_u2i_user2vec  }
+    rec_score_u2i_similars:             {num: cnt_rec_score_u2i_similars,       den: show_u2i_similars  }
+    rec_score_u2i_graph:                {num: cnt_rec_score_u2i_graph,          den: show_u2i_graph     }
+    rec_score_u2i_crosscat:             {num: cnt_rec_score_u2i_crosscat,       den: show_u2i_crosscat  }
+
