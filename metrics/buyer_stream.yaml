@@ -1965,6 +1965,10 @@ metric.counter:
     c_base_block: { filter: [*x_is_search, *is_serp_base_block, *is_contact_wo_guessing] }
     fav_base_block: { filter: [*x_is_search, *is_serp_base_block, *is_fav] }
     btc_base_block: { filter: [*x_is_search, *is_serp_base_block, *is_btc_wo_guessing] }
+    c_base_block_q: { filter: [*x_is_search, *is_serp_base_block, *is_contact_wo_guessing, *q] }
+    c_base_block_noq: { filter: [*x_is_search, *is_serp_base_block, *is_contact_wo_guessing, *noq] }
+
+
 
     iv_video_lenta: { filter: [*is_iv_wo_guessing, *x_avl] }
     c_video_lenta: { filter: [*is_contact_wo_guessing, *x_avl] }
@@ -3491,6 +3495,9 @@ metric.uniq:
     user_c_base_block: { counter: c_base_block, key: [cookie] }
     user_fav_base_block: { counter: fav_base_block, key: [cookie] }
     user_btc_base_block: { counter: btc_base_block, key: [cookie] }
+    user_c_base_block_q: { counter: c_base_block_q, key: [cookie] }
+    user_c_base_block_noq: { counter: c_base_block_noq, key: [cookie] }
+     
 
     user_iv_video_lenta:    { counter: iv_video_lenta, key: [cookie] }
     user_c_video_lenta :    { counter: c_video_lenta, key: [cookie] }
