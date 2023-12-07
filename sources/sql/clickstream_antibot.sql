@@ -11,3 +11,4 @@ select
     is_clean_cookie
 from dma.o_clickstream_antibot
 where cast(event_date as date) between :first_date and :last_date
+--and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
