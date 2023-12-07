@@ -8,4 +8,4 @@ left join logcat on logcat.logical_category_id = wb.logical_category_id
 where cast(event_date as date) between :first_date and :last_date
     -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 group by 1,2,3,4,5,6
-order by 1,2,3,4,5,6;
+order by 1,2,3,4,5,6
