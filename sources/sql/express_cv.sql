@@ -1,4 +1,4 @@
-	  select observation_date as event_date,
+select observation_date as event_date,
 	  		 platform_id,
 	  		 cv.location_id,
 	  		 participant_id as user_id,
@@ -15,6 +15,7 @@
 	      	 cl.LocationGroup_id                                          as location_group_id,
 	      	 cl.City_Population_Group                                     as population_group,
 	      	 cl.Logical_Level                                             as location_level_id
-	    from dma.express_cv_metric_observation cv
+from dma.express_cv_metric_observation cv
   LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id   = cv.location_id
 where cast(observation_date as date) between :first_date and :last_date
+    -- and observation_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
