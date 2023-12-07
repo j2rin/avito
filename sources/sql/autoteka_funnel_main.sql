@@ -10,7 +10,7 @@ events as (
            null as searchtype
     from dma.autoteka_report_stream
     where cast(event_date as date) between :first_date and :last_date
-        and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date)
+        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     union all
     select track_id,
            event_no,
@@ -28,7 +28,7 @@ events as (
            searchtype
     from dma.autoteka_stream
     where cast(event_date as date) between :first_date and :last_date
-        and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date)
+        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 ),
 events_interpolated as (
     select
