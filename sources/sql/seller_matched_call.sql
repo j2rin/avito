@@ -32,9 +32,11 @@ JOIN /*+distrib(l,b)*/ (
         select item_id
         from DMA.matched_anonymous_calls_metric_observation
         where cast(observation_date as date) between :first_date and :last_date
+        and observation_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
     )
 ) ci on mac.item_id = ci.item_id
 LEFT JOIN DMA.current_microcategories cm on cm.microcat_id   = mac.microcat_id
 LEFT JOIN DMA.current_locations       cl ON cl.Location_id   = mac.location_id
 WHERE mac.participant_type = 'visitor'
     and cast(mac.observation_date as date) between :first_date and :last_date
+    -- and mac.observation_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
