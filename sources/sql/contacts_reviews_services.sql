@@ -4,6 +4,7 @@ select
     urs.*,
     coalesce(lead(date_from) over (partition by user_id order by date_from),'2100-01-01') as date_to
 from dma.user_ratings_services urs
+--where date_year between date_trunc('year', :first_date) AND date_trunc('year', :last_date) --@trino
 )
 select 
     ss.event_date,
