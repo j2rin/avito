@@ -23,3 +23,4 @@ select
 from    dma.cookie_account_enter
 where   enter_start > 0 or restore_start > 0
     and cast(event_date as date) between :first_date and :last_date
+    -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
