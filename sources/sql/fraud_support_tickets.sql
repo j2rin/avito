@@ -20,3 +20,4 @@ from dma.fraud_support_tickets fst
 left join dma.current_microcategories cm on fst.item_microcat_id = cm.microcat_id
 where TicketFraudInfo_id is not null
 and cast(create_date as date) between :first_date and :last_date
+--and create_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
