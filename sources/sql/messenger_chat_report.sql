@@ -26,7 +26,7 @@ with am_client_day as (
 )
  select
  	chr.chat_id,
- 	cast(first_message_event_date as Date),
+ 	cast(first_message_event_date as Date) as first_message_event_date,
 	platform_id,
     first_message_user_id,
     first_message_cookie_id,
