@@ -29,3 +29,4 @@ LEFT JOIN DMA.current_microcategories cm on cm.microcat_id = ci.microcat_id
 LEFT JOIN DMA.current_locations       cl on cl.location_id=bc.location_id
 LEFT JOIN dma.current_logical_categories lc on lc.logcat_id = cm.logical_Category_id
 where cast(eventdate as date) between :first_date and :last_date
+--and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
