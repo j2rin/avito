@@ -38,3 +38,4 @@ from DMA.re_nd_buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = ss.microcat_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = ss.location_id
 where cast(event_date as date) between :first_date and :last_date
+-- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
