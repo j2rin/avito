@@ -69,4 +69,4 @@ select
                and co.deliveryorder_id in (select deliveryorder_id from orders)
     group by 1,2
 ) ub on cbcm.billing_order_ext = ub.purchase_ext
-    where cast(cbcm.create_date as date) between :first_date and :last_date;
+    where cast(cbcm.create_date as date) between :first_date and :last_date
