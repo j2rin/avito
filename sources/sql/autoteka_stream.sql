@@ -40,6 +40,7 @@ select
     0 as fake_user_id
 from dma.autoteka_stream 
 where cast(event_date as date) between :first_date and :last_date
+    --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 union all
 select
     track_id,
@@ -82,6 +83,7 @@ select
     0 as fake_user_id
 from dma.autoteka_on_avito_stream_and_payments
 where cast(event_date as date) between :first_date and :last_date
+    --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 )
 select 
     autoteka.track_id,
