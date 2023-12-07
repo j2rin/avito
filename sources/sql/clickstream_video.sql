@@ -35,3 +35,4 @@ from DMA.clickstream_video cs
 left join DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
 left join cond on (condition = value)
 where cast(cs.event_date as date) between :first_date and :last_date
+--and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
