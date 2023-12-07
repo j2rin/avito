@@ -15,12 +15,13 @@ das as (
         and autotekauser_id is not null
         and funnel_stage_id = 4
         and cast(das.event_date as date) between :first_date and :last_date
+        and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 ),
 reports_365_grouped as (
     select
         d2.searchtype,
         d2.autoteka_platform_id,
-        sum(case when datediff('day', d1.user_created_at, d1.event_date) < 365 then d1.reports_count end) /
+        sum(case when date_diff('day', d1.user_created_at, d1.event_date) < 365 then d1.reports_count end) /
         count(distinct d1.autotekauser_id) as avg_reports_365
     from das d1
     join das d2 on d1.autotekauser_id = d2.autotekauser_id and d2.rn_user = 1
@@ -31,7 +32,7 @@ reports_365_grouped as (
 ),
 reports_365_total as (
     select
-        sum(case when datediff('day', user_created_at, event_date) < 365 then reports_count end) /
+        sum(case when date_diff('day', user_created_at, event_date) < 365 then reports_count end) /
         count(distinct autotekauser_id) as avg_reports_365_total
     from das
     where rn_order = 1
@@ -41,6 +42,7 @@ report_price as (
     from dma.autoteka_stream
     where funnel_stage_id = 4
         and cast(event_date as date) between :first_date and :last_date
+        --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 ),
 new_users as (
     select
@@ -56,6 +58,7 @@ new_users as (
     from dma.autoteka_stream
     where is_new_user
         and cast(event_date as date) between :first_date and :last_date
+        --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 ),
 revenue as (
     select
@@ -69,12 +72,13 @@ revenue as (
     join new_users nu on nu.autotekauser_id = das.autotekauser_id
     where funnel_stage_id = 4
         and cast(das.event_date as date) between :first_date and :last_date
+        --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 ),
 revenue_grouped as (
     select
         autotekauser_id,
-        sum(case when datediff('day', user_created_at, event_date) < 365 then amount end)        as amount,
-        sum(case when datediff('day', user_created_at, event_date) < 365 then reports_count end) as reports_cnt
+        sum(case when date_diff('day', user_created_at, event_date) < 365 then amount end)        as amount,
+        sum(case when date_diff('day', user_created_at, event_date) < 365 then reports_count end) as reports_cnt
     from revenue
     where rn = 1
     group by 1
