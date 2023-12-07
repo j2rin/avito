@@ -9,3 +9,4 @@
     	  public_profile_closed_items_paginations 
     from dma.public_profile_metric_observation
 where cast(observation_date as date) between :first_date and :last_date
+    -- and observation_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
