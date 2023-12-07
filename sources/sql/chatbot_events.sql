@@ -2,7 +2,7 @@ select
     t.chat_id,
     t.user_id,
     t.flow_id,
-    cast(event_date as date),
+    cast(event_date as date) as event_date,
     FlowTransition_id as flow_transition_id,
     eventtype_id,
     null as cnt_linkclicks
