@@ -34,3 +34,4 @@ from dma.payment_page_transaction_funnel pp
 join dma.current_payment_transactions cpt on cpt.payment_transaction_id = pp.payment_transaction_id
 left join dds.S_PaymentTransaction_ErrorCode ec on cpt.payment_transaction_id = ec.paymenttransaction_id
 where cast(pp.transaction_date as date) between :first_date and :last_date
+-- and transaction_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
