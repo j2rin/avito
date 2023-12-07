@@ -37,4 +37,5 @@ where cs.cookie_id is not null
       	6608,2664,2443,5752,5756,6434,6832,6053,4298,3183,4795,7186,7187,8108,8109,8179,4731,8675,8676
 		)
 	and cast(cs.event_date as date) between :first_date and :last_date
+    -- and date between :first_date and :last_date -- @trino
 group by 1, 2, 3, 4, 5, 6, 7, 8, 9, track_id
