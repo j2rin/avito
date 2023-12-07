@@ -37,3 +37,4 @@ SELECT
     ,auth_success_with_check_31_days
 FROM dma.hacked_metrics 
 WHERE event_date BETWEEN :first_date AND :last_date
+--and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) --@trino
