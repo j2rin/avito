@@ -1,5 +1,5 @@
 select
-    cast(cs.event_date as date),
+    cast(cs.event_date as date) as event_date,
     cs.cookie_id,
     cs.user_id,
     cs.platform_id,
