@@ -21,7 +21,7 @@ select
     cond.condition_id,
     cs.cookie_id,
     cs.avl_entry_type,
-  	cs.x_avl_hash,
+  	hash(cs.x_avl_hash) x_avl_hash,
     cs.metric_value,
     cm.vertical_id,
     cm.logical_category_id,
