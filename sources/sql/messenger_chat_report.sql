@@ -10,7 +10,7 @@ with am_client_day as (
 )
 , usm as (
     select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where cast(converting_date as date) <= :last_date
 )
@@ -22,6 +22,7 @@ with am_client_day as (
     from DMA.messenger_chat_flow_report
     where cast(start_flow_time as date) <= :last_date
         and cast(end_flow_time as date) >= :first_date
+        -- and start_flow_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 )
  select
  	chr.chat_id,
@@ -41,7 +42,7 @@ with am_client_day as (
     with_reply,
     chr.user_id,
     cast(reply_time as date),
-    datediff ('minute',first_message_event_date, reply_time) as reply_time_minutes,
+    date_diff ('minute',first_message_event_date, reply_time) as reply_time_minutes,
     case
         when cast(first_message_event_date as date)=cast(reply_time as date) then true
         else false
@@ -102,3 +103,4 @@ where true
             cast(first_message_event_date as date) between :first_date and :last_date
         or  cast(reply_time as date) between :first_date and :last_date
     )
+    -- and min_event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
