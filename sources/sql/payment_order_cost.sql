@@ -59,8 +59,8 @@ select
     select
         co.purchase_id,
         co.purchase_ext,
-        MAX(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
-        SUM(case when expired_date >= '2022-03-01' and expired_date >= (create_date - interval '5 years') and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
+        MAX(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
+        SUM(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
     from dma.current_order co
     left join dma.user_payment_bindings pb on pb.user_id = co.buyer_id
     where true
@@ -69,4 +69,4 @@ select
                and co.deliveryorder_id in (select deliveryorder_id from orders)
     group by 1,2
 ) ub on cbcm.billing_order_ext = ub.purchase_ext
-    where cast(cbcm.create_date as date) between :first_date and :last_date
+    where cast(cbcm.create_date as date) between :first_date and :last_date;
