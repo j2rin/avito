@@ -19,3 +19,4 @@ select
     max_duration
 from dma.o_perf_web w
 where cast(observation_date as date) between :first_date and :last_date
+    -- and observation_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) -- @trino
