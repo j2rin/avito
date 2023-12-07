@@ -4,6 +4,7 @@ users as (
     from dma.mnz_vas_seller_metrics
     where cast(event_date as date) between :first_date and :last_date
         and user_id is not null
+        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 )
 select
 	mv.event_date,
@@ -40,7 +41,6 @@ select
     coalesce(usm.user_segment, ls.segment)                            as user_segment_market
 from dma.mnz_vas_seller_metrics mv
 left join dma.current_microcategories cm on cm.microcat_id = mv.microcat_id
-
 left join /*+jtype(h),distrib(l,a)*/ (
     select infmquery_id, logcat_id
     from infomodel.current_infmquery_category
@@ -49,16 +49,16 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from dma.mnz_vas_seller_metrics
         where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
+            -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
     )
 ) ic
     on ic.infmquery_id = mv.infmquery_id
-
 left join  dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = lc.logical_category_id and ls.is_default
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = mv.location_id
 left join /*+jtype(h),distrib(l,a)*/  (
     select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, date('20990101')) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where user_id in (select user_id from users)
 ) usm
@@ -75,3 +75,4 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where user_id in (select user_id from users)
 ) acd on mv.user_id = acd.user_id and mv.event_date between acd.active_from_date and acd.active_to_date
 where cast(mv.event_date as date) between :first_date and :last_date
+-- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
