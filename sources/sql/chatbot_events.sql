@@ -11,6 +11,7 @@ left join (select flow_id, name , row_number() over (partition by flow_id order 
     on t.flow_id = fn.flow_id and fn.rn = 1
 where user_id not in (select user_id from dma."current_user" where isTest)
 and cast(event_date as date) between :first_date and :last_date
+and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 union all
 select 
     chat_id,
@@ -24,5 +25,4 @@ from dma.messenger_chat_flow_report
 where user_id not in (select user_id from dma."current_user" where isTest)
 and cnt_linkclicks>0
 and cast(start_flow_time as date) between :first_date and :last_date
-
-
+and start_flow_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
