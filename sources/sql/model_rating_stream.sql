@@ -27,3 +27,4 @@ from dma.model_rating_stream as rs
 left join /*+jtype(h)*/  dma.current_microcategories    as cm  on rs.microcat_id = cm.microcat_id
 left join /*+jtype(h)*/  dma.current_locations          as cl  on rs.Location_id = cl.location_id
 where rs.event_date between :first_date and :last_date
+    -- and rs.event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
