@@ -58,7 +58,7 @@ left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_ca
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = mv.location_id
 left join /*+jtype(h),distrib(l,a)*/  (
     select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, date('20990101')) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('20990101' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where user_id in (select user_id from users)
 ) usm
