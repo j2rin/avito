@@ -30,3 +30,4 @@ left join DMA.current_locations cl on cl.Location_id = ci.location_id
 where True
     and eventtype_ext in (4413, 4414, 4099)
     and cast(cs.event_date as date) between :first_date and :last_date
+--    and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
