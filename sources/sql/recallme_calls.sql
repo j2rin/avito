@@ -13,7 +13,7 @@ with clickstream as (
     select *, row_number() over (partition by recallmerequest_id order by event_date desc) rn  
     from dma.recallme_stream
     where recallmerequest_id is not null
-        and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
+        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     ) t where rn = 1
 )
 select  /*+syntactic_join*/
