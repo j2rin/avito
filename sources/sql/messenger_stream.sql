@@ -60,4 +60,4 @@ left join /*+distrib(l,a)*/ usm
         and cm.logical_category_id = usm.logical_category_id
 		and cast(m.event_date as TIMESTAMP) >= converting_date and cast(m.event_date as TIMESTAMP) < next_converting_date
 where cast(m.event_date as date) between :first_date and :last_date
-    and m.event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
+    --and m.event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
