@@ -15,7 +15,7 @@ das as (
         and autotekauser_id is not null
         and funnel_stage_id = 4
         and cast(das.event_date as date) between :first_date and :last_date
-        and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+        --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 ),
 reports_365_grouped as (
     select
