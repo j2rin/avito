@@ -10,7 +10,7 @@ with am_client_day as (
 ),
 usm as (
     select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where cast(converting_date as date) <= :last_date
 )
@@ -60,3 +60,4 @@ left join /*+distrib(l,a)*/ usm
         and cm.logical_category_id = usm.logical_category_id
 		and cast(m.event_date as TIMESTAMP) >= converting_date and cast(m.event_date as TIMESTAMP) < next_converting_date
 where cast(m.event_date as date) between :first_date and :last_date
+    and m.event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
