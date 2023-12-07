@@ -21,3 +21,4 @@ left join dma.current_item ci on ci.item_id = sc.item_id
 left join dma.current_microcategories cm on cm.microcat_id = ci.microcat_id
 left join dma.current_locations cl on cl.location_id = ci.location_id
 where cast(event_date as date) between :first_date and :last_date
+    -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
