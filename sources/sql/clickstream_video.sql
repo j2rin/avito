@@ -21,7 +21,7 @@ select
     cond.condition_id,
     cs.cookie_id,
     cs.avl_entry_type,
-   	to_hex(xxhash64(from_hex(cast(cs.x_avl_hash)))) as x_avl_hash,
+   	to_hex(xxhash64(from_hex(cs.x_avl_hash))) as x_avl_hash,
     cs.metric_value,
     cm.vertical_id,
     cm.logical_category_id,
