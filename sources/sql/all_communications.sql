@@ -408,7 +408,7 @@ select
         ,True is_common_funnel
         ,case when c.confirmed_time is not null then true else false end as is_answered
         ,cast(null as int) as platform_id-- платформа баера ?
-        ,cast(null as int) seller_platform_id -- платформа селлера??
+        ,cast(null as int) seller_platform_id -- платформа селлера?
         ,cast(null as int) buyer_cookie_id 
         ,case when  pay_date  is not null  then true else false end  as is_target
         ,case when pay_date  is not null  then 'target' else 'preliminary' end as type
