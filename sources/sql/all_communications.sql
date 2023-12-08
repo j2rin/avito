@@ -481,6 +481,9 @@ select
     ,coalesce(asd.is_asd, False) as is_asd
     ,asd.user_group_id as asd_user_group_id
     ,coalesce(usm.user_segment, ls.segment) as user_segment_market
+    ,lc.logical_param1_id
+    ,lc.logical_param2_id
+    ,coalesce(cpg.price_group, 'Undefined') as price_group
 from 
     (
         select *
@@ -502,3 +505,24 @@ from
     left join usm on a.seller_id = usm.user_id
                     and a.logical_category_id = usm.logical_category_id
                     and usm.converting_date interpolate previous value a.event_date
+    left join dma.current_logical_categories lc on lc.logical_category_id = a.logical_category_id
+    left join (
+    select item_id, price, actual_date from (
+            select
+                item_id, price, actual_date,
+                row_number() over (partition by item_id order by actual_date desc) as rn
+            from dds.S_Item_Price
+            where item_id in (
+                select distinct item_id
+                from dma.click_stream_contacts
+                where cast(eventdate as date) between :first_date and :last_date
+                    and item_id is not null
+            )
+        )t
+        where rn = 1
+    ) cif
+        on a.item_id = cif.item_id
+left join  dict.current_price_groups cpg
+    on   a.logical_category_id = cpg.logical_category_id
+    and  cif.price >= cpg.min_price
+    and  cif.price <  cpg.max_price
