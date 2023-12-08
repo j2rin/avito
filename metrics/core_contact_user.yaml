@@ -1,0 +1,12 @@
+metric.counter:
+  cnt_contact_by_user:            {}
+
+metric.uniq:
+  contacts_canonical_by_user:     {counter: cnt_contact_by_user, key: [item_id, logical_category_id]}
+  buyers_canonical_by_user:       {counter: cnt_contact_by_user, key: [user, logical_category_id]}
+  buyers_any_by_user:             {counter: cnt_contact_by_user, key: [user]}
+
+  user_c_uniq_vertical:           {counter: cnt_contact_by_user, key: [user, vertical_id]}
+  user_c_uniq_category:           {counter: cnt_contact_by_user, key: [user, category_id]}
+  user_c_uniq_subcategory:        {counter: cnt_contact_by_user, key: [user, subcategory_id]}
+

@@ -11,6 +11,7 @@ calls_scores as
                 when is_preliminary_call = True then 'preliminary'
                 when is_trash_call = True then 'trash'
         end as type
+        ,case when first_tag_prob > 0.4 then first_tag else 'empty_call' end as tags
     from
         dma.target_call
     where True
@@ -124,6 +125,7 @@ calls_scores as
         a.*
         ,d.is_target
         ,d.type
+        ,d.tags
     from 
         gsm_with_matching as a
         left join calls_scores as d on d.call_type = 'ct' and d.call_id = a.communication_id
@@ -150,6 +152,7 @@ calls_scores as
         ,case when CallerIsBuyer then CallerPlatform else RecieverPlatform end as platform_id -- платформа баера
         ,case when CallerIsBuyer then RecieverPlatform else CallerPlatform end as seller_platform_id -- платформа селлера
         ,case when CallerIsBuyer then CallerDevice else RecieverDevice end as buyer_cookie_id
+        ,NVL(a.is_video_call, False) as is_video_call
         ,a.Microcat_id
         ,c.category_id
         ,a.location_id
@@ -164,6 +167,7 @@ calls_scores as
         ,c.Param4_microcat_id as param4_id
         ,d.is_target
         ,d.type
+        ,d.tags
         ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
         ,case cl.level when 3 then cl.Location_id end                           as city_id
 	    ,cl.LocationGroup_id                                          as location_group_id
@@ -179,6 +183,7 @@ calls_scores as
         and AppCallScenario is not null
         and CallerIsBuyer is not null
         and AppCallScenario not in ('demo', 'messenger_chat_long_answer', 'messenger_empty_chat', 'support')
+        and (AppCallResult is null or AppCallResult not in ('gsm_fallback')) -- безуспешно перенаправленные из gsm в iac и отправленные обратно в gsm
 )
 -- чаты
 , chats as 
@@ -190,6 +195,7 @@ calls_scores as
             ,item_id
             ,class
       		,is_contact_exchange
+            ,is_seller_contact_exchange
         from 
             dma.messenger_chat_scores
         where 
@@ -214,6 +220,7 @@ calls_scores as
         ,platform_id -- платформа баера
         ,reply_platform_id as seller_platform_id -- платформа селлера
         ,first_message_cookie_id as buyer_cookie_id
+        ,cast(NULL as boolean) as is_video_call
         ,chr.microcat_id
         ,chr.category_id
         ,chr.item_location_id as location_id
@@ -226,13 +233,23 @@ calls_scores as
         ,cm.Param2_microcat_id as param2_id
         ,cm.Param3_microcat_id as param3_id
         ,cm.Param4_microcat_id as param4_id
-        ,case when cs.class in (3,4,5) or is_contact_exchange then True else False end as is_target
+        ,case 
+            when cm.vertical in ('Jobs') and cs.class in (3,4,5) then True
+            when cm.vertical not in ('Jobs') and (cs.class in (3,4,5) or is_contact_exchange or is_seller_contact_exchange) then True
+            else False
+        end as is_target
         ,case
-            when class in (3,4,5) or is_contact_exchange then 'target'
-            when class in (1,2,6,7,8) and with_reply = True then 'preliminary'
+            when cm.vertical in ('Jobs') and cs.class in (3,4,5) then 'target'
+            when cm.vertical not in ('Jobs') and (cs.class in (3,4,5) or is_contact_exchange or is_seller_contact_exchange) then 'target'
+            when cs.class in (1,2,6,7,8) and with_reply = True then 'preliminary'
             when is_spam = True then 'trash'
             when with_reply = False then 'not_answered'
         end as type
+        ,case 
+            when class in (3, 4, 5) then to_char(class)
+            when is_contact_exchange then '9_contact_exchange_buyer'
+            when is_seller_contact_exchange then '10_contact_exchange_seller' 
+            else to_char(class) end as tags
         ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
         ,case cl.level when 3 then cl.Location_id end                           as city_id
 	    ,cl.LocationGroup_id                                            as location_group_id
@@ -286,6 +303,7 @@ select
         ,co.platform_id as platform_id -- платформа баера
         ,cast(null as int) as seller_platform_id -- платформа селлера
         ,cast(null as int) as buyer_cookie_id
+        ,cast(NULL as boolean) as is_video_call
         ,coi.microcat_id
         ,cm.category_id as category_id
         ,coi.location_id
@@ -300,6 +318,7 @@ select
         ,cm.Param4_microcat_id as param4_id
         ,case when ((co.workflow = 'delivery-c2c' and platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')  or confirm_date is null) then False else True end is_target
         ,case when ((  (co.workflow = 'delivery-c2c'and  platformstatus = 'voided' ) or (co.workflow in ('marketplace-pvz', 'marketplace', 'delivery-b2c', 'delivery-c2c-courier') and platformstatus = 'rejected')) or confirm_date is null) then  'preliminary' else 'target' end as type
+        ,'transactions_order' as tags
         ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
         ,case cl.level when 3 then cl.Location_id end                           as city_id
 	    ,cl.LocationGroup_id                                          as location_group_id
@@ -338,6 +357,7 @@ select
         ,cast(null as int) as buyer_cookie_id 
         ,case when accepted_flg = 1 and canceled_flg = 0 then true else false end  as is_target
         ,case when accepted_flg = 1 and canceled_flg = 0 then 'target' else 'preliminary' end as type
+        ,'transactions_services_calendar' as tags
 from dma.services_calendar_orders sco
 where true 
         and cast(create_timestamp as date) between :first_date and :last_date 
@@ -392,6 +412,7 @@ select
         ,cast(null as int) buyer_cookie_id 
         ,case when  pay_date  is not null  then true else false end  as is_target
         ,case when pay_date  is not null  then 'target' else 'preliminary' end as type
+        ,'transactions_str' as tags
 from dma.short_term_rent_orders stro
 left join confirmed_str_orders as c 
     on c.strbooking_id = stro.order_id
@@ -420,6 +441,7 @@ select
     ,platform_id
     ,seller_platform_id
     ,buyer_cookie_id
+    ,cast(NULL as boolean) as is_video_call
     ,cm.microcat_id
     ,cm.category_id
     ,cl.location_id
@@ -434,6 +456,7 @@ select
     ,cm.Param4_microcat_id as param4_id
     ,is_target
     ,type
+    ,tags
     ,case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
     ,case cl.level when 3 then cl.Location_id end                           as city_id
 	,cl.LocationGroup_id                                          as location_group_id
@@ -447,7 +470,7 @@ from (
         from str_orders
     union all 
     select * 
-    from gsm_calls
+        from gsm_calls
     )t  
 join dma.current_item ci using (Item_id)
 join dma.current_microcategories cm using (microcat_id)

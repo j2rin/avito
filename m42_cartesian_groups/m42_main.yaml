@@ -31,6 +31,7 @@
             session_source,
             str,
             user_dau,
+            user_address 
           ],
         cubes:
           [
@@ -51,15 +52,12 @@
             fraud_tickets_user_reported,
             item_abuses,
             messenger_active_chats,
-            chat_leads,
             msh_banned_contacts,
             re_nd_buyer_stream,
             sbc_answered_inbox_special_offers,
             sbc_inbox_special_offers,
             search_items,
             seller_matched_call,
-            target_contact,
-            target_contact_seller,
           ],
         cubes:
           [
@@ -76,7 +74,6 @@
             calendar_orders_mp,
             calendar_sellers_items,
             calendar_sellers_items_mp,
-            chatbot_chats_delete,
             chatbot_events,
             cookie_account_enter,
             credit_broker,
@@ -209,7 +206,7 @@
         metric_configs: [clickstream_video],
         cubes:
           [
-            [category, subcategory, param1, param2, condition, platform],
+            [category, subcategory, param1, condition, platform],
             [is_logged_in, vertical, logical_category, platform],
           ],
       },
@@ -217,6 +214,7 @@
         metric_configs:
           [
             core_contacts,
+            core_contact_user,
             deal_confirmed,
             messenger_answered_inbox_messages,
             messenger_answered_messages,
@@ -265,7 +263,7 @@
           ],
       },
       {
-        metric_configs: [gmv_deals_proxy, inbox_chat_leads],
+        metric_configs: [gmv_deals_proxy],
         cubes:
           [
             [category, subcategory, platform],
@@ -332,12 +330,16 @@
         cubes: [[vertical, logical_category, user_segment_market, platform]],
       },
       {
-        metric_configs: [str_by_cookies, target_call_bx, target_call_sx],
+        metric_configs: [str_by_cookies],
         cubes:
           [
             [category, subcategory, platform],
             [is_logged_in, vertical, logical_category, region, platform],
           ],
+      },
+      {
+        metric_configs: [buyout_requests],
+        cubes: [[vertical, logical_category, platform]],
       },
     ],
   cubes_by_metric_sets:
@@ -397,7 +399,6 @@
               category,
               subcategory,
               param1,
-              param2,
               user_segment_market,
               condition,
               platform,
@@ -421,7 +422,6 @@
               category,
               subcategory,
               param1,
-              param2,
               user_segment_market,
               condition,
               platform,
@@ -526,29 +526,12 @@
             ],
           ],
       },
-      {
-        metric_sets: [target_call_bx, target_call_sx],
-        cubes:
-          [
-            [
-              platform,
-              vertical,
-              logical_category,
-              category,
-              subcategory,
-              param1,
-              region,
-              city,
-              platform,
-            ],
-          ],
-      },
     ],
   cubes_by_tags: [],
   cubes_by_metrics:
     [
       {
-        metrics: [users_active_daily],
+        metrics: [users_active_daily,buyers_canonical],
         cubes:
           [
             [app_version, platform],
@@ -598,7 +581,6 @@
               category,
               subcategory,
               param1,
-              param2,
               is_asd,
               condition,
               platform,
@@ -633,7 +615,6 @@
               category,
               subcategory,
               param1,
-              param2,
               is_asd,
               condition,
               platform,
@@ -1044,6 +1025,18 @@
               is_asd,
               region,
               platform,
+            ],
+          ],
+      },
+      {
+        metrics: [autoload_item_add_success],
+        cubes:
+          [
+            [
+              vertical,
+              logical_category,
+              category,
+              subcategory
             ],
           ],
       },

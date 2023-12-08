@@ -26,3 +26,5 @@
         payment_method_choice - payment_method_choice_subs - payment_method_choice_cv - payment_method_choice_wallet as payment_method_choice_account_pay
    from dma.billing_metric_observation
 where cast(observation_date as date) between :first_date and :last_date
+    -- and observation_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+

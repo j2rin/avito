@@ -2,6 +2,7 @@
 
 definitions:
   - &is_iac               {communication: iac}
+  - &is_video             {is_video_call: true}
 
 
   # Screens
@@ -17,7 +18,8 @@ definitions:
   # Logical Groups
   - &callback_scenario    [deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, call_log_callback, notification_call_back, gsm_messenger_bubble_callback, avito_call_log_callback]
   - &direct_scenario      [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, web_redirect]
-  - &any_scenario         [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, call_log_callback, notification_call_back, web_redirect, gsm_messenger_bubble_callback, avito_call_log_callback]
+  - &gsm2iac_scenario     [gsm2iac]
+  - &any_scenario         [item, item_gallery, item_feed, item_feed_photo, messenger_chat_menu, mini_messenger_chat_menu, seller_messenger_chat, deeplink_call_back, answering_machine_callback, call_screen, recall_after_micaccess, recall_on_call_screen, pro_callback, pro_mini_messenger_chat_menu, pro_messenger_chat_menu, call_log_callback, notification_call_back, web_redirect, gsm_messenger_bubble_callback, avito_call_log_callback, gsm2iac]
 
 
   # Filters
@@ -31,6 +33,7 @@ definitions:
 
   - &is_callback_c        {communication_type: *callback_scenario}
   - &is_direct_c          {communication_type: *direct_scenario}
+  - &is_gsm2iac_c         {communication_type: *gsm2iac_scenario}
   - &is_c                 {communication_type: *any_scenario}
 
   - &is_outgoing          {caller_is_buyer: false}
@@ -82,6 +85,10 @@ metric.counter:
   appcall_sx_incoming_direct_answered:          {filter: [*is_iac, *is_incoming, *is_direct_c, *is_answered]}
   appcall_sx_incoming_direct_talkseconds:       {filter: [*is_iac, *is_incoming, *is_direct_c, *is_answered], obs: [talk_duration]}
 
+  appcall_sx_incoming_gsm2iac:                   {filter: [*is_iac, *is_incoming, *is_gsm2iac_c]}
+  appcall_sx_incoming_gsm2iac_answered:          {filter: [*is_iac, *is_incoming, *is_gsm2iac_c, *is_answered]}
+  appcall_sx_incoming_gsm2iac_talkseconds:       {filter: [*is_iac, *is_incoming, *is_gsm2iac_c, *is_answered], obs: [talk_duration]}
+
   # By screen
   appcall_sx_incoming_item:                     {filter: [*is_iac, *is_incoming, *is_item_c]}
   appcall_sx_incoming_item_answered:            {filter: [*is_iac, *is_incoming, *is_item_c, *is_answered]}
@@ -107,16 +114,21 @@ metric.counter:
   # appcall_sx_incoming_direct_initiated:         {filter: [*is_iac, *is_incoming, *is_direct_c, *is_initiated]}
   # appcall_sx_incoming_direct_ringing:           {filter: [*is_iac, *is_incoming, *is_direct_c, *is_ringing]}
 
+  # Success
   appcall_sx_outgoing_success:                  {filter: [*is_iac, *is_outgoing, *is_c, *is_success]}
   appcall_sx_incoming_success:                  {filter: [*is_iac, *is_incoming, *is_c, *is_success]}
   appcall_sx_incoming_direct_success:           {filter: [*is_iac, *is_incoming, *is_direct_c, *is_success]}
   appcall_sx_any_success:                       {filter: [*is_iac, *is_c, *is_success]}
 
+  # Video calls
+  appcall_sx_video_calls:                       {filter: [*is_iac, *is_c, *is_video]}
+  appcall_sx_video_answered:                    {filter: [*is_iac, *is_c, *is_answered, *is_video]}
+  appcall_sx_video_talkseconds:                 {filter: [*is_iac, *is_c, *is_answered, *is_video], obs: [talk_duration]}
+
 
 
 metric.uniq:
   appcall_sx_any_canonical:                 {counter: appcall_sx_any_calls, key: [item_id, logical_category_id]}
-
 
 
 

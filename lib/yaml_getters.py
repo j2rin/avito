@@ -20,7 +20,7 @@ def get_sql_metadata():
         subject = source_meta['primary_subject']
         result[sql_file_name] = {
             'primary_subject': source_meta['participant'][subject],
-            'database': source_meta['database'],
+            'connections': source_meta['connections'],
         }
 
     return result

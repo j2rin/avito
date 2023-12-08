@@ -106,7 +106,7 @@ select
         else 0 --Undefined
     end                                                          as condition_id,
     cast(bitwise_and(case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end, 16) > 0 as int) as onmap,
-    bitwise_and(bitwise_left_shift(case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end, 10), 0xFFFFF) as search_features,
+    bitwise_and(bitwise_right_shift(case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end, 10), 0xFFFFF) as search_features,
     ubb.track_id is not null as new_user_btc,
     coalesce(asd.is_asd,false) is_asd,
     -- По дефолту ставим SS сегмент - 8383
@@ -137,7 +137,8 @@ select
     )) as seller_microcat_price_x,
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 34)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as b2c_wo_dbs,
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 35)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as c2c_return_within_14_days,
-    cast((bitwise_and(ss.item_flags, bitwise_left_shift(1, 34)) > 0 or bitwise_and(ss.item_flags, bitwise_left_shift(1, 35)) > 0) and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as return_within_14_days
+    cast((bitwise_and(ss.item_flags, bitwise_left_shift(1, 34)) > 0 or bitwise_and(ss.item_flags, bitwise_left_shift(1, 35)) > 0) and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as return_within_14_days,
+    cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as is_delivery_active_in_sale 
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -147,9 +148,10 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from infomodel.current_infmquery_category
         where infmquery_id in (
             select distinct infmquery_id
-            from dma.o_seller_item_active
+            from dma.buyer_stream
             where cast(event_date as date) between :first_date and :last_date
                 and infmquery_id is not null
+                -- and date between :first_date and :last_date -- @trino
         )
     ) ic on ic.infmquery_id = ss.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
@@ -225,7 +227,6 @@ left join /*+jtype(h),distrib(l,a)*/ (
         )
         and from_date <= :last_date
         and to_date >= :first_date
---         and from_year <= :last_date -- @trino
 ) ial
     on ial.item_id = ss.item_id
     and cast(ss.event_date as date) between ial.from_date and ial.to_date

@@ -32,3 +32,4 @@ left join /*+jtype(fm)*/ dma.review_params_clickstream  as rpc on cr.review_id  
 left join /*+jtype(h)*/  dma.current_microcategories    as cm  on cr.microcat_id = cm.microcat_id
 left join /*+jtype(h)*/  dma.current_locations          as cl  on cr.Location_id = cl.location_id
 where cast(cr.create_date as date) between :first_date and :last_date
+--and create_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

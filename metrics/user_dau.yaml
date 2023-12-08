@@ -1,3 +1,10 @@
+definitions:
+  - &has_active_address {active_addresses.>: 0 }
+  - &active_user        {events_count.>: 0 }
+  - &is_buyer           {contact_count.>: 0 }
+  - &is_user_bx_active  {$or: [{serp_count.>: 0}, {itemviews_count.>: 0}, {btc_count.>: 0}, {contact_count.>: 0}]}
+
+
 metric.counter:
   authorized_users_page_views:                  {filter: [user_id.isnull: false],  obs: [events_count]}
   item_views_count_user:                        {filter: [user_id.isnull: false],  obs: [itemviews_count]}
@@ -5,6 +12,12 @@ metric.counter:
   serp_count_user:                              {filter: [user_id.isnull: false],  obs: [serp_count]}
   btc_count_user:                               {filter: [user_id.isnull: false],  obs: [btc_count]}
   c_count_user:                                 {filter: [user_id.isnull: false],  obs: [contact_count]}
+
+
+#метрики активных юзеров с адресами
+  user_active_address_active_cnt:          {filter: [user_id.isnull: false, *has_active_address, *active_user]}
+  user_c_address_active_cnt:               {filter: [user_id.isnull: false, *has_active_address, *is_buyer]}
+  user_bx_active_address_active_cnt:       {filter: [user_id.isnull: false, *has_active_address, *is_user_bx_active]}
 
 metric.uniq:
   daily_active_uniq_authorized_users:     {counter: authorized_users_page_views,  key: [user]}
@@ -20,6 +33,12 @@ metric.uniq:
   user_month_c_user:                      {counter: c_count_user,                 key: [user_month_hash]}
   user_day_page_view_user:                {counter: authorized_users_page_views,              key: [user_day_hash]}
   user_month_page_view_user:              {counter: authorized_users_page_views,              key: [user_month_hash]}
+
+
+#юзеры с адресами
+  user_active_address_active:              {counter: user_active_address_active_cnt,    key: [user]}
+  user_c_address_active:                   {counter: user_c_address_active_cnt,         key: [user]}
+  user_bx_active_address_active:           {counter: user_bx_active_address_active_cnt, key: [user]}
 
 metric.ratio:
   user_day_iv_per_month_user:                   {num: user_day_iv_user,                     den: user_month_iv_user}

@@ -36,6 +36,7 @@ select /*+syntactic_join*/
     src.serp_count                                         as serp_count,
     src.btc_count                                          as btc_count,
     src.contact                                            as contact_count,
+    src.active_addresses,
     from_big_endian_64(xxhash64(to_big_endian_64(coalesce(src.cookie_id, 0)) || to_big_endian_64(date_diff('day', date('2000-01-01'), src.event_date))))                        as cookie_day_hash,
     from_big_endian_64(xxhash64(to_big_endian_64(coalesce(src.cookie_id, 0)) || to_big_endian_64(date_diff('day', date('2000-01-01'), date_trunc('month', src.event_date)))))   as cookie_month_hash,
     from_big_endian_64(xxhash64(to_big_endian_64(coalesce(src.user_id, 0)) || to_big_endian_64(date_diff('day', date('2000-01-01'), src.event_date))))                          as user_day_hash,

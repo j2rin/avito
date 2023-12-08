@@ -308,6 +308,13 @@ metric.counter:
   buyer_delivery_seller_commission_unconfirmed:      {filter: [{is_unconfirmed: true}], obs: [seller_commission]}
 
   buyer_delivery_total_payment_time:                 {filter: [{is_paid: true}], obs: [time_to_payment]}
+  
+  payment_conversion_paid: { filter: [ { is_finally_paid: true }, { purchase_equal_final_purchase: true }, { paylink_not_null: true }, { is_cod: false } ] } # PCR metric
+  payment_conversion_created: { filter: [ { purchase_equal_final_purchase: true }, { paylink_not_null: true }, { is_cod: false } ] } # PCR metric
+  orders_paid_paid: { filter: [ { is_paid_purchase: true }, { paylink_not_null: true } ] } # OPR metric
+  orders_paid_created: { filter: [ { paylink_not_null: true } ] } # OPR metric
+
+  buyer_delivery_items_paid_new:                     {filter: [{is_paid: true}, {is_delivery_paid_new: true}]}
 
 metric.uniq:
   buyer_delivery_orders_created:          {counter: buyer_delivery_items_created, key: [deliveryorder_id]}
@@ -420,6 +427,14 @@ metric.uniq:
   buyer_delivery_orders_exmail_subsidies_accepted:                        { counter: buyer_delivery_items_exmail_subsidies_accepted, key: [ deliveryorder_id ] }
   buyer_delivery_orders_exmail_subsidies_returned:                        { counter: buyer_delivery_items_exmail_subsidies_returned, key: [ deliveryorder_id ] }
   buyer_delivery_orders_exmail_subsidies_accepted_and_returned:           { counter: buyer_delivery_items_exmail_subsidies_accepted_and_returned, key: [ deliveryorder_id ] }
+  
+  payment_conversion_paid_uniq: { counter: payment_conversion_paid, key: [ purchase_ext ] } # PCR
+  payment_conversion_created_uniq: { counter: payment_conversion_created, key: [ purchase_ext ] } # PCR
+  orders_paid_paid_uniq: { counter: orders_paid_paid, key: [ purchase_ext ] } # OPR
+  orders_paid_created_uniq: { counter: orders_paid_created, key: [ purchase_ext ] } # OPR
+
+  buyer_delivery_orders_paid_new:                                         { counter: buyer_delivery_items_paid_new, key: [ deliveryorder_id ] }
+  buyers_with_delivery_orders_paid_new:                                   { counter: buyer_delivery_items_paid_new, key: [ buyer_id ] }
 
 metric.ratio:
   buyer_delivery_average_item_price_created: {num: buyer_delivery_gmv_created, den: buyer_delivery_items_created}
@@ -529,6 +544,10 @@ metric.ratio:
   buyer_delivery_paid_canceled_purchases_ratio:     {num: buyer_delivery_purchases_canceled, den: buyer_delivery_purchases_paid} # доля отмен среди оплат
 
   buyer_delivery_average_purchase_price_paid:       {num: buyer_delivery_gmv_paid, den: buyer_delivery_purchases_paid} # средняя стоимость покупки
+  buyer_delivery_purchase_avg_paid_items:           {num: buyer_delivery_items_paid, den: buyer_delivery_purchases_paid} # среднее количество айтемов в покупке 
 
   buyer_delivery_average_payment_time:              {num: buyer_delivery_total_payment_time, den: buyer_delivery_items_paid}
+  
+  orders_paid_ratio: { num: orders_paid_paid_uniq, den: orders_paid_created_uniq } # OPR
+  payment_conversion_rate: { num: payment_conversion_paid_uniq, den: payment_conversion_created_uniq } #PCR
    
