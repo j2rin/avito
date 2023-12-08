@@ -35,4 +35,3 @@ left join dma.current_item ci using (item_id)
 left join dma.current_microcategories cm using (microcat_id) 
 left join dma.current_locations cl using (location_id)
 --where calendar_type in ('avito', 'moi_profi') -- считаем только контакты по айтемам с определенной принадлежностью. тут не учтутся 
-
