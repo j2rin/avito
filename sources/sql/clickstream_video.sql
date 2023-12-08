@@ -21,7 +21,7 @@ select
     cond.condition_id,
     cs.cookie_id,
     cs.avl_entry_type,
-   	sha256(cs.x_avl_hash) as x_avl_hash,
+   	sha256(cast(cs.x_avl_hash as varbinary)) as x_avl_hash,
     cs.metric_value,
     cm.vertical_id,
     cm.logical_category_id,
