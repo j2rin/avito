@@ -21,7 +21,7 @@ select
     cond.condition_id,
     cs.cookie_id,
     cs.avl_entry_type,
-   	from_big_endian_64(xxhash64(to_big_endian_64(cast(cs.x_avl_hash as varbinary)))) as x_avl_hash,
+   	from_big_endian_64(xxhash64(cast(cs.x_avl_hash as varbinary))) as x_avl_hash,
     cs.metric_value,
     cm.vertical_id,
     cm.logical_category_id,
