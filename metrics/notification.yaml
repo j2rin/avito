@@ -27,23 +27,30 @@ metric.counter:
   sms_action:                              {filter: [eid: 2619, notification_channel: 'sms', notification: 'Any'], obs: [events_count]}
   nc_action:                               {filter: [eid: 2619, notification_channel: 'notificationCenter', notification: 'Any'], obs: [events_count]}
   email_action:                            {filter: [eid: 2619, notification_channel: 'email', notification: 'Any'], obs: [events_count]}
-  push_rec_marketing_no_data:              {filter: [eid: 2615, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
-  push_rec_marketing_prepared:             {filter: [eid: 2614, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
-  push_rec_marketing_to_provider:          {filter: [eid: 2616, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
-  push_rec_marketing_to_receiver:          {filter: [eid: 2617, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
-  push_rec_marketing_open:                 {filter: [eid: 2618, notification_channel: 'appPush', notification_type: 'recommendation', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
   push_saved_search_no_data:              {filter: [eid: 2615, notification_channel: 'appPush', notification: 'saved_search.push'], obs: [events_count]}
   push_saved_search_prepared:             {filter: [eid: 2614, notification_channel: 'appPush', notification: 'saved_search.push'], obs: [events_count]}
   push_saved_search_to_provider:          {filter: [eid: 2616, notification_channel: 'appPush', notification: 'saved_search.push'], obs: [events_count]}
   push_saved_search_to_receiver:          {filter: [eid: 2617, notification_channel: 'appPush', notification: 'saved_search.push'], obs: [events_count]}
   push_saved_search_open:                 {filter: [eid: 2618, notification_channel: 'appPush', notification: 'saved_search.push'], obs: [events_count]}
-  push_marketing_to_receiver:              {filter: [eid: 2617, notification_channel: 'appPush', notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
-  browser_pushes_marketing_to_receiver:    {filter: [eid: 2617, notification_channel: 'browserPush', notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
-  sms_marketing_to_receiver:               {filter: [eid: 2617, notification_channel: 'sms', notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
-  nc_marketing_to_receiver:                {filter: [eid: 2617, notification_channel: 'notificationCenter', notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
-  email_marketing_to_receiver:             {filter: [eid: 2617, notification_channel: 'email', notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
+  push_marketing_prepared: 				   {filter: [eid: 2614, notification_channel: 'appPush', notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
+  push_marketing_to_provider:			   {filter: [eid: 2616, notification_channel: 'appPush', notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
+  push_marketing_to_receiver:			   {filter: [eid: 2617, notification_channel: 'appPush', notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
+  push_marketing_open:				   	   {filter: [eid: 2618, notification_channel: 'appPush', notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
+  push_crm_prepared:					   {filter: [eid: 2614, notification_channel: 'appPush', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  push_crm_to_provider:					   {filter: [eid: 2616, notification_channel: 'appPush', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  push_crm_to_receiver:					   {filter: [eid: 2617, notification_channel: 'appPush', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  push_crm_open:						   {filter: [eid: 2618, notification_channel: 'appPush', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  nc_crm_prepared:						   {filter: [eid: 2614, notification_channel: 'notificationCenter', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  nc_crm_to_provider:					   {filter: [eid: 2616, notification_channel: 'notificationCenter', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  nc_crm_to_receiver:					   {filter: [eid: 2617, notification_channel: 'notificationCenter', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  nc_crm_open:						   	   {filter: [eid: 2618, notification_channel: 'notificationCenter', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  nc_crm_action:						   {filter: [eid: 2619, notification_channel: 'notificationCenter', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  email_crm_prepared:					   {filter: [eid: 2614, notification_channel: 'email', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  email_crm_to_provider:				   {filter: [eid: 2616, notification_channel: 'email', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  email_crm_to_receiver:				   {filter: [eid: 2617, notification_channel: 'email', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  email_crm_open:					  	   {filter: [eid: 2618, notification_channel: 'email', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
+  email_crm_action:						   {filter: [eid: 2619, notification_channel: 'email', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
   push_rec_to_receiver:                    {filter: [eid: 2617, notification_channel: 'appPush', notification_owner: 'Recommendations', notification: 'Any'], obs: [events_count]}
-  push_crm_to_receiver:                    {filter: [eid: 2617, notification_channel: 'appPush', $or: [notification_owner.=: 'Marketing', notification_owner.=: 'Recommendations'], notification: 'Any'], obs: [events_count]}
   notification_marketing_prepared:         {filter: [eid: 2614, notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
   notification_marketing_no_data:          {filter: [eid: 2615, notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
   notification_marketing_to_provider:      {filter: [eid: 2616, notification_owner: 'Marketing', notification: 'Any'], obs: [events_count]}
@@ -136,18 +143,25 @@ metric.uniq:
   user_sms_action:                              {counter: sms_action,                                   key: [user]}
   user_nc_action:                               {counter: nc_action,                                    key: [user]}
   user_email_action:                            {counter: email_action,                                 key: [user]}
-  user_push_no_data_rec_marketing:              {counter: push_rec_marketing_no_data,                   key: [user]}
-  user_push_prepared_rec_marketing:             {counter: push_rec_marketing_prepared,                  key: [user]}
-  user_push_to_provider_rec_marketing:          {counter: push_rec_marketing_to_provider,               key: [user]}
-  user_push_to_receiver_rec_marketing:          {counter: push_rec_marketing_to_receiver,               key: [user]}
-  user_push_open_rec_marketing:                 {counter: push_rec_marketing_open,                      key: [user]}
-  user_push_marketing_to_receiver:              {counter: push_marketing_to_receiver,                   key: [user]}
-  user_browser_pushes_marketing_to_receiver:    {counter: browser_pushes_marketing_to_receiver,         key: [user]}
-  user_sms_marketing_to_receiver:               {counter: sms_marketing_to_receiver,                    key: [user]}
-  user_nc_marketing_to_receiver:                {counter: nc_marketing_to_receiver,                     key: [user]}
-  user_email_marketing_to_receiver:             {counter: email_marketing_to_receiver,                  key: [user]}
+  user_push_marketing_prepared:					{counter: push_marketing_prepared,                      key: [user]}
+  user_push_marketing_to_provider:				{counter: push_marketing_to_provider,                   key: [user]}
+  user_push_marketing_to_receiver:				{counter: push_marketing_to_receiver,                   key: [user]}
+  user_push_marketing_open:						{counter: push_marketing_open,                   		key: [user]}
+  user_push_crm_prepared:						{counter: push_crm_prepared,                   		    key: [user]}
+  user_push_crm_to_provider:					{counter: push_crm_to_provider,                   		key: [user]}
+  user_push_crm_to_receiver:					{counter: push_crm_to_receiver,                   		key: [user]}
+  user_push_crm_open:							{counter: push_crm_open,                   		    	key: [user]}
+  user_nc_crm_prepared:							{counter: nc_crm_prepared,                   		    key: [user]}
+  user_nc_crm_to_provider:						{counter: nc_crm_to_provider,                   		key: [user]}
+  user_nc_crm_to_receiver:						{counter: nc_crm_to_receiver,                   		key: [user]}
+  user_nc_crm_open:								{counter: nc_crm_open,                   		    	key: [user]}
+  user_nc_crm_action:							{counter: nc_crm_action,                   		    	key: [user]}
+  user_email_crm_prepared: 						{counter: email_crm_prepared,                   		    	key: [user]}
+  user_email_crm_to_provider:					{counter: email_crm_to_provider,                   		    	key: [user]}
+  user_email_crm_to_receiver:					{counter: email_crm_to_receiver,                   		    	key: [user]}
+  user_email_crm_open:							{counter: email_crm_open,                   		    	key: [user]}
+  user_email_crm_action:						{counter: email_crm_action,                   		    	key: [user]}
   user_push_rec_to_receiver:                    {counter: push_rec_to_receiver,                         key: [user]}
-  user_push_crm_to_receiver:                    {counter: push_crm_to_receiver,                         key: [user]}
   user_notification_marketing_prepared:         {counter: notification_marketing_prepared,              key: [user]}
   user_notification_marketing_no_data:          {counter: notification_marketing_no_data,               key: [user]}
   user_notification_marketing_to_provider:      {counter: notification_marketing_to_provider,           key: [user]}
@@ -195,7 +209,6 @@ metric.ratio:
   sms_to_receiver_per_sms_prepared:                                 {num: sms_to_receiver,                       den: sms_prepared}
   nc_to_receiver_per_nc_prepared:                                   {num: nc_to_receiver,                        den: nc_prepared}
   email_to_receiver_per_email_prepared:                             {num: email_to_receiver,                     den: email_prepared}
-  push_open_per_to_receiver_rec_marketing:                          {num: push_rec_marketing_open,               den: push_rec_marketing_to_receiver}
   user_app_pushes_to_receiver_per_user_push_prepared:               {num: user_push_to_receiver,                 den: user_push_prepared}
   user_browser_push_to_receiver_per_user_browser_push_prepared:     {num: user_browser_push_to_receiver,         den: user_browser_push_prepared}
   user_sms_to_receiver_per_user_sms_prepared:                       {num: user_sms_to_receiver,                  den: user_sms_prepared}
@@ -206,13 +219,46 @@ metric.ratio:
   user_sms_open_per_user_sms_to_receiver:                           {num: user_sms_open,                         den: user_sms_to_receiver}
   user_nc_open_per_user_nc_to_receiver:                             {num: user_nc_open,                          den: user_nc_to_receiver}
   user_email_open_per_user_email_to_receiver:                       {num: user_email_open,                       den: user_email_to_receiver}
-  user_push_open_per_to_receiver_rec_marketing:                     {num: user_push_open_rec_marketing,          den: user_push_to_receiver_rec_marketing}
   push_to_receiver_per_user:                                        {num: push_to_receiver,                      den: user_push_to_receiver}
   browser_push_to_receiver_per_user:                                {num: browser_push_to_receiver,              den: user_browser_push_to_receiver}
   sms_to_receiver_per_user:                                         {num: sms_to_receiver,                       den: user_sms_to_receiver}
   nc_to_receiver_per_user:                                          {num: nc_to_receiver,                        den: user_nc_to_receiver}
   email_to_receiver_per_user:                                       {num: email_to_receiver,                     den: user_email_to_receiver}
-  push_rec_marketing_to_receiver_per_user:                          {num: push_rec_marketing_to_receiver,        den: user_push_to_receiver_rec_marketing}
+  push_marketing_open_per_prepared:									{num: push_marketing_open,                 	 den: push_marketing_prepared}
+  push_marketing_open_per_to_reciever:								{num: push_marketing_open,                   den: push_marketing_to_receiver}
+  user_push_marketing_open_per_prepared:							{num: user_push_marketing_open,              den: user_push_marketing_prepared}
+  user_push_marketing_open_per_to_reciever:							{num: user_push_marketing_open,              den: user_push_marketing_to_receiver}
+  push_marketing_to_receiver_per_user:								{num: push_marketing_to_receiver,            den: user_push_marketing_to_receiver}
+  push_crm_open_per_prepared: 										{num: push_crm_open,                 	     den: push_crm_prepared}
+  push_crm_open_per_to_reciever:									{num: push_crm_open,                 		 den: push_crm_to_receiver}
+  user_push_crm_open_per_prepared: 									{num: user_push_crm_open,                 	 den: user_push_crm_prepared}
+  user_push_crm_open_per_to_reciever:								{num: user_push_crm_open,                    den: user_push_crm_to_receiver}
+  push_crm_to_receiver_per_user:									{num: push_crm_to_receiver,                  den: user_push_crm_to_receiver}
+  nc_crm_open_per_prepared:											{num: nc_crm_open,                           den: nc_crm_prepared}
+  nc_crm_open_per_to_reciever:										{num: nc_crm_open,                  	     den: nc_crm_to_receiver}
+  user_nc_crm_open_per_prepared:									{num: user_nc_crm_open,                  	 den: user_nc_crm_prepared}
+  user_nc_crm_open_per_to_reciever:									{num: user_nc_crm_open,                  	 den: user_nc_crm_to_receiver}
+  nc_crm_to_receiver_per_user:										{num: nc_crm_to_receiver,                    den: user_nc_crm_to_receiver}
+  email_crm_open_per_prepared:										{num: email_crm_open,                    	 den: email_crm_prepared}
+  email_crm_open_per_to_reciever:									{num: email_crm_open,                    	 den: email_crm_to_receiver}
+  user_email_crm_open_per_prepared:									{num: user_email_crm_open,                   den: user_email_crm_prepared}
+  user_email_crm_open_per_to_reciever:								{num: user_email_crm_open,                   den: user_email_crm_to_receiver}
+  email_crm_to_reciever_per_user:									{num: email_crm_to_receiver,                 den: user_email_crm_to_receiver}
+  notification_crm_open_per_prepared:								{num: notification_crm_open,                 den: notification_crm_prepared}
+  notification_crm_open_per_to_reciever:							{num: notification_crm_open,                 den: notification_crm_to_receiver}
+  user_notification_crm_open_per_prepared:							{num: user_notification_crm_open,            den: user_notification_crm_prepared}
+  user_notification_crm_open_per_to_reciever:						{num: user_notification_crm_open,            den: user_notification_crm_to_receiver}
+  notification_crm_to_reciever_per_user:							{num: notification_crm_to_receiver,          den: user_email_crm_to_receiver}
+  notification_marketing_open_per_prepared:							{num: notification_marketing_open,           den: notification_marketing_prepared}
+  notification_marketing_open_per_to_reciever:						{num: notification_marketing_open,           den: notification_marketing_to_receiver}
+  user_notification_marketing_open_per_prepared:					{num: user_notification_marketing_open,      den: user_notification_marketing_prepared}
+  user_notification_marketing_open_per_to_reciever:					{num: user_notification_marketing_open,      den: user_notification_marketing_to_receiver}
+  notification_marketing_to_reciever_per_user:						{num: notification_marketing_to_receiver,    den: user_notification_marketing_to_receiver}
+  notification_rec_open_per_prepared:								{num: notification_rec_open,                 den: notification_rec_prepared}
+  notification_rec_open_per_to_reciever:							{num: notification_rec_open,                 den: notification_rec_to_receiver}
+  user_notification_rec_open_per_prepared:							{num: user_notification_rec_open,            den: user_notification_rec_prepared}
+  user_notification_rec_open_per_to_reciever:						{num: user_notification_rec_open,            den: user_notification_rec_to_receiver}
+  notification_rec_to_reciever_per_user:							{num: notification_marketing_open,           den: user_notification_rec_to_receiver}
   notifications_off_any_per_push_to_receiver:                       {num: notifications_off_any,                 den: push_to_receiver}
   notifications_off_profile_per_push_to_receiver:                   {num: notifications_off_profile,             den: push_to_receiver}
   notifications_off_system_per_push_to_receiver:                    {num: notifications_off_system,              den: push_to_receiver}
@@ -226,4 +272,4 @@ metric.ratio:
   user_notifications_off_profile_per_user_crm_to_receiver:          {num: user_notifications_off_profile,        den: user_notification_crm_to_receiver}
   user_notifications_off_system_per_user_crm_to_receiver:           {num: user_notifications_off_system,         den: user_notification_crm_to_receiver}
   user_notifications_off_push_per_user_push_crm_to_receiver:        {num: user_notifications_off_profile_push,   den: user_push_crm_to_receiver}
-  user_notifications_off_email_per_user_email_crm_to_receiver:      {num: user_notifications_off_profile_email,  den: user_email_marketing_to_receiver}
+  user_notifications_off_email_per_user_email_crm_to_receiver:      {num: user_notifications_off_profile_email,  den: user_email_crm_to_receiver}
