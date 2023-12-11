@@ -53,3 +53,4 @@ select
     is_messenger_tips_setting_available
 from dma.crm_notification_settings_by_user
 where cast(event_date as date) between :first_date and :last_date
+--and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

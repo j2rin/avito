@@ -12,3 +12,4 @@ select
     playback_stalls_count
 from dma.perf_video_metrics
 where cast(event_date as date) between :first_date and :last_date
+    -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

@@ -351,6 +351,11 @@ definitions:
     - &is_c2c_return_within_14_days { c2c_return_within_14_days: 1}
     - &is_return_within_14_days {return_within_14_days: 1}
 
+    - &in_sale { item_flags.bit: 36 }
+    - &x_is_sales_vertical_main_widget { x_eid: [ 5516, 2012 ], from_page.ilike: '%_sale' } 
+    - &in_sale_delivery_active { is_delivery_active_in_sale: 1 }
+
+
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
@@ -1968,13 +1973,25 @@ metric.counter:
     c_base_block_q: { filter: [*x_is_search, *is_serp_base_block, *is_contact_wo_guessing, *q] }
     c_base_block_noq: { filter: [*x_is_search, *is_serp_base_block, *is_contact_wo_guessing, *noq] }
 
-
-
     iv_video_lenta: { filter: [*is_iv_wo_guessing, *x_avl] }
     c_video_lenta: { filter: [*is_contact_wo_guessing, *x_avl] }
 
     btc_video_lenta: { filter: [*is_btc, *x_avl] }
     fav_video_lenta: { filter: [*is_fav, *x_avl] }
+
+    cnt_iv_sales: { filter: [*is_iv, *in_sale] }
+    cnt_iv_s_sales: { filter: [*is_iv, *x_is_search, *in_sale] }
+    cnt_iv_u2i_sales: { filter: [*is_iv, *x_is_u2i, *in_sale] }
+    cnt_iv_sales_vertical_page: { filter: [*is_iv, *x_is_sales_vertical_main_widget, *in_sale]}
+
+    cnt_c_sales: { filter: [*is_contact, *in_sale] }
+    cnt_c_s_sales: { filter: [*is_contact_wo_guessing, *x_is_search, *in_sale] }
+    cnt_c_u2i_sales: {filter: [*is_contact_wo_guessing, *x_is_u2i, *in_sale] }
+    cnt_c_sales_vertical_page: { filter: [*is_contact_wo_guessing, *x_is_sales_vertical_main_widget, *in_sale] }
+
+    total_delivery_iv_sales: { filter: [*is_iv, *in_sale_delivery_active ] }
+    total_delivery_click_sales: { filter: [ *in_sale_delivery_active, eid: 2483 ] }
+    total_delivery_order_create_sales: { filter: [*is_delivery_tot, *in_sale_delivery_active] }
 
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie, item] }
@@ -3504,6 +3521,34 @@ metric.uniq:
     user_btc_video_lenta:    { counter: btc_video_lenta, key: [cookie] }
     user_fav_video_lenta :    { counter: fav_video_lenta, key: [cookie] }
 
+    iv_sales:                     { counter: cnt_iv_sales, key: [item, x] }
+    iv_s_sales:                   { counter: cnt_iv_s_sales, key: [item, x] }
+    iv_u2i_sales:                 { counter: cnt_iv_u2i_sales, key: [item, x] }
+    iv_sales_vertical_page:       { counter: cnt_iv_sales_vertical_page, key: [item, x] }
+
+    c_sales:                      { counter: cnt_c_sales, key: [item, x] }
+    c_s_sales:                    { counter: cnt_c_s_sales, key: [item, x] }
+    c_u2i_sales:                  { counter: cnt_c_u2i_sales, key: [item, x] }
+    c_sales_vertical_page:        { counter: cnt_c_sales_vertical_page, key: [item, x] }
+
+    delivery_iv_sales:            { counter: total_delivery_iv_sales, key: [item, cookie] }
+    delivery_click_sales:         { counter: total_delivery_click_sales, key: [item, cookie]}
+    order_create_sales:           { counter: total_delivery_order_create_sales, key: [item, cookie]}
+
+    user_iv_sales:                { counter: cnt_iv_sales, key: [cookie] }
+    user_iv_s_sales:              { counter: cnt_iv_s_sales, key: [cookie] }
+    user_iv_u2i_sales:            { counter: cnt_iv_u2i_sales, key: [cookie] }
+    user_iv_sales_vertical_page:  { counter: cnt_iv_sales_vertical_page, key: [cookie] }
+
+    user_c_sales:                 { counter: cnt_c_sales, key: [cookie] }
+    user_c_s_sales:               { counter: cnt_c_s_sales, key: [cookie] }
+    user_c_u2i_sales:             { counter: cnt_c_u2i_sales, key: [cookie] }
+    user_c_sales_vertical_page:   { counter: cnt_c_sales_vertical_page, key: [cookie] }
+
+    user_delivery_iv_sales:       { counter: total_delivery_iv_sales, key: [cookie] }
+    user_delivery_click_sales:    { counter: total_delivery_click_sales, key: [cookie]}
+    user_order_create_sales:      { counter: total_delivery_order_create_sales, key: [cookie]}
+
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
     btc_from_witcher_any_per_witcher_any: { num: btc_from_witcher_any, den: searches_witcher_any }
@@ -4192,3 +4237,10 @@ metric.ratio:
     delivery_confirm_delivery_contact_c2c_14days_return: { num: delivery_contact_c2c_14days_return, den: delivery_confirm_c2c_14days_return }
     delivery_confirm_delivery_contact_14days_return: { num: delivery_contact_14days_return, den: delivery_confirm_14days_return }
 
+    c_per_iv_sales: {num: c_sales, den: iv_sales}
+    c_per_iv_s_sales: {num: c_s_sales, den: iv_s_sales}
+    c_per_iv_u2i_sales: {num: c_u2i_sales, den: iv_u2i_sales}
+    c_per_iv_sales_vertical_page: {num: c_sales_vertical_page, den: iv_sales_vertical_page}
+
+    delivery_iv_delivery_click_sales:     { num: delivery_click_sales, den: delivery_iv_sales}
+    delivery_iv_order_create_sales:       { num: order_create_sales, den: delivery_iv_sales}

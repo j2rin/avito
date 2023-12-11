@@ -25,3 +25,4 @@
     LEFT JOIN /*+jtype(h)*/ DMA.current_locations cl ON cl.Location_id   = ct.phone_location_id
     LEFT JOIN /*+jtype(h)*/ DMA.current_categories_new c on c.cat_id = ct.category_id
 where cast(event_date as date) between :first_date and :last_date
+  -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

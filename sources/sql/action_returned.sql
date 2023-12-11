@@ -20,3 +20,4 @@ left join /*+jtype(h)*/ DMA.current_logical_categories cm
     and cm.level_name = 'LogicalCategory'
 left join /*+jtype(h)*/ DMA.current_locations cl on cl.Location_id = ss.location_id
 where ss.event_date between :first_date and :last_date
+    -- and ss.event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino

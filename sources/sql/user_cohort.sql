@@ -12,3 +12,4 @@ join DMA.current_logical_categories clc
 	on uc.logical_category_id = clc.logical_category_id
 where uc.user_id not in (select user_id from dma."current_user" where isTest)
     and cast(uc.event_date as date) between :first_date and :last_date
+    -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

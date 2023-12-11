@@ -17,3 +17,4 @@ select /*+syntactic_join*/
 from dma.location_suggest_click                      ss
 LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id = ss.location_id
 where cast(event_date as date) between :first_date and :last_date
+--and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

@@ -10,3 +10,4 @@ select
     buyer_id as profile_id
 from dma.buyer_reviews_stream
 where cast(event_timestamp as date) between :first_date and :last_date
+    --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

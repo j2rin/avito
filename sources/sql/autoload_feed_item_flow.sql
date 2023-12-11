@@ -53,3 +53,4 @@ select
     deactivate_total_time_spent_for_success_sec
 from dma.autoload_feed_item_flow
 where cast(event_date as date) between :first_date and :last_date
+    --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

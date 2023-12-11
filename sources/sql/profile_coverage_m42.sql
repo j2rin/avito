@@ -15,4 +15,5 @@ SELECT
     MAX(CASE WHEN vertical = 'Services' THEN cast(pro_users/base*10000 as int) END) AS profile_coverage_services
 FROM dma.profile_vertical_coverage
 WHERE event_date BETWEEN :first_date AND :last_date
+--and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 GROUP BY launch_id, event_date

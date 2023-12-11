@@ -22,3 +22,4 @@ select  observation_date as event_Date,
   LEFT JOIN /*+jtype(h)*/ DMA.current_microcategories cm on cm.microcat_id   = m.microcat_id
   LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id   = m.location_id
 where cast(observation_date as date) between :first_date and :last_date
+--and observation_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
