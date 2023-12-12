@@ -36,10 +36,30 @@ daily_active_listers_w_segment as (
         coalesce(usm.user_segment, ls.segment) as user_segment_market,
         coalesce(usm.user_segment is null and ls.segment is not null, False) as is_default_segment
     from daily_active_listers dal
-    left join dma.user_segment_market usm
-        on usm.user_id = dal.user_id
-        and usm.logical_category_id = dal.logical_category_id
-        and dal.event_date interpolate previous value usm.converting_date
+    left join /*+jtype(h),distrib(l,r)*/ (
+        select
+            usm.user_id,
+            usm.logical_category_id,
+            usm.user_segment,
+            c.event_date
+        from (
+            select
+                user_id,
+                logical_category_id,
+                user_segment,
+                converting_date as from_date,
+                lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
+            from DMA.user_segment_market
+            where true
+                and converting_date <= :last_date
+        ) usm
+        join dict.calendar c on c.event_date between :first_date and :last_date
+        where c.event_date >= usm.from_date and c.event_date < usm.to_date
+            and usm.to_date >= :first_date
+    ) usm
+        on  dal.user_id = usm.user_id
+        and dal.event_date = usm.event_date
+        and dal.logical_category_id = usm.logical_category_id
     left join dict.segmentation_ranks ls
         on ls.logical_category_id = dal.logical_category_id
         and ls.is_default
@@ -58,21 +78,25 @@ select /*+syntactic_join*/
     row_number() over (partition by t.user_id, t.event_date order by t.user_segment_rank, t.is_default_segment, t.items desc) = 1 as is_seller_total
 from (
     select
-        event_date,
-        user_id,
-        logical_category_id,
-        vertical_id,
-        items,
-        user_segment_market,
-        is_default_segment,
-        case
-            when split_part(user_segment_market, '.', 1) = 'Enterprise' then 1
-            when split_part(user_segment_market, '.', 1) = 'MidMarket' then 2
-            when split_part(user_segment_market, '.', 1) = 'Private (Earning)' then 3
-            else 4
-        end as user_segment_rank,
+        *,
         row_number() over (partition by user_id, event_date, vertical_id order by user_segment_rank, is_default_segment, items desc) as rnk
-    from daily_active_listers_w_segment dal
+    from (
+        select
+            event_date,
+            user_id,
+            logical_category_id,
+            vertical_id,
+            items,
+            user_segment_market,
+            is_default_segment,
+            case
+                when split_part(user_segment_market, '.', 1) = 'Enterprise' then 1
+                when split_part(user_segment_market, '.', 1) = 'MidMarket' then 2
+                when split_part(user_segment_market, '.', 1) = 'Private (Earning)' then 3
+                else 4
+            end as user_segment_rank
+        from daily_active_listers_w_segment dal
+    ) t
 ) t
 left join (
     select
@@ -85,6 +109,7 @@ left join (
     join dma.current_microcategories cm on pur.microcat_id = cm.microcat_id and cm.microcat_id != -1
     where ctt.IsRevenue
         and cast(pur.event_date as date) between :first_date and :last_date
+        -- and pur.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     group by 1, 2, 3
 ) pur on pur.user_id=t.user_id and pur.event_date=t.event_date and pur.vertical_id=t.vertical_id
 where rnk = 1
