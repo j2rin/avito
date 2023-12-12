@@ -12,7 +12,7 @@ definitions:
 
 metric.counter:
 
-# general all
+#general all
   cnt_dlb_active_items:                           {}
   cnt_items_available_regular_bulky:              {filter: [is_delivery_available_regular: True]}
   cnt_items_enabled_regular_bulky:                {filter: [is_delivery_active_regular: True, is_delivery_available_regular: True]}
@@ -20,7 +20,7 @@ metric.counter:
   cnt_items_enabled_regular:                      {filter: [is_delivery_active_regular: True, is_delivery_available_regular: True, available_courier_yandexcargo: False]}
   cnt_items_available_anydbs:                     {filter: [is_delivery_available_anydbs: True]}
   cnt_items_enabled_anydbs:                       {filter: [is_delivery_active_anydbs: True, is_delivery_available_anydbs: True]}
-# general new
+#general new
   cnt_dlb_new_active_items:                       {filter: [*is_new: true]}
   cnt_new_items_available_regular_bulky:          {filter: [*is_new: true, is_delivery_available_regular: True]}
   cnt_new_items_enabled_regular_bulky:            {filter: [*is_new: true, is_delivery_active_regular: True, is_delivery_available_regular: True]}
@@ -29,7 +29,7 @@ metric.counter:
   cnt_new_items_available_anydbs:                 {filter: [*is_new: true, is_delivery_available_anydbs: True]}
   cnt_new_items_enabled_anydbs:                   {filter: [*is_new: true, is_delivery_active_anydbs: True, is_delivery_available_anydbs: True]}
 
-  # enabled by delivery flow all
+#enabled by delivery flow all
   cnt_items_enabled_pudo:                         {filter: [is_enabled_pvz: True, available_pvz: True]}
   cnt_items_available_pudo:                       {filter: [available_pvz: True]}
   cnt_items_enabled_locker:                       {filter: [is_enabled_postamat: True, available_locker: True]}
@@ -46,7 +46,7 @@ metric.counter:
   cnt_items_available_dbs:                        {filter: [available_dbs: True]}
   cnt_items_enabled_rdbs:                         {filter: [is_enabled_rdbs: True]}
   cnt_items_available_rdbs:                       {filter: [available_rdbs: True]}
-# enabled by delivery flow new
+#enabled by delivery flow new
   cnt_new_items_enabled_pudo:                     {filter: [*is_new: true, is_enabled_pvz: True, available_pvz: True]}
   cnt_new_items_available_pudo:                   {filter: [*is_new: true, available_pvz: True]}
   cnt_new_items_enabled_locker:                   {filter: [*is_new: true, is_enabled_postamat: True, available_locker: True]}
@@ -64,7 +64,7 @@ metric.counter:
   cnt_new_items_enabled_rdbs:                     {filter: [*is_new: true, is_enabled_rdbs: True]}
   cnt_new_items_available_rdbs:                   {filter: [*is_new: true, available_rdbs: True]}
 
-# available by delivery service all
+#available by delivery service all
   cnt_items_available_pvz_pochta:                 {filter: [available_pvz_pochta: True]}
   cnt_items_available_pvz_bb:                     {filter: [available_pvz_bb: True]}
   cnt_items_available_pvz_dpd:                    {filter: [available_pvz_dpd: True]}
@@ -76,7 +76,7 @@ metric.counter:
   cnt_items_available_courierd2d_cse:             {filter: [available_courierd2d_cse: True]}
   cnt_items_available_courier_yandexcargo:        {filter: [available_courier_yandexcargo: True]}
   cnt_items_available_postamat_fivepost:          {filter: [available_postamat_fivepost: True]}
-# available by delivery service new
+#available by delivery service new
   cnt_new_items_available_pvz_pochta:             {filter: [*is_new: true, available_pvz_pochta: True]}
   cnt_new_items_available_pvz_bb:                 {filter: [*is_new: true, available_pvz_bb: True]}
   cnt_new_items_available_pvz_dpd:                {filter: [*is_new: true, available_pvz_dpd: True]}
@@ -92,8 +92,8 @@ metric.counter:
 metric.uniq:
 
 ################################################
-# general
-## items
+#general
+##items
   dlb_active_items:                               {counter: cnt_dlb_active_items,                       key: [item]}
   items_available_regular_bulky:                  {counter: cnt_items_available_regular_bulky,          key: [item]}
   items_enabled_regular_bulky:                    {counter: cnt_items_enabled_regular_bulky,            key: [item]}
@@ -101,7 +101,7 @@ metric.uniq:
   items_enabled_regular:                          {counter: cnt_items_enabled_regular,                  key: [item]}
   items_available_anydbs:                         {counter: cnt_items_available_anydbs,                 key: [item]}
   items_enabled_anydbs:                           {counter: cnt_items_enabled_anydbs,                   key: [item]}
-## users
+##users
   dlb_active_users:                               {counter: cnt_dlb_active_items,                       key: [user_id]}
   users_available_regular_bulky:                  {counter: cnt_items_available_regular_bulky,          key: [user_id]}
   users_enabled_regular_bulky:                    {counter: cnt_items_enabled_regular_bulky,            key: [user_id]}
@@ -109,7 +109,7 @@ metric.uniq:
   users_enabled_regular:                          {counter: cnt_items_enabled_regular,                  key: [user_id]}
   users_available_anydbs:                         {counter: cnt_items_available_anydbs,                 key: [user_id]}
   users_enabled_anydbs:                           {counter: cnt_items_enabled_anydbs,                   key: [user_id]}
-## listers
+##listers
   dlb_active_listers:                             {counter: cnt_dlb_active_items,                       key: [user_id, logical_category_id]}
   listers_available_regular_bulky:                {counter: cnt_items_available_regular_bulky,          key: [user_id, logical_category_id]}
   listers_enabled_regular_bulky:                  {counter: cnt_items_enabled_regular_bulky,            key: [user_id, logical_category_id]}
@@ -119,8 +119,8 @@ metric.uniq:
   listers_enabled_anydbs:                         {counter: cnt_items_enabled_anydbs,                   key: [user_id, logical_category_id]}
 
 ################################################
-# enabled by delivery flow
-## items
+#enabled by delivery flow
+##items
   items_enabled_pudo:                             {counter: cnt_items_enabled_pudo,                     key: [item]}
   items_available_pudo:                           {counter: cnt_items_available_pudo,                   key: [item]}
   items_enabled_locker:                           {counter: cnt_items_enabled_locker,                   key: [item]}
@@ -137,7 +137,7 @@ metric.uniq:
   items_available_dbs:                            {counter: cnt_items_available_dbs,                    key: [item]}
   items_enabled_rdbs:                             {counter: cnt_items_enabled_rdbs,                     key: [item]}
   items_available_rdbs:                           {counter: cnt_items_available_rdbs,                   key: [item]}
-## users
+##users
   users_enabled_pudo:                             {counter: cnt_items_enabled_pudo,                     key: [user_id]}
   users_available_pudo:                           {counter: cnt_items_available_pudo,                   key: [user_id]}
   users_enabled_locker:                           {counter: cnt_items_enabled_locker,                   key: [user_id]}
@@ -154,7 +154,7 @@ metric.uniq:
   users_available_dbs:                            {counter: cnt_items_available_dbs,                    key: [user_id]}
   users_enabled_rdbs:                             {counter: cnt_items_enabled_rdbs,                     key: [user_id]}
   users_available_rdbs:                           {counter: cnt_items_available_rdbs,                   key: [user_id]}
-## listers
+##listers
   listers_enabled_pudo:                           {counter: cnt_items_enabled_pudo,                     key: [user_id, logical_category_id]]}
   listers_available_pudo:                         {counter: cnt_items_available_pudo,                   key: [user_id, logical_category_id]]}
   listers_enabled_locker:                         {counter: cnt_items_enabled_locker,                   key: [user_id, logical_category_id]]}
@@ -172,7 +172,7 @@ metric.uniq:
   listers_enabled_rdbs:                           {counter: cnt_items_enabled_rdbs,                     key: [user_id, logical_category_id]]}
   listers_available_rdbs:                         {counter: cnt_items_available_rdbs,                   key: [user_id, logical_category_id]]}
 
-# available by delivery service all
+#available by delivery service all
   items_available_pvz_pochta:                     {counter: cnt_items_available_pvz_pochta,             key: [item]}
   items_available_pvz_bb:                         {counter: cnt_items_available_pvz_bb,                 key: [item]}
   items_available_pvz_dpd:                        {counter: cnt_items_available_pvz_dpd,                key: [item]}
@@ -187,14 +187,15 @@ metric.uniq:
 
 
 metric.ratio:
-# general all
+
+#general all
   items_available_regular_ratio:                 {num: cnt_items_available_regular,                    den: cnt_dlb_active_items}
   items_active_regular_ratio:                    {num: cnt_items_enabled_regular,                      den: cnt_items_available_regular}
   items_available_regular_bulky_ratio:           {num: cnt_items_available_regular_bulky,              den: cnt_dlb_active_items}
   items_active_regular_bulky_ratio:              {num: cnt_items_enabled_regular_bulky,                den: cnt_items_available_regular_bulky}
   items_available_anydbs_ratio:                  {num: cnt_items_available_anydbs,                     den: cnt_dlb_active_items}
   items_active_anydbs_ratio:                     {num: cnt_items_enabled_anydbs,                       den: cnt_items_available_anydbs}
-# general new
+#general new
   new_items_available_regular_ratio:             {num: cnt_new_items_available_regular,                den: cnt_dlb_new_active_items}
   new_items_active_regular_ratio:                {num: cnt_new_items_enabled_regular,                  den: cnt_new_items_available_regular}
   new_items_available_regular_bulky_ratio:       {num: cnt_new_items_available_regular_bulky,          den: cnt_dlb_new_active_items}
@@ -202,7 +203,7 @@ metric.ratio:
   new_items_available_anydbs_ratio:              {num: cnt_new_items_available_anydbs,                 den: cnt_dlb_new_active_items}
   new_items_active_anydbs_ratio:                 {num: cnt_new_items_enabled_anydbs,                   den: cnt_new_items_available_anydbs}
 
-# enabled by delivery flow
+#enabled by delivery flow
   items_enabled_pudo_ratio:                       {num: items_enabled_pudo,                             den: items_available_pudo}
   items_enabled_locker_ratio:                     {num: items_enabled_locker,                           den: items_available_locker}
   items_enabled_courier_bulky_ratio:              {num: items_enabled_courier_bulky,                    den: items_available_courier_bulky}
@@ -212,7 +213,7 @@ metric.ratio:
   items_enabled_dbs_ratio:                        {num: items_enabled_dbs,                              den: items_available_dbs}
   items_enabled_rdbs_ratio:                       {num: items_enabled_rdbs,                             den: items_available_rdbs}
 
-# available by delivery service all
+#available by delivery service all
   items_available_pvz_pochta_ratio:               {num: cnt_items_available_pvz_pochta,                 den: cnt_dlb_active_items}
   items_available_pvz_bb_ratio:                   {num: cnt_items_available_pvz_bb,                     den: cnt_dlb_active_items}
   items_available_pvz_dpd_ratio:                  {num: cnt_items_available_pvz_dpd,                    den: cnt_dlb_active_items}
@@ -224,7 +225,7 @@ metric.ratio:
   items_available_courierd2d_cse_ratio:           {num: cnt_items_available_courierd2d_cse,             den: cnt_dlb_active_items}
   items_available_courier_yandexcargo_ratio:      {num: cnt_items_available_courier_yandexcargo,        den: cnt_dlb_active_items}
   items_available_postamat_fivepost_ratio:        {num: cnt_items_available_postamat_fivepost,          den: cnt_dlb_active_items}
-# available by delivery service new
+#available by delivery service new
   new_items_available_pvz_pochta_ratio:           {num: cnt_new_items_available_pvz_pochta,             den: cnt_dlb_active_items}
   new_items_available_pvz_bb_ratio:               {num: cnt_new_items_available_pvz_bb,                 den: cnt_dlb_active_items}
   new_items_available_pvz_dpd_ratio:              {num: cnt_new_items_available_pvz_dpd,                den: cnt_dlb_active_items}
