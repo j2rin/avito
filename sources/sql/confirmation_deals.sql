@@ -1,5 +1,8 @@
 select
-    hash(buyer_id, cd.item_id) as deal_id,
+    from_big_endian_64(xxhash64(
+        to_big_endian_64(coalesce(buyer_id, 0)) ||
+        to_big_endian_64(coalesce(cd.item_id, 0))
+    )) as deal_id,
     chat_id,
     buyer_id,
     seller_id,
@@ -28,6 +31,7 @@ left join dma.current_microcategories           as cm on ci.microcat_id = cm.mic
 left join dma.current_locations                 as cl on ci.location_id = cl.location_id
 where cast(cd.event_time as date) between :first_date and :last_date
     and cast(cd.event_time as date) <= date('2023-01-16')  -- c 17 января берем данные из другой витрины
+--     and cd.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     and not seller_id is null
 
 union all
@@ -61,18 +65,18 @@ left join dma.current_item                      as ci on cd.item_id = ci.item_id
 left join dma.current_microcategories           as cm on ci.microcat_id = cm.microcat_id
 left join dma.current_locations                 as cl on ci.location_id = cl.location_id
 where cast(cd.event_time as date) between :first_date and :last_date
-
+--     and cd.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 union all
 
-select 
+select
     deal_id,
     chat_id,
     buyer_id,
-    seller_id, 
+    seller_id,
     ns.item_id,
     contact_method as contactmethod,
     deal_confirmation_source,
-    state as dealconfirmationstate, 
+    state as dealconfirmationstate,
     event_timestamp as event_time,
     -- Dimensions -----------------------------------------------------------------------------------------------------
     cm.vertical_id                                               as vertical_id,
@@ -93,3 +97,4 @@ left join dma.current_item                      as ci on ns.item_id = ci.item_id
 left join dma.current_microcategories           as cm on ci.microcat_id = cm.microcat_id
 left join dma.current_locations                 as cl on ci.location_id = cl.location_id
 where cast(ns.event_timestamp as date) between :first_date and :last_date
+-- and ns.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
