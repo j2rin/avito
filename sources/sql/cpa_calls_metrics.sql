@@ -47,6 +47,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from dma.cpa_calls_metrics
         where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
+            --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     )
 ) ci
     on ci.infmquery_id = c.infmquery_id
@@ -67,12 +68,13 @@ left join /*+jtype(h),distrib(l,r)*/ (
             logical_category_id,
             user_segment,
             converting_date as from_date,
-            lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
+            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
         from DMA.user_segment_market
         where true
             and user_id in (
                 select distinct user_id from dma.cpa_calls_metrics
                 where cast(event_date as date) between :first_date and :last_date
+                --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
             )
             and converting_date <= :last_date
     ) usm
@@ -97,7 +99,7 @@ left join (
     where active_from_date <= :last_date
         and active_to_date >= :first_date
 ) acd
-	on acd.user_id = c.user_id 
+	on acd.user_id = c.user_id
 	and c.event_date between acd.active_from_date and acd.active_to_date
-
 where cast(event_date as date) between :first_date and :last_date
+    --and c.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino

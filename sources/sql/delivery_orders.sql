@@ -97,6 +97,13 @@ select
     ------ привязки в контуре авито
     has_avito_bindings,
     payment_flow,
+    ------ метрики OPR и PCR
+    co.is_finally_paid,
+    co.is_paid_purchase,
+    co.purchase_equal_final_purchase,
+    co.paylink_not_null,
+    co.is_cod,
+    purchase_ext,
 -- Dimensions -----------------------------------------------------------------------------------------------------
     clc.vertical_id                                              as vertical_id,
     cm.category_id                                               as category_id,
@@ -121,7 +128,8 @@ select
     case bl.level when 3 then bl.Location_id end                           as buyer_city_id,
     bl.LocationGroup_id                                          as buyer_location_group_id,
     bl.City_Population_Group                                     as buyer_population_group,
-    bl.Logical_Level                                             as buyer_location_level_id
+    bl.Logical_Level                                             as buyer_location_level_id,
+    co.in_sale 
 from dma.delivery_metric_for_ab co
 left join dma.current_logical_categories clc on clc.logcat_id = co.logical_category_id
 left join dma.current_microcategories cm on cm.microcat_id = co.microcat_id

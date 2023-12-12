@@ -11,3 +11,4 @@ SELECT
     error_text
 FROM dma.passport_event_stream
 WHERE event_date BETWEEN :first_date AND :last_date
+--and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino

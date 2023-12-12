@@ -34,3 +34,4 @@ left join (
     and  dp.event_date between acd.active_from_date and acd.active_to_date
 
 where cast(event_date as date) between :first_date and :last_date
+  -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

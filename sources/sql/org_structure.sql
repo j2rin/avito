@@ -1,6 +1,6 @@
 select
     event_date,
-    hash(login) as user_hash,
+    from_big_endian_64(xxhash64(cast(login as varbinary))) as user_hash,
     login as ldap_user,
     functional_line_name as functional_line,
     major_function_name as org_major_function,

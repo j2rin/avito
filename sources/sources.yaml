@@ -1157,7 +1157,7 @@ tariff_funnel:
 
 cpx_tariff_funnel:
   metric_configs: [cpx_tariff_funnel]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: cpx_tariff_funnel
   column_map:
     user: user_id
@@ -1778,7 +1778,7 @@ reviews_collected:
 
 contacts_reviews_services:
   metric_configs: [seller_contacts_reviews_services]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: contacts_reviews_services
   column_map:
     user: user_id
@@ -1804,7 +1804,7 @@ contacts_reviews_services:
 
 lister_reactivations:
   metric_configs: [lister_reactivations]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: lister_reactivations
   dimensions: [logical_category, vertical, region, city]
   participant: { user: user_id }
@@ -2084,7 +2084,7 @@ autoteka_reports:
 
 buyer_confirmation_deals:
   metric_configs: [buyer_confirmation_deals]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: confirmation_deals
   column_map:
     item: item_id
@@ -2110,7 +2110,7 @@ buyer_confirmation_deals:
 
 seller_confirmation_deals:
   metric_configs: [seller_confirmation_deals]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: confirmation_deals
   column_map:
     item: item_id
@@ -2836,7 +2836,7 @@ payout_page_trx:
 
 payment_order_cost:
   metric_configs: [payment_order_cost]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: payment_order_cost
   column_map:
     user: user_id
@@ -3000,7 +3000,7 @@ clickstream_sigma_duration:
 
 org_structure:
   metric_configs: [org_structure]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: org_structure
   participant: { user: user_hash }
   primary_subject: user
@@ -3211,7 +3211,7 @@ user_address:
 
 active_pro_sellers:
   metric_configs: [active_pro_sellers]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: active_pro_sellers
   column_map:
     user: user_id
@@ -3441,6 +3441,7 @@ calendar_contacts:
   participant: { visitor: cookie_id, user: user_id  }
   primary_subject: visitor
   dtm: event_date
+
 
 
 deliverability:

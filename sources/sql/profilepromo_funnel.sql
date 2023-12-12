@@ -21,3 +21,4 @@ left join /*+jtype(h),distrib(l,a)*/ dma.profilepromo_campaigns c on c.adv_campa
 left join /*+jtype(h),distrib(l,a)*/ dma.profilepromo_presets s on c.preset_id = s.preset_id
 left join /*+jtype(h),distrib(l,a)*/ dma.current_logical_categories cm on cm.logical_category = s.logical_category
 where cast(f.event_date as date) between :first_date and :last_date
+	-- and f.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino

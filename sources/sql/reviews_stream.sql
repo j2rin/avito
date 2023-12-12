@@ -17,4 +17,5 @@ from dma.reviews_stream
 where cast(event_date as date) between :first_date and :last_date
     and not (eid = 2754 and coalesce(page_from,'none') in ('item_rating','item_scroll','item_all_reviews'))
     and not (eid = 2754 and coalesce(page_from,'none') = 'item' and platform_id = 3)
+    --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 

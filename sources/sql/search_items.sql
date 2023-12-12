@@ -3,7 +3,6 @@ select
     cookie_id,
     platform_id,
     eventtype_id,
-    item_engines,
     vertical_id,
     logical_category_id,
     category_id,

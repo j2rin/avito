@@ -56,13 +56,23 @@
             re_nd_buyer_stream,
             sbc_answered_inbox_special_offers,
             sbc_inbox_special_offers,
-            search_items,
             seller_matched_call,
           ],
         cubes:
           [
             [category, subcategory, platform],
             [vertical, logical_category, platform],
+          ],
+      },
+      {
+        metric_configs:
+          [
+            search_items,
+          ],
+        cubes:
+          [
+            [region, category, subcategory, platform],
+            [region, vertical, logical_category, platform],
           ],
       },
       {
@@ -336,6 +346,10 @@
             [category, subcategory, platform],
             [is_logged_in, vertical, logical_category, region, platform],
           ],
+      },
+      {
+        metric_configs: [buyout_requests],
+        cubes: [[vertical, logical_category, platform]],
       },
     ],
   cubes_by_metric_sets:
@@ -1021,6 +1035,18 @@
               is_asd,
               region,
               platform,
+            ],
+          ],
+      },
+      {
+        metrics: [autoload_item_add_success],
+        cubes:
+          [
+            [
+              vertical,
+              logical_category,
+              category,
+              subcategory
             ],
           ],
       },

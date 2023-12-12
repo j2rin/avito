@@ -8,12 +8,12 @@ from DMA.am_client_day_versioned
 )
 , usm as (
     select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
 )
  select
  	t.trigger_date,
-    case 
+    case
         when trigger_type = 'messenger' then 'messenger'
         when trigger_type=  'link_regexp' or trigger_type = 'link_message' then 'link'
         when trigger_type like '%phone%' then 'phone'
@@ -57,3 +57,4 @@ left join usm
         and cm.logical_category_id = usm.logical_category_id
         and cast(t.trigger_date as timestamp) >= converting_date and cast(t.trigger_date as timestamp) < next_converting_date
 where cast(trigger_date as date) between :first_date and :last_date
+    --and trigger_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino

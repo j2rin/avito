@@ -15,13 +15,12 @@ from http import client as httplib
 from time import sleep
 
 from dotenv import load_dotenv
-from validate_sql import validate as validate_sql
 
 load_dotenv()
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
-PUBLISH_URL = '/api/publishMetricsRepo'
+PRODUCTION_BRANCH = 'origin/master'
 
 
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -35,13 +34,22 @@ CONFIGS = [
     ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions/dimensions.yaml'), False),
     ('dimensions_sql', os.path.join(CUR_DIR_PATH, 'dimensions/sql'), True),
     ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
-    ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
-    ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
-    ('metrics_lists', os.path.join(CUR_DIR_PATH, 'presets/metrics'), True),
     ('m42_cartesian_groups', os.path.join(CUR_DIR_PATH, 'm42_cartesian_groups'), True),
 ]
 
-DEPRECATED_CONFIGS = ['breakdown_presets', 'ab_config_presets', 'metrics_lists']
+
+def list_modified_files():
+    result = []
+
+    # Для локального запуска
+    from git import Repo
+
+    repo = Repo('.')
+    origin_master = repo.commit(PRODUCTION_BRANCH)
+    for item in origin_master.diff(None):
+        result.append(item.a_path)
+
+    return result
 
 
 def validate_configs():
@@ -84,9 +92,6 @@ def validate():
     try:
         success = validate_configs()
 
-        if success:
-            success = validate_sql()
-
     except Exception as e:
         success = False
         print(e)
@@ -99,38 +104,13 @@ def validate():
         exit(1)
 
 
-
-def publish():
-    key = os.getenv('API_KEY')
-
-    if not key:
-        print('No API_KEY in the env')
-        exit(2)
-
-    result, _ = send_all(PUBLISH_URL, os.getenv('API_KEY'))
-
-    if not result.get('success'):
-        print('Cannot publish metrics config')
-        print(result)
-        exit(1)
-
-    print('Metrics repo has been successfully updated')
-
-
-def send_all(url, api_key=None):
+def send_all(url):
     data = {}
     file_name_maps = {}
-
-    if api_key:
-        data['api_key'] = api_key
-
+    changed_files = list_modified_files()
     for name, path, is_multi in CONFIGS:
-        if name in DEPRECATED_CONFIGS:
-            data[name] = {}
-            file_name_maps[name] = {}
-            continue
         if is_multi:
-            data[name], file_name_maps[name] = read_yamls(path)
+            data[name], file_name_maps[name] = read_configs(path, changed_files)
         else:
             data[name] = read_file(path)
             file_name_maps[name] = {name: path}
@@ -200,7 +180,7 @@ def read_file(file_path):
     return io.open(file_path, encoding='utf-8').read()
 
 
-def read_yamls(dir_path):
+def read_configs(dir_path, changed_files):
     file_name_map = {}
     result = {}
 
@@ -216,7 +196,7 @@ def read_yamls(dir_path):
         if is_file_appropriate(fn):
             full_path = os.path.join(dir_path, fn)
             short_name = get_short_name(fn)
-            result[short_name] = read_file(full_path)
+            result[short_name] = (read_file(full_path), full_path.replace(f'{CUR_DIR_PATH}/', '') in changed_files)
 
             file_name_map[short_name] = full_path
     return result, file_name_map
@@ -247,22 +227,9 @@ def get_short_name(file_name):
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        if sys.argv[1] == '--publish':
-            publish()
-            exit(0)
-        elif sys.argv[1] == '--publish-staging':
+        if sys.argv[1] == '--validate-staging':
             AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
             VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
-            PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
-
-            os.environ['API_KEY'] = 'api_key'
-
-            publish()
-            exit(0)
-        elif sys.argv[1] == '--validate-staging':
-            AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
-            VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
-            PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
 
             validate()
             exit(0)
