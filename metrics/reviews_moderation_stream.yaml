@@ -1,0 +1,7 @@
+metric.counter:
+  all_reviews_declined:                       {}
+  rating_reviews_declined:                    {filter: [{stage.in: [1,2]}]}
+
+metric.uniq:
+  user_rating_reviews_declined:               {counter: rating_reviews_declined,            key: [user]}
+  user_all_reviews_declined:                  {counter: all_reviews_declined,               key: [user]}
