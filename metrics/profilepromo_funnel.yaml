@@ -5,7 +5,7 @@ metric.counter:
       pp_item_contacts:                        {filter: [eid.in: [303, 2654], item_id.isnull: false]}
       pp_profile_contacts:                     {filter: [eid.in: [303, 2654], item_id.isnull: true]}
       pp_contacts_all:                         {filter: [eid.in: [303, 2654]]}
-      pp_target_actions:                       {filter: [eid.in: [2908, 303, 2654]]}
+      pp_target_actions:                       {filter: [eid.in: [2908, 303, 2654,401]]}
       pp_adv_clicks:                           {filter: [eid: 3215]}
 
 metric.uniq:
@@ -15,7 +15,7 @@ metric.uniq:
       pp_item_contacts_unique:                 {counter: pp_item_contacts,           key: [user_id, item_id]}
       pp_profile_contacts_unique:              {counter: pp_profile_contacts,        key: [user_id]}
       pp_contacts_all_unique:                  {counter: pp_contacts_all,            key: [user_id, item_id]}
-      pp_target_actions_unique:                {counter: pp_target_actions,          key: [user_id]}
+      pp_target_actions_unique:                {counter: pp_target_actions,          key: [user_id, item_id]}
       pp_adv_clicks_unique:                    {counter: pp_adv_clicks,              key: [user_id]}
 
 metric.ratio:
