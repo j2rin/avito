@@ -3441,3 +3441,31 @@ calendar_contacts:
   participant: { visitor: cookie_id, user: user_id  }
   primary_subject: visitor
   dtm: event_date
+  
+reviews_moderation_stream:
+  metric_configs: [reviews_moderation_stream]
+  connections: [vertica]
+  sql: reviews_moderation_stream
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
