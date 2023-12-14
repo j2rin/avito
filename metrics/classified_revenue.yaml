@@ -1,6 +1,11 @@
 definitions:
   - &revenue   {is_revenue: true, is_classified: true}
   - &payment   {is_payment: true, is_classified: true}
+  - &is_str_revenue  {is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'buyer book'}
+  - &is_trx_revenue  {is_revenue: true, product_type: 'promo', transaction_subtype: 'trx promo'}
+  - &is_cpt_revenue  {is_revenue: true, product_type: 'cpt'}
+  - &is_cpa_revenue  {is_revenue: true, product_type: 'cpa'}
+  - &is_profile_promo_revenue {is_revenue: true, product_type: 'vas', product_subtype: 'profile promo'}
 
 metric.counter:
   revenue_total:                                      {obs: [transaction_amount],          filter: [is_revenue: true]}
@@ -32,7 +37,7 @@ metric.counter:
   vas_transactions_cpa_user:                          {obs: [transaction_count],           filter: [*revenue, product_type: 'vas', is_user_cpa: true]}
   vas_transactions_p:                                 {obs: [transaction_count],           filter: [*payment, product_type: 'vas']}
   paid_contact_amount_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'paid_contact']}
-  cpa_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'cpa']}
+  cpa_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [*is_cpa_revenue]}
   cpa_amount:                                         {obs: [transaction_amount],          filter: [*revenue, product_type: 'cpa']} 
   cpa_amount_calls:                                   {obs: [transaction_amount],          filter: [*revenue, product_type: 'cpa', product_subtype: 'calls']} 
   cpa_amount_calendars_leads:                         {obs: [transaction_amount],          filter: [*revenue, product_type: 'cpa', product_subtype: 'calendars_leads']} 
@@ -119,9 +124,9 @@ metric.counter:
   bundle_transactions:                                {obs: [transaction_count],           filter: [*revenue, product_type: 'bundle']}
   bundle_transactions_p:                              {obs: [transaction_count],           filter: [*payment, product_type: 'bundle']}
   domoteka_amount_net_adj:                            {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'check']}
-  str_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'short_term_rent', transaction_subtype: 'buyer book']}
+  str_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [*is_str_revenue]}
   chatbots_amount_net_adj:                            {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'JOB ChatBot']}
-  cpt_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'cpt', transaction_subtype: ['c2c commission', 'b2c commission']]}
+  cpt_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [*is_cpt_revenue]}
   cpt_c2c_amount_net_adj:                             {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'cpt', transaction_subtype: ['c2c commission']]}
   cpt_b2c_amount_net_adj:                             {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'cpt', transaction_subtype: ['b2c commission']]}
   cpt_transactions:                                   {obs: [transaction_count],  filter: [is_revenue: true, product_type: 'cpt', transaction_subtype: ['c2c commission', 'b2c commission']]}
@@ -152,11 +157,11 @@ metric.counter:
   auto_paid_contact_amount:                           {obs: [transaction_amount],         filter: [is_revenue: true,  product_type: 'auto_paid_contact']}
   auto_paid_contact_amount_net:                       {obs: [transaction_amount_net],     filter: [is_revenue: true,  product_type: 'auto_paid_contact']}
   auto_paid_contact_amount_net_adj:                   {obs: [transaction_amount_net_adj], filter: [is_revenue: true,  product_type: 'auto_paid_contact']}
-  profile_promo_amount_net_adj:                       {obs: [transaction_amount_net_adj], filter: [is_revenue: true, product_type: 'vas', product_subtype: 'profile promo']} 
-  profile_promo_transactions:                         {obs: [transaction_count],          filter: [is_revenue: true, product_type: 'vas', product_subtype: 'profile promo']}
-  trx_promo_amount_net_adj:                           {obs: [transaction_amount_net_adj], filter: [is_revenue: true, product_type: 'promo', transaction_subtype: ['trx promo']]}
-  str_trx_amount_net_adj:                             {obs: [transaction_amount_net_adj], filter: [is_revenue: true, product_type: ['short_term_rent','promo'], transaction_subtype: ['buyer book','trx promo']]}
-  
+  profile_promo_amount_net_adj:                       {obs: [transaction_amount_net_adj], filter: [*is_profile_promo_revenue]} 
+  profile_promo_transactions:                         {obs: [transaction_count],          filter: [*is_profile_promo_revenue]}
+  trx_promo_amount_net_adj:                           {obs: [transaction_amount_net_adj], filter: [*is_trx_revenue]}
+  str_trx_amount_net_adj:                             {obs: [transaction_amount_net_adj], filter: [$or: [*is_trx_revenue, *is_str_revenue]]}
+  pay_for_perf_amount_net_adj:                        {obs: [transaction_amount_net_adj], filter: [$or: [*is_trx_revenue, *is_str_revenue, *is_cpt_revenue, *is_cpa_revenue, *is_profile_promo_revenue]]}
  
 
 
@@ -256,3 +261,4 @@ metric.ratio:
   cpa_advance_transactions_per_user:          {num: cpa_advance_transactions,               den: cpa_advance_users}
   cpa_advance_transactions_per_user_clicks:   {num: cpa_advance_transactions_clicks,        den: cpa_advance_users_clicks}
   cpa_advance_transactions_per_user_contacts: {num: cpa_advance_transactions_contacts,      den: cpa_advance_users_contacts}
+  pay_for_perf_amount_net_adj_share:          {num: pay_for_perf_amount_net_adj,            den: revenue_net_adj_total}
