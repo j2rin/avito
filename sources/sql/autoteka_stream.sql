@@ -37,8 +37,8 @@ select
     utm_content,
     utm_term,
     'standalone' as source,
-  	hash(autotekauser_id, source) as autoteka_user_hash,
-  	hash(autotekaorder_id, source) as autoteka_order_hash,
+  	hash(autotekauser_id, 'standalone') as autoteka_user_hash,
+  	hash(autotekaorder_id, 'standalone') as autoteka_order_hash,
     0 as fake_user_id
 from dma.autoteka_stream 
 where cast(event_date as date) between :first_date and :last_date
@@ -82,8 +82,8 @@ select
     null utm_content,
     null utm_term,
     'avito' as source,
-  	hash(user_id, source) as autoteka_user_hash,
-  	hash(order_items_id, source) as autoteka_order_hash,
+  	hash(user_id, 'avito') as autoteka_user_hash,
+  	hash(order_items_id, 'avito') as autoteka_order_hash,
     0 as fake_user_id
 from dma.autoteka_on_avito_stream_and_payments
 where cast(event_date as date) between :first_date and :last_date
