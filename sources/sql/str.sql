@@ -12,6 +12,7 @@
   		   observation_name,
   		   observation_value,
            has_short_video,
+           buyer_cluster, 
   		   -- Dimensions -----------------------------------------------------------------------------------------------------
 	       cm.Param1_microcat_id                                        as param1_id,
 	       cm.Param2_microcat_id                                        as param2_id,
@@ -21,7 +22,7 @@
            case cl.level when 3 then cl.Location_id end                           as city_id,
 	       cl.LocationGroup_id                                          as location_group_id,
 	       cl.City_Population_Group                                     as population_group,
-	       cl.Logical_Level                                             as location_level_id
+	       cl.Logical_Level                                             as location_level_id 
      FROM dma.str_metric_observation mac
     LEFT JOIN /*+jtype(h)*/ DMA.current_microcategories cm on cm.microcat_id   = mac.microcat_id
     LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id   = mac.location_id
