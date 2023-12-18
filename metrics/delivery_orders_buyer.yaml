@@ -22,15 +22,18 @@ metric.counter:
   buyer_delivery_items_created_video:    {filter: [{is_created: true}, {has_short_video: true}]}
   buyer_delivery_items_created_no_video: {filter: [{is_created: true}, {has_short_video: false}]}
   buyer_delivery_items_paid:             {filter: [{is_paid: true}]}
+  buyer_delivery_items_paid_start_date:  {filter: [{is_paid: true}, {create_date.>: $ab_start_date}]}
   buyer_delivery_items_paid_video:       {filter: [{is_paid: true}, {has_short_video: true}]}
   buyer_delivery_items_paid_no_video:    {filter: [{is_paid: true}, {has_short_video: false}]}
   buyer_delivery_items_confirmed:        {filter: [{is_confirmed: true}]}
   buyer_delivery_items_confirmed_video:  {filter: [{is_confirmed: true}, {has_short_video: true}]}
   buyer_delivery_items_confirmed_no_video: {filter: [{is_confirmed: true}, {has_short_video: false}]}
   buyer_delivery_items_performed:        {filter: [{is_performed: true}]}
+  buyer_delivery_items_performed_start_date: {filter: [{is_performed: true}, {create_date.>: $ab_start_date}]}
   buyer_delivery_items_provided:         {filter: [{is_provided: true}]}
   buyer_delivery_items_received:         {filter: [{is_received: true}]}
   buyer_delivery_items_accepted:         {filter: [{is_accepted: true}]}
+  buyer_delivery_items_accepted_start_date: {filter: [{is_accepted: true}, {create_date.>: $ab_start_date}]}
   buyer_delivery_items_canceled:         {filter: [{is_canceled: true}]}
   buyer_delivery_items_voided:           {filter: [{is_voided: true}]}
   buyer_delivery_items_unperformed:      {filter: [{is_unperformed: true}]}
@@ -321,15 +324,18 @@ metric.uniq:
   buyer_delivery_orders_created_video:    {counter: buyer_delivery_items_created_video, key: [deliveryorder_id]}
   buyer_delivery_orders_created_no_video: {counter: buyer_delivery_items_created_no_video, key: [deliveryorder_id]}
   buyer_delivery_orders_paid:             {counter: buyer_delivery_items_paid, key: [deliveryorder_id]}
+  buyer_delivery_orders_paid_start_date:        {counter: buyer_delivery_items_paid_start_date, key: [deliveryorder_id]}
   buyer_delivery_orders_paid_video:             {counter: buyer_delivery_items_paid_video, key: [deliveryorder_id]}
   buyer_delivery_orders_paid_no_video:             {counter: buyer_delivery_items_paid_no_video, key: [deliveryorder_id]}
   buyer_delivery_orders_confirmed:        {counter: buyer_delivery_items_confirmed, key: [deliveryorder_id]}
   buyer_delivery_orders_confirmed_video:        {counter: buyer_delivery_items_confirmed_video, key: [deliveryorder_id]}
   buyer_delivery_orders_confirmed_no_video:        {counter: buyer_delivery_items_confirmed_no_video, key: [deliveryorder_id]}
   buyer_delivery_orders_performed:        {counter: buyer_delivery_items_performed, key: [deliveryorder_id]}
+  buyer_delivery_orders_performed_start_date:        {counter: buyer_delivery_items_performed_start_date, key: [deliveryorder_id]}
   buyer_delivery_orders_provided:         {counter: buyer_delivery_items_provided, key: [deliveryorder_id]}
   buyer_delivery_orders_received:         {counter: buyer_delivery_items_received, key: [deliveryorder_id]}
   buyer_delivery_orders_accepted:         {counter: buyer_delivery_items_accepted, key: [deliveryorder_id]}
+  buyer_delivery_orders_accepted_start_date: {counter: buyer_delivery_items_accepted_start_date, key: [deliveryorder_id]}
   buyer_delivery_orders_canceled:         {counter: buyer_delivery_items_canceled, key: [deliveryorder_id]}
   buyer_delivery_orders_voided:           {counter: buyer_delivery_items_voided, key: [deliveryorder_id]}
   buyer_delivery_orders_unperformed:      {counter: buyer_delivery_items_unperformed, key: [deliveryorder_id]}
@@ -553,4 +559,8 @@ metric.ratio:
     
   buyer_delivery_performed_paid_ratio: { num: buyer_delivery_orders_performed, den: buyer_delivery_orders_paid }
   buyer_delivery_accepted_paid_ratio:  { num: buyer_delivery_orders_accepted, den: buyer_delivery_orders_paid }
+    
+  buyer_delivery_performed_paid_ratio_start_date: { num: buyer_delivery_orders_performed_start_date, den: buyer_delivery_orders_paid_start_date }
+  buyer_delivery_accepted_paid_ratio_start_date:  { num: buyer_delivery_orders_accepted_start_date, den: buyer_delivery_orders_paid_start_date }
+
 
