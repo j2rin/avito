@@ -34,39 +34,47 @@ metric.counter:
   autoteka_on_avito_revenue_nonpro_users: { filter: [ funnel_stage_id: 4,is_pro: false, source: avito], obs: [ amount ] }
   autoteka_on_avito_cnt_reports_pro_users: { filter: [ funnel_stage_id: 4,is_pro: true, source: avito], obs: [ reports_count ] }
   autoteka_on_avito_cnt_reports_nonpro_users: { filter: [ funnel_stage_id: 4,is_pro: false, source: avito], obs: [ reports_count ] }
+#search item метрики для стендалона
+  autoteka_revenue_search_item: {filter: [funnel_stage_id: 4, searchtype: 1], obs: [amount]}
+  autoteka_cnt_reports_search_item: {filter: [funnel_stage_id: 4, searchtype: 1], obs: [reports_count]}
+  autoteka_cnt_previews_search_item: {filter: [funnel_stage_id: 1, searchtype: 1]}
+
 
 metric.uniq:
 #метрики для проведения АБ в двух доменах (Автотека+Авито) на авито куке
-  autoteka_unique_report_buyers: {counter: autoteka_cnt_reports, key: [autotekauser_id]}
-  autoteka_unique_paypage_visitors: {counter: autoteka_cnt_paypage_loads, key: [autotekauser_id]}
+  autoteka_unique_report_buyers: {counter: autoteka_cnt_reports, key: [autoteka_user_hash]}
+  autoteka_unique_paypage_visitors: {counter: autoteka_cnt_paypage_loads, key: [autoteka_user_hash]}
   autoteka_unique_product_selection_visitors: {counter: autoteka_cnt_product_selections, key: [cookie_id]}
   autoteka_unique_preview_visitors: {counter: autoteka_cnt_previews, key: [cookie_id]}
   autoteka_unique_main_page_visitors: { counter: autoteka_cnt_main_page, key: [ additionalcookie_id ] }
-  autoteka_one_report_purchase: { counter: autoteka_cnt_one_report, key: [ autotekaorder_id ] }
-  autoteka_small_package_purchase: { counter: autoteka_cnt_small_package, key: [ autotekaorder_id ] }
-  autoteka_big_package_purchase: { counter: autoteka_cnt_big_package, key: [ autotekaorder_id ] }
-  autoteka_one_report_buyer: { counter: autoteka_cnt_one_report, key: [ autotekauser_id ] }
-  autoteka_small_package_buyer: { counter: autoteka_cnt_small_package, key: [ autotekauser_id ] }
-  autoteka_big_package_buyer: { counter: autoteka_cnt_big_package, key: [ autotekauser_id ] }
-  autoteka_payment_card: { counter: autoteka_cnt_card, key: [ autotekaorder_id ] }
-  autoteka_payment_apple_in_app: { counter: autoteka_cnt_apple_in_app, key: [ autotekaorder_id ] }
-  autoteka_payment_gpay: { counter: autoteka_cnt_gpay, key: [ autotekaorder_id ] }
-  autoteka_payment_apple_pay: { counter: autoteka_cnt_apple_pay, key: [ autotekaorder_id ] }
-  autoteka_payment_sms: { counter: autoteka_cnt_sms, key: [ autotekaorder_id ] }
-  autoteka_unique_report_new_buyers: {counter: autoteka_cnt_reports_new_users, key: [autotekauser_id]}
-  autoteka_unique_report_pro_buyers: {counter: autoteka_cnt_reports_pro_users, key: [autotekauser_id]}
-  autoteka_unique_report_nonpro_buyers: {counter: autoteka_cnt_reports_nonpro_users, key: [autotekauser_id]}
+  autoteka_one_report_purchase: { counter: autoteka_cnt_one_report, key: [ autoteka_order_hash ] }
+  autoteka_small_package_purchase: { counter: autoteka_cnt_small_package, key: [ autoteka_order_hash ] }
+  autoteka_big_package_purchase: { counter: autoteka_cnt_big_package, key: [ autoteka_order_hash ] }
+  autoteka_one_report_buyer: { counter: autoteka_cnt_one_report, key: [ autoteka_user_hash ] }
+  autoteka_small_package_buyer: { counter: autoteka_cnt_small_package, key: [ autoteka_user_hash ] }
+  autoteka_big_package_buyer: { counter: autoteka_cnt_big_package, key: [ autoteka_user_hash ] }
+  autoteka_payment_card: { counter: autoteka_cnt_card, key: [ autoteka_order_hash ] }
+  autoteka_payment_apple_in_app: { counter: autoteka_cnt_apple_in_app, key: [ autoteka_order_hash ] }
+  autoteka_payment_gpay: { counter: autoteka_cnt_gpay, key: [ autoteka_order_hash ] }
+  autoteka_payment_apple_pay: { counter: autoteka_cnt_apple_pay, key: [ autoteka_order_hash ] }
+  autoteka_payment_sms: { counter: autoteka_cnt_sms, key: [ autoteka_order_hash ] }
+  autoteka_unique_report_new_buyers: {counter: autoteka_cnt_reports_new_users, key: [autoteka_user_hash]}
+  autoteka_unique_report_pro_buyers: {counter: autoteka_cnt_reports_pro_users, key: [autoteka_user_hash]}
+  autoteka_unique_report_nonpro_buyers: {counter: autoteka_cnt_reports_nonpro_users, key: [autoteka_user_hash]}
 #метрики Автотеки на Авито
-  autoteka_on_avito_one_report_purchase: { counter: autoteka_on_avito_cnt_one_report, key: [ autotekaorder_id ] }
-  autoteka_on_avito_unique_report_buyers: {counter: autoteka_on_avito_cnt_reports, key: [autotekauser_id]}
-  autoteka_on_avito_small_package_purchase: { counter: autoteka_on_avito_cnt_small_package, key: [ autotekaorder_id ] }
-  autoteka_on_avito_big_package_purchase: { counter: autoteka_on_avito_cnt_big_package, key: [ autotekaorder_id ] }
-  autoteka_on_avito_one_report_buyers: { counter: autoteka_on_avito_cnt_one_report, key: [ autotekauser_id ] }
-  autoteka_on_avito_small_package_buyers: { counter: autoteka_on_avito_cnt_small_package, key: [ autotekauser_id ] }
-  autoteka_on_avito_big_package_buyers: { counter: autoteka_on_avito_cnt_big_package, key: [ autotekauser_id ] }
-  autoteka_on_avito_unique_report_new_buyers: {counter: autoteka_on_avito_cnt_reports_new_users, key: [autotekauser_id]}
-  autoteka_on_avito_unique_report_pro_buyers: {counter: autoteka_on_avito_cnt_reports_pro_users, key: [autotekauser_id]}
-  autoteka_on_avito_unique_report_nonpro_buyers: {counter: autoteka_on_avito_cnt_reports_nonpro_users, key: [autotekauser_id]}
+  autoteka_on_avito_one_report_purchase: { counter: autoteka_on_avito_cnt_one_report, key: [ autoteka_order_hash ] }
+  autoteka_on_avito_unique_report_buyers: {counter: autoteka_on_avito_cnt_reports, key: [autoteka_user_hash]}
+  autoteka_on_avito_small_package_purchase: { counter: autoteka_on_avito_cnt_small_package, key: [ autoteka_order_hash ] }
+  autoteka_on_avito_big_package_purchase: { counter: autoteka_on_avito_cnt_big_package, key: [ autoteka_order_hash ] }
+  autoteka_on_avito_one_report_buyers: { counter: autoteka_on_avito_cnt_one_report, key: [ autoteka_user_hash ] }
+  autoteka_on_avito_small_package_buyers: { counter: autoteka_on_avito_cnt_small_package, key: [ autoteka_user_hash ] }
+  autoteka_on_avito_big_package_buyers: { counter: autoteka_on_avito_cnt_big_package, key: [ autoteka_user_hash ] }
+  autoteka_on_avito_unique_report_new_buyers: {counter: autoteka_on_avito_cnt_reports_new_users, key: [autoteka_user_hash]}
+  autoteka_on_avito_unique_report_pro_buyers: {counter: autoteka_on_avito_cnt_reports_pro_users, key: [autoteka_user_hash]}
+  autoteka_on_avito_unique_report_nonpro_buyers: {counter: autoteka_on_avito_cnt_reports_nonpro_users, key: [autoteka_user_hash]}
+#search item метрики для стендалона
+  autoteka_unique_report_buyers_search_item: {counter: autoteka_cnt_reports_search_item, key: [autoteka_user_hash]}
+  autoteka_unique_preview_visitors_search_item: {counter: autoteka_cnt_previews_search_item, key: [additionalcookie_id]}
   
 metric.ratio:
 #метрики для проведения АБ в двух доменах (Автотека+Авито) на авито куке
@@ -75,3 +83,5 @@ metric.ratio:
   autoteka_preview_callback_conversion_unique: {num: autoteka_unique_report_buyers, den: autoteka_unique_preview_visitors}
 #метрики Автотеки на Авито
   autoteka_on_avito_report_price: {num: autoteka_on_avito_revenue, den: autoteka_on_avito_cnt_reports}
+#search item метрики для стендалона
+  autoteka_preview_callback_conversion_unique_search_item: {num: autoteka_unique_report_buyers_search_item, den: autoteka_unique_preview_visitors_search_item}
