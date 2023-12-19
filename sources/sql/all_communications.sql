@@ -36,7 +36,7 @@ select
     ,case cl.level when 3 then cl.Location_id end                           as city_id
 	,cl.LocationGroup_id                                          as location_group_id
 	,cl.City_Population_Group                                     as population_group
-	,cl.Logical_Level     
+    ,cl.Logical_Level                                            as location_level_id
     ,coalesce(asd.is_asd, False) as is_asd
     ,asd.asd_user_group_id as asd_user_group_id
     ,coalesce(usm.user_segment_market, ls.segment) as user_segment_market
