@@ -24,4 +24,3 @@ select
     items_perfvas_rnk30_count
 from dma.vo_search_items
 where cast(event_date as date) between :first_date and :last_date
-
