@@ -1,8 +1,8 @@
 select
     a.event_date
     ,contact as communication
-    ,contact_type
-    ,contact_id
+    ,contact_type as communication_type
+    ,contact_id as communication_id
     ,buyer_id
     ,seller_id
     ,caller_is_buyer
