@@ -3428,7 +3428,7 @@ calendar_contacts:
   participant: { visitor: cookie_id, user: user_id  }
   primary_subject: visitor
   dtm: event_date
-  
+
 reviews_moderation_stream:
   metric_configs: [reviews_moderation_stream]
   connections: [vertica]
@@ -3455,4 +3455,28 @@ reviews_moderation_stream:
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
+  dtm: event_date
+
+
+
+deliverability:
+  metric_configs: [deliverability]
+  connections: [vertica]
+  sql: deliverability_daily
+  column_map:
+    item: item_id
+    user: user_id
+  dimensions:
+    - logical_category
+    - user_segment_market
+    - deliverability_flow
+    - delivery_category_name
+    - delivery_subcategory_name
+    - delivery_param1
+    - delivery_param2
+    - delivery_param3
+    - delivery_infomodel_param
+    - delivery_infomodel_param2
+  participant: { user: user_id }
+  primary_subject: user
   dtm: event_date

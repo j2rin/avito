@@ -169,3 +169,14 @@ x_param5:               {level: event, has_id: true}
 param5:                 {level: event, has_id: true}
 vas_path:               {level: event, has_id: false, is_bool: false}
 messenger_role:         {level: event, has_id: false, is_bool: false}
+
+# Иерархия доставочных категорий ---------------------------------------------------------------------------------------
+delivery_category_name:                 {level: event, has_id: true}
+delivery_subcategory_name:              {level: event, has_id: true, parent: delivery_category_name}
+delivery_param1:                        {level: event, has_id: true, parent: delivery_subcategory_name}
+delivery_param2:                        {level: event, has_id: true, parent: delivery_param1}
+delivery_param3:                        {level: event, has_id: true, parent: delivery_param2}
+delivery_infomodel_param:               {level: event, has_id: true, parent: delivery_param3}
+delivery_infomodel_param2:              {level: event, has_id: true, parent: delivery_infomodel_param}
+
+deliverability_flow:                    {level: event}
