@@ -44,9 +44,11 @@ select
     ,lc.logical_param2_id
     ,coalesce(cpg.price_group, 'Undefined') as price_group
 from dma.all_contacts a
-left join dma.current_microcategories cm using (microcat_id)
+left join dma.current_item ci using (item_id)
+left join infomodel.current_infmquery_category cic on ci.infmquery_id = cic.infmquery_id
+left join DMA.current_microcategories cm on cm.microcat_id = cic.microcat_id
+left join dma.current_logical_categories lc on lc.logcat_id = cic.logcat_id
 left join dma.current_locations as cl on cl.location_id = a.location_id
-left join dma.current_logical_categories lc on lc.logcat_id = cm.logcat_id
 left join dict.segmentation_ranks ls on ls.logical_category_id = lc.logical_category_id and ls.is_default
 left join (
     select
