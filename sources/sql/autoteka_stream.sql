@@ -37,6 +37,8 @@ select
     utm_content,
     utm_term,
     'standalone' as source,
+  	from_big_endian_64(xxhash64(cast(cast(autotekauser_id as varchar) || 'standalone' as varbinary))) as autoteka_user_hash,
+  	from_big_endian_64(xxhash64(cast(cast(autotekaorder_id as varchar) || 'standalone' as varbinary))) autoteka_order_hash,
     0 as fake_user_id
 from dma.autoteka_stream 
 where cast(event_date as date) between :first_date and :last_date
@@ -80,6 +82,8 @@ select
     null utm_content,
     null utm_term,
     'avito' as source,
+  	from_big_endian_64(xxhash64(cast(cast(user_id as varchar) || 'avito' as varbinary))) as autoteka_user_hash,
+  	from_big_endian_64(xxhash64(cast(cast(order_items_id as varchar) || 'avito' as varbinary))) as autoteka_order_hash,
     0 as fake_user_id
 from dma.autoteka_on_avito_stream_and_payments
 where cast(event_date as date) between :first_date and :last_date
@@ -124,6 +128,8 @@ select
     autoteka.utm_term,
     autoteka.source,
     autoteka.fake_user_id,
+    autoteka.autoteka_user_hash,
+    autoteka.autoteka_order_hash,
     coalesce(mc.logical_category_id, 24144500001) as logical_category_id,
     coalesce(mc.vertical_id, 500012) as vertical_id
 from autoteka

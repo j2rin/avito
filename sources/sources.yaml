@@ -307,7 +307,7 @@ core_contact_user:
   metric_configs: [core_contact_user]
   column_map:
     user: user_id
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: core_contacts
   dimensions:
     [
@@ -375,6 +375,7 @@ str:
       location_group,
       population_group,
       location_level,
+      buyer_cluster,
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
@@ -402,6 +403,7 @@ str_by_cookies:
       location_group,
       population_group,
       location_level,
+      buyer_cluster,
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
@@ -970,7 +972,7 @@ app_call_sx:
 
 app_call_event:
   metric_configs: [app_call_event]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: app_call_event
   column_map:
     item: item_id
@@ -3051,6 +3053,11 @@ all_communications_bx:
       population_group,
       location_level,
       user_segment_market,
+      is_asd,
+      asd_user_group,
+      logical_param1,
+      logical_param2,
+      price_group
     ]
   participant: { visitor: buyer_cookie_id, user: buyer_id }
   primary_subject: user
@@ -3079,8 +3086,12 @@ all_communications_sx:
       location_group,
       population_group,
       location_level,
-      is_asd,
       user_segment_market,
+      is_asd,
+      asd_user_group,
+      logical_param1,
+      logical_param2,
+      price_group
     ]
   participant: { user: seller_id }
   primary_subject: user
@@ -3439,6 +3450,34 @@ calendar_contacts:
       location_level
     ]
   participant: { visitor: cookie_id, user: user_id  }
+  primary_subject: visitor
+  dtm: event_date
+
+reviews_moderation_stream:
+  metric_configs: [reviews_moderation_stream]
+  connections: [vertica]
+  sql: reviews_moderation_stream
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
+  participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 

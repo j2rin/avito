@@ -14,7 +14,7 @@ select /*+syntactic_join*/
     -- дименшены
     coalesce(usm.user_segment, ls.segment) as user_segment_market,
     idd.flow as deliverability_flow,
-    coalesce(cm.logical_category_id)       as logical_category_id,
+    cm.logical_category_id as logical_category_id,
     cdc.l2_node_id as delivery_category_name_id,
     cdc.l3_node_id as delivery_subcategory_name_id,
     cdc.l4_node_id as delivery_param1_id,
