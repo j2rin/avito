@@ -1,13 +1,13 @@
 definitions:
-  - &is_new:                      {started_today: true}
-  - &any_courier_enabled:         {
+  - &is_new                      {started_today: true}
+  - &any_courier_enabled         {
         $or: {
               [{is_enabled_courierd2d: True}, {available_courierd2d: True}],
               [{is_enabled_courier: True}, {available_courier: True}]
             }
         }
-  - &isnt_bulky:                  {available_courier_yandexcargo: False}
-  - &any_courier_available:       {$or: [available_courier: True, available_courierd2d: True] }
+  - &isnt_bulky                  {available_courier_yandexcargo: False}
+  - &any_courier_available       {$or: [available_courier: True, available_courierd2d: True] }
 
 
 metric.counter:
