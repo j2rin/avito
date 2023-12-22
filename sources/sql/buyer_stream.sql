@@ -93,16 +93,16 @@ select
     clx.City_Population_Group                                    as x_population_group,
     clx.Logical_Level                                            as x_location_level_id,
     case
-       when (bitwise_and(item_vas_flags, bitwise_left_shift(1, 12)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(1, 13)) > 0) then 2
-       when (bitwise_and(item_vas_flags, bitwise_left_shift(1, 14)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(1, 15)) > 0) then 5
-       when (bitwise_and(item_vas_flags, bitwise_left_shift(1, 16)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(1, 17)) > 0) then 10
+       when (bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 12)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 13)) > 0) then 2
+       when (bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 14)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 15)) > 0) then 5
+       when (bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 17)) > 0) then 10
        else 1
     end                                                          as vas_power,
     case
-        when (bitwise_and(ss.item_flags, bitwise_left_shift(1, 18)) > 0) then 5 -- Новое
-        when (bitwise_and(ss.item_flags, bitwise_left_shift(1, 19)) > 0) then 1 -- Б/у
-        when (bitwise_and(ss.item_flags, bitwise_left_shift(1, 20)) > 0) then 2 -- Битый
-        when (bitwise_and(ss.item_flags, bitwise_left_shift(1, 21)) > 0) then 4 -- Не битый
+        when (bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 18)) > 0) then 5 -- Новое
+        when (bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 19)) > 0) then 1 -- Б/у
+        when (bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 20)) > 0) then 2 -- Битый
+        when (bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 21)) > 0) then 4 -- Не битый
         else 0 --Undefined
     end                                                          as condition_id,
     cast(bitwise_and(case when ss.x_eid is not null then coalesce(ss.search_flags, 0) end, 16) > 0 as int) as onmap,
@@ -117,14 +117,14 @@ select
     3 AS multiplier_3,
     5 AS multiplier_5,
     10 AS multiplier_10,
-    case (bitwise_and(ss.item_flags, (bitwise_left_shift(1, 32) + bitwise_left_shift(1, 33)))) / power(2, 32) when 1 then 'medium' when 2 then 'low' when 3 then 'high' end as reputation_class,
-    case when ((bitwise_and(ss.search_flags, bitwise_left_shift(1, 39)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 40)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 41)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 42)) = 0)) then 1
-    	 when ((bitwise_and(ss.search_flags, bitwise_left_shift(1, 39)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 40)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 41)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 42)) = 0)) then 2
-         when ((bitwise_and(ss.search_flags, bitwise_left_shift(1, 39)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 40)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 41)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 42)) = 0)) then 3
-         when ((bitwise_and(ss.search_flags, bitwise_left_shift(1, 39)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 40)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 41)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 42)) = 0)) then 4
-         when ((bitwise_and(ss.search_flags, bitwise_left_shift(1, 39)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 40)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 41)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(1, 42)) = 0)) then 5
+    case (bitwise_and(ss.item_flags, (bitwise_left_shift(cast(1 as bigint), 32) + bitwise_left_shift(cast(1 as bigint), 33)))) / power(2, 32) when 1 then 'medium' when 2 then 'low' when 3 then 'high' end as reputation_class,
+    case when ((bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 39)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 40)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 41)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 42)) = 0)) then 1
+    	 when ((bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 39)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 40)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 41)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 42)) = 0)) then 2
+         when ((bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 39)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 40)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 41)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 42)) = 0)) then 3
+         when ((bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 39)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 40)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 41)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 42)) = 0)) then 4
+         when ((bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 39)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 40)) = 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 41)) > 0) and (bitwise_and(ss.search_flags, bitwise_left_shift(cast(1 as bigint), 42)) = 0)) then 5
          end as s_view_mode,
-    cast((bitwise_and(ss.item_flags, bitwise_left_shift(1, 28)) > 0) and (bitwise_and(ss.item_flags, bitwise_left_shift(1, 17)) > 0) as int) as is_item_with_video_cpa,
+    cast((bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 28)) > 0) and (bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 17)) > 0) as int) as is_item_with_video_cpa,
     date_diff('hour', ial.sort_time, ss.event_date) as item_age_hours,
     date_diff('hour', ial.start_time, ss.event_date) as item_start_hours,
     pg.price_group,
@@ -135,10 +135,10 @@ select
         to_big_endian_64(coalesce(ss.x, 0)) ||
         to_big_endian_64(coalesce(ss.eid, 0))
     )) as seller_microcat_price_x,
-    cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 34)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as b2c_wo_dbs,
-    cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 35)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as c2c_return_within_14_days,
-    cast((bitwise_and(ss.item_flags, bitwise_left_shift(1, 34)) > 0 or bitwise_and(ss.item_flags, bitwise_left_shift(1, 35)) > 0) and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as return_within_14_days,
-    cast(bitwise_and(ss.item_flags, bitwise_left_shift(1, 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(1, 16)) > 0 as int) as is_delivery_active_in_sale 
+    cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 34)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as b2c_wo_dbs,
+    cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 35)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as c2c_return_within_14_days,
+    cast((bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 34)) > 0 or bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 35)) > 0) and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as return_within_14_days,
+    cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as is_delivery_active_in_sale 
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
