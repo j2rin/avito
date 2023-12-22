@@ -1,4 +1,15 @@
 with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
+user_matching as (
+    select
+        autoteka_user_id,
+        date_from,
+        coalesce(lead(date_from) over (partition by autoteka_user_id order by date_from), cast('2100-01-01' as date)) lead_date_from,
+        user_id, 
+        cookie_id
+    from dma.autoteka_avito_user_matching
+    where 1=1 
+    --and date_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
+),
 autoteka as (
 select
     track_id,
@@ -93,12 +104,9 @@ where cast(event_date as date) between :first_date and :last_date
 --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 )
 select
-	distinct
     autoteka.track_id,
     autoteka.event_no,
     autoteka.event_date,
-    case when autoteka.source = 'standalone' then coalesce(autoteka.cookie_id, ut.cookie_id) else autoteka.cookie_id end as cookie_id,
-    case when autoteka.source = 'standalone' then coalesce(ut2.user_id, autoteka.user_id) else autoteka.user_id end as user_id,
     autoteka.additionalcookie_id,
     autoteka.autotekauser_id,
     autoteka.is_authorized,
@@ -135,34 +143,19 @@ select
     autoteka.autoteka_user_hash,
     autoteka.autoteka_order_hash,
     coalesce(mc.logical_category_id, 24144500001) as logical_category_id,
-    coalesce(mc.vertical_id, 500012) as vertical_id
+    coalesce(mc.vertical_id, 500012) as vertical_id,
+    case when autoteka.source = 'standalone' then coalesce(max(autoteka.cookie_id), max(ut.cookie_id)) else max(autoteka.cookie_id) end as cookie_id,
+    case when autoteka.source = 'standalone' then coalesce(max(ut2.user_id), max(autoteka.user_id)) else max(autoteka.user_id) end as user_id
 from autoteka
 left join dma.current_item ci 
     on autoteka.item_id = ci.item_id
 left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories mc
     on mc.microcat_id = ci.microcat_id
     and mc.vertical='Transport'
+left join user_matching ut on ut.autoteka_user_id = autoteka.autotekauser_id and autoteka.dt >= ut.date_from and autoteka.dt < ut.lead_date_from
 left join (
-    select
-        autoteka_user_id,
-        date_from,
-        coalesce(lead(date_from) over (partition by autoteka_user_id order by date_from), cast('2100-01-01' as date)) lead_date_from,
-        max(cookie_id) as cookie_id,
-        max(user_id) as user_id
-    from dma.autoteka_avito_user_matching
-    where 1=1 
-    --and date_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
-    group by 1, 2
-) ut on ut.autoteka_user_id = autoteka.autotekauser_id and autoteka.dt >= ut.date_from and autoteka.dt < ut.lead_date_from
-left join (
-    select
-        autoteka_user_id,
-        date_from,
-        coalesce(lead(date_from) over (partition by autoteka_user_id order by date_from), cast('2100-01-01' as date)) lead_date_from,
-        max(user_id) as user_id
-    from dma.autoteka_avito_user_matching
-    where 1=1
-    and user_id is not null
-    --and date_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
-    group by 1, 2
+    select autoteka_user_id, user_id, date_from, lead_date_from
+    from user_matching
+    where user_id is not null
 ) ut2 on ut2.autoteka_user_id = autoteka.autotekauser_id and autoteka.dt >= ut2.date_from and autoteka.dt < ut2.lead_date_from
+group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
