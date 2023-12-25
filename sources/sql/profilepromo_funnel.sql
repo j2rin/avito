@@ -5,7 +5,7 @@ select  /*+syntactic_join*/
 	event_timestamp,
 	eid,
 	platform_id,
-	cookie_id,
+	cast(cookie_id as bigint) as cookie_id,
 	f.user_id,
 	alid,
 	profile_id,
