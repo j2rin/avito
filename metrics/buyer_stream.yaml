@@ -1610,6 +1610,8 @@ metric.counter:
     total_delivery_confirm_all_services: { filter: [eid: [2749, 5827]] }
     total_delivery_confirm_all_services_public_profile: { filter: [*x_is_public_profile, eid: [2749, 5827]] }
     total_delivery_contact_all_services: { filter: [*is_delivery_tot] }
+    cnt_marketplace_order_create_vas: { filter: [*is_delivery_tot, *is_item_vas] }
+    cnt_marketplace_contact_vas: { filter: [eid: [4675, 5942], *is_item_vas] }
     total_delivery_contact_all_services_serp: { filter: [*x_is_search, *is_delivery_tot] }
     total_delivery_contact_all_services_rec_i2i: { filter: [*x_is_i2i, *is_delivery_tot] }
     total_delivery_contact_all_services_rec_i2i_delivery: { filter: [*x_is_i2i_delivery, *is_delivery_tot] }
@@ -2325,6 +2327,9 @@ metric.uniq:
     contacts_perfvas_weighted: { counter: cnt_cs_perfvas_w, key: [item, x] }
     contact_delivery_any_ext_block: { counter: cnt_contact_delivery_any_ext_block, key: [item, x] }
     contacts_delivery_grouped: { counter: cnt_contacts_delivery, key: [cookie, item] }
+    contacts_delivery_vas_grouped: { counter: cnt_contacts_delivery_vas, key: [cookie, item] }
+    marketplace_order_create_vas_grouped: { counter: cnt_marketplace_order_create_vas, key: [cookie, item] }
+    cnt_marketplace_order_create_vas
     contacts_delivery_serp: { counter: cnt_contacts_delivery_serp, key: [item, x] }
     contacts_delivery_rec_i2i: { counter: cnt_contacts_delivery_rec_i2i, key: [item, x] }
     contacts_delivery_rec_i2i_delivery: { counter: cnt_contacts_delivery_rec_i2i_delivery, key: [item, x] }
