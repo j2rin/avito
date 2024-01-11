@@ -3,7 +3,7 @@ user_matching as (
     select
         autoteka_user_id,
         date_from,
-        coalesce(lead(date_from) over (partition by autoteka_user_id order by date_from), cast('2100-01-01' as date)) lead_date_from,
+  		lead(date_from, 1, cast('2099-01-01' as date)) over (partition by autoteka_user_id order by date_from) lead_date_from,
         max(cookie_id) as cookie_id,
         max(user_id) as user_id
     from dma.autoteka_avito_user_matching
