@@ -1,0 +1,57 @@
+metric.counter:
+  installments_item_view_events:                      {filter: [event_name_slug.in: [broker_render, broker_view]]}
+  installments_any_block_click_events:                {filter: [event_name_slug.in: [broker_click, broker_bank_offer]]}
+  installments_upper_block_click_events:              {filter: [event_name_slug: broker_bank_offer]}
+  installments_lower_block_click_events:              {filter: [event_name_slug: broker_click]}
+  installments_onboarding_click_events:               {filter: [event_name_slug: installment_onboarding_continue]}
+  installments_created_orders:                        {filter: [event_name_slug: installment_order_creation]}
+  installments_personal_data_confirm_events:          {filter: [event_name_slug: installment_confirm_personal_data]}
+  installments_passport_data_confirm_events:          {filter: [event_name_slug: installment_confirm_passport_data]}
+  installments_verification_events:                   {filter: [event_name_slug: installment_form_render]}
+  installments_paid_orders:                           {filter: [event_name_slug: installment_order_payment]}
+
+
+metric.uniq:
+  installments_item_view_unq_user_item:               {counter: installments_item_view_events, key: [user_id, item_id]}
+  installments_any_block_click_unq_user_item:         {counter: installments_any_block_click_events, key: [user_id, item_id]}
+  installments_upper_block_click_unq_user_item:       {counter: installments_upper_block_click_events, key: [user_id, item_id]}
+  installments_lower_block_click_unq_user_item:       {counter: installments_lower_block_click_events, key: [user_id, item_id]}
+  installments_onboarding_click_unq_user_item:        {counter: installments_onboarding_click_events, key: [user_id, item_id]}
+  installments_personal_data_confirm_unq_user_item:   {counter: installments_personal_data_confirm_events, key: [user_id, item_id]}
+  installments_passport_data_confirm_unq_user_item:   {counter: installments_passport_data_confirm_events, key: [user_id, item_id]}
+  installments_verification_unq_user_item:            {counter: installments_verification_events, key: [user_id, item_id]}
+
+  installments_item_view_unq_user:                    { counter: installments_item_view_events, key: [ user_id ] }
+  installments_any_block_click_unq_user:              { counter: installments_any_block_click_events, key: [ user_id ] }
+  installments_upper_block_click_unq_user:            { counter: installments_upper_block_click_events, key: [ user_id ] }
+  installments_lower_block_click_unq_user:            { counter: installments_lower_block_click_events, key: [ user_id ] }
+  installments_onboarding_click_unq_user:             { counter: installments_onboarding_click_events, key: [ user_id ] }
+  installments_created_orders_unq_user:               { counter: installments_created_orders, key: [ user_id ] }
+  installments_personal_data_confirm_unq_user:        { counter: installments_personal_data_confirm_events, key: [ user_id ] }
+  installments_passport_data_confirm_unq_user:        { counter: installments_passport_data_confirm_events, key: [ user_id ] }
+  installments_verification_unq_user:                 { counter: installments_verification_events, key: [ user_id ] }
+  installments_paid_orders_unq_user:                  { counter: installments_paid_orders, key: [ user_id ] }
+
+
+metric.ratio:
+  installments_any_block_unq_user_item_ratio:         {num: installments_any_block_click_unq_user_item, den: installments_item_view_unq_user_item}
+  installments_upper_block_unq_user_item_ratio:       {num: installments_upper_block_click_unq_user_item, den: installments_item_view_unq_user_item}
+  installments_lower_block_unq_user_item_ratio:       {num: installments_upper_block_click_unq_user_item, den: installments_item_view_unq_user_item}
+  installments_onboarding_unq_user_item_ratio:        {num: installments_onboarding_click_unq_user_item, den: installments_any_block_click_unq_user_item}
+  installments_created_orders_ratio:                  {num: installments_created_orders, den: installments_onboarding_click_unq_user_item}
+  installments_personal_data_unq_user_item_ratio:     {num: installments_personal_data_confirm_unq_user_item, den: installments_created_orders}
+  installments_passport_data_unq_user_item_ratio:     {num: installments_passport_data_confirm_unq_user_item, den: installments_personal_data_confirm_unq_user_item}
+  installments_verification_unq_user_item_ratio:      {num: installments_verification_unq_user_item, den: installments_passport_data_confirm_unq_user_item}
+  installments_paid_orders_ratio:                     {num: installments_paid_orders, den: installments_verification_unq_user_item}
+  installments_payment_to_view_ratio:                 {num: installments_paid_orders, den: installments_item_view_unq_user_item}
+
+  installments_any_block_unq_user_ratio:              { num: installments_any_block_click_unq_user, den: installments_item_view_unq_user }
+  installments_upper_block_unq_user_ratio:            { num: installments_upper_block_click_unq_user, den: installments_item_view_unq_user }
+  installments_lower_block_unq_user_ratio:            { num: installments_upper_block_click_unq_user, den: installments_item_view_unq_user }
+  installments_onboarding_unq_user_ratio:             { num: installments_onboarding_click_unq_user, den: installments_any_block_click_unq_user }
+  installments_created_orders_unq_user_ratio:         { num: installments_created_orders_unq_user, den: installments_onboarding_click_unq_user }
+  installments_personal_data_unq_user_ratio:          { num: installments_personal_data_confirm_unq_user, den: installments_created_orders_unq_user }
+  installments_passport_data_unq_user_ratio:          { num: installments_passport_data_confirm_unq_user, den: installments_personal_data_confirm_unq_user }
+  installments_verification_unq_user_ratio:           { num: installments_verification_unq_user, den: installments_passport_data_confirm_unq_user }
+  installments_paid_orders_unq_user_ratio:            { num: installments_paid_orders_unq_user, den: installments_verification_unq_user }
+  installments_payment_to_view_unq_user_ratio:        { num: installments_paid_orders_unq_user, den: installments_item_view_unq_user }
