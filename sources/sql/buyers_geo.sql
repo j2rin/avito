@@ -1,52 +1,129 @@
-with test_users AS (
-            -- Собираем тестовых пользователей
-            SELECT User_id AS user_id
-            FROM DMA.current_user
-            WHERE IsTest
-            ORDER BY user_id
+with
+users as (
+    select distinct item_user_id as user_id
+    from dma.click_stream_contacts
+    where cast(eventdate as date) between :first_date and :last_date
+        and item_user_id is not null
+        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 )
-, item_buy as (
-            SELECT distinct csc.cookie_id
-                , csc.User_id
-                , csc.EventDate::date as event_date
-                , lc.logical_category_id
-                , lc.vertical_id
-            FROM
-                DMA.click_stream_contacts csc
-                    LEFT JOIN /*+ JTYPE(FM) */ test_users tu
-                        ON tu.user_id = csc.item_user_id
-                    LEFT JOIN /*+ JTYPE(FM) */ INFOMODEL.current_infmquery_category i
-                        ON i.infmquery_id = csc.infmquery_id
-                    LEFT JOIN /*+ JTYPE(FM) */ DMA.current_logical_categories lc
-                        ON lc.logcat_id = i.logcat_id
-                    left join DMA.current_locations cl
-                        on cl.Location_id = csc.Location_id
-            WHERE TRUE
-                and csc.User_id is not null
-                AND CAST(csc.EventDate AS DATE) BETWEEN :first_date and :last_date
-                AND COALESCE(csc.ishuman_dev, TRUE) -- очистка от ботов
-                AND COALESCE(csc.ishuman, TRUE) -- очистка от ботов
-                AND csc.last_nondirect_session_source_id IS NOT NULL -- (!) похоже, что в DMA.click_stream_contacts есть такие кортежи (Cookie_id, session_hash), которых нет в DMA.session_source_full (для менее чем 0.1 % ежедневных событий "контакт")
-                AND tu.user_id IS NULL -- оставляем только контакты по айтемам, листеры которых не нашлись среди множества тестовых пользователей
-                AND i.infm_version IN ('master') -- мастер-версия классификатора
-            ORDER BY User_id, event_date
-)
-select item_buy.cookie_id
-    , geo.participant_id as user_id
-    , geo.event_date::date as event_date
-    , item_buy.logical_category_id
-    , item_buy.vertical_id
-    -- Dimensions -----------
-    , cl.region_internal_id as region_id
-    , cl.city_internal_id as city_id
-    , cl.LocationGroup_id as location_group_id
-    , cl.City_Population_Group as population_group
-    , cl.Logical_Level as location_level_id
-from DMA.users_home_location_segment geo
-inner join DMA.current_locations cl on geo.home_city_id = cl.location_id and cl.region is not null
-inner join item_buy on item_buy.User_id = geo.participant_id and item_buy.event_date = geo.event_date
-where TRUE
-    and geo.participant_type = 'user'
-    -- and geo.event_date::date
-    and cast(geo.event_date as date) between :first_date and :last_date
-ORDER BY geo.participant_id, geo.event_date::date
+select
+    cast(csc.eventdate as date) as event_date,
+    csc.cookie_id,
+    csc.item_id,
+    csc.platform_id,
+    csc.last_nondirect_session_source_id as traffic_source_id,
+    csc.eventdate as action_dttm,
+    item_user_id,
+    ishuman_dev as is_human_dev,
+    csc.microcat_id,
+    lc.vertical_id,
+    lc.logical_category_id,
+    cm.category_id,
+    cm.subcategory_id,
+    lc.logical_category,
+    cm.param1_microcat_id as param1_id,
+    coalesce(acd.is_asd, False)                                      as is_asd,
+    -- По дефолту ставим SS сегмент - 8383
+    coalesce(acd.user_group_id ,8383)                             as asd_user_group_id,
+    cast(csc.eventdate as date) = cast(bb.first_contact_event_date as date) as is_buyer_new,
+    coalesce(usm.user_segment, ls.segment)                           as user_segment_market,
+    coalesce(cpg.price_group, 'Undefined')                      as price_group,
+    geo.home_city_id as location_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
+    cl.LocationGroup_id                                         as location_group_id,
+    cl.City_Population_Group                                    as population_group,
+    cl.Logical_Level                                            as location_level_id,
+    cast(null as varchar) as user_segment,
+    csc.user_id,
+    lc.logical_param1_id,
+    lc.logical_param2_id
+from dma.click_stream_contacts csc
+
+left join DMA.users_home_location_segment geo
+    on csc.User_id = geo.participant_id and csc.eventdate = geo.event_date and geo.participant_type = 'user'
+left join  dma.current_microcategories cm
+    on csc.microcat_id = cm.microcat_id
+left join dma.current_locations cl
+    ON geo.home_city_id = cl.location_id
+left join (
+    select infmquery_id, logcat_id
+    from infomodel.current_infmquery_category
+    where infmquery_id in (
+        select distinct infmquery_id
+        from dma.click_stream_contacts
+        where cast(eventdate as date) between :first_date and :last_date
+            and infmquery_id is not null
+            -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+    )
+) ic
+    on ic.infmquery_id = csc.infmquery_id
+left join dma.current_logical_categories lc
+    on lc.logcat_id = ic.logcat_id
+left join dict.segmentation_ranks ls
+    on ls.logical_category_id = lc.logical_category_id
+    and ls.is_default
+left join (
+    select cookie_id, logical_category_id, first_contact_event_date
+    from dma.buyer_birthday
+    where cookie_id in (
+        select distinct cookie_id
+        from dma.click_stream_contacts
+        where cast(eventdate as date) between :first_date and :last_date
+            and cookie_id is not null
+            -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+    )
+        -- and first_contact_event_year > date('2000-01-01') -- @trino
+) bb
+    on csc.cookie_id = bb.cookie_id
+    and lc.logical_category_id = bb.logical_category_id
+left join (
+    select
+        user_id,
+        logical_category_id, user_segment,
+        date_trunc('second', cast(converting_date as timestamp)) as converting_date,
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+    from DMA.user_segment_market
+    where user_id in (select user_id from users)
+) usm
+    on csc.item_user_id = usm.user_id
+    and lc.logical_category_id = usm.logical_category_id
+    and csc.eventdate >= usm.converting_date
+    and csc.eventdate < usm.next_converting_date
+left join (
+    select user_id,
+           active_from_date,
+           active_to_date,
+           (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
+           user_group_id
+    from DMA.am_client_day_versioned
+    where user_id in (select user_id from users)
+) acd
+    on acd.user_id = csc.item_user_id
+    and cast(csc.eventdate as date) between acd.active_from_date and acd.active_to_date
+left join (
+    select item_id, price, actual_date from (
+        select
+            item_id, price, actual_date,
+            row_number() over (partition by item_id order by actual_date desc) as rn
+        from dds.S_Item_Price
+        where item_id in (
+            select distinct item_id
+            from dma.click_stream_contacts
+            where cast(eventdate as date) between :first_date and :last_date
+                and item_id is not null
+                -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+        )
+    )t
+    where rn = 1
+) cif
+    on csc.item_id = cif.item_id
+left join dict.current_price_groups cpg
+    on lc.logical_category_id = cpg.logical_category_id
+    and cif.price >= cpg.min_price
+    and cif.price < cpg.max_price
+where csc.cookie_id is not null
+    and csc.item_user_id not in (select user_id from dma."current_user" where istest)
+    and cast(csc.eventdate as date) between :first_date and :last_date
+    -- and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
+ORDER BY csc.eventdate, csc.cookie_id
