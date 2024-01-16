@@ -11,7 +11,7 @@ users as (
                     home_city_id
     from DMA.users_home_location_segment
     where participant_type = 'user'
-    and cast(event_date as date) between --:first_date and :last_date
+    and cast(event_date as date) between :first_date and :last_date
     )
 select /*+syntactic_join*/
     csc.item_id,
