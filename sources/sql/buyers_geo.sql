@@ -142,3 +142,4 @@ where csc.cookie_id is not null
     and csc.item_user_id not in (select user_id from dma."current_user" where istest)
     and cast(csc.eventdate as date) between :first_date and :last_date
     -- and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
+
