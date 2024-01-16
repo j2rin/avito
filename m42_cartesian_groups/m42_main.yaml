@@ -18,7 +18,6 @@
             communications,
             contact_deal,
             contact_deal_user,
-            contact_deal_weight,
             geo_loc_change,
             geo_map_stream,
             kmt,
@@ -68,6 +67,7 @@
         metric_configs:
           [
             search_items,
+            search_items_engines,
           ],
         cubes:
           [
@@ -126,7 +126,6 @@
             autoteka_stream_autoteka_participant,
             autoteka_total,
             user_cohort,
-            user_rating,
           ],
         cubes: [[vertical, logical_category, platform]],
       },
@@ -350,6 +349,16 @@
       {
         metric_configs: [buyout_requests],
         cubes: [[vertical, logical_category, platform]],
+      },
+     {
+        metric_configs: [deliverability],
+        cubes:
+          [
+            [
+              logical_category,
+              user_segment_market
+            ],
+          ],
       },
     ],
   cubes_by_metric_sets:
@@ -1049,6 +1058,10 @@
               subcategory
             ],
           ],
+      },
+      {
+        metrics: [charity_donations],
+        cubes: [],
       },
     ],
 }

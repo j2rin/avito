@@ -344,15 +344,6 @@ advert_funnel:
   primary_subject: visitor
   dtm: event_date
 
-user_rating:
-  metric_configs: [user_rating]
-  connections: [vertica, trino]
-  sql: user_rating
-  dimensions: [vertical, logical_category]
-  participant: { user: user_id }
-  primary_subject: user
-  dtm: event_date
-
 str:
   metric_configs: [str]
   connections: [vertica, trino]
@@ -375,6 +366,7 @@ str:
       location_group,
       population_group,
       location_level,
+      buyer_cluster,
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
@@ -402,6 +394,7 @@ str_by_cookies:
       location_group,
       population_group,
       location_level,
+      buyer_cluster,
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
@@ -2253,30 +2246,6 @@ contact_deal:
   primary_subject: visitor
   dtm: event_date
 
-contact_deal_weight:
-  metric_configs: [contact_deal_weight]
-  connections: [vertica]
-  sql: contact_deal_weight
-  column_map:
-    cookie: cookie_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      logical_category,
-      category,
-      subcategory,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-    ]
-  participant: { visitor: cookie_id }
-  primary_subject: visitor
-  dtm: event_date
-
 contact_deal_user:
   metric_configs: [contact_deal_user]
   connections: [vertica, trino]
@@ -3018,7 +2987,18 @@ m42_usage:
 
 sq_track_metrics:
   metric_configs: [sq_track_metrics]
-  connections: [vertica, trino]
+  connections: [trino]
+  sql: sq_track_metrics
+  column_map:
+    cookie: cookie_id
+    item: item_id
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
+
+sq_liquidity_worth:
+  metric_configs: [sq_liquidity_worth]
+  connections: [trino]
   sql: sq_track_metrics
   column_map:
     cookie: cookie_id
@@ -3051,6 +3031,11 @@ all_communications_bx:
       population_group,
       location_level,
       user_segment_market,
+      is_asd,
+      asd_user_group,
+      logical_param1,
+      logical_param2,
+      price_group
     ]
   participant: { visitor: buyer_cookie_id, user: buyer_id }
   primary_subject: user
@@ -3079,8 +3064,12 @@ all_communications_sx:
       location_group,
       population_group,
       location_level,
-      is_asd,
       user_segment_market,
+      is_asd,
+      asd_user_group,
+      logical_param1,
+      logical_param2,
+      price_group
     ]
   participant: { user: seller_id }
   primary_subject: user
@@ -3441,7 +3430,7 @@ calendar_contacts:
   participant: { visitor: cookie_id, user: user_id  }
   primary_subject: visitor
   dtm: event_date
-  
+
 reviews_moderation_stream:
   metric_configs: [reviews_moderation_stream]
   connections: [vertica]
@@ -3467,5 +3456,70 @@ reviews_moderation_stream:
       location_level,
     ]
   participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
+
+
+deliverability:
+  metric_configs: [deliverability]
+  connections: [vertica]
+  sql: deliverability_daily
+  column_map:
+    item: item_id
+    user: user_id
+  dimensions:
+    - logical_category
+    - user_segment_market
+    - deliverability_flow
+    - delivery_category_name
+    - delivery_subcategory_name
+    - delivery_param1
+    - delivery_param2
+    - delivery_param3
+    - delivery_infomodel_param
+    - delivery_infomodel_param2
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+installments_goods:
+  metric_configs: [installments_goods]
+  connections: [vertica, trino]
+  sql: installments_goods_events
+  dimensions: [platform]
+  dtm: event_timestamp
+  participant: { user: user_id }
+  primary_subject: user
+
+
+buyers_geo:
+  metric_configs: [ buyers_geo ]
+  connections: [trino]
+  sql: buyers_geo
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      logical_param1,
+      logical_param2,
+      category,
+      subcategory,
+      param1,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      price_group,
+      is_asd,
+      user_segment_market,
+      asd_user_group
+    ]
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date

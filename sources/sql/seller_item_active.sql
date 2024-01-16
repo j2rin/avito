@@ -169,8 +169,8 @@ left join /*+distrib(l,r)*/ (
         idd.item_id,
         idd.event_date,
         idd.subsidy_index
-    from DMA.item_day_delivery idd
-    join dma.current_item ci on ci.item_id = idd.item_id
+    from dma.current_item ci
+    join DMA.item_day_delivery idd on ci.item_id = idd.item_id
     where idd.event_date between :first_date and :last_date
 ) idd
     on  ss.user_id = idd.user_id
@@ -189,8 +189,8 @@ left join /*+distrib(l,r)*/ (
         pld.item_id,
         cast(pld.event_date as date) as event_date,
         count(*) as count_services_price_list
-    from dma.price_list_day pld
-    join dma.current_item ci on ci.item_id = pld.item_id
+    from dma.current_item ci
+    join dma.price_list_day pld on ci.item_id = pld.item_id
     where not pld.stoimost is null
         and pld.event_date between :first_date and :last_date
         -- and pld.event_year is not null -- @trino
@@ -205,8 +205,8 @@ left join /*+distrib(l,r)*/ (
         ci.user_id,
         sic.item_id,
         sic.event_date
-    from dma.services_active_items_calendar sic
-    join dma.current_item ci on ci.item_id = sic.item_id
+    from dma.current_item ci
+    join dma.services_active_items_calendar sic on ci.item_id = sic.item_id
     where sic.event_date between :first_date and :last_date
         -- and sic.event_year is not null -- @trino
 ) sic

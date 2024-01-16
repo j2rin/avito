@@ -146,10 +146,10 @@ metric.uniq:
 
   user_target_contact_chat:                              {counter: target_contact_chat,            key: [user]} #old
 
-  target_buyers_any:                                     {counter: target_contact_all,     key: [cookie]} #old
+  target_buyers_any:                                     {counter: target_contact_all,     key: [buyer_id]} #old
   user_target_contact:                                   {counter: target_contact_all,     key: [user]} #old
   target_contact_canonical:                              {counter: target_contact_all,      key: [item_id, logical_category_id]} #old
-  target_buyers_canonical:                               {counter: target_contact_all,      key: [buyer_cookie_id, logical_category_id]} #old
+  target_buyers_canonical:                               {counter: target_contact_all,      key: [buyer_id, logical_category_id]} #old
 
 
 metric.ratio:
@@ -160,6 +160,11 @@ metric.ratio:
   iac_bx_outgoing_talk_dur_per_call:                     {num: iac_bx_outgoing_talk_dur,            den: iac_bx_outgoing}
   calls_bx_outgoing_talk_dur_per_call:                   {num: calls_bx_outgoing_talk_dur,          den: calls_bx_outgoing}
 
+  iac_bx_outgoing_answered_ratio:                        {num: iac_bx_outgoing_answered, den: iac_bx_outgoing}
+  gsm_bx_outgoing_answered_ratio:                        {num: gsm_bx_answered, den: gsm_bx}
+
   target_contact_call_bx_ratio:                          {num: target_contact_call_bx, den: call_bx} #old
   user_target_contact_call_bx_ratio:                     {num: user_target_contact_call_bx, den: user_call_bx} #old
-  target_contact_call_bx_ratio_answered:                  {num: target_contact_call_bx, den: answered_call_bx} #old
+  target_contact_call_bx_ratio_answered:                 {num: target_contact_call_bx, den: answered_call_bx} #old
+
+  iac_share_bx:                                           {num: iac_bx_outgoing_talk_dur, den: calls_bx_outgoing_talk_dur}
