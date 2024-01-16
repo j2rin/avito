@@ -1,4 +1,4 @@
-with
+with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
 users as (
     select distinct item_user_id as user_id
     from dma.click_stream_contacts
@@ -6,16 +6,23 @@ users as (
         and item_user_id is not null
         -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 )
-select
-    cast(csc.eventdate as date) as event_date,
-    csc.cookie_id,
+, geo as (select participant_id,
+                    event_date,
+                    home_city_id
+    from DMA.users_home_location_segment
+    where participant_type = 'user'
+    and cast(event_date as date) between --:first_date and :last_date
+    order by participant_id, event_date)
+select /*+syntactic_join*/
     csc.item_id,
+    cast(csc.eventdate as date) as event_date,
     csc.platform_id,
     csc.last_nondirect_session_source_id as traffic_source_id,
     csc.eventdate as action_dttm,
     item_user_id,
     ishuman_dev as is_human_dev,
     csc.microcat_id,
+    csc.cookie_id,
     lc.vertical_id,
     lc.logical_category_id,
     cm.category_id,
@@ -40,13 +47,16 @@ select
     lc.logical_param2_id
 from dma.click_stream_contacts csc
 
-left join DMA.users_home_location_segment geo
-    on csc.User_id = geo.participant_id and csc.eventdate = geo.event_date and geo.participant_type = 'user'
-left join  dma.current_microcategories cm
+left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm
     on csc.microcat_id = cm.microcat_id
-left join dma.current_locations cl
-    ON geo.home_city_id = cl.location_id
-left join (
+
+left join /*+jtype(h),distrib(l,a)*/ geo
+      on csc.User_id = geo.participant_id and csc.eventdate = geo.event_date
+
+left join /*+jtype(h),distrib(l,a)*/ dma.current_locations cl
+    ON  geo.home_city_id = cl.location_id
+
+left join /*+jtype(h),distrib(l,a)*/ (
     select infmquery_id, logcat_id
     from infomodel.current_infmquery_category
     where infmquery_id in (
@@ -58,12 +68,13 @@ left join (
     )
 ) ic
     on ic.infmquery_id = csc.infmquery_id
-left join dma.current_logical_categories lc
+left join /*+jtype(h),distrib(l,a)*/ dma.current_logical_categories lc
     on lc.logcat_id = ic.logcat_id
-left join dict.segmentation_ranks ls
-    on ls.logical_category_id = lc.logical_category_id
-    and ls.is_default
-left join (
+left join /*+jtype(h),distrib(l,a)*/ dict.segmentation_ranks ls
+    on   ls.logical_category_id = lc.logical_category_id
+    and  ls.is_default
+
+left join /*+jtype(h),distrib(l,a)*/ (
     select cookie_id, logical_category_id, first_contact_event_date
     from dma.buyer_birthday
     where cookie_id in (
@@ -75,9 +86,10 @@ left join (
     )
         -- and first_contact_event_year > date('2000-01-01') -- @trino
 ) bb
-    on csc.cookie_id = bb.cookie_id
-    and lc.logical_category_id = bb.logical_category_id
-left join (
+    on   csc.cookie_id = bb.cookie_id
+    and  lc.logical_category_id = bb.logical_category_id
+
+left join /*+jtype(h),distrib(l,a)*/ (
     select
         user_id,
         logical_category_id, user_segment,
@@ -86,11 +98,12 @@ left join (
     from DMA.user_segment_market
     where user_id in (select user_id from users)
 ) usm
-    on csc.item_user_id = usm.user_id
+    on  csc.item_user_id = usm.user_id
     and lc.logical_category_id = usm.logical_category_id
     and csc.eventdate >= usm.converting_date
     and csc.eventdate < usm.next_converting_date
-left join (
+
+left join /*+jtype(h),distrib(l,a)*/ (
     select user_id,
            active_from_date,
            active_to_date,
@@ -99,9 +112,10 @@ left join (
     from DMA.am_client_day_versioned
     where user_id in (select user_id from users)
 ) acd
-    on acd.user_id = csc.item_user_id
-    and cast(csc.eventdate as date) between acd.active_from_date and acd.active_to_date
-left join (
+    on   acd.user_id = csc.item_user_id
+    and  cast(csc.eventdate as date) between acd.active_from_date and acd.active_to_date
+
+left join /*+jtype(h),distrib(l,a)*/ (
     select item_id, price, actual_date from (
         select
             item_id, price, actual_date,
@@ -118,12 +132,13 @@ left join (
     where rn = 1
 ) cif
     on csc.item_id = cif.item_id
-left join dict.current_price_groups cpg
-    on lc.logical_category_id = cpg.logical_category_id
-    and cif.price >= cpg.min_price
-    and cif.price < cpg.max_price
+
+left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups cpg
+    on   lc.logical_category_id = cpg.logical_category_id
+    and  cif.price >= cpg.min_price
+    and  cif.price <  cpg.max_price
+
 where csc.cookie_id is not null
     and csc.item_user_id not in (select user_id from dma."current_user" where istest)
     and cast(csc.eventdate as date) between :first_date and :last_date
     -- and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
-ORDER BY csc.eventdate, csc.cookie_id
