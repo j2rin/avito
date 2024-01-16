@@ -575,6 +575,8 @@ metric.counter:
     btc_perfvas:                   { filter: [*is_btc, *is_item_perfvas] }
     btc_perfvas_serp:              { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_search] }
     btc_perfvas_serp_auction:      { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_search, *is_auction_winner] }
+    btc_perfvas_sq_serp_auction:      { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_search, *is_auction_winner, *q] }
+    btc_perfvas_noq_serp_auction:      { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_search, *is_auction_winner, *noq] }
     btc_perfvas_u2i:               { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_u2i] }
     btc_perfvas_u2i_auction:       { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_u2i, *is_auction_winner] }
     btc_perfvas_i2i:               { filter: [*is_btc_wo_guessing, *is_item_perfvas, *x_is_i2i] }
@@ -1219,6 +1221,8 @@ metric.counter:
     contacts_perfvas:                    { filter: [*is_contact, *is_item_perfvas] }
     contacts_perfvas_serp:               { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_search] }
     contacts_perfvas_serp_auction:       { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_search, *is_auction_winner] }
+    contacts_perfvas_sq_serp_auction:       { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_search, *is_auction_winner, *q] }
+    contacts_perfvas_noq_serp_auction:       { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_search, *is_auction_winner, *noq] }
     contacts_perfvas_u2i:                { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_u2i] }
     contacts_perfvas_u2i_auction:        { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_u2i, *is_auction_winner] }
     contacts_perfvas_i2i:                { filter: [*is_contact_wo_guessing, *is_item_perfvas, *x_is_i2i] }
@@ -1310,6 +1314,8 @@ metric.counter:
     iv_perfvas:                   { filter: [*is_iv, *is_item_perfvas] }
     iv_perfvas_serp:              { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_search] }
     iv_perfvas_serp_auction:      { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_search, *is_auction_winner] }
+    iv_perfvas_sq_serp_auction:      { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_search, *is_auction_winner, *q] }
+    iv_perfvas_noq_serp_auction:      { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_search, *is_auction_winner, *noq] }
     iv_perfvas_u2i:               { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_u2i] }
     iv_perfvas_u2i_auction: { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_u2i, *is_auction_winner] }
     iv_perfvas_i2i:               { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_i2i] }
@@ -2154,6 +2160,8 @@ metric.uniq:
     btc_perfvas_u2i_unique:                 { counter: btc_perfvas_u2i, key: [item, x]}
     btc_perfvas_i2i_unique:                 { counter: btc_perfvas_i2i, key: [item, x]}
     btc_perfvas_serp_auction_unique:        { counter: btc_perfvas_serp_auction, key: [item, x]}
+    btc_perfvas_sq_serp_auction_unique:        { counter: btc_perfvas_sq_serp_auction, key: [item, x]}
+    btc_perfvas_noq_serp_auction_unique:        { counter: btc_perfvas_noq_serp_auction, key: [item, x]}
     btc_perfvas_u2i_auction_unique:        { counter: btc_perfvas_u2i_auction, key: [item, x]}
     btc_perfvas_promo_unique:                { counter: btc_perfvas_promo, key: [item, x]}
     btc_perfvas_serp_promo_unique:           { counter: btc_perfvas_serp_promo, key: [item, x]}
@@ -2234,6 +2242,8 @@ metric.uniq:
     contacts_perfvas_u2i_unique:                 { counter: contacts_perfvas_u2i, key: [item, x]}
     contacts_perfvas_i2i_unique:                 { counter: contacts_perfvas_i2i, key: [item, x]}
     contacts_perfvas_serp_auction_unique:        { counter: contacts_perfvas_serp_auction, key: [item, x]}
+    contacts_perfvas_sq_serp_auction_unique:        { counter: contacts_perfvas_sq_serp_auction, key: [item, x]}
+    contacts_perfvas_noq_serp_auction_unique:        { counter: contacts_perfvas_noq_serp_auction, key: [item, x]}
     contacts_perfvas_u2i_auction_unique:        { counter: contacts_perfvas_u2i_auction, key: [item, x]}
     contacts_perfvas_promo_unique:                { counter: contacts_perfvas_promo, key: [item, x]}
     contacts_perfvas_serp_promo_unique:           { counter: contacts_perfvas_serp_promo, key: [item, x]}
@@ -2462,6 +2472,8 @@ metric.uniq:
     iv_perfvas_u2i_unique:                 { counter: iv_perfvas_u2i, key: [item, x]}
     iv_perfvas_i2i_unique:                 { counter: iv_perfvas_i2i, key: [item, x]}
     iv_perfvas_serp_auction_unique:        { counter: iv_perfvas_serp_auction, key: [item, x]}
+    iv_perfvas_sq_serp_auction_unique:        { counter: iv_perfvas_sq_serp_auction, key: [item, x]}
+    iv_perfvas_noq_serp_auction_unique:        { counter: iv_perfvas_noq_serp_auction, key: [item, x]}
     iv_perfvas_u2i_auction_unique:        { counter: iv_perfvas_u2i_auction, key: [item, x]}
     iv_perfvas_promo_unique:                { counter: iv_perfvas_promo, key: [item, x]}
     iv_perfvas_serp_promo_unique:           { counter: iv_perfvas_serp_promo, key: [item, x]}
