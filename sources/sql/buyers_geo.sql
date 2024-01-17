@@ -31,7 +31,6 @@ select /*+syntactic_join*/
     lc.logical_category,
     cm.param1_microcat_id as param1_id,
     cast(csc.eventdate as date) = cast(bb.first_contact_event_date as date) as is_buyer_new,
-    coalesce(usm.user_segment, ls.segment)                           as user_segment_market,
     geo.home_city_id as location_id,
     case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
     case cl.level when 3 then cl.Location_id end                           as city_id,
@@ -86,19 +85,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     on   csc.cookie_id = bb.cookie_id
     and  lc.logical_category_id = bb.logical_category_id
 
-left join /*+jtype(h),distrib(l,a)*/ (
-    select
-        user_id,
-        logical_category_id, user_segment,
-        date_trunc('second', cast(converting_date as timestamp)) as converting_date,
-        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
-    where user_id in (select user_id from users)
-) usm
-    on  csc.item_user_id = usm.user_id
-    and lc.logical_category_id = usm.logical_category_id
-    and csc.eventdate >= usm.converting_date
-    and csc.eventdate < usm.next_converting_date
+
 
 
 where csc.cookie_id is not null
