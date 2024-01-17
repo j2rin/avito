@@ -48,6 +48,7 @@ select /*+syntactic_join*/
     ig.CoordinatesLongitude,
     ig.address_id,
     ig.min_kind_level,
+    ig.addresses_count,
     ss.is_delivery_available,
     ss.is_delivery_active,
     ss.delivery_clicks,
