@@ -116,6 +116,11 @@ metric.counter:
   items_with_street_500m_from_location_reactivated: {filter: [{activations_count.>: 1}, {is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.5}, {min_kind_level: [50]}]}
   items_with_street_new:                   {filter: [{is_active: True}, {min_kind_level: 50}, {start_date: $event_date}]}
   items_with_street_reactivated:           {filter: [{activations_count.>: 1}, {is_active: True}, {last_activation_date: $event_date}, {min_kind_level: 50}]}
+  items_multiaddress:                      {filter: [{addresses_count.>=: 2}, {is_active: True}]}
+  items_multiaddress_3plus:                {filter: [{addresses_count.>=: 3}, {is_active: True}]}
+  items_multiaddress_4plus:                {filter: [{addresses_count.>=: 4}, {is_active: True}]}
+  items_multiaddress_5plus:                {filter: [{addresses_count.>=: 5}, {is_active: True}]}
+  items_multiaddress_10plus:               {filter: [{addresses_count.>=: 10}, {is_active: True}]}
   seller_item_views:                       {obs: [item_views]}
   seller_iv_video:                         {filter: [{has_short_video: True}], obs: [item_views]}
   seller_item_views_cpa:                   {filter: [{is_item_cpa: True}], obs: [item_views]}
@@ -402,6 +407,12 @@ metric.uniq:
   active_items_vas_have_duplicate:         {counter: cnt_active_items_vas_have_duplicate,    key: [item]}
   users_active_items_have_duplicate:       {counter: cnt_active_items_have_duplicate,        key: [user]}
   users_active_items_vas_have_duplicate:   {counter: cnt_active_items_vas_have_duplicate,    key: [user]}
+  user_active_items_multiaddr:              {counter: items_multiaddress,    key: [user]}
+  user_active_items_multiaddr_3plus:        {counter: items_multiaddress_3plus,    key: [user]}
+  user_active_items_multiaddr_4plus:        {counter: items_multiaddress_4plus,    key: [user]}
+  user_active_items_multiaddr_5plus:        {counter: items_multiaddress_5plus,    key: [user]}
+  user_active_items_multiaddr_10plus:       {counter: items_multiaddress_10plus,   key: [user]}
+
 
 
 metric.ratio:
