@@ -3491,3 +3491,20 @@ buyers_geo:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
+
+
+withdrawal_refund:
+  metric_configs: [auction_withdrawals]
+  connections: [vertica, trino]
+  sql: auction_withdrawal_refund
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - region
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
