@@ -34,7 +34,6 @@ select /*+syntactic_join*/
     coalesce(acd.user_group_id ,8383)                             as asd_user_group_id,
     cast(csc.eventdate as date) = cast(bb.first_contact_event_date as date) as is_buyer_new,
     coalesce(usm.user_segment, ls.segment)                           as user_segment_market,
-    coalesce(cpg.price_group, 'Undefined')                      as price_group,
     geo.home_city_id as location_id,
     case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
     case cl.level when 3 then cl.Location_id end                           as city_id,
@@ -115,28 +114,6 @@ left join /*+jtype(h),distrib(l,a)*/ (
     on   acd.user_id = csc.item_user_id
     and  cast(csc.eventdate as date) between acd.active_from_date and acd.active_to_date
 
-left join /*+jtype(h),distrib(l,a)*/ (
-    select item_id, price, actual_date from (
-        select
-            item_id, price, actual_date,
-            row_number() over (partition by item_id order by actual_date desc) as rn
-        from dds.S_Item_Price
-        where item_id in (
-            select distinct item_id
-            from dma.click_stream_contacts
-            where cast(eventdate as date) between :first_date and :last_date
-                and item_id is not null
-                -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
-        )
-    )t
-    where rn = 1
-) cif
-    on csc.item_id = cif.item_id
-
-left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups cpg
-    on   lc.logical_category_id = cpg.logical_category_id
-    and  cif.price >= cpg.min_price
-    and  cif.price <  cpg.max_price
 
 where csc.cookie_id is not null
     and csc.item_user_id not in (select user_id from dma."current_user" where istest)
