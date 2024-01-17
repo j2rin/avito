@@ -30,9 +30,6 @@ select /*+syntactic_join*/
     cm.subcategory_id,
     lc.logical_category,
     cm.param1_microcat_id as param1_id,
-    coalesce(acd.is_asd, False)                                      as is_asd,
-    -- По дефолту ставим SS сегмент - 8383
-    coalesce(acd.user_group_id ,8383)                             as asd_user_group_id,
     cast(csc.eventdate as date) = cast(bb.first_contact_event_date as date) as is_buyer_new,
     coalesce(usm.user_segment, ls.segment)                           as user_segment_market,
     geo.home_city_id as location_id,
@@ -102,18 +99,6 @@ left join /*+jtype(h),distrib(l,a)*/ (
     and lc.logical_category_id = usm.logical_category_id
     and csc.eventdate >= usm.converting_date
     and csc.eventdate < usm.next_converting_date
-
-left join /*+jtype(h),distrib(l,a)*/ (
-    select user_id,
-           active_from_date,
-           active_to_date,
-           (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
-           user_group_id
-    from DMA.am_client_day_versioned
-    where user_id in (select user_id from users)
-) acd
-    on   acd.user_id = csc.item_user_id
-    and  cast(csc.eventdate as date) between acd.active_from_date and acd.active_to_date
 
 
 where csc.cookie_id is not null
