@@ -13,6 +13,7 @@ users as (
     where participant_type = 'user'
     and cast(event_date as date) between :first_date and :last_date
  )
+
 select /*+syntactic_join*/
     csc.item_id,
     cast(csc.eventdate as date) as event_date,
