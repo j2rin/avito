@@ -1,0 +1,73 @@
+definitions:
+  - &x_eid_search_shop                              [300]
+  - &x_eid_favorite_items_view                      [400]
+  - &x_eid_comparison_view                          [450]
+  - &x_eid_users_recommendation                     [2012]
+  - &x_eid_user_profile_items_show                  [2017]
+  - &x_eid_users_banners_recommendation             [2309]
+  - &x_eid_item_similars                            [2437]
+  - &x_eid_serp_on_map_display                      [2743]
+  - &x_eid_personal_items                           [4112]
+  - &x_eid_profprofile_view_window1                 [4259]
+  - &x_eid_back_model_card                          [5184]
+  - &x_eid_push_landing                             [5354]
+  - &x_eid_show_vertical_widget_with_items          [5516]
+  - &x_eid_user_profile_window_show                 [6006]
+  - &x_eid_feed_view                                [6221]
+  - &x_eid_feed_view_main                           [7241]
+  - &x_eid_favcollection_view                       [8175]
+
+  - &is_search_shop                              {x_eid: *x_eid_search_shop}
+  - &is_favorite_items_view                      {x_eid: *x_eid_favorite_items_view}
+  - &is_comparison_view                          {x_eid: *x_eid_comparison_view}
+  - &is_users_recommendation                     {x_eid: *x_eid_users_recommendation}
+  - &is_user_profile_items_show                  {x_eid: *x_eid_user_profile_items_show}
+  - &is_users_banners_recommendation             {x_eid: *x_eid_users_banners_recommendation}
+  - &is_item_similars                            {x_eid: *x_eid_item_similars}
+  - &is_serp_on_map_display                      {x_eid: *x_eid_serp_on_map_display}
+  - &is_personal_items                           {x_eid: *x_eid_personal_items}
+  - &is_profprofile_view_window1                 {x_eid: *x_eid_profprofile_view_window1}
+  - &is_back_model_card                          {x_eid: *x_eid_back_model_card}
+  - &is_push_landing                             {x_eid: *x_eid_push_landing}
+  - &is_show_vertical_widget_with_items          {x_eid: *x_eid_show_vertical_widget_with_items}
+  - &is_user_profile_window_show                 {x_eid: *x_eid_user_profile_window_show}
+  - &is_feed_view                                {x_eid: *x_eid_feed_view}
+  - &is_feed_view_main                           {x_eid: *x_eid_feed_view_main}
+  - &is_favcollection_view                       {x_eid: *x_eid_favcollection_view}
+
+  - &is_consultation                             {call_source_detailed: 'consultation_form'}
+  - &is_external_leadgen                         {call_source_detailed: 'external_leadgen'}
+  - &is_incoming                                 {call_source_detailed: 'incoming_calls'}
+  - &is_initial                                  {call_source_detailed: 'initiall calls'}
+  - &is_repeat                                   {call_source_detailed: 'repeat_calls'}
+
+metric.counter:
+  cpa_call_revenue_net_adj_total:                             {obs: [cpa_call_revenue_net_adj]}
+
+  cpa_call_revenue_net_adj_search_shop:                       {obs: [cpa_call_revenue_net_adj], filter: [*is_search_shop]}
+  cpa_call_revenue_net_adj_favorite_items_view:               {obs: [cpa_call_revenue_net_adj], filter: [*is_favorite_items_view]}
+  cpa_call_revenue_net_adj_comparison_view:                   {obs: [cpa_call_revenue_net_adj], filter: [*is_comparison_view]}
+  cpa_call_revenue_net_adj_users_recommendation:              {obs: [cpa_call_revenue_net_adj], filter: [*is_users_recommendation]}
+  cpa_call_revenue_net_adj_user_profile_items_show:           {obs: [cpa_call_revenue_net_adj], filter: [*is_user_profile_items_show]}
+  cpa_call_revenue_net_adj_users_banners_recommendation:      {obs: [cpa_call_revenue_net_adj], filter: [*is_users_banners_recommendation]}
+  cpa_call_revenue_net_adj_item_similars:                     {obs: [cpa_call_revenue_net_adj], filter: [*is_item_similars]}
+  cpa_call_revenue_net_adj_serp_on_map_display:               {obs: [cpa_call_revenue_net_adj], filter: [*is_serp_on_map_display]}
+  cpa_call_revenue_net_adj_personal_items:                    {obs: [cpa_call_revenue_net_adj], filter: [*is_personal_items]}
+  cpa_call_revenue_net_adj_profprofile_view_window1:          {obs: [cpa_call_revenue_net_adj], filter: [*is_profprofile_view_window1]}
+  cpa_call_revenue_net_adj_back_model_card:                   {obs: [cpa_call_revenue_net_adj], filter: [*is_back_model_card]}
+  cpa_call_revenue_net_adj_push_landing:                      {obs: [cpa_call_revenue_net_adj], filter: [*is_push_landing]}
+  cpa_call_revenue_net_adj_show_vertical_widget_with_items:   {obs: [cpa_call_revenue_net_adj], filter: [*is_show_vertical_widget_with_items]}
+  cpa_call_revenue_net_adj_user_profile_window_show:          {obs: [cpa_call_revenue_net_adj], filter: [*is_user_profile_window_show]}
+  cpa_call_revenue_net_adj_feed_view:                         {obs: [cpa_call_revenue_net_adj], filter: [*is_feed_view]}
+  cpa_call_revenue_net_adj_feed_view_main:                    {obs: [cpa_call_revenue_net_adj], filter: [*is_feed_view_main]}
+  cpa_call_revenue_net_adj_favcollection_view:                {obs: [cpa_call_revenue_net_adj], filter: [*is_favcollection_view]}
+
+  cpa_call_revenue_net_adj_source_consultation:               {obs: [cpa_call_revenue_net_adj], filter: [*is_consultation]}
+  cpa_call_revenue_net_adj_source_external_leadgen:           {obs: [cpa_call_revenue_net_adj], filter: [*is_external_leadgen]}
+  cpa_call_revenue_net_adj_source_incoming:                   {obs: [cpa_call_revenue_net_adj], filter: [*is_incoming]}
+  cpa_call_revenue_net_adj_source_initial:                    {obs: [cpa_call_revenue_net_adj], filter: [*is_initial]}
+  cpa_call_revenue_net_adj_source_repeat:                     {obs: [cpa_call_revenue_net_adj], filter: [*is_repeat]}
+
+
+
+

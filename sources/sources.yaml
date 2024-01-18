@@ -2179,6 +2179,19 @@ re_nd_buyer_stream:
   primary_subject: visitor
   dtm: event_date
 
+re_nd_cpa_call_revenue:
+  metric_configs: [re_nd_cpa_call_revenue]
+  connections: [vertica, trino]
+  sql: re_nd_cpa_call_revenue
+  column_map:
+    cookie: cookie_id
+    x_eid: x_eid
+  dimensions:
+    - call_source_detailed
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  dtm: event_date
+
 autoteka_new_buyer_expected_revenue_ap:
   metric_configs: [autoteka_new_buyer_expected_revenue_ap]
   connections: [vertica, trino]
