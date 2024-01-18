@@ -49,13 +49,13 @@ left join dma.current_locations as cl on cl.location_id = a.location_id
 left join (
     select infmquery_id, logcat_id
     from infomodel.current_infmquery_category
-    -- where infmquery_id in (
-    --     select distinct infmquery_id
-    --     from dma.all_contacts
-    --     where cast(event_date as date) between :first_date and :last_date
-    --         and infmquery_id is not null
-    --         -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
-    -- )
+    where infmquery_id in (
+        select distinct infmquery_id
+        from dma.all_contacts
+        where cast(event_date as date) between :first_date and :last_date
+            and infmquery_id is not null
+            -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+    )
 ) ic
     on ic.infmquery_id = a.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
