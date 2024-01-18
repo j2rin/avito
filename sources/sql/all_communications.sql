@@ -20,10 +20,10 @@ select
     ,cm.microcat_id
     ,cm.category_id
     ,cl.location_id
-    ,cm.vertical_id
-    ,cm.vertical
-    ,cm.logical_category_id
-    ,cm.logical_category
+    ,lc.vertical_id
+    ,lc.vertical
+    ,lc.logical_category_id
+    ,lc.logical_category
     ,cm.subcategory_id
     ,cm.Param1_microcat_id as param1_id 
     ,cm.Param2_microcat_id as param2_id
