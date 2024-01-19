@@ -1,0 +1,64 @@
+definitions:
+  - &x_eid_search                              [300]
+  - &x_eid_fav_lst                             [400]
+  - &x_eid_comp_lst                            [450]
+  - &x_eid_u2i                                 [2012]
+  - &x_eid_profile                             [2017]
+  - &x_eid_rec                                 [2309]
+  - &x_eid_i2i                                 [2437]
+  - &x_eid_map                                 [2743]
+  - &x_eid_personal_items                      [4112]
+  - &x_eid_mini_s_kmt                          [5184]
+  - &x_eid_push_land                           [5354]
+  - &x_eid_mall_widget                         [5516]
+  - &x_eid_extended_profile_window             [6006]
+  - &x_eid_fav_coll                            [8175]
+
+  - &is_search                                 {x_eid: *x_eid_search}
+  - &is_fav_lst                                {x_eid: *x_eid_fav_lst}
+  - &is_comp_lst                               {x_eid: *x_eid_comp_lst}
+  - &is_u2i                                    {x_eid: *x_eid_u2i}
+  - &is_profile                                {x_eid: *x_eid_profile}
+  - &is_rec                                    {x_eid: *x_eid_rec}
+  - &is_i2i                                    {x_eid: *x_eid_i2i}
+  - &is_map                                    {x_eid: *x_eid_map}
+  - &is_personal_items                         {x_eid: *x_eid_personal_items}
+  - &is_mini_s_kmt                             {x_eid: *x_eid_mini_s_kmt}
+  - &is_push_land                              {x_eid: *x_eid_push_land}
+  - &is_mall_widget                            {x_eid: *x_eid_mall_widget}
+  - &is_extended_profile_window                {x_eid: *x_eid_extended_profile_window}
+  - &is_fav_coll                               {x_eid: *x_eid_fav_coll}
+
+  - &is_consultation                           {call_source_detailed: ['consultation_form']}
+  - &is_external_leadgen                       {call_source_detailed: ['external_leadgen']}
+  - &is_incoming                               {call_source_detailed: ['incoming_calls']}
+  - &is_initial                                {call_source_detailed: ['initiall calls']}
+  - &is_repeat                                 {call_source_detailed: ['repeat_calls']}
+
+metric.counter:
+  cpa_call_revenue_net_adj_total:                             {obs: [cpa_call_revenue_net_adj]}
+
+  cpa_call_revenue_net_adj_search:                            {obs: [cpa_call_revenue_net_adj], filter: [*is_search]}
+  cpa_call_revenue_net_adj_fav_lst:                           {obs: [cpa_call_revenue_net_adj], filter: [*is_fav_lst]}
+  cpa_call_revenue_net_adj_comp_lst:                          {obs: [cpa_call_revenue_net_adj], filter: [*is_comp_lst]}
+  cpa_call_revenue_net_adj_u2i:                               {obs: [cpa_call_revenue_net_adj], filter: [*is_u2i]}
+  cpa_call_revenue_net_adj_profile:                           {obs: [cpa_call_revenue_net_adj], filter: [*is_profile]}
+  cpa_call_revenue_net_adj_rec:                               {obs: [cpa_call_revenue_net_adj], filter: [*is_rec]}
+  cpa_call_revenue_net_adj_i2i:                               {obs: [cpa_call_revenue_net_adj], filter: [*is_i2i]}
+  cpa_call_revenue_net_adj_map:                               {obs: [cpa_call_revenue_net_adj], filter: [*is_map]}
+  cpa_call_revenue_net_adj_personal_items:                    {obs: [cpa_call_revenue_net_adj], filter: [*is_personal_items]}
+  cpa_call_revenue_net_adj_mini_s_kmt:                        {obs: [cpa_call_revenue_net_adj], filter: [*is_mini_s_kmt]}
+  cpa_call_revenue_net_adj_push_land:                         {obs: [cpa_call_revenue_net_adj], filter: [*is_push_land]}
+  cpa_call_revenue_net_adj_mall_widget:                       {obs: [cpa_call_revenue_net_adj], filter: [*is_mall_widget]}
+  cpa_call_revenue_net_adj_extended_profile_window:           {obs: [cpa_call_revenue_net_adj], filter: [*is_extended_profile_window]}
+  cpa_call_revenue_net_adj_fav_coll:                          {obs: [cpa_call_revenue_net_adj], filter: [*is_fav_coll]}
+
+  cpa_call_revenue_net_adj_source_consultation:               {obs: [cpa_call_revenue_net_adj], filter: [*is_consultation]}
+  cpa_call_revenue_net_adj_source_external_leadgen:           {obs: [cpa_call_revenue_net_adj], filter: [*is_external_leadgen]}
+  cpa_call_revenue_net_adj_source_incoming:                   {obs: [cpa_call_revenue_net_adj], filter: [*is_incoming]}
+  cpa_call_revenue_net_adj_source_initial:                    {obs: [cpa_call_revenue_net_adj], filter: [*is_initial]}
+  cpa_call_revenue_net_adj_source_repeat:                     {obs: [cpa_call_revenue_net_adj], filter: [*is_repeat]}
+
+
+
+
