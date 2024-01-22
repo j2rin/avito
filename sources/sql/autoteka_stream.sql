@@ -8,7 +8,7 @@ user_matching as (
         max(user_id) as user_id
     from dma.autoteka_avito_user_matching
     where 1=1 
-    --and date_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
+    --and date_year is not null --@trino
     group by 1, 2
 ),
 autoteka as (
