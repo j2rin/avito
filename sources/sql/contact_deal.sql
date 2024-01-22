@@ -74,7 +74,7 @@ from (
             and reply_message_bot is null
             and date_diff ('minute',first_message_event_date, reply_time) between 0 and 4320
             and cast(first_message_event_date as date) between :first_date and :last_date
-            -- and min_event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+            -- and min_event_year is not null -- @trino
 
     )
     union all
