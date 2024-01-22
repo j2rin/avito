@@ -120,7 +120,7 @@ select track_id,
        event_type,
        platform_id,
        search_type             as searchtype,
-       cs.cookie_session,
+       from_big_endian_64(xxhash64(cast(coalesce(cs.cookie_session, '') as varbinary))) as cookie_session,
        to_exclude_pay_callback as is_session_to_exclude,
        main_page_session       as is_main_page_session,
        is_pro_user             as is_pro

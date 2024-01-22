@@ -1,6 +1,6 @@
 select
     user_id,
-    autoload_package,
+    from_big_endian_64(xxhash64(cast(coalesce(autoload_package, '') as varbinary))) as autoload_package,
     event_date,
     vertical_id,
     vertical,

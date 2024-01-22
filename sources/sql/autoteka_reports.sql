@@ -8,7 +8,7 @@ select
     autoteka_order_id,
     item_id,
     banner_clicks,
-    vin,
+    from_big_endian_64(xxhash64(cast(coalesce(vin, '') as varbinary))) as vin,
     is_pro,
     searchtype,
     reports_count,
