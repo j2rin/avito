@@ -57,6 +57,7 @@ metric.counter:
   comns_bx_outgoing_target:                              {filter: [*is_common_funnel, *is_comns, *is_target]}
 
   contacts_all_2_0:                                      {filter: [*is_common_funnel]}
+  contacts_all_exp:                                      {}
   answered_contacts_2_0:                                 {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
   answered_contacts_exp:                                 {filter: [*is_answered, *reply_time_not_zero, *reply_3days]}
   target_contacts_all_2_0:                               {filter: [*is_common_funnel, *is_target]}
@@ -135,7 +136,10 @@ metric.uniq:
 
   contacts_canonical_2_0:                                {counter: contacts_all_2_0,               key: [item_id, logical_category_id]}
   buyers_canonical_2_0:                                  {counter: contacts_all_2_0,               key: [buyer_id, logical_category_id]}
-  user_contacts_2_0:                                     {counter: contacts_all_2_0,               key: [user]}
+  user_contacts_2_0:                                     {counter: contacts_all_2_0,               key: [user]}  
+  contacts_canonical_exp:                                {counter: contacts_all_exp,               key: [item_id, logical_category_id]}
+  buyers_canonical_exp:                                  {counter: contacts_all_exp,               key: [buyer_id, logical_category_id]}
+  user_contacts_exp:                                     {counter: contacts_all_exp,               key: [user]}
   target_contacts_canonical_2_0:                         {counter: target_contacts_all_2_0,         key: [item_id, logical_category_id]}
   target_buyers_canonical_2_0:                           {counter: target_contacts_all_2_0,         key: [buyer_id, logical_category_id]}
   target_contacts_canonical_exp:                         {counter: target_contacts_all_exp,         key: [item_id, logical_category_id]}
