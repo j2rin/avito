@@ -1,10 +1,6 @@
 select
     _batch, _partition,
-    u,
-    xxHash64(coalesce(u, '')) as u_n,
-    eid,
-    event_hash,
-    event_date,
+    xxHash64(coalesce(u, '')) as u, eid, event_hash, event_date,
     business_platform,
     event_timestamp,
     app_state,
