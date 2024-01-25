@@ -355,6 +355,11 @@ definitions:
     - &x_is_sales_vertical_main_widget { x_eid: [ 5516, 2012 ], from_page.ilike: '%_sale' } 
     - &in_sale_delivery_active { is_delivery_active_in_sale: 1 }
 
+    - &is_trx_commission_low {item_flags.bit: 37}
+    - &is_trx_commission_medium {item_flags.bit: 38}
+    - &is_trx_commission_high {item_flags.bit: 39}
+    - &is_trx {$or: [*is_trx_commission_low, *is_trx_commission_medium, *is_trx_commission_high]}
+
 
 
 metric.counter:
@@ -2001,6 +2006,48 @@ metric.counter:
     total_delivery_click_sales: { filter: [ *in_sale_delivery_active, eid: 2483 ] }
     total_delivery_order_create_sales: { filter: [*is_delivery_tot, *in_sale_delivery_active] }
 
+    cnt_c_trx:                      { filter: [ *is_contact, *is_trx] }
+    cnt_c_serp_trx:                 { filter: [ *is_contact_wo_guessing, *is_trx, *x_is_search ] }
+    cnt_c_u2i_trx:                  { filter: [ *is_contact_wo_guessing, *is_trx, *x_is_u2i ] }
+    cnt_c_i2i_trx:                  { filter: [ *is_contact_wo_guessing, *is_trx, *x_is_i2i ] }
+    cnt_c_map_trx:                  { filter: [ *is_contact, *is_trx, *x_is_map ] }
+    cnt_c_trx_comm_low:             { filter: [ *is_contact, *is_trx_commission_low ] }
+    cnt_c_trx_comm_medium:          { filter: [ *is_contact, *is_trx_commission_medium ] }
+    cnt_c_trx_comm_high:            { filter: [ *is_contact, *is_trx_commission_high ] }
+    cnt_c_serp_trx_comm_low:        { filter: [ *is_contact_wo_guessing, *x_is_search, *is_trx_commission_low] }
+    cnt_c_serp_trx_comm_medium:     { filter: [ *is_contact_wo_guessing, *x_is_search, *is_trx_commission_medium ] }
+    cnt_c_serp_trx_comm_high:       { filter: [ *is_contact_wo_guessing, *x_is_search, *is_trx_commission_high ] }
+    cnt_c_u2i_trx_comm_low:         { filter: [ *is_contact_wo_guessing, *x_is_u2i, *is_trx_commission_low] }
+    cnt_c_u2i_trx_comm_medium:      { filter: [ *is_contact_wo_guessing, *x_is_u2i, *is_trx_commission_medium ] }
+    cnt_c_u2i_trx_comm_high:        { filter: [ *is_contact_wo_guessing, *x_is_u2i, *is_trx_commission_high ] }
+    cnt_c_i2i_trx_comm_low:         { filter: [ *is_contact_wo_guessing, *x_is_i2i, *is_trx_commission_low] }
+    cnt_c_i2i_trx_comm_medium:      { filter: [ *is_contact_wo_guessing, *x_is_i2i, *is_trx_commission_medium ] }
+    cnt_c_i2i_trx_comm_high:        { filter: [ *is_contact_wo_guessing, *x_is_i2i, *is_trx_commission_high ] }
+    cnt_c_map_trx_comm_low:         { filter: [ *is_contact, *x_is_map, *is_trx_commission_low] }
+    cnt_c_map_trx_comm_medium:      { filter: [ *is_contact, *x_is_map, *is_trx_commission_medium ] }
+    cnt_c_map_trx_comm_high:        { filter: [ *is_contact, *x_is_map, *is_trx_commission_high ] }
+
+    cnt_iv_trx:                     { filter: [ *is_iv, *is_trx ] }
+    cnt_iv_serp_trx:                { filter: [ *is_iv_wo_guessing, *is_trx, *x_is_search ] }
+    cnt_iv_u2i_trx:                 { filter: [ *is_iv_wo_guessing, *is_trx, *x_is_u2i ] }
+    cnt_iv_i2i_trx:                 { filter: [ *is_iv_wo_guessing, *is_trx, *x_is_i2i ] }
+    cnt_iv_map_trx:                 { filter: [ *is_iv, *is_trx, *x_is_map ] }
+    cnt_iv_trx_comm_low:            { filter: [ *is_iv, *is_trx_commission_low ] }
+    cnt_iv_trx_comm_medium:         { filter: [ *is_iv, *is_trx_commission_medium ] }
+    cnt_iv_trx_comm_high:           { filter: [ *is_iv, *is_trx_commission_high ] }
+    cnt_iv_serp_trx_comm_low:       { filter: [ *is_iv_wo_guessing, *x_is_search, *is_trx_commission_low ] }
+    cnt_iv_serp_trx_comm_medium:    { filter: [ *is_iv_wo_guessing, *x_is_search, *is_trx_commission_medium ] }
+    cnt_iv_serp_trx_comm_high:      { filter: [ *is_iv_wo_guessing, *x_is_search, *is_trx_commission_high ] }
+    cnt_iv_u2i_trx_comm_low:        { filter: [ *is_iv_wo_guessing, *x_is_u2i, *is_trx_commission_low ] }
+    cnt_iv_u2i_trx_comm_medium:     { filter: [ *is_iv_wo_guessing, *x_is_u2i, *is_trx_commission_medium ] }
+    cnt_iv_u2i_trx_comm_high:       { filter: [ *is_iv_wo_guessing, *x_is_u2i, *is_trx_commission_high ] }
+    cnt_iv_i2i_trx_comm_low:        { filter: [ *is_iv_wo_guessing, *x_is_i2i, *is_trx_commission_low ] }
+    cnt_iv_i2i_trx_comm_medium:     { filter: [ *is_iv_wo_guessing, *x_is_i2i, *is_trx_commission_medium ] }
+    cnt_iv_i2i_trx_comm_high:       { filter: [ *is_iv_wo_guessing, *x_is_i2i, *is_trx_commission_high ] }
+    cnt_iv_map_trx_comm_low:        { filter: [ *is_iv, *x_is_map, *is_trx_commission_low ] }
+    cnt_iv_map_trx_comm_medium:     { filter: [ *is_iv, *x_is_map, *is_trx_commission_medium ] }
+    cnt_iv_map_trx_comm_high:       { filter: [ *is_iv, *x_is_map, *is_trx_commission_high ] }
+
 metric.uniq:
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie, item] }
     bt_clicks_grouped: { counter: bt_clicks, key: [cookie, item] }
@@ -3567,6 +3614,69 @@ metric.uniq:
     user_delivery_iv_sales:       { counter: total_delivery_iv_sales, key: [cookie] }
     user_delivery_click_sales:    { counter: total_delivery_click_sales, key: [cookie]}
     user_order_create_sales:      { counter: total_delivery_order_create_sales, key: [cookie]}
+
+    user_c_trx:                      { counter: cnt_c_trx,                   key: [cookie] }
+    user_c_serp_trx:                 { counter: cnt_c_serp_trx,              key: [cookie] }
+    user_c_u2i_trx:                  { counter: cnt_c_u2i_trx,               key: [cookie] }
+    user_c_i2i_trx:                  { counter: cnt_c_i2i_trx,               key: [cookie] }
+    user_c_map_trx:                  { counter: cnt_c_map_trx,               key: [cookie] }
+    user_c_trx_comm_low:             { counter: cnt_c_trx_comm_low,          key: [cookie] }
+    user_c_trx_comm_medium:          { counter: cnt_c_trx_comm_medium,       key: [cookie] }
+    user_c_trx_comm_high:            { counter: cnt_c_trx_comm_high,         key: [cookie] }
+    user_c_serp_trx_comm_low:        { counter: cnt_c_serp_trx_comm_low,     key: [cookie] }
+    user_c_serp_trx_comm_medium:     { counter: cnt_c_serp_trx_comm_medium,  key: [cookie] }
+    user_c_serp_trx_comm_high:       { counter: cnt_c_serp_trx_comm_high,    key: [cookie] }
+    user_c_u2i_trx_comm_low:         { counter: cnt_c_u2i_trx_comm_low,      key: [cookie] }
+    user_c_u2i_trx_comm_medium:      { counter: cnt_c_u2i_trx_comm_medium,   key: [cookie] }
+    user_c_u2i_trx_comm_high:        { counter: cnt_c_u2i_trx_comm_high,     key: [cookie] }
+    user_c_i2i_trx_comm_low:         { counter: cnt_c_i2i_trx_comm_low,      key: [cookie] }
+    user_c_i2i_trx_comm_medium:      { counter: cnt_c_i2i_trx_comm_medium,   key: [cookie] }
+    user_c_i2i_trx_comm_high:        { counter: cnt_c_i2i_trx_comm_high,     key: [cookie] }
+    user_c_map_trx_comm_low:         { counter: cnt_c_map_trx_comm_low,      key: [cookie] }
+    user_c_map_trx_comm_medium:      { counter: cnt_c_map_trx_comm_medium,   key: [cookie] }
+    user_c_map_trx_comm_high:        { counter: cnt_c_map_trx_comm_high,     key: [cookie] }
+
+    item_views_trx:                     { counter: cnt_iv_trx,                  key: [item, x] }
+    item_views_serp_trx:                { counter: cnt_iv_serp_trx,             key: [item, x] }
+    item_views_u2i_trx:                 { counter: cnt_iv_u2i_trx,              key: [item, x] }
+    item_views_i2i_trx:                 { counter: cnt_iv_i2i_trx,              key: [item, x] }
+    item_views_map_trx:                 { counter: cnt_iv_map_trx,              key: [item, x] }
+    item_views_trx_comm_low:            { counter: cnt_iv_trx_comm_low,         key: [item, x] }
+    item_views_trx_comm_medium:         { counter: cnt_iv_trx_comm_medium,      key: [item, x] }
+    item_views_trx_comm_high:           { counter: cnt_iv_trx_comm_high,        key: [item, x] }
+    item_views_serp_trx_comm_low:       { counter: cnt_iv_serp_trx_comm_low,    key: [item, x] }
+    item_views_serp_trx_comm_medium:    { counter: cnt_iv_serp_trx_comm_medium, key: [item, x] }
+    item_views_serp_trx_comm_high:      { counter: cnt_iv_serp_trx_comm_high,   key: [item, x] }
+    item_views_u2i_trx_comm_low:        { counter: cnt_iv_u2i_trx_comm_low,     key: [item, x] }
+    item_views_u2i_trx_comm_medium:     { counter: cnt_iv_u2i_trx_comm_medium,  key: [item, x] }
+    item_views_u2i_trx_comm_high:       { counter: cnt_iv_u2i_trx_comm_high,    key: [item, x] }
+    item_views_i2i_trx_comm_low:        { counter: cnt_iv_i2i_trx_comm_low,     key: [item, x] }
+    item_views_i2i_trx_comm_medium:     { counter: cnt_iv_i2i_trx_comm_medium,  key: [item, x] }
+    item_views_i2i_trx_comm_high:       { counter: cnt_iv_i2i_trx_comm_high,    key: [item, x] }
+    item_views_map_trx_comm_low:        { counter: cnt_iv_map_trx_comm_low,     key: [item, x] }
+    item_views_map_trx_comm_medium:     { counter: cnt_iv_map_trx_comm_medium,  key: [item, x] }
+    item_views_map_trx_comm_high:       { counter: cnt_iv_map_trx_comm_high,    key: [item, x] }
+
+    user_iv_trx:                        { counter: cnt_iv_trx,                   key: [cookie] }
+    user_iv_serp_trx:                   { counter: cnt_iv_serp_trx,              key: [cookie] }
+    user_iv_u2i_trx:                    { counter: cnt_iv_u2i_trx,               key: [cookie] }
+    user_iv_i2i_trx:                    { counter: cnt_iv_i2i_trx,               key: [cookie] }
+    user_iv_map_trx:                    { counter: cnt_iv_map_trx,               key: [cookie] }
+    user_iv_trx_comm_low:               { counter: cnt_iv_trx_comm_low,          key: [cookie] }
+    user_iv_trx_comm_medium:            { counter: cnt_iv_trx_comm_medium,       key: [cookie] }
+    user_iv_trx_comm_high:              { counter: cnt_iv_trx_comm_high,         key: [cookie] }
+    user_iv_serp_trx_comm_low:          { counter: cnt_iv_serp_trx_comm_low,     key: [cookie] }
+    user_iv_serp_trx_comm_medium:       { counter: cnt_iv_serp_trx_comm_medium,  key: [cookie] }
+    user_iv_serp_trx_comm_high:         { counter: cnt_iv_serp_trx_comm_high,    key: [cookie] }
+    user_iv_u2i_trx_comm_low:           { counter: cnt_iv_u2i_trx_comm_low,      key: [cookie] }
+    user_iv_u2i_trx_comm_medium:        { counter: cnt_iv_u2i_trx_comm_medium,   key: [cookie] }
+    user_iv_u2i_trx_comm_high:          { counter: cnt_iv_u2i_trx_comm_high,     key: [cookie] }
+    user_iv_i2i_trx_comm_low:           { counter: cnt_iv_i2i_trx_comm_low,      key: [cookie] }
+    user_iv_i2i_trx_comm_medium:        { counter: cnt_iv_i2i_trx_comm_medium,   key: [cookie] }
+    user_iv_i2i_trx_comm_high:          { counter: cnt_iv_i2i_trx_comm_high,     key: [cookie] }
+    user_iv_map_trx_comm_low:           { counter: cnt_iv_map_trx_comm_low,      key: [cookie] }
+    user_iv_map_trx_comm_medium:        { counter: cnt_iv_map_trx_comm_medium,   key: [cookie] }
+    user_iv_map_trx_comm_high:          { counter: cnt_iv_map_trx_comm_high,     key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
