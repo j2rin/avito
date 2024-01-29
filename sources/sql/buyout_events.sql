@@ -7,7 +7,7 @@ select
     be.eid,
     be.banner_type,
     be.buyout_screen_type,
-    be.segment,
+--     be.segment,
     be.dispatch_cd,
     be.source,
     be.event_type,
