@@ -6,6 +6,9 @@ definitions:
   - &is_cpt_revenue  {is_revenue: true, product_type: 'cpt'}
   - &is_cpa_revenue  {is_revenue: true, product_type: 'cpa'}
   - &is_profile_promo_revenue {is_revenue: true, product_type: 'vas', product_subtype: 'profile promo'}
+  - &is_subs_lf_pack_revenue {is_revenue: true, product_type: 'subscription', transaction_subtype: 'tariff lf package'}
+  - &is_vas_revenue {is_revenue: true, product_type: 'vas'}
+  - &is_lf_revenue {is_revenue: true, product_type: 'lf'}
 
 metric.counter:
   revenue_total:                                      {obs: [transaction_amount],          filter: [is_revenue: true]}
@@ -162,7 +165,7 @@ metric.counter:
   trx_promo_amount_net_adj:                           {obs: [transaction_amount_net_adj], filter: [*is_trx_revenue]}
   str_trx_amount_net_adj:                             {obs: [transaction_amount_net_adj], filter: [$or: [*is_trx_revenue, *is_str_revenue]]}
   pay_for_perf_amount_net_adj:                        {obs: [transaction_amount_net_adj], filter: [$or: [*is_trx_revenue, *is_str_revenue, *is_cpt_revenue, *is_cpa_revenue, *is_profile_promo_revenue]]}
- 
+  promo_presence_amount_net_adj:                      {obs: [transaction_amount_net_adj], filter: [$or: [*is_trx_revenue, *is_str_revenue, *is_cpt_revenue, *is_cpa_revenue, *is_profile_promo_revenue, *is_subs_lf_pack_revenue, *is_vas_revenue, *is_lf_revenue]]}
 
 
 
@@ -261,4 +264,4 @@ metric.ratio:
   cpa_advance_transactions_per_user:          {num: cpa_advance_transactions,               den: cpa_advance_users}
   cpa_advance_transactions_per_user_clicks:   {num: cpa_advance_transactions_clicks,        den: cpa_advance_users_clicks}
   cpa_advance_transactions_per_user_contacts: {num: cpa_advance_transactions_contacts,      den: cpa_advance_users_contacts}
-  pay_for_perf_amount_net_adj_share:          {num: pay_for_perf_amount_net_adj,            den: revenue_net_adj_total}
+  pay_for_perf_amount_net_adj_share:          {num: pay_for_perf_amount_net_adj,            den: promo_presence_amount_net_adj}
