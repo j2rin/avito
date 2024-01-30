@@ -319,12 +319,12 @@ metric.counter:
 
   buyer_delivery_items_paid_new:                     {filter: [{is_paid: true}, {is_delivery_paid_new: true}]}
   
-  buyer_delivery_items_created_mall:        {filter: [{is_created: true}, {is_mall: true}]}
-  buyer_delivery_items_paid_mall:        {filter: [{is_paid: true}, {is_mall: true}]}
-  buyer_delivery_items_accepted_mall:         {filter: [{is_accepted: true}, {is_mall: true}]}
-  buyer_delivery_gmv_created_mall:          {filter: [{is_created: true}, {is_mall: true}], obs: [item_price]}
-  buyer_delivery_gmv_paid_mall:          {filter: [{is_paid: true}, {is_mall: true}], obs: [item_price]}
-  buyer_delivery_gmv_accepted_mall:          {filter: [{is_accepted: true}, {is_mall: true}], obs: [item_price]}
+  buyer_delivery_items_created_mall:                     {filter: [{is_created: true}, {is_mall: true}]}
+  buyer_delivery_items_paid_mall:                     {filter: [{is_paid: true}, {is_mall: true}]}
+  buyer_delivery_items_accepted_mall:                     {filter: [{is_accepted: true}, {is_mall: true}]}
+  buyer_delivery_gmv_created_mall:                     {filter: [{is_created: true, is_mall: true}], obs: [item_price]}
+  buyer_delivery_gmv_paid_mall:                     {filter: [{is_paid: true, is_mall: true}], obs: [item_price]}
+  buyer_delivery_gmv_accepted_mall:                     {filter: [{is_accepted: true, is_mall: true}], obs: [item_price]}
 
 metric.uniq:
   buyer_delivery_orders_created:          {counter: buyer_delivery_items_created, key: [deliveryorder_id]}
