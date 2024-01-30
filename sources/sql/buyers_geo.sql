@@ -52,7 +52,6 @@ left join /*+jtype(h),distrib(l,a)*/ geo
 left join /*+jtype(h),distrib(l,a)*/ dma.current_locations cl
     ON  geo.home_city_id = cl.location_id
 
-
 left join /*+jtype(h),distrib(l,a)*/ (
     select infmquery_id, logcat_id
     from infomodel.current_infmquery_category
