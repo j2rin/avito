@@ -319,12 +319,7 @@ metric.counter:
 
   buyer_delivery_items_paid_new:                     {filter: [{is_paid: true}, {is_delivery_paid_new: true}]}
   
-  buyer_delivery_items_created_mall:                     {filter: [{is_created: true}, {is_mall: true}]}
-  buyer_delivery_items_paid_mall:                     {filter: [{is_paid: true}, {is_mall: true}]}
-  buyer_delivery_items_accepted_mall:                     {filter: [{is_accepted: true}, {is_mall: true}]}
-  buyer_delivery_gmv_created_mall:                     {filter: [{is_created: true, is_mall: true}], obs: [item_price]}
-  buyer_delivery_gmv_paid_mall:                     {filter: [{is_paid: true, is_mall: true}], obs: [item_price]}
-  buyer_delivery_gmv_accepted_mall:                     {filter: [{is_accepted: true, is_mall: true}], obs: [item_price]}
+  buyer_delivery_items_created_mall:				 {filter: [{is_created: true}, {is_mall: true}]}
 
 metric.uniq:
   buyer_delivery_orders_created:          {counter: buyer_delivery_items_created, key: [deliveryorder_id]}
@@ -571,8 +566,3 @@ metric.ratio:
   buyer_delivery_accepted_paid_ratio_start_date:  { num: buyer_delivery_orders_accepted_start_date, den: buyer_delivery_orders_paid_start_date }
 
   buyer_delivery_purchases_created_mall:       {counter: buyer_delivery_items_created_mall, key: [purchase_id]} # созданные покупки
-  buyer_delivery_purchases_paid_mall:          {counter: buyer_delivery_items_paid_mall, key: [purchase_id]} # оплаченные покупки
-  buyer_delivery_orders_created_mall:          {counter: buyer_delivery_items_created_mall, key: [deliveryorder_id]}
-  buyer_delivery_orders_paid_mall:             {counter: buyer_delivery_items_paid_mall, key: [deliveryorder_id]}
-  buyer_delivery_orders_accepted_mall:         {counter: buyer_delivery_items_accepted_mall, key: [deliveryorder_id]}
-
