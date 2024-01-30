@@ -47,7 +47,7 @@ left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm
     on csc.microcat_id = cm.microcat_id
 
 left join /*+jtype(h),distrib(l,a)*/ geo
-      on csc.User_id = geo.participant_id and csc.eventdate::date = geo.event_date
+      on csc.User_id = geo.participant_id and date(csc.eventdate) = geo.event_date
 
 left join /*+jtype(h),distrib(l,a)*/ dma.current_locations cl
     ON  geo.home_city_id = cl.location_id
