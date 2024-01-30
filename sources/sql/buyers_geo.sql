@@ -47,7 +47,7 @@ left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm
     on csc.microcat_id = cm.microcat_id
 
 left join /*+jtype(h),distrib(l,a)*/ geo
-      on csc.User_id = geo.participant_id and csc.eventdate = geo.event_date
+      on csc.User_id = geo.participant_id and csc.eventdate::date = geo.event_date
 
 left join /*+jtype(h),distrib(l,a)*/ dma.current_locations cl
     ON  geo.home_city_id = cl.location_id
@@ -84,8 +84,6 @@ left join /*+jtype(h),distrib(l,a)*/ (
 ) bb
     on   csc.cookie_id = bb.cookie_id
     and  lc.logical_category_id = bb.logical_category_id
-
-
 
 
 where csc.cookie_id is not null
