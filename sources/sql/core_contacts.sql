@@ -29,11 +29,11 @@ select /*+syntactic_join*/
     coalesce(usm.user_segment, ls.segment)                           as user_segment_market,
     coalesce(cpg.price_group, 'Undefined')                      as price_group,
     csc.location_id,
-    case coalesce(cl.level, cl_2.level) when 3 then coalesce(cl.ParentLocation_id, cl_2.ParentLocation_id) else coalesce(cl.Location_id, cl_2.Location_id) end as region_id,
-    case coalesce(cl.level, cl_2.level) when 3 then coalesce(cl.Location_id, cl_2.Location_id) end as city_id,
-    coalesce(cl.LocationGroup_id , cl_2.LocationGroup_id)                                  as location_group_id,
-    coalesce(cl.City_Population_Group, cl_2.City_Population_Group)                         as population_group,
-    coalesce(cl.Logical_Level, cl_2.Logical_Level)                                         as location_level_id,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case cl.level when 3 then cl.Location_id end                           as city_id,
+    cl.LocationGroup_id                                         as location_group_id,
+    cl.City_Population_Group                                    as population_group,
+    cl.Logical_Level                                            as location_level_id,
     cast(null as varchar) as user_segment,
     csc.user_id,
     lc.logical_param1_id,
@@ -44,8 +44,6 @@ left join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm
     on csc.microcat_id = cm.microcat_id
 left join /*+jtype(h),distrib(l,a)*/ dma.current_locations cl
     ON  csc.Location_id = cl.location_id
-left join /*+jtype(h),distrib(l,a)*/ dma.current_locations cl_2
-    ON  csc.Location_id = cl_2.location_id
 
 left join /*+jtype(h),distrib(l,a)*/ (
     select infmquery_id, logcat_id
