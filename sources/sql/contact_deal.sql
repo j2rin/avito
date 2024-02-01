@@ -102,6 +102,7 @@ from (
                 'notification_call_back'
             )
            and cast(AppCallStart as date) between :first_date and :last_date
+           --and appcallstart_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
     )
 ) t
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = t.microcat_id
