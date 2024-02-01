@@ -1,7 +1,18 @@
 metric.counter:
   buyer_reviews_list_open:            {filter: [eid: 7604], }
   buyer_reviews_add_open_page:        {filter: [eid: 7605], }
+  buyer_reviews_add_review:           {filter: [eid: 7606], }
+  buyer_reviews_text_open_page:       {filter: [eid: 3058], }
+  buyer_reviews_photo_open_page:      {filter: [eid: 4685], }
+  buyer_reviews_dont_want_button:     {filter: [eid: 3469], }
+  buyer_reviews_triggers_sent:        {filter: [eid: 8261, review_request_sent_result: 'sent'], }
 
 metric.uniq:
-  user_buyer_reviews_list_open:           {counter: buyer_reviews_list_open,        key: [user]}
-  user_buyer_reviews_add_open_page:       {counter: buyer_reviews_add_open_page,    key: [user]}
+  user_buyer_reviews_list_open:       {counter: buyer_reviews_list_open,        key: [user]}
+  user_buyer_reviews_add_open_page:   {counter: buyer_reviews_add_open_page,    key: [user]}
+
+metric.ratio:
+  cr_trigger_to_review:         {num: buyer_reviews_add_review, den: buyer_reviews_triggers_sent}
+  cr_open_page_to_text:         {num: buyer_reviews_text_open_page, den: buyer_reviews_add_open_page}
+  cr_text_to_photo:             {num: buyer_reviews_photo_open_page, den: buyer_reviews_text_open_page}
+  cr_text_to_review:            {num: buyer_reviews_add_review, den: buyer_reviews_text_open_page}
