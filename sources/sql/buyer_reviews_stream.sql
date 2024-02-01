@@ -75,7 +75,7 @@ from (
                      coalesce(case when eid = 8261 then buyer_review_request_type else review_add_trigger end, 'null') as review_add_trigger,
                      coalesce(order_status, 'null')                                                                    as order_status,
                      coalesce(buyer_review_form_type, 'null')                                                          as buyer_review_form_type,
-                     cast(max(cast(cbr.buyer_review_id is not null as int)) as bool)                                   as has_review
+                     cast(max(cast(cbr.buyer_review_id is not null as int)) as boolean)                                   as has_review
               from dma.buyer_reviews_stream brs
               left join orders o
                  on brs.internal_orderid = o.deliveryorder_id and buyer_review_form_type = 'goods'
