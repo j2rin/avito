@@ -4,7 +4,7 @@ with orders as (
            count(distinct location_id) as count_locations,
            max(microcat_id) as microcat_id,
            max(location_id) as location_id,
-           count_microcats > 1 or count_locations > 1 as is_mixed_order
+           count(distinct microcat_id) > 1 or count(distinct location_id) > 1 as is_mixed_order
     from dma.current_order_item
     group by 1
     ),
