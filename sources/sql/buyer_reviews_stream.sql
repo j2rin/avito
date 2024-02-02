@@ -1,4 +1,3 @@
-explain
 with orders as (
     select coi.deliveryorder_id,
            Microcat_id,
