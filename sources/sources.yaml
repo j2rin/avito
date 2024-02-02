@@ -3112,9 +3112,31 @@ buyer_reviews_stream:
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      user_segment_market,
+      has_review,
+      review_add_trigger,
+      review_page_from,
+      order_status,
+      buyer_review_form_type
+    ]
   participant: { visitor: cookie_id, user: user_id }
-  primary_subject: visitor
+  primary_subject: user
   dtm: event_date
 
 buyer_reviews:
@@ -3140,9 +3162,15 @@ buyer_reviews:
       location_group,
       population_group,
       location_level,
+      user_segment_market,
+      has_review,
+      review_add_trigger,
+      review_page_from,
+      order_status,
+      buyer_review_form_type
     ]
   participant: { visitor: cookie_id, user: user_id }
-  primary_subject: visitor
+  primary_subject: user
   dtm: event_date
 
 fraud_tickets_user_reported:
