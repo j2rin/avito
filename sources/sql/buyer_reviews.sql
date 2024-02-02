@@ -5,7 +5,6 @@ with seller_has_review as (
     )
 select
     cast(cbr.create_date as date) as event_date,
-    create_year,
     rpc.cookie_id,
     cbr.from_user_id as user_id,
     cbr.to_user_id as buyer_id,
