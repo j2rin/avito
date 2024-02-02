@@ -45,4 +45,4 @@ from dma.current_buyer_reviews as cbr
     left join dict.segmentation_ranks sr on sr.logical_category_id = cm.logical_category_id and is_default
     left join seller_has_review r on cbr.from_user_id = r.from_user_id
 where cast(cbr.create_date as date) between :first_date and :last_date
-and create_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+-- and create_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
