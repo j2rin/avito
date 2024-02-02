@@ -22,7 +22,7 @@ with am_client_day as (
     from DMA.messenger_chat_flow_report
     where cast(start_flow_time as date) <= :last_date
         and cast(end_flow_time as date) >= :first_date
-        -- and start_flow_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+        -- and start_flow_year is not null -- @trino
 )
  select
  	chr.chat_id,
@@ -103,4 +103,4 @@ where true
             cast(first_message_event_date as date) between :first_date and :last_date
         or  cast(reply_time as date) between :first_date and :last_date
     )
-    -- and min_event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+    -- and min_event_year is not null -- @trino

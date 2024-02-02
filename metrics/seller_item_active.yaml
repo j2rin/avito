@@ -116,6 +116,11 @@ metric.counter:
   items_with_street_500m_from_location_reactivated: {filter: [{activations_count.>: 1}, {is_active: True}, {last_activation_date: $event_date}, {location_distance.<=: 0.5}, {min_kind_level: [50]}]}
   items_with_street_new:                   {filter: [{is_active: True}, {min_kind_level: 50}, {start_date: $event_date}]}
   items_with_street_reactivated:           {filter: [{activations_count.>: 1}, {is_active: True}, {last_activation_date: $event_date}, {min_kind_level: 50}]}
+  items_multiaddress:                      {filter: [{addresses_count.>=: 2}, {is_active: True}]}
+  items_multiaddress_3plus:                {filter: [{addresses_count.>=: 3}, {is_active: True}]}
+  items_multiaddress_4plus:                {filter: [{addresses_count.>=: 4}, {is_active: True}]}
+  items_multiaddress_5plus:                {filter: [{addresses_count.>=: 5}, {is_active: True}]}
+  items_multiaddress_10plus:               {filter: [{addresses_count.>=: 10}, {is_active: True}]}
   seller_item_views:                       {obs: [item_views]}
   seller_iv_video:                         {filter: [{has_short_video: True}], obs: [item_views]}
   seller_item_views_cpa:                   {filter: [{is_item_cpa: True}], obs: [item_views]}
@@ -370,12 +375,12 @@ metric.uniq:
   sellers_with_delivery_click:                      {counter: seller_delivery_clicks,           key: [user]}
   delivery_sellers_with_contact:                    {counter: seller_contacts_on_delivery_items, key: [user]}
   delivery_available_sellers_with_contact:          {counter: seller_contacts_on_deliverable_items, key: [user]}
-  sellers_with_rating_1_new:                {counter: items_with_rating_1,             key: [user]}
-  sellers_with_rating_2_new:                {counter: items_with_rating_2,             key: [user]}
-  sellers_with_rating_3_new:                {counter: items_with_rating_3,             key: [user]}
-  sellers_with_rating_4_new:                {counter: items_with_rating_4,             key: [user]}
-  sellers_with_rating_5_new:                {counter: items_with_rating_5,             key: [user]}
-  sellers_with_rating_new:                  {counter: items_with_rating,               key: [user]}
+  user_active_items_with_rating_1:                	{counter: items_with_rating_1,             key: [user]}
+  user_active_items_with_rating_2:                	{counter: items_with_rating_2,             key: [user]}
+  user_active_items_with_rating_3:                	{counter: items_with_rating_3,             key: [user]}
+  user_active_items_with_rating_4:                	{counter: items_with_rating_4,             key: [user]}
+  user_active_items_with_rating_5:                	{counter: items_with_rating_5,             key: [user]}
+  user_active_items_with_rating:                  	{counter: items_with_rating,               key: [user]}
   listers_with_rating_1:                    {counter: items_with_rating_1,             key: [user_id, logical_category_id]}
   listers_with_rating_2:                    {counter: items_with_rating_2,             key: [user_id, logical_category_id]}
   listers_with_rating_3:                    {counter: items_with_rating_3,             key: [user_id, logical_category_id]}
@@ -402,6 +407,12 @@ metric.uniq:
   active_items_vas_have_duplicate:         {counter: cnt_active_items_vas_have_duplicate,    key: [item]}
   users_active_items_have_duplicate:       {counter: cnt_active_items_have_duplicate,        key: [user]}
   users_active_items_vas_have_duplicate:   {counter: cnt_active_items_vas_have_duplicate,    key: [user]}
+  user_active_items_multiaddr:              {counter: items_multiaddress,    key: [user]}
+  user_active_items_multiaddr_3plus:        {counter: items_multiaddress_3plus,    key: [user]}
+  user_active_items_multiaddr_4plus:        {counter: items_multiaddress_4plus,    key: [user]}
+  user_active_items_multiaddr_5plus:        {counter: items_multiaddress_5plus,    key: [user]}
+  user_active_items_multiaddr_10plus:       {counter: items_multiaddress_10plus,   key: [user]}
+
 
 
 metric.ratio:
@@ -436,10 +447,11 @@ metric.ratio:
   seller_contact_per_active_deliverable_item:         {num: seller_contacts_on_deliverable_items,       den: items_delivery_available   }
   items_delivery_ratio:                               {num: items_with_delivery,                        den: items_delivery_available   }
   items_rating_coverage:                              {num: items_with_rating,                          den: active_items,              }
+  items_item_rating_coverage:                         {num: items_with_item_rating,                     den: active_items,              }
   items_reputation_high_coverage:                     {num: active_items_reputation_high,               den: active_items,              }
   items_reputation_medium_coverage:                   {num: active_items_reputation_medium,             den: active_items,              }
   items_reputation_low_coverage:                      {num: active_items_reputation_low,                den: active_items,              }
-  sellers_rating_coverage:                            {num: sellers_with_rating_new,                    den: users_active_items,        }
+  sellers_rating_coverage:                  		  {num: user_active_items_with_rating,              den: users_active_items,        }
   items_delivery_ratio_start_date:                    {num: active_items_delivery_on_start_date,        den: active_items_deliverable_start_date}
   sellers_items_delivery_ratio_start_date:            {num: user_active_items_delivery_on_start_date,   den: user_active_items_deliverable_start_date}
   items_delivery_seller_discount_ratio:               {num: items_with_delivery_seller_discount,        den: items_with_delivery        }

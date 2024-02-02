@@ -268,7 +268,7 @@ perf_web:
   sql: perf_web
   column_map:
     cookie: cookie_id
-  dimensions: [platform, network_type, screen_name, stage_name]
+  dimensions: [platform, network_type, screen_name, stage_name, vertical]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: observation_date
@@ -519,6 +519,7 @@ delivery_orders_buyer:
     - c2c_return_within_14_days
     - payment_flow
     - in_sale
+    - has_sbp_bindings
   participant: { user: buyer_id }
   primary_subject: user
   dtm: status_date
@@ -1340,7 +1341,6 @@ clickstream_sparse.clickhouse:
   sql: clickstream_sparse
   column_map:
     platform_id: business_platform
-    cookie: u
     item: iid
     x_eid: __x_eid
     q: __x_q
@@ -2179,6 +2179,17 @@ re_nd_buyer_stream:
   primary_subject: visitor
   dtm: event_date
 
+re_nd_cpa_call_revenue:
+  metric_configs: [re_nd_cpa_call_revenue]
+  connections: [vertica, trino]
+  sql: re_nd_cpa_call_revenue
+  column_map:
+    cookie: cookie_id
+    x_eid: x_eid
+  participant: {visitor: cookie_id}
+  primary_subject: visitor
+  dtm: event_date
+
 autoteka_new_buyer_expected_revenue_ap:
   metric_configs: [autoteka_new_buyer_expected_revenue_ap]
   connections: [vertica, trino]
@@ -2359,6 +2370,7 @@ performance_fps:
   dimensions:
     - platform
     - screen_name
+    - vertical
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
@@ -3248,7 +3260,6 @@ buyout_events:
   column_map:
     user: user_id
     item: item_id
-    user_segment_market: segment
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
@@ -3395,7 +3406,7 @@ buyout_requests:
   dtm: event_date
 
 
-credit_с2с:
+credit_c2c:
   metric_configs: [ credit_c2cloans ]
   connections: [ vertica ]
   sql: clickstream_c2c_counters
@@ -3496,7 +3507,7 @@ installments_goods:
 
 buyers_geo:
   metric_configs: [ buyers_geo ]
-  connections: [trino]
+  connections: [vertica, trino]
   sql: buyers_geo
   column_map:
     cookie: cookie_id
@@ -3514,11 +3525,7 @@ buyers_geo:
       city,
       location_group,
       population_group,
-      location_level,
-      price_group,
-      is_asd,
-      user_segment_market,
-      asd_user_group
+      location_level
     ]
   participant: { visitor: cookie_id }
   primary_subject: visitor

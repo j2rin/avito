@@ -2,7 +2,7 @@ with
 das as (
     select
         autotekauser_id,
-        reports_count,
+        reports_count * 1.000000000000000000 as reports_count,
         user_created_at,
         event_date,
         searchtype,

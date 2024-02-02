@@ -42,7 +42,6 @@
         metric_configs:
           [
             app_call_bx,
-            all_communications_bx,
             app_call_sx,
             all_communications_sx,
             chatbot_metrics_end,
@@ -222,6 +221,7 @@
       {
         metric_configs:
           [
+            all_communications_bx,
             core_contacts,
             core_contact_user,
             deal_confirmed,
@@ -359,6 +359,10 @@
               user_segment_market
             ],
           ],
+      },
+      {
+        metric_configs: [re_nd_cpa_call_revenue],
+        cubes: [],
       },
     ],
   cubes_by_metric_sets:
@@ -1068,7 +1072,7 @@
         cubes:
           [
             [category, subcategory, param1, platform],
-            [price_group, platform],
+            [platform],
             [
               vertical,
               logical_category,
@@ -1077,6 +1081,19 @@
               region,
               platform,
             ],
+          ],
+      },
+      {
+        metrics: [contacts_calendar],
+        cubes:
+          [
+            [vertical, 
+             logical_category,
+             logical_param1, 
+             logical_param2, 
+             platform, 
+             region, 
+             is_logged_in]
           ],
       },
     ],
