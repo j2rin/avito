@@ -44,7 +44,7 @@ select
     ,lc.logical_param2_id
     ,coalesce(cpg.price_group, 'Undefined') as price_group
 from dma.all_contacts a
-left join dma.current_microcategories cm using (microcat_id)
+left join dma.current_microcategories cm on cm.microcat_id = a.microcat_id
 left join dma.current_locations as cl on cl.location_id = a.location_id
 left join /*+distrib(a,l)*/ (
     select infmquery_id, logcat_id
@@ -54,7 +54,7 @@ left join /*+distrib(a,l)*/ (
         from dma.all_contacts
         where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
-            -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+            -- and event_month between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
     )
 ) ic
     on ic.infmquery_id = a.infmquery_id
@@ -75,7 +75,7 @@ left join (
 
 left join /*+distrib(a,l)*/ (
     select user_id, logical_category_id, user_segment as user_segment_market, converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where converting_date <= :last_date
 ) as usm
@@ -95,7 +95,7 @@ left join /*+distrib(a,l)*/ (
             from dma.all_contacts
             where cast(event_date as date) between :first_date and :last_date
                 and item_id is not null
-                -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+                -- and event_month between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
         )
         and from_date <= :last_date
         and to_date >= :first_date
@@ -108,4 +108,5 @@ left join dict.current_price_groups cpg
     and  cif.price >= cpg.min_price
     and  cif.price <  cpg.max_price
 where true 
-    and cast(a.event_date as date) between :first_date and :last_date 
+    and cast(a.event_date as date) between :first_date and :last_date
+    -- and event_month between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
