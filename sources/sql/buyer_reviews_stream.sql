@@ -59,7 +59,7 @@ from (
               left join dma.current_item ci on brs.item_id = ci.item_id and buyer_review_form_type != 'goods' -- забираю микрокат айтема не из goods (1 заказ = 1 айтем)
               left join seller_has_review cbr on brs.seller_id = from_user_id
               where cast(event_timestamp as date) between :first_date and :last_date
-              and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+              -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
               ) t1
               left join dma.current_microcategories cm on t1.microcat_id = cm.microcat_id
               left join dma.current_locations cl on t1.Location_id = cl.Location_id
