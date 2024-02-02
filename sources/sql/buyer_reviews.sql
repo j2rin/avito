@@ -40,5 +40,5 @@ from (
                                             and cm.logical_category_id = usm.logical_category_id
         left join dict.segmentation_ranks sr on sr.logical_category_id = cm.logical_category_id and is_default
     ) data
-where cast(create_date as date) between :first_date and :last_date
+where cast(event_date as date) between :first_date and :last_date
 --and create_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
