@@ -46,7 +46,7 @@ select
 from dma.all_contacts a
 left join dma.current_microcategories cm using (microcat_id)
 left join dma.current_locations as cl on cl.location_id = a.location_id
-left join (
+left join /*+distrib(a,l)*/ (
     select infmquery_id, logcat_id
     from infomodel.current_infmquery_category
     where infmquery_id in (
@@ -71,46 +71,39 @@ left join (
     where true
         and asd.active_from_date <= :last_date
         and asd.active_to_date >= :first_date
-    ) asd on a.seller_id = asd.user_id and cast(a.event_date as date) between asd.active_from_date and asd.active_to_date
-left join (
+) asd on a.seller_id = asd.user_id and cast(a.event_date as date) between asd.active_from_date and asd.active_to_date
+
+left join /*+distrib(a,l)*/ (
+    select user_id, logical_category_id, user_segment as user_segment_market, converting_date,
+        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+    from DMA.user_segment_market
+    where converting_date <= :last_date
+) as usm
+    on a.seller_id = usm.user_id
+    and cm.logical_category_id = usm.logical_category_id
+    and cast(a.event_date as date) >= converting_date and cast(a.event_date as date) < next_converting_date
+
+left join /*+distrib(a,l)*/ (
     select
-        usm.user_id,
-        usm.logical_category_id,
-        usm.user_segment as user_segment_market,
-        c.event_date
-    from (
-        select
-            user_id,
-            logical_category_id,
-            user_segment,
-            converting_date as from_date,
-            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
-        from DMA.user_segment_market
-        where true
-            and converting_date <= :last_date
-    ) usm
-    join dict.calendar c on c.event_date between :first_date and :last_date
-    where c.event_date >= usm.from_date and c.event_date < usm.to_date
-        and usm.to_date >= :first_date
-) usm on a.seller_id = usm.user_id and cm.logical_category_id = usm.logical_category_id and cast(a.event_date as date) = usm.event_date  
-left join (
-    select item_id, price, actual_date from (
-        select
-            item_id, price, actual_date,
-            row_number() over (partition by item_id order by actual_date desc) as rn
-        from dds.S_Item_Price
-        where item_id in (
+        item_id,
+        from_date,
+        to_date,
+  		price
+    from dma.item_attr_log
+    where item_id in (
             select distinct item_id
-            from dma.click_stream_contacts
-            where cast(eventdate as date) between :first_date and :last_date
+            from dma.all_contacts
+            where cast(event_date as date) between :first_date and :last_date
                 and item_id is not null
                 -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
         )
-    )t
-    where rn = 1
+        and from_date <= :last_date
+        and to_date >= :first_date
 ) cif
-    on a.item_id = cif.item_id
-left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups cpg
+    on cif.item_id = a.item_id
+    and cast(a.event_date as date) between cif.from_date and cif.to_date
+
+left join dict.current_price_groups cpg
     on   lc.logical_category_id = cpg.logical_category_id
     and  cif.price >= cpg.min_price
     and  cif.price <  cpg.max_price
