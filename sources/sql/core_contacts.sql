@@ -63,7 +63,7 @@ left join /*+jtype(h),distrib(l,a)*/ dict.segmentation_ranks ls
     on   ls.logical_category_id = lc.logical_category_id
     and  ls.is_default
 
-left join /*+jtype(h),distrib(l,a)*/ (
+left join (
     select cookie_id, logical_category_id, first_contact_event_date
     from dma.buyer_birthday
     where cookie_id in (
@@ -78,7 +78,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     on   csc.cookie_id = bb.cookie_id
     and  lc.logical_category_id = bb.logical_category_id
 
-left join /*+jtype(h),distrib(l,a)*/ (
+left join (
     select
         user_id,
         logical_category_id, user_segment,
@@ -92,7 +92,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     and csc.eventdate >= usm.converting_date
     and csc.eventdate < usm.next_converting_date
 
-left join /*+jtype(h),distrib(l,a)*/ (
+left join (
     select user_id,
            active_from_date,
            active_to_date,
@@ -104,23 +104,25 @@ left join /*+jtype(h),distrib(l,a)*/ (
     on   acd.user_id = csc.item_user_id
     and  cast(csc.eventdate as date) between acd.active_from_date and acd.active_to_date
 
-left join /*+jtype(h),distrib(l,a)*/ (
-    select item_id, price, actual_date from (
-        select
-            item_id, price, actual_date,
-            row_number() over (partition by item_id order by actual_date desc) as rn
-        from dds.S_Item_Price
-        where item_id in (
+left join (
+    select
+        item_id,
+        from_date,
+        to_date,
+  		price
+    from dma.item_attr_log
+    where item_id in (
             select distinct item_id
             from dma.click_stream_contacts
             where cast(eventdate as date) between :first_date and :last_date
                 and item_id is not null
                 -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
         )
-    )t
-    where rn = 1
+        and from_date <= :last_date
+        and to_date >= :first_date
 ) cif
-    on csc.item_id = cif.item_id
+    on cif.item_id = csc.item_id
+    and cast(csc.eventdate as date) between cif.from_date and cif.to_date
 
 left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups cpg
     on   lc.logical_category_id = cpg.logical_category_id
