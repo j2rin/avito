@@ -34,6 +34,6 @@ from (
         union all
         select 'acceptance' as cohort
     )c
---     where event_date_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+--     where event_date_year is not null -- @trino
 ) dhr
 where cast(event_time as date) between :first_date and :last_date
