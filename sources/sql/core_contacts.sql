@@ -73,7 +73,7 @@ left join (
             and cookie_id is not null
             -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
     )
-        -- and first_contact_event_year > date('2000-01-01') -- @trino
+        -- and first_contact_event_year is not null -- @trino
 ) bb
     on   csc.cookie_id = bb.cookie_id
     and  lc.logical_category_id = bb.logical_category_id
