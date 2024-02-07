@@ -87,7 +87,18 @@ with item_add_chain_metrics as (select
       coalesce(lc.vertical_id, cm.vertical_id)                       as vertical_id,
       coalesce(lc.logical_category_id, cm.logical_category_id)       as logical_category_id
 from dma.item_add_chain_metrics t
-left join infomodel.current_infmquery_category ic on ic.infmquery_id = t.infmquery_id
+left join (
+    select infmquery_id, logcat_id, microcat_id
+    from infomodel.current_infmquery_category
+    where infmquery_id in (
+        select distinct infmquery_id
+        from dma.item_add_chain_metrics
+        where infmquery_id is not null
+            and cast(chain_start_time as date) between :first_date and :last_date
+--             and chain_start_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+    )
+) ic
+    on ic.infmquery_id = t.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join DMA.current_microcategories cm on cm.microcat_id = t.microcat_id
 where user_id is not null
@@ -185,7 +196,7 @@ select
       coalesce(usm.user_segment, ls.segment) as user_segment_market
 from item_add_chain_metrics t
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = t.logical_category_id and ls.is_default
-left join /*+distrib(l,a)*/ (
+left join (
     select
         user_id,
         logical_category_id,
