@@ -8,6 +8,7 @@ filtered_data as (
             from dma.controlled_deals cd
             where deal_type not in ('buyer_rejected_deal', 'delivered_item')
     --             and cast(event_date as date) between :first_date and :last_date
+                --and event_year is not null -- @trino
             union all
             select
                 cast(co.accept_date as date) as event_date,
@@ -17,7 +18,6 @@ filtered_data as (
             from dma.current_order_item coi
             join dma.current_order co on co.deliveryorder_id = coi.deliveryorder_id
             where true
-                -- and 'delivered_item' in ({{deal_type}})
                 and co.accept_date is not null
                 and coi.seller_id not in (select User_id from dma."current_user" where IsTest)
     --             and cast(co.accept_date as date) between :first_date and :last_date
@@ -48,7 +48,7 @@ left join (
         logical_category_id,
         user_segment,
         converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
 ) usm
     on ci.user_id = usm.user_id
