@@ -10,11 +10,12 @@ with tmp_reviews_with_status as (
     from DMA.review_moder_events cs
     where EventType_id in  (169073000001, 169075750001)                         --Событие 2990 - Рейтинги и отзывы / Модерация отзывов / Отзыв не прошел модерацию; --Событие 2989 Рейтинги и отзывы / Модерация отзывов / Отзыв прошел модерацию
             and cast(EventDate as date) >= cast('2023-01-01' as date)
-            -- and cast(event_year as date) >= cast('2023-01-01' as date) -- @trino
+--             and cast(event_year as date) >= cast('2023-01-01' as date) -- @trino
 ),
 tmp_unique_declined_reviews as (
-    select * from tmp_reviews_with_status 
-        where rn = 1
+    select *
+    from tmp_reviews_with_status
+    where rn = 1
 )
 select
     udr.event_date,
@@ -52,7 +53,7 @@ select
 from tmp_unique_declined_reviews as udr
 join dma.current_reviews                                as cr on cr.review_id   = udr.review_id
 left join /*+jtype(fm)*/ dma.review_params_clickstream  as rpc on cr.review_id   = rpc.review_id
+                                                                -- and rpc.create_year is not null -- @trino
 left join /*+jtype(h)*/  dma.current_microcategories    as cm  on cr.microcat_id = cm.microcat_id
 left join /*+jtype(h)*/  dma.current_locations          as cl  on cr.Location_id = cl.location_id
-where event_date between :first_date and :last_date
---and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+where udr.event_date between :first_date and :last_date
