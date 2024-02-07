@@ -54,7 +54,7 @@ left join /*+distrib(a,l)*/ (
         from dma.all_contacts
         where cast(event_date as date) between :first_date and :last_date
             and infmquery_id is not null
-            -- and event_month between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+            -- and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
     )
 ) ic
     on ic.infmquery_id = a.infmquery_id
@@ -95,7 +95,7 @@ left join /*+distrib(a,l)*/ (
             from dma.all_contacts
             where cast(event_date as date) between :first_date and :last_date
                 and item_id is not null
-                -- and event_month between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+                -- and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
         )
         and from_date <= :last_date
         and to_date >= :first_date
@@ -109,4 +109,4 @@ left join dict.current_price_groups cpg
     and  cif.price <  cpg.max_price
 where true 
     and cast(a.event_date as date) between :first_date and :last_date
-    -- and event_month between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+    -- and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
