@@ -1,12 +1,6 @@
-with  user_segment_market as (
-    select
-        user_id, logical_category_id, user_segment,
-        timestampadd('s', 86399, cast(converting_date as timestamp(0))) converting_date
-    from dma.user_segment_market
-)
 select
     tf.user_id,
-    cast(tf.event_date as date) event_date,
+    cast(tf.event_date as date) as event_date,
     pt.platform_id,
     cm.vertical_id          as vertical_id,
     cm.logical_category_id  as logical_category_id,
@@ -25,7 +19,27 @@ select
 from 		dma.tariff_funnel 				tf
 left join 	dds.h_platform 					pt 	on lower(tf.source_platform_name) = lower(pt.external_id)
 left join 	dma.current_microcategories 	cm 	on tf.source_microcat_id = cm.microcat_id
-left join 	dma.am_client_day 				am 	on tf.user_id = am.user_id 	and tf.event_date = am.event_date and am.user_is_asd_recognised
-left join 	user_segment_market 		    usm on tf.user_id = usm.user_id and cm.logical_category_id = usm.logical_category_id and tf.event_date interpolate previous value usm.converting_date
+left join (
+    select user_id, event_date, user_is_asd_recognised
+    from dma.am_client_day am
+    where cast(am.event_date as date) between :first_date and :last_date
+        -- and am.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+) am on tf.user_id = am.user_id and tf.event_date = am.event_date and am.user_is_asd_recognised
+
+left join (
+    select
+        user_id,
+        logical_category_id,
+        user_segment,
+        converting_date,
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+    from DMA.user_segment_market
+    where cast(converting_date as date) <= :last_date
+) usm
+    on  tf.user_id = usm.user_id
+    and cm.logical_category_id = usm.logical_category_id
+    and tf.event_date >= usm.converting_date and tf.event_date < usm.next_converting_date
+
 left join 	dict.segmentation_ranks 		ls 	on cm.logical_category_id = ls.logical_category_id and is_default
 where cast(tf.event_date as date) between :first_date and :last_date
+    -- and tf.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
