@@ -312,6 +312,8 @@ definitions:
     - &is_s_mall_filter     { search_flags.bit: 44 }
     - &is_s_from_mall       { search_flags.bit: 48 }
     - &x_is_mall_widget     { x_eid: 5516, x_from_page.ilike: 'mall_%' }
+    - &x_is_extra_vector_mall_filter    { search_flags.bit: [19, 44] }
+    - &x_is_extra_vector_from_mall    { search_flags.bit: [19, 48] }
 
     - &is_new_btc { new_user_btc: true }
     - &is_old_btc { new_user_btc: false }
@@ -1960,8 +1962,8 @@ metric.counter:
     cnt_cs_vec_mall_filter: { filter: [*is_contact_wo_guessing, *is_serp_vector, *x_is_search, *is_s_mall_filter] }
     cnt_iv_vec_from_mall: { filter: [*is_iv_wo_guessing, *is_serp_vector, *x_is_search, *is_s_from_mall] }
     cnt_iv_vec_mall_filter: { filter: [*is_iv_wo_guessing, *is_serp_vector, *x_is_search, *is_s_mall_filter] }
-    searches_extra_vector_from_mall: { filter: [*is_search, *x_is_extra_vector, *is_s_from_mall] }
-    searches_extra_vector_mall_filter: { filter: [*is_search, *x_is_extra_vector, *is_s_mall_filter] }
+    searches_extra_vector_from_mall: { filter: [*is_search, *x_is_extra_vector_from_mall] }
+    searches_extra_vector_mall_filter: { filter: [*is_search, *x_is_extra_vector_mall_filter] }
 
     c_callback: { filter: [*is_back_call] }
     c_callback_recallme: { filter: [*is_back_call_recallme] }
