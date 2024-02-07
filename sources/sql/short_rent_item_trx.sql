@@ -42,9 +42,31 @@ select
     coalesce(usm.user_segment, ls.segment) as user_segment_market
 from item_data as t
 left join am_client_day as acd on acd.user_id = t.user_id and t.event_date between acd.active_from_date and acd.active_to_date
-left join dma.user_segment_market usm on t.user_id = usm.user_id and t.logical_category_id = usm.logical_category_id
-                                                                 and t.event_date interpolate previous value usm.converting_date
+left join /*+jtype(h),distrib(l,r)*/ (
+    select
+        usm.user_id,
+        usm.logical_category_id,
+        usm.user_segment,
+        c.event_date
+    from (
+        select
+            user_id,
+            logical_category_id,
+            user_segment,
+            converting_date as from_date,
+            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
+        from DMA.user_segment_market
+        where true
+            and converting_date <= :last_date
+    ) usm
+    join dict.calendar c on c.event_date between :first_date and :last_date
+    where c.event_date >= usm.from_date and c.event_date < usm.to_date
+        and usm.to_date >= :first_date
+) usm
+    on  t.user_id = usm.user_id
+    and t.logical_category_id = usm.logical_category_id
+    and t.event_date = usm.event_date
 left join dict.segmentation_ranks ls on ls.logical_category_id = t.logical_category_id and ls.is_default
 left join dma.current_locations cl on cl.Location_id = t.location_id
 where rnb = 1 and ShortTermRent
-and cast(event_date as date) between :first_date and :last_date
+and cast(t.event_date as date) between :first_date and :last_date
