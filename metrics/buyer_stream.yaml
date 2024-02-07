@@ -1937,6 +1937,7 @@ metric.counter:
     iv_s_mall_filter: { filter: [*is_s_mall_filter, *is_iv] }
     c_s_mall_filter: { filter: [*is_s_mall_filter, *is_contact] }
     marketplace_c_s_mall_filter: { filter: [*is_s_mall_filter, *is_black_target_clicks] }
+    
     s_from_mall: { filter: [*is_s_from_mall, *is_search] }
     s_mall_filter: { filter: [*is_s_mall_filter, *is_search] }
     serp_empty_from_mall: { filter: [*is_1p, *is_search, *is_serp_empty, *is_s_from_mall] }
@@ -1945,6 +1946,7 @@ metric.counter:
     serp_small_mall_filter: { filter: [*is_1p, *is_search, *is_serp_small, *is_s_mall_filter] }
     serp_with_query_empty_from_mall: { filter: [*is_1p, *is_search, *is_serp_empty, *q, *is_s_from_mall] }
     serp_with_query_empty_mall_filter: { filter: [*is_1p, *is_search, *is_serp_empty, *q, *is_s_mall_filter] }
+    
     base_serp_empty_from_mall: { filter: [*is_1p, *is_base_serp_empty, *is_search, *is_s_from_mall] }
     base_serp_small_from_mall: { filter: [*is_1p, *is_base_serp_small, *is_search, *is_s_from_mall] }
     base_serp_with_query_empty_from_mall: { filter: [*is_1p, *is_base_serp_empty, *is_search, *q, *is_s_from_mall] }
@@ -1953,6 +1955,13 @@ metric.counter:
     base_serp_small_mall_filter: { filter: [*is_1p, *is_base_serp_small, *is_search, *is_s_mall_filter] }
     base_serp_with_query_empty_mall_filter: { filter: [*is_1p, *is_base_serp_empty, *is_search, *q, *is_s_mall_filter] }
     base_serp_with_query_small_mall_filter: { filter: [*is_1p, *is_base_serp_small, *is_search, *q, *is_s_mall_filter] }
+    
+    cnt_cs_vec_from_mall: { filter: [*is_contact_wo_guessing, *is_serp_vector, *x_is_search, *is_s_from_mall] }
+    cnt_cs_vec_mall_filter: { filter: [*is_contact_wo_guessing, *is_serp_vector, *x_is_search, *is_s_mall_filter] }
+    cnt_iv_vec_from_mall: { filter: [*is_iv_wo_guessing, *is_serp_vector, *x_is_search, *is_s_from_mall] }
+    cnt_iv_vec_mall_filter: { filter: [*is_iv_wo_guessing, *is_serp_vector, *x_is_search, *is_s_mall_filter] }
+    searches_extra_vector_from_mall: { filter: [*is_search, *x_is_extra_vector, *is_s_from_mall] }
+    searches_extra_vector_mall_filter: { filter: [*is_search, *x_is_extra_vector, *is_s_mall_filter] }
 
     c_callback: { filter: [*is_back_call] }
     c_callback_recallme: { filter: [*is_back_call_recallme] }
@@ -3584,6 +3593,17 @@ metric.uniq:
     user_marketplace_c_s_mall_filter: { counter: marketplace_c_s_mall_filter, key: [cookie] }
     user_s_from_mall: { counter: s_from_mall, key: [cookie] }
     user_s_mall_filter: { counter: s_mall_filter, key: [cookie] }
+    
+    contacts_vector_mall_filter: { counter: cnt_cs_vec_mall_filter, key: [item, x] }
+    contacts_vector_from_mall: { counter: cnt_cs_vec_from_mall, key: [item, x] }
+    item_views_vector_mall_filter: { counter: cnt_iv_vec_mall_filter, key: [item, x] }
+    item_views_vector_from_mall: { counter: cnt_iv_vec_from_mall, key: [item, x] }
+    users_searches_extra_vector_mall_filter: { counter: searches_extra_vector_mall_filter, key: [cookie] }
+    users_searches_extra_vector_from_mall: { counter: searches_extra_vector_from_mall, key: [cookie] }
+    user_item_views_vector_mall_filter: { counter: cnt_iv_vec_mall_filter, key: [cookie] }
+    user_item_views_vector_from_mall: { counter: cnt_iv_vec_from_mall, key: [cookie] }
+    user_contacts_vector_mall_filter: { counter: cnt_cs_vec_mall_filter, key: [cookie] }
+    user_contacts_vector_from_mall: { counter: cnt_cs_vec_from_mall, key: [cookie] }
 
     user_contacts_front: { counter: contacts_front, key: [cookie] }
     user_contacts_front_cpa: { counter: contacts_front_cpa, key: [cookie] }
