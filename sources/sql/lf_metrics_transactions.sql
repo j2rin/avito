@@ -1,22 +1,14 @@
 with am_client_day as (
-select user_id,
-       active_from_date,
-       active_to_date,
-       (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
-       user_group_id
-from DMA.am_client_day_versioned
+    select user_id,
+           active_from_date,
+           active_to_date,
+           (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
+           user_group_id
+    from DMA.am_client_day_versioned
 )
-, user_segment_market as (
-select 
-    user_id, 
-    logical_category_id, 
-    user_segment, 
-    timestampadd('s', 86399, cast(converting_date as timestamp(0))) converting_date
-from dma.user_segment_market
-)
-select 	lfmtr.first_vasfact_id, 
-		lfmtr.second_vasfact_id, 
-		lfmtr.user_id, 
+select 	lfmtr.first_vasfact_id,
+		lfmtr.second_vasfact_id,
+		lfmtr.user_id,
 		cast(lfmtr.event_time as date) event_date,
 		lfmtr.tariff_source,
 		case when lfmtr.lf_product = 'subscription 1.0' then 'subscription' else lfmtr.lf_product end tariff_type,
@@ -39,24 +31,34 @@ select 	lfmtr.first_vasfact_id,
         acd.user_group_id                                            as asd_user_group_id,
 		coalesce(usm.user_segment, ls.segment) as user_segment_market
 from dma.o_lf_metrics_transactions lfmtr
-left join dds.h_platform pt 	
+left join dds.h_platform pt
     on lower(lfmtr.avito_version) = lower(pt.external_id)
-left join dma.current_pricecategories cp 	
+left join dma.current_pricecategories cp
     on lfmtr.pricecat_id = cp.pricecat_id
-left join dma.current_logical_categories 	clc	
+left join dma.current_logical_categories 	clc
     on cp.logcat_id = clc.logcat_id
-left join dma.current_locations       	cl 	
+left join dma.current_locations       	cl
     on lfmtr.location_id = cl.location_id
-left join dma.current_transaction_type	tt 	
+left join dma.current_transaction_type	tt
     on lfmtr.first_transaction_type_id = tt.transactiontype_id
-left join dict.segmentation_ranks ls 	
-    on clc.logical_category_id = ls.logical_category_id 
-    and is_default
-left join user_segment_market usm 
-    on lfmtr.user_id = usm.user_id 
-    and clc.logical_category_id = usm.logical_category_id 
-    and lfmtr.event_time interpolate previous value usm.converting_date
+left join dict.segmentation_ranks ls
+    on clc.logical_category_id = ls.logical_category_id
+    and ls.is_default
+left join (
+    select
+        user_id,
+        logical_category_id,
+        user_segment,
+        converting_date,
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+    from DMA.user_segment_market
+    where cast(converting_date as date) <= :last_date
+) usm
+    on  lfmtr.user_id = usm.user_id
+    and clc.logical_category_id = usm.logical_category_id
+    and cast(lfmtr.event_time as date) >= converting_date and cast(lfmtr.event_time as date) < next_converting_date
 left join am_client_day acd
     on cast(lfmtr.event_time as date) between acd.active_from_date and acd.active_to_date
     and lfmtr.user_id = acd.user_id
-where cast(event_date as date) between :first_date and :last_date
+where cast(lfmtr.event_time as date) between :first_date and :last_date
+--     and lfmtr.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
