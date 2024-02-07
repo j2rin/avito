@@ -82,7 +82,7 @@ with item_add_chain_metrics as (select
       cast(chain_start_time as date) as event_date,
       cast(chain_start_time as date) as item_add_start_date,
       business_platform as platform_id,
-      datediff('second', chain_start_time, chain_item_create_time) as duration_sec,
+      date_diff('second', chain_start_time, chain_item_create_time) as duration_sec,
       1 as observation_value,
       coalesce(lc.vertical_id, cm.vertical_id)                       as vertical_id,
       coalesce(lc.logical_category_id, cm.logical_category_id)       as logical_category_id
@@ -90,8 +90,11 @@ from dma.item_add_chain_metrics t
 left join infomodel.current_infmquery_category ic on ic.infmquery_id = t.infmquery_id
 left join dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join DMA.current_microcategories cm on cm.microcat_id = t.microcat_id
-where user_id is not null and cast(chain_start_time as date) between :first_date and :last_date)
-select 
+where user_id is not null
+    and cast(chain_start_time as date) between :first_date and :last_date
+--    and chain_start_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+)
+select
       eventchain_id,
       cookie_id,
       t.user_id,
@@ -182,7 +185,16 @@ select
       coalesce(usm.user_segment, ls.segment) as user_segment_market
 from item_add_chain_metrics t
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = t.logical_category_id and ls.is_default
-left join /*+distrib(l,a)*/ dma.user_segment_market usm on t.user_id = usm.user_id and t.logical_category_id = usm.logical_category_id
-                                                                and t.event_date interpolate previous value usm.converting_date
-
-
+left join /*+distrib(l,a)*/ (
+    select
+        user_id,
+        logical_category_id,
+        user_segment,
+        converting_date,
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+    from DMA.user_segment_market
+    where cast(converting_date as date) <= :last_date
+) usm
+    on  t.user_id = usm.user_id
+    and t.logical_category_id = usm.logical_category_id
+    and cast(t.event_date as date) >= converting_date and cast(t.event_date as date) < next_converting_date

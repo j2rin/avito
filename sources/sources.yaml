@@ -763,7 +763,7 @@ weighted_buyer:
 
 seller_item_add:
   metric_configs: [seller_item_add]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: seller_item_add
   column_map:
     cookie: cookie_id
@@ -912,33 +912,6 @@ app_call_bx:
   metric_configs: []
   connections: [vertica, trino]
   sql: app_call_buyer
-  column_map:
-    item: item_id
-    cookie: cookie_id
-    user: user_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      logical_category,
-      category,
-      subcategory,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      population_group,
-    ]
-  participant: { visitor: cookie_id, user: user_id }
-  primary_subject: visitor
-  dtm: event_date
-
-app_call_sx:
-  metric_configs: []
-  connections: [vertica]
-  sql: app_call_seller
   column_map:
     item: item_id
     cookie: cookie_id
@@ -3487,11 +3460,9 @@ reviews_moderation_stream:
   primary_subject: visitor
   dtm: event_date
 
-
-
 deliverability:
   metric_configs: [deliverability]
-  connections: [vertica]
+  connections: [vertica, trino]
   sql: deliverability_daily
   column_map:
     item: item_id
