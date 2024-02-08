@@ -37,6 +37,10 @@ metric.counter:
   iac_bx_outgoing_call_dur:                              {filter: [*is_iac, *is_common_funnel], obs: [call_duration]}
   iac_bx_outgoing_talk_dur:                              {filter: [*is_iac, *is_common_funnel], obs: [talk_duration]}
 
+  msg_bx:                                                {filter: [*is_msg, *is_common_funnel]}
+  msg_bx_answered:                                       {filter: [*is_msg, *is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
+  msg_bx_target:                                         {filter: [*is_msg, *is_common_funnel, *is_target]}
+
   calls_bx_outgoing:                                     {filter: [*is_call, *is_common_funnel]}
   call_bx:                                               {filter: [*is_call, *is_common_funnel]} #old
   calls_bx_outgoing_answered:                            {filter: [*is_call, *is_common_funnel, *is_answered]}
@@ -134,6 +138,10 @@ metric.uniq:
   comns_bx_outgoing_preliminary_canonical:               {counter: comns_bx_outgoing_preliminary,  key: [item_id, logical_category_id]}
   comns_bx_outgoing_target_canonical:                    {counter: comns_bx_outgoing_target,       key: [item_id, logical_category_id]}
 
+  transactions_bx_canonical:                             {counter: contacts_transactions,          key: [item_id, logical_category_id]}
+  transactions_bx_answered_canonical:                    {counter: answered_transactions,          key: [item_id, logical_category_id]}
+  transactions_bx_target_canonical:                      {counter: target_transactions,            key: [item_id, logical_category_id]}
+
   contacts_canonical_2_0:                                {counter: contacts_all_2_0,               key: [item_id, logical_category_id]}
   buyers_canonical_2_0:                                  {counter: contacts_all_2_0,               key: [buyer_id, logical_category_id]}
   user_contacts_2_0:                                     {counter: contacts_all_2_0,               key: [user]}  
@@ -160,6 +168,28 @@ metric.uniq:
   user_target_contact:                                   {counter: target_contact_all,     key: [user]} #old
   target_contact_canonical:                              {counter: target_contact_all,      key: [item_id, logical_category_id]} #old
   target_buyers_canonical:                               {counter: target_contact_all,      key: [buyer_id, logical_category_id]} #old
+
+  # Logcat uniq metrics
+  comns_bx_outgoing_buyers_canonical:                    {counter: comns_bx_outgoing,              key: [buyer_id, logical_category_id]}
+  comns_bx_outgoing_answered_buyers_canonical:           {counter: comns_bx_outgoing_answered,     key: [buyer_id, logical_category_id]}
+  comns_bx_outgoing_trash_buyers_canonical:              {counter: comns_bx_outgoing_trash,        key: [buyer_id, logical_category_id]}
+  comns_bx_outgoing_preliminary_buyers_canonical:        {counter: comns_bx_outgoing_preliminary,  key: [buyer_id, logical_category_id]}
+  comns_bx_outgoing_target_buyers_canonical:             {counter: comns_bx_outgoing_target,       key: [buyer_id, logical_category_id]}
+  transactions_bx_buyers_canonical:                      {counter: contacts_transactions,          key: [buyer_id, logical_category_id]}
+  transactions_bx_answered_buyers_canonical:             {counter: answered_transactions,          key: [buyer_id, logical_category_id]}
+  transactions_bx_target_buyers_canonical:               {counter: target_transactions,            key: [buyer_id, logical_category_id]}
+  iac_bx_outgoing_buyers_canonical:                      {counter: iac_bx_outgoing,                key: [buyer_id, logical_category_id]}
+  iac_bx_outgoing_answered_buyers_canonical:             {counter: iac_bx_outgoing_answered,       key: [buyer_id, logical_category_id]}
+  iac_bx_outgoing_target_buyers_canonical:               {counter: iac_bx_outgoing_target,         key: [buyer_id, logical_category_id]}
+  gsm_bx_buyers_canonical:                               {counter: gsm_bx,                         key: [buyer_id, logical_category_id]}
+  gsm_bx_answered_buyers_canonical:                      {counter: gsm_bx_answered,                key: [buyer_id, logical_category_id]}
+  gsm_bx_target_buyers_canonical:                        {counter: gsm_bx_target,                  key: [buyer_id, logical_category_id]}
+  contacts_all_buyers_canonical:                         {counter: contacts_all_2_0,               key: [buyer_id, logical_category_id]}
+  answered_contacts_buyers_canonical:                    {counter: answered_contacts_2_0,          key: [buyer_id, logical_category_id]}
+  target_contacts_buyers_canonical:                      {counter: target_contacts_all_2_0,        key: [buyer_id, logical_category_id]}
+  msg_bx_buyers_canonical:                               {counter: msg_bx,                         key: [buyer_id, logical_category_id]}
+  msg_bx_answered_buyers_canonical:                      {counter: msg_bx_answered,                key: [buyer_id, logical_category_id]}
+  msg_bx_target_buyers_canonical:                        {counter: msg_bx_target,                  key: [buyer_id, logical_category_id]}
 
 
 metric.ratio:
