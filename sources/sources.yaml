@@ -1923,33 +1923,6 @@ model_rating_stream:
   primary_subject: visitor
   dtm: event_date
 
-videocalls_stream:
-  metric_configs: [videocalls_stream]
-  connections: [vertica]
-  sql: videocalls_stream
-  column_map:
-    item: item_id
-    cookie: cookie_id
-    user: user_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      logical_category,
-      category,
-      subcategory,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      population_group,
-    ]
-  participant: { visitor: cookie_id, user: user_id }
-  primary_subject: visitor
-  dtm: event_date
-
 msh_banned_contacts:
   metric_configs: [msh_banned_contacts]
   connections: [vertica, trino]
