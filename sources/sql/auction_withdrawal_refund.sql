@@ -25,5 +25,4 @@ left join
 on
     aw.location_id = cl.location_id
 where
-    is_open_auction = 1 and
     cast(event_date as date) between :first_date and :last_date
