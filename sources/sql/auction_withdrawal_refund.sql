@@ -17,7 +17,7 @@ select
     cm.subcategory_id,
     cl.region_internal_id as region_id
 from
-    dwhcs.auction_withdrawal_refund aw
+    dma.auction_withdrawal_refund aw
 left join
     dma.current_microcategories cm
 on
