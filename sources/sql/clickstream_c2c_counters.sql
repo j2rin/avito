@@ -17,12 +17,11 @@ select
     event_count
 from dma.c2cloans_clickstream
 where
-    eid in (9651, 4498, 4496, 9752, 9632)
+    eid in (4496, 9651, 4801, 4498, 9752, 4502, 9822)
     and cast(event_date as date) >= cast('2023-11-01' as date)
     and cast(event_date as date) between :first_date and :last_date
 --     and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) --@trino
     and from_page in (
         'c2c_item_card', 'c2c_usp_banner',
-        'c2c_tinkoff_flow', 'landing_tinkoff',
-        'tinkoff', 'autobrokerSber'
+        'tinkoff', 'blankWork'
     )
