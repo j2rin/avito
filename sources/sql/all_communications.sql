@@ -43,6 +43,7 @@ select
     ,lc.logical_param1_id
     ,lc.logical_param2_id
     ,coalesce(cpg.price_group, 'Undefined') as price_group
+    ,coalesce(a.condition_id, 0) as condition_id
 from dma.all_contacts a
 left join dma.current_microcategories cm on cm.microcat_id = a.microcat_id
 left join dma.current_locations as cl on cl.location_id = a.location_id
