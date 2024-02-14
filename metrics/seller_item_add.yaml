@@ -8,7 +8,7 @@ metric.counter:
   items_created_click:                     {filter: [{chain_wizard_last_click_time.isnull: False}, {chain_item_create_time.isnull: False}]}
   title_suggest_clicks:                    {obs: [chain_title_suggest_click_count]}
   title_suggest_shows:                     {obs: [chain_title_suggest_show_count]}
-  item_add_drafts:						   {filter: [{chain_wizard_last_click_time.isnull: False}, {item_id.isnull: True}]}
+  item_add_drafts:						   {filter: [{chain_first_form_input_time.isnull: False}, $or: [{item_id.isnull: True},{chain_draft_continue_time.isnull: False}]]}
 
 metric.uniq:
   users_item_add_category_first_click:     {counter: item_add_category_first_clicks,  key: [cookie]}
