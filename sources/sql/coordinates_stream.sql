@@ -8,7 +8,7 @@ select
     cs.longitude,
     cs.resolved,
     cs.accuracy,
-    datediff('hour',cs.resolve_time, cs.event_date) as freshness_hours,
+    date_diff('hour',cs.resolve_time, cs.event_date) as freshness_hours,
     cs.provider,
     cs.error,
     cs.eid,
@@ -23,3 +23,4 @@ select
 from dma.coordinates_stream                                 cs
 LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id = cs.city_id
 where cast(cs.event_date as date) between :first_date and :last_date
+--     and cast(cs.date as date) between :first_date and :last_date -- @trino
