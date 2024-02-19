@@ -1,0 +1,18 @@
+definitions:
+    - &cpc          { metric_name: 'vas_cps'}
+    - &cpo          { metric_name: 'vas_cpo'}
+    - &src_u2i      { source: 'u2i'}
+    - &src_search   { source: 'serp'}
+    - &traffic_dist { metric_name: 'traffic_dist'}
+
+
+metric.counter:
+    vas_click_worth:     { filter: [*cpc],              obs: [metric_value] }
+    vas_odds_worth:      { filter: [*cpo],              obs: [metric_value] }
+    traffic_dist:        { filter: [*traffic_dist ],    obs: [metric_value] }
+
+    vas_u2i_click_worth: { filter: [*cpc,    *src_u2i], obs: [metric_value] }
+    vas_u2i_odds_worth:  { filter: [*cpo,    *src_u2i], obs: [metric_value] }
+
+    vas_s_click_worth:   { filter: [*cpc, *src_search], obs: [metric_value] }
+    vas_s_odds_worth:    { filter: [*cpo, *src_search], obs: [metric_value] }
