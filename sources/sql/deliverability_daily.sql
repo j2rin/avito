@@ -9,7 +9,7 @@ select /*+syntactic_join*/
     idd.event_date,
     idd.item_id,
     idd.user_id,
-    bitwise_and(product_flag, bitwise_left_shift(1, 1)) > 0 as started_today,
+    bitwise_and(product_flag, bitwise_left_shift(cast(1 as bigint), 1)) > 0 as started_today,
     -- дименшены
     coalesce(usm.user_segment, ls.segment) as user_segment_market,
     idd.flow as deliverability_flow,
@@ -48,17 +48,17 @@ select /*+syntactic_join*/
     is_available_rdbs and is_enabled_rdbs and available_rdbs
         and not coalesce(is_delivery_deleted, false) and coalesce(item_price, 0) between 10 and 150000 as is_enabled_rdbs,
         -- available delivery service
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 0 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 7 )) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_pvz_pochta,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 2 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 8 )) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_pvz_bb,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 3 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 9 )) > 0) and coalesce(item_price, 0) between 10 and 10000  as available_pvz_dpd,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 4 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 10)) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_pvz_exmail,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 5 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 11)) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_pvz_sbl,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 6 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 12)) > 0) and coalesce(item_price, 0) between 10 and 80000  as available_pvz_cdek,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 13)) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 30)) > 0) and coalesce(item_price, 0) between 10 and 50000  as available_courier_dostavista,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 14)) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 31)) > 0) and coalesce(item_price, 0) between 10 and 50000  as available_courier_yandex,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 16)) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 34)) > 0) and coalesce(item_price, 0) between 10 and 50000  as available_courierd2d_cse,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 29)) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 32)) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_courier_yandexcargo,
-    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 42)) > 0) and coalesce(item_price, 0) between 10 and 15000 as available_postamat_fivepost
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 0 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 7 )) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_pvz_pochta,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 2 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 8 )) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_pvz_bb,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 3 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 9 )) > 0) and coalesce(item_price, 0) between 10 and 10000  as available_pvz_dpd,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 4 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 10)) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_pvz_exmail,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 5 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 11)) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_pvz_sbl,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 6 )) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 12)) > 0) and coalesce(item_price, 0) between 10 and 80000  as available_pvz_cdek,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 13)) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 30)) > 0) and coalesce(item_price, 0) between 10 and 50000  as available_courier_dostavista,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 14)) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 31)) > 0) and coalesce(item_price, 0) between 10 and 50000  as available_courier_yandex,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 16)) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 34)) > 0) and coalesce(item_price, 0) between 10 and 50000  as available_courierd2d_cse,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 29)) > 0) or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 32)) > 0) and coalesce(item_price, 0) between 10 and 150000 as available_courier_yandexcargo,
+    (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 42)) > 0) and coalesce(item_price, 0) between 10 and 15000 as available_postamat_fivepost
 from (
     select  event_date,
             item_id,
@@ -88,11 +88,11 @@ from (
             is_enabled_rdbs,
             -- available flow
             is_available_pvz_c2c or is_available_pvz_b2c as available_pvz,
-            is_available_courierd2d_c2c or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 26)) > 0) as available_courierd2d,
-            is_available_locker_c2c     or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 25)) > 0) as available_locker,
-            is_available_courier_c2c    or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 24)) > 0) as available_courier,
-            is_available_dbs_c2c        or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 27)) > 0) as available_dbs,
-            is_available_rdbs_c2c       or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(1, 28)) > 0) as available_rdbs
+            is_available_courierd2d_c2c or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 26)) > 0) as available_courierd2d,
+            is_available_locker_c2c     or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 25)) > 0) as available_locker,
+            is_available_courier_c2c    or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 24)) > 0) as available_courier,
+            is_available_dbs_c2c        or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 27)) > 0) as available_dbs,
+            is_available_rdbs_c2c       or (bitwise_and(delivery_services_availability_flag, bitwise_left_shift(cast(1 as bigint), 28)) > 0) as available_rdbs
     from dma.item_day_delivery idd
 ) idd
 inner join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm on cm.microcat_id = idd.microcat_id
