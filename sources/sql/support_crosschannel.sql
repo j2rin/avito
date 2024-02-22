@@ -20,3 +20,4 @@ select observation_date as event_date,
 from dma.support_crosschannel_metrics
 where cast(observation_date as date) between :first_date and :last_date
     -- and observation_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
+    
