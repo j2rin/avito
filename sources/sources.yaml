@@ -3521,3 +3521,15 @@ withdrawal_refund:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
+
+
+avito_pro_metrics:
+  metric_configs: [avito_pro_metrics]
+  connections: [vertica, trino]
+  sql: avito_pro_metrics
+  dimensions:
+    - vertical
+    - is_pro
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
