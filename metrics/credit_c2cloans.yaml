@@ -1,12 +1,15 @@
 definitions:
-    - &auto       {x_from_page.in: [c2c_item_card, c2c_usp_banner, tinkoff, blankWork]}
+    - &render     {x_from_page.in: [tinkoff, c2c_item_card]}
+    - &click      {x_from_page.in: [tinkoff, c2c_item_card]}
+    - &enter      {x_from_page.in: [tinkoff, c2c_usp_banner]}
+    - &send       {x_from_page.in: [tinkoff, blankWork]}
 
 
 metric.counter:
-    c2c_credit_auto_full_renders:                         {filter: [eventtype_ext.in: [4496, 9651], *auto], obs: [event_count]}
-    c2c_credit_auto_full_clicks:                          {filter: [eventtype_ext.in: [4801, 4498], *auto], obs: [event_count]}
-    c2c_credit_auto_full_enters:                          {filter: [eventtype_ext.in: [4498, 9752], *auto], obs: [event_count]}
-    c2c_credit_auto_full_sends:                           {filter: [eventtype_ext.in: [4502, 9822], *auto], obs: [event_count]}
+    c2c_credit_auto_full_renders:                         {filter: [eventtype_ext.in: [4496, 9651], *render], obs: [event_count]}
+    c2c_credit_auto_full_clicks:                          {filter: [eventtype_ext.in: [4801, 4498], *click], obs: [event_count]}
+    c2c_credit_auto_full_enters:                          {filter: [eventtype_ext.in: [4498, 9752], *enter], obs: [event_count]}
+    c2c_credit_auto_full_sends:                           {filter: [eventtype_ext.in: [4502, 9822], *send], obs: [event_count]}
 
 
 metric.uniq:
