@@ -1,7 +1,7 @@
  select
     pmd.user_id,
     pmd.event_date,
-    pmd.vertical,
+    pmd.vertical_id,
     pmd.is_pro,
     pmd.transaction_amount,
     target_contacts,
