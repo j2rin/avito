@@ -3523,6 +3523,18 @@ withdrawal_refund:
   dtm: event_date
 
 
+avito_pro_metrics:
+  metric_configs: [avito_pro_metrics]
+  connections: [vertica, trino]
+  sql: avito_pro_metrics
+  dimensions:
+    - vertical
+    - is_pro
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
 hacked_metric_m42:
   metric_configs: [hacked_metric_m42]
   connections: [vertica, trino]
@@ -3558,3 +3570,4 @@ haraba_user_active_day:
   participant: { user: user_id }
   primary_subject: user
   dtm: entry_date
+

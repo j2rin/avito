@@ -1,0 +1,13 @@
+metric.counter:
+  pro_seller_revenue_fixed_segment: { filter: [ is_pro: true], obs: [transaction_amount]}
+  pro_seller_target_contacts: { filter: [ is_pro: true], obs: [target_contacts]}
+  at_least_one_target_contact: { filter: [ seller_with_at_least_one_contact.>=: 0]}
+  active_pro_sellers_fixed_segment: {filter: [ is_pro: true]} 
+metric.uniq:
+  seller_with_at_least_one_target_contact: { counter: at_least_one_target_contact, key: [ user_id ] }
+  active_pro_sellers_fixed_segment_unique: { counter: active_pro_sellers_fixed_segment, key: [ user_id ] }
+
+metric.ratio:
+  revenue_per_target_contact: { num: pro_seller_revenue_fixed_segment, den: pro_seller_target_contacts }
+  average_revenue_per_pro_seller: { num: pro_seller_revenue_fixed_segment, den: active_pro_sellers_fixed_segment_unique }
+  average_target_contact_per_pro_seller: { num: pro_seller_target_contacts, den: active_pro_sellers_fixed_segment_unique }

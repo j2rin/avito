@@ -1,7 +1,7 @@
-select
+ select
     pmd.user_id,
     pmd.event_date,
-    pmd.vertical,
+    pmd.vertical_id,
     pmd.is_pro,
     pmd.transaction_amount,
     target_contacts,
@@ -12,4 +12,4 @@ select
     end as seller_with_at_least_one_contact
 from DMA.avito_pro_metrics_daily pmd
 where cast(event_date as date) between :first_date and :last_date
-    --and cast(event_date as date) between :first_date and :last_date --@trino
+    -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
