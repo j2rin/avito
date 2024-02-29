@@ -81,7 +81,6 @@ with
             dma.short_term_rent_orders
         where 1=1
             and cast(order_create_time as date) between :first_date and :last_date
-            and coalesce(order_status, '') not in ('expired', 'rejected_by_host', 'rejected_by_guest', 'unpaid', 'overbooked', 'created')
         ),
     paid_orders as
         (select
