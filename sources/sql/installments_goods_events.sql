@@ -6,8 +6,8 @@ select
         item_id,
         event_name_slug
 from dma.installments_click_stream
-where eventtype_ext in (4496, 4497, 4498, 4801, 7820, 7826, 7889)
-        or eventtype_ext=7817 and installment_screen = 'success_verification'
+where (eventtype_ext in (4496, 4497, 4498, 4801, 7820, 7826, 7889)
+        or eventtype_ext=7817 and installment_screen = 'success_verification')
         and event_date between cast(:first_date as date) and cast(:last_date as date)
         -- and event_year between date_trunc('year', cast(:first_date as date) ) and date_trunc('year', cast(:last_date as date)) -- @trino
 
