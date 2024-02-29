@@ -63,7 +63,7 @@ daily_active_listers_w_segment as (
     left join dict.segmentation_ranks ls
         on ls.logical_category_id = dal.logical_category_id
         and ls.is_default
-        and ls.logical_category != 'Any'
+        and ls.logical_category_id != -1
 )
 select /*+syntactic_join*/
     t.event_date,
