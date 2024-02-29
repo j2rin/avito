@@ -82,6 +82,15 @@ with
         where 1=1
             and cast(order_create_time as date) between :first_date and :last_date
             and coalesce(order_status, '') not in ('expired', 'rejected_by_host', 'rejected_by_guest', 'unpaid', 'overbooked', 'created')
+        ),
+    paid_orders as
+        (select
+			distinct StrBooking_id as order_id --, CreatedAt as actual_date
+        from dds.L_STROrderEventname_StrBooking l
+        left join dds.S_STROrderEventname_STREventName s1 using (STROrderEventname_id)
+        left join dds.S_STROrderEventname_CreatedAt s2 using (STROrderEventname_id)
+		where STREventName = 'paid'
+		    and cast(CreatedAt as date) between :first_date and :last_date
         )
 select
     d.cookie_id,
@@ -96,6 +105,8 @@ from
     str_orders as s
     inner join str_items as str
         on s.item_id = str.item_id
+    inner join paid_orders as p
+        on s.order_id = p.order_id
     left join day_cookie_user_item_x_eid as d
         on d.event_date = s.event_date
         and s.buyer_id = d.user_id
