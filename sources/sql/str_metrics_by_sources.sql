@@ -86,8 +86,10 @@ with
         (select
 			distinct StrBooking_id as order_id --, CreatedAt as actual_date
         from dds.L_STROrderEventname_StrBooking l
-        left join dds.S_STROrderEventname_STREventName s1 using (STROrderEventname_id)
-        left join dds.S_STROrderEventname_CreatedAt s2 using (STROrderEventname_id)
+        left join dds.S_STROrderEventname_STREventName s1
+            on l.STROrderEventname_id = s1.STROrderEventname_id
+        left join dds.S_STROrderEventname_CreatedAt s2
+            on l.STROrderEventname_id = s2.STROrderEventname_id
 		where STREventName = 'paid'
 		    and cast(CreatedAt as date) between :first_date and :last_date
         )
