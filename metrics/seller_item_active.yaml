@@ -219,6 +219,7 @@ metric.counter:
   active_items_price_list_more_3_services_new:             {filter: [{is_active: True}, {count_services_price_list.>=: 3}, {start_date: $event_date}]}
   active_items_price_list_more_5_services:                 {filter: [{is_active: True}, {count_services_price_list.>=: 5}]}
   active_items_price_list_more_5_services_new:             {filter: [{is_active: True}, {count_services_price_list.>=: 5}, {start_date: $event_date}]}
+  sum_quality_price_list:                                  {filter: [{is_active: True}, obs: [quality_price_list]}
 
   items_with_delivery_seller_discount:                     {filter: [is_active: True, is_delivery_active: True, subsidy_index.>: 0]}
   active_items_delivery_on_seller_discount_start_date:     {filter: [is_active: True, is_delivery_active: True, start_date.>=: $ab_start_date, subsidy_index.>: 0]}
@@ -460,3 +461,4 @@ metric.ratio:
   active_items_sellergroup_dedup_ratio:               {num: active_items_sellergroup_dedup,             den: active_items               }
   item_video_per_seller_item_video:                   {num: item_video,                                 den: user_item_video            }
   items_price_list_per_active_items:                  {num: active_items_price_list,                    den: active_items               }
+  quality_price_list:                                 {num: sum_quality_price_list,                     den: active_items               }
