@@ -1,5 +1,3 @@
--- noinspection SqlNoDataSourceInspectionForFile
-
 with
     str_items as
         (select
