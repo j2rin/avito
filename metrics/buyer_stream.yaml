@@ -118,6 +118,7 @@ definitions:
     - &is_booking   { eid: 2581 }
     - &is_soc_btn   { eid: 308 }
     - &is_calendar  { eid: 6154 }
+    - &x_no_guessing     { item_x_type: 0 }
     - &is_iv_wo_guessing { <<: *is_iv, item_x_type: 0 }
     - &is_btc_wo_guessing { $or: [{ <<: *is_btc, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
     - &is_contact_wo_guessing { $or: [{ <<: *is_contact, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
@@ -637,45 +638,45 @@ metric.counter:
                 ],
 
         }
-    cnt_cs_comp_list: { filter: [*is_contact_wo_guessing, *x_is_comp_lst] }
-    cnt_cs_msg_comp_list: { filter: [*is_msg, *x_is_comp_lst] }
-    cnt_cs_ph_comp_list: { filter: [*is_ph, *x_is_comp_lst] }
-    cnt_cs_fav_list: { filter: [*is_contact_wo_guessing, *x_is_fav_lst] }
-    cnt_cs_msg_fav_list: { filter: [*is_msg, *x_is_fav_lst] }
-    cnt_cs_ph_fav_list: { filter: [*is_ph, *x_is_fav_lst] }
-    cnt_cs_from_map: { filter: [*is_contact_wo_guessing, *x_is_map] }
+    cnt_cs_comp_list:       { filter: [*is_contact_wo_guessing, *x_is_comp_lst] }
+    cnt_cs_msg_comp_list:   { filter: [*is_msg, *x_is_comp_lst] }
+    cnt_cs_ph_comp_list:    { filter: [*is_ph, *x_is_comp_lst] }
+    cnt_cs_fav_list:        { filter: [*is_contact_wo_guessing, *x_is_fav_lst] }
+    cnt_cs_msg_fav_list:    { filter: [*is_msg, *x_is_fav_lst] }
+    cnt_cs_ph_fav_list:     { filter: [*is_ph, *x_is_fav_lst] }
+    cnt_cs_from_map:        { filter: [*is_contact_wo_guessing, *x_is_map] }
     cnt_cs_from_map_s_area: { filter: [*is_contact_wo_guessing, { $or: [[*is_s_map, *x_is_search], [*x_is_map]] }] }
-    cnt_cs_rec: { filter: [*is_contact_wo_guessing, *x_is_rec] }
-    cnt_cs_push_land: { filter: [*is_contact_wo_guessing, *x_is_push_land] }
-    cnt_cs_rec_i2i: { filter: [*is_contact_wo_guessing, *x_is_i2i] }
+    cnt_cs_rec:             { filter: [*is_contact_wo_guessing, *x_is_rec] }
+    cnt_cs_push_land:       { filter: [*is_contact_wo_guessing, *x_is_push_land] }
+    cnt_cs_rec_i2i:         { filter: [*is_contact_wo_guessing, *x_is_i2i] }
     cnt_cs_rec_i2i_guarantee: { filter: [*is_contact_wo_guessing, *x_is_i2i, *is_guarantee] }
-    cnt_cs_rec_cv2vac: { filter: [*is_contact_wo_guessing, *x_is_cv2vac] }
-    cnt_cs_msg_rec_i2i: { filter: [*is_msg, *x_is_i2i] }
-    cnt_cs_ph_rec_i2i: { filter: [*is_ph, *x_is_i2i] }
-    cnt_cs_msg_rec_cv2vac: { filter: [*is_msg, *x_is_cv2vac] }
-    cnt_cs_ph_rec_cv2vac: { filter: [*is_ph, *x_is_cv2vac] }
-    cnt_cs_rec_i2i_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_i2i] }
-    cnt_cs_rec_s: { filter: [*is_contact_wo_guessing, { $or: [[*x_is_rec], [*x_is_search]] }] }
-    cnt_cs_rec_u2i: { filter: [*is_contact_wo_guessing, *x_is_u2i] }
-    cnt_cs_rec_u2i_reputation_high: { filter: [*is_reputation_high, *is_contact_wo_guessing, *x_is_u2i] }
+    cnt_cs_rec_cv2vac:      { filter: [*is_contact_wo_guessing, *x_is_cv2vac] }
+    cnt_cs_msg_rec_i2i:     { filter: [*is_msg, *x_is_i2i] }
+    cnt_cs_ph_rec_i2i:      { filter: [*is_ph, *x_is_i2i, *x_no_guessing] }
+    cnt_cs_msg_rec_cv2vac:  { filter: [*is_msg, *x_is_cv2vac] }
+    cnt_cs_ph_rec_cv2vac:   { filter: [*is_ph, *x_is_cv2vac] }
+    cnt_cs_rec_i2i_vas:     { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_i2i] }
+    cnt_cs_rec_s:           { filter: [*is_contact_wo_guessing, { $or: [[*x_is_rec], [*x_is_search]] }] }
+    cnt_cs_rec_u2i:         { filter: [*is_contact_wo_guessing, *x_is_u2i] }
+    cnt_cs_rec_u2i_reputation_high:   { filter: [*is_reputation_high, *is_contact_wo_guessing, *x_is_u2i] }
     cnt_cs_rec_u2i_reputation_medium: { filter: [*is_reputation_medium, *is_contact_wo_guessing, *x_is_u2i] }
-    cnt_cs_rec_u2i_reputation_low: { filter: [*is_reputation_low, *is_contact_wo_guessing, *x_is_u2i] }
-    cnt_cs_rec_u2i_reputation_grey: { filter: [*is_reputation_grey, *is_contact_wo_guessing, *x_is_u2i] }
+    cnt_cs_rec_u2i_reputation_low:    { filter: [*is_reputation_low, *is_contact_wo_guessing, *x_is_u2i] }
+    cnt_cs_rec_u2i_reputation_grey:   { filter: [*is_reputation_grey, *is_contact_wo_guessing, *x_is_u2i] }
     cnt_cs_rec_u2i_collab:      { filter: [*is_contact_wo_guessing, *x_is_u2i, *collab]     }
     cnt_cs_rec_u2i_user2vec:    { filter: [*is_contact_wo_guessing, *x_is_u2i, *user2vec]   }
     cnt_cs_rec_u2i_similars:    { filter: [*is_contact_wo_guessing, *x_is_u2i, *similars]   }
     cnt_cs_rec_u2i_graph:       { filter: [*is_contact_wo_guessing, *x_is_u2i, *graph]      }
     cnt_cs_rec_u2i_crosscat:    { filter: [*is_contact_wo_guessing, *x_is_u2i, *crosscat]   }
-    cnt_cs_msg_rec_u2i: { filter: [*is_msg, *x_is_u2i] }
-    cnt_cs_perfvas_w: { filter: [*is_contact_wo_guessing, *x_is_search, *is_item_perfvas], obs: [vas_power] }
-    cnt_cs_ph_rec_u2i: { filter: [*is_ph, *x_is_u2i] }
-    cnt_cs_rec_u2i_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_u2i] }
-    cnt_cs_rec_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_rec] }
-    cnt_cs_rec_vas_cpa: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_rec, *is_item_cpa] }
-    cnt_cs_rec_perfvas_x2_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec] }
-    cnt_cs_rec_perfvas_x2_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_7, *x_is_rec] }
-    cnt_cs_rec_perfvas_x5_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_1, *x_is_rec] }
-    cnt_cs_rec_perfvas_x5_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_7, *x_is_rec] }
+    cnt_cs_msg_rec_u2i:         { filter: [*is_msg, *x_is_u2i] }
+    cnt_cs_perfvas_w:           { filter: [*is_contact_wo_guessing, *x_is_search, *is_item_perfvas], obs: [vas_power] }
+    cnt_cs_ph_rec_u2i:          { filter: [*is_ph, *x_is_u2i, *x_no_guessing] }
+    cnt_cs_rec_u2i_vas:         { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_u2i] }
+    cnt_cs_rec_vas:             { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_rec] }
+    cnt_cs_rec_vas_cpa:         { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_rec, *is_item_cpa] }
+    cnt_cs_rec_perfvas_x2_1:  { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec] }
+    cnt_cs_rec_perfvas_x2_7:  { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_7, *x_is_rec] }
+    cnt_cs_rec_perfvas_x5_1:  { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_1, *x_is_rec] }
+    cnt_cs_rec_perfvas_x5_7:  { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_7, *x_is_rec] }
     cnt_cs_rec_perfvas_x10_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_1, *x_is_rec] }
     cnt_cs_rec_perfvas_x10_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_7, *x_is_rec] }
     cnt_cs_rec_perfvas_x15_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x15_1, *x_is_rec] }
