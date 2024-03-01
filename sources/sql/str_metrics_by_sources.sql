@@ -3,8 +3,8 @@ with
         (select
             distinct
             ci.item_id,
-            cl.region,
-            mic.subcategory_name
+            cl.region_id,
+            mic.subcategory_id
         from DMA.current_item ci
             inner join DMA.current_locations cl
                 on 1=1
@@ -94,8 +94,8 @@ select
     s.buyer_id as user_id,
     d.cookie_id,
     d.x_eid,
-    str.region,
-    str.subcategory_name,
+    str.region_id,
+    str.subcategory_id,
     count(s.order_id) as str_paid_bookings,
     sum(s.str_paid_gmv) as str_paid_gmv,
     sum(s.str_paid_revenue) as str_paid_revenue,
