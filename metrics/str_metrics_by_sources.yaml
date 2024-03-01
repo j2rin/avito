@@ -1,0 +1,46 @@
+definitions:
+  - &x_eid_search                              [300]
+  - &x_eid_fav_lst                             [400]
+  - &x_eid_u2i                                 [2012]
+  - &x_eid_profile                             [2017]
+  - &x_eid_i2i                                 [2437]
+  - &x_eid_map                                 [2743]
+
+  - &is_search                                 {x_eid: *x_eid_search}
+  - &is_fav_lst                                {x_eid: *x_eid_fav_lst}
+  - &is_u2i                                    {x_eid: *x_eid_u2i}
+  - &is_profile                                {x_eid: *x_eid_profile}
+  - &is_i2i                                    {x_eid: *x_eid_i2i}
+  - &is_map                                    {x_eid: *x_eid_map}
+
+metric.counter:
+  str_paid_bookings_search:                            {obs: [str_paid_bookings], filter: [*is_search]}
+  str_paid_bookings_fav_lst:                           {obs: [str_paid_bookings], filter: [*is_fav_lst]}
+  str_paid_bookings_u2i:                               {obs: [str_paid_bookings], filter: [*is_u2i]}
+  str_paid_bookings_profile:                           {obs: [str_paid_bookings], filter: [*is_profile]}
+  str_paid_bookings_i2i:                               {obs: [str_paid_bookings], filter: [*is_i2i]}
+  str_paid_bookings_map:                               {obs: [str_paid_bookings], filter: [*is_map]}
+
+  str_paid_gmv_search:                                 { obs: [ str_paid_gmv ], filter: [ *is_search ] }
+  str_paid_gmv_fav_lst:                                { obs: [ str_paid_gmv ], filter: [ *is_fav_lst ] }
+  str_paid_gmv_u2i:                                    { obs: [ str_paid_gmv ], filter: [ *is_u2i ] }
+  str_paid_gmv_profile:                                { obs: [ str_paid_gmv ], filter: [ *is_profile ] }
+  str_paid_gmv_i2i:                                    { obs: [ str_paid_gmv ], filter: [ *is_i2i ] }
+  str_paid_gmv_map:                                    { obs: [ str_paid_gmv ], filter: [ *is_map ] }
+
+  str_paid_revenue_search:                             { obs: [ str_paid_revenue ], filter: [ *is_search ] }
+  str_paid_revenue_fav_lst:                            { obs: [ str_paid_revenue ], filter: [ *is_fav_lst ] }
+  str_paid_revenue_u2i:                                { obs: [ str_paid_revenue ], filter: [ *is_u2i ] }
+  str_paid_revenue_profile:                            { obs: [ str_paid_revenue ], filter: [ *is_profile ] }
+  str_paid_revenue_i2i:                                { obs: [ str_paid_revenue ], filter: [ *is_i2i ] }
+  str_paid_revenue_map:                                { obs: [ str_paid_revenue ], filter: [ *is_map ] }
+
+  str_paid_promo_revenue_search:                       { obs: [ str_paid_promo_revenue ], filter: [ *is_search ] }
+  str_paid_promo_revenue_fav_lst:                      { obs: [ str_paid_promo_revenue ], filter: [ *is_fav_lst ] }
+  str_paid_promo_revenue_u2i:                          { obs: [ str_paid_promo_revenue ], filter: [ *is_u2i ] }
+  str_paid_promo_revenue_profile:                      { obs: [ str_paid_promo_revenue ], filter: [ *is_profile ] }
+  str_paid_promo_revenue_i2i:                          { obs: [ str_paid_promo_revenue ], filter: [ *is_i2i ] }
+  str_paid_promo_revenue_map:                          { obs: [ str_paid_promo_revenue ], filter: [ *is_map ] }
+
+
+

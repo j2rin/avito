@@ -400,6 +400,25 @@ str_by_cookies:
   primary_subject: visitor
   dtm: event_date
 
+str_metrics_by_sources:
+  metric_configs: [str_metrics_by_sources]
+  connections: [vertica, trino]
+  sql: str_metrics_by_sources
+  column_map:
+    cookie: cookie_id
+    user: user_id
+    x_eid: x_eid
+    subcategory: subcategory_id
+    region: region_id
+  dimensions:
+    [
+      region,
+      subcategory,
+    ]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
 public_profile:
   metric_configs: [public_profile]
   connections: [vertica, trino]
