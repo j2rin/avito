@@ -94,6 +94,7 @@ with
 		    and cast(CreatedAt as date) between :first_date and :last_date
         )
 select
+    s.event_date,
     d.cookie_id,
     d.x_eid,
     str.region,
@@ -112,5 +113,5 @@ from
         on d.event_date = s.event_date
         and s.buyer_id = d.user_id
         and s.item_id = d.item_id
-group by 1, 2, 3, 4
+group by 1, 2, 3, 4, 5
 ;
