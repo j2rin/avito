@@ -3,7 +3,7 @@ with
         (select
             distinct
             ci.item_id,
-            cl.region_id,
+            case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
             mic.subcategory_id
         from DMA.current_item ci
             inner join DMA.current_locations cl
