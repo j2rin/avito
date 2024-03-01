@@ -25,6 +25,7 @@ with
             inner join str_items as str
                 on t.item_id = str.item_id
                 and cast(t.event_date as date) between :first_date and :last_date
+                --and cast(t.date as date) between :first_date and :last_date --@trino
                 and t.eid = 2581
                 ),
     bookings_first_x_eid as
