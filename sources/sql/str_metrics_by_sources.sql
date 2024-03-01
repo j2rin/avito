@@ -15,7 +15,6 @@ with
         ),
     bookings_events as
         (select
-            -- есть дубли, далее избавляемся
             t.event_date as event_datetime,
             cast(t.event_date as date) as event_date,
             t.cookie_id,
