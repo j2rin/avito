@@ -8,11 +8,9 @@ with
         from DMA.current_item ci
             inner join DMA.current_locations cl
                 on 1=1
-                --and cl.region in ('Ставропольский край', 'Новосибирская область', 'Ростовская область', 'Тюменская область', 'Свердловская область', 'Челябинская область', 'Воронежская область', 'Кемеровская область', 'Алтайский край', 'Удмуртия', 'Тульская область', 'Ханты-Мансийский АО')
                 and cl.Location_id = ci.location_id
             inner join DMA.current_microcategories mic
                 on ci.microcat_id = mic.microcat_id
-                --and mic.subcategory_name = 'Квартиры'
                 and mic.logical_category = 'Realty.ShortRent'
         ),
     bookings_events as
@@ -29,7 +27,6 @@ with
                 on t.item_id = str.item_id
                 and cast(t.event_date as date) between :first_date and :last_date
                 and t.eid = 2581
-                -- and action_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
                 ),
     bookings_first_x_eid as
         (select
