@@ -195,6 +195,7 @@ left join /*+distrib(l,r)*/ (
     from dma.current_item ci
     join dma.item_metric_price_list_day pld on ci.item_id = pld.item_id
     where pld.event_date between :first_date and :last_date
+    -- and pld.event_year is not null -- @trino
 ) ipl
     on ipl.user_id = ss.user_id
     and ipl.item_id = ss.item_id
