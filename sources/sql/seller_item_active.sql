@@ -60,6 +60,7 @@ select /*+syntactic_join*/
     jvdd.duplicates_count,
     ipl.count_services_price_list,
     sic.item_id is not null as is_item_calendar,
+    ipl.quality_price_list,
     -- Dimensions -----------------------------------------------------------------------------------------------------
     coalesce(lc.vertical_id, cm.vertical_id)                       as vertical_id,
     coalesce(lc.logical_category_id, cm.logical_category_id)       as logical_category_id,
@@ -215,4 +216,3 @@ left join /*+distrib(l,r)*/ (
 
 where (ss.is_user_test is null or ss.is_user_test = false)
     and ss.event_date between :first_date and :last_date
-    
