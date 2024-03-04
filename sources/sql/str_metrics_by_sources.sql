@@ -4,7 +4,7 @@ with
             distinct
             ci.item_id,
             case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
-            mic.logical_category,
+            mic.logical_category_id,
             mic.subcategory_id
         from DMA.current_item ci
             inner join DMA.current_locations cl
@@ -97,7 +97,7 @@ select
     d.cookie_id,
     d.x_eid,
     str.region_id,
-    str.logical_category,
+    str.logical_category_id,
     str.subcategory_id,
     count(s.order_id) as str_paid_bookings,
     sum(s.str_paid_gmv) as str_paid_gmv,
