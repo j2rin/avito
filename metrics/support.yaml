@@ -39,6 +39,13 @@ metric.counter:
   support_chat_thank_question:                     {obs: [chat_thank_question]}
   support_chat_reopen_after_thank:                 {obs: [chat_reopen_after_thank]}
   support_chat_first_touch_ht:                     {obs: [chat_first_touch_ht]}
+  support_chat_with_autoclassifier:                {obs: [autoclassifier_chats]}
+  support_chat_autoclassifier_abandoned:           {obs: [autoclassifier_chats_abandoned]}
+  support_chat_autoclassifier_skill_changed:       {obs: [autoclassifier_chats_skill_changed]}
+  support_chat_with_bot:                           {obs: [chats_with_bot]}
+  support_chatbot_successful_pass:                 {obs: [chatbot_successful_pass]}
+  support_chat_count_in_sl:                        {obs: [chat_count_in_sl]}
+  support_chat_count_has_sl:                       {obs: [chat_count_has_sl]}
 # --- COMBINING TOTAL ---
   support_email_wizard_tickets_created:    {obs: [ticket_email_created, ticket_wizard_created]}
   support_ticket_chat_platform:            {obs: [ticket_wizard_created, chats_created]}
@@ -70,7 +77,7 @@ metric.ratio:
   support_ticket_with_changed_problem_rate: {num: cnt_tickets_problem_changed, den: support_email_wizard_tickets_created}
   support_chat_from_flow_share:             {num: support_chats_created, den: support_total_flow}
   support_chat_on_time_share:               {num: support_chat_on_time, den: support_chat_solved}
-  support_chat_sl_share:                    {num: support_chat_sl, den: support_chats_flow}
+  support_chat_sl_share:                    {num: support_chat_count_in_sl, den: support_chat_count_has_sl}
   support_ticket_csat:                      {num: support_ticket_csat_scores, den: support_ticket_satisfaction_scores}
   support_chat_csat:                        {num: support_chat_csat_scores, den: support_chat_satisfaction_scores}
   support_ticket_aht:                       {num: support_ticket_ht, den: support_tickets_with_ht}
@@ -90,3 +97,5 @@ metric.ratio:
   support_ticket_sat_response_rate:         {num: support_ticket_satisfaction_scores, den: support_email_wizard_tickets_created}
   support_chat_reopen_after_thank_rate:     {num: support_chat_reopen_after_thank, den: support_chat_thank_question}
   support_chat_first_touch_aht:             {num: support_chat_first_touch_ht, den: support_chats_with_ht}
+  support_chat_autoclassifier_abandon_rate: {num: support_chat_autoclassifier_abandoned, den: support_chat_with_autoclassifier}
+  support_chat_chatbot_success_rate:        {num: support_chatbot_successful_pass, den: support_chat_with_bot}
