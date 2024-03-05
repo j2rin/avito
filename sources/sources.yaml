@@ -3618,3 +3618,19 @@ true_new_users:
   primary_subject: user
   dtm: event_date
 
+
+auto_select_metrics:
+  metric_configs: [ auto_select_metrics ]
+  connections: [vertica, trino]
+  sql: auto_select_events
+  column_map:
+    cookie: cookie_id
+    user: user_id
+    item: item_id
+  dimensions: [
+    platform,
+    location
+  ]
+  dtm: event_timestamp
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
