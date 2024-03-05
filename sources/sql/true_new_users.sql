@@ -34,6 +34,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         from dma.true_new_users
         where event_date between :first_date and :last_date
             and infmquery_id is not null
+	-- 		and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
     )
 ) ic
     on tnu.infmquery_id = ic.infmquery_id
