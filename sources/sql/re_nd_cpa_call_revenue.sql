@@ -30,6 +30,7 @@ with
             inner join items as i
                 on m.chat_item_id = i.item_id
                 and cast(m.event_date as date) between :first_date and :last_date
+                -- and event_month between date_trunc('month', :first_date) and date_trunc('year', :last_date) -- @trino
             where 1=1
                 and (i.seller_user_id = m.to_user_id or i.seller_user_id != m.from_user_id) --- таким образом, непустое поле m.from_cookie_id будет соответствовать куке баера (OR используем на случай NULL значений)
         ),
