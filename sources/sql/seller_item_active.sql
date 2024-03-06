@@ -60,6 +60,7 @@ select /*+syntactic_join*/
     jvdd.duplicates_count,
     ipl.count_services_price_list,
     sic.item_id is not null as is_item_calendar,
+    ipl.quality_price_list,
     -- Dimensions -----------------------------------------------------------------------------------------------------
     coalesce(lc.vertical_id, cm.vertical_id)                       as vertical_id,
     coalesce(lc.logical_category_id, cm.logical_category_id)       as logical_category_id,
@@ -185,17 +186,16 @@ left join /*+distrib(l,a)*/ dma.jobs_vacancies_duplicates_daily jvdd
     -- and jvdd.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 
 left join /*+distrib(l,r)*/ (
-    select
-        ci.user_id,
-        pld.item_id,
-        cast(pld.event_date as date) as event_date,
-        count(*) as count_services_price_list
+    select 
+            user_id,
+            pld.item_id,
+            cast(pld.event_date as date) as event_date,
+            services as count_services_price_list,
+            quality_price_list
     from dma.current_item ci
-    join dma.price_list_day pld on ci.item_id = pld.item_id
-    where not pld.stoimost is null
-        and pld.event_date between :first_date and :last_date
-        -- and pld.event_year is not null -- @trino
-    group by 1, 2, 3
+    join dma.item_metric_price_list_day pld on ci.item_id = pld.item_id
+    where pld.event_date between :first_date and :last_date
+    -- and pld.event_year is not null -- @trino
 ) ipl
     on ipl.user_id = ss.user_id
     and ipl.item_id = ss.item_id
