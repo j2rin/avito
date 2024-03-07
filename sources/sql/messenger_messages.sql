@@ -107,7 +107,6 @@ left join /*distrib(l,a)*/ (
     from DMA.messenger_chat_flow_report
     where cast(start_flow_time as date) <= :last_date
         and coalesce(end_flow_time, cast('9999-12-31' as timestamp)) >= :first_date
---         and start_flow_year <= date_trunc('month', :last_date) -- @trino
 ) cb
     on cb.chat_id = mm.chat_id
     and mm.event_date >=  cb.start_flow_time

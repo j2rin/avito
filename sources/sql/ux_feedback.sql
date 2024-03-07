@@ -9,6 +9,7 @@ join dma."current_user" on External_id =
                                         -- user_id_ext::!int -- @vertica
                                         -- try_cast(user_id_ext as bigint) -- @trino
 where question_number = 1
-and cast(created_at as date) between :first_date and :last_date
+-- and cast(created_at as date) between :first_date and :last_date -- @vertica
+-- and cast(created_at AT TIME ZONE '+03:00' as date) between :first_date and :last_date -- @trino
 group by 1,2
 

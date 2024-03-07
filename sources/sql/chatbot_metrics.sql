@@ -31,12 +31,8 @@ where (
         cast(t.start_flow_time as date) between :first_date and :last_date
         or cast(t.end_flow_time as date) between :first_date and :last_date
     )
---     and ( --@trino
---        r.min_event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
---        or t.start_flow_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
---     ) --@trino
+--     and r.min_event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 --     and r.min_event_year is not null --@trino
---     and t.start_flow_year is not null --@trino
     and not is_spam
     and not is_blocked
     and not is_deleted
