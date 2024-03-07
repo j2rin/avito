@@ -12,6 +12,8 @@ metric.counter:
  payment_amount_card_non_mir:  {filter: [is_sbp: False, is_mir: False],obs: [items_price]}
  payment_commission:           {obs: [payment_commission_calculated]}
  payment_commission_total_without_refunds:    {filter: [has_refund: False], obs: [commission_calculated]}
+ payment_amount_wallet:        {filter: [is_wallet: True],obs: [items_price]}
+ payment_orders_wallet:        {filter: [is_wallet: True]}
 
 metric.ratio:
  payment_acquiring_fee:   {num: payment_commission, den: payment_amount}
@@ -22,3 +24,5 @@ metric.ratio:
  payment_amount_sbp_ratio:  {num: payment_amount_sbp, den: payment_amount}
  payment_amount_card_ratio:  {num: payment_amount_card_total, den: payment_amount} 
  payment_amount_card_mir_ratio:  {num: payment_amount_card_mir, den: payment_amount}
+ payment_amount_wallet_ratio:  {num: payment_amount_wallet, den: payment_amount}
+ payment_orders_wallet_ratio:  {num: payment_orders_wallet, den: payment_orders}
