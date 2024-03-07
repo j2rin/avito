@@ -22,7 +22,6 @@ with am_client_day as (
     from DMA.messenger_chat_flow_report
     where cast(start_flow_time as date) <= :last_date
         and cast(end_flow_time as date) >= :first_date
-        -- and start_flow_year is not null -- @trino
 )
  select
  	chr.chat_id,
