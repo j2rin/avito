@@ -1,6 +1,7 @@
 select
 user_id,
-cast(created_at as date) event_date,
+-- cast(created_at as date) event_date, -- @vertica
+-- cast(created_at AT TIME ZONE '+03:00' as date) event_date, -- @trino
 max(case answer when 'Отлично' then 5 when 'Хорошо' then 4 when 'Нейтрально' then 3 when 'Плохо' then 2 when 'Ужасно' then 1 end) grade,
 sum(1) obs_count,
 sum(case answer when 'Отлично' then 5 when 'Хорошо' then 4 when 'Нейтрально' then 3 when 'Плохо' then 2 when 'Ужасно' then 1 end) as obs_sum_grade
