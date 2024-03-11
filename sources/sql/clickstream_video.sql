@@ -30,9 +30,17 @@ select
     cm.Param1_microcat_id                                      as param1_id,
     cm.Param2_microcat_id                                      as param2_id,
     cm.Param3_microcat_id                                      as param3_id,
-    cm.Param4_microcat_id                                      as param4_id
+    cm.Param4_microcat_id                                      as param4_id,
+    cl.location_id                                                           as location_id,
+    case when cl.level = 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+    case when cl.level = 3 then cl.Location_id else null end                 as city_id,
+    cl.LocationGroup_id                                                      as location_group_id,
+    cl.City_Population_Group                                                 as population_group,
+    cl.Logical_Level                                                         as location_level_id
 from DMA.clickstream_video cs
 left join DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
 left join cond on (condition = value)
+left join dma.current_locations cl
+    on home_city_id = location_id
 where cast(cs.event_date as date) between :first_date and :last_date
 --and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
