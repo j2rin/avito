@@ -92,6 +92,8 @@ select
     clx.LocationGroup_id                                         as x_location_group_id,
     clx.City_Population_Group                                    as x_population_group,
     clx.Logical_Level                                            as x_location_level_id,
+    case when cl.level=3 and clx.level=3 then cl.Location_id=clx.Location_id end as same_location,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end = case clx.level when 3 then clx.ParentLocation_id else clx.Location_id end as same_region,
     case
        when (bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 12)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 13)) > 0) then 2
        when (bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 14)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 15)) > 0) then 5
