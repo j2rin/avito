@@ -6,48 +6,47 @@ definitions:
     - &click_banner_serp {eid: 4921, target_page: 'Запрос поставщикам'}  # клик точка входа баннер в серпе
     - &click_item_card {eid: 8868, from_page: 'item_card'}  # клик точка входа карточка товара
 
-
 metric.counter:
-  cnt_buyer_view_enter_point: {filter: [ funnel_type: 'buyer_funnel_front', { $or: [*v_rubricator_serp, *v_banner_serp, *v_item_card]}]}
-  cnt_buyer_click_enter_point: {filter: [ funnel_type: 'buyer_funnel_front', { $or: [*click_rubricator_serp, *click_banner_serp, *click_item_card]}]}
-  cnt_buyer_start_fill_in_rfp: {filter: [eid: [8967, 8969, 8970, 8971, 10053, 10054]]}
-  cnt_find_more_2_seller: {filter: [eid: 10055], [nsellers.>=: 2]}
-  cnt_buyer_get_error_msg_change_desc: {filter: [eid: 10056]}
-  cnt_rfp_cancel_moderation: {filter: [eid: 10057]}
-  cnt_buyer_click_create_rfp: {filter: [eid: 8908]}
-  cnt_buyer_create_rfp: {filter: [eid: 9005]}
-  cnt_buyer_cancel_rfp: {filter: [eid: 8927]}
-  cnt_buyer_get_proposal: {filter: [eid: 8928]}
-  cnt_buyer_download_table: {filter: [eid: [8932, 9628]]}
-  cnt_buyer_click_connect_seller: {filter: [eid: 8934]}
+    cnt_buyer_view_enter_point: {filter: [ funnel_type: 'buyer_funnel_front', { $or: [*v_rubricator_serp, *v_banner_serp, *v_item_card]}]}
+    cnt_buyer_click_enter_point: {filter: [ funnel_type: 'buyer_funnel_front', { $or: [*click_rubricator_serp, *click_banner_serp, *click_item_card]}]}
+    cnt_buyer_start_fill_in_rfp: {filter: [eid: [8967, 8969, 8970, 8971, 10053, 10054]]}
+    cnt_find_more_2_seller: {filter: [eid: 10055, nsellers.>=: 2]}
+    cnt_buyer_get_error_msg_change_desc: {filter: [eid: 10056]}
+    cnt_rfp_cancel_moderation: {filter: [eid: 10057]}
+    cnt_buyer_click_create_rfp: {filter: [eid: 8908]}
+    cnt_buyer_create_rfp: {filter: [eid: 9005]}
+    cnt_buyer_cancel_rfp: {filter: [eid: 8927]}
+    cnt_buyer_get_proposal: {filter: [eid: 8928]}
+    cnt_buyer_download_table: {filter: [eid: [8932, 9628]]}
+    cnt_buyer_click_connect_seller: {filter: [eid: 8934]}
 
 metric.uniq:
-  u_buyer_view_enter_point: {counter: cnt_buyer_view_enter_point,     key: [user_id]}
-  u_buyer_click_enter_point: { counter: cnt_buyer_click_enter_point,     key: [ user_id] }
-  u_buyer_start_fill_in_rfp: { counter: cnt_buyer_start_fill_in_rfp,     key: [ user_id] }
-  u_buyer_create_rfp: { counter: cnt_buyer_create_rfp,     key: [ user_id] }
-  u_buyer_cancel_rfp: { counter: cnt_buyer_cancel_rfp,     key: [ user_id] }
-  u_buyer_get_proposal: { counter: cnt_buyer_get_proposal,     key: [ user_id] }
-  u_buyer_download_table: { counter: cnt_buyer_download_table,     key: [ user_id] }
-  u_buyer_click_connect_seller: { counter: cnt_buyer_click_connect_seller,     key: [ user_id] }
+    u_buyer_view_enter_point: {counter: cnt_buyer_view_enter_point,     key: [user_id]}
+    u_buyer_click_enter_point: { counter: cnt_buyer_click_enter_point,     key: [ user_id] }
+    u_buyer_start_fill_in_rfp: { counter: cnt_buyer_start_fill_in_rfp,     key: [ user_id] }
+    u_buyer_create_rfp: { counter: cnt_buyer_create_rfp,     key: [ user_id] }
+    u_buyer_cancel_rfp: { counter: cnt_buyer_cancel_rfp,     key: [ user_id] }
+    u_buyer_get_proposal: { counter: cnt_buyer_get_proposal,     key: [ user_id] }
+    u_buyer_download_table: { counter: cnt_buyer_download_table,     key: [ user_id] }
+    u_buyer_click_connect_seller: { counter: cnt_buyer_click_connect_seller,     key: [ user_id] }
 
-  u_buyer_rfp_click_enter_point: {counter: cnt_buyer_click_enter_point,     key: [user_id, rfpid]}
-  u_buyer_rfp_start_fill_in_rfp: {counter: cnt_buyer_start_fill_in_rfp,     key: [user_id, rfpid]}
-  u_buyer_rfp_create_rfp: {counter: cnt_buyer_create_rfp,     key: [user_id, rfpid]}
-  u_buyer_rfp_cancel_rfp: {counter: cnt_buyer_cancel_rfp,     key: [user_id, rfpid]}
-  u_buyer_rfp_find_more_2_seller: {counter: cnt_find_more_2_seller,     key: [user_id, rfpid]}
-  u_buyer_rfp_cancel_moderation: {counter: cnt_rfp_cancel_moderation,     key: [user_id, rfpid]}
-  u_buyer_rfp_get_proposal: {counter: cnt_buyer_get_proposal,     key: [user_id, rfpid]}
-  u_buyer_rfp_download_table: {counter: cnt_buyer_download_table,     key: [user_id, rfpid]}
-  u_buyer_rfp_click_connect_seller: {counter: cnt_buyer_click_connect_seller,     key: [user_id, rfpid]}
+    u_buyer_rfp_click_enter_point: {counter: cnt_buyer_click_enter_point,     key: [user_id, rfpid]}
+    u_buyer_rfp_start_fill_in_rfp: {counter: cnt_buyer_start_fill_in_rfp,     key: [user_id, rfpid]}
+    u_buyer_rfp_create_rfp: {counter: cnt_buyer_create_rfp,     key: [user_id, rfpid]}
+    u_buyer_rfp_cancel_rfp: {counter: cnt_buyer_cancel_rfp,     key: [user_id, rfpid]}
+    u_buyer_rfp_find_more_2_seller: {counter: cnt_find_more_2_seller,     key: [user_id, rfpid]}
+    u_buyer_rfp_cancel_moderation: {counter: cnt_rfp_cancel_moderation,     key: [user_id, rfpid]}
+    u_buyer_rfp_get_proposal: {counter: cnt_buyer_get_proposal,     key: [user_id, rfpid]}
+    u_buyer_rfp_download_table: {counter: cnt_buyer_download_table,     key: [user_id, rfpid]}
+    u_buyer_rfp_click_connect_seller: {counter: cnt_buyer_click_connect_seller,     key: [user_id, rfpid]}
 
 metric.ratio:
-  cr_view_to_click_rfp: {num: u_buyer_rfp_start_fill_in_rfp,  den: u_buyer_view_enter_point}
-  cr_click_to_start_fill_in_rfp: {num: u_buyer_rfp_start_fill_in_rfp,  den: u_buyer_rfp_start_fill_in_rfp}
-  cr_start_to_create_rfp: { num: u_buyer_rfp_create_rfp,  den: u_buyer_rfp_start_fill_in_rfp }
-  cr_create_rfp_to_get_proposal: { num: u_buyer_rfp_get_proposal,  den: u_buyer_rfp_create_rfp }
-  cr_get_proposal_to_download_table: { num: u_buyer_rfp_download_table,  den: u_buyer_rfp_get_proposal }
-  cr_download_table_to_click_connect_seller: { num: u_buyer_rfp_click_connect_seller,  den: u_buyer_rfp_download_table }
-  cr_create_rfp_to_find_more_2_seller: { num: u_buyer_rfp_find_more_2_seller,  den: u_buyer_rfp_create_rfp }
-  cr_create_rfp_to_cancel_moderation: { num: u_buyer_rfp_cancel_moderation,  den: u_buyer_rfp_create_rfp }
-  cr_create_rfp_to_click_connect_seller: { num: u_buyer_rfp_click_connect_seller,  den: u_buyer_rfp_create_rfp }
+    cr_view_to_click_rfp: {num: u_buyer_rfp_start_fill_in_rfp,  den: u_buyer_view_enter_point}
+    cr_click_to_start_fill_in_rfp: {num: u_buyer_rfp_start_fill_in_rfp,  den: u_buyer_rfp_start_fill_in_rfp}
+    cr_start_to_create_rfp: { num: u_buyer_rfp_create_rfp,  den: u_buyer_rfp_start_fill_in_rfp }
+    cr_create_rfp_to_get_proposal: { num: u_buyer_rfp_get_proposal,  den: u_buyer_rfp_create_rfp }
+    cr_get_proposal_to_download_table: { num: u_buyer_rfp_download_table,  den: u_buyer_rfp_get_proposal }
+    cr_download_table_to_click_connect_seller: { num: u_buyer_rfp_click_connect_seller,  den: u_buyer_rfp_download_table }
+    cr_create_rfp_to_find_more_2_seller: { num: u_buyer_rfp_find_more_2_seller,  den: u_buyer_rfp_create_rfp }
+    cr_create_rfp_to_cancel_moderation: { num: u_buyer_rfp_cancel_moderation,  den: u_buyer_rfp_create_rfp }
+    cr_create_rfp_to_click_connect_seller: { num: u_buyer_rfp_click_connect_seller,  den: u_buyer_rfp_create_rfp }
