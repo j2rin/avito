@@ -5,7 +5,7 @@ with cpx_item_call_price as (
         lead(actual_date, 1, cast('2099-01-01' as date)) over(partition by item_id order by actual_date) as to_date,
         bid_price
     from dma.lmp_cpx_item_call_price
-    where actual_date <= :last_date
+    where cast(actual_date as date) <= :last_date
 ),
 buyer_stream_contacts as (
     select
