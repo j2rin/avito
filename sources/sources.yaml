@@ -3648,3 +3648,18 @@ auto_select_metrics:
   dtm: event_timestamp
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
+
+
+newdev_weighted_contacts:
+  metric_configs: [newdev_weighted_contacts]
+  connections: [vertica, trino]
+  sql: newdev_weighted_contacts
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - logical_category
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
