@@ -27,4 +27,4 @@ from DMA.rfp_events_tracker ret
 left join dma.current_microcategories cm on cm.microcat_id = ret.microcat_id
 where true
     and date(event_date) between date(:first_date) and date(:last_date)
-    -- and status_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+    -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
