@@ -34,7 +34,8 @@ CONFIGS = [
     ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions/dimensions.yaml'), False),
     ('dimensions_sql', os.path.join(CUR_DIR_PATH, 'dimensions/sql'), True),
     ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
-    ('m42_cartesian_groups', os.path.join(CUR_DIR_PATH, 'm42_cartesian_groups'), True),
+    ('cubes_configs', os.path.join(CUR_DIR_PATH, 'm42/cubes_configs'), True),
+    ('m42_reports', os.path.join(CUR_DIR_PATH, 'm42/reports'), True),
 ]
 
 
@@ -112,7 +113,7 @@ def send_all(url):
         if is_multi:
             data[name], file_name_maps[name] = read_configs(path, changed_files)
         else:
-            data[name] = read_file(path)
+            data[name] = (read_file(path), path.replace(f'{CUR_DIR_PATH}/', '') in changed_files)
             file_name_maps[name] = {name: path}
 
     result = post(url, data)
