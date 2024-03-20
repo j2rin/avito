@@ -3663,3 +3663,24 @@ newdev_weighted_contacts:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
+
+
+reputation_interface:
+  metric_configs: [reputation_interface_metrics]
+  connections: [vertica, trino]
+  sql: reputation_interface
+  column_map:
+    user: user_id
+  dimensions:
+    - platform
+    - location
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - is_asd
+    - asd_user_group
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date

@@ -1,22 +1,18 @@
 select
     cast(rs.event_timestamp as date) as event_date
     , rs.user_id
-    , hp.platform_id
-    , role
-    , quality_level
-    , eid
-    , from_page
-    , source
-    , case when eid = 7256 and coalesce(from_page, 'general') = 'general' then 1 end as reputation_page_shown
-    , case when eid = 7256 and from_page in ('features.all', 'features.advices') then 1 when eid = 7257 then 1 end as reputation_features_shown
-    , case when eid = 7259 then 1 end as reputation_faq_click
-    , case when eid = 7258 then 1 end as reputation_effect_click
+    , rs.role
+    , rs.quality_level
+    , rs.eid
+    , rs.from_page
+    , rs.source
     -- dimensions
+    , hp.platform_id
     , cl.location_id
     , case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
     , case cl.level when 3 then cl.Location_id end                           as city_id
-	  , cl.LocationGroup_id                                                    as location_group_id
-	  , cl.City_Population_Group                                               as population_group
+    , cl.LocationGroup_id                                                    as location_group_id
+    , cl.City_Population_Group                                               as population_group
     , cl.Logical_Level                                                       as location_level_id
     , coalesce(asd.is_asd, False)                                            as is_asd
     , asd.asd_user_group_id                                                  as asd_user_group_id
