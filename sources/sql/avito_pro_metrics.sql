@@ -3,6 +3,7 @@
     pmd.event_date,
     pmd.vertical_id,
     pmd.is_pro,
+    pmd.logical_category_id,
     pmd.transaction_amount,
     target_contacts,
     case 

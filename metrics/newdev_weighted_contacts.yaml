@@ -1,0 +1,42 @@
+definitions:
+  - &x_eid_search                              [300]
+  - &x_eid_fav_lst                             [400]
+  - &x_eid_comp_lst                            [450]
+  - &x_eid_u2i                                 [2012]
+  - &x_eid_profile                             [2017]
+  - &x_eid_rec                                 [2309]
+  - &x_eid_i2i                                 [2437]
+  - &x_eid_map                                 [2743]
+  - &x_eid_personal_items                      [4112]
+  - &x_eid_mini_s_kmt                          [5184]
+  - &x_eid_push_land                           [5354]
+  - &x_eid_mall_widget                         [5516]
+  - &x_eid_extended_profile_window             [6006]
+  - &x_eid_fav_coll                            [8175]
+
+  - &is_search                                 {x_eid: *x_eid_search}
+  - &is_fav_lst                                {x_eid: *x_eid_fav_lst}
+  - &is_comp_lst                               {x_eid: *x_eid_comp_lst}
+  - &is_u2i                                    {x_eid: *x_eid_u2i}
+  - &is_profile                                {x_eid: *x_eid_profile}
+  - &is_rec                                    {x_eid: *x_eid_rec}
+  - &is_i2i                                    {x_eid: *x_eid_i2i}
+  - &is_map                                    {x_eid: *x_eid_map}
+  - &is_personal_items                         {x_eid: *x_eid_personal_items}
+  - &is_mini_s_kmt                             {x_eid: *x_eid_mini_s_kmt}
+  - &is_push_land                              {x_eid: *x_eid_push_land}
+  - &is_mall_widget                            {x_eid: *x_eid_mall_widget}
+  - &is_extended_profile_window                {x_eid: *x_eid_extended_profile_window}
+  - &is_fav_coll                               {x_eid: *x_eid_fav_coll}
+
+metric.counter:
+  newdev_weighted_contacts:                                   {obs: [call_price]}
+  newdev_weighted_contacts_search:                            {obs: [call_price], filter: [*is_search]}
+  newdev_weighted_contacts_fav_lst:                           {obs: [call_price], filter: [*is_fav_lst]}
+  newdev_weighted_contacts_u2i:                               {obs: [call_price], filter: [*is_u2i]}
+  newdev_weighted_contacts_profile:                           {obs: [call_price], filter: [*is_profile]}
+  newdev_weighted_contacts_i2i:                               {obs: [call_price], filter: [*is_i2i]}
+  newdev_weighted_contacts_map:                               {obs: [call_price], filter: [*is_map]}
+  newdev_weighted_contacts_mini_s_kmt:                        {obs: [call_price], filter: [*is_mini_s_kmt]}
+  newdev_weighted_contacts_push_land:                         {obs: [call_price], filter: [*is_push_land]}
+  newdev_weighted_contacts_extended_profile_window:           {obs: [call_price], filter: [*is_extended_profile_window]}

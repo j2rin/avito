@@ -92,6 +92,8 @@ select
     clx.LocationGroup_id                                         as x_location_group_id,
     clx.City_Population_Group                                    as x_population_group,
     clx.Logical_Level                                            as x_location_level_id,
+    case when cl.level=3 and clx.level=3 then cl.Location_id=clx.Location_id end as same_location,
+    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end = case clx.level when 3 then clx.ParentLocation_id else clx.Location_id end as same_region,
     case
        when (bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 12)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 13)) > 0) then 2
        when (bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 14)) > 0 or bitwise_and(item_vas_flags, bitwise_left_shift(cast(1 as bigint), 15)) > 0) then 5
@@ -138,7 +140,8 @@ select
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 34)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as b2c_wo_dbs,
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 35)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as c2c_return_within_14_days,
     cast((bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 34)) > 0 or bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 35)) > 0) and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as return_within_14_days,
-    cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as is_delivery_active_in_sale 
+    cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as is_delivery_active_in_sale,
+    fs.seller_id is not null as is_federal_seller
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -231,6 +234,9 @@ left join /*+jtype(h),distrib(l,a)*/ (
     on ial.item_id = ss.item_id
     and cast(ss.event_date as date) between ial.from_date and ial.to_date
 left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_category_id=pg.logical_category_id and ial.price>=pg.min_price and ial.price< pg.max_price
+
+left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
+    on ss.item_user_id = fs.seller_id
 
 where cast(ss.event_date as date) between :first_date and :last_date
 --     and ss.date between :first_date and :last_date -- @trino

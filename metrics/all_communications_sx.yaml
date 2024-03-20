@@ -45,6 +45,12 @@ metric.counter:
   comns_sx_incoming_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
   comns_sx_incoming_target:                              {filter: [*is_common_funnel, *is_target]}
 
+  comns_sx:                                     {}
+  comns_sx_answered:                            {filter: [*is_answered, *reply_time_not_zero, *reply_3days]}
+  comns_sx_trash:                               {filter: [*is_trash]}
+  comns_sx_preliminary:                         {filter: [*is_preliminary]}
+  comns_sx_target:                              {filter: [*is_target]}
+
   target_contact_chat_inbox:                             {filter: [*is_msg, *is_common_funnel, *is_target]} #old
   target_contact_call_sx:                                {filter: [*is_call, *is_common_funnel, *is_target]} #old
   target_contact_call_sx_success:                        {filter: [*is_call, *is_common_funnel, *is_target, *is_success_call]} #old
@@ -52,6 +58,7 @@ metric.counter:
   answered_call_sx:                                      {filter: [*is_call, *is_common_funnel, *is_answered]} #old
   call_sx:                                               {filter: [*is_call, *is_common_funnel]} #old
   seller_target_contact_all:                             {filter: [*is_common_funnel, *is_target]} #old
+  seller_target_contact_all_exp:                         {filter: [*is_target]} 
 
   call_sx_delivery_agreement:                              {filter: [*is_common_funnel, {tags.ilike: 'delivery_agreement'} , *is_call]} #old
   call_sx_sending_docs:                                    {filter: [*is_common_funnel, {tags.ilike: 'sending_docs'} , *is_call]} #old
@@ -118,6 +125,15 @@ metric.uniq:
   user_seller_target_contact:                            {counter: seller_target_contact_all,      key: [user]} #old
   seller_target_contact:                                 {counter: seller_target_contact_all,      key: [item_id, logical_category_id]} #old
   seller_target_buyers:                                  {counter: seller_target_contact_all,      key: [seller_id, logical_category_id]} #old
+
+  # с перезвонами
+  seller_target_contact_exp:                                 {counter: seller_target_contact_all_exp,      key: [item_id, logical_category_id]} #old
+  seller_target_buyers_exp:                                  {counter: seller_target_contact_all_exp,      key: [seller_id, logical_category_id]} #old
+  comns_sx_canonical:                           {counter: comns_sx,              key: [item_id, logical_category_id]}
+  comns_sx_answered_canonical:                  {counter: comns_sx_answered,     key: [item_id, logical_category_id]}
+  comns_sx_trash_canonical:                     {counter: comns_sx_trash,        key: [item_id, logical_category_id]}
+  comns_sx_preliminary_canonical:               {counter: comns_sx_preliminary,  key: [item_id, logical_category_id]}
+  comns_sx_target_canonical:                    {counter: comns_sx_target,       key: [item_id, logical_category_id]}
 
 metric.ratio:
   gsm_sx_incoming_call_dur_per_call:                     {num: gsm_sx_incoming_call_dur,            den: gsm_sx}

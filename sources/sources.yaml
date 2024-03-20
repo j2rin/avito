@@ -36,10 +36,13 @@ buyer_stream:
     - x_location_group
     - x_population_group
     - x_location_level
+    - same_location
+    - same_region
     - condition
     - boost_class
     - user_segment_market
     - is_asd
+    - is_federal_seller
     - price_group
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
@@ -2150,9 +2153,15 @@ re_nd_cpa_call_revenue:
   connections: [vertica, trino]
   sql: re_nd_cpa_call_revenue
   column_map:
+    item: item_id
     cookie: cookie_id
+    user: user_id
     x_eid: x_eid
-  participant: {visitor: cookie_id}
+  dimensions:
+    - logical_category
+    - subcategory
+    - region
+  participant: {visitor: cookie_id, user: user_id}
   primary_subject: visitor
   dtm: event_date
 
@@ -3244,6 +3253,11 @@ clickstream_video:
       param3,
       param4,
       condition,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
@@ -3549,7 +3563,7 @@ avito_pro_metrics:
   sql: avito_pro_metrics
   dimensions:
     - vertical
-    - is_pro
+    - logical_category
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
@@ -3591,3 +3605,61 @@ haraba_user_active_day:
   primary_subject: user
   dtm: entry_date
 
+
+true_new_users:
+  metric_configs: [ true_new_users ]
+  connections: [vertica, trino]
+  sql: true_new_users
+  column_map:
+    item: item_id
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+      - platform
+      - vertical
+      - logical_category
+      - logical_param1
+      - logical_param2
+      - category
+      - subcategory
+      - param1
+      - region
+      - city
+      - location_group
+      - population_group
+      - location_level
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+auto_select_metrics:
+  metric_configs: [ auto_select_metrics ]
+  connections: [vertica, trino]
+  sql: auto_select_events
+  column_map:
+    cookie: cookie_id
+    user: user_id
+    item: item_id
+  dimensions: [
+    platform,
+    location
+  ]
+  dtm: event_timestamp
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+
+
+newdev_weighted_contacts:
+  metric_configs: [newdev_weighted_contacts]
+  connections: [vertica, trino]
+  sql: newdev_weighted_contacts
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - logical_category
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
