@@ -18,7 +18,7 @@ select
     , asd.asd_user_group_id                                                  as asd_user_group_id
 from dma.repsys_events rs
 join dds.H_Platform hp on hp.external_id = rs.platform
-join dma.current_user cu on rs.user_id = cu.user_id
+join dma."current_user" cu on rs.user_id = cu.user_id
 left join dma.current_locations cl on cu.location_id = cl.location_id
 left join (
     select
