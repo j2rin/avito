@@ -3578,23 +3578,23 @@ hacked_metric_m42:
   dtm: calc_date
 
 
-  rfp_funnel_buyer:
-    metric_configs: [ rfp_funnel_buyer ]
-    connections: [ vertica, trino ]
-    sql: rfp_funnel
-    column_map:
-      user: user_id
-      rfp: rfpid
-    dimensions:
-      - category
-      - subcategory
-      - param1
-      - param2
-      - param3
-      - param4
-    participant: { user: user_id }
-    primary_subject: user
-    dtm: event_date
+rfp_funnel_buyer:
+  metric_configs: [ rfp_funnel_buyer ]
+  connections: [ vertica, trino ]
+  sql: rfp_funnel
+  column_map:
+    user: user_id
+    rfp: rfpid
+  dimensions:
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
 
 
 haraba_user_active_day:
