@@ -34,4 +34,5 @@ left join (
 ) asd on rs.user_id = asd.user_id and cast(rs.event_timestamp as date) between asd.active_from_date and asd.active_to_date
 where 1=1
 and cast(event_timestamp as date) between cast(:first_date as date) and cast(:last_date as date)
+-- and event_month between date_trunc('month' , :first_date) and date_trunc('month' , :last_date) -- @trino
 and eid in (7256, 7257, 7258, 7259)
