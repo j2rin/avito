@@ -15,4 +15,5 @@ left join infomodel.current_infmquery_category as cic
 left join dma.current_logical_categories as clc
     on cic.logcat_id = clc.logcat_id
 where cast(pd20.event_date as date) between :first_date and :last_date
+-- and date_trunc('year', event_date) between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 
