@@ -9,7 +9,7 @@ select
       platform_id,
       ret.microcat_id,
       target_page,
-      rfpid,
+      from_big_endian_64(xxhash64(cast(coalesce(rfpid, '') as varbinary))) as rfpid,
       offerid,
       chat_id,
       message_preview,
