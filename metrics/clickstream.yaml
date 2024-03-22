@@ -100,6 +100,9 @@ metric.counter:
   contacts_limit_screen_faced:                 {filter: [eid: 4731],  obs: [event_count]}
   click_banner_in_stories:                     {filter: [eid: 9491],  obs: [event_count]}
   show_banner_in_stories:                      {filter: [eid: 9490],  obs: [event_count]}
+  open_avito_sales_sellers_flow                {filter: [eid: 7148],  obs: [event_count]}
+  add_parameter_avito_sales_sellers_flow       {filter: [eid: 7149],  obs: [event_count]}
+  click_participate_in_sales                   {filter: [eid.in: [8356,10110]],  obs: [event_count]}
 
 metric.uniq:
   orders_page_views_users:                          {counter: orders_page_views,                           key: [cookie]}
@@ -184,21 +187,28 @@ metric.uniq:
   user_contacts_limit_screen_faced:                 {counter: contacts_limit_screen_faced,                 key: [user_id]}
   user_click_banner_in_stories:                     {counter: click_banner_in_stories,                     key: [cookie]}
   user_show_banner_in_stories:                      {counter: show_banner_in_stories,                      key: [cookie]}
+  users_opened_avito_sales_sellers_flow:            {counter: open_avito_sales_sellers_flow ,              key: [user_id]}
+  users_added_parameter_avito_sales_sellers_flow:   {counter: add_parameter_avito_sales_sellers_flow,      key: [user_id]}
+  users_clicked_participate_in_sales:               {counter: click_participate_in_sales,                  key: [user_id]}
+  
 
 
 metric.ratio:
-  story_show_per_story_list_click:         {num: story_shows,                         den: stories_list_clicks}
-  story_click_per_show:                    {num: story_clicks,                        den: story_shows}
-  story_ctr:                               {num: stories_list_clicks,                 den: stories_list_shows}
-  user_story_ctr:                          {num: user_stories_list_clicks,            den: user_stories_list_shows}
-  story_btn_ctr:                           {num: story_clicks,                        den: stories_list_clicks}
-  user_story_btn_ctr:                      {num: user_story_clicks,                   den: user_stories_list_clicks}
-  story_depth:                             {num: story_page_open,                     den: story_clicks}
-  user_story_depth:                        {num: user_story_page_open,                den: user_stories_list_clicks}
-  callback_button_click_per_show:          {num: callback_button_click,               den: callback_button_show}
-  callback_request_sent_per_click:         {num: callback_request_sent,               den: callback_button_click}
-  user_callback_button_click_per_show:     {num: user_callback_button_click,          den: user_callback_button_show}
-  user_callback_request_sent_per_click:    {num: user_callback_request_sent,          den: user_callback_button_click}
-  user_ctr_banner_in_stories:              {num: user_click_banner_in_stories,        den: user_show_banner_in_stories}
-  ctr_banner_in_stories:                   {num: click_banner_in_stories,             den: show_banner_in_stories}
+  story_show_per_story_list_click:         							{num: story_shows,                         den: stories_list_clicks}
+  story_click_per_show:                    							{num: story_clicks,                        den: story_shows}
+  story_ctr:                               							{num: stories_list_clicks,                 den: stories_list_shows}
+  user_story_ctr:                          							{num: user_stories_list_clicks,            den: user_stories_list_shows}
+  story_btn_ctr:                           							{num: story_clicks,                        den: stories_list_clicks}
+  user_story_btn_ctr:                      							{num: user_story_clicks,                   den: user_stories_list_clicks}
+  story_depth:                             							{num: story_page_open,                     den: story_clicks}
+  user_story_depth:                        							{num: user_story_page_open,                den: user_stories_list_clicks}
+  callback_button_click_per_show:          							{num: callback_button_click,               den: callback_button_show}
+  callback_request_sent_per_click:         							{num: callback_request_sent,               den: callback_button_click}
+  user_callback_button_click_per_show:     							{num: user_callback_button_click,          den: user_callback_button_show}
+  user_callback_request_sent_per_click:    							{num: user_callback_request_sent,          den: user_callback_button_click}
+  user_ctr_banner_in_stories:              							{num: user_click_banner_in_stories,        den: user_show_banner_in_stories}
+  ctr_banner_in_stories:                   							{num: click_banner_in_stories,             den: show_banner_in_stories}
+  users_clicked_participate_per_users_opened_avito_sales:         	{num: users_clicked_participate_in_sales,  den: users_opened_avito_sales_sellers_flow}
+  users_clicked_participate_per_users_added_parameter_avito_sales:  {num: users_clicked_participate_in_sales,  den: users_added_parameter_avito_sales_sellers_flow}
+  users_added_parameter_per_users_opened_avito_sales:         		{num: users_added_parameter_avito_sales_sellers_flow,    den: users_opened_avito_sales_sellers_flow}
   
