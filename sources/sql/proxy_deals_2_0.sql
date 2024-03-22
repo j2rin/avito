@@ -1,6 +1,6 @@
 select 
     pd20.item_id
-    , pd20.buyer_id
+    , pd20.buyer_id as user_id
     , pd20.event_date
     , clc.logical_category_id
     , clc.vertical_id 
