@@ -1,0 +1,17 @@
+metric.counter:
+  reputation_main_show:                                      {filter: [ eid: 7256, $or: [from_page.isnull: true, from_page: 'general'] ]}
+  reputation_features_show:                                  {filter: [ $or: [eid: 7257, [eid: 7256, from_page.in: ['features.all', 'features.advices'] ] ] ]}
+  reputation_effect_click:                                   {filter: [ eid: 7258 ]}
+  reputation_faq_click:                                      {filter: [ eid: 7259 ]}
+
+
+metric.uniq:
+  reputation_main_show_sellers:                              {counter: reputation_main_show,                   key: [user]}
+  reputation_features_show_sellers:                          {counter: reputation_features_show,               key: [user]}
+  reputation_effect_click_sellers:                           {counter: reputation_effect_click,                key: [user]}
+  reputation_faq_click_sellers:                              {counter: reputation_faq_click,                   key: [user]}
+
+metric.ratio:
+  reputation_features_show_cr:                               {num: reputation_features_show_sellers,           den: reputation_main_show_sellers}
+  reputation_effect_click_cr:                                {num: reputation_features_show_sellers,           den: reputation_main_show_sellers}
+  reputation_faq_click_cr:                                   {num: reputation_features_show_sellers,           den: reputation_main_show_sellers}
