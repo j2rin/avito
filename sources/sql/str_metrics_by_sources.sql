@@ -77,8 +77,7 @@ with
             coalesce(trx_promo_fee, 0) as str_paid_promo_revenue
         from
             dma.short_term_rent_orders
-        where 1=1
-            and cast(order_create_time as date) between :first_date and :last_date
+        where cast(order_create_time as date) between :first_date and :last_date
         ),
     paid_orders as
         (select
