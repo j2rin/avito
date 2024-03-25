@@ -73,7 +73,7 @@ with
             buyer_id,
             item_id,
             amount as str_paid_gmv,
-            cast(payout_fee / 100 as decimal) as str_paid_revenue,
+            cast(payout_fee / 100 as decimal) + coalesce(cast(trx_promo_fee as decimal), 0) as str_paid_revenue,
             coalesce(trx_promo_fee, 0) as str_paid_promo_revenue
         from
             dma.short_term_rent_orders
