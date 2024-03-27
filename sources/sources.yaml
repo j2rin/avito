@@ -2336,6 +2336,20 @@ gmv_deals_proxy:
   primary_subject: user
   dtm: event_date
 
+proxy_deals_2_0:
+  metric_configs: [proxy_deals_2_0]
+  connections: [vertica, trino]
+  sql: proxy_deals_2_0
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      user_segment_market,
+    ]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
 performance_fps:
   metric_configs: [performance_fps]
   connections: [vertica, trino]
