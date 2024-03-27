@@ -7,13 +7,12 @@ select
     , pd20.prob_adj
     , pd20.user_segment as user_segment_market
 from 
-    DMA.proxy_deals_2_0 pd20
+    DMA.proxy_deals_2_0 as pd20
 left join DMA.current_item as ci
     on pd20.item_id = ci.item_id
 left join infomodel.current_infmquery_category as cic
     on ci.infmquery_id = cic.infmquery_id
 left join dma.current_logical_categories as clc
     on cic.logcat_id = clc.logcat_id
-where cast(pd20.event_date as date) between :first_date and :last_date
--- and date_trunc('year', event_date) between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
-
+where cast(pd20.event_date as date) between cast(:first_date as date) and cast(:last_date as date)
+-- and event_year between date_trunc('year', cast(:first_date as date)) and date_trunc('year', cast(:last_date as date)) -- @trino
