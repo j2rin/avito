@@ -92,7 +92,10 @@ select /*+syntactic_join*/
         to_big_endian_64(coalesce(ss.profession_id, 0))
     )) as user_microcat_price,
     COALESCE(ss.group_id, ss.item_id) as seller_group,
-    ss.item_rating
+    ss.item_rating,
+    is_delivery_active_regular,
+    is_delivery_available_regular,
+    delivery_flow
 
 from DMA.o_seller_item_active ss
 
