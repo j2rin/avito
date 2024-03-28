@@ -7,13 +7,16 @@ from trino.exceptions import TrinoUserError
 
 def get_credentials():
     def get_from_env():
+        user = os.getenv('TRINO_USER', 'ab_metrics')
+        password = os.getenv('TRINO_PASSWORD', '')
         return {
+            'auth': trino.auth.BasicAuthentication(user, password),
             'host': os.getenv(
                 'TRINO_HOST',
-                'dwh-ab-trino-coordinator-ef01',
+                'dwh-ab-trino.k.avito.ru',
             ),
-            'user': os.getenv('TRINO_USER', 'ab_metrics'),
-            # 'password': os.getenv('TRINO_PASSWORD', ''),
+            'port': os.getenv('TRINO_PORT', '443'),
+            'http_scheme': os.getenv('TRINO_HTTP_SCHEMA', 'https'),
             'catalog': os.getenv('TRINO_CATALOG', 'dwh'),
             'schema': os.getenv('TRINO_SCHEMA', 'dwh'),
         }
