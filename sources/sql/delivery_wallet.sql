@@ -82,8 +82,7 @@ group by 1,2
 req as (
 select cast(create_date as date) as event_date,
        user_id,
-       count(distinct internal_id) as tickets,
-       min(platform) as platfrom_id
+       count(distinct internal_id) as tickets
 from dma.support_templates
 where template_name like '%Баланс для покупок%'
     and cast(create_date as date) >= cast('2024-02-05' as date)
@@ -93,7 +92,6 @@ group by 1,2),
 select coalesce(t.event_date,tu.event_date,r.event_date) as event_date,
        coalesce(tu.user_id,t.user_id, r.user_id) as user_id,
        tickets,
-       platform_id,
        total_top_up_count + transactions as total_operations,
        total_top_up_count,
        transactions
@@ -104,7 +102,7 @@ full outer join req r on r.user_id = tu.user_id and r.event_date = tu.event_date
 where coalesce(t.event_date,tu.event_date,r.event_date) between  :first_date and :last_date)
 select coalesce(we.user_id,tu.user_id,cr.user_id) as user_id,
        coalesce(we.event_date,tu.event_date,cr.event_date) as event_date,
-        coalesce(we.platfrom_id,cr.platform_id,0) as platform_id,
+        coalesce(we.platfrom_id,0) as platform_id,
         oneclick_load_users,
         oneclick_load_events,
         wallet_banner_load_users,
