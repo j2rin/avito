@@ -8,6 +8,7 @@ definitions:
   - &is_reputation_medium {reputation_class: "medium"}
   - &is_reputation_low {reputation_class: "low"}
   - &is_reputation_grey {reputation_class.!in: ["high", "medium", "low"]}
+  - &is_free_delivery_by_seller {subsidy_index: 3}
 
 metric.counter:
   active_items_marketplace:                {filter: [is_active: True, is_marketplace: True]}
@@ -231,6 +232,18 @@ metric.counter:
   seller_delivery_contacts_seller_discount_start_date:             {filter: [start_date.>=: $ab_start_date, subsidy_index.>: 0], obs: [delivery_contacts]}
   seller_delivery_clicks_seller_discount:                          {filter: [subsidy_index.>: 0], obs: [delivery_clicks]}
   seller_delivery_clicks_seller_discount_start_date:               {filter: [subsidy_index.>: 0, start_date.>=: $ab_start_date], obs: [delivery_clicks]}
+  
+  items_with_free_delivery_by_seller:                     {filter: [is_active: True, is_delivery_active: True, *is_free_delivery_by_seller]}
+  active_items_on_free_delivery_by_seller_start_date:     {filter: [is_active: True, is_delivery_active: True, *is_free_delivery_by_seller, start_date.>=: $ab_start_date]}
+  seller_delivery_iv_free_delivery_by_seller:                      {filter: [is_delivery_active: True, *is_free_delivery_by_seller], obs: [ item_views]}
+  seller_delivery_iv_free_delivery_by_seller_start_date:           {filter: [is_delivery_active: True, start_date.>=: $ab_start_date, *is_free_delivery_by_seller], obs: [item_views]}
+  seller_contacts_on_items_free_delivery_by_seller:               {filter: [is_delivery_active: True, *is_free_delivery_by_seller], obs: [contacts]}
+  seller_contacts_on_items_free_delivery_by_seller_start_date:    {filter: [is_delivery_active: True, start_date.>=: $ab_start_date, *is_free_delivery_by_seller], obs: [contacts]}
+  seller_delivery_contacts_free_delivery_by_seller:                        {filter: [*is_free_delivery_by_seller], obs: [delivery_contacts]}
+  seller_delivery_contacts_free_delivery_by_seller_start_date:             {filter: [start_date.>=: $ab_start_date, *is_free_delivery_by_seller], obs: [delivery_contacts]}
+  seller_delivery_clicks_free_delivery_by_seller:                          {filter: [*is_free_delivery_by_seller], obs: [delivery_clicks]}
+  seller_delivery_clicks_free_delivery_by_seller_start_date:               {filter: [*is_free_delivery_by_seller, start_date.>=: $ab_start_date], obs: [delivery_clicks]}
+  
   cnt_active_items_deduplicated:            {filter: [{is_active: True}, {is_original: True}]}
   cnt_active_items_duplicates_groups:       {filter: [{is_active: True}, {is_original: True}, {duplicates_count.>: 0}]}
   cnt_active_items_have_duplicate:          {filter: [{is_active: True}, {duplicates_count.>: 0}]}
@@ -402,6 +415,13 @@ metric.uniq:
   sellers_with_delivery_contact_seller_discount:          {counter: seller_delivery_contacts_seller_discount,         key: [user]}
   sellers_with_delivery_click_seller_discount:            {counter: seller_delivery_clicks_seller_discount,           key: [user]}
   delivery_sellers_with_contact_seller_discount:          {counter: seller_contacts_on_delivery_items_seller_discount, key: [user]}
+  seller_items_with_delivery_contacts_free_delivery_by_seller:    {counter: seller_delivery_contacts_free_delivery_by_seller,         key: [item]}
+  seller_items_with_delivery_clicks_free_delivery_by_seller:      {counter: seller_delivery_clicks_free_delivery_by_seller,           key: [item]}
+  seller_items_with_delivery_iv_free_delivery_by_seller:          {counter: seller_delivery_iv_free_delivery_by_seller,               key: [item]}
+  sellers_with_item_free_delivery_by_seller:             {counter: items_with_free_delivery_by_seller,              key: [user]}
+  sellers_with_delivery_contact_free_delivery_by_seller:          {counter: seller_delivery_contacts_free_delivery_by_seller,         key: [user]}
+  sellers_with_delivery_click_free_delivery_by_seller:            {counter: seller_delivery_clicks_free_delivery_by_seller,           key: [user]}
+  delivery_sellers_with_contact_free_delivery_by_seller:          {counter: seller_contacts_on_items_free_delivery_by_seller,         key: [user]}
   active_items_deduplicated:               {counter: cnt_active_items_deduplicated,          key: [item]}
   active_items_duplicates_groups:          {counter: cnt_active_items_duplicates_groups,     key: [item]}
   active_items_have_duplicate:             {counter: cnt_active_items_have_duplicate,        key: [item]}
@@ -457,6 +477,8 @@ metric.ratio:
   sellers_items_delivery_ratio_start_date:            {num: user_active_items_delivery_on_start_date,   den: user_active_items_deliverable_start_date}
   items_delivery_seller_discount_ratio:               {num: items_with_delivery_seller_discount,        den: items_with_delivery        }
   items_delivery_seller_discount_ratio_start_date:    {num: active_items_delivery_on_seller_discount_start_date, den: active_items_delivery_on_start_date}
+  items_free_delivery_by_seller_ratio:                {num: items_with_free_delivery_by_seller,         den: items_with_delivery        }
+  items_free_delivery_by_seller_ratio_start_date:     {num: active_items_on_free_delivery_by_seller_start_date, den: active_items_delivery_on_start_date}
   active_items_dedup_ratio:                           {num: active_items_dedup,                         den: active_items               }
   active_items_sellergroup_dedup_ratio:               {num: active_items_sellergroup_dedup,             den: active_items               }
   item_video_per_seller_item_video:                   {num: item_video,                                 den: user_item_video            }
