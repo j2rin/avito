@@ -1,37 +1,37 @@
 with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ wallet_events  as (select  event_date,
         user_id,
         min(platform_id) as platfrom_id,
-        count(distinct case when eventtype_ext = 6533 and has_avito_wallet = 1 then wcs.user_id end) as oneclick_load_users,
+        count(case when eventtype_ext = 6533 and has_avito_wallet = 1 then wcs.user_id end) as oneclick_load_users,
         count(case when eventtype_ext = 6533 and has_avito_wallet = 1 then wcs.user_id end) as oneclick_load_events,
-        count(distinct case when eventtype_ext = 9673 then wcs.user_id end) wallet_banner_load_users,
+        count(case when eventtype_ext = 9673 then wcs.user_id end) wallet_banner_load_users,
         count(case when eventtype_ext = 9673 then wcs.user_id end)  wallet_banner_load_events,
-        count(distinct case when eventtype_ext = 9676 then wcs.user_id end) as wallet_banner_click_users,
+        count(case when eventtype_ext = 9676 then wcs.user_id end) as wallet_banner_click_users,
         count(case when eventtype_ext = 9676 then wcs.user_id end) wallet_banner_click_events,
-        count(distinct case when eventtype_ext = 9058 then wcs.user_id end) as wallet_passcode_create_page_load_users,
+        count(case when eventtype_ext = 9058 then wcs.user_id end) as wallet_passcode_create_page_load_users,
         count(case when eventtype_ext = 9058 then wcs.user_id end) wallet_passcode_create_page_load_events,
-        count(distinct case when eventtype_ext = 9063 then wcs.user_id end) as wallet_passcode_confirm_page_passcode_correct_users,
+        count(case when eventtype_ext = 9063 then wcs.user_id end) as wallet_passcode_confirm_page_passcode_correct_users,
         count(case when eventtype_ext = 9063 then wcs.user_id end) wallet_passcode_confirm_page_passcode_correct_events,
-        count(distinct case when eventtype_ext = 6567 and has_avito_wallet = 1 then wcs.user_id end) as oneclick_seen_users,
+        count(case when eventtype_ext = 6567 and has_avito_wallet = 1 then wcs.user_id end) as oneclick_seen_users,
         count(case when eventtype_ext = 6567 and has_avito_wallet = 1 then wcs.user_id end) as oneclick_seen_events,
-        count(distinct case when eventtype_ext = 6643 and payment_method_id = 8 then wcs.user_id end) as oneclick_choose_wallet_users,
+        count(case when eventtype_ext = 6643 and payment_method_id = 8 then wcs.user_id end) as oneclick_choose_wallet_users,
         count(case when eventtype_ext = 6643 and payment_method_id = 8 then wcs.user_id end) as  oneclick_choose_wallet_events,
-        count(distinct case when eventtype_ext = 6564 and payment_method_id = 8 then wcs.user_id end) as oneclick_pay_wallet_users,
+        count(case when eventtype_ext = 6564 and payment_method_id = 8 then wcs.user_id end) as oneclick_pay_wallet_users,
         count(case when eventtype_ext = 6564 and payment_method_id = 8 then wcs.user_id end) as  oneclick_pay_wallet_events,
-        count(distinct case when eventtype_ext = 8394  then wcs.user_id end) as wallet_phone_verification_page_render_users,
+        count(case when eventtype_ext = 8394  then wcs.user_id end) as wallet_phone_verification_page_render_users,
         count(case when eventtype_ext = 8394  then wcs.user_id end) as wallet_phone_verification_page_render_events,
-        count(distinct case when eventtype_ext = 8401  then wcs.user_id end) as wallet_phone_verification_code_correct_users,
+        count(case when eventtype_ext = 8401  then wcs.user_id end) as wallet_phone_verification_code_correct_users,
         count(case when eventtype_ext = 8401  then wcs.user_id end) as wallet_phone_verification_code_correct_events,
-        count(distinct case when eventtype_ext = 8402  then wcs.user_id end) as wallet_phone_verification_code_sent_users,
+        count(case when eventtype_ext = 8402  then wcs.user_id end) as wallet_phone_verification_code_sent_users,
         count(case when eventtype_ext = 8402  then wcs.user_id end) as wallet_phone_verification_code_sent_events,
-        count(distinct case when eventtype_ext = 8416  then wcs.user_id end) as wallet_top_up_page_load_users, -- тут вероятно нужно выделить чекаут
+        count(case when eventtype_ext = 8416  then wcs.user_id end) as wallet_top_up_page_load_users, -- тут вероятно нужно выделить чекаут
         count(case when eventtype_ext = 8416  then wcs.user_id end) as wallet_top_up_page_load_events, --тут вероятно нужно выделить чекаут
-        count(distinct case when eventtype_ext = 8421  then wcs.user_id end) as wallet_top_up_trx_create_users, -- тут вероятно нужно выделить чекаут
+        count(case when eventtype_ext = 8421  then wcs.user_id end) as wallet_top_up_trx_create_users, -- тут вероятно нужно выделить чекаут
         count(case when eventtype_ext = 8421  then wcs.user_id end) as wallet_top_up_trx_create_events, --тут вероятно нужно выделить чекаут
-        count(distinct case when eventtype_ext = 9665  then wcs.user_id end) as wallet_top_up_trx_success_users, -- тут вероятно нужно выделить чекаут
+        count(case when eventtype_ext = 9665  then wcs.user_id end) as wallet_top_up_trx_success_users, -- тут вероятно нужно выделить чекаут
         count(case when eventtype_ext = 9665  then wcs.user_id end) as wallet_top_up_trx_success_events, --тут вероятно нужно выделить чекаут
-        count(distinct case when eventtype_ext = 8415  then wcs.user_id end) as wallet_payment_trx_create_users, -- тут вероятно нужно выделить чекаут
+        count(case when eventtype_ext = 8415  then wcs.user_id end) as wallet_payment_trx_create_users, -- тут вероятно нужно выделить чекаут
         count(case when eventtype_ext = 8415  then wcs.user_id end) as wallet_payment_trx_create_events, --тут вероятно нужно выделить чекаут
-        count(distinct case when eventtype_ext = 9877  then wcs.user_id end) as wallet_payment_trx_success_users, -- тут вероятно нужно выделить чекаут
+        count(case when eventtype_ext = 9877  then wcs.user_id end) as wallet_payment_trx_success_users, -- тут вероятно нужно выделить чекаут
         count(case when eventtype_ext = 9877  then wcs.user_id end) as wallet_payment_trx_success_events --тут вероятно нужно выделить чекаут
 from dma.wallet_click_stream wcs
 where eventtype_ext in (6533, 9673, 9676, 9058, 9063, 6567, 6643, 6564, 8394, 8401, 8402, 8416, 8421, 9665, 8415, 9877) and
