@@ -1,4 +1,4 @@
-with wallet_events /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ as (select  event_date,
+with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ wallet_events  as (select  event_date,
         user_id,
         min(platform_id) as platfrom_id,
         count(distinct case when eventtype_ext = 6533 and has_avito_wallet = 1 then wcs.user_id end) as oneclick_load_users,
