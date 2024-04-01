@@ -34,9 +34,9 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ wallet_events  as (select  event_d
         count(distinct case when eventtype_ext = 9877  then wcs.user_id end) as wallet_payment_trx_success_users, -- тут вероятно нужно выделить чекаут
         count(case when eventtype_ext = 9877  then wcs.user_id end) as wallet_payment_trx_success_events --тут вероятно нужно выделить чекаут
 from dma.wallet_click_stream wcs
-where cast(wcs.event_timestamp as date) > cast('2024-02-20' as date) and event_date between :first_date and :last_date --@trino
-and eventtype_ext in (6533, 9673, 9676, 9058, 9063, 6567, 6643, 6564, 8394, 8401, 8402, 8416, 8421, 9665, 8415, 9877)
---     and wcs.event_date between :first_date and :last_date -- @trino
+where eventtype_ext in (6533, 9673, 9676, 9058, 9063, 6567, 6643, 6564, 8394, 8401, 8402, 8416, 8421, 9665, 8415, 9877) and
+ cast(wcs.event_timestamp as date) > cast('2024-02-20' as date) and event_date between :first_date and :last_date --@trino
+--     and event_year between :first_date and :last_date -- @trino
 group by 1,2),
 wallet_top_ups as (select ca.createdat as create_date,method,amount,user_id,status,
     row_number() over(partition by pdoci.PaymentDispatcherOperation_id, status order by actual_date asc) rn from
