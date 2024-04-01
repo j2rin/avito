@@ -55,10 +55,10 @@ wallet_top_ups as (select ca.createdat as create_date,*,
  top_ups as (
   select cast(create_Date as date) as event_date,
          user_id,
-         sum(case when method ilike '%SBP%' then amount end) as sbp_top_up_amount,
-         sum(case when method not ilike '%SBP%' then amount end) as card_top_up_amount,
-         count(case when method ilike '%SBP%' then amount end) as sbp_top_up_count,
-         count(case when method not ilike '%SBP%' then amount end) as card_top_up_count,
+         sum(case when method like '%sbp%' then amount end) as sbp_top_up_amount,
+         sum(case when method not like '%sbp%' then amount end) as card_top_up_amount,
+         count(case when method like '%sbp%' then amount end) as sbp_top_up_count,
+         count(case when method not like '%sbp%' then amount end) as card_top_up_count,
          sum(amount) as total_top_up_amount,
          count(amount) as total_top_up_count
       from wallet_top_ups
