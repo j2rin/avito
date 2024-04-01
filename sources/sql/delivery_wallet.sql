@@ -34,7 +34,7 @@ with wallet_events as (select  event_date,
         count(distinct case when eventtype_ext = 9877  then wcs.user_id end) as wallet_payment_trx_success_users, -- тут вероятно нужно выделить чекаут
         count(case when eventtype_ext = 9877  then wcs.user_id end) as wallet_payment_trx_success_events --тут вероятно нужно выделить чекаут
 from dma.wallet_click_stream wcs
-where cast(wcs.event_timestamp as date) > '2024-02-20' and event_date between :first_date and :last_date
+where cast(wcs.event_timestamp as date) > cast('2024-02-20' as date) and event_date between :first_date and :last_date
 group by 1,2),
 wallet_top_ups as (select ca.createdat as create_date,*,
     row_number() over(partition by pdoci.PaymentDispatcherOperation_id, status order by actual_date asc) rn from
@@ -74,7 +74,7 @@ transactions as (
     from dma.current_payment_transactions
     where payment_method = 'wallet'
       and payment_project = 'MARKETPLACE'
-      and cast(created_txtime as date) >= '2024-02-05'
+      and cast(created_txtime as date) >= cast('2024-02-05' as date)
       and cast(created_txtime as date) between  :first_date and :last_date
     and transaction_type in ('payment','refund')
 group by 1,2
@@ -85,7 +85,7 @@ select cast(create_date as date) as event_date,
        count(distinct internal_id) as tickets
 from dma.support_templates
 where template_name like '%Баланс для покупок%'
-    and cast(create_date as date) >= '2024-02-05'
+    and cast(create_date as date) >= cast('2024-02-05' as date)
     and cast(create_date as date) between  :first_date and :last_date
 group by 1,2),
     cr as (
