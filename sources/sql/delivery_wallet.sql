@@ -36,7 +36,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ wallet_events  as (select  event_d
 from dma.wallet_click_stream wcs
 where cast(wcs.event_timestamp as date) > cast('2024-02-20' as date) and event_date between :first_date and :last_date
 group by 1,2),
-wallet_top_ups as (select ca.createdat as create_date,*,
+wallet_top_ups as (select ca.createdat as create_date,method,amount,user_id,
     row_number() over(partition by pdoci.PaymentDispatcherOperation_id, status order by actual_date asc) rn from
      dds.L_PaymentDispatcherOperation_ContainerInternal pdoci
     join  dds.L_PaymentDispatcherOperation_User  pdou  on  pdou.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
