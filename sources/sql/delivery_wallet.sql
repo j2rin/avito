@@ -52,7 +52,7 @@ wallet_top_ups as (select ca.createdat as create_date,*,
   join  dds.S_ContainerInternal_CreatedAt ca2 on  ca2.ContainerInternal_id = pdoci.ContainerInternal_id 
   join dds.S_ContainerInternal_PaymentScenario ps on ps.ContainerInternal_id = pdoci.ContainerInternal_id 
   where paymentscenario = 'wallet_top_up'
-  and cast(create_Date as date) between  :first_date and :last_date), 
+  and cast(ca.createdat as date) between  :first_date and :last_date), 
  top_ups as (
   select cast(create_Date as date) as event_date,
          user_id,
