@@ -235,8 +235,8 @@ metric.counter:
   
   items_with_free_delivery_by_seller:                     {filter: [is_active: True, is_delivery_active: True, *is_free_delivery_by_seller]}
   active_items_on_free_delivery_by_seller_start_date:     {filter: [is_active: True, is_delivery_active: True, *is_free_delivery_by_seller, start_date.>=: $ab_start_date]}
-  seller_iv_free_delivery_by_seller:                      {filter: [is_delivery_active: True, *is_free_delivery_by_seller], obs: [ item_views]}
-  seller_iv_free_delivery_by_seller_start_date:           {filter: [is_delivery_active: True, start_date.>=: $ab_start_date, *is_free_delivery_by_seller], obs: [item_views]}
+  seller_delivery_iv_free_delivery_by_seller:                      {filter: [is_delivery_active: True, *is_free_delivery_by_seller], obs: [ item_views]}
+  seller_delivery_iv_free_delivery_by_seller_start_date:           {filter: [is_delivery_active: True, start_date.>=: $ab_start_date, *is_free_delivery_by_seller], obs: [item_views]}
   seller_contacts_on_items_free_delivery_by_seller:               {filter: [is_delivery_active: True, *is_free_delivery_by_seller], obs: [contacts]}
   seller_contacts_on_items_free_delivery_by_seller_start_date:    {filter: [is_delivery_active: True, start_date.>=: $ab_start_date, *is_free_delivery_by_seller], obs: [contacts]}
   seller_delivery_contacts_free_delivery_by_seller:                        {filter: [*is_free_delivery_by_seller], obs: [delivery_contacts]}
@@ -417,7 +417,7 @@ metric.uniq:
   delivery_sellers_with_contact_seller_discount:          {counter: seller_contacts_on_delivery_items_seller_discount, key: [user]}
   seller_items_with_delivery_contacts_free_delivery_by_seller:    {counter: seller_delivery_contacts_free_delivery_by_seller,         key: [item]}
   seller_items_with_delivery_clicks_free_delivery_by_seller:      {counter: seller_delivery_clicks_free_delivery_by_seller,           key: [item]}
-  seller_items_with_iv_free_delivery_by_seller:          {counter: seller_iv_free_delivery_by_seller,               key: [item]}
+  seller_items_with_delivery_iv_free_delivery_by_seller:          {counter: seller_delivery_iv_free_delivery_by_seller,               key: [item]}
   sellers_with_item_free_delivery_by_seller:             {counter: items_with_free_delivery_by_seller,              key: [user]}
   sellers_with_delivery_contact_free_delivery_by_seller:          {counter: seller_delivery_contacts_free_delivery_by_seller,         key: [user]}
   sellers_with_delivery_click_free_delivery_by_seller:            {counter: seller_delivery_clicks_free_delivery_by_seller,           key: [user]}
