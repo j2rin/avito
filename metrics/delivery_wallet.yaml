@@ -1,0 +1,66 @@
+metric.counter:
+ wallet_oneclick_load_users: {obs: [oneclick_load_users]}
+ wallet_oneclick_load_events: {obs: [oneclick_load_events]}
+ wallet_banner_load_users: {obs: [wallet_banner_load_users]}
+ wallet_banner_load_events: {obs: [wallet_banner_load_events]}
+ wallet_banner_click_users: {obs: [wallet_banner_click_users]}
+ wallet_banner_click_events: {obs: [wallet_banner_click_events]}
+ wallet_passcode_create_page_load_users: {obs: [wallet_passcode_create_page_load_users]}
+ wallet_passcode_create_page_load_events: {obs: [wallet_passcode_create_page_load_events]}
+ wallet_passcode_confirm_page_passcode_correct_users: {obs: [wallet_passcode_confirm_page_passcode_correct_users]}
+ wallet_passcode_confirm_page_passcode_correct_events: {obs: [wallet_passcode_confirm_page_passcode_correct_events]}
+ oneclick_choose_wallet_users: {obs: [oneclick_choose_wallet_users]}
+ oneclick_choose_wallet_events: {obs: [oneclick_choose_wallet_events]}
+ oneclick_pay_wallet_users: {obs: [oneclick_pay_wallet_users]}
+ oneclick_pay_wallet_events: {obs: [oneclick_pay_wallet_events]}
+ wallet_oneclick_seen_events: {obs: [oneclick_seen_events]}
+ wallet_oneclick_seen_users: {obs: [oneclick_seen_users]} 
+ wallet_phone_verification_page_render_users: {obs: [wallet_phone_verification_page_render_users]}
+ wallet_phone_verification_page_render_events: {obs: [wallet_phone_verification_page_render_events]}
+ wallet_phone_verification_code_correct_users: {obs: [wallet_phone_verification_code_correct_users]}
+ wallet_phone_verification_code_correct_events: {obs: [wallet_phone_verification_code_correct_events]}
+ wallet_phone_verification_code_sent_users: {obs: [wallet_phone_verification_code_sent_users]}
+ wallet_phone_verification_code_sent_events: {obs: [wallet_phone_verification_code_sent_events]}
+ wallet_top_up_page_load_users: {obs: [wallet_top_up_page_load_users]}
+ wallet_top_up_page_load_events: {obs: [wallet_top_up_page_load_events]}
+ wallet_top_up_trx_create_users: {obs: [wallet_top_up_trx_create_users]}
+ wallet_top_up_trx_create_events: {obs: [wallet_top_up_trx_create_events]}
+ wallet_top_up_trx_success_users: {obs: [wallet_top_up_trx_success_users]}
+ wallet_top_up_trx_success_events: {obs: [wallet_top_up_trx_success_events]}
+ wallet_payment_trx_create_users: {obs: [wallet_payment_trx_create_users]}
+ wallet_payment_trx_create_events: {obs: [wallet_payment_trx_create_events]}
+ wallet_payment_trx_success_users: {obs: [wallet_payment_trx_success_users]}
+ wallet_payment_trx_success_events: {obs: [wallet_payment_trx_success_events]}
+ wallet_sbp_top_up_amount: {obs: [sbp_top_up_amount]}
+ wallet_card_top_up_amount: {obs: [card_top_up_amount]}
+ wallet_sbp_top_up_count: {obs: [sbp_top_up_count]}
+ wallet_card_top_up_count: {obs: [card_top_up_count]}
+ wallet_total_top_up_amount: {obs: [total_top_up_amount]}
+ wallet_total_top_up_count: {obs: [tu.total_top_up_count]}
+ wallet_support_tickets: {obs: [tickets]}
+ wallet_total_operations: {obs: [total_operations]}
+
+
+metric.ratio:
+ wallet_cr: {num: wallet_support_tickets, den: wallet_total_operations}
+ wallet_top_up_sbp_amount_ratio: {num: wallet_sbp_top_up_amount, den: wallet_total_top_up_amount}
+ wallet_top_up_sbp_count_ratio: {num: wallet_sbp_top_up_count, den: wallet_total_top_up_count}
+ wallet_top_up_card_amount_ratio: {num: wallet_card_top_up_amount, den: wallet_total_top_up_amount}
+ wallet_top_up_card_count_ratio: {num: wallet_card_top_up_count, den: wallet_total_top_up_count}
+ wallet_avg_top_up_amount: {num: wallet_total_top_up_amount, den: wallet_total_top_up_count}
+ wallet_select_to_view_users_conversion: {num: oneclick_choose_wallet_users, den: wallet_oneclick_load_users}
+ wallet_click_pay_to_view_users_conversion: {num: oneclick_pay_wallet_users, den: wallet_oneclick_load_users}
+ wallet_finish_onboarding_to_view_users_conversion: {num: oneclick_pay_wallet_users, den: wallet_oneclick_load_users}
+ wallet_top_up_to_view_users_conversion: {num: wallet_top_up_trx_success_users, den: wallet_oneclick_load_users}
+ wallet_payment_to_view_users_conversion: {num: wallet_top_up_trx_success_users, den: wallet_oneclick_load_users}
+ wallet_onboarding_users_conversion: {num: wallet_payment_trx_success_users, den: wallet_oneclick_load_users}
+ wallet_banner_load_users_coverage: {num: wallet_banner_load_users, den: wallet_oneclick_load_users}
+ wallet_seen_oneclick_from_load_oneclick_users: {num: wallet_oneclick_seen_users, den: wallet_oneclick_load_users}
+ wallet_select_to_view_events_conversion: {num: oneclick_choose_wallet_events, den: wallet_oneclick_load_events}
+ wallet_click_pay_to_view_events_conversion: {num: oneclick_pay_wallet_events, den: wallet_oneclick_load_events}
+ wallet_finish_onboarding_to_view_events_conversion: {num: oneclick_pay_wallet_events, den: wallet_oneclick_load_events}
+ wallet_top_up_to_view_events_conversion: {num: wallet_top_up_trx_success_events, den: wallet_oneclick_load_events}
+ wallet_payment_to_view_events_conversion: {num: wallet_top_up_trx_success_events, den: wallet_oneclick_load_events}
+ wallet_onboarding_events_conversion: {num: wallet_payment_trx_success_events, den: wallet_oneclick_load_events}
+ wallet_banner_load_events_coverage: {num: wallet_banner_load_events, den: wallet_oneclick_load_events}
+ wallet_seen_oneclick_from_load_oneclick_events: {num: wallet_oneclick_seen_events, den: wallet_oneclick_load_events}
