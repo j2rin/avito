@@ -36,23 +36,23 @@ with wallet_events as (select  event_date,
 from dma.wallet_click_stream wcs
 where cast(wcs.event_timestamp as date) > cast('2024-02-20' as date) and event_date between :first_date and :last_date
 group by 1,2),
-wallet_top_ups as (select ca.createdat as create_date,*, 
-    row_number() over(partition by pdoci.PaymentDispatcherOperation_id, status order by actual_date asc) rn from 
-     dds.L_PaymentDispatcherOperation_ContainerInternal pdoci 
-    join  dds.L_PaymentDispatcherOperation_User  pdou  on  pdou.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id 
-  join  dds.S_PaymentDispatcherOperation_CreatedAt ca   on   ca.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id 
-   join dds.S_PaymentDispatcherOperation_Title    t    on   t.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id 
-    join dds.S_PaymentDispatcherOperation_Status s  on s.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id 
-  join  dds.S_PaymentDispatcherOperation_Method  m on      m.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id 
-   join dds.S_PaymentDispatcherOperation_Amount  a on     a.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id 
-   left join dds.S_PaymentDispatcherOperation_IsTwoStage   its  on   its.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id 
-   join dds.S_PaymentDispatcherOperation_Type     type on type.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id 
-  join  dds.S_ContainerInternal_Provider p  on p.ContainerInternal_id = pdoci.ContainerInternal_id 
-   join dds.S_ContainerInternal_IsDeal id    on id.ContainerInternal_id = pdoci.ContainerInternal_id 
-  join  dds.S_ContainerInternal_CreatedAt ca2 on  ca2.ContainerInternal_id = pdoci.ContainerInternal_id 
-  join dds.S_ContainerInternal_PaymentScenario ps on ps.ContainerInternal_id = pdoci.ContainerInternal_id 
+wallet_top_ups as (select ca.createdat as create_date,*,
+    row_number() over(partition by pdoci.PaymentDispatcherOperation_id, status order by actual_date asc) rn from
+     dds.L_PaymentDispatcherOperation_ContainerInternal pdoci
+    join  dds.L_PaymentDispatcherOperation_User  pdou  on  pdou.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+  join  dds.S_PaymentDispatcherOperation_CreatedAt ca   on   ca.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+   join dds.S_PaymentDispatcherOperation_Title    t    on   t.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+    join dds.S_PaymentDispatcherOperation_Status s  on s.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+  join  dds.S_PaymentDispatcherOperation_Method  m on      m.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+   join dds.S_PaymentDispatcherOperation_Amount  a on     a.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+   left join dds.S_PaymentDispatcherOperation_IsTwoStage   its  on   its.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+   join dds.S_PaymentDispatcherOperation_Type     type on type.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+  join  dds.S_ContainerInternal_Provider p  on p.ContainerInternal_id = pdoci.ContainerInternal_id
+   join dds.S_ContainerInternal_IsDeal id    on id.ContainerInternal_id = pdoci.ContainerInternal_id
+  join  dds.S_ContainerInternal_CreatedAt ca2 on  ca2.ContainerInternal_id = pdoci.ContainerInternal_id
+  join dds.S_ContainerInternal_PaymentScenario ps on ps.ContainerInternal_id = pdoci.ContainerInternal_id
   where paymentscenario = 'wallet_top_up'
-  and cast(ca.createdat as date) between  :first_date and :last_date), 
+  and cast(ca.createdat as date) between :first_date and :last_date),
  top_ups as (
   select cast(create_Date as date) as event_date,
          user_id,
@@ -67,43 +67,9 @@ wallet_top_ups as (select ca.createdat as create_date,*,
      and cast(create_Date as date) between  :first_date and :last_date
    and rn = 1
    group by 1,2)
-,
-transactions as (
-    select cast(created_txtime as date) as event_date,
-           user_id,
-           count(*) as transactions
-    from dma.current_payment_transactions
-    where payment_method = 'wallet'
-      and payment_project = 'MARKETPLACE'
-      and cast(created_txtime as date) >= cast('2024-02-05' as date)
-      and cast(created_txtime as date) between  :first_date and :last_date
-    and transaction_type in ('payment','refund')
-group by 1,2
- ),
-req as (
-select cast(create_date as date) as event_date,
-       user_id,
-       count(distinct internal_id) as tickets
-from dma.support_templates
-where template_name like '%Баланс для покупок%'
-    and cast(create_date as date) >= cast('2024-02-05' as date)
-    and cast(create_date as date) between  :first_date and :last_date
-group by 1,2),
-    cr as (
-select coalesce(t.event_date,tu.event_date,r.event_date) as event_date,
-       coalesce(tu.user_id,t.user_id, r.user_id) as user_id,
-       tickets,
-       total_top_up_count + transactions as total_operations,
-       total_top_up_count,
-       transactions
-from
-top_ups tu
-full outer join  transactions t on t.user_id = tu.user_id and tu.event_date = t.event_date
-full outer join req r on r.user_id = tu.user_id and r.event_date = tu.event_date
-where coalesce(t.event_date,tu.event_date,r.event_date) between  :first_date and :last_date)
-select coalesce(we.user_id,tu.user_id,cr.user_id) as user_id,
-       coalesce(we.event_date,tu.event_date,cr.event_date) as event_date,
-        coalesce(we.platfrom_id,0) as platform_id,
+select coalesce(we.user_id,tu.user_id) as user_id,
+       coalesce(we.event_date,tu.event_date) as event_date,
+       coalesce(we.platfrom_id,0) as platform_id,
         oneclick_load_users,
         oneclick_load_events,
         wallet_banner_load_users,
@@ -141,16 +107,14 @@ select coalesce(we.user_id,tu.user_id,cr.user_id) as user_id,
         sbp_top_up_count,
         card_top_up_count,
         total_top_up_amount,
-        tu.total_top_up_count,
-        tickets,
-        total_operations
-       ,case when cast(onboarding_ended_db as date) >= coalesce(we.event_date,tu.event_date,cr.event_date) then 'new_wallet_user'
-            when cast(onboarding_ended_db as date) < coalesce(we.event_date,tu.event_date,cr.event_date) then 'old_wallet_user'
+        tu.total_top_up_count
+       ,case when cast(onboarding_ended_db as date) >= coalesce(we.event_date,tu.event_date) then 'new_wallet_user'
+            when cast(onboarding_ended_db as date) < coalesce(we.event_date,tu.event_date) then 'old_wallet_user'
             else 'not_wallet_user' end as wallet_user_type
         from wallet_events we
-full outer join top_ups tu on tu.event_date = we.event_date and we.user_id = tu.user_id
-full outer join cr  on cr.event_date = we.event_date and we.user_id = cr.user_id
-left join dma.current_wallet_user cwu on coalesce(we.user_id,tu.user_id,cr.user_id) = cwu.user_id
+left join top_ups tu on tu.event_date = we.event_date and we.user_id = tu.user_id
+left join dma.current_wallet_user cwu on coalesce(we.user_id,tu.user_id) = cwu.user_id
+
 
 
 
