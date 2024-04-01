@@ -36,7 +36,7 @@ with wallet_events as (select  event_date,
 from dma.wallet_click_stream wcs
 where cast(wcs.event_timestamp as date) > '2024-02-20' and event_date between :first_date and :last_date
 group by 1,2),
-wallet_top_ups as (select ca.createdat as create_date,*,cu.user_id as userid,
+wallet_top_ups as (select ca.createdat as create_date,*,pdou.user_id,
     row_number() over(partition by pdoci.PaymentDispatcherOperation_id, status order by actual_date asc) rn from
      dds.L_PaymentDispatcherOperation_ContainerInternal pdoci
     join  dds.L_PaymentDispatcherOperation_User  pdou  on  pdou.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
@@ -49,13 +49,12 @@ wallet_top_ups as (select ca.createdat as create_date,*,cu.user_id as userid,
    join dds.S_PaymentDispatcherOperation_Type     type on type.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
   join  dds.S_ContainerInternal_Provider p  on p.ContainerInternal_id = pdoci.ContainerInternal_id
    join dds.S_ContainerInternal_IsDeal id    on id.ContainerInternal_id = pdoci.ContainerInternal_id
-  join  dds.S_ContainerInternal_CreatedAt ca2  on  ca2.ContainerInternal_id = pdoci.ContainerInternal_id
+  join  dds.S_ContainerInternal_CreatedAt ca2 on  ca2.ContainerInternal_id = pdoci.ContainerInternal_id
   join dds.S_ContainerInternal_PaymentScenario ps on ps.ContainerInternal_id = pdoci.ContainerInternal_id
-  join dma.current_user cu on  pdou.user_id = cu.user_id
   where paymentscenario = 'wallet_top_up'),
  top_ups as (
   select cast(create_Date as date) as event_date,
-         userid as user_id,
+         user_id,
          sum(case when method ilike '%SBP%' then amount end) as sbp_top_up_amount,
          sum(case when method not ilike '%SBP%' then amount end) as card_top_up_amount,
          count(case when method ilike '%SBP%' then amount end) as sbp_top_up_count,
@@ -66,7 +65,6 @@ wallet_top_ups as (select ca.createdat as create_date,*,cu.user_id as userid,
    where status = 'successful'
      and cast(create_Date as date) between  :first_date and :last_date
    and rn = 1
-   and istest = false
    group by 1,2)
 ,
 transactions as (
