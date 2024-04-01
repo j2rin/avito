@@ -39,19 +39,19 @@ group by 1,2),
 wallet_top_ups as (select ca.createdat as create_date,*,cu.user_id as userid,
     row_number() over(partition by pdoci.PaymentDispatcherOperation_id, status order by actual_date asc) rn from
      dds.L_PaymentDispatcherOperation_ContainerInternal pdoci
-    join  dds.L_PaymentDispatcherOperation_User           using(PaymentDispatcherOperation_id)
-  join  dds.S_PaymentDispatcherOperation_CreatedAt ca      using(PaymentDispatcherOperation_id)
-   join dds.S_PaymentDispatcherOperation_Title           using(PaymentDispatcherOperation_id)
-    join dds.S_PaymentDispatcherOperation_Status using(PaymentDispatcherOperation_id)
-  join  dds.S_PaymentDispatcherOperation_Method           using(PaymentDispatcherOperation_id)
-   join dds.S_PaymentDispatcherOperation_Amount            using(PaymentDispatcherOperation_id)
-   left join dds.S_PaymentDispatcherOperation_IsTwoStage         using(PaymentDispatcherOperation_id)
-   join dds.S_PaymentDispatcherOperation_Type                using(PaymentDispatcherOperation_id)
-  join  dds.S_ContainerInternal_Provider  using(ContainerInternal_id)
-   join dds.S_ContainerInternal_IsDeal     using(ContainerInternal_id)
-  join  dds.S_ContainerInternal_CreatedAt    using(ContainerInternal_id)
-  join dds.S_ContainerInternal_PaymentScenario using(ContainerInternal_id)
-  join dma.current_user cu using(user_id)
+    join  dds.L_PaymentDispatcherOperation_User  pdou  on  pdou.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+  join  dds.S_PaymentDispatcherOperation_CreatedAt ca   on   ca.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+   join dds.S_PaymentDispatcherOperation_Title    t    on   t.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+    join dds.S_PaymentDispatcherOperation_Status s  on s.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+  join  dds.S_PaymentDispatcherOperation_Method  m on      m.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+   join dds.S_PaymentDispatcherOperation_Amount  a on     a.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+   left join dds.S_PaymentDispatcherOperation_IsTwoStage   its  on   its.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+   join dds.S_PaymentDispatcherOperation_Type     type on type.PaymentDispatcherOperation_id = pdoci.PaymentDispatcherOperation_id
+  join  dds.S_ContainerInternal_Provider p  on p.ContainerInternal_id = pdoci.ContainerInternal_id
+   join dds.S_ContainerInternal_IsDeal id    on id.ContainerInternal_id = pdoci.ContainerInternal_id
+  join  dds.S_ContainerInternal_CreatedAt ca2  on  ca2.ContainerInternal_id = pdoci.ContainerInternal_id
+  join dds.S_ContainerInternal_PaymentScenario ps on ps.ContainerInternal_id = pdoci.ContainerInternal_id
+  join dma.current_user cu on  pdou.user_id = cu.user_id
   where paymentscenario = 'wallet_top_up'),
  top_ups as (
   select cast(create_Date as date) as event_date,
