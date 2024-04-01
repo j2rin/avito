@@ -104,7 +104,7 @@ full outer join req r on r.user_id = tu.user_id and r.event_date = tu.event_date
 where coalesce(t.event_date,tu.event_date,r.event_date) between  :first_date and :last_date)
 select coalesce(we.user_id,tu.user_id,cr.user_id) as user_id,
        coalesce(we.event_date,tu.event_date,cr.event_date) as event_date,
-        coalesce(we.platfrom_id,cr.platform_id,0) as platform_id,,
+        coalesce(we.platfrom_id,cr.platform_id,0) as platform_id,
         oneclick_load_users,
         oneclick_load_events,
         wallet_banner_load_users,
