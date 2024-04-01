@@ -1,4 +1,4 @@
-with wallet_events as (select  event_date,
+with wallet_events /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ as (select  event_date,
         user_id,
         min(platform_id) as platfrom_id,
         count(distinct case when eventtype_ext = 6533 and has_avito_wallet = 1 then wcs.user_id end) as oneclick_load_users,
@@ -108,12 +108,12 @@ select coalesce(we.user_id,tu.user_id) as user_id,
         card_top_up_count,
         total_top_up_amount,
         tu.total_top_up_count
-       ,case when cast(onboarding_ended_db as date) >= coalesce(we.event_date,tu.event_date) then 'new_wallet_user'
-            when cast(onboarding_ended_db as date) < coalesce(we.event_date,tu.event_date) then 'old_wallet_user'
+       ,case when cast(onboarding_ended_db as date) >= we.event_date then 'new_wallet_user'
+            when cast(onboarding_ended_db as date) < we.event_date then 'old_wallet_user'
             else 'not_wallet_user' end as wallet_user_type
         from wallet_events we
-left join top_ups tu on tu.event_date = we.event_date and we.user_id = tu.user_id
-left join dma.current_wallet_user cwu on coalesce(we.user_id,tu.user_id) = cwu.user_id
+left join /*+jtype(h),distrib(l,b)*/  top_ups tu on tu.event_date = we.event_date and we.user_id = tu.user_id
+left join /*+jtype(h),distrib(l,b)*/  dma.current_wallet_user cwu on we.user_id = cwu.user_id
 
 
 
