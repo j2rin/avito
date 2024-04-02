@@ -7,6 +7,8 @@ metric.counter:
   watch_short_video_snippet:            {filter: [eid: 6304, from_page.ilike: '%snippet%'], obs: [metric_value]}
   
   video_upload_attempt:                 {filter: [eid: 6303], obs: [metric_value]}
+  video_upload_attempt_item_add:		{filter: [eid: 6303, from_page: 'item_add'], obs: [metric_value]}
+  video_upload_attempt_item_edit:		{filter: [eid: 6303, from_page: 'item_edit'], obs: [metric_value]}
   video_upload_success:                 {filter: [eid: 6303, error_text.isnull: True], obs: [metric_value]}
   video_upload_success_item_add:        {filter: [eid: 6303, error_text.isnull: True, from_page: 'item_add'], obs: [metric_value]}
   video_upload_success_item_edit:       {filter: [eid: 6303, error_text.isnull: True, from_page: 'item_edit'], obs: [metric_value]}
@@ -46,6 +48,8 @@ metric.uniq:
   user_watch_short_video_snippet:       {counter: watch_short_video_snippet, key: [cookie]}
 
   user_video_upload_attempt:            {counter: video_upload_attempt, key: [cookie]}
+  user_video_upload_attempt_item_add:   {counter: video_upload_attempt_item_add, key: [cookie]}
+  user_video_upload_attempt_item_edit:  {counter: video_upload_attempt_item_edit, key: [cookie]}
   user_video_upload_success:            {counter: video_upload_success, key: [cookie]}
   user_video_upload_success_item_add:   {counter: video_upload_success_item_add, key: [cookie]}
   user_video_upload_success_item_edit:  {counter: video_upload_success_item_edit, key: [cookie]}
@@ -61,6 +65,10 @@ metric.uniq:
   
   item_video_upload_success_item_add:   {counter: video_upload_success_item_add, key: [item_id]}
   item_video_upload_success_item_edit:  {counter: video_upload_success_item_edit, key: [item_id]}
+  
+  item_video_upload_attempt_item_add:   {counter: video_upload_attempt_item_add, key: [item_id]}
+  item_video_upload_attempt_item_edit:  {counter: video_upload_attempt_item_edit, key: [item_id]}
+  
 
   user_iv_avl:                          {counter: iv_avl, key: [cookie]}
   item_iv_avl:                          {counter: iv_avl, key: [item_id]}
