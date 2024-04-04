@@ -237,6 +237,13 @@ definitions:
     - &is_item_perfvas_x20_7 { item_vas_flags.bit: [21] }
     - &x_is_promo            { $or: [search_flags.bit: [49], *x_is_u2i]}
 
+    - &is_item_vas_short     { item_vas_xn_days.<=: 1}
+    - &is_item_vas_long      { item_vas_xn_days.>: 1}
+    - &is_item_vas_mini      { item_vas_xn_per_day.<=: 0.05}
+    - &is_item_vas_med       { item_vas_xn_per_day.<: 1.1}
+    - &is_item_vas_large     { item_vas_xn_per_day.>=: 1.1}
+    - &is_item_vas_huge      { item_vas_xn_per_day.>=: 5.1}
+
     - &is_s_sort_date       { search_sort: *sort_date }
     - &is_s_sort_price      { search_sort: *sort_price }
     - &is_s_sort_distance   { search_sort: *sort_distance }
@@ -1374,6 +1381,12 @@ metric.counter:
     iv_perfvas_i2i:               { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_i2i] }
     iv_perfvas_promo:              { filter: [*is_iv, *is_item_perfvas, *x_is_promo] }
     iv_perfvas_serp_promo:         { filter: [*is_iv_wo_guessing, *is_item_perfvas, *x_is_search, *x_is_promo] }
+    iv_vas_short:  { filter: [*is_iv, *is_item_vas_short] }
+    iv_vas_long:  { filter: [*is_iv, *is_item_vas_long] }
+    iv_vas_mini:  { filter: [*is_iv, *is_item_vas_mini] }
+    iv_vas_med:  { filter: [*is_iv, *is_item_vas_med] }
+    iv_vas_large:  { filter: [*is_iv, *is_item_vas_large] }
+    iv_vas_huge:  { filter: [*is_iv, *is_item_vas_huge] }
     item_views_xl: { filter: [*is_iv, *is_item_xl] }
     item_views_with_available_msg: { filter: [*is_msg_available, *is_iv] }
     item_views_guarantee: { filter: [*is_iv, *is_guarantee] }
