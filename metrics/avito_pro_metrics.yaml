@@ -1,7 +1,7 @@
 metric.counter:
   pro_seller_revenue_fixed_segment: { filter: [ is_pro: true], obs: [transaction_amount]}
   pro_seller_target_contacts: { filter: [ is_pro: true], obs: [target_contacts]}
-  at_least_one_target_contact: { filter: [ seller_with_at_least_one_contact.>=: 0, is_pro: false]}
+  at_least_one_target_contact: { filter: [ seller_with_at_least_one_contact.>: 0, is_pro: false]}
   active_pro_sellers_fixed_segment: {filter: [ is_pro: true]} 
 metric.uniq:
   seller_with_at_least_one_target_contact: { counter: at_least_one_target_contact, key: [ user_id ] }
