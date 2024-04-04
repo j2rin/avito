@@ -42,8 +42,8 @@ select
                 else
                     (
                         item_vas_xn - 2.0
-                        + cast(item_vas_xn_days >= 7 as real) -- if xN_7
-                        + 2.0 / 3.0 * cast(bitwise_and(ss.item_vas_flags, bitwise_left_shift(cast(1 as bigint), 13)) > 0 as real) -- if x2_7
+                        + cast(cast(item_vas_xn_days >= 7 as int) as real) -- if xN_7
+                        + 2.0 / 3.0 * cast(cast(bitwise_and(ss.item_vas_flags, bitwise_left_shift(cast(1 as bigint), 13)) > 0 as int) as real)-- if x2_7
                     ) / cast(item_vas_xn_days as real)
             end
     end as item_vas_xn_per_day,
