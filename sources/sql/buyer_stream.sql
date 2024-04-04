@@ -37,13 +37,13 @@ select
         when ss.item_vas_xn_days is null or ss.item_vas_xn_days <= 0 then 0.0
         else
             case
-                when bitwise_and(ss.item_vas_flags, bitwise_left_shift(cast(1 as bigint), 25)) > 0 -- bbip
+                when bitwise_and(ss.item_vas_flags, bitwise_left_shift(cast(1 as bigint), 22)) > 0 -- bbip
                     then (item_vas_xn - 1) - 1.0 / item_vas_xn_days
                 else
                     (
                         item_vas_xn - 2
                         + cast(item_vas_xn_days >= 7 as int) -- if xN_7
-                        + 2.0 / 3.0 * cast(bitwise_and(ss.item_vas_flags, bitwise_left_shift(cast(1 as bigint), 5)) > 0) -- if x2_7
+                        + 2.0 / 3.0 * cast(bitwise_and(ss.item_vas_flags, bitwise_left_shift(cast(1 as bigint), 13)) > 0 as int) -- if x2_7
                     ) / item_vas_xn_days
             end
     end as item_vas_xn_per_day,
