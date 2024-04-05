@@ -2109,8 +2109,14 @@ metric.counter:
     cnt_iv_map_trx_comm_low:        { filter: [ *is_iv_wo_guessing, *x_is_map, *is_trx_commission_low ] }
     cnt_iv_map_trx_comm_medium:     { filter: [ *is_iv_wo_guessing, *x_is_map, *is_trx_commission_medium ] }
     cnt_iv_map_trx_comm_high:       { filter: [ *is_iv_wo_guessing, *x_is_map, *is_trx_commission_high ] }
+    rec_hide_category:              { filter: [eid: 3848, from_page: 'hide_category']}
+    rec_hide_item:                  { filter: [eid: 3848, from_page: 'hide_item']}
+    rec_hide_location:              { filter: [eid: 3848, from_page: 'hide_location']}
 
 metric.uniq:
+    user_rec_hide_category:         { counter: rec_hide_category, key: [cookie]}
+    user_rec_hide_item:             { counter: rec_hide_item,     key: [cookie]}
+    user_rec_hide_location:         { counter: rec_hide_location, key: [cookie]}
     booking_created_short_rent_grouped: { counter: booking_created_short_rent, key: [cookie, item] }
     bt_clicks_grouped: { counter: bt_clicks, key: [cookie, item] }
     buyer_target_clicks_from_map_grouped: { counter: cnt_btc_from_map, key: [cookie, item] }
