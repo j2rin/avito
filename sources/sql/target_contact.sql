@@ -59,7 +59,7 @@ where cast(call_time as date) between :first_date  and :last_date
 )
 select 
     event_date
-    ,item_id
+    ,t.item_id
     ,buyer_id
     ,seller_id
     ,chat_id
