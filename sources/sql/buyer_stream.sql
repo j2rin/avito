@@ -141,7 +141,8 @@ select
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 35)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as c2c_return_within_14_days,
     cast((bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 34)) > 0 or bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 35)) > 0) and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as return_within_14_days,
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as is_delivery_active_in_sale,
-    fs.seller_id is not null as is_federal_seller
+    fs.seller_id is not null as is_federal_seller,
+    case when prem.is_premium = 1 then true when prem.is_premium = 0 or prem.is_premium is null then false end is_premium
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -217,6 +218,15 @@ left join /*+jtype(h),distrib(l,b)*/ (
 ) acc on acc.User_id = ss.item_user_id
 
 left join /*+jtype(h),distrib(l,a)*/ (
+  select 
+  	item_id,
+  	is_premium
+  from dma.current_premium_assortment
+  where true 
+  	and item_id in (select item_id from bs_items)
+) prem on prem.item_id = ss.item_id
+
+left join /*+jtype(h),distrib(l,a)*/ (
     select
         item_id,
         from_date,
@@ -237,6 +247,6 @@ left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_
 
 left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
     on ss.item_user_id = fs.seller_id
-
+  
 where cast(ss.event_date as date) between :first_date and :last_date
 --     and ss.date between :first_date and :last_date -- @trino
