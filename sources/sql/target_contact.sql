@@ -59,7 +59,7 @@ where cast(call_time as date) between :first_date  and :last_date
 )
 select 
     event_date
-    ,item_id
+    ,t.item_id
     ,buyer_id
     ,seller_id
     ,chat_id
@@ -146,4 +146,4 @@ left join
   from dma.fancy_items
   where true
   	and calc_date <= :last_date
-) fancy on ss.item_id = fancy.item_id and ss.event_date >= fancy.converting_date and ss.event_date < fancy.next_converting_date
+) fancy on t.item_id = fancy.item_id and t.event_date >= fancy.converting_date and t.event_date < fancy.next_converting_date
