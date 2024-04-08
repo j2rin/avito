@@ -1930,6 +1930,13 @@ metric.counter:
     c_cpa_video: { filter: [*is_item_with_video_cpa, *is_contact] }
     iv_cpa_video_s: { filter: [*is_item_with_video_cpa, *is_iv_wo_guessing, *x_is_search] }
     c_cpa_video_s: { filter: [*is_item_with_video_cpa, *is_contact_wo_guessing, *x_is_search] }
+    
+    iv_video_premium: { filter: [*is_item_with_video, *is_iv, {is_premium: True}] }
+    c_video_premium: { filter: [*is_item_with_video, *is_contact, {is_premium: True}] }
+    iv_premium_bx: { filter: [*is_iv, {is_premium: True}] }
+    c_premium_bx: { filter: [*is_contact, {is_premium: True}] }
+    
+    
 
     iv_mall: { filter: [*is_item_mall, *is_iv] }
     c_mall: { filter: [*is_item_mall, *is_contact] }
@@ -2063,6 +2070,9 @@ metric.counter:
 
     iv_video_lenta: { filter: [*is_iv_wo_guessing, *x_avl] }
     c_video_lenta: { filter: [*is_contact_wo_guessing, *x_avl] }
+    
+    iv_video_lenta_premium: { filter: [*is_iv_wo_guessing, *x_avl, {is_premium: True}] }
+    c_video_lenta_premium: { filter: [*is_contact_wo_guessing, *x_avl, {is_premium: True}] }
 
     btc_video_lenta: { filter: [*is_btc, *x_avl] }
     fav_video_lenta: { filter: [*is_fav, *x_avl] }
@@ -3832,6 +3842,13 @@ metric.uniq:
     user_iv_map_trx_comm_low:           { counter: cnt_iv_map_trx_comm_low,      key: [cookie] }
     user_iv_map_trx_comm_medium:        { counter: cnt_iv_map_trx_comm_medium,   key: [cookie] }
     user_iv_map_trx_comm_high:          { counter: cnt_iv_map_trx_comm_high,     key: [cookie] }
+    
+    user_iv_video_premium:  {counter: iv_video_premium,	key: [cookie] }
+    user_c_video_premium:  {counter: c_video_premium,	key: [cookie] }
+    user_iv_premium_bx:  {counter: iv_premium_bx,	key: [cookie] }
+    user_c_premium_bx:  {counter: c_premium_bx,	key: [cookie] }
+    user_iv_video_lenta_premium:  {counter: iv_video_lenta_premium,	key: [cookie] }
+    user_c_video_lenta_premium:  {counter: c_video_lenta_premium,	key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
@@ -4517,3 +4534,5 @@ metric.ratio:
 
     delivery_iv_delivery_click_sales:     { num: delivery_click_sales, den: delivery_iv_sales}
     delivery_iv_order_create_sales:       { num: order_create_sales, den: delivery_iv_sales}
+    
+
