@@ -144,6 +144,6 @@ left join
   	calc_date converting_date,
   	lead(calc_date, 1, cast('2099-01-01' as date)) over (partition by item_id order by calc_date) next_converting_date
   from dma.fancy_items
-  where item_id in (select item_id from bs_items)
+  where true
   	and calc_date <= :last_date
 ) fancy on ss.item_id = fancy.item_id and ss.event_date >= fancy.converting_date and ss.event_date < fancy.next_converting_date
