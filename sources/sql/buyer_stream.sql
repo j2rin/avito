@@ -33,6 +33,21 @@ select
     coalesce(ss.rec_position, 0) as rec_position,
     ss.from_page,
     ss.item_vas_flags,
+    case
+        when ss.item_vas_xn_days is null or ss.item_vas_xn_days <= 0 then 0.0
+        else
+            case
+                when bitwise_and(ss.item_vas_flags, bitwise_left_shift(cast(1 as bigint), 22)) > 0 -- bbip
+                    then (item_vas_xn - 1.0) - 1.0 / cast(item_vas_xn_days as real)
+                else
+                    (
+                        item_vas_xn - 2.0
+                        + cast(cast(item_vas_xn_days >= 7 as int) as real) -- if xN_7
+                        + 2.0 / 3.0 * cast(cast(bitwise_and(ss.item_vas_flags, bitwise_left_shift(cast(1 as bigint), 13)) > 0 as int) as real)-- if x2_7
+                    ) / cast(item_vas_xn_days as real)
+            end
+    end as item_vas_xn_per_day,
+    coalesce(ss.item_vas_xn_days, 0) as item_vas_xn_days,
     ss.phone_view_source,
     ss.item_x_type % 2 as item_x_type,
     ss.x_eid,
