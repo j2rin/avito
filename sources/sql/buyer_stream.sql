@@ -157,7 +157,8 @@ select
     cast((bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 34)) > 0 or bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 35)) > 0) and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as return_within_14_days,
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as is_delivery_active_in_sale,
     fs.seller_id is not null as is_federal_seller,
-    case when prem.is_premium = 1 then true when prem.is_premium = 0 or prem.is_premium is null then false end is_premium
+    case when prem.is_premium = 1 then true when prem.is_premium = 0 or prem.is_premium is null then false end is_premium,
+    coalesce(fancy.is_fancy, false) is_fancy
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -240,6 +241,17 @@ left join /*+jtype(h),distrib(l,a)*/ (
   where true 
   	and item_id in (select item_id from bs_items)
 ) prem on prem.item_id = ss.item_id
+
+left join /*+jtype(h),distrib(l,a)*/ (
+  select 
+  	item_id,
+  	is_fancy,
+  	calc_date converting_date,
+  	lead(calc_date, 1, cast('2099-01-01' as date)) over (partition by item_id order by calc_date) next_converting_date
+  from dma.fancy_items
+  where item_id in (select item_id from bs_items)
+  	and calc_date <= :last_date
+) fancy on ss.item_id = fancy.item_id and ss.event_date >= fancy.converting_date and ss.event_date < fancy.next_converting_date
 
 left join /*+jtype(h),distrib(l,a)*/ (
     select
