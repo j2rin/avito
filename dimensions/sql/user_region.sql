@@ -1,4 +1,4 @@
-select  ifnull(l.LocationName, 'Undefined') as value,
+select  coalesce(l.LocationName, 'Undefined') as value,
         l.location_id as value_id,
         l.loc_id as value_ext_id,
         case when pl.level in (1, 2) then 'user_region' else 'user_city' end as parent_dimension,
