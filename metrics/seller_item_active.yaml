@@ -254,6 +254,8 @@ metric.counter:
   cnt_active_items_vas_have_duplicate:      {filter: [{is_active: True}, {duplicates_count.>: 0}, {vas_mask.>: 0}]}
   seller_contacts_on_duplicates:            {filter: [duplicates_count.>: 0], obs: [contacts]}
   seller_contacts_on_duplicates_vas:        {filter: [{duplicates_count.>: 0}, {vas_mask.>: 0}], obs: [contacts]}
+  items_with_delivery_regular_b2c:          {filter: [{is_active: True}, {delivery_flow: b2c}, {is_delivery_active_regular: True}]}
+  items_delivery_available_regular_b2c:     {filter: [{is_active: True}, {delivery_flow: b2c}, $or: [{is_delivery_available_regular: True}, {is_delivery_active_regular: True}]]}
 
 
 metric.uniq:
@@ -492,3 +494,4 @@ metric.ratio:
   item_video_per_seller_item_video:                   {num: item_video,                                 den: user_item_video            }
   items_price_list_per_active_items:                  {num: active_items_price_list,                    den: active_items               }
   quality_price_list:                                 {num: sum_quality_price_list,                     den: active_items               }
+  items_delivery_regular_ratio_b2c:                   {num: items_with_delivery_regular_b2c,            den: items_delivery_available_regular_b2c               }
