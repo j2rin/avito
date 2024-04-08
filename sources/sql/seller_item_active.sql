@@ -95,7 +95,8 @@ select /*+syntactic_join*/
     ss.item_rating,
     is_delivery_active_regular,
     is_delivery_available_regular,
-    delivery_flow
+    delivery_flow,
+    ss.is_premium
 
 from DMA.o_seller_item_active ss
 
