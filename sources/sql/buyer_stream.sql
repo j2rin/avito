@@ -251,6 +251,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
   from dma.fancy_items
   where item_id in (select item_id from bs_items)
   	and calc_date <= :last_date
+  -- and calc_year <= date_trunc('year', :last_date) -- @trino
 ) fancy on ss.item_id = fancy.item_id and ss.event_date >= fancy.converting_date and ss.event_date < fancy.next_converting_date
 
 left join /*+jtype(h),distrib(l,a)*/ (
