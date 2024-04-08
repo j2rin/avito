@@ -97,6 +97,7 @@ select
     ,acd.user_group_id                                            as asd_user_group_id
     ,coalesce(usm.user_segment, ls.segment)                            as user_segment_market
     ,tags
+    ,coalesce(fancy.is_fancy, false)	as is_fancy
 from (
     select 
         * 
@@ -134,3 +135,15 @@ left join
         on t.seller_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
         and t.event_date >= converting_date and t.event_date < next_converting_date
+        
+left join 
+(
+  select 
+  	item_id,
+  	is_fancy,
+  	calc_date converting_date,
+  	lead(calc_date, 1, cast('2099-01-01' as date)) over (partition by item_id order by calc_date) next_converting_date
+  from dma.fancy_items
+  where true
+  	and calc_date <= :last_date
+) fancy on ss.item_id = fancy.item_id and ss.event_date >= fancy.converting_date and ss.event_date < fancy.next_converting_date
