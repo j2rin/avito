@@ -17,6 +17,7 @@ select
     ,seller_platform_id
     ,buyer_cookie_id
     ,is_video_call
+    ,coalesce(fancy.is_fancy, false)	as is_fancy
     ,cm.microcat_id
     ,cm.category_id
     ,cl.location_id
@@ -108,6 +109,19 @@ left join dict.current_price_groups cpg
     on   lc.logical_category_id = cpg.logical_category_id
     and  cif.price >= cpg.min_price
     and  cif.price <  cpg.max_price
+    
+left join /*+distrib(a,l)*/
+(
+  select 
+  	item_id,
+  	is_fancy,
+  	calc_date converting_date,
+  	lead(calc_date, 1, cast('2099-01-01' as date)) over (partition by item_id order by calc_date) next_converting_date
+  from dma.fancy_items
+  where true
+  	and calc_date <= :last_date
+) fancy on a.item_id = fancy.item_id and a.event_date >= fancy.converting_date and a.event_date < fancy.next_converting_date
+  
 where true 
     and cast(a.event_date as date) between :first_date and :last_date
     -- and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
