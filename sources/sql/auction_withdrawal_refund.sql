@@ -1,7 +1,7 @@
-select
+select distinct
     aw.cookie_id,
     aw.transaction_uid,
-    aw.amount,
+    - aw.amount as amount,
     aw.event_time,
     aw.item_id,
     aw.campaign_id,
