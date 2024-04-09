@@ -120,6 +120,7 @@ left join /*+distrib(a,l)*/
   from dma.fancy_items
   where true
   	and calc_date <= :last_date
+  -- and calc_year <= date_trunc('year', :last_date) -- @trino
 ) fancy on a.item_id = fancy.item_id and a.event_date >= fancy.converting_date and a.event_date < fancy.next_converting_date
   
 where true 
