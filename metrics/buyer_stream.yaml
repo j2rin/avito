@@ -1930,11 +1930,27 @@ metric.counter:
     c_cpa_video: { filter: [*is_item_with_video_cpa, *is_contact] }
     iv_cpa_video_s: { filter: [*is_item_with_video_cpa, *is_iv_wo_guessing, *x_is_search] }
     c_cpa_video_s: { filter: [*is_item_with_video_cpa, *is_contact_wo_guessing, *x_is_search] }
+  
     
     iv_video_premium: { filter: [*is_item_with_video, *is_iv, {is_premium: True}] }
     c_video_premium: { filter: [*is_item_with_video, *is_contact, {is_premium: True}] }
     iv_premium_bx: { filter: [*is_iv, {is_premium: True}] }
     c_premium_bx: { filter: [*is_contact, {is_premium: True}] }
+    
+    iv_fancy: { filter: [is_fancy, *is_iv] }
+    c_fancy: { filter: [is_fancy, *is_contact] }
+    fav_fancy: { filter: [is_fancy, *is_fav] }
+    btc_fancy: { filter: [is_fancy, *is_btc] }
+    iv_fancy_s: { filter: [is_fancy, *is_iv_wo_guessing, *x_is_search] }
+    c_fancy_s: { filter: [is_fancy, *is_contact_wo_guessing, *x_is_search] }
+    fav_fancy_s: { filter: [is_fancy, *is_fav, *x_is_search] }
+    btc_fancy_s: { filter: [is_fancy, *is_btc_wo_guessing, *x_is_search] }
+    iv_fancy_u2i: { filter: [is_fancy, *is_iv_wo_guessing, *x_is_u2i] }
+    c_fancy_u2i: { filter: [is_fancy, *is_contact_wo_guessing, *x_is_u2i] }
+    btc_fancy_u2i: { filter: [is_fancy, *is_btc_wo_guessing, *x_is_u2i] }
+    iv_fancy_i2i: { filter: [is_fancy, *is_iv_wo_guessing, *x_is_i2i] }
+    c_fancy_i2i: { filter: [is_fancy, *is_contact_wo_guessing, *x_is_i2i] }
+    btc_fancy_i2i: { filter: [is_fancy, *is_btc_wo_guessing, *x_is_i2i] }
     
     
 
@@ -3604,6 +3620,21 @@ metric.uniq:
     user_c_cpa_video: { counter: c_cpa_video, key: [cookie] }
     user_iv_cpa_video_s: { counter: iv_cpa_video_s, key: [cookie] }
     user_c_cpa_video_s: { counter: c_cpa_video_s, key: [cookie] }
+    
+    user_iv_fancy: { counter: iv_fancy,	key:	[cookie] }
+    user_c_fancy: { counter: c_fancy,	key:	[cookie] }
+    user_fav_fancy: { counter: fav_fancy,	key:	[cookie] }
+    user_btc_fancy: { counter: btc_fancy,	key:	[cookie] }
+    user_iv_fancy_s: { counter: iv_fancy_s,	key:	[cookie] }
+    user_c_fancy_s: { counter: c_fancy_s,	key:	[cookie] }
+    user_fav_fancy_s: { counter: fav_fancy_s,	key:	[cookie] }
+    user_btc_fancy_s: { counter: btc_fancy_s,	key:	[cookie] }
+    user_iv_fancy_u2i: { counter: iv_fancy_u2i,	key:	[cookie] }
+    user_c_fancy_u2i: { counter: c_fancy_u2i,	key:	[cookie] }
+    user_btc_fancy_u2i: { counter: btc_fancy_u2i,	key:	[cookie] }
+    user_iv_fancy_i2i: { counter: iv_fancy_i2i,	key:	[cookie] }
+    user_c_fancy_i2i: { counter: c_fancy_i2i,	key:	[cookie] }
+    user_btc_fancy_i2i: { counter: btc_fancy_i2i,	key:	[cookie] }
 
     user_iv_mall: { counter: iv_mall, key: [cookie] }
     user_c_mall: { counter: c_mall, key: [cookie] }
