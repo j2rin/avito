@@ -133,7 +133,7 @@ left join
   	lead(actual_date, 1, cast('2099-01-01' as timestamp)) over (partition by item_id order by actual_date) next_converting_date
   from dds.s_item_video
   where true
-  	and actual_date::date <= :last_date
+  	and cast(actual_date as date) <= :last_date
 ) video on a.item_id = video.item_id and a.event_date >= video.converting_date and a.event_date < video.next_converting_date
   
 where true 
