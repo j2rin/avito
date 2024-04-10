@@ -19,6 +19,7 @@ definitions:
   - &is_success_call              {talk_duration.>: 30}
   - &is_answered_call             {talk_duration.>: 0}
   - &is_fancy					  {is_fancy: True}
+  - &has_short_video			  {has_short_video: True}	
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
@@ -127,6 +128,7 @@ metric.counter:
   chat_seller_contact_exchange:                         {filter: [*is_common_funnel, {tags.ilike: '10_contact_exchange_seller'} , *is_msg]} #old
   
   target_contact_fancy:                                  {filter: [*is_common_funnel, *is_target, *is_fancy]} 
+  target_contact_video:									 {filter: [*is_common_funnel, *is_target, *has_short_video]}
 
 metric.uniq:
   calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [item_id, logical_category_id]}
@@ -195,6 +197,7 @@ metric.uniq:
   msg_bx_target_buyers_canonical:                        {counter: msg_bx_target,                  key: [buyer_id, logical_category_id]}
   
   target_buyer_fancy:									 {counter: target_contact_fancy,		   key: [buyer_id, logical_category_id]}
+  target_buyer_video:									 {counter: target_contact_video,		   key: [buyer_id, logical_category_id]}
 
 
 metric.ratio:
