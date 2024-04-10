@@ -18,6 +18,7 @@ select
     ,buyer_cookie_id
     ,is_video_call
     ,coalesce(fancy.is_fancy, false)	as is_fancy
+    ,coalesce(video.has_short_video, false)	as has_short_video
     ,cm.microcat_id
     ,cm.category_id
     ,cl.location_id
@@ -122,6 +123,18 @@ left join /*+distrib(a,l)*/
   	and calc_date <= :last_date
   -- and calc_year <= date_trunc('year', :last_date) -- @trino
 ) fancy on a.item_id = fancy.item_id and a.event_date >= fancy.converting_date and a.event_date < fancy.next_converting_date
+
+left join 
+(
+  select 
+    item_id,
+    video is not null has_short_video,
+    actual_date converting_date,
+  	lead(actual_date, 1, cast('2099-01-01' as timestamp)) over (partition by item_id order by actual_date) next_converting_date
+  from dds.s_item_video
+  where true
+  	and actual_date::date <= :last_date
+) video on a.item_id = video.item_id and a.event_date >= video.converting_date and a.event_date < video.next_converting_date
   
 where true 
     and cast(a.event_date as date) between :first_date and :last_date
