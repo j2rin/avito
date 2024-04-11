@@ -69,6 +69,7 @@ select
     bonus_cashback,
     promocode_discount,
     c2c_seller_discount,
+    c2c_seller_avito_discount, -- скидка Авито, если субсидии продавца не хватает для бесплатной доставки
     exmail_discount,
     ------ флаг скидки
     is_threefirst_discount,
@@ -85,6 +86,7 @@ select
     promocode_subsidies_wo_tax,
     promocode_subsidies,
     exmail_subsidies,
+    c2c_seller_avito_subsidies, -- доплата Авито, если субсидии продавца не хватает для бесплатной доставки
     -------------- total_subsidies (субсидии без экономии от скидки с2с_seller_discount)
     total_threefirst_subsidies,
     total_exmail_subsidies,
