@@ -7,7 +7,7 @@ select
     cs_chain.from_page,
     video,
     coalesce(upload_page.item_id, cs_chain.item_id) item_id_upload_chain,
-    item_video.item_id item_video_id,
+    item_video.item_id item_id,
     upload_page.event_chain,
     cm.vertical_id,
     cm.logical_category_id,
