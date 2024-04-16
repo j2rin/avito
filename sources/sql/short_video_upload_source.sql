@@ -26,7 +26,7 @@ from
         cast(event_date as date) event_date,
         microcat_id
     from dma.clickstream_video
-    where event_date between cast(:first_date as date) - interval '2' day and cast(:last_date as date) - interval '2' day
+    where event_date between cast(:first_date as date) and cast(:last_date as date)
         and eid = 6303
 ) upload_page
 left join 
@@ -37,7 +37,7 @@ left join
         s.microcat_id
     from DMA.item_add_chain_metrics s
         join dds.H_EventChain using (EventChain_id)
-    where cast(chain_item_create_time as date) between cast(:first_date as date) - interval '2' day and cast(:last_date as date) - interval '2' day
+    where cast(chain_item_create_time as date) between cast(:first_date as date) and cast(:last_date as date)
 ) cs_chain on cs_chain.event_chain = upload_page.event_chain
 left join 
 (select 
@@ -53,7 +53,7 @@ left join
       		row_number() over (partition by video order by actual_date) rn
             from dds.s_item_video
     ) siv 
-    where rn = 1 and siv.actual_date between cast(:first_date as date) - interval '2' day and cast(:last_date as date) - interval '2' day
+    where rn = 1 and siv.actual_date between cast(:first_date as date) and cast(:last_date as date)
 ) item_video on item_video.item_id = coalesce(upload_page.item_id, cs_chain.item_id)
 left join DMA.current_microcategories cm on cm.microcat_id = coalesce(upload_page.microcat_id, cs_chain.microcat_id)
 
