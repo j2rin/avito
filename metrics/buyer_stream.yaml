@@ -1977,6 +1977,10 @@ metric.counter:
     c_fancy_i2i: { filter: [is_fancy: true, *is_contact_wo_guessing, *x_is_i2i] }
     btc_fancy_i2i: { filter: [is_fancy: true, *is_btc_wo_guessing, *x_is_i2i] }
     
+    iv_non_fancy: { filter: [is_fancy: false, *is_iv] }
+    iv_non_fancy_s: { filter: [is_fancy: false, *is_iv_wo_guessing, *x_is_search] }
+    iv_non_fancy_u2i: { filter: [is_fancy: false, *is_iv_wo_guessing, *x_is_u2i] }
+    iv_non_fancy_i2i: { filter: [is_fancy: false, *is_iv_wo_guessing, *x_is_i2i] }
     
 
     iv_mall: { filter: [*is_item_mall, *is_iv] }
@@ -3680,6 +3684,11 @@ metric.uniq:
     user_iv_fancy_i2i: { counter: iv_fancy_i2i,	key:	[cookie] }
     user_c_fancy_i2i: { counter: c_fancy_i2i,	key:	[cookie] }
     user_btc_fancy_i2i: { counter: btc_fancy_i2i,	key:	[cookie] }
+    
+    user_iv_non_fancy: { counter: iv_non_fancy, key:	[cookie] }
+	user_iv_non_fancy_s: { counter: iv_non_fancy_s, key:	[cookie] }
+	user_iv_non_fancy_u2i: { counter: iv_non_fancy_u2i, key:	[cookie] }
+	user_iv_non_fancy_i2i: { counter: iv_non_fancy_i2i, key:	[cookie] }
 
     user_iv_mall: { counter: iv_mall, key: [cookie] }
     user_c_mall: { counter: c_mall, key: [cookie] }
