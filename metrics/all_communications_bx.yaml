@@ -128,7 +128,10 @@ metric.counter:
   chat_seller_contact_exchange:                         {filter: [*is_common_funnel, {tags.ilike: '10_contact_exchange_seller'} , *is_msg]} #old
   
   target_contact_fancy:                                  {filter: [*is_common_funnel, *is_target, *is_fancy]} 
-  target_contact_video:									 {filter: [*is_common_funnel, *is_target, *has_short_video]}
+  target_contact_video:									                 {filter: [*is_common_funnel, *is_target, *has_short_video]}
+
+  target_contacts_new:                                   {filter: [*is_common_funnel, *is_target, {is_target_buyer_new: True}]} 
+  target_contacts_returned:                              {filter: [*is_common_funnel, *is_target, {is_target_buyer_new: True}]} 
 
 metric.uniq:
   calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [item_id, logical_category_id]}
@@ -157,10 +160,14 @@ metric.uniq:
   target_buyers_canonical_2_0:                           {counter: target_contacts_all_2_0,         key: [buyer_id, logical_category_id]}
   target_contacts_canonical_exp:                         {counter: target_contacts_all_exp,         key: [buyer_cookie_id, item_id, logical_category_id]}
   target_buyers_canonical_exp:                           {counter: target_contacts_all_exp,         key: [buyer_cookie_id, logical_category_id]}
+
   user_target_contacts_2_0:                              {counter: target_contacts_all_2_0,         key: [user]}
   user_asnwered_contacts_2_0:                            {counter: answered_contacts_2_0,         key: [user]}
   user_target_contacts_exp:                              {counter: target_contacts_all_exp,         key: [cookie]}
   user_answered_contacts_exp:                            {counter: answered_contacts_exp,         key: [cookie]}
+
+  target_buyers_new_exp:                                 {counter: target_contacts_new,         key: [buyer_cookie_id, logical_category_id]}
+  target_buyers_returned_exp:                            {counter: target_contacts_returned,    key: [buyer_cookie_id, logical_category_id]}
 
   user_target_contact_call_bx:                           {counter: target_contact_call_bx, key: [user]} #old
   user_target_contact_call_bx_success:                   {counter: target_contact_call_bx_success, key: [user]} #old
