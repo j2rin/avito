@@ -5,7 +5,6 @@ bs_users as (
     where cast(event_date as date) between :first_date and :last_date
         and item_user_id is not null
 --         and date between :first_date and :last_date -- @trino
-
 ),
 bs_items as (
     select distinct item_id
