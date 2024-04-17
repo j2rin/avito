@@ -132,12 +132,42 @@ select
     bl.City_Population_Group                                     as buyer_population_group,
     bl.Logical_Level                                             as buyer_location_level_id,
     co.in_sale,
-    co.has_sbp_bindings
+    co.has_sbp_bindings,
+    case
+        when inn_info.inn_status then 'B2C White'
+        when usm.segment_rank is null or usm.segment_rank < 300 then 'C2C'
+        when usm.segment_rank >= 300 then 'B2C Gray'
+    end as seller_segment_marketplace
 from dma.delivery_metric_for_ab co
 left join dma.current_logical_categories clc on clc.logcat_id = co.logical_category_id
 left join dma.current_microcategories cm on cm.microcat_id = co.microcat_id
 left join dma.current_locations as cl on co.warehouse_location_id = cl.location_id
 left join dma.current_locations as bl on co.buyer_location_id = bl.location_id
+left join /*+jtype(h),distrib(l,a)*/
+(
+    select *,
+           coalesce(cast(lead(active_from) over(partition by user_id order by active_from asc) as date) - interval '1' day, cast('2030-01-01' as date)) as active_until -- дата окончания действия этого статуса
+    from
+        (
+            select
+                cast(event_time as date) as active_from,
+                user_id,
+                status as inn_status,
+                row_number() over(partition by user_id, cast(event_time as date) order by event_time desc) as rn
+            from
+                dma.verification_statuses
+            where 1=1
+                and verification_type = 'INN'
+--                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
+        ) _
+    where rn = 1 --получаем последний за день статус
+) inn_info
+    on co.seller_id = inn_info.user_id
+    and cast(co.status_date as date) between inn_info.active_from and inn_info.active_until
+ left join dma.user_segment_market usm
+    on co.logical_category_id = usm.logical_category_id
+    and co.seller_id = usm.user_id
+    and cast(co.status_date as date) between converting_date and max_valid_date
 where true 
     and date(co.status_date) between date(:first_date) and date(:last_date)
     -- and status_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
