@@ -81,6 +81,7 @@ select
     -- Dimensions -----------------------------------------------------------------------------------------------------
     coalesce(lc.vertical_id, cm.vertical_id)                     as vertical_id,
     coalesce(lc.logical_category_id, cm.logical_category_id)     as logical_category_id,
+    lc.logical_param1                                            as logical_param1,
     cm.category_id                                               as category_id,
     cm.subcategory_id                                            as subcategory_id,
     cm.Param1_microcat_id                                        as param1_id,
