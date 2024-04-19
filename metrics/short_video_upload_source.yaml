@@ -1,2 +1,13 @@
 metric.counter:
-    new_video:          {filter: [video.isnull: false]}
+    new_video:                      {filter: [video.isnull: false]}
+    new_video_item_add:             {filer: [video.isnull: false, from_page.ilike: 'item_add']}
+    new_video_item_edit:            {filer: [video.isnull: false, from_page.ilike: 'item_edit']}
+
+metric.uniq:
+    items_with_new_video:                   {counter: new_video, key: [item]}
+    items_with_new_video_item_add:          {counter: new_video_item_add, key: [item]}
+    items_with_new_video_item_edit:         {counter: new_video_item_edit, key: [item]}
+
+    user_with_new_video:                    {counter: new_video, key: [cookie]}                  
+    user_with_new_video_item_add:           {counter: new_video_item_add, key: [cookie]}                 
+    user_with_new_video_item_edit:          {counter: new_video_item_edit, key: [cookie]}                    
