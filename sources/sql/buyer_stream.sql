@@ -158,7 +158,12 @@ select
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as is_delivery_active_in_sale,
     fs.seller_id is not null as is_federal_seller,
     case when prem.is_premium = 1 then true when prem.is_premium = 0 or prem.is_premium is null then false end is_premium,
-    coalesce(fancy.is_fancy, false) is_fancy
+    coalesce(fancy.is_fancy, false) is_fancy,
+    case
+        when inn_info.inn_status then 'B2C White'
+        when usm.segment_rank is null or usm.segment_rank < 300 then 'C2C'
+        when usm.segment_rank >= 300 then 'B2C Gray'
+    end as seller_segment_marketplace
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -191,6 +196,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
     select
         usm.user_id,
         usm.logical_category_id,
+        usm.segment_rank,
         usm.user_segment as user_segment_market,
         c.event_date
     from (
@@ -198,6 +204,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
             user_id,
             logical_category_id,
             user_segment,
+            segment_rank,
             converting_date as from_date,
             lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
         from DMA.user_segment_market
@@ -275,6 +282,28 @@ left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_
 
 left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
     on ss.item_user_id = fs.seller_id
+
+left join /*+jtype(h),distrib(l,a)*/
+(
+    select *,
+           coalesce(cast(lead(active_from) over(partition by user_id order by active_from asc) as date) - interval '1' day, cast('2030-01-01' as date)) as active_until -- дата окончания действия этого статуса
+    from
+        (
+            select
+                cast(event_time as date) as active_from,
+                user_id,
+                status as inn_status,
+                row_number() over(partition by user_id, cast(event_time as date) order by event_time desc) as rn
+            from
+                dma.verification_statuses
+            where 1=1
+                and verification_type = 'INN'
+--                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
+        ) _
+    where rn = 1 --получаем последний за день статус
+) inn_info
+    on ss.item_user_id = inn_info.user_id
+    and cast(ss.event_date as date) between inn_info.active_from and inn_info.active_until
   
 where cast(ss.event_date as date) between :first_date and :last_date
 --     and ss.date between :first_date and :last_date -- @trino
