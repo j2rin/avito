@@ -28,6 +28,7 @@ from
     from dma.clickstream_video
     where event_date between cast(:first_date as date) and cast(:last_date as date)
         and eid = 6303
+    --  and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 ) upload_page
 left join 
 (   
