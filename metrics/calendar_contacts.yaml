@@ -1,5 +1,6 @@
 metric.counter: 
-  contacts_calendar:          {} # кол-во контактов через календарь (нажатий на онлайн-запись) # не указано obs, поэтому 1 
+  contacts_calendar_all:          {} # кол-во нажатий на кнопку онлайн-запись # не указано obs, поэтому 1 
 
 metric.uniq: 
-  buyers_calendar:            {counter: contacts_calendar, key: [cookie]} # уникальные баеры сконтактировавшие через календарь (за день, тк по cookie)
+  buyers_calendar:            {counter: contacts_calendar_all, key: [cookie]} # уникальные баеры сконтактировавшие через кнопку онлайн-запись с хотя бы одним айтемом (за день, тк по cookie)
+  contacts_calendar:          {counter: contacts_calendar_all, key: [cookie, item]} # контакты через календарь (за день, не по нажатиям, а по уникальным нажатиям кукой на айтем)
