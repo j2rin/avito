@@ -121,9 +121,9 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
                 t.event_date,
                 first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
                 --- следующие поля актуальны только если предыдущее поле x_eid = 300
-                first_value(serp_search_params ilike '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
-                first_value(serp_search_params ilike '%"Посуточно"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
-                first_value(serp_search_params ilike '%"from"%' and serp_search_params ilike '%"to"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
+                first_value(serp_search_params like '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
+                first_value(serp_search_params like '%"Посуточно"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
+                first_value(serp_search_params like '%"from"%' and serp_search_params like '%"to"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
                 first_value(coalesce(serp_query != '', false)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as text_query_flg,
                 ---
                 sum(1) over (partition by t.cookie_id, t.item_id, t.event_date) as item_views_cnt
