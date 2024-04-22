@@ -12,21 +12,29 @@ metric.counter:
   delivery_c_premium:      {filter: *delivery_c}
   fav_premium:             {filter: *fav}
   cart_premium:            {filter: *cart}
-  searches_premium:        {filter: *search}
+  searches_premium:        {filter: [*search, page_number.isnull: true]}
   chats_premium:           {filter: *chats}
   iv_premium:              {filter: *iv}
+  searches_all_pages_premium: {filter: *search}
+  empty_serps_premium: {filter: [*search, items_count.=: 0]}
+  small_serps_premium: {filter: [*search, items_count.>: 0, items_count.<=: 9]}
 
 metric.uniq:
-  u_marketplace_c_premium: {counter: marketplace_c_premium,     key: [cookie]}
-  u_delivery_c_premium: {counter: delivery_c_premium,     key: [cookie]}
-  u_fav_premium: {counter: fav_premium,     key: [cookie]}
-  u_cart_premium: {counter: cart_premium,     key: [cookie]}
-  u_searches_premium: {counter: searches_premium,     key: [cookie]}
-  u_chats_premium: {counter: chats_premium,     key: [cookie]}
+  u_marketplace_c_premium: {counter: marketplace_c_premium, key: [cookie]}
+  u_delivery_c_premium: {counter: delivery_c_premium, key: [cookie]}
+  u_fav_premium: {counter: fav_premium, key: [cookie]}
+  u_cart_premium: {counter: cart_premium, key: [cookie]}
+  u_searches_premium: {counter: searches_premium, key: [cookie]}
+  u_chats_premium: {counter: chats_premium, key: [cookie]}
 
 metric.ratio:
   cr_iv_to_delivery_c_premium: {num: delivery_c_premium,  den: iv_premium}
   cr_iv_to_marketplace_c_premium: {num: marketplace_c_premium,  den: iv_premium}
-  cr_search_to_iv_premium: { num: iv_premium,  den: searches_premium }
   cr_iv_to_fav_premium: { num: fav_premium,  den: iv_premium }
   cr_iv_to_cart_premium: { num: cart_premium,  den: iv_premium }
+  cr_search_to_iv_premium: { num: iv_premium,  den: searches_premium }
+  cr_search_to_fav_premium: { num: fav_premium,  den: searches_premium }
+  cr_search_to_marketplace_c_premium: { num: marketplace_c_premium,  den: searches_premium }
+  search_depth_premium: { num: searches_all_pages_premium,  den: searches_premium }
+  empty_serps_ratio_premium: { num: empty_serps_premium,  den: searches_premium }
+  small_serps_ratio_premium: { num: small_serps_premium,  den: searches_premium }
