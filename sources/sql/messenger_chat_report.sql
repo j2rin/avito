@@ -48,6 +48,7 @@ with am_client_day as (
     end as is_one_day_reply,
 	chr.microcat_id,
 	chr.item_location_id,
+    is_autoreply,
 	-- Dimensions -----------------------------------------------------------------------------------------------------
     cm.vertical_id,
 	cm.category_id,
