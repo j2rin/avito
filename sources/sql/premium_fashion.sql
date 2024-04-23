@@ -1,11 +1,5 @@
-with b2c_items as (
-select ci.user_id, item_id
-from dds.L_User_PremiumShop ps
-join dma.current_item ci on ci.user_id = ps.user_id
-)
-select pe.*,
-       case when bi.item_id is not null then 1 else 0 end as is_b2c
-from DMA.premium_events_tracker pe
+select * 
+from DMA.premium_events_tracker
 left join b2c_items bi on bi.item_id = pe.item_id
 where 1=1
     and cast(event_date as date) between :first_date and :last_date
