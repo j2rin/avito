@@ -16,7 +16,7 @@ metric.counter:
     iv_s_kmt: {filter: [*kmt], obs: [item_views_serp_kmt]}
     c_mini_s_kmt: {filter: [*kmt], obs: [contacts_kmt]}
     iv_mini_s_kmt: {filter: [*kmt], obs: [item_views_kmt]}
-
+    actions_kmt: {filter: [*kmt], obs: [item_views_kmt, item_views_serp_kmt, searches_kmt]}
 
     kmt_or_catalog_started: {filter: [*is_start]}
     kmt_started: {filter: [*kmt, *is_start]}
@@ -55,6 +55,7 @@ metric.uniq:
     user_iv_s_kmt: { counter: iv_s_kmt, key: [cookie_id] }
     user_c_mini_s_kmt: { counter: c_mini_s_kmt, key: [cookie_id] }
     user_iv_mini_s_kmt: { counter: iv_mini_s_kmt, key: [cookie_id] }
+    user_actions_kmt: { counter: actions_kmt, key: [cookie_id] }
     user_kmt_over_15_sec: { counter: session_over_15_sec_cnt, key: [cookie_id] }
     user_kmt_over_15_sec_organic: { counter: kmt_session_over_15_sec_organic, key: [cookie_id] }
 
