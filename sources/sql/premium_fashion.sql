@@ -1,7 +1,7 @@
 with b2c_items as (
 select ci.user_id, item_id
-from dds.L_User_PremiumShop
-join dma.current_item ci using (user_id)
+from dds.L_User_PremiumShop ps
+join dma.current_item ci on ci.user_id = ps.user_id
 )
 select pe.*,
        case when bi.item_id is not null then 1 else 0 end as is_b2c
