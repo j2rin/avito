@@ -14,7 +14,7 @@ with
                 and mic.logical_category = 'Realty.ShortRent'
         ),
     events AS (
-        select * from (
+        --select * from (
             select
                 t.event_date as event_datetime,
                 cast(t.event_date as date) as event_date,
@@ -56,7 +56,7 @@ with
                 and t.eid in (300, 301, 2581)
                 -- из событий просмотра и бронирований оставляем только просмотры и бронирования STR-ных айтемов
                 --and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
-            ) t
+           -- ) t
         --where (t.eid in (301, 2581) or t.serp_with_iv_flg = 1)
         ),
     /*clickstream AS
@@ -121,7 +121,6 @@ with
             where STREventName = 'paid'
                 and cast(CreatedAt as date) between :first_date and :last_date
             ),
-     */
     str_orders AS (
         select
             s.order_id,
@@ -151,6 +150,7 @@ with
                     ) as p
                 on s.order_id = p.order_id
         ),
+     */
     item_view_sources AS (
         select
             cookie_id,
@@ -267,7 +267,35 @@ from
         on iv.cookie_id = bfc.cookie_id
         and iv.item_id = bfc.item_id
         and iv.event_date = bfc.event_date
-    left join str_orders as o
+    left join (
+            select
+                s.order_id,
+                order_create_time,
+                cast(order_create_time as date) as event_date,
+                buyer_id,
+                s.item_id,
+                p.order_id is not null as paid_flg,
+                coalesce(amount, 0) as gmv,
+                cast(coalesce(payout_fee, 0) / 100 as decimal) + coalesce(trx_promo_fee, 0) as revenue,
+                coalesce(trx_promo_fee, 0) as promo_revenue
+            from
+                dma.short_term_rent_orders s
+                inner join str_items as str
+                    on s.item_id = str.item_id
+                    and cast(s.order_create_time as date) between :first_date and :last_date
+                left join (
+                        select
+                            distinct StrBooking_id as order_id, CreatedAt as actual_date
+                        from dds.L_STROrderEventname_StrBooking l
+                        left join dds.S_STROrderEventname_STREventName s1
+                            on l.STROrderEventname_id = s1.STROrderEventname_id
+                        left join dds.S_STROrderEventname_CreatedAt s2
+                            on l.STROrderEventname_id = s2.STROrderEventname_id
+                        where STREventName = 'paid'
+                            and cast(CreatedAt as date) between :first_date and :last_date
+                        ) as p
+                    on s.order_id = p.order_id
+            ) as o
         on bfc.user_id = o.buyer_id
         and iv.event_date = o.event_date
         and iv.item_id = o.item_id
