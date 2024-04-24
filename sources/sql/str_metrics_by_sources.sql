@@ -34,7 +34,11 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
                 left join str_items as str
                     on t.item_id = str.item_id
                 left join   (select
-                                 *
+                                 cookie_id,
+                                 track_id,
+                                 event_no,
+                                 search_params,
+                                 search_query
                             from dma.clickstream_search_events
                             where (search_params is not null or search_query is not null)
                                 and event_date between :first_date and :last_date
