@@ -53,7 +53,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
             t1.x,
             t1.search_query
         from
-            from dma.clickstream_search_events as t1
+            dma.clickstream_search_events as t1
             inner join buyer_stream as t2
                 on t1.event_date between :first_date and :last_date
                 and t1.cookie_id = t2.cookie_id
