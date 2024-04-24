@@ -1,4 +1,5 @@
 with
+    /*
     str_items AS
         (select
             ci.item_id,
@@ -13,6 +14,7 @@ with
                 on ci.microcat_id = mic.microcat_id
                 and mic.logical_category = 'Realty.ShortRent'
         ),
+     */
     events AS (
         --select * from (
             select
@@ -273,7 +275,6 @@ from
                 t.cookie_id,
                 t.item_id,
                 t.event_date,
-                first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
                 --- следующие поля актуальны только если предыдущее поле x_eid = 300
                 first_value(serp_search_params like '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
                 first_value(serp_search_params like '%"Посуточно"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
@@ -287,7 +288,19 @@ from
             ) t
         group by 1, 2, 3
         ) as iv
-    inner join str_items as str
+    inner join (select
+                    ci.item_id,
+                    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+                    mic.logical_category_id,
+                    mic.subcategory_id
+                from DMA.current_item ci
+                    inner join DMA.current_locations cl
+                        on 1=1
+                        and cl.Location_id = ci.location_id
+                    inner join DMA.current_microcategories mic
+                        on ci.microcat_id = mic.microcat_id
+                        and mic.logical_category = 'Realty.ShortRent'
+                ) as str
         on iv.item_id = str.item_id
     left join (
             select
@@ -359,7 +372,19 @@ from
                 coalesce(trx_promo_fee, 0) as promo_revenue
             from
                 dma.short_term_rent_orders s
-                inner join str_items as str
+                inner join (select
+                                ci.item_id,
+                                case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+                                mic.logical_category_id,
+                                mic.subcategory_id
+                            from DMA.current_item ci
+                                inner join DMA.current_locations cl
+                                    on 1=1
+                                    and cl.Location_id = ci.location_id
+                                inner join DMA.current_microcategories mic
+                                    on ci.microcat_id = mic.microcat_id
+                                    and mic.logical_category = 'Realty.ShortRent'
+                            ) as str
                     on s.item_id = str.item_id
                     and cast(s.order_create_time as date) between :first_date and :last_date
                 left join (
