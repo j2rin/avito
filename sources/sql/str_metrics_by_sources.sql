@@ -58,7 +58,7 @@ with
                 --and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
            -- ) t
         --where (t.eid in (301, 2581) or t.serp_with_iv_flg = 1)
-        ),
+        )
     /*clickstream AS
         (select
             t1.event_date,
@@ -150,7 +150,6 @@ with
                     ) as p
                 on s.order_id = p.order_id
         ),
-     */
     item_view_sources AS (
         select
             cookie_id,
@@ -234,6 +233,7 @@ with
             ) t
         group by 1, 2, 3
         )
+     */
 select
     iv.event_date,
     iv.cookie_id,
@@ -257,13 +257,92 @@ select
     sum(case when o.paid_flg then o.revenue else 0 end) as str_paid_revenue,
     sum(case when o.paid_flg then o.promo_revenue else 0 end) as str_paid_promo_revenue
 from
-    item_view_sources as iv
+        (select
+            cookie_id,
+            item_id,
+            event_date,
+            min(x_eid) as x_eid,
+            min(sdam_flg) as sdam_flg,
+            min(str_flg) as str_flg,
+            min(date_filtered_flg) as date_filtered_flg,
+            min(text_query_flg) as text_query_flg,
+            min(item_views_cnt) as item_views_cnt
+        from
+            (
+            select
+                t.cookie_id,
+                t.item_id,
+                t.event_date,
+                first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
+                --- следующие поля актуальны только если предыдущее поле x_eid = 300
+                first_value(serp_search_params like '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
+                first_value(serp_search_params like '%"Посуточно"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
+                first_value(serp_search_params like '%"from"%' and serp_search_params like '%"to"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
+                first_value(coalesce(serp_query != '', false)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as text_query_flg,
+                ---
+                sum(1) over (partition by t.cookie_id, t.item_id, t.event_date) as item_views_cnt
+            from events as t
+            where 1=1
+                and eid = 301
+            ) t
+        group by 1, 2, 3
+        ) as iv
     inner join str_items as str
         on iv.item_id = str.item_id
-    left join user_first_cookie_id as u
+    left join (
+            select
+                cookie_id,
+                event_date,
+                min(user_id) as user_id
+            from (
+                select
+                    cookie_id,
+                    event_date,
+                    first_value(t.user_id) over (partition by t.cookie_id, t.event_date order by t.min_event_datetime) as user_id
+                from (
+                    select
+                        user_id,
+                        event_date,
+                        min(cookie_id) as cookie_id,
+                        min(min_event_datetime) as min_event_datetime
+                    from
+                        (
+                        select
+                            t.user_id,
+                            t.event_date,
+                            first_value(t.cookie_id) over (partition by t.user_id, t.event_date order by t.event_datetime) as cookie_id,
+                            min(t.event_datetime) over (partition by t.user_id, t.event_date) as min_event_datetime
+                        from events as t
+                        where 1=1
+                            and user_id is not null
+                            and cookie_id is not null
+                        ) t
+                    group by 1, 2
+                ) t
+            ) t
+            group by 1, 2
+            ) as u
         on iv.cookie_id = u.cookie_id
         and iv.event_date = u.event_date
-    left join bookings_first_cookie as bfc
+    left join (
+            select
+                event_date,
+                user_id,
+                item_id,
+                min(cookie_id) as cookie_id
+            from (
+                select
+                    event_date,
+                    user_id,
+                    item_id,
+                    first_value(cookie_id) over (partition by event_date, user_id, item_id order by event_datetime) as cookie_id
+                from
+                    events
+                where
+                    eid = 2581
+                ) t
+            group by 1, 2, 3
+            ) as bfc
         on iv.cookie_id = bfc.cookie_id
         and iv.item_id = bfc.item_id
         and iv.event_date = bfc.event_date
