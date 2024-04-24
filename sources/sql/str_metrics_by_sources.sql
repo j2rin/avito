@@ -81,7 +81,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
             left join dds.S_STROrderEventname_CreatedAt s2
                 on l.STROrderEventname_id = s2.STROrderEventname_id
             where STREventName = 'paid'
-                and cast(actual_date as date) between :first_date and :last_date
+                and cast(CreatedAt as date) between :first_date and :last_date
             ),
     str_orders AS (
         select
