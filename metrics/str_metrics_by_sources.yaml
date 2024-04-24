@@ -15,8 +15,8 @@ definitions:
 
   - &is_search_sdam                            {sdam_flg: true}
   - &is_search_str                             {str_flg: true}
-  - &is_search_w_infm_params                   {str_flg: true, sdam_flg: true}
-  - &is_search_wo_infm_params                  {str_flg: false, sdam_flg: false}
+  - &is_search_w_infm_prms                     {str_flg: true, sdam_flg: true}
+  - &is_search_wo_infm_prms                    {str_flg: false, sdam_flg: false}
   - &is_search_date_filtered                   {date_filtered_flg: true}
   - &is_search_not_date_filtered               {date_filtered_flg: false}
   - &is_search_text                            {text_query_flg: true}
@@ -25,10 +25,10 @@ definitions:
 metric.counter:
   cnt_iv_str:                                              {obs: [item_views_cnt]}
   cnt_iv_str_search:                                       {obs: [item_views_cnt], filter: [*is_search]}
-  cnt_iv_str_no_infm_params:                               {obs: [item_views_cnt], filter: [*is_search, *is_search_wo_infm_params]}
-  cnt_iv_str_infm_params:                                  {obs: [item_views_cnt], filter: [*is_search, *is_search_w_infm_params]}
-  cnt_iv_str_date_filtered:                                {obs: [item_views_cnt], filter: [*is_search, *is_search_w_infm_params, *is_search_date_filtered]}
-  cnt_iv_str_not_date_filtered:                            {obs: [item_views_cnt], filter: [*is_search, *is_search_w_infm_params, *is_search_not_date_filtered]}
+  cnt_iv_str_no_infm_prms:                                 {obs: [item_views_cnt], filter: [*is_search, *is_search_wo_infm_prms]}
+  cnt_iv_str_infm_prms:                                    {obs: [item_views_cnt], filter: [*is_search, *is_search_w_infm_prms]}
+  cnt_iv_str_date_filtered:                                {obs: [item_views_cnt], filter: [*is_search, *is_search_w_infm_prms, *is_search_date_filtered]}
+  cnt_iv_str_not_date_filtered:                            {obs: [item_views_cnt], filter: [*is_search, *is_search_w_infm_prms, *is_search_not_date_filtered]}
   cnt_iv_str_fav_lst:                                      {obs: [item_views_cnt], filter: [*is_fav_lst]}
   cnt_iv_str_u2i:                                          {obs: [item_views_cnt], filter: [*is_u2i]}
   cnt_iv_str_profile:                                      {obs: [item_views_cnt], filter: [*is_profile]}
@@ -37,10 +37,10 @@ metric.counter:
 
   str_created_bookings:                                 { obs: [ str_created_bookings ] }
   str_created_bookings_search:                          { obs: [ str_created_bookings ], filter: [ *is_search ] }
-  str_created_bookings_search_no_infm_prms:             { obs: [ str_created_bookings ], filter: [ *is_search, *is_search_wo_infm_params ] }
-  str_created_bookings_search_infm_prms:                { obs: [ str_created_bookings ], filter: [ *is_search, *is_search_w_infm_params ] }
-  str_created_bookings_search_dt_fltr:                  { obs: [ str_created_bookings ], filter: [ *is_search, *is_search_w_infm_params, *is_search_date_filtered ] }
-  str_created_bookings_search_no_dt_fltr:               { obs: [ str_created_bookings ], filter: [ *is_search, *is_search_w_infm_params, *is_search_not_date_filtered ] }
+  str_created_bookings_search_no_infm_prms:             { obs: [ str_created_bookings ], filter: [ *is_search, *is_search_wo_infm_prms ] }
+  str_created_bookings_search_infm_prms:                { obs: [ str_created_bookings ], filter: [ *is_search, *is_search_w_infm_prms ] }
+  str_created_bookings_search_dt_fltr:                  { obs: [ str_created_bookings ], filter: [ *is_search, *is_search_w_infm_prms, *is_search_date_filtered ] }
+  str_created_bookings_search_no_dt_fltr:               { obs: [ str_created_bookings ], filter: [ *is_search, *is_search_w_infm_prms, *is_search_not_date_filtered ] }
   str_created_bookings_fav_lst:                         { obs: [ str_created_bookings ], filter: [ *is_fav_lst ] }
   str_created_bookings_u2i:                             { obs: [ str_created_bookings ], filter: [ *is_u2i ] }
   str_created_bookings_profile:                         { obs: [ str_created_bookings ], filter: [ *is_profile ] }
@@ -49,10 +49,10 @@ metric.counter:
 
   str_paid_bookings:                                   {obs: [str_paid_bookings]}
   str_paid_bookings_search:                            {obs: [str_paid_bookings], filter: [*is_search]}
-  str_paid_bookings_search_no_infm_prms:               {obs: [str_paid_bookings], filter: [ *is_search, *is_search_wo_infm_params ] }
-  str_paid_bookings_search_infm_prms:                  {obs: [str_paid_bookings], filter: [ *is_search, *is_search_w_infm_params ] }
-  str_paid_bookings_search_dt_fltr:                    {obs: [str_paid_bookings], filter: [*is_search, *is_search_w_infm_params, *is_search_date_filtered]}
-  str_paid_bookings_search_no_dt_fltr:                 {obs: [str_paid_bookings], filter: [*is_search, *is_search_w_infm_params, *is_search_not_date_filtered ] }
+  str_paid_bookings_search_no_infm_prms:               {obs: [str_paid_bookings], filter: [ *is_search, *is_search_wo_infm_prms ] }
+  str_paid_bookings_search_infm_prms:                  {obs: [str_paid_bookings], filter: [ *is_search, *is_search_w_infm_prms ] }
+  str_paid_bookings_search_dt_fltr:                    {obs: [str_paid_bookings], filter: [*is_search, *is_search_w_infm_prms, *is_search_date_filtered]}
+  str_paid_bookings_search_no_dt_fltr:                 {obs: [str_paid_bookings], filter: [*is_search, *is_search_w_infm_prms, *is_search_not_date_filtered ] }
   str_paid_bookings_fav_lst:                           {obs: [str_paid_bookings], filter: [*is_fav_lst]}
   str_paid_bookings_u2i:                               {obs: [str_paid_bookings], filter: [*is_u2i]}
   str_paid_bookings_profile:                           {obs: [str_paid_bookings], filter: [*is_profile]}
@@ -61,10 +61,10 @@ metric.counter:
 
   str_paid_gmv:                                        { obs: [ str_paid_gmv ] }
   str_paid_gmv_search:                                 { obs: [ str_paid_gmv ], filter: [ *is_search ] }
-  str_paid_gmv_search_no_infm_prms:                    { obs: [ str_paid_gmv ], filter: [ *is_search, *is_search_wo_infm_params ] }
-  str_paid_gmv_search_infm_prms:                       { obs: [ str_paid_gmv ], filter: [ *is_search, *is_search_w_infm_params ] }
-  str_paid_gmv_search_dt_fltr:                         { obs: [ str_paid_gmv ], filter: [*is_search, *is_search_w_infm_params, *is_search_date_filtered]}
-  str_paid_gmv_search_no_dt_fltr:                      { obs: [ str_paid_gmv ], filter: [ *is_search, *is_search_w_infm_params, *is_search_not_date_filtered ] }
+  str_paid_gmv_search_no_infm_prms:                    { obs: [ str_paid_gmv ], filter: [ *is_search, *is_search_wo_infm_prms ] }
+  str_paid_gmv_search_infm_prms:                       { obs: [ str_paid_gmv ], filter: [ *is_search, *is_search_w_infm_prms ] }
+  str_paid_gmv_search_dt_fltr:                         { obs: [ str_paid_gmv ], filter: [*is_search, *is_search_w_infm_prms, *is_search_date_filtered]}
+  str_paid_gmv_search_no_dt_fltr:                      { obs: [ str_paid_gmv ], filter: [ *is_search, *is_search_w_infm_prms, *is_search_not_date_filtered ] }
   str_paid_gmv_fav_lst:                                { obs: [ str_paid_gmv ], filter: [ *is_fav_lst ] }
   str_paid_gmv_u2i:                                    { obs: [ str_paid_gmv ], filter: [ *is_u2i ] }
   str_paid_gmv_profile:                                { obs: [ str_paid_gmv ], filter: [ *is_profile ] }
@@ -73,10 +73,10 @@ metric.counter:
 
   str_paid_revenue_total:                              { obs: [ str_paid_revenue ], filter: [ *is_search ] }
   str_paid_revenue_search:                             { obs: [ str_paid_revenue ], filter: [ *is_search ] }
-  str_paid_revenue_search_no_infm_prms:                { obs: [ str_paid_revenue ], filter: [ *is_search, *is_search_wo_infm_params ] }
-  str_paid_revenue_search_infm_prms:                   { obs: [ str_paid_revenue ], filter: [ *is_search, *is_search_w_infm_params ] }
-  str_paid_revenue_search_dt_fltr:                     { obs: [ str_paid_revenue ], filter: [ *is_search, *is_search_w_infm_params, *is_search_date_filtered ] }
-  str_paid_revenue_search_no_dt_fltr:                  { obs: [ str_paid_revenue ], filter: [ *is_search, *is_search_w_infm_params, *is_search_not_date_filtered ] }
+  str_paid_revenue_search_no_infm_prms:                { obs: [ str_paid_revenue ], filter: [ *is_search, *is_search_wo_infm_prms ] }
+  str_paid_revenue_search_infm_prms:                   { obs: [ str_paid_revenue ], filter: [ *is_search, *is_search_w_infm_prms ] }
+  str_paid_revenue_search_dt_fltr:                     { obs: [ str_paid_revenue ], filter: [ *is_search, *is_search_w_infm_prms, *is_search_date_filtered ] }
+  str_paid_revenue_search_no_dt_fltr:                  { obs: [ str_paid_revenue ], filter: [ *is_search, *is_search_w_infm_prms, *is_search_not_date_filtered ] }
   str_paid_revenue_fav_lst:                            { obs: [ str_paid_revenue ], filter: [ *is_fav_lst ] }
   str_paid_revenue_u2i:                                { obs: [ str_paid_revenue ], filter: [ *is_u2i ] }
   str_paid_revenue_profile:                            { obs: [ str_paid_revenue ], filter: [ *is_profile ] }
@@ -85,10 +85,10 @@ metric.counter:
 
   str_paid_promo_revenue_total:                        { obs: [ str_paid_promo_revenue ] }
   str_paid_promo_revenue_search:                       { obs: [ str_paid_promo_revenue ], filter: [ *is_search ] }
-  str_paid_promo_revenue_search_no_infm_prms:          { obs: [ str_paid_promo_revenue ], filter: [ *is_search, *is_search_wo_infm_params ] }
-  str_paid_promo_revenue_search_infm_prms:             { obs: [ str_paid_promo_revenue ], filter: [ *is_search, *is_search_w_infm_params ] }
-  str_paid_promo_revenue_search_dt_fltr:               { obs: [ str_paid_promo_revenue ], filter: [ *is_search, *is_search_w_infm_params, *is_search_date_filtered ] }
-  str_paid_promo_revenue_search_no_dt_fltr:            { obs: [ str_paid_promo_revenue ], filter: [ *is_search, *is_search_w_infm_params, *is_search_not_date_filtered ] }
+  str_paid_promo_revenue_search_no_infm_prms:          { obs: [ str_paid_promo_revenue ], filter: [ *is_search, *is_search_wo_infm_prms ] }
+  str_paid_promo_revenue_search_infm_prms:             { obs: [ str_paid_promo_revenue ], filter: [ *is_search, *is_search_w_infm_prms ] }
+  str_paid_promo_revenue_search_dt_fltr:               { obs: [ str_paid_promo_revenue ], filter: [ *is_search, *is_search_w_infm_prms, *is_search_date_filtered ] }
+  str_paid_promo_revenue_search_no_dt_fltr:            { obs: [ str_paid_promo_revenue ], filter: [ *is_search, *is_search_w_infm_prms, *is_search_not_date_filtered ] }
   str_paid_promo_revenue_fav_lst:                      { obs: [ str_paid_promo_revenue ], filter: [ *is_fav_lst ] }
   str_paid_promo_revenue_u2i:                          { obs: [ str_paid_promo_revenue ], filter: [ *is_u2i ] }
   str_paid_promo_revenue_profile:                      { obs: [ str_paid_promo_revenue ], filter: [ *is_profile ] }
@@ -98,8 +98,8 @@ metric.counter:
 metric.uniq:
   iv_str:                                              { counter: cnt_iv_str,               key: [ cookie, item ] }
   iv_str_search:                                       { counter: cnt_iv_str_search,        key: [ cookie, item ] }
-  iv_str_search_no_infm_prms:                          { counter: cnt_iv_str_no_infm_params, key: [ cookie, item ] }
-  iv_str_search_infm_prms:                             { counter: cnt_iv_str_infm_params,   key: [ cookie, item ] }
+  iv_str_search_no_infm_prms:                          { counter: cnt_iv_str_no_infm_prms, key: [ cookie, item ] }
+  iv_str_search_infm_prms:                             { counter: cnt_iv_str_infm_prms,   key: [ cookie, item ] }
   iv_str_search_dt_fltr:                               { counter: cnt_iv_str_date_filtered, key: [ cookie, item ] }
   iv_str_search_no_dt_fltr:                            { counter: cnt_iv_str_not_date_filtered, key: [ cookie, item ] }
   iv_str_fav_lst:                                      { counter: cnt_iv_str_fav_lst,       key: [ cookie, item ] }
@@ -110,8 +110,8 @@ metric.uniq:
 
   user_iv_str:                                         { counter: cnt_iv_str,               key: [ cookie ] }
   user_iv_str_search:                                  { counter: cnt_iv_str_search,        key: [ cookie ] }
-  user_iv_str_search_no_infm_prms:                     { counter: cnt_iv_str_no_infm_params, key: [ cookie ] }
-  user_iv_str_search_infm_prms:                        { counter: cnt_iv_str_infm_params,   key: [ cookie ] }
+  user_iv_str_search_no_infm_prms:                     { counter: cnt_iv_str_no_infm_prms, key: [ cookie ] }
+  user_iv_str_search_infm_prms:                        { counter: cnt_iv_str_infm_prms,   key: [ cookie ] }
   user_iv_str_search_dt_fltr:                          { counter: cnt_iv_str_date_filtered, key: [ cookie ] }
   user_iv_str_search_no_dt_fltr:                       { counter: cnt_iv_str_not_date_filtered, key: [ cookie ] }
   user_iv_str_fav_lst:                                 { counter: cnt_iv_str_fav_lst,       key: [ cookie ] }
@@ -171,8 +171,8 @@ metric.uniq:
 metric.ratio:
   str_paid_aov:                                        { num: str_paid_gmv, den: str_paid_bookings }
   str_paid_aov_search:                                 { num: str_paid_gmv_search, den: str_paid_bookings_search }
-  str_paid_aov_search_no_infm_params:                  { num: str_paid_gmv_search_no_infm_params, den: str_paid_bookings_search_no_infm_params }
-  str_paid_aov_search_infm_params:                     { num: str_paid_gmv_search_infm_params, den: str_paid_bookings_search_infm_params }
+  str_paid_aov_search_no_infm_prms:                    { num: str_paid_gmv_search_no_infm_prms, den: str_paid_bookings_search_no_infm_prms }
+  str_paid_aov_search_infm_prms:                       { num: str_paid_gmv_search_infm_prms, den: str_paid_bookings_search_infm_prms }
   str_paid_aov_search_dt_fltr:                         { num: str_paid_gmv_search_dt_fltr, den: str_paid_bookings_search_dt_fltr }
   str_paid_aov_search_no_dt_fltr:                      { num: str_paid_gmv_search_no_dt_fltr, den: str_paid_bookings_search_no_dt_fltr }
   str_paid_aov_fav_lst:                                { num: str_paid_gmv_fav_lst, den: str_paid_bookings_fav_lst }
@@ -183,8 +183,8 @@ metric.ratio:
 
   str_paid_avg_revenue:                                { num: str_paid_revenue_total, den: str_paid_bookings }
   str_paid_avg_revenue_search:                         { num: str_paid_revenue_search, den: str_paid_bookings_search }
-  str_paid_avg_revenue_search_no_infm_params:          { num: str_paid_revenue_search_no_infm_params, den: str_paid_bookings_search_no_infm_params }
-  str_paid_avg_revenue_search_infm_params:             { num: str_paid_revenue_search_infm_params, den: str_paid_bookings_search_infm_params }
+  str_paid_avg_revenue_search_no_infm_prms:            { num: str_paid_revenue_search_no_infm_prms, den: str_paid_bookings_search_no_infm_prms }
+  str_paid_avg_revenue_search_infm_prms:               { num: str_paid_revenue_search_infm_prms, den: str_paid_bookings_search_infm_prms }
   str_paid_avg_revenue_search_dt_fltr:                 { num: str_paid_revenue_search_dt_fltr, den: str_paid_bookings_search_dt_fltr }
   str_paid_avg_revenue_search_no_dt_fltr:              { num: str_paid_revenue_search_no_dt_fltr, den: str_paid_bookings_search_no_dt_fltr }
   str_paid_avg_revenue_fav_lst:                        { num: str_paid_revenue_fav_lst, den: str_paid_bookings_fav_lst }
@@ -195,8 +195,8 @@ metric.ratio:
 
   str_paid_avg_promo_revenue:                          { num: str_paid_promo_revenue_total,                   den: str_paid_bookings }
   str_paid_avg_promo_revenue_search:                   { num: str_paid_promo_revenue_search,                  den: str_paid_bookings_search }
-  str_paid_avg_promo_revenue_search_no_infm_params:    { num: str_paid_promo_revenue_search_no_infm_params,   den: str_paid_bookings_search_no_infm_params }
-  str_paid_avg_promo_revenue_search_infm_params:       { num: str_paid_promo_revenue_search_infm_params,      den: str_paid_bookings_search_infm_params }
+  str_paid_avg_promo_revenue_search_no_infm_prms:      { num: str_paid_promo_revenue_search_no_infm_prms,   den: str_paid_bookings_search_no_infm_prms }
+  str_paid_avg_promo_revenue_search_infm_prms:         { num: str_paid_promo_revenue_search_infm_prms,      den: str_paid_bookings_search_infm_prms }
   str_paid_avg_promo_revenue_search_dt_fltr:           { num: str_paid_promo_revenue_search_dt_fltr,          den: str_paid_bookings_search_dt_fltr }
   str_paid_avg_promo_revenue_search_no_dt_fltr:        { num: str_paid_promo_revenue_search_no_dt_fltr,       den: str_paid_bookings_search_no_dt_fltr }
   str_paid_avg_promo_revenue_fav_lst:                  { num: str_paid_promo_revenue_fav_lst,                 den: str_paid_bookings_fav_lst }
@@ -207,8 +207,8 @@ metric.ratio:
 
   str_cr_from_iv_to_created_booking:                             { num: str_created_bookings_uniq, den: iv_str }
   str_cr_from_iv_to_created_booking_search:                      { num: str_created_bookings_search_uniq, den: iv_str_search  }
-  str_cr_from_iv_to_created_booking_search_no_infm_params:       { num: str_created_bookings_search_no_infm_params_uniq, den: iv_str_search_no_infm_params  }
-  str_cr_from_iv_to_created_booking_search_infm_params:          { num: str_created_bookings_search_infm_params_uniq, den: iv_str_search_infm_params  }
+  str_cr_from_iv_to_created_booking_search_no_infm_prms:         { num: str_created_bookings_search_no_infm_prms_uniq, den: iv_str_search_no_infm_prms  }
+  str_cr_from_iv_to_created_booking_search_infm_prms:            { num: str_created_bookings_search_infm_prms_uniq, den: iv_str_search_infm_prms  }
   str_cr_from_iv_to_created_booking_search_dt_fltr:              { num: str_created_bookings_search_dt_fltr_uniq, den: iv_str_search_dt_fltr  }
   str_cr_from_iv_to_created_booking_search_no_dt_fltr:           { num: str_created_bookings_search_no_dt_fltr_uniq, den: iv_str_search_no_dt_fltr  }
   str_cr_from_iv_to_created_booking_fav_lst:                     { num: str_created_bookings_fav_lst_uniq, den: iv_str_fav_lst  }
@@ -219,8 +219,8 @@ metric.ratio:
 
   str_cr_from_iv_to_paid_booking:                             { num: str_paid_bookings_uniq, den: iv_str }
   str_cr_from_iv_to_paid_booking_search:                      { num: str_paid_bookings_search_uniq, den: iv_str_search  }
-  str_cr_from_iv_to_paid_booking_search_no_infm_params:       { num: str_paid_bookings_search_no_infm_params_uniq, den: iv_str_search_no_infm_params  }
-  str_cr_from_iv_to_paid_booking_search_infm_params:          { num: str_paid_bookings_search_infm_params_uniq, den: iv_str_search_infm_params  }
+  str_cr_from_iv_to_paid_booking_search_no_infm_prms:         { num: str_paid_bookings_search_no_infm_prms_uniq, den: iv_str_search_no_infm_prms  }
+  str_cr_from_iv_to_paid_booking_search_infm_prms:            { num: str_paid_bookings_search_infm_prms_uniq, den: iv_str_search_infm_prms  }
   str_cr_from_iv_to_paid_booking_search_dt_fltr:              { num: str_paid_bookings_search_dt_fltr_uniq, den: iv_str_search_dt_fltr  }
   str_cr_from_iv_to_paid_booking_search_no_dt_fltr:           { num: str_paid_bookings_search_no_dt_fltr_uniq, den: iv_str_search_no_dt_fltr  }
   str_cr_from_iv_to_paid_booking_fav_lst:                     { num: str_paid_bookings_fav_lst_uniq, den: iv_str_fav_lst  }
@@ -231,8 +231,8 @@ metric.ratio:
 
   str_cr_from_created_to_paid_booking:                        { num: str_paid_bookings_uniq, den: str_created_bookings_uniq }
   str_cr_from_created_to_paid_booking_search:                 { num: str_paid_bookings_search_uniq, den: str_created_bookings_search_uniq }
-  str_cr_from_created_to_paid_booking_search_no_infm_params:  { num: str_paid_bookings_search_no_infm_params_uniq, den: str_created_bookings_search_no_infm_params_uniq }
-  str_cr_from_created_to_paid_booking_search_infm_params:     { num: str_paid_bookings_search_infm_params_uniq, den: str_created_bookings_search_infm_params_uniq }
+  str_cr_from_created_to_paid_booking_search_no_infm_prms:    { num: str_paid_bookings_search_no_infm_prms_uniq, den: str_created_bookings_search_no_infm_prms_uniq }
+  str_cr_from_created_to_paid_booking_search_infm_prms:       { num: str_paid_bookings_search_infm_prms_uniq, den: str_created_bookings_search_infm_prms_uniq }
   str_cr_from_created_to_paid_booking_search_dt_fltr:         { num: str_paid_bookings_search_dt_fltr_uniq, den: str_created_bookings_search_dt_fltr_uniq }
   str_cr_from_created_to_paid_booking_search_no_dt_fltr:      { num: str_paid_bookings_search_no_dt_fltr_uniq, den: str_created_bookings_search_no_dt_fltr_uniq }
   str_cr_from_created_to_paid_booking_fav_lst:                { num: str_paid_bookings_fav_lst_uniq, den: str_created_bookings_fav_lst_uniq }
@@ -243,8 +243,8 @@ metric.ratio:
 
   str_cookies_cr_from_iv_to_created_booking:                             { num: str_created_bookings_uniq_cookies, den: user_iv_str }
   str_cookies_cr_from_iv_to_created_booking_search:                      { num: str_created_bookings_search_uniq_cookies, den: user_iv_str_search  }
-  str_cookies_cr_from_iv_to_created_booking_search_no_infm_params:       { num: str_created_bookings_search_no_infm_params_uniq_cookies, den: user_iv_str_search_no_infm_params  }
-  str_cookies_cr_from_iv_to_created_booking_search_infm_params:          { num: str_created_bookings_search_infm_params_uniq_cookies, den: user_iv_str_search_infm_params  }
+  str_cookies_cr_from_iv_to_created_booking_search_no_infm_prms:         { num: str_created_bookings_search_no_infm_prms_uniq_cookies, den: user_iv_str_search_no_infm_prms  }
+  str_cookies_cr_from_iv_to_created_booking_search_infm_prms:            { num: str_created_bookings_search_infm_prms_uniq_cookies, den: user_iv_str_search_infm_prms  }
   str_cookies_cr_from_iv_to_created_booking_search_dt_fltr:              { num: str_created_bookings_search_dt_fltr_uniq_cookies, den: user_iv_str_search_dt_fltr  }
   str_cookies_cr_from_iv_to_created_booking_search_no_dt_fltr:           { num: str_created_bookings_search_no_dt_fltr_uniq_cookies, den: user_iv_str_search_no_dt_fltr  }
   str_cookies_cr_from_iv_to_created_booking_fav_lst:                     { num: str_created_bookings_fav_lst_uniq_cookies, den: user_iv_str_fav_lst  }
@@ -255,8 +255,8 @@ metric.ratio:
 
   str_cookies_cr_from_iv_to_paid_booking:                             { num: str_paid_bookings_uniq_cookies, den: user_iv_str }
   str_cookies_cr_from_iv_to_paid_booking_search:                      { num: str_paid_bookings_search_uniq_cookies, den: user_iv_str_search  }
-  str_cookies_cr_from_iv_to_paid_booking_search_no_infm_params:       { num: str_paid_bookings_search_no_infm_params_uniq_cookies, den: user_iv_str_search_no_infm_params  }
-  str_cookies_cr_from_iv_to_paid_booking_search_infm_params:          { num: str_paid_bookings_search_infm_params_uniq_cookies, den: user_iv_str_search_infm_params  }
+  str_cookies_cr_from_iv_to_paid_booking_search_no_infm_prms:         { num: str_paid_bookings_search_no_infm_prms_uniq_cookies, den: user_iv_str_search_no_infm_prms  }
+  str_cookies_cr_from_iv_to_paid_booking_search_infm_prms:            { num: str_paid_bookings_search_infm_prms_uniq_cookies, den: user_iv_str_search_infm_prms  }
   str_cookies_cr_from_iv_to_paid_booking_search_dt_fltr:              { num: str_paid_bookings_search_dt_fltr_uniq_cookies, den: user_iv_str_search_dt_fltr  }
   str_cookies_cr_from_iv_to_paid_booking_search_no_dt_fltr:           { num: str_paid_bookings_search_no_dt_fltr_uniq_cookies, den: user_iv_str_search_no_dt_fltr  }
   str_cookies_cr_from_iv_to_paid_booking_fav_lst:                     { num: str_paid_bookings_fav_lst_uniq_cookies, den: user_iv_str_fav_lst  }
@@ -267,8 +267,8 @@ metric.ratio:
 
   str_cookies_cr_from_created_to_paid_booking:                        { num: str_paid_bookings_uniq_cookies, den: str_created_bookings_uniq_cookies }
   str_cookies_cr_from_created_to_paid_booking_search:                 { num: str_paid_bookings_search_uniq_cookies, den: str_created_bookings_search_uniq_cookies }
-  str_cookies_cr_from_created_to_paid_booking_search_no_infm_params:  { num: str_paid_bookings_search_no_infm_params_uniq_cookies, den: str_created_bookings_search_no_infm_params_uniq_cookies }
-  str_cookies_cr_from_created_to_paid_booking_search_infm_params:     { num: str_paid_bookings_search_infm_params_uniq_cookies, den: str_created_bookings_search_infm_params_uniq_cookies }
+  str_cookies_cr_from_created_to_paid_booking_search_no_infm_prms:    { num: str_paid_bookings_search_no_infm_prms_uniq_cookies, den: str_created_bookings_search_no_infm_prms_uniq_cookies }
+  str_cookies_cr_from_created_to_paid_booking_search_infm_prms:       { num: str_paid_bookings_search_infm_prms_uniq_cookies, den: str_created_bookings_search_infm_prms_uniq_cookies }
   str_cookies_cr_from_created_to_paid_booking_search_dt_fltr:         { num: str_paid_bookings_search_dt_fltr_uniq_cookies, den: str_created_bookings_search_dt_fltr_uniq_cookies }
   str_cookies_cr_from_created_to_paid_booking_search_no_dt_fltr:      { num: str_paid_bookings_search_no_dt_fltr_uniq_cookies, den: str_created_bookings_search_no_dt_fltr_uniq_cookies }
   str_cookies_cr_from_created_to_paid_booking_fav_lst:                { num: str_paid_bookings_fav_lst_uniq_cookies, den: str_created_bookings_fav_lst_uniq_cookies }
