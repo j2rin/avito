@@ -41,24 +41,26 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
         ),
     clickstream AS
         (select
-            event_date,
+            t1.event_date,
             t1.track_id,
             t1.event_no,
-            event_timestamp,
-            eid,
-            cookie,
+            t1.event_timestamp,
+            t1.eid,
+            t1.cookie,
             t1.cookie_id,
-            user_id,
-            search_params,
-            x,
-            search_query
+            t1.user_id,
+            t1.search_params,
+            t1.x,
+            t1.search_query
         from
-            dma.clickstream_search_events as t1
-            inner join (select cookie_id, track_id, event_no from buyer_stream where eid = 300 and serp_with_iv_flg = 1) as t2
+            from dma.clickstream_search_events as t1
+            inner join buyer_stream as t2
                 on t1.event_date between :first_date and :last_date
                 and t1.cookie_id = t2.cookie_id
                 and t1.track_id = t2.track_id
                 and t1.event_no = t2.event_no
+                and t2.serp_with_iv_flg = 1
+                and t2.eid = 300
                 -- and t1.event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
         ),
     events AS (
