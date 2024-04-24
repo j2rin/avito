@@ -199,11 +199,11 @@ select
     min(str.logical_category_id) as logical_category_id,
     min(str.subcategory_id) as subcategory_id,
     min(iv.item_views_cnt) as item_views_cnt,
-    count(o.order_id) as str_created_orders,
+    count(o.order_id) as str_created_bookings,
     coalesce(sum(o.gmv), 0) as str_created_gmv,
     coalesce(sum(o.revenue), 0) as str_created_revenue,
     coalesce(sum(o.promo_revenue), 0) as str_created_promo_revenue,
-    sum(case when o.paid_flg then 1 else 0 end) as str_paid_orders,
+    sum(case when o.paid_flg then 1 else 0 end) as str_paid_bookings,
     sum(case when o.paid_flg then o.gmv else 0 end) as str_paid_gmv,
     sum(case when o.paid_flg then o.revenue else 0 end) as str_paid_revenue,
     sum(case when o.paid_flg then o.promo_revenue else 0 end) as str_paid_promo_revenue
