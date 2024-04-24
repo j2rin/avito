@@ -28,8 +28,8 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
                 t.eid,
                 t.infmquery_id,
                 max(case when t.eid = 301 then 1 else 0 end) over (partition by t.x) as serp_with_iv_flg,
-                min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_params,
-                min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query
+                min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_search_params,
+                min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_query
             from dma.buyer_stream t
                 left join str_items as str
                     on t.item_id = str.item_id
