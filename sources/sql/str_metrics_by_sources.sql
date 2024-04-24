@@ -34,8 +34,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
         where 1=1
             -- фильтрация на даты
             and event_date between :first_date and :last_date
-            -- события поиска
-            --and eid = 300
+            -- and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
         ),
     events AS (
         select
