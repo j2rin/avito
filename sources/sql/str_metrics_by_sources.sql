@@ -13,10 +13,35 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
                 on ci.microcat_id = mic.microcat_id
                 and mic.logical_category = 'Realty.ShortRent'
         ),
+    buyer_stream AS (
+        select
+            t.event_date as event_datetime,
+            cast(t.event_date as date) as event_date,
+            t.cookie_id,
+            t.track_id,
+            t.event_no,
+            t.user_id,
+            t.item_id,
+            t.x,
+            t.x_eid,
+            t.eid,
+            t.infmquery_id
+        from dma.buyer_stream t
+            left join str_items as str
+                on t.item_id = str.item_id
+        where 1=1
+            --- фильтрация на даты
+            and cast(t.event_date as date) between :first_date and :last_date
+            --and cast(t.date as date) between :first_date and :last_date --@trino
+             -- оставляем только события поиска, просмотра и бронирования
+            and t.eid in (300, 301, 2581)
+            -- из событий просмотра и бронирований оставляем только просмотры и бронирования STR-ных айтемов
+            and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
+        ),
     clickstream AS
         (select
             event_date,
-            track_id,
+            t1.track_id,
             event_no,
             event_timestamp,
             eid,
@@ -30,46 +55,36 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
             x,
             search_query
         from
-            dma.clickstream_search_events
-        where 1=1
-            -- фильтрация на даты
-            and event_date between :first_date and :last_date
-            -- and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
+            dma.clickstream_search_events as t1
+            inner join (select track_id, min(cookie_id) as cookie_id from buyer_stream group by 1) as t2
+                on t1.track_id = t2.track_id
+                and t1.cookie_id = t2.cookie_id
+                and t1.event_date between :first_date and :last_date
+                -- and t1.event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
         ),
     events AS (
         select
-            t.event_date as event_datetime,
-            cast(t.event_date as date) as event_date,
+            t.event_datetime,
+            t.event_date,
             t.cookie_id,
             t.track_id,
             t.event_no,
-            last_value((case when t.eid = 300 then cs.event_no end)) over (partition by t.track_id, t.x order by t.event_no rows between unbounded preceding and current row) as serp_event_no,
-            last_value((case when t.eid = 300 then cs.infm_raw_params end)) over (partition by t.track_id, t.x order by t.event_no rows between unbounded preceding and current row) as serp_infm_raw_params,
-            last_value((case when t.eid = 300 then cs.infomodel_params end)) over (partition by t.track_id, t.x order by t.event_no rows between unbounded preceding and current row) as serp_infomodel_params,
-            last_value((case when t.eid = 300 then cs.search_params end)) over (partition by t.track_id, t.x order by t.event_no rows between unbounded preceding and current row) as serp_search_params,
-            last_value((case when t.eid = 300 then cs.params end)) over (partition by t.track_id, t.x order by t.event_no rows between unbounded preceding and current row) as serp_params,
-            last_value((case when t.eid = 300 then cs.search_query end)) over (partition by t.track_id, t.x order by t.event_no rows between unbounded preceding and current row) as serp_query,
+            min(case when t.eid = 300 then cs.event_no end)            over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_event_no,
+            min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_params,
+            min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query,
             t.user_id,
             t.item_id,
             t.x,
             t.x_eid,
             t.eid,
             t.infmquery_id
-        from dma.buyer_stream t
-            left join str_items as str
-                on t.item_id = str.item_id
+        from buyer_stream t
             left join clickstream as cs
                 on t.eid = 300
+                and t.cookie_id = cs.cookie_id
+                and t.event_date = cs.event_date
                 and t.track_id = cs.track_id
                 and t.event_no = cs.event_no
-        where 1=1
-            --- фильтрация на даты
-            and cast(t.event_date as date) between :first_date and :last_date
-            --and cast(t.date as date) between :first_date and :last_date --@trino
-             -- оставляем только события поиска, просмотра и бронирования
-            and t.eid in (300, 301, 2581)
-            -- из событий просмотра и бронирований оставляем только просмотры и бронирования STR-ных айтемов
-            and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
         ),
     paid_orders AS (
             select
