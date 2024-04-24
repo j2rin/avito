@@ -48,18 +48,14 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
             cookie,
             t1.cookie_id,
             user_id,
-            infm_raw_params,
-            infomodel_params,
             search_params,
-            params,
             x,
             search_query
         from
             dma.clickstream_search_events as t1
-            inner join (select track_id, min(cookie_id) as cookie_id from buyer_stream group by 1) as t2
-                on t1.track_id = t2.track_id
+            inner join (select distinct cookie_id from buyer_stream where eid = 301) as t2
+                on t1.event_date between :first_date and :last_date
                 and t1.cookie_id = t2.cookie_id
-                and t1.event_date between :first_date and :last_date
                 -- and t1.event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
         ),
     events AS (
