@@ -1,4 +1,4 @@
-with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
+with
     str_items AS
         (select
             ci.item_id,
@@ -55,9 +55,9 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
                  -- оставляем только события поиска, просмотра и бронирования
                 and t.eid in (300, 301, 2581)
                 -- из событий просмотра и бронирований оставляем только просмотры и бронирования STR-ных айтемов
-                and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
+                --and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
             ) t
-        where (t.eid in (301, 2581) or t.serp_with_iv_flg = 1)
+        --where (t.eid in (301, 2581) or t.serp_with_iv_flg = 1)
         ),
     /*clickstream AS
         (select
