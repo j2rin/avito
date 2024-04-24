@@ -13,33 +13,47 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
                 on ci.microcat_id = mic.microcat_id
                 and mic.logical_category = 'Realty.ShortRent'
         ),
-    buyer_stream AS (
-        select
-            t.event_date as event_datetime,
-            cast(t.event_date as date) as event_date,
-            t.cookie_id,
-            t.track_id,
-            t.event_no,
-            t.user_id,
-            t.item_id,
-            t.x,
-            t.x_eid,
-            t.eid,
-            t.infmquery_id,
-            max(case when eid = 301 then 1 else 0 end) over (partition by x) as serp_with_iv_flg
-        from dma.buyer_stream t
-            left join str_items as str
-                on t.item_id = str.item_id
-        where 1=1
-            --- фильтрация на даты
-            and cast(t.event_date as date) between :first_date and :last_date
-            --and cast(t.date as date) between :first_date and :last_date --@trino
-             -- оставляем только события поиска, просмотра и бронирования
-            and t.eid in (300, 301, 2581)
-            -- из событий просмотра и бронирований оставляем только просмотры и бронирования STR-ных айтемов
-            and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
+    events AS (
+        select * from (
+            select
+                t.event_date as event_datetime,
+                cast(t.event_date as date) as event_date,
+                t.cookie_id,
+                t.track_id,
+                t.event_no,
+                t.user_id,
+                t.item_id,
+                t.x,
+                t.x_eid,
+                t.eid,
+                t.infmquery_id,
+                max(case when t.eid = 301 then 1 else 0 end) over (partition by t.x) as serp_with_iv_flg
+            from dma.buyer_stream t
+                left join str_items as str
+                    on t.item_id = str.item_id
+                left join   (select
+                                 *
+                            from dma.clickstream_search_events
+                            where (search_params is not null or search_query is not null)
+                                and event_date between :first_date and :last_date
+                                -- and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
+                            ) as t2
+                    on t.cookie_id = t2.cookie_id
+                    and t.track_id = t2.track_id
+                    and t.event_no = t2.event_no
+                    and t.eid = 300
+            where 1=1
+                --- фильтрация на даты
+                and cast(t.event_date as date) between :first_date and :last_date
+                --and cast(t.date as date) between :first_date and :last_date --@trino
+                 -- оставляем только события поиска, просмотра и бронирования
+                and t.eid in (300, 301, 2581)
+                -- из событий просмотра и бронирований оставляем только просмотры и бронирования STR-ных айтемов
+                and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
+            ) t
+        where (t.eid in (301, 2581) or t.serp_with_iv_flg = 1)
         ),
-    clickstream AS
+    /*clickstream AS
         (select
             t1.event_date,
             t1.track_id,
@@ -89,7 +103,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
                 and t.event_date = cs.event_date
                 and t.track_id = cs.track_id
                 and t.event_no = cs.event_no
-        ),
+        ),*/
     paid_orders AS (
             select
                 distinct StrBooking_id as order_id, CreatedAt as actual_date
