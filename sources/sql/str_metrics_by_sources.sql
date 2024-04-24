@@ -46,7 +46,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
             event_timestamp,
             eid,
             cookie,
-            cookie_id,
+            t1.cookie_id,
             user_id,
             infm_raw_params,
             infomodel_params,
