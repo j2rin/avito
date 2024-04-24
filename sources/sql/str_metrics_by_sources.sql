@@ -109,7 +109,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
                 and t.event_date = cs.event_date
                 and t.track_id = cs.track_id
                 and t.event_no = cs.event_no
-        ),*/
+        ),
     paid_orders AS (
             select
                 distinct StrBooking_id as order_id, CreatedAt as actual_date
@@ -121,6 +121,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
             where STREventName = 'paid'
                 and cast(CreatedAt as date) between :first_date and :last_date
             ),
+     */
     str_orders AS (
         select
             s.order_id,
@@ -137,7 +138,17 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
             inner join str_items as str
                 on s.item_id = str.item_id
                 and cast(s.order_create_time as date) between :first_date and :last_date
-            left join paid_orders as p
+            left join (
+                    select
+                        distinct StrBooking_id as order_id, CreatedAt as actual_date
+                    from dds.L_STROrderEventname_StrBooking l
+                    left join dds.S_STROrderEventname_STREventName s1
+                        on l.STROrderEventname_id = s1.STROrderEventname_id
+                    left join dds.S_STROrderEventname_CreatedAt s2
+                        on l.STROrderEventname_id = s2.STROrderEventname_id
+                    where STREventName = 'paid'
+                        and cast(CreatedAt as date) between :first_date and :last_date
+                    ) as p
                 on s.order_id = p.order_id
         ),
     item_view_sources AS (
