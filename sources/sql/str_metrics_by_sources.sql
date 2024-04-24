@@ -58,7 +58,7 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
             from dma.clickstream_search_events
             where (search_params is not null or search_query is not null)
                 and event_date between :first_date and :last_date
-                -- and t1.event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
+                -- and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
             ) as t1
             inner join buyer_stream as t2
                 on t1.cookie_id = t2.cookie_id
@@ -74,7 +74,6 @@ with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
             t.cookie_id,
             t.track_id,
             t.event_no,
-            min(case when t.eid = 300 then cs.event_no end)            over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_event_no,
             min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_params,
             min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query,
             t.user_id,
