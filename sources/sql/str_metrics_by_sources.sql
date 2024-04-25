@@ -15,7 +15,16 @@ with
         ),
     events AS (
         select
-            t.*,
+            t.event_datetime,
+            t.event_date,
+            t.cookie_id,
+            t.track_id,
+            t.event_no,
+            t.user_id,
+            t.item_id,
+            t.x,
+            t.x_eid,
+            t.eid,
             min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_search_params,
             min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_query
         from (
@@ -274,6 +283,7 @@ from
                 t.cookie_id,
                 t.item_id,
                 t.event_date,
+                first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
                 --- следующие поля актуальны только если предыдущее поле x_eid = 300
                 first_value(serp_search_params like '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
                 first_value(serp_search_params like '%"Посуточно"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
