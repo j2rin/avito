@@ -27,7 +27,7 @@ select
     trx_commission_no_vat,
     b2c_white_commission,
     trx_commission,
-    status,
+    co.status,
     delivery_workflow,
     delivery_service,
     platform_id,
