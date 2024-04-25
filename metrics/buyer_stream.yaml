@@ -269,7 +269,6 @@ definitions:
     - &is_start_time_less_7days  { item_start_hours.<: 168 }
     - &is_start_time_less_14days { item_start_hours.<: 336 }
 
-    - &is_region_with_double_groups { region_id: [697, 4181] }
     - &is_developer_acc { SFAccount_Type: "Девелопер" }
     - &is_re_agency_acc { SFAccount_Type: "Агентство Недвижимости" }
     - &is_re_private_acc { SFAccount_Type.isnull: true }
@@ -703,8 +702,6 @@ metric.counter:
     cnt_cs_s_distr: { filter: [*is_contact_wo_guessing, *is_s_district, *x_is_search] }
     cnt_cs_s_distr_metro_road:
         { filter: [*is_contact_wo_guessing, *x_is_search, { $or: [[*is_s_district], [*is_s_metro], [*is_s_road]] }] }
-    cnt_cs_s_grouped_doubles:
-        { filter: [*is_contact_wo_guessing, *is_region_with_double_groups, *is_serp_grouping, *x_is_search] }
     cnt_cs_s_item_attr:                   { filter: [*is_contact_wo_guessing, *x_is_search] }
     cnt_iv_s_start_time_1day:             { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_1day] }
     cnt_iv_s_start_time_3days:            { filter: [*is_iv_wo_guessing, *x_is_search, *is_start_time_less_3days] }
@@ -907,7 +904,6 @@ metric.counter:
     cnt_iv_from_map: { filter: [*is_iv_wo_guessing, *x_is_map] }
     cnt_iv_from_map_s_area: { filter: [*is_iv_wo_guessing, { $or: [[*is_s_map, *x_is_search], [*x_is_map]] }] }
     cnt_iv_grouped: { filter: [*is_iv_wo_guessing, *is_serp_grouping, *x_is_search] }
-    cnt_iv_grouped_doubles: { filter: [*is_iv_wo_guessing, *is_region_with_double_groups, *is_serp_grouping, *x_is_search] }
     cnt_iv_rec: { filter: [*is_iv_wo_guessing, *x_is_rec] }
     cnt_iv_push_land: { filter: [*is_iv_wo_guessing, *x_is_push_land] }
     cnt_iv_rec_i2i: { filter: [*is_iv_wo_guessing, *x_is_i2i] }
@@ -1597,7 +1593,6 @@ metric.counter:
     searches_from_witcher_regions: { filter: [*is_1p, *is_fp_witcher_regions, *is_search] }
     searches_geo: { filter: [*is_1p, *is_search, { $or: [[*is_s_district], [*is_s_metro], [*is_s_radius], [*is_s_road]] }] }
     searches_group: { filter: [*is_search, *is_serp_grouping] }
-    searches_group_doubles: { filter: [*is_region_with_double_groups, *is_search, *is_serp_grouping] }
     searches_local_geo: { filter: [*is_1p, *is_search, { $or: [[*is_s_district], [*is_s_metro], [*is_s_road]] }] }
     searches_map_area: { filter: [*is_1p, *is_s_map, *is_search] }
     searches_metro: { filter: [*is_1p, *is_s_metro, *is_search] }
@@ -2388,7 +2383,6 @@ metric.uniq:
     c_from_witcher_new_auto: { counter: cnt_cs_wtc_new_auto, key: [item, x] }
     c_from_witcher_new_flats: { counter: cnt_cs_wtc_new_flats, key: [item, x] }
     c_from_witcher_regions: { counter: cnt_cs_wtc_reg, key: [item, x] }
-    c_serp_grouped_doubles: { counter: cnt_cs_s_grouped_doubles, key: [item, x] }
     click_delivery_any_ext_block: { counter: cnt_click_delivery_any_ext_block, key: [item, x] }
     contacts_any_ext_block: { counter: cnt_cs_any_ext_block, key: [item, x] }
     contacts_comp_list: { counter: cnt_cs_comp_list, key: [item, x] }
@@ -2754,7 +2748,6 @@ metric.uniq:
     iv_from_witcher_new_auto: { counter: cnt_iv_wtc_new_auto, key: [item, x] }
     iv_from_witcher_new_flats: { counter: cnt_iv_wtc_new_flats, key: [item, x] }
     iv_from_witcher_regions: { counter: cnt_iv_wtc_reg, key: [item, x] }
-    iv_grouped_doubles: { counter: cnt_iv_grouped_doubles, key: [item, x] }
     iv_searches_u2i: { counter: cnt_iv_s_u2i, key: [item, x] }
     iv_vertical_main: { counter: cnt_iv_vertical_main, key: [item, x] }
     iv_vertical_main_rec: { counter: cnt_iv_vertical_main_rec, key: [item, x] }
