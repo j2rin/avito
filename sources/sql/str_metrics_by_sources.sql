@@ -25,8 +25,8 @@ with
             t.x,
             t.x_eid,
             t.eid,
-            min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_search_params,
-            min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_query
+            min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_params,
+            min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query
         from (
             select
                 t.event_date as event_datetime,
@@ -68,7 +68,6 @@ with
                     and t.track_id = cs.track_id
                     and t.event_no = cs.event_no
                     and t.eid = 300
-                    and t.serp_with_iv_flg = 1
         )
     /*clickstream AS
         (select
@@ -293,8 +292,9 @@ from
                 ---
                 sum(1) over (partition by t.cookie_id, t.item_id, t.event_date) as item_views_cnt
             from events as t
-            where 1=1
-                and eid = 301
+                inner join str_items as str
+                    on t.item_id = str.item_id
+                    and t.eid = 301
             ) t
         group by 1, 2, 3
         ) as iv
