@@ -47,7 +47,7 @@ select
     cbcm.is_wallet
 from dma.current_billing_cost_mp cbcm
 join order_data co on cbcm.billing_order_ext = co.purchase_ext
-left join dma.current_wallet_user cwu on cwu.user_id = co.buyer_id
+left join /*+distrib(l,a)*/ dma.current_wallet_user cwu on cwu.user_id = co.buyer_id
 left join /*+distrib(l,a)*/ (
     select
         buyer_id,
@@ -67,7 +67,7 @@ left join /*+distrib(l,a)*/ (
         MAX(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
         SUM(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
     from dma.current_order co
-    left join dma.user_payment_bindings pb on pb.user_id = co.buyer_id
+    left join  dma.user_payment_bindings pb on pb.user_id = co.buyer_id
 
     where true
         and pb.external_source_provider_id in (18)
