@@ -307,7 +307,7 @@ left join /*+jtype(h),distrib(l,a)*/
                 where 1=1
                     and verification_type = 'INN'
                     and user_id in (select user_id from bs_users)
-                    and active_from <= :last_date
+                    and cast(event_time as date) <= :last_date
     --                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
             ) _
         where rn = 1 --получаем последний за день статус
