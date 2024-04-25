@@ -68,6 +68,7 @@ with
                     and t.track_id = cs.track_id
                     and t.event_no = cs.event_no
                     and t.eid = 300
+                    and t.serp_with_iv_flg = 1
         )
     /*clickstream AS
         (select
