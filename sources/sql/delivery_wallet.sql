@@ -7,9 +7,11 @@ eventtype_ext,
 event_date,
  0 as amount,
 'none' as method,
-case when cast(onboarding_ended_db as date) >= wcs.event_date then 'new_wallet_user'
+case when cast(onboarding_ended_db as date) >= wcs.event_date or onboarding_ended_db is null then 'new_wallet_user'
             when cast(onboarding_ended_db as date) < wcs.event_date then 'old_wallet_user'
-            else 'not_wallet_user' end as wallet_user_type
+            else 'not_wallet_user' end as wallet_user_type,
+case when cast(onboarding_ended_db as date) <= wcs.event_date then true
+            else false end as has_opened_delivery_wallet
 from dma.wallet_click_stream wcs
 left join /*+jtype(h)*/  dma.current_wallet_user cwu on wcs.user_id = cwu.user_id
 where eventtype_ext in (6533, 9673, 9676, 9058, 9063, 6567, 6643, 6564, 8394, 8401, 8402, 8416, 8421, 9665, 8415, 9877) and
@@ -45,7 +47,9 @@ wallet_top_ups as (select ca.createdat as create_date,method,amount,user_id,stat
     method,
     case when cast(onboarding_ended_db as date) >= cast(create_date as date) then 'new_wallet_user'
             when cast(onboarding_ended_db as date) < cast(create_date as date) then 'old_wallet_user'
-            else 'not_wallet_user' end as wallet_user_type
+            else 'not_wallet_user' end as wallet_user_type,
+    case when cast(onboarding_ended_db as date) <= cast(create_date as date)  then true
+            else false end as has_opened_delivery_wallet
       from wallet_top_ups wtu
       left join /*+jtype(h)*/  dma.current_wallet_user cwu on wtu.user_id = cwu.user_id
    where wtu.status = 'successful'

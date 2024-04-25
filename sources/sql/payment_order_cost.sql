@@ -42,9 +42,12 @@ select
     case when payment_method = 'SBP' then TRUE else FALSE end as is_sbp,
     case when is_mir = 1 then TRUE else FALSE end as is_mir,
     case when has_refund > 0 then TRUE else FALSE end as has_refund,
+    case when cast(onboarding_ended_db as date) <= cast(cbcm.create_date as date)  then true
+            else false end as has_opened_delivery_wallet,
     cbcm.is_wallet
 from dma.current_billing_cost_mp cbcm
 join order_data co on cbcm.billing_order_ext = co.purchase_ext
+left join dma.current_wallet_user cwu on cwu.user_id = co.buyer_id
 left join /*+distrib(l,a)*/ (
     select
         buyer_id,
@@ -65,6 +68,7 @@ left join /*+distrib(l,a)*/ (
         SUM(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
     from dma.current_order co
     left join dma.user_payment_bindings pb on pb.user_id = co.buyer_id
+
     where true
         and pb.external_source_provider_id in (18)
         and pb.is_available = True
