@@ -1,5 +1,4 @@
 with
-    /*
     str_items AS
         (select
             ci.item_id,
@@ -14,9 +13,12 @@ with
                 on ci.microcat_id = mic.microcat_id
                 and mic.logical_category = 'Realty.ShortRent'
         ),
-     */
     events AS (
-        --select * from (
+        select
+            t.*,
+            min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_search_params,
+            min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_query
+        from (
             select
                 t.event_date as event_datetime,
                 cast(t.event_date as date) as event_date,
@@ -29,27 +31,10 @@ with
                 t.x_eid,
                 t.eid,
                 t.infmquery_id,
-                max(case when t.eid = 301 then 1 else 0 end) over (partition by t.x) as serp_with_iv_flg,
-                min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_search_params,
-                min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_date rows between unbounded preceding and current row) as serp_query
+                max(case when t.eid = 301 then 1 else 0 end) over (partition by t.x) as serp_with_iv_flg
             from dma.buyer_stream t
-                left join str_items as str
-                    on t.item_id = str.item_id
-                left join   (select
-                                 cookie_id,
-                                 track_id,
-                                 event_no,
-                                 search_params,
-                                 search_query
-                            from dma.clickstream_search_events
-                            where (search_params is not null or search_query is not null)
-                                and event_date between :first_date and :last_date
-                                -- and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
-                            ) as cs
-                    on t.cookie_id = cs.cookie_id
-                    and t.track_id = cs.track_id
-                    and t.event_no = cs.event_no
-                    and t.eid = 300
+                --left join str_items as str
+                --    on t.item_id = str.item_id
             where 1=1
                 --- фильтрация на даты
                 and cast(t.event_date as date) between :first_date and :last_date
@@ -58,8 +43,22 @@ with
                 and t.eid in (300, 301, 2581)
                 -- из событий просмотра и бронирований оставляем только просмотры и бронирования STR-ных айтемов
                 --and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
-           -- ) t
-        --where (t.eid in (301, 2581) or t.serp_with_iv_flg = 1)
+            ) t
+            --where (t.eid in (301, 2581) or t.serp_with_iv_flg = 1)
+            left join   (select
+                                 cookie_id,
+                                 track_id,
+                                 event_no,
+                                 search_params,
+                                 search_query
+                            from dma.clickstream_search_events
+                            where event_date between :first_date and :last_date
+                                -- and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
+                            ) as cs
+                    on t.cookie_id = cs.cookie_id
+                    and t.track_id = cs.track_id
+                    and t.event_no = cs.event_no
+                    and t.eid = 300
         )
     /*clickstream AS
         (select
@@ -288,19 +287,7 @@ from
             ) t
         group by 1, 2, 3
         ) as iv
-    inner join (select
-                    ci.item_id,
-                    case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
-                    mic.logical_category_id,
-                    mic.subcategory_id
-                from DMA.current_item ci
-                    inner join DMA.current_locations cl
-                        on 1=1
-                        and cl.Location_id = ci.location_id
-                    inner join DMA.current_microcategories mic
-                        on ci.microcat_id = mic.microcat_id
-                        and mic.logical_category = 'Realty.ShortRent'
-                ) as str
+    inner join str_items as str
         on iv.item_id = str.item_id
     left join (
             select
@@ -372,19 +359,7 @@ from
                 coalesce(trx_promo_fee, 0) as promo_revenue
             from
                 dma.short_term_rent_orders s
-                inner join (select
-                                ci.item_id,
-                                case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
-                                mic.logical_category_id,
-                                mic.subcategory_id
-                            from DMA.current_item ci
-                                inner join DMA.current_locations cl
-                                    on 1=1
-                                    and cl.Location_id = ci.location_id
-                                inner join DMA.current_microcategories mic
-                                    on ci.microcat_id = mic.microcat_id
-                                    and mic.logical_category = 'Realty.ShortRent'
-                            ) as str
+                inner join str_items as str
                     on s.item_id = str.item_id
                     and cast(s.order_create_time as date) between :first_date and :last_date
                 left join (
