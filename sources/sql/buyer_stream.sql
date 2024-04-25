@@ -285,25 +285,37 @@ left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
 
 left join /*+jtype(h),distrib(l,a)*/
 (
-    select *,
-           coalesce(cast(lead(active_from) over(partition by user_id order by active_from asc) as date) - interval '1' day, cast('2030-01-01' as date)) as active_until -- дата окончания действия этого статуса
+    select
+        c.event_date,
+        user_id,
+        inn_status,
+        active_from,
+        active_until
     from
         (
-            select
-                cast(event_time as date) as active_from,
-                user_id,
-                status as inn_status,
-                row_number() over(partition by user_id, cast(event_time as date) order by event_time desc) as rn
-            from
-                dma.verification_statuses
-            where 1=1
-                and verification_type = 'INN'
---                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
-        ) _
-    where rn = 1 --получаем последний за день статус
-) inn_info
-    on ss.item_user_id = inn_info.user_id
-    and cast(ss.event_date as date) between inn_info.active_from and inn_info.active_until
+        select *,
+               coalesce(cast(lead(active_from) over(partition by user_id order by active_from asc) as date) - interval '1' day, cast('2030-01-01' as date)) as active_until -- дата окончания действия этого статуса
+        from
+            (
+                select
+                    cast(event_time as date) as active_from,
+                    user_id,
+                    status as inn_status,
+                    row_number() over(partition by user_id, cast(event_time as date) order by event_time desc) as rn
+                from
+                    dma.verification_statuses
+                where 1=1
+                    and verification_type = 'INN'
+                    and user_id in (select user_id from bs_users)
+                    and active_from <= :last_date
+    --                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
+            ) _
+        where rn = 1 --получаем последний за день статус
+        ) inn_info
+        join dict.calendar c on c.event_date between :first_date and :last_date
+        where c.event_date >= inn_info.active_from and c.event_date < inn_info.active_until
+        and inn_info.active_until >= :first_date
+) inn_info on ss.item_user_id = inn_info.user_id and cast(ss.event_date as date) = inn_info.event_date
   
 where cast(ss.event_date as date) between :first_date and :last_date
 --     and ss.date between :first_date and :last_date -- @trino
