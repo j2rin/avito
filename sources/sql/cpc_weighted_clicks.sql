@@ -5,7 +5,7 @@ with cpx_item_click_price as (
         lead(event_date, 1, cast('2099-01-01' as date)) over(partition by item_id order by event_date) as to_date,
         price
     from dma.current_cpx_prices
-    where cast(event_date as date) <= :last_date
+    -- where event_month between date_trunc('month', date(:first_date)) and date_trunc('month', date(:last_date)) -- @trino
 ),
 buyer_stream_contacts as (
     select
