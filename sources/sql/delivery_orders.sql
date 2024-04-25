@@ -146,7 +146,7 @@ left join dma.current_logical_categories clc on clc.logcat_id = co.logical_categ
 left join dma.current_microcategories cm on cm.microcat_id = co.microcat_id
 left join dma.current_locations as cl on co.warehouse_location_id = cl.location_id
 left join dma.current_locations as bl on co.buyer_location_id = bl.location_id
-left join dma.current_wallet_user as cwu on cwu.user_id = co.buyer_id
+left join /*+jtype(h),distrib(l,a)*/ dma.current_wallet_user as cwu on cwu.user_id = co.buyer_id
 left join /*+jtype(h),distrib(l,a)*/
 (
     select *,

@@ -48,7 +48,7 @@ select
 from dma.current_billing_cost_mp cbcm
 join order_data co on cbcm.billing_order_ext = co.purchase_ext
 left join /*+jtype(h)*/ dma.current_wallet_user cwu on cwu.user_id = co.buyer_id
-left join /*+distrib(l,a)*/ (
+left join /*+jtype(h)*/ (
     select
         buyer_id,
         min(coalesce(pay_date, confirm_date)) as pay_date,
