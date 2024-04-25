@@ -3752,3 +3752,19 @@ delivery_wallet:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
+
+
+cpc_weighted_clicks:
+  metric_configs: [cpc_weighted_clicks]
+  connections: [vertica, trino]
+  sql: cpc_weighted_clicks
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - logical_category
+    - vertical
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
