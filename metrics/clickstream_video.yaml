@@ -12,6 +12,10 @@ metric.counter:
   video_upload_success:                 {filter: [eid: 6303, error_text.isnull: True], obs: [metric_value]}
   video_upload_success_item_add:        {filter: [eid: 6303, error_text.isnull: True, from_page: 'item_add'], obs: [metric_value]}
   video_upload_success_item_edit:       {filter: [eid: 6303, error_text.isnull: True, from_page: 'item_edit'], obs: [metric_value]}
+  
+  video_upload_fail:                 {filter: [eid: 6303, error_text.isnull: False], obs: [metric_value]}
+  video_upload_fail_item_add:        {filter: [eid: 6303, error_text.isnull: False, from_page: 'item_add'], obs: [metric_value]}
+  video_upload_fail_item_edit:       {filter: [eid: 6303, error_text.isnull: False, from_page: 'item_edit'], obs: [metric_value]}
 
   add_video_screen_show_item_add:       {filter: [eid: 3071, item_add_screen.ilike: '%видео%'], obs: [metric_value]}
   add_video_screen_show_item_edit:       {filter: [eid: 9119], obs: [metric_value]}
@@ -55,6 +59,10 @@ metric.uniq:
   user_video_upload_success_item_add:   {counter: video_upload_success_item_add, key: [cookie]}
   user_video_upload_success_item_edit:  {counter: video_upload_success_item_edit, key: [cookie]}
   
+  user_video_upload_fail:            {counter: video_upload_fail, key: [cookie]}
+  user_video_upload_fail_item_add:   {counter: video_upload_fail_item_add, key: [cookie]}
+  user_video_upload_fail_item_edit:  {counter: video_upload_fail_item_edit, key: [cookie]}
+  
   user_add_video_screen_show_item_add:  {counter: add_video_screen_show_item_add, key: [cookie]}
   user_add_video_screen_show_item_edit:  {counter: add_video_screen_show_item_edit, key: [cookie]}
 
@@ -70,6 +78,11 @@ metric.uniq:
   
   item_video_upload_attempt_item_add:   {counter: video_upload_attempt_item_add, key: [item_id]}
   item_video_upload_attempt_item_edit:  {counter: video_upload_attempt_item_edit, key: [item_id]}
+  
+  item_video_upload_fail:            {counter: video_upload_fail, key: [item_id]}
+  
+  item_video_upload_fail_item_add:   {counter: video_upload_fail_item_add, key: [item_id]}
+  item_video_upload_fail_item_edit:  {counter: video_upload_fail_item_edit, key: [item_id]}
   
 
   user_iv_avl:                          {counter: iv_avl, key: [cookie]}
