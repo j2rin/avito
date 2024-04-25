@@ -1,2 +1,2 @@
-SELECT  true as value
-UNION ALL   SELECT  false
+SELECT  'true' as value
+UNION ALL   SELECT  'false'
