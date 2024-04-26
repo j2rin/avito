@@ -14,7 +14,6 @@ with
                 and mic.logical_category = 'Realty.ShortRent'
         ),
     events AS (
-        select * from (
         select
             t.event_datetime,
             t.event_date,
@@ -69,10 +68,7 @@ with
                     and t.track_id = cs.track_id
                     and t.event_no = cs.event_no
                     and t.eid = 300
-        ) as t2
-        where eid != 300
         )
-
     /*clickstream AS
         (select
             t1.event_date,
@@ -258,9 +254,9 @@ select
     coalesce(min(iv.str_flg), false) as str_flg,
     coalesce(min(iv.date_filtered_flg), false) as date_filtered_flg,
     coalesce(min(iv.text_query_flg), false) as text_query_flg,
-    min(str.region_id) as region_id,
-    min(str.logical_category_id) as logical_category_id,
-    min(str.subcategory_id) as subcategory_id,
+    min(iv.region_id) as region_id,
+    min(iv.logical_category_id) as logical_category_id,
+    min(iv.subcategory_id) as subcategory_id,
     min(iv.item_views_cnt) as item_views_cnt,
     count(o.order_id) as str_created_bookings,
     coalesce(sum(o.gmv), 0) as str_created_gmv,
@@ -275,6 +271,9 @@ from
             cookie_id,
             item_id,
             event_date,
+            min(region_id) as region_id,
+            min(logical_category_id) as logical_category_id,
+            min(subcategory_id) as subcategory_id,
             min(x_eid) as x_eid,
             min(sdam_flg) as sdam_flg,
             min(str_flg) as str_flg,
@@ -287,6 +286,9 @@ from
                 t.cookie_id,
                 t.item_id,
                 t.event_date,
+                str.region_id,
+                str.logical_category_id,
+                str.subcategory_id,
                 first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
                 --- следующие поля актуальны только если предыдущее поле x_eid = 300
                 first_value(serp_search_params like '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
@@ -302,8 +304,8 @@ from
             ) t
         group by 1, 2, 3
         ) as iv
-    inner join str_items as str
-        on iv.item_id = str.item_id
+    --inner join str_items as str
+    --    on iv.item_id = str.item_id
     left join (
             select
                 cookie_id,
@@ -374,9 +376,9 @@ from
                 coalesce(trx_promo_fee, 0) as promo_revenue
             from
                 dma.short_term_rent_orders s
-                inner join str_items as str
-                    on s.item_id = str.item_id
-                    and cast(s.order_create_time as date) between :first_date and :last_date
+                --inner join str_items as str
+                --    on s.item_id = str.item_id
+                --    and cast(s.order_create_time as date) between :first_date and :last_date
                 left join (
                         select
                             distinct StrBooking_id as order_id, CreatedAt as actual_date
@@ -389,6 +391,7 @@ from
                             and cast(CreatedAt as date) between :first_date and :last_date
                         ) as p
                     on s.order_id = p.order_id
+            where cast(s.order_create_time as date) between :first_date and :last_date
             ) as o
         on bfc.user_id = o.buyer_id
         and iv.event_date = o.event_date
