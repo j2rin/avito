@@ -46,7 +46,7 @@ select /*+ SYNTACTIC_JOIN*/
  else false end as has_opened_delivery_wallet,
     cbcm.is_wallet
 from dma.current_billing_cost_mp cbcm
-join /*+distrib(l,a)*/  order_data co on cbcm.billing_order_ext = co.purchase_ext
+join /*+jtype(m)*/   order_data co on cbcm.billing_order_ext = co.purchase_ext
 left join /*+jtype(h)*/ dma.current_wallet_user cwu on cwu.user_id = co.buyer_id
 left join /*+jtype(h)*/ (
     select
@@ -60,7 +60,7 @@ left join /*+jtype(h)*/ (
     group by 1
 ) du
     on du.buyer_id = co.buyer_id
-left join /*+distrib(l,a)*/ (
+left join /*+jtype(m)*/ (
     select /*+ SYNTACTIC_JOIN*/
         co.purchase_id,
         co.purchase_ext,
