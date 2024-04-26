@@ -1,4 +1,4 @@
-with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ delivery_status_date  as ( -- чтобы побороть дубли статусов по некоторым заказам, находим минимальную дату для каждого из статусов
+with delivery_status_date  as ( -- чтобы побороть дубли статусов по некоторым заказам, находим минимальную дату для каждого из статусов
     select
         deliveryorder_id,
         platformstatus,
@@ -25,7 +25,7 @@ buyers as (
     from dma.current_order
     where deliveryorder_id in (select deliveryorder_id from orders))
 ,ub as (
-    select 
+    select
         co.purchase_id,
         co.purchase_ext,
         MAX(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
@@ -51,11 +51,11 @@ du as (
     group by 1
 ),
 wallet_users as (
-select user_id, onboarding_ended_db 
-from dma.current_wallet_user 
+select user_id, onboarding_ended_db
+from dma.current_wallet_user
 where onboarding_ended_db is not null
 )
-select 
+select
  cast(cbcm.create_date as date) as create_date,
     co.buyer_id as user_id,
     cast(co.create_date as date) < coalesce(du.pay_date, cast('9999-12-21' as date)) as is_delivery_paid_new,
