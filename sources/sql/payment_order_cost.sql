@@ -56,7 +56,7 @@ du as (
 --select   user_id, onboarding_ended_db
 --from dma.current_wallet_user
 --where onboarding_ended_db is not null)
---select /*+ SYNTACTIC_JOIN */
+select /*+ SYNTACTIC_JOIN */
  cast(cbcm.create_date as date) as create_date,
     co.buyer_id as user_id,
     cast(co.create_date as date) < coalesce(du.pay_date, cast('9999-12-21' as date)) as is_delivery_paid_new,
