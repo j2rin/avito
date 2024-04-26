@@ -1,4 +1,5 @@
 with
+    /*
     str_items AS
         (select
             ci.item_id,
@@ -13,7 +14,8 @@ with
                 on ci.microcat_id = mic.microcat_id
                 and mic.logical_category = 'Realty.ShortRent'
         ),
-    events AS (
+     */
+    events AS (select * from (
         select
             t.event_datetime,
             t.event_date,
@@ -25,6 +27,9 @@ with
             t.x,
             t.x_eid,
             t.eid,
+            t.region_id,
+            t.logical_category_id,
+            t.subcategory_id,
             min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_params,
             min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query
         from (
@@ -40,10 +45,27 @@ with
                 t.x_eid,
                 t.eid,
                 t.infmquery_id,
+                str.region_id,
+                str.logical_category_id,
+                str.subcategory_id,
                 max(case when t.eid = 301 then 1 else 0 end) over (partition by t.x) as serp_with_iv_flg
             from dma.buyer_stream t
                 --left join str_items as str
                 --    on t.item_id = str.item_id
+                left join (select
+                                ci.item_id,
+                                case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id,
+                                mic.logical_category_id,
+                                mic.subcategory_id
+                            from DMA.current_item ci
+                                inner join DMA.current_locations cl
+                                    on 1=1
+                                    and cl.Location_id = ci.location_id
+                                inner join DMA.current_microcategories mic
+                                    on ci.microcat_id = mic.microcat_id
+                                    and mic.logical_category = 'Realty.ShortRent'
+                            ) as str
+                        on t.item_id = str.item_id
             where 1=1
                 --- фильтрация на даты
                 and cast(t.event_date as date) between :first_date and :last_date
@@ -68,6 +90,8 @@ with
                     and t.track_id = cs.track_id
                     and t.event_no = cs.event_no
                     and t.eid = 300
+            ) t2
+        where logical_category_id is not null
         )
     /*clickstream AS
         (select
@@ -286,9 +310,9 @@ from
                 t.cookie_id,
                 t.item_id,
                 t.event_date,
-                str.region_id,
-                str.logical_category_id,
-                str.subcategory_id,
+                t.region_id,
+                t.logical_category_id,
+                t.subcategory_id,
                 first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
                 --- следующие поля актуальны только если предыдущее поле x_eid = 300
                 first_value(serp_search_params like '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
@@ -298,9 +322,7 @@ from
                 ---
                 sum(1) over (partition by t.cookie_id, t.item_id, t.event_date) as item_views_cnt
             from events as t
-                inner join str_items as str
-                    on t.item_id = str.item_id
-                    and t.eid = 301
+            where t.eid = 301
             ) t
         group by 1, 2, 3
         ) as iv
