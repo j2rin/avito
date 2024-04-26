@@ -70,181 +70,6 @@ with
                     and t.event_no = cs.event_no
                     and t.eid = 300
             )
-    /*clickstream AS
-        (select
-            t1.event_date,
-            t1.track_id,
-            t1.event_no,
-            t1.event_timestamp,
-            t1.eid,
-            t1.cookie,
-            t1.cookie_id,
-            t1.user_id,
-            t1.search_params,
-            t1.x,
-            t1.search_query
-        from
-            (select
-                 *
-            from dma.clickstream_search_events
-            where (search_params is not null or search_query is not null)
-                and event_date between :first_date and :last_date
-                -- and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
-            ) as t1
-            inner join buyer_stream as t2
-                on t1.cookie_id = t2.cookie_id
-                and t1.track_id = t2.track_id
-                and t1.event_no = t2.event_no
-                and t2.serp_with_iv_flg = 1
-                and t2.eid = 300
-        ),
-    events AS (
-        select
-            t.event_datetime,
-            t.event_date,
-            t.cookie_id,
-            t.track_id,
-            t.event_no,
-            min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_params,
-            min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query,
-            t.user_id,
-            t.item_id,
-            t.x,
-            t.x_eid,
-            t.eid,
-            t.infmquery_id
-        from buyer_stream t
-            left join clickstream as cs
-                on t.eid = 300
-                and t.cookie_id = cs.cookie_id
-                and t.event_date = cs.event_date
-                and t.track_id = cs.track_id
-                and t.event_no = cs.event_no
-        ),
-    paid_orders AS (
-            select
-                distinct StrBooking_id as order_id, CreatedAt as actual_date
-            from dds.L_STROrderEventname_StrBooking l
-            left join dds.S_STROrderEventname_STREventName s1
-                on l.STROrderEventname_id = s1.STROrderEventname_id
-            left join dds.S_STROrderEventname_CreatedAt s2
-                on l.STROrderEventname_id = s2.STROrderEventname_id
-            where STREventName = 'paid'
-                and cast(CreatedAt as date) between :first_date and :last_date
-            ),
-    str_orders AS (
-        select
-            s.order_id,
-            order_create_time,
-            cast(order_create_time as date) as event_date,
-            buyer_id,
-            s.item_id,
-            p.order_id is not null as paid_flg,
-            coalesce(amount, 0) as gmv,
-            cast(coalesce(payout_fee, 0) / 100 as decimal) + coalesce(trx_promo_fee, 0) as revenue,
-            coalesce(trx_promo_fee, 0) as promo_revenue
-        from
-            dma.short_term_rent_orders s
-            inner join str_items as str
-                on s.item_id = str.item_id
-                and cast(s.order_create_time as date) between :first_date and :last_date
-            left join (
-                    select
-                        distinct StrBooking_id as order_id, CreatedAt as actual_date
-                    from dds.L_STROrderEventname_StrBooking l
-                    left join dds.S_STROrderEventname_STREventName s1
-                        on l.STROrderEventname_id = s1.STROrderEventname_id
-                    left join dds.S_STROrderEventname_CreatedAt s2
-                        on l.STROrderEventname_id = s2.STROrderEventname_id
-                    where STREventName = 'paid'
-                        and cast(CreatedAt as date) between :first_date and :last_date
-                    ) as p
-                on s.order_id = p.order_id
-        ),
-    item_view_sources AS (
-        select
-            cookie_id,
-            item_id,
-            event_date,
-            min(x_eid) as x_eid,
-            min(sdam_flg) as sdam_flg,
-            min(str_flg) as str_flg,
-            min(date_filtered_flg) as date_filtered_flg,
-            min(text_query_flg) as text_query_flg,
-            min(item_views_cnt) as item_views_cnt
-        from
-            (
-            select
-                t.cookie_id,
-                t.item_id,
-                t.event_date,
-                first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
-                --- следующие поля актуальны только если предыдущее поле x_eid = 300
-                first_value(serp_search_params like '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
-                first_value(serp_search_params like '%"Посуточно"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
-                first_value(serp_search_params like '%"from"%' and serp_search_params like '%"to"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
-                first_value(coalesce(serp_query != '', false)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as text_query_flg,
-                ---
-                sum(1) over (partition by t.cookie_id, t.item_id, t.event_date) as item_views_cnt
-            from events as t
-            where 1=1
-                and eid = 301
-            ) t
-        group by 1, 2, 3
-        ),
-    user_first_cookie_id AS (
-        select
-            cookie_id,
-            event_date,
-            min(user_id) as user_id
-        from (
-            select
-                cookie_id,
-                event_date,
-                first_value(t.user_id) over (partition by t.cookie_id, t.event_date order by t.min_event_datetime) as user_id
-            from (
-                select
-                    user_id,
-                    event_date,
-                    min(cookie_id) as cookie_id,
-                    min(min_event_datetime) as min_event_datetime
-                from
-                    (
-                    select
-                        t.user_id,
-                        t.event_date,
-                        first_value(t.cookie_id) over (partition by t.user_id, t.event_date order by t.event_datetime) as cookie_id,
-                        min(t.event_datetime) over (partition by t.user_id, t.event_date) as min_event_datetime
-                    from events as t
-                    where 1=1
-                        and user_id is not null
-                        and cookie_id is not null
-                    ) t
-                group by 1, 2
-            ) t
-        ) t
-        group by 1, 2
-        ),
-    bookings_first_cookie AS (
-        select
-            event_date,
-            user_id,
-            item_id,
-            min(cookie_id) as cookie_id
-        from (
-            select
-                event_date,
-                user_id,
-                item_id,
-                first_value(cookie_id) over (partition by event_date, user_id, item_id order by event_datetime) as cookie_id
-            from
-                events
-            where
-                eid = 2581
-            ) t
-        group by 1, 2, 3
-        )
-     */
 select
     iv.event_date,
     iv.cookie_id,
@@ -305,8 +130,6 @@ from
             ) t
         group by 1, 2, 3
         ) as iv
-    --inner join str_items as str
-    --    on iv.item_id = str.item_id
     left join (
             select
                 cookie_id,
@@ -377,9 +200,6 @@ from
                 coalesce(trx_promo_fee, 0) as promo_revenue
             from
                 dma.short_term_rent_orders s
-                --inner join str_items as str
-                --    on s.item_id = str.item_id
-                --    and cast(s.order_create_time as date) between :first_date and :last_date
                 left join (
                         select
                             distinct StrBooking_id as order_id, CreatedAt as actual_date
