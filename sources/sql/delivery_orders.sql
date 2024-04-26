@@ -145,29 +145,57 @@ left join dma.current_locations as cl on co.warehouse_location_id = cl.location_
 left join dma.current_locations as bl on co.buyer_location_id = bl.location_id
 left join /*+jtype(h),distrib(l,a)*/
 (
-    select *,
-           coalesce(cast(lead(active_from) over(partition by user_id order by active_from asc) as date) - interval '1' day, cast('2030-01-01' as date)) as active_until -- дата окончания действия этого статуса
+    select
+        c.event_date,
+        user_id,
+        inn_status,
+        active_from,
+        active_until
     from
         (
-            select
-                cast(event_time as date) as active_from,
-                user_id,
-                status as inn_status,
-                row_number() over(partition by user_id, cast(event_time as date) order by event_time desc) as rn
-            from
-                dma.verification_statuses
-            where 1=1
-                and verification_type = 'INN'
---                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
-        ) _
-    where rn = 1 --получаем последний за день статус
-) inn_info
-    on co.seller_id = inn_info.user_id
-    and cast(co.status_date as date) between inn_info.active_from and inn_info.active_until
- left join dma.user_segment_market usm
-    on co.logical_category_id = usm.logical_category_id
-    and co.seller_id = usm.user_id
-    and cast(co.status_date as date) between converting_date and max_valid_date
+        select *,
+               coalesce(cast(lead(active_from) over(partition by user_id order by active_from asc) as date) - interval '1' day, cast('2030-01-01' as date)) as active_until -- дата окончания действия этого статуса
+        from
+            (
+                select
+                    cast(event_time as date) as active_from,
+                    user_id,
+                    status as inn_status,
+                    row_number() over(partition by user_id, cast(event_time as date) order by event_time desc) as rn
+                from
+                    dma.verification_statuses
+                where 1=1
+                    and verification_type = 'INN'
+    --                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
+            ) _
+        where rn = 1 --получаем последний за день статус
+        ) inn_info
+        join dict.calendar c on c.event_date between :first_date and :last_date
+        where c.event_date >= inn_info.active_from and c.event_date < inn_info.active_until
+        and inn_info.active_until >= :first_date
+) inn_info on co.seller_id = inn_info.user_id and cast(co.status_date as date) = inn_info.event_date
+ left join /*+jtype(h),distrib(l,a)*/ (
+    select
+        usm.user_id,
+        usm.logical_category_id,
+        usm.segment_rank,
+        c.event_date
+    from (
+        select
+            user_id,
+            logical_category_id,
+            user_segment,
+            segment_rank,
+            converting_date as from_date,
+            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
+        from DMA.user_segment_market
+        where True
+            and converting_date <= :last_date
+    ) usm
+    join dict.calendar c on c.event_date between :first_date and :last_date
+    where c.event_date >= usm.from_date and c.event_date < usm.to_date
+        and usm.to_date >= :first_date
+) usm on co.seller_id = usm.user_id and co.logical_category_id = usm.logical_category_id and cast(co.status_date as date) = usm.event_date
 where true 
     and date(co.status_date) between date(:first_date) and date(:last_date)
     -- and status_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
