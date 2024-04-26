@@ -23,7 +23,8 @@ orders as (
 buyers as (
     select distinct buyer_id
     from dma.current_order
-    where deliveryorder_id in (select deliveryorder_id from orders))
+    where deliveryorder_id in (select deliveryorder_id from orders)
+    and cast(create_date as date) between :first_date and :last_date)
 ,ub as (
     select
         co.purchase_id,
@@ -37,6 +38,7 @@ buyers as (
         and pb.external_source_provider_id in (18)
         and pb.is_available = True
                and co.deliveryorder_id in (select deliveryorder_id from orders)
+               and cast(create_date as date) between :first_date and :last_date)
     group by 1,2
 ),
 du as (
@@ -73,6 +75,6 @@ select
 from dma.current_billing_cost_mp cbcm
 join   order_data co on cbcm.billing_order_ext = co.purchase_ext
 --left join  wallet_users cwu on cwu.user_id = co.buyer_id
-left join  du on du.buyer_id = co.buyer_id
-left join  ub on cbcm.billing_order_ext = ub.purchase_ext
+left join /*+jtype(h)*/ du on du.buyer_id = co.buyer_id
+left join /*+jtype(h)*/ ub on cbcm.billing_order_ext = ub.purchase_ext
 where cast(cbcm.create_date as date) between :first_date and :last_date
