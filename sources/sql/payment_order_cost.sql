@@ -29,7 +29,8 @@ sellers as (
     from dma.current_order_item
     where deliveryorder_id in (select deliveryorder_id from orders)
 )
-select
+select /*+ SYNTACTIC_JOIN*/
+
     cast(cbcm.create_date as date) as create_date,
     co.buyer_id as user_id,
     cast(co.create_date as date) < coalesce(du.pay_date, cast('9999-12-21' as date)) as is_delivery_paid_new,
@@ -46,7 +47,7 @@ select
  else false end as has_opened_delivery_wallet,
     cbcm.is_wallet
 from dma.current_billing_cost_mp cbcm
-join order_data co on cbcm.billing_order_ext = co.purchase_ext
+join /*+jtype(h)*/ order_data co on cbcm.billing_order_ext = co.purchase_ext
 left join /*+jtype(h)*/ dma.current_wallet_user cwu on cwu.user_id = co.buyer_id
 left join /*+jtype(h)*/ (
     select
