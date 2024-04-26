@@ -25,13 +25,13 @@ buyers as (
     from dma.current_order
     where deliveryorder_id in (select deliveryorder_id from orders))
 ,ub as (
-    select /*+ SYNTACTIC_JOIN*/
+    select 
         co.purchase_id,
         co.purchase_ext,
         MAX(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
         SUM(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
     from dma.current_order co
-    left join /*+jtype(h)*/  dma.user_payment_bindings pb on pb.user_id = co.buyer_id
+    left join dma.user_payment_bindings pb on pb.user_id = co.buyer_id
 
     where true
         and pb.external_source_provider_id in (18)
@@ -50,7 +50,7 @@ du as (
         and (coalesce(pay_date, confirm_date) <= :last_date or accept_date <= :last_date)
     group by 1
 )
-select /*+ SYNTACTIC_JOIN*/
+select 
  cast(cbcm.create_date as date) as create_date,
     co.buyer_id as user_id,
     cast(co.create_date as date) < coalesce(du.pay_date, cast('9999-12-21' as date)) as is_delivery_paid_new,
@@ -67,8 +67,8 @@ select /*+ SYNTACTIC_JOIN*/
  else false end as has_opened_delivery_wallet,
     cbcm.is_wallet
 from dma.current_billing_cost_mp cbcm
-join /*+JTYPE(FM)*/   order_data co on cbcm.billing_order_ext = co.purchase_ext
-left join /*+jtype(h)*/ dma.current_wallet_user cwu on cwu.user_id = co.buyer_id
-left join /*+jtype(h)*/ du on du.buyer_id = co.buyer_id
-left join /*+jtype(m)*/ ub on cbcm.billing_order_ext = ub.purchase_ext
+join   order_data co on cbcm.billing_order_ext = co.purchase_ext
+left join  dma.current_wallet_user cwu on cwu.user_id = cbcm.user_id
+left join  du on du.buyer_id = co.buyer_id
+left join  ub on cbcm.billing_order_ext = ub.purchase_ext
 where cast(cbcm.create_date as date) between :first_date and :last_date
