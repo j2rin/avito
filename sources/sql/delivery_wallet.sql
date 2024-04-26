@@ -7,13 +7,9 @@ eventtype_ext,
 event_date,
  0 as amount,
 'none' as method,
-case when cast(onboarding_ended_db as date) >= wcs.event_date or onboarding_ended_db is null then 'new_wallet_user'
-            when cast(onboarding_ended_db as date) < wcs.event_date then 'old_wallet_user'
-            else 'not_wallet_user' end as wallet_user_type,
-case when cast(onboarding_ended_db as date) <= wcs.event_date then true
-            else false end as has_opened_delivery_wallet
+wallet_user_type,
+has_opened_delivery_wallet
 from dma.wallet_click_stream wcs
-left join /*+jtype(h)*/  dma.current_wallet_user cwu on wcs.user_id = cwu.user_id
 where eventtype_ext in (6533, 9673, 9676, 9058, 9063, 6567, 6643, 6564, 8394, 8401, 8402, 8416, 8421, 9665, 8415, 9877) and
  cast(wcs.event_timestamp as date) > cast('2024-02-20' as date) and event_date between :first_date and :last_date --@trino
 --     and event_year between date_trunc('year',:first_date) and date_trunc('year',:last_date) -- @trino
