@@ -15,6 +15,7 @@ order_data as (
     from dma.current_order
     where cast(create_date as date) between :first_date and :last_date
     group by 1
+    order by 1
 ),
 orders as (
     select distinct deliveryorder_id
