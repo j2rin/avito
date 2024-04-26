@@ -1,4 +1,4 @@
-with delivery_status_date as ( -- чтобы побороть дубли статусов по некоторым заказам, находим минимальную дату для каждого из статусов
+with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ delivery_status_date  as ( -- чтобы побороть дубли статусов по некоторым заказам, находим минимальную дату для каждого из статусов
     select
         deliveryorder_id,
         platformstatus,
