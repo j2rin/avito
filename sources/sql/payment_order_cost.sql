@@ -1,4 +1,4 @@
-with delivery_status_date  as ( -- чтобы побороть дубли статусов по некоторым заказам, находим минимальную дату для каждого из статусов
+with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */ delivery_status_date  as ( -- чтобы побороть дубли статусов по некоторым заказам, находим минимальную дату для каждого из статусов
     select
         deliveryorder_id,
         platformstatus,
@@ -74,6 +74,6 @@ else false end as has_opened_delivery_wallet,
 from dma.current_billing_cost_mp cbcm
 join  /*+jtype(h),distrib(l,a)*/ order_data co on cbcm.billing_order_ext = co.purchase_ext
 left join /*+jtype(h),distrib(l,a)*/ wallet_users cwu on cwu.user_id = co.buyer_id
-left join /*+jtype(h)*/ du on du.buyer_id = co.buyer_id
+left join /*+jtype(h),distrib(l,a)*/ du on du.buyer_id = co.buyer_id
 left join /*+jtype(h),distrib(l,a)*/ ub on cbcm.billing_order_ext = ub.purchase_ext
 where cast(cbcm.create_date as date) between :first_date and :last_date
