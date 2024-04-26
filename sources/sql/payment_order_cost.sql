@@ -49,6 +49,11 @@ du as (
         and buyer_id in (select buyer_id from buyers)
         and (coalesce(pay_date, confirm_date) <= :last_date or accept_date <= :last_date)
     group by 1
+),
+wallet_users as (
+select user_id, onboarding_ended_db 
+from dma.current_wallet_user 
+where onboarding_ended_db is not null
 )
 select 
  cast(cbcm.create_date as date) as create_date,
@@ -68,7 +73,7 @@ select
     cbcm.is_wallet
 from dma.current_billing_cost_mp cbcm
 join   order_data co on cbcm.billing_order_ext = co.purchase_ext
-left join  dma.current_wallet_user cwu on cwu.user_id = co.buyer_id
+left join  wallet_users cwu on cwu.user_id = co.buyer_id
 left join  du on du.buyer_id = co.buyer_id
 left join  ub on cbcm.billing_order_ext = ub.purchase_ext
 where cast(cbcm.create_date as date) between :first_date and :last_date
