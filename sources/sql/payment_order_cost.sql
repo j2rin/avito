@@ -38,7 +38,6 @@ buyers as (
         and pb.external_source_provider_id in (18)
         and pb.is_available = True
                and co.deliveryorder_id in (select deliveryorder_id from orders)
-               and cast(create_date as date) between :first_date and :last_date)
     group by 1,2
 ),
 du as (
