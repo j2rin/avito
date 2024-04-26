@@ -159,6 +159,10 @@ metric.counter:
   seller_contacts_vas_cpa_lf:              {filter: [{vas_mask.>: 0}, {is_item_cpa: False}, {is_user_cpa: True}], obs: [contacts]}
   seller_contacts_vas_cpa_prevalidation:   {filter: [{vas_mask.>: 0}, {is_item_cpa: True}, {cpaaction_type: 4}], obs: [contacts]}
   seller_contacts_vas_cpa_cpc_contact:     {filter: [{vas_mask.>: 0}, {is_item_cpa: True}, {cpaaction_type: 6}], obs: [contacts]}
+  seller_contacts_reputation_green:	   {filter: [{reputation_color: "green"}], obs: [contacts]}
+  seller_contacts_reputation_yellow:	   {filter: [{reputation_color: "yellow"}], obs: [contacts]}
+  seller_contacts_reputation_red:      	   {filter: [{reputation_color: "red"}], obs: [contacts]}
+  seller_contacts_reputation_gray:     	   {filter: [{reputation_color: "gray"}], obs: [contacts]}
   seller_btc:                              {obs: [favs_added, contacts]}
   seller_btc_video:                        {filter: [{has_short_video: True}], obs: [favs_added, contacts]}
   seller_btc_cpa:                          {filter: [{is_item_cpa: True}], obs: [favs_added, contacts]}
@@ -482,6 +486,10 @@ metric.ratio:
   items_reputation_high_coverage:                     {num: active_items_reputation_high,               den: active_items,              }
   items_reputation_medium_coverage:                   {num: active_items_reputation_medium,             den: active_items,              }
   items_reputation_low_coverage:                      {num: active_items_reputation_low,                den: active_items,              }
+  seller_contacts_reputation_green_coverage: 	      {num: seller_contacts_reputation_green,           den: seller_contacts,           }
+  seller_contacts_reputation_yellow_coverage: 	      {num: seller_contacts_reputation_yellow,          den: seller_contacts,           }
+  seller_contacts_reputation_red_coverage:            {num: seller_contacts_reputation_red,             den: seller_contacts,           }
+  seller_contacts_reputation_gray_coverage:           {num: seller_contacts_reputation_gray,            den: seller_contacts,           }
   sellers_rating_coverage:                  		  {num: user_active_items_with_rating,              den: users_active_items,        }
   items_delivery_ratio_start_date:                    {num: active_items_delivery_on_start_date,        den: active_items_deliverable_start_date}
   sellers_items_delivery_ratio_start_date:            {num: user_active_items_delivery_on_start_date,   den: user_active_items_deliverable_start_date}
