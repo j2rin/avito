@@ -42,18 +42,13 @@ with
                 t.infmquery_id,
                 max(case when t.eid = 301 then 1 else 0 end) over (partition by t.x) as serp_with_iv_flg
             from dma.buyer_stream t
-                --left join str_items as str
-                --    on t.item_id = str.item_id
             where 1=1
                 --- фильтрация на даты
                 and cast(t.event_date as date) between :first_date and :last_date
                 --and cast(t.date as date) between :first_date and :last_date --@trino
                  -- оставляем только события поиска, просмотра и бронирования
                 and t.eid in (300, 301, 2581)
-                -- из событий просмотра и бронирований оставляем только просмотры и бронирования STR-ных айтемов
-                --and (case when t.eid in (301, 2581) then str.item_id is not null else true end)
             ) t
-            --where (t.eid in (301, 2581) or t.serp_with_iv_flg = 1)
             left join   (select
                                  cookie_id,
                                  track_id,
