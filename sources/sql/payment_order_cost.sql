@@ -30,8 +30,7 @@ sellers as (
     where deliveryorder_id in (select deliveryorder_id from orders)
 )
 select /*+ SYNTACTIC_JOIN*/
-
-    cast(cbcm.create_date as date) as create_date,
+ cast(cbcm.create_date as date) as create_date,
     co.buyer_id as user_id,
     cast(co.create_date as date) < coalesce(du.pay_date, cast('9999-12-21' as date)) as is_delivery_paid_new,
     coalesce(has_avito_bindings, FALSE) as has_avito_bindings,
@@ -62,13 +61,13 @@ left join /*+jtype(h)*/ (
 ) du
     on du.buyer_id = co.buyer_id
 left join /*+distrib(l,a)*/ (
-    select
+    select /*+ SYNTACTIC_JOIN*/
         co.purchase_id,
         co.purchase_ext,
         MAX(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then True else False end) as has_avito_bindings,
         SUM(case when expired_date >= date('2022-03-01') and expired_date >= (create_date - interval '5' year) and create_date between status_start_at and coalesce(status_end_at, create_date) then 1 else 0 end) as cnt_bindings
     from dma.current_order co
-    left join  dma.user_payment_bindings pb on pb.user_id = co.buyer_id
+    left join /*+jtype(h)*/  dma.user_payment_bindings pb on pb.user_id = co.buyer_id
 
     where true
         and pb.external_source_provider_id in (18)
