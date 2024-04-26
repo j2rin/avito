@@ -52,11 +52,11 @@ du as (
         and (coalesce(pay_date, confirm_date) <= :last_date or accept_date <= :last_date)
     group by 1
 )
-,wallet_users as (
-select  /*+ SYNTACTIC_JOIN */ user_id, onboarding_ended_db
-from dma.current_wallet_user
-where onboarding_ended_db is not null)
-select
+--,wallet_users as (
+--select   user_id, onboarding_ended_db
+--from dma.current_wallet_user
+--where onboarding_ended_db is not null)
+--select /*+ SYNTACTIC_JOIN */
  cast(cbcm.create_date as date) as create_date,
     co.buyer_id as user_id,
     cast(co.create_date as date) < coalesce(du.pay_date, cast('9999-12-21' as date)) as is_delivery_paid_new,
@@ -69,12 +69,12 @@ select
     case when payment_method = 'SBP' then TRUE else FALSE end as is_sbp,
     case when is_mir = 1 then TRUE else FALSE end as is_mir,
     case when has_refund > 0 then TRUE else FALSE end as has_refund,
-case when cast(onboarding_ended_db as date) <= cast(cbcm.create_date as date)  then true
-else false end as has_opened_delivery_wallet,
+--case when cast(onboarding_ended_db as date) <= cast(cbcm.create_date as date)  then true
+--else false end as has_opened_delivery_wallet,
     cbcm.is_wallet
 from dma.current_billing_cost_mp cbcm
-join  /*+jtype(h),distrib(l,a)*/ order_data co on cbcm.billing_order_ext = co.purchase_ext
-left join /*+jtype(h),distrib(l,a)*/ wallet_users cwu on cwu.user_id = co.buyer_id
+join  /*+jtype(M),distrib(l,a)*/ order_data co on cbcm.billing_order_ext = co.purchase_ext
+--left join /*+jtype(h),distrib(l,a)*/ wallet_users cwu on cwu.user_id = co.buyer_id
 left join /*+jtype(h),distrib(l,a)*/ du on du.buyer_id = co.buyer_id
 left join /*+jtype(h),distrib(l,a)*/ ub on cbcm.billing_order_ext = ub.purchase_ext
 where cast(cbcm.create_date as date) between :first_date and :last_date
