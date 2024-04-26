@@ -14,6 +14,7 @@ with
                 and mic.logical_category = 'Realty.ShortRent'
         ),
     events AS (
+        select * from (
         select
             t.event_datetime,
             t.event_date,
@@ -68,7 +69,10 @@ with
                     and t.track_id = cs.track_id
                     and t.event_no = cs.event_no
                     and t.eid = 300
+        ) as t2
+        where eid != 300
         )
+
     /*clickstream AS
         (select
             t1.event_date,
