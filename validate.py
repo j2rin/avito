@@ -20,8 +20,11 @@ load_dotenv()
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
-PRODUCTION_BRANCH = 'origin/master'
 
+AB_CONFIGURATOR_STAGING_HOST = 'staging.k.avito.ru'
+VALIDATE_STAGING_URL = '/service-ab-configurator/api/validateMetricsRepo'
+
+PRODUCTION_BRANCH = 'origin/master'
 
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -53,8 +56,8 @@ def list_modified_files():
     return result
 
 
-def validate_configs():
-    result, file_name_maps = send_all(VALIDATE_URL)
+def validate_configs(configurator_host, validator_url):
+    result, file_name_maps = send_all(configurator_host, validator_url)
 
     if 'errors' in result:
         print(result['errors'])
@@ -88,10 +91,10 @@ def validate_configs():
     return success
 
 
-def validate():
+def validate(configurator_host, validator_url):
 
     try:
-        success = validate_configs()
+        success = validate_configs(configurator_host, validator_url)
 
     except Exception as e:
         success = False
@@ -105,7 +108,7 @@ def validate():
         exit(1)
 
 
-def send_all(url):
+def send_all(configurator_host, url):
     data = {}
     file_name_maps = {}
     changed_files = list_modified_files()
@@ -116,14 +119,14 @@ def send_all(url):
             data[name] = (read_file(path), path.replace(f'{CUR_DIR_PATH}/', '') in changed_files)
             file_name_maps[name] = {name: path}
 
-    result = post(url, data)
+    result = post(configurator_host, url, data)
     return result, file_name_maps
 
 
-def post(url, data):
+def post(configurator_host, url, data):
     def _post():
         # conn = httplib.HTTPConnection('127.0.0.1', 5000)
-        conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
+        conn = httplib.HTTPSConnection(configurator_host)
 
         conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
 
@@ -229,13 +232,10 @@ def get_short_name(file_name):
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         if sys.argv[1] == '--validate-staging':
-            AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
-            VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
-
-            validate()
+            validate(AB_CONFIGURATOR_STAGING_HOST, VALIDATE_STAGING_URL)
             exit(0)
         else:
             print('Unknown argument')
             exit(1)
 
-    validate()
+    validate(AB_CONFIGURATOR_HOST, VALIDATE_URL)
