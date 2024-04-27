@@ -27,7 +27,7 @@ select
     trx_commission_no_vat,
     b2c_white_commission,
     trx_commission,
-    status,
+    co.status,
     delivery_workflow,
     delivery_service,
     platform_id,
@@ -106,6 +106,9 @@ select
     co.paylink_not_null,
     co.is_cod,
     purchase_ext,
+    case when cast(co.create_date as date) <= cast(onboarding_ended_db as date) then true
+     else false
+    end as has_opened_delivery_wallet,
 -- Dimensions -----------------------------------------------------------------------------------------------------
     clc.vertical_id                                              as vertical_id,
     cm.category_id                                               as category_id,
@@ -143,6 +146,7 @@ left join dma.current_logical_categories clc on clc.logcat_id = co.logical_categ
 left join dma.current_microcategories cm on cm.microcat_id = co.microcat_id
 left join dma.current_locations as cl on co.warehouse_location_id = cl.location_id
 left join dma.current_locations as bl on co.buyer_location_id = bl.location_id
+left join /*+jtype(h),distrib(l,a)*/ dma.current_wallet_user as cwu on cwu.user_id = co.buyer_id
 left join /*+jtype(h),distrib(l,a)*/
 (
     select
