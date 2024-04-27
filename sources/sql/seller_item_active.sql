@@ -85,7 +85,6 @@ select /*+syntactic_join*/
     ss.is_user_cpa,
     ss.cpaaction_type,
     case ss.reputation_class_id when 1 then 'low' when 2 then 'medium' when 3 then 'high' end as reputation_class,
-    coalesce(ur.reputation_color,'gray') as reputation_color,
     from_big_endian_64(xxhash64(
         to_big_endian_64(cast(round(exp(round(ln(abs(coalesce(ss.price, 0)) + 1), 1))) as bigint)) ||
         to_big_endian_64(coalesce(ss.user_id, 0)) ||
@@ -219,18 +218,6 @@ left join /*+distrib(l,r)*/ (
     on sic.user_id = ss.user_id
     and sic.item_id = ss.item_id
     and sic.event_date = ss.event_date
-    
-left join /*+jtype(h),distrib(l,a)*/ (
-    select 
-	    user_id,
-	    event_date,
-	    reputation_color
-    from dma.user_reputation
-    where event_date between :first_date and :last_date
-    -- and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
-) ur
-    on ur.user_id = ss.user_id
-    and ur.event_date = ss.event_date
 
 where (ss.is_user_test is null or ss.is_user_test = false)
     and ss.event_date between :first_date and :last_date
