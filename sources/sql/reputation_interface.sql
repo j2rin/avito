@@ -6,7 +6,7 @@ select
     , rs.from_page
     , rs.source
     -- dimensions
-    , decode(rs.quality_level, 'high', 'green', 'medium', 'yellow', 'low', 'red') as reputation_color
+	, case rs.quality_level when 'high' then 'green' when 'medium' then 'yellow' when 'low' then 'red' end as reputation_color
     , hp.platform_id
     , cl.location_id
     , case cl.level when 3 then cl.ParentLocation_id else cl.Location_id end as region_id
