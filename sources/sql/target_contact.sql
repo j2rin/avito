@@ -8,6 +8,8 @@ select
     ,cast(null as int) as call_id
     ,'messenger' as contact_type
     ,case when class in (3,4,5) or orders>=1 then true else false end as is_target
+    ,is_contact_exchange
+    ,is_seller_contact_exchange
     ,microcat_id
     ,location_id
     ,platform_id
@@ -34,27 +36,17 @@ select
     ,call_id
     ,call_type as contact_type
     ,is_target_call as is_target
+    ,false as is_contact_exchange
+    ,false as is_seller_contact_exchange
     ,microcat_id
     ,location_id
     ,platform_id
     ,cast(null as int) as reply_platform_id
     ,buyer_cookie_id
     ,case  
-        when is_target = true then 'target'
-        when maplookup(mapjsonextractor(prob_distrib), 'already_sold') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'item_deal_discussion') >0.5
-                or maplookup(mapjsonextractor(prob_distrib), 'irrelevant_applicant') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'reject_by_employer') >0.5 
-                or maplookup(mapjsonextractor(prob_distrib), 'closed_vacancy') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'applicant_refused') >0.5 
-                or maplookup(mapjsonextractor(prob_distrib), 'refused_by_employer') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'failed_agreement') >0.5  
-                    or maplookup(mapjsonextractor(prob_distrib), 'call_later_no_meeting') >0.5  
-    then 'preliminary'
-        when maplookup(mapjsonextractor(prob_distrib), 'spam') >0.5 or maplookup(mapjsonextractor(prob_distrib), 'autoreply') >0.5
-            or maplookup(mapjsonextractor(prob_distrib), 'agent_call') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5 
-      or maplookup(mapjsonextractor(prob_distrib), 'unclear') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'dispatcher_call') >0.5 
-      or maplookup(mapjsonextractor(prob_distrib), 'auto_ru') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'failed_call') >0.5 
-      or maplookup(mapjsonextractor(prob_distrib), 'mistake') >0.5  or maplookup(mapjsonextractor(prob_distrib), 'different_number') >0.5 
-      or maplookup(mapjsonextractor(prob_distrib), 'discrimination') >0.5   or maplookup(mapjsonextractor(prob_distrib), 'illegal_vacancy') >0.5  
-      or maplookup(mapjsonextractor(prob_distrib), 'different_offer') >0.5 
-    then 'trash'
+        when is_target_call = true then 'target'
+        when is_preliminary_call = true then 'preliminary'
+        when is_trash_call = true then 'trash'
     end as type,    
       ' '|| case when first_tag_prob > 0.5 then first_tag else '' end
     ||' '|| case when second_tag_prob > 0.5 then second_tag else '' end
@@ -67,19 +59,26 @@ where cast(call_time as date) between :first_date  and :last_date
 )
 select 
     event_date
-    ,item_id
+    ,t.item_id
     ,buyer_id
     ,seller_id
     ,chat_id
     ,call_id
     ,contact_type
-    ,is_target
+    ,case 
+        when cm.vertical in ('Jobs') then is_target
+        else (is_target or is_contact_exchange or is_seller_contact_exchange)
+    end as is_target
     ,platform_id
     ,reply_platform_id
     ,buyer_cookie_id
     ,cm.microcat_id
     ,cl.location_id
-    ,type
+    -- ,type   
+    ,case 
+        when (cm.vertical not in ('Jobs') and ((is_contact_exchange = true) or (is_seller_contact_exchange = true))) then 'target'
+        else type
+    end as type
     -- Dimensions -------------------------------------------------------------------
     ,cm.vertical_id
 	,cm.category_id
@@ -98,6 +97,7 @@ select
     ,acd.user_group_id                                            as asd_user_group_id
     ,coalesce(usm.user_segment, ls.segment)                            as user_segment_market
     ,tags
+    ,coalesce(fancy.is_fancy, false)	as is_fancy
 from (
     select 
         * 
@@ -135,3 +135,15 @@ left join
         on t.seller_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
         and t.event_date >= converting_date and t.event_date < next_converting_date
+        
+left join 
+(
+  select 
+  	item_id,
+  	is_fancy,
+  	calc_date converting_date,
+  	lead(calc_date, 1, cast('2099-01-01' as date)) over (partition by item_id order by calc_date) next_converting_date
+  from dma.fancy_items
+  where true
+  	and calc_date <= :last_date
+) fancy on t.item_id = fancy.item_id and t.event_date >= fancy.converting_date and t.event_date < fancy.next_converting_date

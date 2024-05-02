@@ -13,6 +13,8 @@ select
     jank_frames_size_total,
     screen_fps_context,
     hitch_time_ratio_sum,
-    events_count
+    events_count,
+    vertical_id
 from dma.performance_fps f
 where cast(event_date as date) between :first_date and :last_date
+    -- and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino

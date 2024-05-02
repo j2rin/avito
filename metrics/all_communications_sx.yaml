@@ -6,6 +6,7 @@ definitions:
   - &is_call                      {communication: *call}
   - &is_common_funnel             {is_common_funnel: True} # коммуникации, считающиеся в воронке. Только исходящие от баера, без заблокированных
   - &is_answered                  {is_answered: True} # отвеченные (для GSM подобраны пороги, а не просто talk_duration > 0)
+  - &is_success_call              {talk_duration.>: 30}
   - &is_trash                     {type: trash}
   - &is_preliminary               {type: preliminary}
   - &is_target                    {type: target}
@@ -44,18 +45,95 @@ metric.counter:
   comns_sx_incoming_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
   comns_sx_incoming_target:                              {filter: [*is_common_funnel, *is_target]}
 
-metric.uniq:
-  calls_sx_incoming_canonical:                           {counter: calls_sx_incoming,              key: [logcat_item]}
-  calls_sx_incoming_answered_canonical:                  {counter: calls_sx_incoming_answered,     key: [logcat_item]}
-  calls_sx_incoming_trash_canonical:                     {counter: calls_sx_incoming_trash,        key: [logcat_item]}
-  calls_sx_incoming_preliminary_canonical:               {counter: calls_sx_incoming_preliminary,  key: [logcat_item]}
-  calls_sx_incoming_target_canonical:                    {counter: calls_sx_incoming_target,       key: [logcat_item]}
+  comns_sx:                                     {}
+  comns_sx_answered:                            {filter: [*is_answered, *reply_time_not_zero, *reply_3days]}
+  comns_sx_trash:                               {filter: [*is_trash]}
+  comns_sx_preliminary:                         {filter: [*is_preliminary]}
+  comns_sx_target:                              {filter: [*is_target]}
 
-  comns_sx_incoming_canonical:                           {counter: comns_sx_incoming,              key: [logcat_item]}
-  comns_sx_incoming_answered_canonical:                  {counter: comns_sx_incoming_answered,     key: [logcat_item]}
-  comns_sx_incoming_trash_canonical:                     {counter: comns_sx_incoming_trash,        key: [logcat_item]}
-  comns_sx_incoming_preliminary_canonical:               {counter: comns_sx_incoming_preliminary,  key: [logcat_item]}
-  comns_sx_incoming_target_canonical:                    {counter: comns_sx_incoming_target,       key: [logcat_item]}
+  target_contact_chat_inbox:                             {filter: [*is_msg, *is_common_funnel, *is_target]} #old
+  target_contact_call_sx:                                {filter: [*is_call, *is_common_funnel, *is_target]} #old
+  target_contact_call_sx_success:                        {filter: [*is_call, *is_common_funnel, *is_target, *is_success_call]} #old
+  target_contact_call_sx_talkseconds:                    {filter: [*is_call, *is_common_funnel], obs: [talk_duration]} #old
+  answered_call_sx:                                      {filter: [*is_call, *is_common_funnel, *is_answered]} #old
+  call_sx:                                               {filter: [*is_call, *is_common_funnel]} #old
+  seller_target_contact_all:                             {filter: [*is_common_funnel, *is_target]} #old
+  seller_target_contact_all_exp:                         {filter: [*is_target]} 
+
+  call_sx_delivery_agreement:                              {filter: [*is_common_funnel, {tags.ilike: 'delivery_agreement'} , *is_call]} #old
+  call_sx_sending_docs:                                    {filter: [*is_common_funnel, {tags.ilike: 'sending_docs'} , *is_call]} #old
+  call_sx_item_deal_discussion:                            {filter: [*is_common_funnel, {tags.ilike: 'item_deal_discussion'} , *is_call]} #old
+  call_sx_agent_call:                                      {filter: [*is_common_funnel, {tags.ilike: 'agent_call'} , *is_call]} #old
+  call_sx_refused_by_employer:                             {filter: [*is_common_funnel, {tags.ilike: 'refused_by_employer'} , *is_call]} #old
+  call_sx_call_later_no_meeting:                           {filter: [*is_common_funnel, {tags.ilike: 'call_later_no_meeting'} , *is_call]} #old
+  call_sx_mistake:                                         {filter: [*is_common_funnel, {tags.ilike: 'mistake'} , *is_call]} #old
+  call_sx_different_number:                                {filter: [*is_common_funnel, {tags.ilike: 'different_number'} , *is_call]} #old
+  call_sx_dispatcher_call:                                 {filter: [*is_common_funnel, {tags.ilike: 'dispatcher_call'} , *is_call]} #old
+  call_sx_meeting_moment:                                  {filter: [*is_common_funnel, {tags.ilike: 'meeting_moment'} , *is_call]} #old
+  call_sx_going_for_interview:                             {filter: [*is_common_funnel, {tags.ilike: 'going_for_interview'} , *is_call]} #old
+  call_sx_fast_hiring:                                     {filter: [*is_common_funnel, {tags.ilike: 'fast_hiring'} , *is_call]} #old
+  call_sx_spam:                                            {filter: [*is_common_funnel, {tags.ilike: 'spam'} , *is_call]} #old
+  call_sx_contact_exchange:                                {filter: [*is_common_funnel, {tags.ilike: 'contact_exchange'} , *is_call]} #old
+  call_sx_auto_ru:                                         {filter: [*is_common_funnel, {tags.ilike: 'auto_ru'} , *is_call]} #old
+  call_sx_discrimination:                                  {filter: [*is_common_funnel, {tags.ilike: 'discrimination'} , *is_call]} #old
+  call_sx_illegal_vacancy:                                 {filter: [*is_common_funnel, {tags.ilike: 'illegal_vacancy'} , *is_call]} #old
+  call_sx_unclear:                                         {filter: [*is_common_funnel, {tags.ilike: 'unclear'} , *is_call]} #old
+  call_sx_delivery_discussion:                             {filter: [*is_common_funnel, {tags.ilike: 'delivery_discussion'} , *is_call]} #old
+  call_sx_ask_for_resume:                                  {filter: [*is_common_funnel, {tags.ilike: 'ask_for_resume'} , *is_call]} #old
+  call_sx_applicant_refused:                               {filter: [*is_common_funnel, {tags.ilike: 'applicant_refused'} , *is_call]} #old
+  call_sx_different_offer:                                 {filter: [*is_common_funnel, {tags.ilike: 'different_offer'} , *is_call]} #old
+  call_sx_agreed_on_booking:                               {filter: [*is_common_funnel, {tags.ilike: 'agreed_on_booking'} , *is_call]} #old
+  call_sx_already_sold:                                    {filter: [*is_common_funnel, {tags.ilike: 'already_sold'} , *is_call]} #old
+  call_sx_irrelevant_applicant:                            {filter: [*is_common_funnel, {tags.ilike: 'irrelevant_applicant'} , *is_call]} #old
+  call_sx_autoreply:                                       {filter: [*is_common_funnel, {tags.ilike: 'autoreply'} , *is_call]} #old
+  call_sx_failed_call:                                     {filter: [*is_common_funnel, {tags.ilike: 'failed_call'} , *is_call]} #old
+  call_sx_failed_agreement:                                {filter: [*is_common_funnel, {tags.ilike: 'failed_agreement'} , *is_call]} #old
+  call_sx_closed_vacancy:                                  {filter: [*is_common_funnel, {tags.ilike: 'closed_vacancy'} , *is_call]} #old
+  call_sx_going_to_meet:                                   {filter: [*is_common_funnel, {tags.ilike: 'going_to_meet'} , *is_call]} #old
+
+  chat_sx_first_class:                                     {filter: [*is_common_funnel, {tags.ilike: '1'} , *is_msg]} #old
+  chat_sx_second_class:                                    {filter: [*is_common_funnel, {tags.ilike: '2'} , *is_msg]} #old
+  chat_sx_third_class:                                     {filter: [*is_common_funnel, {tags.ilike: '3'} , *is_msg]} #old
+  chat_sx_fourth_class:                                    {filter: [*is_common_funnel, {tags.ilike: '4'} , *is_msg]} #old
+  chat_sx_fifth_class:                                     {filter: [*is_common_funnel, {tags.ilike: '5'} , *is_msg]} #old
+  chat_sx_sixth_class:                                     {filter: [*is_common_funnel, {tags.ilike: '6'} , *is_msg]} #old
+  chat_sx_seventh_class:                                   {filter: [*is_common_funnel, {tags.ilike: '7'} , *is_msg]} #old
+  chat_sx_eighth_class:                                    {filter: [*is_common_funnel, {tags.ilike: '8'} , *is_msg]} #old
+  chat_sx_buyer_contact_exchange:                          {filter: [*is_common_funnel, {tags.ilike: '9_contact_exchange_buyer'} , *is_msg]} #old
+  chat_sx_seller_contact_exchange:                         {filter: [*is_common_funnel, {tags.ilike: '10_contact_exchange_seller'} , *is_msg]} #old
+
+metric.uniq:
+  calls_sx_incoming_canonical:                           {counter: calls_sx_incoming,              key: [item_id, logical_category_id]}
+  calls_sx_incoming_answered_canonical:                  {counter: calls_sx_incoming_answered,     key: [item_id, logical_category_id]}
+  calls_sx_incoming_trash_canonical:                     {counter: calls_sx_incoming_trash,        key: [item_id, logical_category_id]}
+  calls_sx_incoming_preliminary_canonical:               {counter: calls_sx_incoming_preliminary,  key: [item_id, logical_category_id]}
+  calls_sx_incoming_target_canonical:                    {counter: calls_sx_incoming_target,       key: [item_id, logical_category_id]}
+
+  comns_sx_incoming_canonical:                           {counter: comns_sx_incoming,              key: [item_id, logical_category_id]}
+  comns_sx_incoming_answered_canonical:                  {counter: comns_sx_incoming_answered,     key: [item_id, logical_category_id]}
+  comns_sx_incoming_trash_canonical:                     {counter: comns_sx_incoming_trash,        key: [item_id, logical_category_id]}
+  comns_sx_incoming_preliminary_canonical:               {counter: comns_sx_incoming_preliminary,  key: [item_id, logical_category_id]}
+  comns_sx_incoming_target_canonical:                    {counter: comns_sx_incoming_target,       key: [item_id, logical_category_id]}
+  
+  user_target_contact_chat_inbox:                        {counter: target_contact_chat_inbox,            key: [user]} #old
+
+  user_target_contact_call_sx:                           {counter: target_contact_call_sx, key: [user]} #old
+  user_target_contact_call_sx_success:                   {counter: target_contact_call_sx_success, key: [user]} #old
+  user_answered_call_sx:                                 {counter: answered_call_sx, key: [user]} #old
+  user_call_sx:                                          {counter: call_sx, key: [user]} #old
+  
+  user_seller_target_contact:                            {counter: seller_target_contact_all,      key: [user]} #old
+  seller_target_contact:                                 {counter: seller_target_contact_all,      key: [item_id, logical_category_id]} #old
+  seller_target_buyers:                                  {counter: seller_target_contact_all,      key: [seller_id, logical_category_id]} #old
+
+  # с перезвонами
+  seller_target_contact_exp:                                 {counter: seller_target_contact_all_exp,      key: [item_id, logical_category_id]} #old
+  seller_target_buyers_exp:                                  {counter: seller_target_contact_all_exp,      key: [seller_id, logical_category_id]} #old
+  comns_sx_canonical:                           {counter: comns_sx,              key: [item_id, logical_category_id]}
+  comns_sx_answered_canonical:                  {counter: comns_sx_answered,     key: [item_id, logical_category_id]}
+  comns_sx_trash_canonical:                     {counter: comns_sx_trash,        key: [item_id, logical_category_id]}
+  comns_sx_preliminary_canonical:               {counter: comns_sx_preliminary,  key: [item_id, logical_category_id]}
+  comns_sx_target_canonical:                    {counter: comns_sx_target,       key: [item_id, logical_category_id]}
 
 metric.ratio:
   gsm_sx_incoming_call_dur_per_call:                     {num: gsm_sx_incoming_call_dur,            den: gsm_sx}
@@ -64,3 +142,13 @@ metric.ratio:
   gsm_sx_incoming_talk_dur_per_call:                     {num: gsm_sx_incoming_talk_dur,            den: gsm_sx}
   iac_sx_incoming_talk_dur_per_call:                     {num: iac_sx_incoming_talk_dur,            den: iac_sx_incoming}
   calls_sx_incoming_talk_dur_per_call:                   {num: calls_sx_incoming_talk_dur,          den: calls_sx_incoming}
+
+  iac_sx_incoming_answered_ratio:                        {num: iac_sx_incoming_answered, den: iac_sx_incoming}
+  gsm_sx_incoming_answered_ratio:                        {num: gsm_sx_answered, den: gsm_sx}
+
+  target_contact_call_sx_ratio:                          {num: target_contact_call_sx, den: call_sx} #old
+  user_target_contact_call_sx_ratio:                     {num: user_target_contact_call_sx, den: user_call_sx} #old
+
+  target_contact_call_sx_ratio_answered:                 {num: target_contact_call_sx, den: answered_call_sx} #old
+
+  iac_share_sx:                                           {num: iac_sx_incoming_talk_dur, den: calls_sx_incoming_talk_dur}

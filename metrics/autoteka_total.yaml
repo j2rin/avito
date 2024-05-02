@@ -1,0 +1,31 @@
+metric.counter:
+#тотал метрики Автотеки
+  autoteka_total_revenue:     {filter: [funnel_stage_id: 4], obs: [amount]}
+  autoteka_total_revenue_net:     {filter: [funnel_stage_id: 4], obs: [amount_net]}
+  autoteka_total_cnt_reports: {filter: [funnel_stage_id: 4], obs: [reports_count]}
+  autoteka_total_revenue_new_users: {filter: [funnel_stage_id: 4, is_new_user: true], obs: [amount]}
+  autoteka_total_cnt_reports_new_users: {filter: [funnel_stage_id: 4, is_new_user: true], obs: [reports_count]}
+  autoteka_total_cnt_one_report: {filter: [funnel_stage_id: 4, reports_count: 1], obs: [reports_count]}
+  autoteka_total_cnt_big_package: {filter: [funnel_stage_id: 4, reports_count.>=: 20], obs: [reports_count]}
+  autoteka_total_cnt_small_package: {filter: [funnel_stage_id: 4, reports_count.>: 1, reports_count.<: 20], obs: [reports_count]}
+  autoteka_total_revenue_pro_users: { filter: [ funnel_stage_id: 4,is_pro: true], obs: [ amount ] }
+  autoteka_total_revenue_nonpro_users: { filter: [ funnel_stage_id: 4,is_pro: false], obs: [ amount ] }
+  autoteka_total_cnt_reports_pro_users: { filter: [ funnel_stage_id: 4,is_pro: true], obs: [ reports_count ] }
+  autoteka_total_cnt_reports_nonpro_users: { filter: [ funnel_stage_id: 4,is_pro: false], obs: [ reports_count ] }
+
+metric.uniq:
+#метрики Автотеки на Авито
+  autoteka_total_one_report_purchase: { counter: autoteka_total_cnt_one_report, key: [ autoteka_order_hash ] }
+  autoteka_total_unique_report_buyers: {counter: autoteka_total_cnt_reports, key: [autoteka_user_hash]}
+  autoteka_total_small_package_purchase: { counter: autoteka_total_cnt_small_package, key: [ autoteka_order_hash ] }
+  autoteka_total_big_package_purchase: { counter: autoteka_total_cnt_big_package, key: [ autoteka_order_hash ] }
+  autoteka_total_one_report_buyers: { counter: autoteka_total_cnt_one_report, key: [ autoteka_user_hash ] }
+  autoteka_total_small_package_buyers: { counter: autoteka_total_cnt_small_package, key: [ autoteka_user_hash ] }
+  autoteka_total_big_package_buyers: { counter: autoteka_total_cnt_big_package, key: [ autoteka_user_hash ] }
+  autoteka_total_unique_report_new_buyers: {counter: autoteka_total_cnt_reports_new_users, key: [autoteka_user_hash]}
+  autoteka_total_unique_report_pro_buyers: {counter: autoteka_total_cnt_reports_pro_users, key: [autoteka_user_hash]}
+  autoteka_total_unique_report_nonpro_buyers: {counter: autoteka_total_cnt_reports_nonpro_users, key: [autoteka_user_hash]}
+  
+metric.ratio:
+#метрики Автотеки на Авито
+  autoteka_total_report_price: {num: autoteka_total_revenue, den: autoteka_total_cnt_reports}

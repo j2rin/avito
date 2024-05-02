@@ -48,6 +48,7 @@ select /*+syntactic_join*/
     ig.CoordinatesLongitude,
     ig.address_id,
     ig.min_kind_level,
+    ig.addresses_count,
     ss.is_delivery_available,
     ss.is_delivery_active,
     ss.delivery_clicks,
@@ -59,6 +60,7 @@ select /*+syntactic_join*/
     jvdd.duplicates_count,
     ipl.count_services_price_list,
     sic.item_id is not null as is_item_calendar,
+    ipl.quality_price_list,
     -- Dimensions -----------------------------------------------------------------------------------------------------
     coalesce(lc.vertical_id, cm.vertical_id)                       as vertical_id,
     coalesce(lc.logical_category_id, cm.logical_category_id)       as logical_category_id,
@@ -82,13 +84,19 @@ select /*+syntactic_join*/
     ss.is_item_cpa,
     ss.is_user_cpa,
     ss.cpaaction_type,
-    DECODE(ss.reputation_class_id, 1, 'low', 2, 'medium', 3, 'high') as reputation_class,
-    hash(
-        round(exp(round(ln(ss.price), 1))),
-        ss.user_id,
-        ss.microcat_id,
-        ss.profession_id
-        ) as user_microcat_price
+    case ss.reputation_class_id when 1 then 'low' when 2 then 'medium' when 3 then 'high' end as reputation_class,
+    from_big_endian_64(xxhash64(
+        to_big_endian_64(cast(round(exp(round(ln(abs(coalesce(ss.price, 0)) + 1), 1))) as bigint)) ||
+        to_big_endian_64(coalesce(ss.user_id, 0)) ||
+        to_big_endian_64(coalesce(ss.microcat_id, 0)) ||
+        to_big_endian_64(coalesce(ss.profession_id, 0))
+    )) as user_microcat_price,
+    COALESCE(ss.group_id, ss.item_id) as seller_group,
+    ss.item_rating,
+    is_delivery_active_regular,
+    is_delivery_available_regular,
+    delivery_flow,
+    ss.is_premium
 
 from DMA.o_seller_item_active ss
 
@@ -125,7 +133,7 @@ left join /*+jtype(h),distrib(l,r)*/ (
             logical_category_id,
             user_segment,
             converting_date as from_date,
-            lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
+            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
         from DMA.user_segment_market
         where true
             and user_id in (select user_id from sia_users)
@@ -146,7 +154,7 @@ left join /*+distrib(l,a)*/ dma.item_geo_information ig
     and ig.event_date between :first_date and :last_date
 
 left join /*+distrib(l,a)*/ (
-   select
+    select
         asd.user_id,
         (asd.personal_manager_team is not null and asd.user_is_asd_recognised) as is_asd,
         asd.user_group_id as asd_user_group_id,
@@ -167,8 +175,8 @@ left join /*+distrib(l,r)*/ (
         idd.item_id,
         idd.event_date,
         idd.subsidy_index
-    from DMA.item_day_delivery idd
-    join dma.current_item ci on ci.item_id = idd.item_id
+    from dma.current_item ci
+    join DMA.item_day_delivery idd on ci.item_id = idd.item_id
     where idd.event_date between :first_date and :last_date
 ) idd
     on  ss.user_id = idd.user_id
@@ -179,19 +187,19 @@ left join /*+distrib(l,a)*/ dma.jobs_vacancies_duplicates_daily jvdd
     on jvdd.user_id = ss.user_id
     and jvdd.item_id = ss.item_id
     and jvdd.event_date = ss.event_date
-    and jvdd.event_date between :first_date and :last_date
+    -- and jvdd.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 
 left join /*+distrib(l,r)*/ (
-    select
-        ci.user_id,
-        pld.item_id,
-        cast(pld.event_date as date) as event_date,
-        count(*) as count_services_price_list
-    from dma.price_list_day pld
-    join dma.current_item ci on ci.item_id = pld.item_id
-    where not pld.stoimost is null
-        and pld.event_date between :first_date and :last_date
-    group by 1, 2, 3
+    select 
+            user_id,
+            pld.item_id,
+            cast(pld.event_date as date) as event_date,
+            services as count_services_price_list,
+            quality_price_list
+    from dma.current_item ci
+    join dma.item_metric_price_list_day pld on ci.item_id = pld.item_id
+    where pld.event_date between :first_date and :last_date
+    -- and pld.event_year is not null -- @trino
 ) ipl
     on ipl.user_id = ss.user_id
     and ipl.item_id = ss.item_id
@@ -202,13 +210,14 @@ left join /*+distrib(l,r)*/ (
         ci.user_id,
         sic.item_id,
         sic.event_date
-    from dma.services_active_items_calendar sic
-    join dma.current_item ci on ci.item_id = sic.item_id
+    from dma.current_item ci
+    join dma.services_active_items_calendar sic on ci.item_id = sic.item_id
     where sic.event_date between :first_date and :last_date
+        -- and sic.event_year is not null -- @trino
 ) sic
     on sic.user_id = ss.user_id
     and sic.item_id = ss.item_id
     and sic.event_date = ss.event_date
 
-where (ss.is_user_test is null or ss.is_user_test is false)
+where (ss.is_user_test is null or ss.is_user_test = false)
     and ss.event_date between :first_date and :last_date

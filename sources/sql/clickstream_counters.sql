@@ -48,9 +48,12 @@ select
        else cs.from_page end as from_page,
     item_id,
     source_click_page,
-    orderid_string,
-    orderid
+    from_big_endian_64(xxhash64(cast(coalesce(orderid_string, '') as varbinary))) as orderid_string,
+    orderid,
+    msg_is_pin,
+    from_big_endian_64(xxhash64(cast(coalesce(msg_chat, '') as varbinary))) as msg_chat
 from DMA.click_stream_counters cs
 left join DMA.current_microcategories cm on cm.microcat_id = cs.microcat_id
 left join DMA.current_locations cl on cl.location_id = cs.location_id
 where cast(cs.event_date as date) between :first_date and :last_date
+    --and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino

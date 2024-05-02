@@ -1,17 +1,12 @@
 buyer_stream:
   metric_configs: [buyer_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: buyer_stream
   column_map:
     query: query_id
     item: item_id
-    session: [cookie_id, session_no]
     cookie: cookie_id
     user: user_id
-    cookie_item: [cookie_id, item_id]
-    item_x: [item_id, x]
-    x: [cookie_id, x]
-    cookie_logcat: [cookie_id, logical_category_id]
   dimensions:
     - platform
     - vertical
@@ -41,19 +36,22 @@ buyer_stream:
     - x_location_group
     - x_population_group
     - x_location_level
+    - same_location
+    - same_region
     - condition
     - boost_class
     - user_segment_market
     - is_asd
+    - is_federal_seller
     - price_group
+    - seller_segment_marketplace
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 pageviews:
   metric_configs: [pageviews]
-  database: vertica
+  connections: [vertica, trino]
   sql: page_views
   column_map:
     cookie: cookie_id
@@ -76,11 +74,10 @@ pageviews:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 user_dau:
   metric_configs: [user_dau]
-  database: vertica
+  connections: [vertica, trino]
   sql: page_views
   column_map:
     cookie: cookie_id
@@ -103,16 +100,14 @@ user_dau:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: cookie_id
 
 seller_item_active:
   metric_configs: [seller_item_active]
-  database: vertica
+  connections: [vertica, trino]
   sql: seller_item_active
   column_map:
     item: item_id
     user: user_id
-    user_logcat: [user_id, logical_category_id]
   dimensions:
     - platform
     - vertical
@@ -137,11 +132,10 @@ seller_item_active:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 seller_item_event:
   metric_configs: [seller_item_event]
-  database: vertica
+  connections: [vertica, trino]
   sql: seller_item_event
   column_map:
     item: item_id
@@ -171,11 +165,10 @@ seller_item_event:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 geo_loc_change:
   metric_configs: [geo_loc_change]
-  database: vertica
+  connections: [vertica, trino]
   sql: geo_loc_change
   column_map:
     cookie: cookie_id
@@ -198,11 +191,10 @@ geo_loc_change:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 geo_map_stream:
   metric_configs: [geo_map_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: geo_map_stream
   column_map:
     session: session_no
@@ -225,52 +217,47 @@ geo_map_stream:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 perf_mobile:
   metric_configs: [perf_mobile]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_mobile
   dimensions:
-    [platform, network_type, is_core_content, screen_name, content_type]
+    [platform, network_type, is_core_content, screen_name, content_type, vertical]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: observation_date
-  segm: cookie_id
 
 perf_content_sli:
   metric_configs: [perf_content_sli]
-  database: vertica
+  connections: [vertica, trino]
   sql: performance_requests_sli
   dimensions: [platform]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 perf_resources:
   metric_configs: [perf_resources]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_resources
   dimensions: [platform, screen_name]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 perf_mobile_apps_startup_times:
   metric_configs: [perf_mobile_apps_startup_times]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_mobile_apps_startup_times
   dimensions: [platform]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 perf_mobile_memory_warnings:
   metric_configs: [perf_mobile_memory_warnings]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_memory_warnings
   column_map:
     cookie: cookie_id
@@ -278,27 +265,23 @@ perf_mobile_memory_warnings:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 perf_web:
   metric_configs: [perf_web]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_web
   column_map:
     cookie: cookie_id
-  dimensions: [platform, network_type, screen_name, stage_name]
+  dimensions: [platform, network_type, screen_name, stage_name, vertical]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: observation_date
-  segm: cookie_id
 
 core_contacts:
   metric_configs: [core_contacts]
   column_map:
     cookie: cookie_id
-    logcat_item: [item_id, logical_category_id]
-    cookie_logcat: [cookie_id, logical_category_id]
-  database: vertica
+  connections: [vertica, trino]
   sql: core_contacts
   dimensions:
     [
@@ -323,33 +306,51 @@ core_contacts:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
+
+core_contact_user:
+  metric_configs: [core_contact_user]
+  column_map:
+    user: user_id
+  connections: [vertica, trino]
+  sql: core_contacts
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      logical_param1,
+      logical_param2,
+      category,
+      subcategory,
+      param1,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      price_group,
+      is_asd,
+      user_segment_market,
+      asd_user_group,
+    ]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
 
 advert_funnel:
   metric_configs: [advert_funnel]
   column_map:
     session: session_hash
-  database: vertica
+  connections: [vertica, trino]
   sql: advert_funnel
   dimensions: [platform, category, subcategory, vertical, logical_category]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
-
-user_rating:
-  metric_configs: [user_rating]
-  database: vertica
-  sql: user_rating
-  dimensions: [vertical, logical_category]
-  participant: { user: user_id }
-  primary_subject: user
-  dtm: event_date
-  segm: user_id
 
 str:
   metric_configs: [str]
-  database: vertica
+  connections: [vertica, trino]
   sql: str
   column_map:
     user: user_id
@@ -369,15 +370,15 @@ str:
       location_group,
       population_group,
       location_level,
+      buyer_cluster,
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 str_by_cookies:
   metric_configs: [str_by_cookies]
-  database: vertica
+  connections: [vertica, trino]
   sql: str
   column_map:
     participant: participant_id
@@ -397,15 +398,36 @@ str_by_cookies:
       location_group,
       population_group,
       location_level,
+      buyer_cluster,
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
+
+str_metrics_by_sources:
+  metric_configs: [str_metrics_by_sources]
+  connections: [vertica, trino]
+  sql: str_metrics_by_sources
+  column_map:
+    cookie: cookie_id
+    user: user_id
+    x_eid: x_eid
+    subcategory: subcategory_id
+    region: region_id
+    item: item_id
+  dimensions:
+    [
+      region,
+      logical_category,
+      subcategory,
+    ]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
 
 public_profile:
   metric_configs: [public_profile]
-  database: vertica
+  connections: [vertica, trino]
   sql: public_profile
   column_map:
     cookie: cookie_id
@@ -413,11 +435,10 @@ public_profile:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 mnz_vas:
   metric_configs: [mnz_vas]
-  database: vertica
+  connections: [vertica, trino]
   sql: mnz_vas
   column_map:
     user: user_id
@@ -444,11 +465,10 @@ mnz_vas:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 labor:
   metric_configs: [labor]
-  database: vertica
+  connections: [vertica, trino]
   sql: labor
   column_map:
     cookie: cookie_id
@@ -469,25 +489,22 @@ labor:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 express_cv:
   metric_configs: [express_cv]
-  database: vertica
+  connections: [vertica, trino]
   sql: express_cv
   dimensions: [platform]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 delivery_orders_buyer:
   metric_configs: [delivery_orders_buyer]
-  database: vertica
+  connections: [vertica, trino]
   sql: delivery_orders
   column_map:
     deliveryorder: deliveryorder_id
-    buyer_item: [buyer_id, item_id]
   dimensions:
     - platform
     - vertical
@@ -519,18 +536,24 @@ delivery_orders_buyer:
     - has_avito_bindings
     - is_cart
     - is_high_price
+    - is_between_15k_and_20k_price
+    - is_between_10k_and_15k_price
+    - is_less_than_10k_price
     - return_within_14_days
     - b2c_wo_dbs
     - c2c_return_within_14_days
     - payment_flow
+    - in_sale
+    - has_sbp_bindings
+    - seller_segment_marketplace
+    - has_opened_delivery_wallet
   participant: { user: buyer_id }
   primary_subject: user
   dtm: status_date
-  segm: deliveryorder_id
 
 delivery_orders_seller:
   metric_configs: [delivery_orders_seller]
-  database: vertica
+  connections: [vertica, trino]
   sql: delivery_orders
   dimensions:
     - platform
@@ -560,17 +583,20 @@ delivery_orders_seller:
     - user_segment_market
     - is_cart
     - is_high_price
+    - is_between_15k_and_20k_price
+    - is_between_10k_and_15k_price
+    - is_less_than_10k_price
     - return_within_14_days
     - b2c_wo_dbs
     - c2c_return_within_14_days
+    - in_sale
   participant: { user: seller_id }
   primary_subject: user
   dtm: status_date
-  segm: deliveryorder_id
 
 billing:
   metric_configs: [billing]
-  database: vertica
+  connections: [vertica, trino]
   sql: billing
   column_map:
     user: user_id
@@ -578,11 +604,10 @@ billing:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 session_source:
   metric_configs: [session_source]
-  database: vertica
+  connections: [vertica, trino]
   sql: session_source
   column_map:
     cookie: cookie_id
@@ -604,11 +629,10 @@ session_source:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 support:
   metric_configs: [support]
-  database: vertica
+  connections: [vertica, trino]
   sql: support
   column_map:
     participant: participant_id
@@ -616,11 +640,10 @@ support:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 support_hc:
   metric_configs: [support_hc]
-  database: vertica
+  connections: [vertica, trino]
   sql: support_hc_metrics
   column_map:
     participant: participant_id
@@ -628,22 +651,20 @@ support_hc:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 support_crosschannel:
   metric_configs: [support_crosschannel]
-  database: vertica
+  connections: [vertica, trino]
   sql: support_crosschannel
   column_map:
     participant: participant_id
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 cookie_account_enter:
   metric_configs: [cookie_account_enter]
-  database: vertica
+  connections: [vertica, trino]
   sql: cookie_account_enter
   column_map:
     cookie: cookie_id
@@ -651,22 +672,20 @@ cookie_account_enter:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 favourite_sellers_totals:
   metric_configs: [favourite_sellers_totals]
-  database: vertica
+  connections: [vertica, trino]
   sql: favourite_sellers_totals
   column_map:
     user: user_id
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 communications:
   metric_configs: [communications]
-  database: vertica
+  connections: [vertica, trino]
   sql: communications
   column_map:
     user: user_id
@@ -692,11 +711,10 @@ communications:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 image:
   metric_configs: [image]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_image_mobile
   column_map:
     participant: cookie_id
@@ -704,11 +722,10 @@ image:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: observation_date
-  segm: cookie_id
 
 buyer_suggest:
   metric_configs: [buyer_suggest]
-  database: vertica
+  connections: [vertica, trino]
   sql: buyer_suggest
   column_map:
     cookie: cookie_id
@@ -717,11 +734,10 @@ buyer_suggest:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 buyer_shortcut:
   metric_configs: [buyer_shortcut]
-  database: vertica
+  connections: [vertica, trino]
   sql: buyer_shortcut
   column_map:
     cookie: cookie_id
@@ -731,11 +747,10 @@ buyer_shortcut:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 buyer_filter:
   metric_configs: [buyer_filter]
-  database: vertica
+  connections: [vertica, trino]
   sql: buyer_filter
   column_map:
     cookie: cookie_id
@@ -744,11 +759,10 @@ buyer_filter:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 story_delay:
   metric_configs: [story_delay]
-  database: vertica
+  connections: [vertica, trino]
   sql: story_delay
   column_map:
     cookie: cookie_id
@@ -757,11 +771,10 @@ story_delay:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 weighted_buyer:
   metric_configs: [weighted_buyer]
-  database: vertica
+  connections: [vertica, trino]
   sql: weighted_buyer_metric
   column_map:
     cookie: cookie_id
@@ -774,11 +787,10 @@ weighted_buyer:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 seller_item_add:
   metric_configs: [seller_item_add]
-  database: vertica
+  connections: [vertica, trino]
   sql: seller_item_add
   column_map:
     cookie: cookie_id
@@ -791,11 +803,10 @@ seller_item_add:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: eventchain_id
 
 seller_item_add_finish:
   metric_configs: [seller_item_add_finish]
-  database: vertica
+  connections: [vertica, trino]
   sql: seller_item_add
   column_map:
     cookie: cookie_id
@@ -808,11 +819,10 @@ seller_item_add_finish:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: item_create_date
-  segm: eventchain_id
 
 geo_map_labor:
   metric_configs: [geo_map_labor]
-  database: vertica
+  connections: [vertica, trino]
   sql: geo_map_labor
   column_map:
     participant: participant_id
@@ -830,11 +840,10 @@ geo_map_labor:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_Date
-  segm: cookie_id
 
 buyer_call:
   metric_configs: [buyer_call]
-  database: vertica
+  connections: [vertica, trino]
   sql: buyer_call
   column_map:
     item: item_id
@@ -858,11 +867,10 @@ buyer_call:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 seller_matched_call:
   metric_configs: [seller_matched_call]
-  database: vertica
+  connections: [vertica, trino]
   sql: seller_matched_call
   column_map:
     item: item_id
@@ -885,11 +893,10 @@ seller_matched_call:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 notification:
   metric_configs: [notification]
-  database: vertica
+  connections: [vertica, trino]
   sql: notification
   column_map:
     cookie: cookie_id
@@ -901,7 +908,7 @@ notification:
 
 notification_availability:
   metric_configs: [notification_availability]
-  database: vertica
+  connections: [vertica, trino]
   sql: crm_notification_settings_by_user
   column_map:
     participant: user_id
@@ -913,7 +920,7 @@ notification_availability:
 
 calltracking:
   metric_configs: [calltracking]
-  database: vertica
+  connections: [vertica, trino]
   sql: calltracking
   column_map:
     user: user_id
@@ -927,11 +934,10 @@ calltracking:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 app_call_bx:
   metric_configs: []
-  database: vertica
+  connections: [vertica, trino]
   sql: app_call_buyer
   column_map:
     item: item_id
@@ -955,39 +961,10 @@ app_call_bx:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: event_date
-
-app_call_sx:
-  metric_configs: []
-  database: vertica
-  sql: app_call_seller
-  column_map:
-    item: item_id
-    cookie: cookie_id
-    user: user_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      logical_category,
-      category,
-      subcategory,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      population_group,
-    ]
-  participant: { visitor: cookie_id, user: user_id }
-  primary_subject: visitor
-  dtm: event_date
-  segm: event_date
 
 app_call_event:
   metric_configs: [app_call_event]
-  database: vertica
+  connections: [vertica, trino]
   sql: app_call_event
   column_map:
     item: item_id
@@ -1011,11 +988,10 @@ app_call_event:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: event_date
 
 app_call_seller_event:
   metric_configs: [app_call_seller_event]
-  database: vertica
+  connections: [vertica, trino]
   sql: app_call_seller_event
   column_map:
     item: item_id
@@ -1039,11 +1015,10 @@ app_call_seller_event:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: event_date
 
 fraud_support_tickets:
   metric_configs: [fraud_support_tickets]
-  database: vertica
+  connections: [vertica, trino]
   sql: fraud_support_tickets
   column_map:
     cookie: cookie_id
@@ -1058,7 +1033,7 @@ fraud_support_tickets:
 
 autoteka_stream:
   metric_configs: [autoteka_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: autoteka_stream
   dimensions:
     [
@@ -1069,6 +1044,8 @@ autoteka_stream:
       is_authorized,
       is_new_user,
       is_pro,
+      vertical,
+      logical_category,
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
@@ -1076,7 +1053,7 @@ autoteka_stream:
 
 geo_coordinates_stream:
   metric_configs: [geo_coordinates_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: coordinates_stream
   column_map:
     cookie: cookie_id
@@ -1091,7 +1068,7 @@ geo_coordinates_stream:
 
 geo_laas_backend:
   metric_configs: [geo_laas_backend]
-  database: vertica
+  connections: [vertica, trino]
   sql: laas_stream
   column_map:
     cookie: cookie_id
@@ -1104,18 +1081,9 @@ geo_laas_backend:
   primary_subject: visitor
   dtm: event_date
 
-moder:
-  metric_configs: [moder]
-  database: vertica
-  sql: moder
-  dimensions: [microcat]
-  participant: { user: participant_id }
-  primary_subject: user
-  dtm: event_date
-
 listing_fees:
   metric_configs: [listing_fees]
-  database: vertica
+  connections: [vertica, trino]
   sql: listing_fees
   column_map:
     user: user_id
@@ -1136,11 +1104,10 @@ listing_fees:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 tariff_transactions:
   metric_configs: [tariff_transactions]
-  database: vertica
+  connections: [vertica, trino]
   sql: lf_metrics_transactions
   column_map:
     user: user_id
@@ -1160,11 +1127,10 @@ tariff_transactions:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 tariff_funnel:
   metric_configs: [tariff_funnel]
-  database: vertica
+  connections: [vertica, trino]
   sql: tariff_metrics_funnel
   column_map:
     user: user_id
@@ -1182,11 +1148,10 @@ tariff_funnel:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 cpx_tariff_funnel:
   metric_configs: [cpx_tariff_funnel]
-  database: vertica
+  connections: [vertica, trino]
   sql: cpx_tariff_funnel
   column_map:
     user: user_id
@@ -1198,19 +1163,11 @@ cpx_tariff_funnel:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
-support_comment:
-  metric_configs: [support_comment]
-  database: vertica
-  sql: support_comment
-  participant: { user: comment_id }
-  primary_subject: user
-  dtm: comment_create_date
 
 time_to_interview_for_job_seeker:
   metric_configs: [time_to_interview_for_job_seeker]
-  database: vertica
+  connections: [vertica, trino]
   sql: time_to_interview
   column_map:
     user: job_seeker_user_id
@@ -1219,11 +1176,10 @@ time_to_interview_for_job_seeker:
   participant: { user: job_seeker_user_id }
   primary_subject: user
   dtm: event_time
-  segm: job_seeker_user_id
 
 time_to_interview_for_job_employer:
   metric_configs: [time_to_interview_for_job_employer]
-  database: vertica
+  connections: [vertica, trino]
   sql: time_to_interview
   column_map:
     user: job_employer_user_id
@@ -1232,11 +1188,10 @@ time_to_interview_for_job_employer:
   participant: { user: job_employer_user_id }
   primary_subject: user
   dtm: event_time
-  segm: job_employer_user_id
 
 search_items:
   metric_configs: [search_items]
-  database: vertica
+  connections: [vertica, trino]
   sql: search_items
   column_map:
     cookie: cookie_id
@@ -1250,11 +1205,27 @@ search_items:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
-  segm: event_date # Просто рандомный столбец, не совпадающий с cookie_id. Чтобы вынудить сделать материализацию при расчете витрин
+
+search_items_engines:
+  metric_configs: [search_items_engines]
+  connections: [vertica, trino]
+  sql: search_items_engines
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - region
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
 
 production_errors:
   metric_configs: [production_errors]
-  database: vertica
+  connections: [vertica, trino]
   sql: production_errors
   column_map:
     cookie: cookie_id
@@ -1266,7 +1237,7 @@ production_errors:
 
 geo_loc_suggest:
   metric_configs: [geo_loc_suggest]
-  database: vertica
+  connections: [vertica, trino]
   sql: geo_loc_suggest
   column_map:
     cookie: cookie_id
@@ -1281,7 +1252,7 @@ geo_loc_suggest:
 
 clickstream:
   metric_configs: [clickstream]
-  database: vertica
+  connections: [vertica, trino]
   sql: clickstream
   column_map:
     cookie: cookie_id
@@ -1308,12 +1279,12 @@ clickstream:
 
 clickstream_counters:
   metric_configs: [clickstream_counters]
-  database: vertica
+  connections: [vertica, trino]
   sql: clickstream_counters
   column_map:
     cookie: cookie_id
-    cookie_order: [cookie_id, orderid]
-    cookie_item: [cookie_id, item_id]
+    user:   user_id
+    chat:   msg_chat
   dimensions:
     [
       platform,
@@ -1337,7 +1308,7 @@ clickstream_counters:
 
 messenger_stream:
   metric_configs: [messenger_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: messenger_stream
   column_map:
     cookie: cookie_id
@@ -1364,17 +1335,13 @@ messenger_stream:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: cookie_id
 
 clickstream_sparse.clickhouse:
-  database: clickhouse
+  connections: [clickhouse]
   sql: clickstream_sparse
   column_map:
     platform_id: business_platform
-    cookie_item: [u, iid]
-    cookie: u
     item: iid
-    item_x: [iid, x]
     x_eid: __x_eid
     q: __x_q
     engine: _x__engine
@@ -1439,7 +1406,7 @@ clickstream_sparse.clickhouse:
 
 messenger_blocks:
   metric_configs: [messenger_blocks]
-  database: vertica
+  connections: [vertica, trino]
   sql: messenger_blocks
   column_map:
     user: user_id
@@ -1466,11 +1433,10 @@ messenger_blocks:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 messenger_response_messages:
   metric_configs: [messenger_response_messages]
-  database: vertica
+  connections: [vertica, trino]
   sql: messenger_chat_report
   column_map:
     user: user_id
@@ -1497,11 +1463,10 @@ messenger_response_messages:
   participant: { user: user_id }
   primary_subject: user
   dtm: reply_time
-  segm: chat_id
 
 messenger_answered_inbox_messages:
   metric_configs: [messenger_answered_inbox_messages]
-  database: vertica
+  connections: [vertica, trino]
   sql: messenger_chat_report
   column_map:
     user: user_id
@@ -1528,11 +1493,10 @@ messenger_answered_inbox_messages:
   participant: { user: user_id }
   primary_subject: user
   dtm: first_message_event_date
-  segm: chat_id
 
 messenger_answered_messages:
   metric_configs: [messenger_answered_messages]
-  database: vertica
+  connections: [vertica, trino]
   sql: messenger_chat_report
   column_map:
     user: first_message_user_id
@@ -1558,11 +1522,10 @@ messenger_answered_messages:
   participant: { visitor: first_message_cookie_id, user: first_message_user_id }
   primary_subject: visitor
   dtm: first_message_event_date
-  segm: chat_id
 
 messenger_inbox_messages:
   metric_configs: [messenger_inbox_messages]
-  database: vertica
+  connections: [vertica, trino]
   sql: messenger_chat_report
   column_map:
     user: user_id
@@ -1587,11 +1550,10 @@ messenger_inbox_messages:
   participant: { user: user_id }
   primary_subject: user
   dtm: first_message_event_date
-  segm: chat_id
 
 messenger_messages:
   metric_configs: [messenger_messages]
-  database: vertica
+  connections: [vertica, trino]
   sql: messenger_messages
   column_map:
     user: user_id
@@ -1617,11 +1579,10 @@ messenger_messages:
   participant: { visitor: from_cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 messenger_active_chats:
   metric_configs: [messenger_active_chats]
-  database: vertica
+  connections: [vertica, trino]
   sql: messenger_messages
   column_map:
     chat: chat_id
@@ -1644,11 +1605,10 @@ messenger_active_chats:
   participant: { user: zero }
   primary_subject: user
   dtm: event_date
-  segm: chat_id
 
 clickstream_antibot:
   metric_configs: [clickstream_antibot]
-  database: vertica
+  connections: [vertica, trino]
   sql: clickstream_antibot
   column_map:
     cookie: cookie_id
@@ -1656,11 +1616,10 @@ clickstream_antibot:
   dtm: event_date
   participant: { visitor: cookie_id }
   primary_subject: visitor
-  segm: cookie_id
 
 credit_broker:
   metric_configs: [credit_broker]
-  database: vertica
+  connections: [vertica, trino]
   sql: broker_full_events
   column_map:
     cookie: cookie_id
@@ -1668,11 +1627,10 @@ credit_broker:
   dtm: event_date
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
-  segm: cookie_id
 
 credit_broker_revenue:
   metric_configs: [credit_broker_revenue]
-  database: vertica
+  connections: [vertica, trino]
   sql: broker_events_revenue
   column_map:
     cookie: cookie_id
@@ -1680,11 +1638,10 @@ credit_broker_revenue:
   dtm: issued_date
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
-  segm: cookie_id
 
 classified_revenue:
   metric_configs: [classified_revenue]
-  database: vertica
+  connections: [vertica, trino]
   sql: classified_revenue
   column_map:
     user: user_id
@@ -1707,11 +1664,10 @@ classified_revenue:
   dtm: event_date
   participant: { user: user_id }
   primary_subject: user
-  segm: user_id
 
 other_projects_revenue:
   metric_configs: [other_projects_revenue]
-  database: vertica
+  connections: [vertica, trino]
   sql: other_projects_revenue
   dimensions: [vertical]
   participant: { user: user_id }
@@ -1720,7 +1676,7 @@ other_projects_revenue:
 
 total_revenue:
   metric_configs: [total_revenue]
-  database: vertica
+  connections: [vertica, trino]
   sql: total_revenue
   dimensions: [vertical]
   participant: { user: user_id }
@@ -1729,7 +1685,7 @@ total_revenue:
 
 delivery_user_toggle:
   metric_configs: [delivery_user_toggle]
-  database: vertica
+  connections: [vertica, trino]
   sql: user_isDeliveryActive
   participant: { user: user_id }
   primary_subject: user
@@ -1737,7 +1693,7 @@ delivery_user_toggle:
 
 autoteka_stream_autoteka_participant:
   metric_configs: [autoteka_stream_autoteka_participant]
-  database: vertica
+  connections: [vertica, trino]
   sql: autoteka_stream
   column_map:
     platform_id: autoteka_platform_id
@@ -1750,6 +1706,8 @@ autoteka_stream_autoteka_participant:
       is_authorized,
       is_new_user,
       is_pro,
+      vertical,
+      logical_category,
     ]
   participant:
     { autoteka_visitor: autoteka_cookie_id, autoteka_user: autotekauser_id }
@@ -1758,7 +1716,7 @@ autoteka_stream_autoteka_participant:
 
 reviews:
   metric_configs: [reviews]
-  database: vertica
+  connections: [vertica, trino]
   sql: reviews
   column_map:
     cookie: cookie_id
@@ -1783,11 +1741,10 @@ reviews:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 reviews_collected:
   metric_configs: [reviews_collected]
-  database: vertica
+  connections: [vertica, trino]
   sql: reviews
   column_map:
     user: seller_id
@@ -1811,11 +1768,10 @@ reviews_collected:
   participant: { user: seller_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 contacts_reviews_services:
   metric_configs: [seller_contacts_reviews_services]
-  database: vertica
+  connections: [vertica, trino]
   sql: contacts_reviews_services
   column_map:
     user: user_id
@@ -1838,11 +1794,10 @@ contacts_reviews_services:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 lister_reactivations:
   metric_configs: [lister_reactivations]
-  database: vertica
+  connections: [vertica, trino]
   sql: lister_reactivations
   dimensions: [logical_category, vertical, region, city]
   participant: { user: user_id }
@@ -1851,7 +1806,7 @@ lister_reactivations:
 
 buyer_items_distance:
   metric_configs: [buyers_items_distance]
-  database: vertica
+  connections: [vertica, trino]
   sql: buyers_items_distance
   column_map:
     cookie: cookie_id
@@ -1871,7 +1826,7 @@ buyer_items_distance:
 
 chatbot_metrics_start:
   metric_configs: [chatbot_metrics_start]
-  database: vertica
+  connections: [vertica, trino]
   sql: chatbot_metrics
   column_map:
     user: user_id
@@ -1887,7 +1842,7 @@ chatbot_metrics_start:
 
 chatbot_metrics_end:
   metric_configs: [chatbot_metrics_end]
-  database: vertica
+  connections: [vertica, trino]
   sql: chatbot_metrics
   column_map:
     user: user_id
@@ -1903,7 +1858,7 @@ chatbot_metrics_end:
 
 verified_users:
   metric_configs: [verified_users]
-  database: vertica
+  connections: [vertica, trino]
   sql: verification_statuses
   column_map:
     user: user_id
@@ -1913,7 +1868,7 @@ verified_users:
 
 rating_stream:
   metric_configs: [rating_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: rating_stream
   column_map:
     cookie: cookie_id
@@ -1938,11 +1893,10 @@ rating_stream:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 rating_search_stream:
   metric_configs: [rating_search_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: rating_search_stream
   column_map:
     cookie: cookie_id
@@ -1967,11 +1921,10 @@ rating_search_stream:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 model_rating_stream:
   metric_configs: [model_rating_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: model_rating_stream
   column_map:
     cookie: cookie_id
@@ -1996,39 +1949,10 @@ model_rating_stream:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
-
-videocalls_stream:
-  metric_configs: [videocalls_stream]
-  database: vertica
-  sql: videocalls_stream
-  column_map:
-    item: item_id
-    cookie: cookie_id
-    user: user_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      logical_category,
-      category,
-      subcategory,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      population_group,
-    ]
-  participant: { visitor: cookie_id, user: user_id }
-  primary_subject: visitor
-  dtm: event_date
-  segm: event_date
 
 msh_banned_contacts:
   metric_configs: [msh_banned_contacts]
-  database: vertica
+  connections: [vertica, trino]
   sql: msh_banned_contacts
   column_map:
     item: item_id
@@ -2052,11 +1976,10 @@ msh_banned_contacts:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: item_id
 
 chatbot_events:
   metric_configs: [chatbot_events]
-  database: vertica
+  connections: [vertica, trino]
   sql: chatbot_events
   column_map:
     user: user_id
@@ -2068,7 +1991,7 @@ chatbot_events:
 
 autoload_package_info:
   metric_configs: [autoload_package_info]
-  database: vertica
+  connections: [vertica, trino]
   sql: autoload_feed_item_flow
   column_map:
     user: user_id
@@ -2082,13 +2005,10 @@ autoload_package_info:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 user_cohort:
   metric_configs: [user_cohort]
-  column_map:
-    user_logcat: [user_id, logical_category_id]
-  database: vertica
+  connections: [vertica, trino]
   sql: user_cohort
   dimensions: [vertical, logical_category, region, city, category, subcategory]
   participant: { user: user_id }
@@ -2097,7 +2017,7 @@ user_cohort:
 
 autoteka_funnel:
   metric_configs: [autoteka_funnel]
-  database: vertica
+  connections: [vertica, trino]
   sql: autoteka_funnel_main
   dimensions:
     [platform, is_pro, is_main_page_session, searchtype, is_session_to_exclude]
@@ -2107,7 +2027,7 @@ autoteka_funnel:
 
 autoteka_reports:
   metric_configs: [autoteka_reports]
-  database: vertica
+  connections: [vertica, trino]
   sql: autoteka_reports
   dimensions:
     [
@@ -2130,7 +2050,7 @@ autoteka_reports:
 
 buyer_confirmation_deals:
   metric_configs: [buyer_confirmation_deals]
-  database: vertica
+  connections: [vertica, trino]
   sql: confirmation_deals
   column_map:
     item: item_id
@@ -2156,7 +2076,7 @@ buyer_confirmation_deals:
 
 seller_confirmation_deals:
   metric_configs: [seller_confirmation_deals]
-  database: vertica
+  connections: [vertica, trino]
   sql: confirmation_deals
   column_map:
     item: item_id
@@ -2182,7 +2102,7 @@ seller_confirmation_deals:
 
 autoteka_reports_autoteka_participant:
   metric_configs: [autoteka_reports_autoteka_participant]
-  database: vertica
+  connections: [vertica, trino]
   sql: autoteka_reports
   column_map:
     platform_id: autoteka_platform_id
@@ -2208,13 +2128,12 @@ autoteka_reports_autoteka_participant:
 
 re_nd_buyer_stream:
   metric_configs: [re_nd_buyer_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: re_nd_buyer_stream
   column_map:
     item: item_id
     cookie: cookie_id
     user: user_id
-    cookie_item: [cookie_id, item_id]
   dimensions:
     - platform
     - vertical
@@ -2233,9 +2152,26 @@ re_nd_buyer_stream:
   primary_subject: visitor
   dtm: event_date
 
+re_nd_cpa_call_revenue:
+  metric_configs: [re_nd_cpa_call_revenue]
+  connections: [vertica, trino]
+  sql: re_nd_cpa_call_revenue
+  column_map:
+    item: item_id
+    cookie: cookie_id
+    user: user_id
+    x_eid: x_eid
+  dimensions:
+    - logical_category
+    - subcategory
+    - region
+  participant: {visitor: cookie_id, user: user_id}
+  primary_subject: visitor
+  dtm: event_date
+
 autoteka_new_buyer_expected_revenue_ap:
   metric_configs: [autoteka_new_buyer_expected_revenue_ap]
-  database: vertica
+  connections: [vertica, trino]
   sql: autoteka_new_buyers_expected_revenue
   dimensions: [platform, searchtype]
   participant:
@@ -2245,7 +2181,7 @@ autoteka_new_buyer_expected_revenue_ap:
 
 autoteka_new_buyer_expected_revenue:
   metric_configs: [autoteka_new_buyer_expected_revenue]
-  database: vertica
+  connections: [vertica, trino]
   sql: autoteka_new_buyers_expected_revenue
   dimensions: [platform, searchtype]
   participant: { visitor: cookie_id, user: user_id }
@@ -2254,7 +2190,7 @@ autoteka_new_buyer_expected_revenue:
 
 messenger_transitions:
   metric_configs: [messenger_transitions]
-  database: vertica
+  connections: [vertica, trino]
   sql: messenger_transitions
   column_map:
     user: user_id
@@ -2274,69 +2210,10 @@ messenger_transitions:
   participant: { user: user_id }
   primary_subject: user
   dtm: trigger_date
-  segm: user_id
-
-messenger_chat_leads:
-  metric_configs: [chat_leads]
-  database: vertica
-  sql: chat_scores
-  column_map:
-    cookie: cookie_id
-    user: user_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      category,
-      subcategory,
-      logical_category,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      location_group,
-      population_group,
-      location_level,
-    ]
-  participant: { visitor: cookie_id, user: user_id }
-  primary_subject: user
-  dtm: first_message_event_date
-  segm: cookie_id
-
-messenger_inbox_chat_leads:
-  metric_configs: [inbox_chat_leads]
-  database: vertica
-  sql: chat_scores
-  column_map:
-    user: seller_id
-  dimensions:
-    [
-      vertical,
-      category,
-      subcategory,
-      logical_category,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      location_group,
-      population_group,
-      location_level,
-      is_asd,
-      user_segment_market,
-    ]
-  participant: { user: seller_id }
-  primary_subject: user
-  dtm: first_message_event_date
-  segm: seller_id
 
 contact_deal:
   metric_configs: [contact_deal]
-  database: vertica
+  connections: [vertica, trino]
   sql: contact_deal
   column_map:
     cookie: cookie_id
@@ -2358,36 +2235,10 @@ contact_deal:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
-
-contact_deal_weight:
-  metric_configs: [contact_deal_weight]
-  database: vertica
-  sql: contact_deal_weight
-  column_map:
-    cookie: cookie_id
-  dimensions:
-    [
-      platform,
-      vertical,
-      logical_category,
-      category,
-      subcategory,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-    ]
-  participant: { visitor: cookie_id }
-  primary_subject: visitor
-  dtm: event_date
-  segm: cookie_id
 
 contact_deal_user:
   metric_configs: [contact_deal_user]
-  database: vertica
+  connections: [vertica, trino]
   sql: contact_deal
   column_map:
     cookie: cookie_id
@@ -2409,11 +2260,10 @@ contact_deal_user:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 bs_first_click:
   metric_configs: [bs_first_click]
-  database: vertica
+  connections: [vertica, trino]
   sql: bs_first_click
   column_map:
     cookie: cookie_id
@@ -2421,11 +2271,10 @@ bs_first_click:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 first_position_click:
   metric_configs: [first_position_click]
-  database: vertica
+  connections: [vertica, trino]
   sql: first_position_click
   column_map:
     cookie: cookie_id
@@ -2433,15 +2282,13 @@ first_position_click:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 cpa_calls_metrics:
   metric_configs: [cpa_calls_metrics]
-  database: vertica
+  connections: [vertica, trino]
   sql: cpa_calls_metrics
   column_map:
     user: user_id
-    user_logcat: [user_id, logical_category_id]
   dimensions:
     [
       vertical,
@@ -2459,25 +2306,21 @@ cpa_calls_metrics:
   dtm: event_date
   participant: { user: user_id }
   primary_subject: user
-  segm: user_id
 
 new_pro_listers:
   metric_configs: [new_pro_listers]
-  database: vertica
+  connections: [vertica, trino]
   sql: new_pro_listers
   column_map:
-    user_logcat: [user_id, logical_category_id]
     user: user_id
-    user_vertical: [user_id, vertical_id]
   dimensions: [vertical, logical_category, is_asd, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 gmv_deals_proxy:
   metric_configs: [gmv_deals_proxy]
-  database: vertica
+  connections: [vertica, trino]
   sql: gmv_deals_proxy
   column_map:
     user: user_id
@@ -2496,24 +2339,38 @@ gmv_deals_proxy:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
+
+proxy_deals_2_0:
+  metric_configs: [proxy_deals_2_0]
+  connections: [vertica, trino]
+  sql: proxy_deals_2_0
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      user_segment_market,
+    ]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
 
 performance_fps:
   metric_configs: [performance_fps]
-  database: vertica
+  connections: [vertica, trino]
   sql: performance_fps
   column_map:
     cookie: cookie_id
   dimensions:
     - platform
     - screen_name
+    - vertical
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
 
 sphinx_cputime:
   metric_configs: [sphinx_cputime]
-  database: vertica
+  connections: [vertica, trino]
   sql: sphinx_cpu
   column_map:
     cookie: cookie_id
@@ -2526,7 +2383,7 @@ sphinx_cputime:
 
 action_returned:
   metric_configs: [action_returned]
-  database: vertica
+  connections: [vertica, trino]
   sql: action_returned
   column_map:
     cookie: cookie_id
@@ -2547,7 +2404,7 @@ action_returned:
 
 callback_calls:
   metric_configs: [callback_calls]
-  database: vertica
+  connections: [vertica, trino]
   sql: recallme_calls
   column_map:
     cookie: cookie_id
@@ -2572,7 +2429,7 @@ callback_calls:
 
 perf_video_metrics:
   metric_configs: [perf_video_metrics]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_video_metrics
   column_map:
     cookie: cookie_id
@@ -2585,7 +2442,7 @@ perf_video_metrics:
 
 perf_queried_hosts_durations:
   metric_configs: [perf_queried_hosts_durations]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_queried_hosts_durations
   column_map:
     cookie: cookie_id
@@ -2598,12 +2455,11 @@ perf_queried_hosts_durations:
 
 short_rent_item_trx:
   metric_configs: [short_rent_item_trx]
-  database: vertica
+  connections: [vertica, trino]
   sql: short_rent_item_trx
   column_map:
     item: item_id
     user: user_id
-    user_logcat: [user_id, logical_category_id]
   dimensions:
     - platform
     - vertical
@@ -2616,16 +2472,14 @@ short_rent_item_trx:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 deal_confirmed:
   metric_configs: [deal_confirmed]
-  database: vertica
+  connections: [vertica, trino]
   sql: confirmed_deals
   column_map:
     item: item_id
     user: user_id
-    user_logcat: [user_id, logical_category_id]
   dimensions:
     - vertical
     - logical_category
@@ -2636,64 +2490,10 @@ deal_confirmed:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
-
-target_call_bx:
-  metric_configs: [target_call_bx]
-  database: vertica
-  sql: target_call
-  column_map:
-    cookie: buyer_cookie_id
-    user: buyer_id
-  dimensions:
-    - platform
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  participant: { visitor: buyer_cookie_id, user: buyer_id }
-  primary_subject: user
-  dtm: call_time
-  segm: buyer_id
-
-target_call_sx:
-  metric_configs: [target_call_sx]
-  database: vertica
-  sql: target_call
-  column_map:
-    user: seller_id
-  dimensions:
-    - platform
-    - vertical
-    - logical_category
-    - category
-    - subcategory
-    - param1
-    - param2
-    - param3
-    - param4
-    - region
-    - city
-    - location_group
-    - population_group
-    - location_level
-  participant: { user: seller_id }
-  primary_subject: user
-  dtm: call_time
-  segm: seller_id
 
 sbc_special_offers:
   metric_configs: [sbc_special_offers]
-  database: vertica
+  connections: [vertica, trino]
   sql: seller_buyer_communication
   column_map:
     user: user_id
@@ -2715,11 +2515,10 @@ sbc_special_offers:
   participant: { user: user_id }
   primary_subject: user
   dtm: discount_send_date
-  segm: user_id
 
 sbc_answered_special_offers:
   metric_configs: [sbc_answered_special_offers]
-  database: vertica
+  connections: [vertica, trino]
   sql: seller_buyer_communication
   column_map:
     user: user_id
@@ -2739,11 +2538,10 @@ sbc_answered_special_offers:
   participant: { user: user_id }
   primary_subject: user
   dtm: discount_send_date
-  segm: user_id
 
 sbc_inbox_special_offers:
   metric_configs: [sbc_inbox_special_offers]
-  database: vertica
+  connections: [vertica, trino]
   sql: seller_buyer_communication
   column_map:
     user: buyer_id
@@ -2761,11 +2559,10 @@ sbc_inbox_special_offers:
   participant: { user: buyer_id }
   primary_subject: user
   dtm: discount_send_date
-  segm: buyer_id
 
 sbc_answered_inbox_special_offers:
   metric_configs: [sbc_answered_inbox_special_offers]
-  database: vertica
+  connections: [vertica, trino]
   sql: seller_buyer_communication
   column_map:
     user: buyer_id
@@ -2784,11 +2581,10 @@ sbc_answered_inbox_special_offers:
   participant: { user: buyer_id }
   primary_subject: user
   dtm: answer_time
-  segm: buyer_id
 
 perf_screen_memory_consumption:
   metric_configs: [perf_screen_memory_consumption]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_screen_memory_consumption
   column_map:
     cookie: cookie_id
@@ -2800,7 +2596,7 @@ perf_screen_memory_consumption:
 
 sx_jobs_candidates:
   metric_configs: [sx_jobs_candidates]
-  database: vertica
+  connections: [vertica, trino]
   sql: sx_jobs_candidates
   column_map:
     user: user_id
@@ -2811,7 +2607,7 @@ sx_jobs_candidates:
 
 messages_reply_percentiles:
   metric_configs: [messages_reply_percentiles]
-  database: vertica
+  connections: [vertica, trino]
   sql: messages_reply_percentiles
   column_map:
     user: from_user_id
@@ -2822,7 +2618,7 @@ messages_reply_percentiles:
 
 reviews_stream:
   metric_configs: [reviews_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: reviews_stream
   column_map:
     cookie: cookie_id
@@ -2834,7 +2630,7 @@ reviews_stream:
 
 qd_lots_create_date:
   metric_configs: [qd_lots_create_date]
-  database: vertica
+  connections: [vertica, trino]
   sql: qd_lots
   column_map:
     user: user_id
@@ -2852,11 +2648,10 @@ qd_lots_create_date:
   participant: { user: user_id }
   primary_subject: user
   dtm: created_at
-  segm: user_id
 
 qd_lots_terminated_date:
   metric_configs: [qd_lots_terminated_date]
-  database: vertica
+  connections: [vertica, trino]
   sql: qd_lots
   column_map:
     user: user_id
@@ -2874,11 +2669,10 @@ qd_lots_terminated_date:
   participant: { user: user_id }
   primary_subject: user
   dtm: terminated_at
-  segm: user_id
 
 perf_clickstream_counters:
   metric_configs: [perf_clickstream_counters]
-  database: vertica
+  connections: [vertica, trino]
   sql: perf_click_stream_counters
   column_map:
     cookie: cookie_id
@@ -2888,19 +2682,9 @@ perf_clickstream_counters:
   primary_subject: visitor
   dtm: event_date
 
-chatbot_chats_delete:
-  metric_configs: [chatbot_chats_delete]
-  database: vertica
-  sql: chatbot_chats_delete
-  column_map:
-    user: user_id
-  participant: { user: user_id }
-  primary_subject: user
-  dtm: event_date
-
 payment_page_trx:
   metric_configs: [payment_page_trx]
-  database: vertica
+  connections: [vertica, trino]
   sql: payment_page_trx
   column_map:
     cookie: cookie_id
@@ -2912,7 +2696,7 @@ payment_page_trx:
 
 jobs_chatbot:
   metric_configs: [jobs_chatbot]
-  database: vertica
+  connections: [vertica, trino]
   sql: jobs_chatbot_metrics
   column_map:
     user: user_id
@@ -2921,74 +2705,10 @@ jobs_chatbot:
   primary_subject: user
   dtm: event_date
 
-target_contact:
-  metric_configs: [target_contact]
-  database: vertica
-  sql: target_contact
-  column_map:
-    cookie: buyer_cookie_id
-    user: buyer_id
-    logcat_item: [item_id, logical_category_id]
-    cookie_logcat: [buyer_cookie_id, logical_category_id]
-  dimensions:
-    [
-      platform,
-      vertical,
-      category,
-      subcategory,
-      logical_category,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      location_group,
-      population_group,
-      location_level,
-    ]
-  participant: { visitor: buyer_cookie_id, user: buyer_id }
-  primary_subject: user
-  dtm: event_date
-  segm: buyer_cookie_id
-
-target_contact_seller:
-  metric_configs: [target_contact_seller]
-  database: vertica
-  sql: target_contact
-  column_map:
-    user: seller_id
-    logcat_item: [item_id, logical_category_id]
-    user_logcat: [seller_id, logical_category_id]
-  dimensions:
-    [
-      vertical,
-      category,
-      subcategory,
-      logical_category,
-      param1,
-      param2,
-      param3,
-      param4,
-      region,
-      city,
-      location_group,
-      population_group,
-      location_level,
-      is_asd,
-      user_segment_market,
-    ]
-  participant: { user: seller_id }
-  primary_subject: user
-  dtm: event_date
-  segm: seller_id
-
 cart_stream:
   metric_configs: [cart_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: cart_stream
-  column_map:
-    cookie_item: [cookie_id, item_id]
   dimensions:
     - platform
     - vertical
@@ -3017,11 +2737,10 @@ cart_stream:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 jobs_chatbot_chats:
   metric_configs: [jobs_chatbot_chats]
-  database: vertica
+  connections: [vertica, trino]
   sql: jobs_chatbot_chats
   column_map:
     user: user_id
@@ -3031,7 +2750,7 @@ jobs_chatbot_chats:
 
 review_arbitrage:
   metric_configs: [review_arbitrage]
-  database: vertica
+  connections: [vertica, trino]
   sql: review_arbitrage
   column_map:
     cookie: cookie_id
@@ -3056,11 +2775,10 @@ review_arbitrage:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 kmt_stream:
   metric_configs: [kmt]
-  database: vertica
+  connections: [vertica, trino]
   sql: kmt_stream
   column_map:
     cookie: cookie_id
@@ -3078,11 +2796,10 @@ kmt_stream:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
 
 payout_page_trx:
   metric_configs: [payout_page_trx]
-  database: vertica
+  connections: [vertica, trino]
   sql: payout_page_trx
   column_map:
     user: user_id
@@ -3093,7 +2810,7 @@ payout_page_trx:
 
 payment_order_cost:
   metric_configs: [payment_order_cost]
-  database: vertica
+  connections: [vertica, trino]
   sql: payment_order_cost
   column_map:
     user: user_id
@@ -3107,33 +2824,29 @@ payment_order_cost:
 
 operating_model_asd_user:
   metric_configs: [operating_model_asd_user]
-  database: vertica
+  connections: [vertica, trino]
   sql: operating_model_asd_user
   column_map:
     user: user_id
-    user_vertical: [user_id, vertical_id]
   dimensions: [vertical, logical_category, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 operating_model_asd_revenue:
   metric_configs: [operating_model_asd_revenue]
-  database: vertica
+  connections: [vertica, trino]
   sql: operating_model_asd_revenue
   column_map:
     user: user_id
-    user_vertical: [user_id, vertical_id]
   dimensions: [vertical, logical_category, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 calendar_orders:
   metric_configs: [calendar_orders]
-  database: vertica
+  connections: [vertica, trino]
   sql: calendar_orders
   column_map:
     user: seller_id # селлер
@@ -3158,7 +2871,7 @@ calendar_orders:
 
 calendar_sellers_items:
   metric_configs: [calendar_sellers_items]
-  database: vertica
+  connections: [vertica, trino]
   sql: calendar_sellers_items
   column_map:
     user: user_id # селлер
@@ -3183,7 +2896,7 @@ calendar_sellers_items:
 
 calendar_orders_mp:
   metric_configs: [calendar_orders_mp]
-  database: vertica
+  connections: [vertica, trino]
   sql: calendar_orders_mp
   column_map:
     user: seller_id # селлер
@@ -3208,7 +2921,7 @@ calendar_orders_mp:
 
 calendar_sellers_items_mp:
   metric_configs: [calendar_sellers_items_mp]
-  database: vertica
+  connections: [vertica, trino]
   sql: calendar_sellers_items_mp
   column_map:
     user: user_id # селлер
@@ -3233,48 +2946,53 @@ calendar_sellers_items_mp:
 
 ux_feedback:
   metric_configs: [ux_feedback]
-  database: vertica
+  connections: [vertica, trino]
   sql: ux_feedback
   column_map:
     user: user_id
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 clickstream_data_platform:
   metric_configs: [clickstream_data_platform]
-  database: vertica
+  connections: [vertica]
   sql: clickstream_data_platform
   participant: { user: user_hash }
   primary_subject: user
   dimensions: [ldap_user]
   dtm: event_date
-  segm: user_hash
+
+clickstream_sigma_duration:
+  metric_configs: [clickstream_sigma_duration]
+  connections: [vertica]
+  sql: clickstream_sigma_duration
+  participant: { user: user_hash }
+  primary_subject: user
+  dimensions: [ldap_user]
+  dtm: event_date
 
 org_structure:
   metric_configs: [org_structure]
-  database: vertica
+  connections: [vertica, trino]
   sql: org_structure
   participant: { user: user_hash }
   primary_subject: user
   dimensions: [ldap_user]
   dtm: event_date
-  segm: user_hash
 
 m42_usage:
   metric_configs: [m42_usage]
-  database: vertica
+  connections: [vertica]
   sql: m42_usage
   participant: { user: user_hash }
   primary_subject: user
   dimensions: [ldap_user, picked_metric]
   dtm: event_date
-  segm: user_hash
 
 sq_track_metrics:
   metric_configs: [sq_track_metrics]
-  database: vertica
+  connections: [trino]
   sql: sq_track_metrics
   column_map:
     cookie: cookie_id
@@ -3282,16 +3000,25 @@ sq_track_metrics:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
-  segm: cookie_id
+
+sq_liquidity_metrics:
+  metric_configs: [sq_liquidity_metrics]
+  connections: [vertica, trino]
+  sql: sq_liquidity_metrics
+  column_map:
+    cookie: cookie_id
+    item: item_id
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
 
 all_communications_bx:
   metric_configs: [all_communications_bx, app_call_bx]
-  database: vertica
+  connections: [vertica, trino]
   sql: all_communications
   column_map:
     cookie: buyer_cookie_id
     user: buyer_id
-    logcat_item: [item_id, logical_category_id]
   dimensions:
     [
       platform,
@@ -3308,20 +3035,25 @@ all_communications_bx:
       location_group,
       population_group,
       location_level,
+      user_segment_market,
+      is_asd,
+      asd_user_group,
+      logical_param1,
+      logical_param2,
+      price_group,
+      condition
     ]
   participant: { visitor: buyer_cookie_id, user: buyer_id }
   primary_subject: user
   dtm: event_date
-  segm: buyer_cookie_id
 
 all_communications_sx:
   metric_configs: [all_communications_sx, app_call_sx]
-  database: vertica
+  connections: [vertica, trino]
   sql: all_communications
   column_map:
     user: seller_id
     platform_id: seller_platform_id
-    logcat_item: [item_id, logical_category_id]
   dimensions:
     [
       platform,
@@ -3338,49 +3070,73 @@ all_communications_sx:
       location_group,
       population_group,
       location_level,
-      is_asd,
       user_segment_market,
+      is_asd,
+      asd_user_group,
+      logical_param1,
+      logical_param2,
+      price_group,
+      condition
     ]
   participant: { user: seller_id }
   primary_subject: user
   dtm: event_date
-  segm: seller_id
 
 mattermost_messages:
   metric_configs: [mattermost_messages]
-  database: vertica
+  connections: [vertica, trino]
   sql: mattermost_messages
   participant: { user: user_hash }
   primary_subject: user
   dimensions: [ldap_user]
   dtm: message_ts
-  segm: user_hash
 
 passport_event_stream:
   metric_configs: [passport_event_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: passport_event_stream
   dimensions: [platform]
   participant: { visitor: cookie_id, user: user_id, passport: passport_id }
   primary_subject: passport
   dtm: event_datetime
-  segm: passport_id
 
 buyer_reviews_stream:
   metric_configs: [buyer_reviews_stream]
-  database: vertica
+  connections: [vertica, trino]
   sql: buyer_reviews_stream
   column_map:
     cookie: cookie_id
     user: user_id
-  dimensions: [platform]
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+      user_segment_market,
+      has_review,
+      review_add_trigger,
+      review_page_from,
+      order_status,
+      buyer_review_form_type
+    ]
   participant: { visitor: cookie_id, user: user_id }
-  primary_subject: visitor
+  primary_subject: user
   dtm: event_date
 
 buyer_reviews:
   metric_configs: [buyer_reviews]
-  database: vertica
+  connections: [vertica, trino]
   sql: buyer_reviews
   column_map:
     cookie: cookie_id
@@ -3401,15 +3157,20 @@ buyer_reviews:
       location_group,
       population_group,
       location_level,
+      user_segment_market,
+      has_review,
+      review_add_trigger,
+      review_page_from,
+      order_status,
+      buyer_review_form_type
     ]
   participant: { visitor: cookie_id, user: user_id }
-  primary_subject: visitor
+  primary_subject: user
   dtm: event_date
-  segm: cookie_id
 
 fraud_tickets_user_reported:
   metric_configs: [fraud_tickets_user_reported]
-  database: vertica
+  connections: [vertica, trino]
   sql: fraud_tickets_user_reported
   column_map:
     user: user_id
@@ -3426,7 +3187,7 @@ fraud_tickets_user_reported:
 
 item_abuses:
   metric_configs: [item_abuses]
-  database: vertica
+  connections: [vertica, trino]
   sql: item_abuses
   column_map:
     user: user_id
@@ -3444,48 +3205,56 @@ item_abuses:
 
 hacked_metrics:
   metric_configs: [hacked_metrics]
-  database: vertica
+  connections: [vertica, trino]
   sql: hacked_metrics
   dimensions: [platform]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 user_address:
   metric_configs: [user_address]
-  database: vertica
+  connections: [vertica, trino]
   sql: user_address
-  dimensions: [platform]
+  dimensions:
+        [
+          platform,
+          vertical,
+          logical_category,
+          region,
+          city,
+          location_group,
+          population_group,
+          location_level
+        ]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
+  column_map:
+      user: user_id
 
 active_pro_sellers:
   metric_configs: [active_pro_sellers]
-  database: vertica
+  connections: [vertica, trino]
   sql: active_pro_sellers
   column_map:
     user: user_id
-    user_vertical: [user_id, vertical_id]
   dimensions: [vertical, logical_category, user_segment_market]
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 passport_coverage_m42:
   metric_configs: [passport_coverage_m42]
-  database: vertica
+  connections: [vertica, trino]
   sql: passport_coverage_m42
   participant: { user: _ } # No participants in table, just value by date.
   primary_subject: user
   dtm: calc_date
-  
+
 clickstream_video:
   metric_configs: [clickstream_video]
-  database: vertica
+  connections: [vertica, trino]
   sql: clickstream_video
   column_map:
     cookie: cookie_id
@@ -3502,6 +3271,31 @@ clickstream_video:
       param3,
       param4,
       condition,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level
+    ]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
+short_video_upload_source:
+  metric_configs: [short_video_upload_source]
+  connections: [trino, vertica]
+  sql: short_video_upload_source
+  column_map:
+    cookie: cookie_id
+    user: user_id
+    item: item_id
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory
     ]
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
@@ -3509,20 +3303,18 @@ clickstream_video:
 
 buyout_events:
   metric_configs: [buyout_events]
-  database: vertica
+  connections: [vertica, trino]
   sql: buyout_events
   column_map:
     user: user_id
     item: item_id
-    user_segment_market: segment
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
 
 premium_fashion:
   metric_configs: [ premium_fashion ]
-  database: vertica
+  connections: [vertica, trino]
   sql: premium_fashion
   column_map:
     user: user_id
@@ -3535,5 +3327,448 @@ premium_fashion:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: user
   dtm: event_date
-  segm: user_id
-  
+
+
+tab_bar_stream:
+  metric_configs: [ tab_bar_stream ]
+  connections: [vertica, trino]
+  sql: tab_bar_stream
+  column_map:
+    user: user_id
+    cookie: cookie_id
+  dimensions:
+    [
+      platform
+    ]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
+autoteka_total:
+  metric_configs: [autoteka_total]
+  connections: [vertica, trino]
+  sql: autoteka_stream
+  dimensions:
+    [
+      platform,
+      payment_method,
+      reports_count,
+      searchtype,
+      is_authorized,
+      is_new_user,
+      is_pro,
+      vertical,
+      logical_category
+    ]
+  participant: { user: fake_user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+delivery_stream:
+  metric_configs: [ delivery_stream ]
+  connections: [vertica, trino]
+  sql: delivery_stream
+  column_map:
+    item: item_id
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+    - is_intercity
+    - is_asd
+    - asd_user_group
+    - buyer_location
+    - buyer_region
+    - buyer_city
+    - buyer_location_group
+    - buyer_location_level
+    - buyer_population_group
+    - location
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - is_cart
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
+
+profilepromo_funnel:
+  metric_configs: [ profilepromo_funnel ]
+  connections: [vertica, trino]
+  sql: profilepromo_funnel
+  dimensions:
+      [
+        platform,
+        vertical,
+        logical_category,
+        region ]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
+
+charity_donations:
+  metric_configs: [ charity_donations ]
+  connections: [vertica, trino]
+  sql: charity_donations
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+profile_coverage_m42:
+  metric_configs: [profile_coverage_m42]
+  connections: [vertica, trino]
+  sql: profile_coverage_m42
+  participant: { user: _ } # No participants in table, just value by date.
+  primary_subject: user
+  dtm: event_date
+
+
+buyout_requests:
+  metric_configs: [buyout_requests]
+  connections: [vertica, trino]
+  sql: buyout_requests
+  dimensions:
+    [
+      platform,
+      region,
+      city,
+      vertical,
+      logical_category,
+    ]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+credit_c2c:
+  metric_configs: [ credit_c2cloans ]
+  connections: [vertica, trino]
+  sql: clickstream_c2c_counters
+  column_map:
+    cookie: cookie_id
+  dimensions: [ platform, location ]
+  dtm: event_date
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+
+calendar_contacts:
+  metric_configs: [calendar_contacts]
+  connections: [vertica, trino]
+  sql: calendar_contacts
+  column_map:
+    cookie: cookie_id
+    user: user_id # баер залогиненный
+    item: item_id # айтем по которому баер контактирует
+  dimensions:
+    [
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level
+    ]
+  participant: { visitor: cookie_id, user: user_id  }
+  primary_subject: visitor
+  dtm: event_date
+
+reviews_moderation_stream:
+  metric_configs: [reviews_moderation_stream]
+  connections: [vertica, trino]
+  sql: reviews_moderation_stream
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      category,
+      subcategory,
+      param1,
+      param2,
+      param3,
+      param4,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level,
+    ]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
+deliverability:
+  metric_configs: [deliverability]
+  connections: [vertica, trino]
+  sql: deliverability_daily
+  column_map:
+    item: item_id
+    user: user_id
+  dimensions:
+    - logical_category
+    - user_segment_market
+    - deliverability_flow
+    - delivery_category
+    - delivery_subcategory
+    - delivery_param1
+    - delivery_param2
+    - delivery_param3
+    - delivery_infomodel_param
+    - delivery_infomodel_param2
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+installments_goods:
+  metric_configs: [installments_goods]
+  connections: [vertica, trino]
+  sql: installments_goods_events
+  dimensions: [platform]
+  dtm: event_timestamp
+  participant: { user: user_id }
+  primary_subject: user
+
+
+buyers_geo:
+  metric_configs: [ buyers_geo ]
+  connections: [vertica, trino]
+  sql: buyers_geo
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    [
+      platform,
+      vertical,
+      logical_category,
+      logical_param1,
+      logical_param2,
+      category,
+      subcategory,
+      param1,
+      region,
+      city,
+      location_group,
+      population_group,
+      location_level
+    ]
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
+
+
+withdrawal_refund:
+  metric_configs: [auction_withdrawals]
+  connections: [vertica, trino]
+  sql: auction_withdrawal_refund
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - region
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
+
+
+avito_pro_metrics:
+  metric_configs: [avito_pro_metrics]
+  connections: [vertica, trino]
+  sql: avito_pro_metrics
+  dimensions:
+    - vertical
+    - logical_category
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+hacked_metric_m42:
+  metric_configs: [hacked_metric_m42]
+  connections: [vertica, trino]
+  sql: hacked_metric_m42
+  participant: { user: _ } # No participants in table, just value by date.
+  primary_subject: user
+  dtm: calc_date
+
+
+rfp_funnel_buyer:
+  metric_configs: [ rfp_funnel_buyer ]
+  connections: [ vertica, trino ]
+  sql: rfp_funnel
+  column_map:
+    user: user_id
+    rfp: rfpid
+  dimensions:
+    - category
+    - subcategory
+    - param1
+    - param2
+    - param3
+    - param4
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+haraba_user_active_day:
+  metric_configs: [ haraba_user_active_day ]
+  connections: [vertica, trino]
+  sql: haraba_user_active_day
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: entry_date
+
+
+true_new_users:
+  metric_configs: [ true_new_users ]
+  connections: [vertica, trino]
+  sql: true_new_users
+  column_map:
+    item: item_id
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+      - platform
+      - vertical
+      - logical_category
+      - logical_param1
+      - logical_param2
+      - category
+      - subcategory
+      - param1
+      - region
+      - city
+      - location_group
+      - population_group
+      - location_level
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+auto_select_metrics:
+  metric_configs: [ auto_select_metrics ]
+  connections: [vertica, trino]
+  sql: auto_select_events
+  column_map:
+    cookie: cookie_id
+    user: user_id
+    item: item_id
+  dimensions: [
+    platform,
+    location
+  ]
+  dtm: event_timestamp
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+
+
+newdev_weighted_contacts:
+  metric_configs: [newdev_weighted_contacts]
+  connections: [vertica, trino]
+  sql: newdev_weighted_contacts
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - logical_category
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
+
+haraba_payments:
+  metric_configs: [ haraba_payment ]
+  connections: [vertica, trino]
+  sql: haraba_payment
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: payment_date
+
+
+reputation_interface:
+  metric_configs: [reputation_interface_metrics]
+  connections: [vertica, trino]
+  sql: reputation_interface
+  column_map:
+    user: user_id
+  dimensions:
+    - platform
+    - location
+    - region
+    - city
+    - location_group
+    - population_group
+    - location_level
+    - is_asd
+    - asd_user_group
+    - reputation_color
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+premier_partner_deals:
+  metric_configs: [premier_partner_deals]
+  connections: [vertica, trino]
+  sql: premier_partner_deals
+  participant: { user: _ } # No participants in table, just value by date.
+  primary_subject: user
+  dtm: event_date   
+
+delivery_wallet:
+  metric_configs: [delivery_wallet]
+  connections: [vertica, trino]
+  sql: delivery_wallet
+  column_map:
+    user: user_id
+  dimensions:
+    - platform
+    - wallet_user_type
+    - has_opened_delivery_wallet
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
+
+
+iv_cpc_weighted:
+  metric_configs: [iv_cpc_weighted]
+  connections: [vertica, trino]
+  sql: iv_cpc_weighted
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - logical_category
+    - vertical
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date

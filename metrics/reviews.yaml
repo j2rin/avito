@@ -7,7 +7,8 @@ metric.counter:
   reviews_stage_no_communication:          {filter: [{stage.=: 4}],      }
   cnt_all_reviews_score_sum:               {obs: [score]}
   cnt_rating_reviews_score_sum:            {filter: [{stage.in: [1,2]}], obs: [score]}
-
+  all_negative_reviews_added:          {filter: [{score.in: [1,2,3]}]}
+  all_positive_reviews_added:          {filter: [{score.in: [4,5]}]}
 
 metric.uniq:
   user_rating_reviews_added:               {counter: rating_reviews_added,            key: [user]}
@@ -16,6 +17,8 @@ metric.uniq:
   user_reviews_stage_deal_canceled:        {counter: reviews_stage_deal_canceled,     key: [user]}
   user_reviews_stage_no_agreement:         {counter: reviews_stage_no_agreement,      key: [user]}
   user_reviews_stage_no_communication:     {counter: reviews_stage_no_communication,  key: [user]}
+  user_all_negative_reviews_added:         {counter: all_negative_reviews_added,      key: [user]}
+  user_all_positive_reviews_added:         {counter: all_positive_reviews_added,      key: [user]}
 
 metric.ratio:
   all_reviews_avg_score:                   {num: cnt_all_reviews_score_sum,           den: all_reviews_added}

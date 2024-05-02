@@ -8,29 +8,31 @@ definitions:
     - &b2c {cart_flow_type: 'b2c'}
     
 metric.counter:
-    cart_add_total: {filter: [*add]}
-    cart_page_total: {filter: [*cart_page]}
-    expired_cart_page_total: {filter: [*cart_page_exp]}
-    empty_cart_page_total: {filter: [*empty_cart_page]}
-    cart_chckt_total: {filter: [*cart_checkout_page]}
-    cart_p2p_total: {filter: [*cart_p2p]}
+    cart_add_total: 			{filter: [*add]}
+    cart_page_total: 			{filter: [*cart_page]}
+    expired_cart_page_total: 	{filter: [*cart_page_exp]}
+    empty_cart_page_total: 		{filter: [*empty_cart_page]}
+    cart_chckt_total: 			{filter: [*cart_checkout_page]}
+    cart_p2p_total: 			{filter: [*cart_p2p]}
 
 metric.uniq:
-    cart_add: {counter: cart_add_total, key: [cookie_item]}
-    cart_add_cookie: {counter: cart_add_total, key: [cookie_id]}
-    cart_page: {counter: cart_page_total, key: [cookie_item]}
-    cart_page_cookie: {counter: cart_page_total, key: [cookie_id]}
-    expired_cart_page_cookie: {counter: expired_cart_page_total, key: [cookie_id]}
-    empty_cart_page_cookie: {counter: empty_cart_page_total, key: [cookie_id]}
-    cart_chckt: {counter: cart_chckt_total, key: [cookie_item]}
-    cart_chckt_cookie: {counter: cart_chckt_total, key: [cookie_id]}
-    cart_p2p: {counter: cart_p2p_total, key: [cookie_item]}
-    cart_p2p_cookie: {counter: cart_p2p_total, key: [cookie_id]}
+    cart_add:					{counter: cart_add_total, key: [cookie_id, item_id]}
+    cart_add_cookie: 			{counter: cart_add_total, key: [cookie_id]}
+    cart_page:					{counter: cart_page_total, key: [cookie_id, item_id]}
+    cart_page_cookie: 			{counter: cart_page_total, key: [cookie_id]}
+    expired_cart_page_cookie: 	{counter: expired_cart_page_total, key: [cookie_id]}
+    empty_cart_page_cookie: 	{counter: empty_cart_page_total, key: [cookie_id]}
+    cart_chckt: 				{counter: cart_chckt_total, key: [cookie_id, item_id]}
+    cart_chckt_cookie: 			{counter: cart_chckt_total, key: [cookie_id]}
+    cart_p2p: 					{counter: cart_p2p_total, key: [cookie_id, item_id]}
+    cart_p2p_cookie: 			{counter: cart_p2p_total, key: [cookie_id]}
 
 metric.ratio:
-    cart_page_add_ratio: {num: cart_page, den: cart_add}
-    expired_cart_cookie_ratio: {num: expired_cart_page_cookie, den: cart_page_cookie}
-    cart_chckt_page_ratio: {num: cart_chckt, den: cart_page}
-    cart_p2p_chckt_ratio: {num: cart_p2p, den: cart_chckt}
-    cart_p2p_add_ratio: {num: cart_p2p, den: cart_add}
-    cart_p2p_add_cookie_ratio: {num: cart_p2p_cookie, den: cart_add_cookie}
+    cart_page_add_ratio:		{num: cart_page, den: cart_add}
+    expired_cart_cookie_ratio:	{num: expired_cart_page_cookie, den: cart_page_cookie}
+    cart_chckt_page_ratio:		{num: cart_chckt, den: cart_page}
+    cart_p2p_chckt_ratio: 		{num: cart_p2p, den: cart_chckt}
+    cart_p2p_add_ratio: 		{num: cart_p2p, den: cart_add}
+    cart_p2p_add_cookie_ratio:	{num: cart_p2p_cookie, den: cart_add_cookie}
+    cart_p2p_page_ratio:		{num: cart_p2p, den: cart_page}
+    cart_p2p_page_cookie_ratio:	{num: cart_p2p_cookie, den: cart_page_cookie}

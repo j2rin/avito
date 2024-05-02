@@ -1,0 +1,195 @@
+# level — откуда тянется дименшен. Например, event — из источника, participant — из таблицы participant_dimension
+# has_id — в источниках дименшен представлен в виде id, столбец имеет имя <dimension_name>_id
+# is_bool — булев дименшен
+# parent — слаг дименшена-родителя
+# description — краткое описание дименшена
+# slug — краткое описание дименшена
+
+
+# Информодельные иерархии ----------------------------------------------------------------------------------------------
+microcat:                 {level: event, has_id: true}
+vertical:                 {level: event, has_id: true, description: "Вертикаль"}
+logical_category:         {level: event, has_id: true, parent: vertical, slug: logcat, description: "Логическая категория"}
+category:                 {level: event, has_id: true, slug: cat, description: "Категория"}
+subcategory:              {level: event, has_id: true, parent: category, slug: subcat, description: "Подкатегория"}
+param1:                   {level: event, has_id: true, parent: subcategory}
+param2:                   {level: event, has_id: true, parent: param1}
+param3:                   {level: event, has_id: true, parent: param2}
+param4:                   {level: event, has_id: true, parent: param3}
+logical_param1:           {level: event, has_id: true, parent: logical_category}
+logical_param2:           {level: event, has_id: true, parent: logical_param1}
+
+location:                 {level: event, has_id: true}
+region:                   {level: event, has_id: true, description: "Регион"}
+city:                     {level: event, has_id: true, parent: region}
+location_group:           {level: event, has_id: true, slug: loc_group}
+location_level:           {level: event, has_id: true, slug: loc_level}
+population_group:         {level: event, slug: pop_group}
+
+x_microcat:               {level: event, has_id: true}
+x_vertical:               {level: event, has_id: true, slug: vertical_x}
+x_logical_category:       {level: event, has_id: true, parent: x_vertical, slug: logcat_x}
+x_category:               {level: event, has_id: true, slug: cat_x}
+x_subcategory:            {level: event, has_id: true, parent: x_category, slug: subcat_x}
+x_param1:                 {level: event, has_id: true, parent: x_subcategory, slug: param1_x}
+x_param2:                 {level: event, has_id: true, parent: x_param1, slug: param2_x}
+x_param3:                 {level: event, has_id: true, parent: x_param3, slug: param3_x}
+x_param4:                 {level: event, has_id: true, parent: x_param4, slug: param4_x}
+
+x_location:               {level: event, has_id: true}
+x_region:                 {level: event, has_id: true, slug: region_x}
+x_city:                   {level: event, has_id: true, parent: x_region, slug: city_x}
+x_location_group:         {level: event, has_id: true, slug: location_group_x}
+x_location_level:         {level: event, has_id: true, slug: location_level_x}
+x_population_group:       {level: event, slug: pop_group_x}
+
+buyer_location:               {level: event, has_id: true}
+buyer_region:                 {level: event, has_id: true}
+buyer_city:                   {level: event, has_id: true, parent: buyer_region}
+buyer_location_group:         {level: event, has_id: true}
+buyer_location_level:         {level: event, has_id: true}
+buyer_population_group:       {level: event}
+
+# Булевы дименшены -----------------------------------------------------------------------------------------------------
+is_asd:                   {level: event,       is_bool: true}
+is_core_content:          {level: event,       is_bool: true, slug: is_core}
+is_intercity:             {level: event,       is_bool: true}
+is_user_new:              {level: participant, is_bool: true}
+is_cookie_new:            {level: participant_platform, is_bool: true, slug: new, description: "Новая кука"}
+is_logged_in:             {level: participant_platform, is_bool: true, slug: auth, description: "Пользователь залогинен"}
+is_human:                 {level: participant, is_bool: true}
+is_delivery_paid_new:     {level: event,       is_bool: true}
+is_delivery_accepted_new: {level: event,       is_bool: true}
+is_pro:                   {level: event, is_bool: true}
+is_main_page_session:     {level: event, is_bool: true}
+is_session_to_exclude:    {level: event, is_bool: true}
+is_authorized:            {level: event, is_bool: true}
+is_new_user:              {level: event, is_bool: true}
+has_avito_bindings:       {level: event, is_bool: true}
+is_cart:                  {level: event, is_bool: true}
+is_high_price:            {level: event, is_bool: true}
+is_between_15k_and_20k_price: {level: event, is_bool: true}
+is_between_10k_and_15k_price: {level: event, is_bool: true}
+is_less_than_10k_price:       {level: event, is_bool: true}
+return_within_14_days:        {level: event, is_bool: true}
+b2c_wo_dbs:                   {level: event, is_bool: true}
+c2c_return_within_14_days:    {level: event, is_bool: true}
+in_sale:                  {level: event, is_bool: true}
+has_sbp_bindings:         {level: event, is_bool: true}
+has_review:               {level: event, is_bool: true}
+same_location:            {level: event, is_bool: true}
+same_region:              {level: event, is_bool: true}
+is_federal_seller:        {level: event, is_bool: true, slug: federal_seller, description: "Федеральный продавец айтема"}
+has_opened_delivery_wallet:  {level: event, is_bool: true}
+
+# event-level ----------------------------------------------------------------------------------------------------------
+platform:                   {level: event, has_id: true, description: "Платформа"}
+asd_user_group:             {level: event, has_id: true}
+condition:                  {level: event, has_id: true}
+phone_region:               {level: event, has_id: true}
+phone_city:                 {level: event, has_id: true}
+phone_location_group:       {level: event, has_id: true}
+phone_location_level:       {level: event, has_id: true}
+rec_engine:                 {level: event, has_id: true, slug: engine}
+user_segment_market:        {level: event}
+user_segment:               {level: event, slug: iseg, description: "Тип пользователя рассчитываемый на каждый день"}
+seller_segment_marketplace: {level: event}
+price_group:                {level: event}
+appversion:                 {level: event}
+content_type:               {level: event, slug: content, description: "Тип контента"}
+from_page:                  {level: event}
+logical_region:             {level: event}
+network_type:               {level: event, slug: network, description: "Тип сети"}
+page_from:                  {level: event, slug: vas, description: "Страница размещеня сценария покупки VAS-услуги"}
+phone_population_group:     {level: event}
+screen_name:                {level: event, slug: screen, description: "Имя экрана"}
+sphinx_context:             {level: event}
+stage_name:                 {level: event}
+tariff_subtype:             {level: event}
+tariff_type:                {level: event}
+tariffvertical_name:        {level: event}
+payment_method:             {level: event}
+reports_count:              {level: event}
+searchtype:                 {level: event}
+delivery_workflow:          {level: event}
+delivery_service:           {level: event}
+autoteka_car_age_group:     {level: event}
+autoteka_car_price_group:   {level: event}
+autoteka_mileage_group:     {level: event}
+boost_class:                {level: event, has_id: true}
+chat_role:                  {level: event}
+payment_flow:               {level: event}
+buyer_cluster:              {level: event, description: "Баерский сегмент в RE STR"}
+review_add_trigger:         {level: event, description: "Триггер, по которому оставлен отзыв"}
+review_page_from:           {level: event, description: "Точка входа в форму оставления отзыва"}
+order_status:               {level: event, description: "Статус, в котором был заказ, когда был оставлен отзыв"}
+buyer_review_form_type:     {level: event, description: "Продуктовый запуск отзывов на покупателей"}
+wallet_user_type:           {level: event}
+reputation_color:           {level: event, description: "Цвет репутации пользователя"}
+
+# participant platform (useragent) ---------------------------------------------
+app_version:              {level: participant_platform, slug: app_ver}
+vendor:                   {level: participant_platform}
+type_device:              {level: participant_platform, slug: device}
+os_version:               {level: participant_platform, slug: os_ver}
+os_name:                  {level: participant_platform, slug: os}
+model:                    {level: participant_platform}
+browser:                  {level: participant_platform}
+app_category:             {level: participant_platform, slug: app_c}
+app:                      {level: participant_platform}
+display_size:             {level: participant_platform, slug: disp_s}
+display_X:                {level: participant_platform, slug: disp_x}
+display_Y:                {level: participant_platform, slug: disp_y}
+browser_version:          {level: participant_platform, slug: browser_ver}
+user_experience:          {level: participant_platform}
+
+# other ------------------------------------------------------------------------
+seeker_segment:           {level: buyer_segment}
+ad_segment:               {level: buyer_segment}
+seller_segment:           {level: buyer_segment}
+type_contacts_segment:    {level: buyer_segment}
+attendance_segment:       {level: buyer_segment}
+quantity_c:               {level: buyer_segment}
+quantity_iv:              {level: buyer_segment}
+buyer_order_group:        {level: buyer_orders}
+traffic_source_paid_free: {level: marketing_traffic_source, has_id: true}
+traffic_source_agg:       {level: marketing_traffic_source, has_id: true, parent: traffic_source_paid_free}
+traffic_source:           {level: marketing_traffic_source, has_id: true, parent: traffic_source_agg, slug: traffic, description: "Верхнеуровневый источник куки"}
+re_target_segment:        {level: re_target_segment}
+
+# Специфичные для M42 --------------------------------------------------------------------------------------------------
+is_participant_new:       {level: participant, is_bool: true}
+metric_date:              {level: participant}
+
+# Специфичные для AB ---------------------------------------------------------------------------------------------------
+user_location_level:         {level: users_home_location_segment, has_id: true}
+user_location_group:         {level: users_home_location_segment, has_id: true}
+user_population_group:       {level: users_home_location_segment}
+user_region:                 {level: users_home_location_segment, has_id: true}
+user_city:                   {level: users_home_location_segment, has_id: true}
+
+# Дименшены внутренних инструментов
+ldap_user:                   {level: event, has_id: false, is_bool: false}
+picked_metric:               {level: event, has_id: true, is_bool: false}
+
+engine_recommendation:  {level: event, has_id: false, is_bool: false, slug: engine, description: "Наименование способа рекомендации Item"}
+is_first_page:          {level: event, has_id: false, is_bool: true, slug: is_1p, description: "Первая страница экрана"}
+item_user_segment:      {level: event, has_id: false, is_bool: false, slug: iseg}
+x_rec_engine:           {level: event, has_id: true, slug: engine_x}
+x_logical_param1:       {level: event, has_id: true}
+x_logical_param2:       {level: event, has_id: true}
+x_param5:               {level: event, has_id: true}
+param5:                 {level: event, has_id: true}
+vas_path:               {level: event, has_id: false, is_bool: false}
+messenger_role:         {level: event, has_id: false, is_bool: false}
+
+# Иерархия доставочных категорий ---------------------------------------------------------------------------------------
+delivery_category:                 {level: event, has_id: true}
+delivery_subcategory:              {level: event, has_id: true, parent: delivery_category}
+delivery_param1:                        {level: event, has_id: true, parent: delivery_subcategory}
+delivery_param2:                        {level: event, has_id: true, parent: delivery_param1}
+delivery_param3:                        {level: event, has_id: true, parent: delivery_param2}
+delivery_infomodel_param:               {level: event, has_id: true, parent: delivery_param3}
+delivery_infomodel_param2:              {level: event, has_id: true, parent: delivery_infomodel_param}
+
+deliverability_flow:                    {level: event}

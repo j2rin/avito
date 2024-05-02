@@ -63,3 +63,4 @@ select
 from dma.broker_full_events bfe
 left join DMA.current_microcategories cm on cm.microcat_id=bfe.microcat_id
 where cast(bfe.event_date as date) between :first_date and :last_date
+    -- and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino

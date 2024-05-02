@@ -1,0 +1,31 @@
+metric.counter:
+  all_reviews_declined:                       {filter: [eventtype_id.in: [169073000001]]}
+  negative_reviews_declined:                  {filter: [eventtype_id.in: [169073000001], score.in: [1,2,3]]}
+  positive_reviews_declined:                  {filter: [eventtype_id.in: [169073000001], score.in: [4,5]]}
+  rating_reviews_declined:                    {filter: [eventtype_id.in: [169073000001], stage.in: [1,2]]}
+  rating_negative_reviews_declined:           {filter: [eventtype_id.in: [169073000001], stage.in: [1,2], score.in: [1,2,3]]}
+  rating_positive_reviews_declined:           {filter: [eventtype_id.in: [169073000001], stage.in: [1,2], score.in: [4,5]]}
+  all_reviews_content_declined:               {filter: [eventtype_id.in: [169073000001], $or: [fraud_code_reason1.in: [791, 910, 806, 2024], fraud_code_reason2.in: [791, 910, 806, 2024], fraud_code_reason3.in: [791, 910, 806, 2024]]]}
+  negative_reviews_content_declined:          {filter: [eventtype_id.in: [169073000001], score.in: [1,2,3], $or: [fraud_code_reason1.in: [791, 910, 806, 2024], fraud_code_reason2.in: [791, 910, 806, 2024], fraud_code_reason3.in: [791, 910, 806, 2024]]]}
+  positive_reviews_content_declined:          {filter: [eventtype_id.in: [169073000001], score.in: [4,5], $or: [fraud_code_reason1.in: [791, 910, 806, 2024], fraud_code_reason2.in: [791, 910, 806, 2024], fraud_code_reason3.in: [791, 910, 806, 2024]]]}
+  all_reviews_allowed:                        {filter: [eventtype_id.in: [169075750001]]}
+  negative_reviews_allowed:                   {filter: [eventtype_id.in: [169075750001], score.in: [1,2,3]]}
+  positive_reviews_allowed:                   {filter: [eventtype_id.in: [169075750001], score.in: [4,5]]}
+  
+metric.uniq:
+  user_all_reviews_declined:                  {counter: all_reviews_declined,               key: [user]}
+  user_negative_reviews_declined:             {counter: negative_reviews_declined,          key: [user]}
+  user_positive_reviews_declined:             {counter: positive_reviews_declined,          key: [user]}
+  user_rating_reviews_declined:               {counter: rating_reviews_declined,            key: [user]}
+  user_rating_negative_reviews_declined:      {counter: rating_negative_reviews_declined,   key: [user]}
+  user_rating_positive_reviews_declined:      {counter: rating_positive_reviews_declined,   key: [user]}  
+  user_all_reviews_content_declined:          {counter: all_reviews_content_declined,       key: [user]}
+  user_negative_reviews_content_declined:     {counter: negative_reviews_content_declined,  key: [user]}
+  user_positive_reviews_content_declined:     {counter: positive_reviews_content_declined,  key: [user]}
+  user_all_reviews_allowed:                   {counter: all_reviews_allowed,                key: [user]}
+  user_negative_reviews_allowed:              {counter: negative_reviews_allowed,           key: [user]}
+  user_positive_reviews_allowed:              {counter: positive_reviews_allowed,           key: [user]}
+ 
+metric.ratio:
+  negative_reviews_content_declined_share:    {num: negative_reviews_content_declined,  den: all_negative_reviews_added}
+  negative_reviews_allowed_share:             {num: negative_reviews_allowed,           den: all_negative_reviews_added}

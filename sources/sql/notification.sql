@@ -9,6 +9,8 @@ SELECT
     notification_type, 
     notification_value, 
     is_notifications_on, 
-    events_count
+    events_count,
+    notification
 FROM dma.notifications_metric_observation_new d
 where cast(observation_date as date) between :first_date and :last_date
+    --and observation_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) --@trino

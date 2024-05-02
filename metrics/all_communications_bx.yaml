@@ -1,4 +1,7 @@
 definitions:
+
+  - &communications               [iac, gsm, msg]
+
   - &call                         [iac, gsm]
   - &is_msg                       {communication: msg}
   - &is_iac                       {communication: iac}
@@ -11,6 +14,12 @@ definitions:
   - &is_target                    {type: target}
   - &reply_time_not_zero          {reply_time_minutes.>=: 0} # порог для месенджера
   - &reply_3days                  {reply_time_minutes.<=: 4320} # порог для месенджера
+  - &is_comns                     {communication: *communications}
+  - &is_trx                       {communication.!in: ["iac", "gsm", "msg"]}
+  - &is_success_call              {talk_duration.>: 30}
+  - &is_answered_call             {talk_duration.>: 0}
+  - &is_fancy					  {is_fancy: True}
+  - &has_short_video			  {has_short_video: True}	
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
@@ -30,32 +39,173 @@ metric.counter:
   iac_bx_outgoing_call_dur:                              {filter: [*is_iac, *is_common_funnel], obs: [call_duration]}
   iac_bx_outgoing_talk_dur:                              {filter: [*is_iac, *is_common_funnel], obs: [talk_duration]}
 
+  msg_bx:                                                {filter: [*is_msg, *is_common_funnel]}
+  msg_bx_answered:                                       {filter: [*is_msg, *is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
+  msg_bx_target:                                         {filter: [*is_msg, *is_common_funnel, *is_target]}
+
   calls_bx_outgoing:                                     {filter: [*is_call, *is_common_funnel]}
+  call_bx:                                               {filter: [*is_call, *is_common_funnel]} #old
   calls_bx_outgoing_answered:                            {filter: [*is_call, *is_common_funnel, *is_answered]}
+  answered_call_bx:                                      {filter: [*is_call, *is_common_funnel, *is_answered]} #old
   calls_bx_outgoing_trash:                               {filter: [*is_call, *is_common_funnel, *is_trash]}
   calls_bx_outgoing_preliminary:                         {filter: [*is_call, *is_common_funnel, *is_preliminary]}
   calls_bx_outgoing_target:                              {filter: [*is_call, *is_common_funnel, *is_target]}
+  target_contact_call_bx:                                {filter: [*is_call, *is_common_funnel, *is_target]} # old
   calls_bx_outgoing_call_dur:                            {filter: [*is_call, *is_common_funnel], obs: [call_duration]}
   calls_bx_outgoing_talk_dur:                            {filter: [*is_call, *is_common_funnel], obs: [talk_duration]}
+  target_contact_call_bx_talkseconds:                    {filter: [*is_call, *is_common_funnel, *is_target], obs: [talk_duration]} #old
+  target_contact_call_bx_success:                        {filter: [*is_target, *is_success_call, *is_call, *is_common_funnel,]} # old
 
-  comns_bx_outgoing:                                     {filter: [*is_common_funnel]}
-  comns_bx_outgoing_answered:                            {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
-  comns_bx_outgoing_trash:                               {filter: [*is_common_funnel, *is_trash]}
-  comns_bx_outgoing_preliminary:                         {filter: [*is_common_funnel, *is_preliminary]}
-  comns_bx_outgoing_target:                              {filter: [*is_common_funnel, *is_target]}
+  comns_bx_outgoing:                                     {filter: [*is_common_funnel, *is_comns]}
+  comns_bx_outgoing_answered:                            {filter: [*is_common_funnel, *is_comns, *is_answered, *reply_time_not_zero, *reply_3days]}
+  comns_bx_outgoing_trash:                               {filter: [*is_common_funnel, *is_comns, *is_trash]}
+  comns_bx_outgoing_preliminary:                         {filter: [*is_common_funnel, *is_comns, *is_preliminary]}
+  comns_bx_outgoing_target:                              {filter: [*is_common_funnel, *is_comns, *is_target]}
+
+  contacts_all_2_0:                                      {filter: [*is_common_funnel]}
+  contacts_all_exp:                                      {}
+  answered_contacts_2_0:                                 {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days]}
+  answered_contacts_exp:                                 {filter: [*is_answered, *reply_time_not_zero, *reply_3days]}
+  target_contacts_all_2_0:                               {filter: [*is_common_funnel, *is_target]}
+  target_contacts_all_exp:                               {filter: [*is_target]}
+  target_contact_all:                                    {filter: [*is_common_funnel, *is_target]} #old
+  contacts_transactions:                                 {filter: [*is_common_funnel,*is_trx]}
+  answered_transactions:                                 {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days, *is_trx]}
+  target_transactions:                                   {filter: [*is_common_funnel, *is_target, *is_trx]}
+
+  target_contact_chat:                                   {filter: [*is_msg, *is_common_funnel, *is_target]} #old
+  trash_contact:                                         {filter: [*is_common_funnel, *is_comns, *is_trash]} #old
+  preliminary_contact:                                   {filter: [*is_common_funnel, *is_comns, *is_preliminary]} #old
+  trash_contact_chat:                                    {filter: [*is_common_funnel, *is_msg, *is_trash]} #old
+  preliminary_contact_chat:                              {filter: [*is_common_funnel, *is_msg, *is_preliminary]} #old
+  trash_contact_call:                                    {filter: [*is_common_funnel, *is_call, *is_trash]} #old
+  preliminary_contact_call:                              {filter: [*is_common_funnel, *is_call, *is_preliminary]} #old
+  trash_contact_iac:                                     {filter: [*is_common_funnel, *is_iac, *is_trash]} #old
+  preliminary_contact_iac:                               {filter: [*is_common_funnel, *is_iac, *is_preliminary]} #old
+  trash_contact_ct:                                      {filter: [*is_common_funnel, *is_gsm, *is_trash]} #old
+  preliminary_contact_ct:                                {filter: [*is_common_funnel, *is_gsm, *is_preliminary]} #old
+
+  call_delivery_agreement:                              {filter: [*is_common_funnel, {tags.ilike: 'delivery_agreement'} , *is_call]} #old
+  call_sending_docs:                                    {filter: [*is_common_funnel, {tags.ilike: 'sending_docs'} , *is_call]} #old
+  call_item_deal_discussion:                            {filter: [*is_common_funnel, {tags.ilike: 'item_deal_discussion'} , *is_call]} #old
+  call_agent_call:                                      {filter: [*is_common_funnel, {tags.ilike: 'agent_call'} , *is_call]} #old
+  call_refused_by_employer:                             {filter: [*is_common_funnel, {tags.ilike: 'refused_by_employer'} , *is_call]} #old
+  call_call_later_no_meeting:                           {filter: [*is_common_funnel, {tags.ilike: 'call_later_no_meeting'} , *is_call]} #old
+  call_mistake:                                         {filter: [*is_common_funnel, {tags.ilike: 'mistake'} , *is_call]} #old
+  call_different_number:                                {filter: [*is_common_funnel, {tags.ilike: 'different_number'} , *is_call]} #old
+  call_dispatcher_call:                                 {filter: [*is_common_funnel, {tags.ilike: 'dispatcher_call'} , *is_call]} #old
+  call_meeting_moment:                                  {filter: [*is_common_funnel, {tags.ilike: 'meeting_moment'} , *is_call]} #old
+  call_going_for_interview:                             {filter: [*is_common_funnel, {tags.ilike: 'going_for_interview'} , *is_call]} #old
+  call_fast_hiring:                                     {filter: [*is_common_funnel, {tags.ilike: 'fast_hiring'} , *is_call]} #old
+  call_spam:                                            {filter: [*is_common_funnel, {tags.ilike: 'spam'} , *is_call]} #old
+  call_contact_exchange:                                {filter: [*is_common_funnel, {tags.ilike: 'contact_exchange'} , *is_call]} #old
+  call_auto_ru:                                         {filter: [*is_common_funnel, {tags.ilike: 'auto_ru'} , *is_call]} #old
+  call_discrimination:                                  {filter: [*is_common_funnel, {tags.ilike: 'discrimination'} , *is_call]} #old
+  call_illegal_vacancy:                                 {filter: [*is_common_funnel, {tags.ilike: 'illegal_vacancy'} , *is_call]} #old
+  call_unclear:                                         {filter: [*is_common_funnel, {tags.ilike: 'unclear'} , *is_call]} #old
+  call_delivery_discussion:                             {filter: [*is_common_funnel, {tags.ilike: 'delivery_discussion'} , *is_call]} #old
+  call_ask_for_resume:                                  {filter: [*is_common_funnel, {tags.ilike: 'ask_for_resume'} , *is_call]} #old
+  call_applicant_refused:                               {filter: [*is_common_funnel, {tags.ilike: 'applicant_refused'} , *is_call]} #old
+  call_different_offer:                                 {filter: [*is_common_funnel, {tags.ilike: 'different_offer'} , *is_call]} #old
+  call_agreed_on_booking:                               {filter: [*is_common_funnel, {tags.ilike: 'agreed_on_booking'} , *is_call]} #old
+  call_already_sold:                                    {filter: [*is_common_funnel, {tags.ilike: 'already_sold'} , *is_call]} #old
+  call_irrelevant_applicant:                            {filter: [*is_common_funnel, {tags.ilike: 'irrelevant_applicant'} , *is_call]} #old
+  call_autoreply:                                       {filter: [*is_common_funnel, {tags.ilike: 'autoreply'} , *is_call]} #old
+  call_failed_call:                                     {filter: [*is_common_funnel, {tags.ilike: 'failed_call'} , *is_call]} #old
+  call_failed_agreement:                                {filter: [*is_common_funnel, {tags.ilike: 'failed_agreement'} , *is_call]} #old
+  call_closed_vacancy:                                  {filter: [*is_common_funnel, {tags.ilike: 'closed_vacancy'} , *is_call]} #old
+  call_going_to_meet:                                   {filter: [*is_common_funnel, {tags.ilike: 'going_to_meet'} , *is_call]} #old
+
+  chat_first_class:                                     {filter: [*is_common_funnel, {tags.ilike: '1'} , *is_msg]} #old
+  chat_second_class:                                    {filter: [*is_common_funnel, {tags.ilike: '2'} , *is_msg]} #old
+  chat_third_class:                                     {filter: [*is_common_funnel, {tags.ilike: '3'} , *is_msg]} #old
+  chat_fourth_class:                                    {filter: [*is_common_funnel, {tags.ilike: '4'} , *is_msg]} #old
+  chat_fifth_class:                                     {filter: [*is_common_funnel, {tags.ilike: '5'} , *is_msg]} #old
+  chat_sixth_class:                                     {filter: [*is_common_funnel, {tags.ilike: '6'} , *is_msg]} #old
+  chat_seventh_class:                                   {filter: [*is_common_funnel, {tags.ilike: '7'} , *is_msg]} #old
+  chat_eighth_class:                                    {filter: [*is_common_funnel, {tags.ilike: '8'} , *is_msg]} #old
+  chat_buyer_contact_exchange:                          {filter: [*is_common_funnel, {tags.ilike: '9_contact_exchange_buyer'} , *is_msg]} #old
+  chat_seller_contact_exchange:                         {filter: [*is_common_funnel, {tags.ilike: '10_contact_exchange_seller'} , *is_msg]} #old
+  
+  target_contact_fancy:                                  {filter: [*is_common_funnel, *is_target, *is_fancy]} 
+  target_contact_video:									                 {filter: [*is_common_funnel, *is_target, *has_short_video]}
+
+  target_contacts_new:                                   {filter: [*is_common_funnel, *is_target, {is_target_buyer_new: True}]} 
+  target_contacts_returned:                              {filter: [*is_common_funnel, *is_target, {is_target_buyer_new: True}]} 
 
 metric.uniq:
-  calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [logcat_item]}
-  calls_bx_outgoing_answered_canonical:                  {counter: calls_bx_outgoing_answered,     key: [logcat_item]}
-  calls_bx_outgoing_trash_canonical:                     {counter: calls_bx_outgoing_trash,        key: [logcat_item]}
-  calls_bx_outgoing_preliminary_canonical:               {counter: calls_bx_outgoing_preliminary,  key: [logcat_item]}
-  calls_bx_outgoing_target_canonical:                    {counter: calls_bx_outgoing_target,       key: [logcat_item]}
+  calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [item_id, logical_category_id]}
+  calls_bx_outgoing_answered_canonical:                  {counter: calls_bx_outgoing_answered,     key: [item_id, logical_category_id]}
+  calls_bx_outgoing_trash_canonical:                     {counter: calls_bx_outgoing_trash,        key: [item_id, logical_category_id]}
+  calls_bx_outgoing_preliminary_canonical:               {counter: calls_bx_outgoing_preliminary,  key: [item_id, logical_category_id]}
+  calls_bx_outgoing_target_canonical:                    {counter: calls_bx_outgoing_target,       key: [item_id, logical_category_id]}
 
-  comns_bx_outgoing_canonical:                           {counter: comns_bx_outgoing,              key: [logcat_item]}
-  comns_bx_outgoing_answered_canonical:                  {counter: comns_bx_outgoing_answered,     key: [logcat_item]}
-  comns_bx_outgoing_trash_canonical:                     {counter: comns_bx_outgoing_trash,        key: [logcat_item]}
-  comns_bx_outgoing_preliminary_canonical:               {counter: comns_bx_outgoing_preliminary,  key: [logcat_item]}
-  comns_bx_outgoing_target_canonical:                    {counter: comns_bx_outgoing_target,       key: [logcat_item]}
+  comns_bx_outgoing_canonical:                           {counter: comns_bx_outgoing,              key: [item_id, logical_category_id]}
+  comns_bx_outgoing_answered_canonical:                  {counter: comns_bx_outgoing_answered,     key: [item_id, logical_category_id]}
+  comns_bx_outgoing_trash_canonical:                     {counter: comns_bx_outgoing_trash,        key: [item_id, logical_category_id]}
+  comns_bx_outgoing_preliminary_canonical:               {counter: comns_bx_outgoing_preliminary,  key: [item_id, logical_category_id]}
+  comns_bx_outgoing_target_canonical:                    {counter: comns_bx_outgoing_target,       key: [item_id, logical_category_id]}
+
+  transactions_bx_canonical:                             {counter: contacts_transactions,          key: [item_id, logical_category_id]}
+  transactions_bx_answered_canonical:                    {counter: answered_transactions,          key: [item_id, logical_category_id]}
+  transactions_bx_target_canonical:                      {counter: target_transactions,            key: [item_id, logical_category_id]}
+
+  contacts_canonical_2_0:                                {counter: contacts_all_2_0,               key: [item_id, logical_category_id]}
+  buyers_canonical_2_0:                                  {counter: contacts_all_2_0,               key: [buyer_id, logical_category_id]}
+  user_contacts_2_0:                                     {counter: contacts_all_2_0,               key: [user]}  
+  contacts_canonical_exp:                                {counter: contacts_all_exp,               key: [buyer_cookie_id, item_id, logical_category_id]}
+  buyers_canonical_exp:                                  {counter: contacts_all_exp,               key: [buyer_cookie_id, logical_category_id]}
+  user_contacts_exp:                                     {counter: contacts_all_exp,               key: [cookie]}
+  target_contacts_canonical_2_0:                         {counter: target_contacts_all_2_0,         key: [item_id, logical_category_id]}
+  target_buyers_canonical_2_0:                           {counter: target_contacts_all_2_0,         key: [buyer_id, logical_category_id]}
+  target_contacts_canonical_exp:                         {counter: target_contacts_all_exp,         key: [buyer_cookie_id, item_id, logical_category_id]}
+  target_buyers_canonical_exp:                           {counter: target_contacts_all_exp,         key: [buyer_cookie_id, logical_category_id]}
+
+  user_target_contacts_2_0:                              {counter: target_contacts_all_2_0,         key: [user]}
+  user_asnwered_contacts_2_0:                            {counter: answered_contacts_2_0,         key: [user]}
+  user_target_contacts_exp:                              {counter: target_contacts_all_exp,         key: [cookie]}
+  user_answered_contacts_exp:                            {counter: answered_contacts_exp,         key: [cookie]}
+
+  target_buyers_new_exp:                                 {counter: target_contacts_new,         key: [buyer_cookie_id, logical_category_id]}
+  target_buyers_returned_exp:                            {counter: target_contacts_returned,    key: [buyer_cookie_id, logical_category_id]}
+
+  user_target_contact_call_bx:                           {counter: target_contact_call_bx, key: [user]} #old
+  user_target_contact_call_bx_success:                   {counter: target_contact_call_bx_success, key: [user]} #old
+  user_answered_call_bx:                                 {counter: answered_call_bx, key: [user]} #old
+  user_call_bx:                                          {counter: call_bx, key: [user]} #old
+
+  user_target_contact_chat:                              {counter: target_contact_chat,            key: [user]} #old
+
+  target_buyers_any:                                     {counter: target_contact_all,     key: [buyer_id]} #old
+  user_target_contact:                                   {counter: target_contact_all,     key: [user]} #old
+  target_contact_canonical:                              {counter: target_contact_all,      key: [item_id, logical_category_id]} #old
+  target_buyers_canonical:                               {counter: target_contact_all,      key: [buyer_id, logical_category_id]} #old
+
+  # Logcat uniq metrics
+  comns_bx_outgoing_buyers_canonical:                    {counter: comns_bx_outgoing,              key: [buyer_id, logical_category_id]}
+  comns_bx_outgoing_answered_buyers_canonical:           {counter: comns_bx_outgoing_answered,     key: [buyer_id, logical_category_id]}
+  comns_bx_outgoing_trash_buyers_canonical:              {counter: comns_bx_outgoing_trash,        key: [buyer_id, logical_category_id]}
+  comns_bx_outgoing_preliminary_buyers_canonical:        {counter: comns_bx_outgoing_preliminary,  key: [buyer_id, logical_category_id]}
+  comns_bx_outgoing_target_buyers_canonical:             {counter: comns_bx_outgoing_target,       key: [buyer_id, logical_category_id]}
+  transactions_bx_buyers_canonical:                      {counter: contacts_transactions,          key: [buyer_id, logical_category_id]}
+  transactions_bx_answered_buyers_canonical:             {counter: answered_transactions,          key: [buyer_id, logical_category_id]}
+  transactions_bx_target_buyers_canonical:               {counter: target_transactions,            key: [buyer_id, logical_category_id]}
+  iac_bx_outgoing_buyers_canonical:                      {counter: iac_bx_outgoing,                key: [buyer_id, logical_category_id]}
+  iac_bx_outgoing_answered_buyers_canonical:             {counter: iac_bx_outgoing_answered,       key: [buyer_id, logical_category_id]}
+  iac_bx_outgoing_target_buyers_canonical:               {counter: iac_bx_outgoing_target,         key: [buyer_id, logical_category_id]}
+  gsm_bx_buyers_canonical:                               {counter: gsm_bx,                         key: [buyer_id, logical_category_id]}
+  gsm_bx_answered_buyers_canonical:                      {counter: gsm_bx_answered,                key: [buyer_id, logical_category_id]}
+  gsm_bx_target_buyers_canonical:                        {counter: gsm_bx_target,                  key: [buyer_id, logical_category_id]}
+  contacts_all_buyers_canonical:                         {counter: contacts_all_2_0,               key: [buyer_id, logical_category_id]}
+  answered_contacts_buyers_canonical:                    {counter: answered_contacts_2_0,          key: [buyer_id, logical_category_id]}
+  target_contacts_buyers_canonical:                      {counter: target_contacts_all_2_0,        key: [buyer_id, logical_category_id]}
+  msg_bx_buyers_canonical:                               {counter: msg_bx,                         key: [buyer_id, logical_category_id]}
+  msg_bx_answered_buyers_canonical:                      {counter: msg_bx_answered,                key: [buyer_id, logical_category_id]}
+  msg_bx_target_buyers_canonical:                        {counter: msg_bx_target,                  key: [buyer_id, logical_category_id]}
+  
+  target_buyer_fancy:									 {counter: target_contact_fancy,		   key: [buyer_id, logical_category_id]}
+  target_buyer_video:									 {counter: target_contact_video,		   key: [buyer_id, logical_category_id]}
+
 
 metric.ratio:
   gsm_bx_outgoing_call_dur_per_call:                     {num: gsm_bx_outgoing_call_dur,            den: gsm_bx}
@@ -64,3 +214,12 @@ metric.ratio:
   gsm_bx_outgoing_talk_dur_per_call:                     {num: gsm_bx_outgoing_talk_dur,            den: gsm_bx}
   iac_bx_outgoing_talk_dur_per_call:                     {num: iac_bx_outgoing_talk_dur,            den: iac_bx_outgoing}
   calls_bx_outgoing_talk_dur_per_call:                   {num: calls_bx_outgoing_talk_dur,          den: calls_bx_outgoing}
+
+  iac_bx_outgoing_answered_ratio:                        {num: iac_bx_outgoing_answered, den: iac_bx_outgoing}
+  gsm_bx_outgoing_answered_ratio:                        {num: gsm_bx_answered, den: gsm_bx}
+
+  target_contact_call_bx_ratio:                          {num: target_contact_call_bx, den: call_bx} #old
+  user_target_contact_call_bx_ratio:                     {num: user_target_contact_call_bx, den: user_call_bx} #old
+  target_contact_call_bx_ratio_answered:                 {num: target_contact_call_bx, den: answered_call_bx} #old
+
+  iac_share_bx:                                           {num: iac_bx_outgoing_talk_dur, den: calls_bx_outgoing_talk_dur}

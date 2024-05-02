@@ -1,4 +1,9 @@
 metric.counter:
+  # auth attempts
+  total_auth_attempts:                     {obs: [auth_attempts]}
+  direct_auth_attempts:                    {obs: [auth_attempts], filter: [auth_source: 'auth']}
+  restore_phone_attempts:                  {obs: [auth_attempts], filter: [auth_source: 'restore_phone']}
+  restore_email_attempts:                  {obs: [auth_attempts], filter: [auth_source: 'restore_phone']}
   # suspicious auth attempts by auth source
   susp_auth_attempts:                           {obs: [susp_auth_attempts]}
   susp_direct_auth_attempts:                    {obs: [susp_auth_attempts], filter: [auth_source: 'auth']}
@@ -10,6 +15,11 @@ metric.counter:
   not_susp_restore_phone_attempts:              {obs: [not_susp_auth_attempts], filter: [auth_source: 'restore_phone']}
   not_susp_restore_email_attempts:              {obs: [not_susp_auth_attempts], filter: [auth_source: 'restore_phone']}
 
+  # auth attempts with check by auth source
+  auth_attempts_with_check:             {obs: [auth_attempts_with_check]}
+  direct_auth_with_check:               {obs: [auth_attempts_with_check], filter: [auth_source: 'auth']}
+  restore_phone_attempts_with_check:    {obs: [auth_attempts_with_check], filter: [auth_source: 'restore_phone']}
+  restore_email_attempts_with_check:    {obs: [auth_attempts_with_check], filter: [auth_source: 'restore_phone']}
   # suspicious auth attempts with check by auth source
   susp_auth_attempts_with_check:                {obs: [susp_auth_attempts_with_check]}
   susp_direct_auth_with_check:               {obs: [susp_auth_attempts_with_check], filter: [auth_source: 'auth']}
@@ -21,6 +31,11 @@ metric.counter:
   not_susp_restore_phone_attempts_with_check:     {obs: [not_susp_auth_attempts_with_sheck], filter: [auth_source: 'restore_phone']}
   not_susp_restore_email_attempts_with_check:     {obs: [not_susp_auth_attempts_with_sheck], filter: [auth_source: 'restore_phone']}
 
+  # auth success by auth source
+  total_auth_success:                    {obs: [auth_success]}
+  direct_auth_success:             {obs: [auth_success], filter: [auth_source: 'auth']}
+  restore_phone_success:           {obs: [auth_success], filter: [auth_source: 'restore_phone']}
+  restore_email_success:           {obs: [auth_success], filter: [auth_source: 'restore_phone']}
   # suspicious auth success by auth source
   susp_auth_success:                    {obs: [susp_auth_success]}
   susp_direct_auth_success:               {obs: [susp_auth_success], filter: [auth_source: 'auth']}
@@ -32,6 +47,11 @@ metric.counter:
   not_susp_restore_phone_success:          {obs: [not_susp_auth_success], filter: [auth_source: 'restore_phone']}
   not_susp_restore_email_success:          {obs: [not_susp_auth_success], filter: [auth_source: 'restore_phone']}
 
+  # auth success with check by auth source
+  auth_success_with_check:               {obs: [auth_success_with_check]}
+  direct_auth_success_with_check:        {obs: [auth_success_with_check], filter: [auth_source: 'auth']}
+  restore_phone_success_with_check:      {obs: [auth_success_with_check], filter: [auth_source: 'restore_phone']}
+  restore_email_with_check:              {obs: [auth_success_with_check], filter: [auth_source: 'restore_phone']}
   # suspicious auth success with check by auth source
   susp_auth_success_with_check:               {obs: [susp_auth_success_with_check]}
   susp_direct_auth_success_with_check:          {obs: [susp_auth_success_with_check], filter: [auth_source: 'auth']}
@@ -43,6 +63,35 @@ metric.counter:
   not_susp_restore_phone_success_with_check:     {obs: [not_susp_auth_success_with_check], filter: [auth_source: 'restore_phone']}
   not_susp_restore_email_success_with_check:          {obs: [not_susp_auth_success_with_check], filter: [auth_source: 'restore_phone']}
 
+  # auth 31 days
+  auth_attempts_31_days: {obs: [auth_attempts_31_days]}
+  direct_auth_attempts_31_days: {obs: [auth_attempts_31_days], filter: [auth_source: 'auth']}
+  restore_phone_attempts_31_days: {obs: [auth_attempts_31_days], filter: [auth_source: 'restore_phone']}
+  restore_email_attempts_31_days: {obs: [auth_attempts_31_days], filter: [auth_source: 'restore_email']}
+  
+  auth_attempts_with_check_31_days: {obs: [auth_attempts_with_check_31_days]}
+  direct_auth_attempts_with_check_31_days: {obs: [auth_attempts_with_check_31_days], filter: [auth_source: 'auth']}
+  restore_phone_attempts_with_check_31_days: {obs: [auth_attempts_with_check_31_days], filter: [auth_source: 'restore_phone']}
+  restore_email_attempts_with_check_31_days: {obs: [auth_attempts_with_check_31_days], filter: [auth_source: 'restore_email']}
+  
+  auth_success_31_days: {obs: [auth_success_31_days]}
+  direct_auth_success_31_days: {obs: [auth_success_31_days], filter: [auth_source: 'auth']}
+  restore_phone_success_31_days: {obs: [auth_success_31_days], filter: [auth_source: 'restore_phone']}
+  restore_email_success_31_days: {obs: [auth_success_31_days], filter: [auth_source: 'restore_email']}
+  
+  auth_success_with_check_31_days: {obs: [auth_success_with_check_31_days]}
+  direct_auth_success_with_check_31_days: {obs: [auth_success_with_check_31_days], filter: [auth_source: 'auth']}
+  restore_phone_success_with_check_31_days: {obs: [auth_success_with_check_31_days], filter: [auth_source: 'restore_phone']}
+  restore_email_success_with_check_31_days: {obs: [auth_success_with_check_31_days], filter: [auth_source: 'restore_email']}
+
+  # hacked
+  hacked: {obs: [is_hacked]}
+  moderation_hack: {obs: [is_moderation_hack]}
+  fraudster_by_hack: {obs: [is_fraudster_by_hack]}
+  # hacked through by auth source
+  hacked_by_restore_phone: {obs: [is_hack_restore_phone]}
+  hacked_by_direct_auth: {obs: [is_hack_direct_auth]}
+  hacked_by_restore_email: {obs: [is_hack_restore_email]}
   # hacked through suspicious auth by auth source
   hacked_by_susp_auth:                    {obs: [is_hack_auth_susp]}
   hacked_by_susp_direct_auth:               {obs: [is_hack_direct_auth_susp]}
@@ -56,6 +105,12 @@ metric.counter:
 
 
 metric.uniq:
+  # user auth attempts
+  user_auth_attempts:                     {counter: total_auth_attempts, key: [user_id]}
+  user_direct_auth_attempts:                    {counter: direct_auth_attempts, key: [user_id]}
+  user_restore_phone_attempts:                  {counter: restore_phone_attempts, key: [user_id]}
+  user_restore_email_attempts:                  {counter: restore_email_attempts, key: [user_id]}
+  
   user_susp_auth_attempts:                    {counter: susp_auth_attempts,                    key: [user_id]}     
   user_susp_direct_auth_attempts:               {counter: susp_direct_auth_attempts,                   key: [user_id]} 
   user_susp_restore_phone_attempts:               {counter: susp_restore_phone_attempts,                   key: [user_id]}
@@ -65,7 +120,13 @@ metric.uniq:
   user_not_susp_direct_auth_attempts:               {counter: not_susp_direct_auth_attempts,             key: [user_id]}
   user_not_susp_restore_phone_attempts:               {counter: not_susp_restore_phone_attempts,             key: [user_id]}     
   user_not_susp_restore_email_attempts:               {counter: not_susp_restore_email_attempts,             key: [user_id]}     
-            
+
+  # user auth_attempts_with_check
+  user_auth_attempts_with_check:             {counter: auth_attempts_with_check, key: [user_id]}
+  user_direct_auth_with_check:               {counter: direct_auth_with_check, key: [user_id]}
+  user_restore_phone_attempts_with_check:    {counter: restore_phone_attempts_with_check, key: [user_id]}
+  user_restore_email_attempts_with_check:    {counter: restore_email_attempts_with_check, key: [user_id]}
+  
   user_susp_auth_attempts_with_check:               {counter: susp_auth_attempts_with_check,             key: [user_id]}     
   user_susp_direct_auth_with_check:               {counter: susp_direct_auth_with_check,                     key: [user_id]}
   user_susp_restore_phone_attempts_with_check:           {counter: susp_restore_phone_attempts_with_check,       key: [user_id]}     
@@ -75,6 +136,12 @@ metric.uniq:
   user_not_susp_direct_auth_with_check:                     {counter: not_susp_direct_auth_with_check,              key: [user_id]}
   user_not_susp_restore_phone_attempts_with_check:      {counter: not_susp_restore_phone_attempts_with_check,   key: [user_id]}     
   user_not_susp_restore_email_attempts_with_check:      {counter: not_susp_restore_email_attempts_with_check,   key: [user_id]}     
+  
+  # user auth success
+  user_auth_success:                    {counter: total_auth_success, key: [user_id]}
+  user_direct_auth_success:             {counter: direct_auth_success, key: [user_id]}
+  user_restore_phone_success:           {counter: restore_phone_success, key: [user_id]}
+  user_restore_email_success:           {counter: restore_email_success, key: [user_id]}
   
   user_susp_auth_success:                               {counter: susp_auth_success,                            key: [user_id]}     
   user_susp_direct_auth_success:               {counter: susp_direct_auth_success,                     key: [user_id]} 
@@ -86,6 +153,12 @@ metric.uniq:
   user_not_susp_restore_phone_success:                     {counter: not_susp_restore_phone_success,             key: [user_id]}     
   user_not_susp_restore_email_success:                  {counter: not_susp_restore_email_success,             key: [user_id]}     
   
+  # user auth success with check
+  user_auth_success_with_check:               {counter: auth_success_with_check, key: [user_id]}
+  user_direct_auth_success_with_check:        {counter: direct_auth_success_with_check, key: [user_id]}
+  user_restore_phone_success_with_check:      {counter: restore_phone_success_with_check, key: [user_id]}
+  user_restore_email_with_check:              {counter: restore_email_with_check, key: [user_id]}
+  
   user_susp_auth_success_with_check:                    {counter: susp_auth_success_with_check,                 key: [user_id]}     
   user_susp_direct_auth_success_with_check:             {counter: susp_direct_auth_success_with_check,          key: [user_id]}
   user_susp_restore_phone_success_with_check:           {counter: susp_restore_phone_success_with_check,        key: [user_id]}     
@@ -95,6 +168,37 @@ metric.uniq:
   user_not_susp_direct_auth_success_with_check:         {counter: not_susp_direct_auth_success_with_check,      key: [user_id]}
   user_not_susp_restore_phone_success_with_check:       {counter: not_susp_restore_phone_success_with_check,    key: [user_id]}     
   user_not_susp_restore_email_success_with_check:               {counter: not_susp_restore_email_success_with_check,            key: [user_id]}     
+  
+  # user auth 31 days
+  user_auth_attempts_31_days: {counter: auth_attempts_31_days, key: [user_id]}
+  user_direct_auth_attempts_31_days: {counter: direct_auth_attempts_31_days, key: [user_id]}
+  user_restore_phone_attempts_31_days: {counter: restore_phone_attempts_31_days, key: [user_id]}
+  user_restore_email_attempts_31_days: {counter: restore_email_attempts_31_days, key: [user_id]}
+  
+  user_auth_attempts_with_check_31_days: {counter: auth_attempts_with_check_31_days, key: [user_id]}
+  user_direct_auth_attempts_with_check_31_days: {counter: direct_auth_attempts_with_check_31_days, key: [user_id]}
+  user_restore_phone_attempts_with_check_31_days: {counter: restore_phone_attempts_with_check_31_days, key: [user_id]}
+  user_restore_email_attempts_with_check_31_days: {counter: restore_email_attempts_with_check_31_days, key: [user_id]}
+  
+  user_auth_success_31_days: {counter: auth_success_31_days, key: [user_id]}
+  user_direct_auth_success_31_days: {counter: direct_auth_success_31_days, key: [user_id]}
+  user_restore_phone_success_31_days: {counter: restore_phone_success_31_days, key: [user_id]}
+  user_restore_email_success_31_days: {counter: restore_email_success_31_days, key: [user_id]}
+  
+  user_auth_success_with_check_31_days: {counter: auth_success_with_check_31_days, key: [user_id]}
+  user_direct_auth_success_with_check_31_days: {counter: direct_auth_success_with_check_31_days, key: [user_id]}
+  user_restore_phone_success_with_check_31_days: {counter: restore_phone_success_with_check_31_days, key: [user_id]}
+  user_restore_email_success_with_check_31_days: {counter: restore_email_success_with_check_31_days, key: [user_id]}
+
+  
+  # user hacks
+  user_hacked: {counter: hacked, key: [user_id]}
+  user_moderation_hack: {counter: moderation_hack, key: [user_id]}
+  user_fraudster_by_hack: {counter: fraudster_by_hack, key: [user_id]}
+  
+  user_hacked_by_restore_phone: {counter: hacked_by_restore_phone, key: [user_id]}
+  user_hacked_by_direct_auth: {counter: hacked_by_direct_auth, key: [user_id]}
+  user_hacked_by_restore_email: {counter: hacked_by_restore_email, key: [user_id]}
   
   user_hacked_by_susp_auth:                             {counter: hacked_by_susp_auth,                          key: [user_id]}     
   user_hacked_by_susp_direct_auth:                      {counter: hacked_by_susp_direct_auth,                   key: [user_id]}
@@ -108,6 +212,19 @@ metric.uniq:
 
 metric.ratio:
   # conversion to hack from success auth by auth source and susp distribution
+  hacked_conv_from_auth:
+    num: user_hacked
+    den: user_auth_success
+  hacked_conv_from_direct_auth:
+    num: user_hacked_by_direct_auth
+    den: user_direct_auth_success
+  hacked_conv_from_restore_phone:
+    num: user_hacked_by_restore_phone
+    den: user_restore_phone_success
+  hacked_conv_from_restore_email:
+    num: user_hacked_by_restore_email
+    den: user_restore_email_success
+  
   hacked_conv_from_susp_auth:
     num: user_hacked_by_susp_auth
     den: user_susp_auth_success
@@ -133,8 +250,35 @@ metric.ratio:
   hacked_conv_from_not_susp_restore_email: 
    num: user_hacked_by_not_susp_restore_email
    den: user_not_susp_restore_email_success
+   
+  # conversion to hack from success auth within 31 days by auth source
+  hacked_conv_from_auth_31_days:
+    num: user_hacked
+    den: user_auth_success_31_days
+  hacked_conv_from_direct_auth_31_days:
+    num: user_hacked_by_direct_auth
+    den: user_direct_auth_success_31_days
+  hacked_conv_from_restore_phone_31_days:
+    num: user_hacked_by_restore_phone
+    den: user_restore_phone_success_31_days
+  hacked_conv_from_restore_email_31_days:
+    num: user_hacked_by_restore_email
+    den: user_restore_email_success_31_days
   
   # conversion from auth attempt to success auth 
+  conv_from_auth_attempt_to_succ:                    
+    num: auth_success                    
+    den: total_auth_attempts           
+  conv_from_direct_auth_attempt_to_succ:             
+    num: direct_auth_success                
+    den: direct_auth_attempts        
+  conv_from_restore_phone_attempt_to_succ:           
+    num: restore_phone_success                       
+    den: restore_phone_attempts
+  conv_from_restore_email_attempt_to_succ:           
+    num: restore_email_success               
+    den: restore_email_attempts
+    
   conv_from_susp_auth_attempt_to_succ:                    
     num: susp_auth_success                    
     den: susp_auth_attempts           
@@ -161,6 +305,20 @@ metric.ratio:
     num: not_susp_restore_email_success                
     den: not_susp_restore_email_attempts
   
+  # user conversion from auth attempt to success auth 
+  user_conv_from_auth_attempt_to_succ:                    
+    num: user_auth_success                     
+    den: user_auth_attempts           
+  user_conv_from_direct_auth_attempt_to_succ:             
+    num: user_direct_auth_success                
+    den: user_direct_auth_attempts         
+  user_conv_from_restore_phone_attempt_to_succ:          
+    num: user_restore_phone_success             
+    den: user_restore_phone_attempts
+  user_conv_from_restore_email_attempt_to_succ:           
+    num: user_restore_email_success                
+    den: user_restore_email_attempts
+    
   user_conv_from_susp_auth_attempt_to_succ:                    
     num: user_susp_auth_success                     
     den: user_susp_auth_attempts           
@@ -188,6 +346,19 @@ metric.ratio:
     den: user_not_susp_restore_email_attempts
 
   # share of auth attempts with check
+  auth_attemps_with_check_share:                             
+    num: auth_attempts_with_check               
+    den: total_auth_attempts
+  direct_auth_attempts_with_check_share:                     
+    num: direct_auth_with_check               
+    den: direct_auth_attempts
+  restore_phone_attempts_with_check_share:                   
+    num: restore_phone_attempts_with_check          
+    den: restore_phone_attempts
+  restore_email_attempts_with_check_share:                   
+    num: restore_email_attempts_with_check          
+    den: restore_email_attempts
+    
   susp_auth_attemps_with_check_share:                             
     num: susp_auth_attempts_with_check               
     den: susp_auth_attempts
@@ -214,6 +385,20 @@ metric.ratio:
     num: not_susp_restore_email_attempts_with_check       
     den: not_susp_restore_email_attempts
   
+  # user share of auth attempts with check
+  user_auth_attemps_with_check_share:                      
+    num: user_auth_attempts_with_check             
+    den: user_auth_attempts
+  user_direct_auth_attempts_with_check_share:              
+    num: user_direct_auth_with_check                     
+    den: user_direct_auth_attempts
+  user_restore_phone_attempts_with_check_share:            
+    num: user_restore_phone_attempts_with_check      
+    den: user_restore_phone_attempts
+  user_restore_email_attempts_with_check_share:            
+    num: user_restore_email_attempts_with_check      
+    den: user_restore_email_attempts
+    
   user_susp_auth_attemps_with_check_share:                      
     num: user_susp_auth_attempts_with_check             
     den: user_susp_auth_attempts
@@ -241,6 +426,19 @@ metric.ratio:
     den: user_not_susp_restore_email_attempts
   
   # conversion from auth attempt with check to success auth
+  conv_from_auth_attempt_with_check_to_succ:                        
+    num: auth_success_with_check                 
+    den: auth_attempts_with_check
+  conv_from_direct_auth_attempt_with_check_to_succ:                 
+    num: direct_auth_success_with_check             
+    den: direct_auth_with_check
+  conv_from_restore_phone_attempt_with_check_to_succ:               
+    num: restore_phone_success_with_check           
+    den: restore_phone_attempts_with_check
+  conv_from_restore_email_attempt_with_check_to_succ:               
+    num: restore_email_with_check                   
+    den: restore_email_attempts_with_check
+    
   conv_from_susp_auth_attempt_with_check_to_succ:                        
     num: susp_auth_success_with_check                 
     den: susp_auth_attempts_with_check
@@ -267,6 +465,20 @@ metric.ratio:
     num: not_susp_restore_email_success_with_check              
     den: not_susp_restore_email_attempts_with_check
   
+  # user conversion from auth attempt with check to success auth
+  user_conv_from_auth_attempt_with_check_to_succ:                        
+    num: user_auth_success_with_check                 
+    den: user_auth_attempts_with_check
+  user_conv_from_direct_auth_attempt_with_check_to_succ:                 
+    num: user_direct_auth_success_with_check             
+    den: user_direct_auth_with_check
+  user_conv_from_restore_phone_attempt_with_check_to_succ:               
+    num: user_restore_phone_success_with_check           
+    den: user_restore_phone_attempts_with_check
+  user_conv_from_restore_email_attempt_with_check_to_succ:               
+    num: user_restore_email_with_check                   
+    den: user_restore_email_attempts_with_check 
+    
   user_conv_from_susp_auth_attempt_with_check_to_succ:                  
     num: user_susp_auth_success_with_check               
     den: user_susp_auth_attempts_with_check

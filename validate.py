@@ -15,15 +15,16 @@ from http import client as httplib
 from time import sleep
 
 from dotenv import load_dotenv
-from validate_sql import validate as validate_sql
 
 load_dotenv()
 
 AB_CONFIGURATOR_HOST = 'ab.avito.ru'
 VALIDATE_URL = '/api/validateMetricsRepo'
-PUBLISH_URL = '/api/publishMetricsRepo'
-PROCESS_URL = '/api/processMetricsConfigs'
 
+AB_CONFIGURATOR_STAGING_HOST = 'staging.k.avito.ru'
+VALIDATE_STAGING_URL = '/service-ab-configurator/api/validateMetricsRepo'
+
+PRODUCTION_BRANCH = 'origin/master'
 
 CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -33,23 +34,30 @@ CUR_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 CONFIGS = [
     ('sources', os.path.join(CUR_DIR_PATH, 'sources/sources.yaml'), False),
     ('sources_sql', os.path.join(CUR_DIR_PATH, 'sources/sql'), True),
-    ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions.yaml'), False),
+    ('dimensions', os.path.join(CUR_DIR_PATH, 'dimensions/dimensions.yaml'), False),
+    ('dimensions_sql', os.path.join(CUR_DIR_PATH, 'dimensions/sql'), True),
     ('configs', os.path.join(CUR_DIR_PATH, 'metrics'), True),
-    ('breakdown_presets', os.path.join(CUR_DIR_PATH, 'presets/breakdowns'), True),
-    ('ab_config_presets', os.path.join(CUR_DIR_PATH, 'presets'), True),
-    ('metrics_lists', os.path.join(CUR_DIR_PATH, 'presets/metrics'), True),
-    (
-        'm42_cartesian_groups',
-        os.path.join(CUR_DIR_PATH, 'config/m42_cartesian_groups.yaml'),
-        False,
-    ),
+    ('cubes_configs', os.path.join(CUR_DIR_PATH, 'm42/cubes_configs'), True),
+    ('m42_reports', os.path.join(CUR_DIR_PATH, 'm42/reports'), True),
 ]
 
-DEPRECATED_CONFIGS = ['breakdown_presets', 'ab_config_presets', 'metrics_lists']
+
+def list_modified_files():
+    result = []
+
+    # Для локального запуска
+    from git import Repo
+
+    repo = Repo('.')
+    origin_master = repo.commit(PRODUCTION_BRANCH)
+    for item in origin_master.diff(None):
+        result.append(item.a_path)
+
+    return result
 
 
-def validate_configs():
-    result, file_name_maps = send_all(VALIDATE_URL)
+def validate_configs(configurator_host, validator_url):
+    result, file_name_maps = send_all(configurator_host, validator_url)
 
     if 'errors' in result:
         print(result['errors'])
@@ -83,13 +91,10 @@ def validate_configs():
     return success
 
 
-def validate():
+def validate(configurator_host, validator_url):
 
     try:
-        success = validate_configs()
-
-        if success:
-            success = validate_sql()
+        success = validate_configs(configurator_host, validator_url)
 
     except Exception as e:
         success = False
@@ -103,55 +108,25 @@ def validate():
         exit(1)
 
 
-def process():
-    result, _ = send_all(PROCESS_URL)
-    del result['success']
-    print(json.dumps(result, indent=4))
-
-
-def publish():
-    key = os.getenv('API_KEY')
-
-    if not key:
-        print('No API_KEY in the env')
-        exit(2)
-
-    result, _ = send_all(PUBLISH_URL, os.getenv('API_KEY'))
-
-    if not result.get('success'):
-        print('Cannot publish metrics config')
-        print(result)
-        exit(1)
-
-    print('Metrics repo has been successfully updated')
-
-
-def send_all(url, api_key=None):
+def send_all(configurator_host, url):
     data = {}
     file_name_maps = {}
-
-    if api_key:
-        data['api_key'] = api_key
-
+    changed_files = list_modified_files()
     for name, path, is_multi in CONFIGS:
-        if name in DEPRECATED_CONFIGS:
-            data[name] = {}
-            file_name_maps[name] = {}
-            continue
         if is_multi:
-            data[name], file_name_maps[name] = read_yamls(path)
+            data[name], file_name_maps[name] = read_configs(path, changed_files)
         else:
-            data[name] = read_file(path)
+            data[name] = (read_file(path), path.replace(f'{CUR_DIR_PATH}/', '') in changed_files)
             file_name_maps[name] = {name: path}
 
-    result = post(url, data)
+    result = post(configurator_host, url, data)
     return result, file_name_maps
 
 
-def post(url, data):
+def post(configurator_host, url, data):
     def _post():
         # conn = httplib.HTTPConnection('127.0.0.1', 5000)
-        conn = httplib.HTTPSConnection(AB_CONFIGURATOR_HOST)
+        conn = httplib.HTTPSConnection(configurator_host)
 
         conn.request('POST', url, json.dumps(data).encode(), {'Content-Type': 'application/json'})
 
@@ -209,7 +184,7 @@ def read_file(file_path):
     return io.open(file_path, encoding='utf-8').read()
 
 
-def read_yamls(dir_path):
+def read_configs(dir_path, changed_files):
     file_name_map = {}
     result = {}
 
@@ -225,7 +200,7 @@ def read_yamls(dir_path):
         if is_file_appropriate(fn):
             full_path = os.path.join(dir_path, fn)
             short_name = get_short_name(fn)
-            result[short_name] = read_file(full_path)
+            result[short_name] = (read_file(full_path), full_path.replace(f'{CUR_DIR_PATH}/', '') in changed_files)
 
             file_name_map[short_name] = full_path
     return result, file_name_map
@@ -256,32 +231,11 @@ def get_short_name(file_name):
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        if sys.argv[1] == '--process':
-            process()
-            exit(0)
-        elif sys.argv[1] == '--publish':
-            publish()
-            exit(0)
-        elif sys.argv[1] == '--publish-staging':
-            AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
-            VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
-            PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
-            PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
-
-            os.environ['API_KEY'] = 'api_key'
-
-            publish()
-            exit(0)
-        elif sys.argv[1] == '--validate-staging':
-            AB_CONFIGURATOR_HOST = 'staging.k.avito.ru'
-            VALIDATE_URL = '/service-ab-configurator' + VALIDATE_URL
-            PUBLISH_URL = '/service-ab-configurator' + PUBLISH_URL
-            PROCESS_URL = '/service-ab-configurator' + PROCESS_URL
-
-            validate()
+        if sys.argv[1] == '--validate-staging':
+            validate(AB_CONFIGURATOR_STAGING_HOST, VALIDATE_STAGING_URL)
             exit(0)
         else:
             print('Unknown argument')
             exit(1)
 
-    validate()
+    validate(AB_CONFIGURATOR_HOST, VALIDATE_URL)

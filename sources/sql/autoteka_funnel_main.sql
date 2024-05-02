@@ -10,6 +10,7 @@ events as (
            null as searchtype
     from dma.autoteka_report_stream
     where cast(event_date as date) between :first_date and :last_date
+        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
     union all
     select track_id,
            event_no,
@@ -27,6 +28,7 @@ events as (
            searchtype
     from dma.autoteka_stream
     where cast(event_date as date) between :first_date and :last_date
+        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 ),
 events_interpolated as (
     select
@@ -54,7 +56,6 @@ events_interpolated as (
                     , last_value(is_pro)
                       over (partition by autoteka_cookie_id
                           , cast(event_date as date) order by event_date desc rows between unbounded preceding and current row )) end as ispro
-
     from events
 ),
 events_lag as (
@@ -67,11 +68,11 @@ events_lag as (
       , searchtype
       , platform_id
       , ispro
-      , datediff('second'
+      , date_diff('second'
       , lag(event_date) over (partition by autoteka_cookie_id order by event_date)
       , event_date)     as second_diff
       , case
-            when datediff('second'
+            when date_diff('second'
                      , lag(event_date) over (partition by autoteka_cookie_id order by event_date)
                      , event_date)
                 <= 1800 then 0
@@ -89,8 +90,8 @@ autoteka_sessions as (
         platform_id,
         searchtype,
         ispro,
-        autoteka_cookie_id || '|' || sum(new_session)
-                                     over (partition by autoteka_cookie_id order by event_date rows between unbounded preceding and current row) as cookie_session
+        cast(autoteka_cookie_id as varchar) || '|' || cast(sum(new_session)
+                                     over (partition by autoteka_cookie_id order by event_date rows between unbounded preceding and current row) as varchar) as cookie_session
     from events_lag
 ),
 autoteka_sessions_searchtype as (
@@ -106,9 +107,15 @@ autoteka_sessions_searchtype as (
         cookie_session,
         case
             when searchtype is not null then searchtype
-            else coalesce(first_value(searchtype ignore nulls)
+            else coalesce(first_value(searchtype
+                                        -- ) --@trino
+                                            IGNORE NULLS
+                                        -- ) --@vertica
                           over (partition by cookie_session order by event_no rows between current row and unbounded following),
-                          last_value(searchtype ignore nulls)
+                          last_value(searchtype
+                                        -- ) --@trino
+                                            IGNORE NULLS
+                                        -- ) --@vertica
                           over (partition by cookie_session order by event_no rows between unbounded preceding and current row)
                 ) end as search_type
     from autoteka_sessions
@@ -120,7 +127,7 @@ select track_id,
        event_type,
        platform_id,
        search_type             as searchtype,
-       cs.cookie_session,
+       from_big_endian_64(xxhash64(cast(coalesce(cs.cookie_session, '') as varbinary))) as cookie_session,
        to_exclude_pay_callback as is_session_to_exclude,
        main_page_session       as is_main_page_session,
        is_pro_user             as is_pro

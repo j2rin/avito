@@ -1,0 +1,50 @@
+definitions:
+    - &slug_list {component_slug.!in: [
+                "advantage_autoteka",
+                "advantage_guarantee",
+                "advantage_manager",
+                "advantage_price",
+                "advantages"
+    ]}
+    - &slug_filter [component_slug.isnull: false, *slug_list]
+    - &button_filter {button_name.in: [
+                "item_Получить отчет Автотеки",
+                "item_Бесплатный отчёт Автотеки",
+                "item_Забронировать",
+                "item_Заказать звонок",
+                "serp_Забронировать",
+                "serp_Заказать звонок",
+                "Окончательная цена_Заказать звонок",
+                "Бесплатный отчёт Автотеки_Заказать звонок",
+                "Личный менеджер_Заказать звонок",
+                "6 месяцев гарантии_Подробнее о гарантии",
+                "gallery-teaser_Заказать звонок",
+                "warranty_page_Заказать звонок",
+                "item_Бесплатный отчёт после звонка",
+                "item_Получить отчёт бесплатно"
+    ]}
+    - &action_button { $or: [*slug_filter, *button_filter] }
+
+
+metric.counter:
+    auto_select_iv: {filter: [eid.in: [8108], from_page: "item"]}
+    auto_select_button_clicks:  {filter: [eid.in: [8109], *action_button]}
+    auto_select_contacts:  {filter: [eid.in: [6608, 10068, 10069]]}
+
+
+metric.uniq:
+    auto_select_iv_uniq_c:  {counter: auto_select_iv, key: [cookie]}
+    auto_select_iv_uniq_ci:  {counter: auto_select_iv, key: [cookie, item]}
+    auto_select_button_clicks_uniq_c:   {counter: auto_select_button_clicks, key: [cookie]}
+    auto_select_button_clicks_uniq_ci:   {counter: auto_select_button_clicks, key: [cookie, item]}
+    auto_select_contacts_uniq_c:   {counter: auto_select_contacts, key: [cookie]}
+    auto_select_contacts_uniq_ci:    {counter: auto_select_contacts, key: [cookie, item]}
+
+
+metric.ratio:
+    auto_select_cr_visit_click_c: {num: auto_select_button_clicks_uniq_c, den: auto_select_iv_uniq_c}
+    auto_select_cr_visit_click_ci:  {num: auto_select_button_clicks_uniq_ci, den: auto_select_iv_uniq_ci}
+    auto_select_cr_click_contact_c:   {num: auto_select_contacts_uniq_c, den: auto_select_button_clicks_uniq_c}
+    auto_select_cr_click_contact_ci:  {num: auto_select_contacts_uniq_ci, den: auto_select_button_clicks_uniq_ci}
+    auto_select_cr_visit_contact_c:   {num: auto_select_contacts_uniq_c, den: auto_select_iv_uniq_c}
+    auto_select_cr_visit_contact_ci:  {num: auto_select_contacts_uniq_ci, den: auto_select_iv_uniq_ci}

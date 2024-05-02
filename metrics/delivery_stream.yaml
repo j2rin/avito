@@ -1,0 +1,13 @@
+metric.counter:
+    cnt_pin_choose_on_a_map:                   {filter: [eid: 4759]}
+    cnt_pin_confirm_on_a_map:                  {filter: [eid: 8153]}
+
+metric.uniq:
+    pin_choose_on_a_map:                       {counter: cnt_pin_choose_on_a_map,  key: [cookie_id, item_id]}
+    pin_confirm_on_a_map:                      {counter: cnt_pin_confirm_on_a_map, key: [cookie_id, item_id]}
+    user_pin_choose_on_a_map:                  {counter: cnt_pin_choose_on_a_map,  key: [cookie]}
+    user_pin_confirm_on_a_map:                 {counter: cnt_pin_confirm_on_a_map, key: [cookie]}
+
+metric.ratio:
+    pin_choose_confirm_on_a_map_ratio:         {num: pin_confirm_on_a_map,         den: pin_choose_on_a_map}
+    user_pin_choose_confirm_on_a_map_ratio:    {num: user_pin_confirm_on_a_map,    den: user_pin_choose_on_a_map}

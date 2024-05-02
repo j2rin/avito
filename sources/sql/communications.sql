@@ -37,3 +37,4 @@ select observation_date as event_date,
   LEFT JOIN /*+jtype(h)*/ DMA.current_locations       cl ON cl.Location_id   = ss.item_location_id
   LEFT JOIN /*+jtype(h)*/ DMA.current_locations       pcl ON pcl.Location_id   = ss.phone_location_id
 where cast(observation_date as date) between :first_date and :last_date
+    -- and observation_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

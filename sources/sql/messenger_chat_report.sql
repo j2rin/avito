@@ -10,7 +10,7 @@ with am_client_day as (
 )
 , usm as (
     select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where cast(converting_date as date) <= :last_date
 )
@@ -25,7 +25,7 @@ with am_client_day as (
 )
  select
  	chr.chat_id,
- 	cast(first_message_event_date as Date),
+ 	cast(first_message_event_date as Date) as first_message_event_date,
 	platform_id,
     first_message_user_id,
     first_message_cookie_id,
@@ -40,14 +40,15 @@ with am_client_day as (
     reply_platform_id,
     with_reply,
     chr.user_id,
-    cast(reply_time as date),
-    datediff ('minute',first_message_event_date, reply_time) as reply_time_minutes,
+    cast(reply_time as date) as reply_time,
+    date_diff ('minute',first_message_event_date, reply_time) as reply_time_minutes,
     case
         when cast(first_message_event_date as date)=cast(reply_time as date) then true
         else false
     end as is_one_day_reply,
 	chr.microcat_id,
 	chr.item_location_id,
+    is_autoreply,
 	-- Dimensions -----------------------------------------------------------------------------------------------------
     cm.vertical_id,
 	cm.category_id,
@@ -102,3 +103,4 @@ where true
             cast(first_message_event_date as date) between :first_date and :last_date
         or  cast(reply_time as date) between :first_date and :last_date
     )
+    -- and min_event_year is not null -- @trino

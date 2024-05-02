@@ -27,8 +27,9 @@ from (
             bs.microcat_id,
             bs.location_id
         from dma.buyer_stream bs
-        where bs.item_flags & 4 = 0 and eid in (2015,4035)
+        where bitwise_and(bs.item_flags, 4) = 0 and eid in (2015,4035)
             and cast(bs.event_date as date) between :first_date and :last_date
+            --and date between :first_date and :last_date -- @trino
     )
     union all
     (
@@ -49,6 +50,7 @@ from (
             )
             and observation_value>0
             and cast(observation_date as date) between :first_date and :last_date
+            -- and observation_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
     )
     union all
     (
@@ -67,12 +69,13 @@ from (
             and not is_bad_cookie
             and not is_blocked
             and not is_deleted
-
             and chat_subtype is null
             and with_reply = True
             and reply_message_bot is null
-            and datediff ('minute',first_message_event_date, reply_time) between 0 and 4320
+            and date_diff ('minute',first_message_event_date, reply_time) between 0 and 4320
             and cast(first_message_event_date as date) between :first_date and :last_date
+            -- and min_event_year is not null -- @trino
+
     )
     union all
     (
@@ -99,6 +102,7 @@ from (
                 'notification_call_back'
             )
            and cast(AppCallStart as date) between :first_date and :last_date
+           --and appcallstart_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
     )
 ) t
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microcat_id = t.microcat_id

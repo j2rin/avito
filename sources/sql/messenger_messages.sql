@@ -4,9 +4,10 @@ from_users as (
     from dma.messenger_messages
     where cast(event_date as date) between :first_date and :last_date
         and from_user_id is not null
+--         and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino
 )
 select
- 	cast(mm.event_date as date),
+ 	cast(mm.event_date as date) as event_date,
  	mm.eventtype_id,
  	mm.chat_id,
 	mm.platform_id,
@@ -86,7 +87,7 @@ left join /*distrib(l,a)*/ (
             logical_category_id,
             user_segment,
             converting_date as from_date,
-            lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
+            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
         from DMA.user_segment_market
         where true
             and user_id in (select from_user_id from from_users)
@@ -102,17 +103,18 @@ left join /*distrib(l,a)*/ (
     select
         chat_id,
         start_flow_time,
-        coalesce(end_flow_time, cast('9999-12-31' as timestamp)) as _end_flow_time
+        coalesce(end_flow_time, cast('9999-12-31' as timestamp)) as end_flow_time
     from DMA.messenger_chat_flow_report
     where cast(start_flow_time as date) <= :last_date
-        and _end_flow_time >= :first_date
+        and coalesce(end_flow_time, cast('9999-12-31' as timestamp)) >= :first_date
 ) cb
     on cb.chat_id = mm.chat_id
     and mm.event_date >=  cb.start_flow_time
-    and mm.event_date <= cb._end_flow_time
+    and mm.event_date <= cb.end_flow_time
 
 where cast(mm.event_date as date) between :first_date and :last_date
     and not mm.is_spam
     and not mm.is_blocked
     and not mm.is_deleted
     and not mm.is_additional
+--     and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino

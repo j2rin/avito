@@ -27,3 +27,5 @@ left join am_client_day acd
 		and cast(t.event_date as date) between acd.active_from_date and acd.active_to_date
 left join DMA.current_logical_categories lc on lc.logcat_id = t.logical_category_id and level_id=2
 where cast(event_date as date) between :first_date and :last_date
+    -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+

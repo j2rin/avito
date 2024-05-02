@@ -1,7 +1,7 @@
 with entrypoints as (
-select 
+select
     platform,
-    eid, 
+    eid,
     user_id,
     event_date,
     event_timestamp,
@@ -11,10 +11,11 @@ select
          when coalesce(from_page, 'lk_avito') in ('lk_avito', 'pro_side_bar') then 'web' else 'web' end entrypoint,
     row_number() over (partition by user_id, eid order by event_timestamp) rn
 from dma.jobs_employers_crm_events
+--where event_year is not null --@trino
 )
-select 
+select
     platform,
-    eid, 
+    eid,
     user_id,
     event_date,
     event_timestamp,

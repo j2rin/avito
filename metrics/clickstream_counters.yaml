@@ -124,8 +124,8 @@ metric.counter:
   
   icebreakers_message_template_shows:                   {filter: [eid: 4209, $or: [source: 'item', source.isnull: True]], obs: [event_count]}
   icebreakers_message_template_clicks:                  {filter: [eid: 4210, $or: [source: 'item', source.isnull: True]], obs: [event_count]}
-  icebreakers_message_template_shows_msg:               {filter: [eid: 4209, $or: [source: 'messenger', source: 'mini-messenger']], obs: [event_count]}
-  icebreakers_message_template_clicks_msg:              {filter: [eid: 4210, $or: [source: 'messenger', source: 'mini-messenger']], obs: [event_count]}
+  icebreakers_message_template_shows_msg:               {filter: [eid: 4209, $or: [source: 'messenger', source: 'mav']], obs: [event_count]}
+  icebreakers_message_template_clicks_msg:              {filter: [eid: 4210, $or: [source: 'messenger', source: 'mav']], obs: [event_count]}
   
   total_osp_open:                                       {filter: [{ eid: 5762}], obs: [event_count]}
   total_osp_write_seller:                               {filter: [{ eid: 5784}], obs: [event_count]}
@@ -141,7 +141,6 @@ metric.counter:
 
   cnt_competition_widget_shows_total:                   {filter: [eid: 6265],                                         obs: [event_count]}
   cnt_competition_widget_shows_from_delivery_widgets:   {filter: [eid: 6265,  source_click_page: 'delivery_widget'],  obs: [event_count]}
-  cnt_competition_widget_shows_from_checkout:           {filter: [eid: 6265,  source_click_page: 'checkout_cheaper'], obs: [event_count]}
 
   watch_video:                                          {filter: [eid: 6304],                               obs: [event_count]}
   watch_video_gallery:                                  {filter: [eid: 6304, from_page.ilike: '%gallery%'], obs: [event_count]}
@@ -151,6 +150,20 @@ metric.counter:
   watch_video_feed_fullscreen:                          {filter: [eid: 6304, from_page: 'feed_fullscreen'], obs: [event_count]}
   show_video_lenta:                                     {filter: [eid: 7723],                               obs: [event_count]}
   click_video_lenta:                                    {filter: [eid: 7724],                               obs: [event_count]}
+
+
+
+  msg_suggest_clicks:                                  {filter: [eid: 4210, $or: [source: 'messenger_seller', source: 'mini-messenger', source: 'pro_web', source: 'pro_mav', source: 'web']], obs: [event_count]}
+  msg_templates_clicks:                                {filter: [eid: 7375], obs: [event_count]}
+  msg_pin:                                             {filter: [eid: 6811, $or: [msg_is_pin: 1]], obs: [event_count]}
+  msg_pin_chat:                                        {filter: [eid: 6811, $or: [msg_is_pin: 1], source: 'chat'], obs: [event_count]}
+  msg_pin_chatlist:                                    {filter: [eid: 6811, $or: [msg_is_pin: 1], source: 'chatlist'], obs: [event_count]}
+  msg_unpin:                                           {filter: [eid: 6811, $or: [msg_is_pin: 0]], obs: [event_count]}
+  msg_make_unread:                                     {filter: [eid: 5139],                        obs: [event_count]}
+  msg_make_unread_chatlist:                            {filter: [eid: 5139, source: 'chatlist'], obs: [event_count]}
+  msg_make_unread_chat:                                {filter: [eid: 5139, source: 'chat'],     obs: [event_count]}
+  msg_make_unread_group:                               {filter: [eid: 5139, source: 'group'],    obs: [event_count]}
+
 
 metric.uniq:
   unq_geo_redirect_replace:          {counter: geo_redirect_replace,            key: [cookie]}
@@ -235,15 +248,14 @@ metric.uniq:
   osp_order_details:                                         {counter: total_osp_order_details, key: [orderid_string]}
   osp_back_to_item:                                          {counter: total_osp_back_to_item, key: [orderid_string]}
   
-  order_page_views_from_my_orders:                           {counter: cnt_order_page_views_from_my_orders,    key: [cookie_order]}
-  order_page_views_from_success_page:                        {counter: cnt_order_page_views_from_success_page, key: [cookie_order]}
-  order_page_views_from_messenger:                           {counter: cnt_order_page_views_from_messenger,    key: [cookie_order]}
-  order_page_views_total:                                    {counter: cnt_order_page_views_total,             key: [cookie_order]}
+  order_page_views_from_my_orders:                           {counter: cnt_order_page_views_from_my_orders,    key: [cookie_id, orderid]}
+  order_page_views_from_success_page:                        {counter: cnt_order_page_views_from_success_page, key: [cookie_id, orderid]}
+  order_page_views_from_messenger:                           {counter: cnt_order_page_views_from_messenger,    key: [cookie_id, orderid]}
+  order_page_views_total:                                    {counter: cnt_order_page_views_total,             key: [cookie_id, orderid]}
   user_order_page_views:                                     {counter: cnt_order_page_views_total,             key: [cookie]}
 
-  competition_widget_shows_total:                            {counter: cnt_competition_widget_shows_total,                 key: [cookie_item]}
-  competition_widget_shows_from_delivery_widgets:            {counter: cnt_competition_widget_shows_from_delivery_widgets, key: [cookie_item]}
-  competition_widget_shows_from_checkout:                    {counter: cnt_competition_widget_shows_from_checkout,         key: [cookie_item]}
+  competition_widget_shows_total:                            {counter: cnt_competition_widget_shows_total,                 key: [cookie_id, item_id]}
+  competition_widget_shows_from_delivery_widgets:            {counter: cnt_competition_widget_shows_from_delivery_widgets, key: [cookie_id, item_id]}
   user_competition_widget_shows:                             {counter: cnt_competition_widget_shows_total,                 key: [cookie]}
   
   user_watch_video:                                          {counter: watch_video,                         key: [cookie]}
@@ -254,6 +266,13 @@ metric.uniq:
   user_watch_video_feed_fullscreen:                          {counter: watch_video_feed_fullscreen,         key: [cookie]}
   user_show_video_lenta:                                     {counter: show_video_lenta,                    key: [cookie]}
   user_click_video_lenta:                                    {counter: click_video_lenta,                   key: [cookie]}
+
+  user_msg_suggest_clicks:                              {counter: msg_suggest_clicks,         key: [user]}
+  msg_suggest_clicks_chats:                             {counter: msg_suggest_clicks,         key: [chat]}
+  msg_templates_chats:                                  {counter: msg_templates_clicks,         key: [chat]}
+  user_msg_pin:                                         {counter: msg_pin,            key: [user]}
+  user_make_unread:                                     {counter: msg_make_unread,         key: [user]}
+
 
 metric.ratio:
   ctr_click_banner_download_app:             {num: click_banner_download_app,                den: show_banner_download_app}

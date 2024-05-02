@@ -7,6 +7,11 @@ metric.counter:
   support_interaction_resolved:                 {obs: [interaction_resolved]}
   support_interaction_resolved_fcr:             {obs: [interaction_resolved_fcr]}
   support_interaction_resolved_not_fcr:         {obs: [interaction_resolved_not_fcr]}
+  support_interaction_delivery:					{obs: [interaction_delivery]}
+  support_interaction_delivery_with_bots:		{obs: [interaction_delivery_with_bots]}
+  support_interaction_resolved_ontime:			{obs: [interaction_ontime]}
+  support_interaction_fcr_flow:					{obs: [interaction_fcr_flow]}
+  
 # --- COMBINING TOTAL ---
   support_interaction_total_flow:               {obs: [interaction_flow, interaction_fully_automated]}
 
@@ -16,4 +21,7 @@ metric.uniq:
 metric.ratio:
   support_interaction_automation_rate:          {num: support_interaction_automated, den: support_interaction_total_flow}
   support_interaction_fully_automation_rate:    {num: support_interaction_fully_automated, den: support_interaction_total_flow}
-  support_interaction_fcr:                      {num: support_interaction_resolved_fcr, den: support_interaction_resolved}
+  support_interaction_fcr:                      {num: support_interaction_resolved_fcr, den: support_interaction_fcr_flow}
+  support_delivery_contact_rate:				{num: support_interaction_delivery, den: buyer_delivery_orders_confirmed}
+  support_delivery_contact_rate_with_bots:		{num: support_interaction_delivery_with_bots, den: buyer_delivery_orders_confirmed}
+  support_interaction_ontime:                   {num: support_interaction_resolved_ontime, den: support_interaction_fcr_flow}

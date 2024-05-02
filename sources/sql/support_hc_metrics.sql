@@ -75,7 +75,9 @@ with
             						328682250001, -- 4771 Support / MSG Chat / Create
             						54245750002 -- 802 Helpdesk / Тикет / Создание тикета
             					)
-    		and cast(event_date as date) >= date('2022-01-01'))r)
+            and cast(event_date as date) >= date('2022-01-01')
+            --and event_year >= date_trunc('year', date('2022-01-01')) -- @trino
+        )r)
     , sessions as (
         select
             ss.session_hash

@@ -1,0 +1,9 @@
+definitions:
+    - &is_serp  {reason:            'auction'    }
+    - &is_u2i   {reason:            'rec_auction'}
+
+
+metric.counter:
+    auction_serp_withdrawals:   {filter: [*is_serp], obs: [amount]}
+    auction_u2i_withdrawals:    {filter: [*is_u2i],  obs: [amount]}
+    auction_withdrawals:        {                    obs: [amount]}

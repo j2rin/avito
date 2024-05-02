@@ -10,7 +10,7 @@ with am_client_day as (
 )
 , usm as (
     select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
     where cast(converting_date as date) <= :last_date
 )
@@ -21,7 +21,7 @@ with am_client_day as (
  	discount_send_date,
 	platform_id,
     answer_platform,
-    cast(answer_time as date),
+    cast(answer_time as date) as answer_time,
     sbc.answer_buyer as answer,
     coalesce(sbc.is_first_message, false) as first_message,
     special_offers,
@@ -56,4 +56,4 @@ where (
            cast(sbc.discount_send_date as date) between :first_date and :last_date
         or cast(sbc.answer_time as date) between :first_date and :last_date
     )
-
+    --and discount_send_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

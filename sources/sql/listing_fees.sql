@@ -3,6 +3,7 @@ lf_users as (
     select distinct user_id
     from dma.o_lf_metrics
     where cast(event_date as date) between :first_date and :last_date
+    -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
         and user_id is not null
 )
 select /*+direct, syn_join*/
@@ -53,6 +54,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         select distinct infmquery_id
         from dma.o_lf_metrics
         where cast(event_date as date) between :first_date and :last_date
+        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
             and infmquery_id is not null
     )
 ) ic
@@ -79,7 +81,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
             logical_category_id,
             user_segment,
             converting_date as from_date,
-            lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as to_date
+            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
         from DMA.user_segment_market
         where true
             and user_id in (select user_id from lf_users)
@@ -112,3 +114,4 @@ left join /*+distrib(l,a)*/ (
     on olf.user_id = asd.user_id
     and cast(olf.event_date as date) between asd.active_from_date and asd.active_to_date
 where olf.event_date between :first_date and :last_date
+-- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino

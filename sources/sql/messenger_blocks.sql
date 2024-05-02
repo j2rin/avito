@@ -13,11 +13,11 @@ usm as (
         logical_category_id,
         user_segment,
         converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
+        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
     from DMA.user_segment_market
 )
 select
-    cast(t.event_date as date),
+    cast(t.event_date as date) as event_date,
     t.platform_id,
     ci.location_id,
     ci.Microcat_id,
@@ -60,3 +60,4 @@ left join  dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id
     and ls.is_default
 where cast(t.event_date as date) between :first_date and :last_date
+--and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino

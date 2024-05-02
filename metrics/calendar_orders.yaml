@@ -1,8 +1,13 @@
 metric.counter: 
   orders_created_calendar:         {} # кол-во созданных записей # не указано obs, поэтому 1 
   orders_succeed_calendar:         {filter: [current_status: ['succeed']]} # кол-во записей которые считаем состоявшимися # не указано obs, поэтому 1 
+  orders_canceled_by_robot_calendar: {filter: [current_status: ['canceled_before_acceptance_by_robot']]} # кол-во записей без действий селлера = отмененных роботом через 24 ч 
 
 metric.uniq: 
   seller_had_order_via_calendar:            {counter: orders_created_calendar, key: [user]} # уникальные юзеры, к которым была хоть одна запись
   seller_had_order_succeed_via_calendar:    {counter: orders_succeed_calendar, key: [user]} # уникальные юзеры, к которым была хоть одна запись, которую считаем состоявшейся
-
+  seller_had_order_canceled_by_robot_via_calendar: {counter: orders_canceled_by_robot_calendar, key: [user]} # уникальные юзеры, к которым была хоть одна запись, отмененённая роботом
+  
+metric.ratio:
+  orders_succeed_calendar_ratio:         {num: orders_succeed_calendar, den: orders_created_calendar} # доля успешных записей от созданных записей
+  orders_canceled_by_robot_calendar_ratio:  {num: orders_canceled_by_robot_calendar, den: orders_created_calendar} # доля записей, отмененных роботом, от созданных записей

@@ -57,6 +57,17 @@
            call_queue_changed,
            chat_reopen,
            chat_thank_question,
-           chat_reopen_after_thank
+           chat_reopen_after_thank,
+           chat_first_touch_ht,
+           autoclassifier_chats,
+  		   autoclassifier_chats_abandoned,
+		   autoclassifier_chats_skill_changed,
+  		   chats_with_bot,
+  		   chatbot_successful_pass,
+  		   chat_count_in_sl,
+  		   chat_count_has_sl,
+           ticket_waiting_status,
+           ticket_waiting_closed_by_timeout
 	  from dma.support_metric_observation
 where cast(observation_date as date) between :first_date and :last_date
+    --and observation_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
