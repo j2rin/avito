@@ -3772,3 +3772,18 @@ iv_cpc_weighted:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
+  
+fashion_auth:
+  metric_configs: [ fashion_auth ]
+  connections: [vertica, trino]
+  sql: fashion_auth
+  column_map:
+    user: user_id
+    item: item_id
+  dimensions:
+    [
+    param1
+    ]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
