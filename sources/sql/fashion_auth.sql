@@ -5,13 +5,16 @@ select
     ch.Status as status,
     ch.Actual_date as actual_time,
     date(ch.actual_date) as event_date,
-    param1,
-    param2,
+    Param1_microcat_id as param1_id,
+    Param2_microcat_id as param2_id,
+    ci.param1,
+    ci.param2,
     ci.user_id
 from DDS.L_Item_AuthCheck ich
 join DDS.S_AuthCheck_Status ch
     on ich.AuthCheck_id = ch.AuthCheck_id
 join dma.current_item ci on ich.item_Id = ci.item_id
+join dma.current_microcategories cm on cm.microcat_id = ci.microcat_id
 where date(ch.actual_date) between :first_date and :last_date
 ),
 first_check as (
@@ -39,10 +42,10 @@ select item_id,
        ic.AuthCheck_id, 
        ic.status, 
        event_date, 
-       param1, 
-       param2, 
+       param1_id, 
+       param1_id, 
        ic.user_id,
-       case when fc.user_id is null or fci.AuthCheck_id is not null then 'first' else 'second+' end as is_first_auth,
+       case when fc.user_id is null or fci.AuthCheck_id is not null then true else false end as is_first_auth,
        case when param1 in ('Аксессуары') then 'Accessories'
             when param1 in ('Женская обувь', 'Мужская обувь') then 'Shoes'
             when param1 in ('Женская одежда', 'Мужская одежда') then 'Clothes'
@@ -58,16 +61,17 @@ select cai.item_id,
        null as AuthCheck_id, 
        'item_new' as status, 
        date(StartTime) as event_date, 
-       ci.param1, 
-       ci.param2, 
+       Param1_microcat_id as param1_id,
+       Param2_microcat_id as param2_id, 
        ci.user_id,
-       case when fc.user_id is null then 'first' else 'second+' end as is_first_auth,
+       case when fc.user_id is null then true else false end as is_first_auth,
        case when ci.param1 in ('Аксессуары') then 'Accessories'
             when ci.param1 in ('Женская обувь', 'Мужская обувь') then 'Shoes'
             when ci.param1 in ('Женская одежда', 'Мужская одежда') then 'Clothes'
             when ci.param1 in ('Сумки, рюкзаки и чемоданы') then 'Bags' end as auth_category
 from dma.current_auth_item cai
 join dma.current_item ci on ci.item_id = cai.item_id
+join dma.current_microcategories cm on cm.microcat_id = ci.microcat_id
 left join first_check fc on fc.user_id = cai.user_id and ci.StartTime > fc.min_check_time
 where true 
 and lg_category not in ('not_defined') 
