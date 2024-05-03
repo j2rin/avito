@@ -1,0 +1,25 @@
+definitions:
+  - &created {status.=: 'created'}
+  - &verified {status.=: 'verified'}
+  - &fake {status.=: 'declined_fake'}
+  - &in_legit {status.=: 'in_legit_check'}
+  - &items_started {status.=: 'item_new'}
+
+metric.counter:
+  auth_created: {filter: *created}
+  auth_verified: {filter: *verified}
+  auth_fake: {filter: *fake}
+  auth_in_legit: {filter: *in_legit}
+  auth_available_started: {filter: *items_started}
+
+metric.uniq:
+  auth_checks_created: {counter: auth_created, key: [AuthCheck_id]}
+  auth_checks_verified: {counter: auth_verified, key: [AuthCheck_id]}
+  auth_checks_fake: {counter: auth_fake, key: [AuthCheck_id]}
+  auth_checks_in_legit: {counter: auth_in_legit, key: [AuthCheck_id]}
+  auth_items_available_started: {counter: auth_available_started, key: [item_id]}
+
+metric.ratio:
+  auth_started_to_created: {num: auth_checks_created, den: auth_items_available_started}
+  auth_started_to_verified: {num: auth_checks_verified, den: auth_items_available_started}
+  auth_started_to_in_legit: { num: auth_checks_in_legit, den: auth_items_available_started }
