@@ -43,7 +43,7 @@ select item_id,
        ic.status, 
        event_date, 
        param1_id, 
-       param1_id, 
+       param2_id, 
        ic.user_id,
        case when fc.user_id is null or fci.AuthCheck_id is not null then true else false end as is_first_auth,
        case when param1 in ('Аксессуары') then 'Accessories'
