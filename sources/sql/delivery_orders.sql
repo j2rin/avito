@@ -178,28 +178,12 @@ left join /*+jtype(h),distrib(l,a)*/
         where c.event_date >= inn_info.active_from and c.event_date < inn_info.active_until
         and inn_info.active_until >= :first_date
 ) inn_info on co.seller_id = inn_info.user_id and cast(co.status_date as date) = inn_info.event_date
- left join /*+jtype(h),distrib(l,a)*/ (
-    select
-        usm.user_id,
-        usm.logical_category_id,
-        usm.segment_rank,
-        c.event_date
-    from (
-        select
-            user_id,
-            logical_category_id,
-            user_segment,
-            segment_rank,
-            converting_date as from_date,
-            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
-        from DMA.user_segment_market
-        where True
-            and converting_date <= :last_date
-    ) usm
-    join dict.calendar c on c.event_date between :first_date and :last_date
-    where c.event_date >= usm.from_date and c.event_date < usm.to_date
-        and usm.to_date >= :first_date
-) usm on co.seller_id = usm.user_id and co.logical_category_id = usm.logical_category_id and cast(co.status_date as date) = usm.event_date
+ left join /*+jtype(h),distrib(l,a)*/ DMA.user_segment_market usm
+      on co.seller_id = usm.user_id
+      and co.logical_category_id = usm.logical_category_id
+      and cast(co.status_date as date) = usm.event_date
+      and usm.event_date between :first_date and :last_date
+      -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 where true 
     and date(co.status_date) between date(:first_date) and date(:last_date)
     -- and status_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

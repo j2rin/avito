@@ -6,17 +6,6 @@ select user_id,
        user_group_id
 from DMA.am_client_day_versioned
 )
-, user_segment_market as (
-select 
-    user_id, 
-    logical_category_id, 
-    user_segment, 
-    cast(converting_date as timestamp(0)) + interval '86399' second as converting_date_ts,
-    lead(cast(converting_date as timestamp(0)) + interval '86399' second, 1, cast('2099-01-01' as timestamp(0))) 
-        over(partition by user_id, logical_category_id order by converting_date) as next_converting_date_ts
-from dma.user_segment_market
-where cast(converting_date as date) <= :last_date
-)
 select 	
 		ctf.event_date ,  
 		ctf.user_id ,                     
@@ -34,10 +23,12 @@ from dma.cpx_tariff_funnel ctf
 left join dict.segmentation_ranks ls 	
     on ctf.logical_category_id = ls.logical_category_id 
     and is_default
-left join user_segment_market usm
+left join DMA.user_segment_market usm
     on  ctf.user_id = usm.user_id
     and ctf.logical_category_id = usm.logical_category_id
-    and ctf.event_timestamp >= converting_date_ts and ctf.event_timestamp < next_converting_date_ts
+    and cast(ctf.event_timestamp as date) = usm.event_date
+    and usm.event_date between :first_date and :last_date
+    -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 left join (
     select user_id, user_segment_market, event_date
     from dma.sellers_info_day sid

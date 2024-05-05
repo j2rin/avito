@@ -78,19 +78,12 @@ left join (
     on   csc.cookie_id = bb.cookie_id
     and  lc.logical_category_id = bb.logical_category_id
 
-left join (
-    select
-        user_id,
-        logical_category_id, user_segment,
-        date_trunc('second', cast(converting_date as timestamp)) as converting_date,
-        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
-    where user_id in (select user_id from users)
-) usm
+left join DMA.user_segment_market usm
     on  csc.item_user_id = usm.user_id
     and lc.logical_category_id = usm.logical_category_id
-    and csc.eventdate >= usm.converting_date
-    and csc.eventdate < usm.next_converting_date
+    and csc.eventdate = usm.event_date
+    and usm.event_date between :first_date and :last_date
+    -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 
 left join (
     select user_id,

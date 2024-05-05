@@ -65,6 +65,8 @@ from (
               left join dma.current_locations cl on t1.Location_id = cl.Location_id
           ) data
     left join dma.user_segment_market usm on data.user_id = usm.user_id
-                                        and cast(event_timestamp as date) between converting_date and max_valid_date
+                                        and cast(event_timestamp as date) = usm.event_date
                                         and data.logical_category_id = usm.logical_category_id
+                                        and usm.event_date between :first_date and :last_date
+                                        -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     left join dict.segmentation_ranks sr on sr.logical_category_id = data.logical_category_id and is_default

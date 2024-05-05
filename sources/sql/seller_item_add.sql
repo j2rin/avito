@@ -186,7 +186,7 @@ select
       chain_last_screen_open_time,
       chain_last_screen_open_name,
       item_create_date,
-      event_date,
+      t.event_date,
       item_add_start_date,
       platform_id,
       duration_sec,
@@ -196,16 +196,9 @@ select
       coalesce(usm.user_segment, ls.segment) as user_segment_market
 from item_add_chain_metrics t
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = t.logical_category_id and ls.is_default
-left join (
-    select
-        user_id,
-        logical_category_id,
-        user_segment,
-        converting_date,
-        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
-    where cast(converting_date as date) <= :last_date
-) usm
+left join DMA.user_segment_market usm
     on  t.user_id = usm.user_id
     and t.logical_category_id = usm.logical_category_id
-    and cast(t.event_date as date) >= converting_date and cast(t.event_date as date) < next_converting_date
+    and cast(t.event_date as date) = usm.event_date
+    and usm.event_date between :first_date and :last_date
+    -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino

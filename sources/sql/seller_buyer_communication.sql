@@ -8,12 +8,6 @@ with am_client_day as (
     where cast(active_from_date as date) <= :last_date
         and cast(active_to_date as date) >= :first_date
 )
-, usm as (
-    select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
-    where cast(converting_date as date) <= :last_date
-)
  select
  	sbc.chat_id,
  	sbc.user_id,
@@ -48,10 +42,12 @@ left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls
 left join am_client_day acd
 		on sbc.user_id = acd.user_id
 		and sbc.discount_send_date between acd.active_from_date and acd.active_to_date
-left join usm
+left join DMA.user_segment_market usm
         on sbc.user_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
-		and cast(sbc.discount_send_date as timestamp) >= converting_date and cast(sbc.discount_send_date as timestamp) < next_converting_date
+		and cast(sbc.discount_send_date as timestamp) = usm.event_date
+        and usm.event_date between :first_date and :last_date
+        -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 where (
            cast(sbc.discount_send_date as date) between :first_date and :last_date
         or cast(sbc.answer_time as date) between :first_date and :last_date
