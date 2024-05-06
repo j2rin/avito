@@ -16,6 +16,7 @@ join DDS.S_AuthCheck_Status ch
 join dma.current_item ci on ich.item_Id = ci.item_id
 join dma.current_microcategories cm on cm.microcat_id = ci.microcat_id
 where date(ch.actual_date) between :first_date and :last_date
+-- cast(ch.actual_date as date) between cast(:first_date as date) and cast(:last_date as date) -- @trino 
 ),
 first_check as (
 select 
@@ -89,5 +90,6 @@ and frod_reviews_share <= 0.1
 and is_verif 
 and isDeliveryActive
 and date(StartTime) between :first_date and :last_date
+-- cast(StartTime as date) between cast(:first_date as date) and cast(:last_date as date) -- @trino
 )
 select * from total
