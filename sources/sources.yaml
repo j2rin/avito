@@ -3788,3 +3788,12 @@ fashion_auth:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
+
+duplicates_in_dai:
+  metric_configs: [duplicates_in_dai]
+  connections: [vertica, trino]
+  sql: duplicates_in_dai
+  dimensions: [vertical, logical_category]
+  participant: {user: _ } # No participants
+  primary_subject: user
+  dtm: event_date
