@@ -29,4 +29,6 @@ select distinct
     clc.logical_category_id
 from dma.duplicates_in_dai_buckets didb
 join dma.current_logical_categories clc on didb.logical_category = clc.logical_category
-where event_date between :first_date and :last_date
+where true 
+    and event_date between :first_date and :last_date
+    -- and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
