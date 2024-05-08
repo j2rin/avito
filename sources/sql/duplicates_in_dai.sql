@@ -1,11 +1,4 @@
-with tmp as
-(
-    select
-        *,
-        SPLIT_PART(logical_category, '.', 1) as vertical
-    from dma.duplicates_in_dai_buckets
-)
-select
+select distinct
     1 as _,
     event_date,
     q_items,
@@ -32,9 +25,8 @@ select
     multi_strong_dups_cluster,
     multi_weak_dups_cluster,
     -- Dimensions -----------------------------------------------------------------------------------------------------
-    mv.vertical_id,
-    mlc.logical_category_id
-from tmp
-join dma.m42_vertical mv on tmp.vertical = mv.vertical
-join dma.m42_logical_category mlc on tmp.logical_category = mlc.logical_category
+    clc.vertical_id,
+    clc.logical_category_id
+from dma.duplicates_in_dai_buckets didb
+join dma.current_logical_categories clc on didb.logical_category = clc.logical_category
 where event_date between :first_date and :last_date
