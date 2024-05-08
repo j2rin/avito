@@ -27,7 +27,7 @@ from DDS.L_Item_AuthCheck ich
 join DDS.S_AuthCheck_Status ch
     on ich.AuthCheck_id = ch.AuthCheck_id
 join dma.current_item ci on ich.item_Id = ci.item_id
-where status in ('verified', 'fake', 'declined_unknown')
+where status in ('verified', 'declined_fake', 'declined_unknown')
 group by 2
 ),
 first_check_id as (
@@ -37,7 +37,7 @@ join DDS.S_AuthCheck_Status ch
     on ich.AuthCheck_id = ch.AuthCheck_id
 join dma.current_item ci on ich.item_Id = ci.item_id
 join first_check fc on fc. user_id = ci.user_id and ch.actual_date = min_check_time
-where status in ('verified', 'fake', 'declined_unknown')
+where status in ('verified', 'declined_fake', 'declined_unknown')
 ),
 total_auth as (
 select item_id, 
