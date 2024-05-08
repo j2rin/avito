@@ -1,4 +1,5 @@
 select
+    1 as _, 
     event_date,
     q_items, 
     all_dups_user,
