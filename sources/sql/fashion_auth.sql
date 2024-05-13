@@ -27,7 +27,7 @@ from DDS.L_Item_AuthCheck ich
 join DDS.S_AuthCheck_Status ch
     on ich.AuthCheck_id = ch.AuthCheck_id
 join dma.current_item ci on ich.item_Id = ci.item_id
-where status in ('verified', 'declined_fake', 'declined_unknown')
+where status in ('verified', 'fake', 'declined_unknown')
 group by 2
 ),
 first_check_id as (
@@ -37,7 +37,7 @@ join DDS.S_AuthCheck_Status ch
     on ich.AuthCheck_id = ch.AuthCheck_id
 join dma.current_item ci on ich.item_Id = ci.item_id
 join first_check fc on fc. user_id = ci.user_id and ch.actual_date = min_check_time
-where status in ('verified', 'declined_fake', 'declined_unknown')
+where status in ('verified', 'fake', 'declined_unknown')
 ),
 total_auth as (
 select item_id, 
@@ -47,7 +47,7 @@ select item_id,
        param1_id, 
        param2_id, 
        ic.user_id,
-       case when fc.user_id is null or fci.AuthCheck_id is not null then true else false end as is_first_check,
+       case when fc.user_id is null or fci.AuthCheck_id is not null then true else false end as is_first_auth,
        case when param1 in ('Аксессуары') then 'Accessories'
             when param1 in ('Женская обувь', 'Мужская обувь') then 'Shoes'
             when param1 in ('Женская одежда', 'Мужская одежда') then 'Clothes'
@@ -56,15 +56,17 @@ from item_checks ic
 left join first_check fc on ic.user_id = fc.user_id and actual_time > min_check_time
 left join first_check_id fci on ic.user_id = fci.user_id and fci.AuthCheck_id = ic.AuthCheck_id
 ),
-total_started as(
+total as (
+select * from total_auth
+union all
 select cai.item_id, 
-       0 as AuthCheck_id, 
+       null as AuthCheck_id, 
        'item_new' as status, 
        date(StartTime) as event_date, 
        Param1_microcat_id as param1_id,
        Param2_microcat_id as param2_id, 
        ci.user_id,
-       case when fc.user_id is null then true else false end as is_first_check,
+       case when fc.user_id is null then true else false end as is_first_auth,
        case when ci.param1 in ('Аксессуары') then 'Accessories'
             when ci.param1 in ('Женская обувь', 'Мужская обувь') then 'Shoes'
             when ci.param1 in ('Женская одежда', 'Мужская одежда') then 'Clothes'
@@ -91,6 +93,4 @@ and isDeliveryActive
 and date(StartTime) between :first_date and :last_date
 -- and cast(StartTime as date) between cast(:first_date as date) and cast(:last_date as date) -- @trino
 )
-select * from total_auth
-union all
-select * from total_started
+select * from total
