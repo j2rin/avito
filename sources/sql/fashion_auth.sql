@@ -58,7 +58,7 @@ left join first_check_id fci on ic.user_id = fci.user_id and fci.AuthCheck_id = 
 ),
 total_started as(
 select cai.item_id, 
-       null as AuthCheck_id, 
+       0 as AuthCheck_id, 
        'item_new' as status, 
        date(StartTime) as event_date, 
        Param1_microcat_id as param1_id,
