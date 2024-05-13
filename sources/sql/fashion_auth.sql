@@ -56,9 +56,7 @@ from item_checks ic
 left join first_check fc on ic.user_id = fc.user_id and actual_time > min_check_time
 left join first_check_id fci on ic.user_id = fci.user_id and fci.AuthCheck_id = ic.AuthCheck_id
 ),
-total as (
-select * from total_auth
-union all
+total_started as(
 select cai.item_id, 
        null as AuthCheck_id, 
        'item_new' as status, 
@@ -93,4 +91,6 @@ and isDeliveryActive
 and date(StartTime) between :first_date and :last_date
 -- and cast(StartTime as date) between cast(:first_date as date) and cast(:last_date as date) -- @trino
 )
-select * from total
+select * from total_auth
+union all
+select * from total_started
