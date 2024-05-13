@@ -47,7 +47,7 @@ select item_id,
        param1_id, 
        param2_id, 
        ic.user_id,
-       case when fc.user_id is null or fci.AuthCheck_id is not null then true else false end as is_first_auth,
+       case when fc.user_id is null or fci.AuthCheck_id is not null then true else false end as is_first_check,
        case when param1 in ('Аксессуары') then 'Accessories'
             when param1 in ('Женская обувь', 'Мужская обувь') then 'Shoes'
             when param1 in ('Женская одежда', 'Мужская одежда') then 'Clothes'
@@ -66,7 +66,7 @@ select cai.item_id,
        Param1_microcat_id as param1_id,
        Param2_microcat_id as param2_id, 
        ci.user_id,
-       case when fc.user_id is null then true else false end as is_first_auth,
+       case when fc.user_id is null then true else false end as is_first_check,
        case when ci.param1 in ('Аксессуары') then 'Accessories'
             when ci.param1 in ('Женская обувь', 'Мужская обувь') then 'Shoes'
             when ci.param1 in ('Женская одежда', 'Мужская одежда') then 'Clothes'
