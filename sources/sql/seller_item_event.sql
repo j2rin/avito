@@ -88,6 +88,7 @@ left join /*+distrib(l,a)*/ dma.user_segment_market usm
     on t.user_id = usm.user_id
     and coalesce(lc.logical_category_id, cm.logical_category_id) = usm.logical_category_id
     and t.event_date = usm.event_date
+    and usm.reason_code is not null
     and usm.event_date between :first_date and :last_date
     -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 left join /*+jtype(h),distrib(l,a)*/ am_client_day acd on t.user_id = acd.user_id and t.event_date between acd.active_from_date and acd.active_to_date

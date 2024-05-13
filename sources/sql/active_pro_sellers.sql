@@ -40,6 +40,7 @@ daily_active_listers_w_segment as (
         on  dal.user_id = usm.user_id
         and dal.event_date = usm.event_date
         and dal.logical_category_id = usm.logical_category_id
+        and usm.reason_code is not null
         and usm.event_date between :first_date and :last_date
         -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     left join dict.segmentation_ranks ls

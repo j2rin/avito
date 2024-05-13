@@ -27,6 +27,7 @@ left join DMA.user_segment_market usm
     on  ctf.user_id = usm.user_id
     and ctf.logical_category_id = usm.logical_category_id
     and cast(ctf.event_timestamp as date) = usm.event_date
+    and usm.reason_code is not null
     and usm.event_date between :first_date and :last_date
     -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 left join (

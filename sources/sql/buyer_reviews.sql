@@ -41,6 +41,7 @@ from dma.current_buyer_reviews as cbr
     left join dma.user_segment_market usm on cbr.from_user_id = usm.user_id
                                         and cm.logical_category_id = usm.logical_category_id
                                         and cast(cbr.create_date as date) = usm.event_date
+                                        and usm.reason_code is not null
                                         and usm.event_date between :first_date and :last_date
                                         -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     left join dict.segmentation_ranks sr on sr.logical_category_id = cm.logical_category_id and is_default

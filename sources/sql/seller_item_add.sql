@@ -200,5 +200,6 @@ left join DMA.user_segment_market usm
     on  t.user_id = usm.user_id
     and t.logical_category_id = usm.logical_category_id
     and cast(t.event_date as date) = usm.event_date
+    and usm.reason_code is not null
     and usm.event_date between :first_date and :last_date
     -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
