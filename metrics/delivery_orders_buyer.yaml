@@ -279,6 +279,7 @@ metric.counter:
   buyer_delivery_approximate_provider_cost_no_vat_created:          {filter: [{is_created: true}], obs: [approximate_delivery_provider_cost_no_vat]}
   buyer_delivery_approximate_provider_cost_no_vat_paid:             {filter: [{is_paid: true}], obs: [approximate_delivery_provider_cost_no_vat]}
   buyer_delivery_approximate_provider_cost_no_vat_confirmed:        {filter: [{is_confirmed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
+  buyer_delivery_approximate_provider_cost_no_vat_performed:		{filter: [{is_performed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
   buyer_delivery_approximate_provider_cost_no_vat_canceled:         {filter: [{is_canceled: true}], obs: [approximate_delivery_provider_cost_no_vat]}
   buyer_delivery_approximate_provider_cost_no_vat_voided:           {filter: [{is_voided: true}], obs: [approximate_delivery_provider_cost_no_vat]}
   buyer_delivery_approximate_provider_cost_no_vat_unperformed:      {filter: [{is_unperformed: true}], obs: [approximate_delivery_provider_cost_no_vat]}
@@ -616,3 +617,7 @@ metric.ratio:
   
   buyer_delivery_performed_paid_ratio_start_date: { num: buyer_delivery_orders_performed_start_date, den: buyer_delivery_orders_paid_start_date }
   buyer_delivery_accepted_paid_ratio_start_date:  { num: buyer_delivery_orders_accepted_start_date, den: buyer_delivery_orders_paid_start_date }
+  
+  buyer_delivery_cpo_paid_orders: { num: buyer_delivery_approximate_provider_cost_no_vat_paid, den: buyer_delivery_orders_paid }
+  buyer_delivery_cpo_performed_orders_real: { num: buyer_delivery_real_provider_cost_no_vat_performed, den: buyer_delivery_orders_performed }
+  buyer_delivery_cpo_performed_orders_approximate: { num: buyer_delivery_approximate_provider_cost_no_vat_performed, den: buyer_delivery_orders_performed }
