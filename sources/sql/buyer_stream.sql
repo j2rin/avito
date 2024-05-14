@@ -322,8 +322,8 @@ left join /*+jtype(h),distrib(l,a)*/ (
     select distinct
         ub.user_id,
         cb.name reputation_badge,
-        cast(ub.date_from as date),
-        cast(ub.date_to as date),
+        cast(ub.date_from as date) date_from,
+        cast(ub.date_to as date) date_to,
         case when cb.name = 'reliable_seller' then 500005 when cb.name = 'user_verified_partner' then 500012 end vertical_id
     from dma.user_badges ub
         join dma.current_badges cb
