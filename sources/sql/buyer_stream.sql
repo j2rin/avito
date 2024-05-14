@@ -164,7 +164,8 @@ select
         when inn_info.inn_status then 'B2C White'
         when usm.segment_rank is null or usm.segment_rank < 300 then 'C2C'
         when usm.segment_rank >= 300 then 'B2C Gray'
-    end as seller_segment_marketplace
+    end as seller_segment_marketplace,
+    b.reputation_badge
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -316,6 +317,24 @@ left join /*+jtype(h),distrib(l,a)*/
         where c.event_date >= inn_info.active_from and c.event_date < inn_info.active_until
         and inn_info.active_until >= :first_date
 ) inn_info on ss.item_user_id = inn_info.user_id and cast(ss.event_date as date) = inn_info.event_date
-  
+
+left join /*+jtype(h),distrib(l,a)*/ (
+    select distinct
+        ub.user_id,
+        cb.name reputation_badge,
+        cast(ub.date_from as date),
+        cast(ub.date_to as date),
+        case when reputation_badge = 'reliable_seller' then 500005 when reputation_badge = 'user_verified_partner' then 500012 end vertical_id
+    from dma.user_badges ub
+        join dma.current_badges cb
+            on ub.badge_id = cb.badge_ext
+    where true
+        and cast(ub.date_from as date) <= :last_date
+        and cast(ub.date_to as date) >= :first_date
+        and ub.user_id in (select user_id from bs_users)
+        and ub.badge_id in (33, 2359)
+        and ub.is_active
+) b on ss.item_user_id = b.user_id coalesce(lc.vertical_id, cm.vertical_id) = b.vertical_id and cast(ss.event_date as date) between b.date_from and b.date_to
+
 where cast(ss.event_date as date) between :first_date and :last_date
 --     and ss.date between :first_date and :last_date -- @trino
