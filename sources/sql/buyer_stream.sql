@@ -324,7 +324,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         cb.name reputation_badge,
         cast(ub.date_from as date),
         cast(ub.date_to as date),
-        case when reputation_badge = 'reliable_seller' then 500005 when reputation_badge = 'user_verified_partner' then 500012 end vertical_id
+        case when cb.name = 'reliable_seller' then 500005 when cb.name = 'user_verified_partner' then 500012 end vertical_id
     from dma.user_badges ub
         join dma.current_badges cb
             on ub.badge_id = cb.badge_ext
