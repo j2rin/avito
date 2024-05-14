@@ -334,7 +334,7 @@ left join /*+jtype(h),distrib(l,a)*/ (
         and ub.user_id in (select user_id from bs_users)
         and ub.badge_id in (33, 2359)
         and ub.is_active
-    --                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
+    --    and date_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
 ) b on ss.item_user_id = b.user_id and coalesce(lc.vertical_id, cm.vertical_id) = b.vertical_id and cast(ss.event_date as date) between b.date_from and b.date_to
 
 where cast(ss.event_date as date) between :first_date and :last_date
