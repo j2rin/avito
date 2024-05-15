@@ -56,15 +56,13 @@ left join /*+jtype(h),distrib(l,a)*/ (
 left join  dma.current_logical_categories lc on lc.logcat_id = ic.logcat_id
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = lc.logical_category_id and ls.is_default
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = mv.location_id
-left join /*+jtype(h),distrib(l,a)*/  (
-    select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
-    where user_id in (select user_id from users)
-) usm
+left join /*+jtype(h),distrib(l,a)*/ DMA.user_segment_market usm
     on mv.user_id = usm.user_id
     and lc.logical_category_id = usm.logical_category_id
-    and mv.event_date >= usm.converting_date and mv.event_date < usm.next_converting_date
+    and mv.event_date = usm.event_date
+    and usm.reason_code is not null
+    and usm.event_date between :first_date and :last_date
+    -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 left join /*+jtype(h),distrib(l,a)*/ (
     select user_id,
            active_from_date,
@@ -75,4 +73,4 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where user_id in (select user_id from users)
 ) acd on mv.user_id = acd.user_id and mv.event_date between acd.active_from_date and acd.active_to_date
 where cast(mv.event_date as date) between :first_date and :last_date
--- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+-- and mv.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino

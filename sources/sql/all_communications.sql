@@ -42,7 +42,7 @@ select
     ,coalesce(asd.is_asd, False) as is_asd
     ,asd.asd_user_group_id as asd_user_group_id
     ,cast(a.event_date as date) = cast(tbb.first_target_contact_event_date as date) as is_target_buyer_new
-    ,coalesce(usm.user_segment_market, ls.segment) as user_segment_market
+    ,coalesce(usm.user_segment, ls.segment) as user_segment_market
     ,lc.logical_param1_id
     ,lc.logical_param2_id
     ,coalesce(cpg.price_group, 'Undefined') as price_group
@@ -82,15 +82,13 @@ from dma.all_contacts a
             and asd.active_to_date >= :first_date
     ) asd on a.seller_id = asd.user_id and cast(a.event_date as date) between asd.active_from_date and asd.active_to_date
 
-    left join /*+distrib(a,l)*/ (
-        select user_id, logical_category_id, user_segment as user_segment_market, converting_date,
-            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-        from DMA.user_segment_market
-        where converting_date <= :last_date
-    ) as usm
+    left join /*+distrib(a,l)*/ DMA.user_segment_market as usm
         on a.seller_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
-        and cast(a.event_date as date) >= converting_date and cast(a.event_date as date) < next_converting_date
+        and a.event_date = usm.event_date
+        and usm.reason_code is not null
+        and usm.event_date between :first_date and :last_date
+        -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 
     left join /*+distrib(a,l)*/ (
         select

@@ -58,15 +58,11 @@ left join /*+jtype(h)*/
 from DMA.am_client_day_versioned
     ) acd on chr.user_id = acd.user_id and cast(chr.first_message_event_date as date) between acd.active_from_date and acd.active_to_date
     
-left join /*+jtype(h)*/ 
-    (
-    select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, '20990101') over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market 
-    Where converting_date <= :last_date
-
-    ) as usm
+left join /*+jtype(h)*/ DMA.user_segment_market as usm
         on chr.user_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
-        and chr.first_message_event_date >= converting_date and chr.first_message_event_date < next_converting_date
+        and chr.first_message_event_date = usm.event_date
+        and usm.reason_code is not null
+        and usm.event_date between :first_date and :last_date
+        -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 where cast(t.first_message_event_date as date) between :first_date and :last_date

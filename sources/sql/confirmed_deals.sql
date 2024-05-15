@@ -42,18 +42,13 @@ from filtered_data                fd
 join /*+distrib(a,l)*/ dma.current_item ci on ci.item_id = fd.item_id -- для получения микроката
 join dma.current_microcategories  cmc on cmc.microcat_id = ci.microcat_id
 
-left join (
-    select
-        user_id,
-        logical_category_id,
-        user_segment,
-        converting_date,
-        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
-) usm
+left join DMA.user_segment_market usm
     on ci.user_id = usm.user_id
     and cmc.logical_category_id = usm.logical_category_id
-    and fd.event_date >= converting_date and fd.event_date < next_converting_date
+    and fd.event_date = usm.event_date
+    and usm.reason_code is not null
+    and usm.event_date between :first_date and :last_date
+    -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 
 left join dict.segmentation_ranks ls on ls.logical_category_id = cmc.logical_category_id and ls.is_default
 

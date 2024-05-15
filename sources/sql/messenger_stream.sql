@@ -7,12 +7,6 @@ with am_client_day as (
     from DMA.am_client_day_versioned
     where cast(active_from_date as date) <= :last_date
         and cast(active_to_date as date) >= :first_date
-),
-usm as (
-    select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
-    where cast(converting_date as date) <= :last_date
 )
 select
     m.event_date,
@@ -55,9 +49,12 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl
 left join /*+jtype(h),distrib(l,a)*/ am_client_day acd
 		on m.user_Id = acd.user_id
 		and m.event_date between acd.active_from_date and acd.active_to_date
-left join /*+distrib(l,a)*/ usm
+left join /*+distrib(l,a)*/ DMA.user_segment_market usm
         on m.user_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
-		and cast(m.event_date as TIMESTAMP) >= converting_date and cast(m.event_date as TIMESTAMP) < next_converting_date
+		and cast(m.event_date as TIMESTAMP) = usm.event_date
+		and usm.reason_code is not null
+        and usm.event_date between :first_date and :last_date
+        -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 where cast(m.event_date as date) between :first_date and :last_date
     --and m.event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) -- @trino

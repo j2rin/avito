@@ -6,15 +6,6 @@ am_client_day as (
            (personal_manager_team is not null and user_is_asd_recognised) as is_asd,
            user_group_id
     from DMA.am_client_day_versioned
-),
-usm as (
-    select
-        user_id,
-        logical_category_id,
-        user_segment,
-        converting_date,
-        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
 )
 select
     cast(t.event_date as date) as event_date,
@@ -52,12 +43,15 @@ JOIN dma.current_microcategories as cm
 left join am_client_day acd
     on t.user_Id = acd.user_id
     and cast(t.event_date as date) between acd.active_from_date and acd.active_to_date
-left join usm
+left join DMA.user_segment_market usm
     on t.user_Id = usm.user_id
     and cm.logical_category_id = usm.logical_category_id
-    and t.event_date >= converting_date and t.event_date < next_converting_date
+    and t.event_date = usm.event_date
+    and usm.reason_code is not null
+    and usm.event_date between :first_date and :last_date
+    -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 left join  dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id
     and ls.is_default
 where cast(t.event_date as date) between :first_date and :last_date
---and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
+--and t.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino

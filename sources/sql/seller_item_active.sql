@@ -121,31 +121,13 @@ left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls
 
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = ss.location_id
 
-left join /*+jtype(h),distrib(l,r)*/ (
-    select
-        usm.user_id,
-        usm.logical_category_id,
-        usm.user_segment,
-        c.event_date
-    from (
-        select
-            user_id,
-            logical_category_id,
-            user_segment,
-            converting_date as from_date,
-            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
-        from DMA.user_segment_market
-        where true
-            and user_id in (select user_id from sia_users)
-            and converting_date <= :last_date
-    ) usm
-    join dict.calendar c on c.event_date between :first_date and :last_date
-    where c.event_date >= usm.from_date and c.event_date < usm.to_date
-        and usm.to_date >= :first_date
-) usm
+left join /*+jtype(h),distrib(l,r)*/ DMA.user_segment_market usm
     on  ss.user_id = usm.user_id
     and ss.event_date = usm.event_date
     and COALESCE(lc.logical_category_id, cm.logical_category_id) = usm.logical_category_id
+    and usm.reason_code is not null
+    and usm.event_date between :first_date and :last_date
+    -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 
 left join /*+distrib(l,a)*/ dma.item_geo_information ig
     on ig.user_id = ss.user_id

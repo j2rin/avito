@@ -36,30 +36,13 @@ daily_active_listers_w_segment as (
         coalesce(usm.user_segment, ls.segment) as user_segment_market,
         coalesce(usm.user_segment is null and ls.segment is not null, False) as is_default_segment
     from daily_active_listers dal
-    left join /*+jtype(h),distrib(l,r)*/ (
-        select
-            usm.user_id,
-            usm.logical_category_id,
-            usm.user_segment,
-            c.event_date
-        from (
-            select
-                user_id,
-                logical_category_id,
-                user_segment,
-                converting_date as from_date,
-                lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
-            from DMA.user_segment_market
-            where true
-                and converting_date <= :last_date
-        ) usm
-        join dict.calendar c on c.event_date between :first_date and :last_date
-        where c.event_date >= usm.from_date and c.event_date < usm.to_date
-            and usm.to_date >= :first_date
-    ) usm
+    left join /*+jtype(h),distrib(l,r)*/ DMA.user_segment_market usm
         on  dal.user_id = usm.user_id
         and dal.event_date = usm.event_date
         and dal.logical_category_id = usm.logical_category_id
+        and usm.reason_code is not null
+        and usm.event_date between :first_date and :last_date
+        -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
     left join dict.segmentation_ranks ls
         on ls.logical_category_id = dal.logical_category_id
         and ls.is_default

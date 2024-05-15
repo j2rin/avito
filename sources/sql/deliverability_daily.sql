@@ -96,32 +96,13 @@ from (
     from dma.item_day_delivery idd
 ) idd
 inner join /*+jtype(h),distrib(l,a)*/ dma.current_microcategories cm on cm.microcat_id = idd.microcat_id
-left join  /*+jtype(h)*/ (
-        select
-            usm.user_id,
-            usm.logical_category_id,
-            usm.user_segment,
-            c.event_date
-        from (
-            select
-                user_id,
-                logical_category_id,
-                user_segment,
-                converting_date as from_date,
-                lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
-            from DMA.user_segment_market
-            where true
-                and user_id in (select user_id from core_users)
-                and converting_date <= :last_date
-        ) usm
-        join dict.calendar c on c.event_date between :first_date and :last_date
-        where c.event_date >= usm.from_date
-            and c.event_date < usm.to_date
-            and usm.to_date >= :first_date
-    ) usm
+left join  /*+jtype(h)*/ DMA.user_segment_market usm
         on idd.user_id = usm.user_id
-        and idd.event_date = usm.event_date
         and cm.logical_category_id = usm.logical_category_id
+        and idd.event_date = usm.event_date
+        and usm.reason_code is not null
+        and usm.event_date between :first_date and :last_date
+        -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 left join dma.current_deliverycategories cdc on cdc.cpv_hash = idd.cpv_hash
 left join dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id

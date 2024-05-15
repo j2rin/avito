@@ -8,12 +8,6 @@ with am_client_day as (
     where cast(active_from_date as date) <= :last_date
         and cast(active_to_date as date) >= :first_date
 )
-, usm as (
-    select user_id, logical_category_id, user_segment, converting_date,
-        lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as next_converting_date
-    from DMA.user_segment_market
-    where cast(converting_date as date) <= :last_date
-)
 , chatbot as (
     select
         chat_id,
@@ -90,10 +84,13 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl
 left join am_client_day acd
     on chr.user_id = acd.user_id
     and cast(chr.first_message_event_date as date) between acd.active_from_date and acd.active_to_date
-left join usm
+left join DMA.user_segment_market usm
     on chr.user_id = usm.user_id
     and cm.logical_category_id = usm.logical_category_id
-    and cast(chr.first_message_event_date as timestamp) >= converting_date and cast(chr.first_message_event_date as timestamp) < next_converting_date
+    and cast(chr.first_message_event_date as timestamp) = usm.event_date
+    and usm.reason_code is not null
+    and usm.event_date between :first_date and :last_date
+    -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 where true
     and not is_spam
     and not is_bad_cookie

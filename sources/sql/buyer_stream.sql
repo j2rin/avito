@@ -130,7 +130,7 @@ select
     coalesce(asd.is_asd,false) is_asd,
     -- По дефолту ставим SS сегмент - 8383
     coalesce(asd.asd_user_group_id,8383) as asd_user_group_id,
-    coalesce(usm.user_segment_market, ls.segment) as user_segment_market,
+    coalesce(usm.user_segment, ls.segment) as user_segment_market,
     ss.item_rnk,
     ss.boost_class_id,
     3 AS multiplier_3,
@@ -195,29 +195,13 @@ left join /*+jtype(fm),distrib(l,a)*/ (
         -- and first_action_event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
 ) ubb on ubb.track_id = ss.track_id and ubb.event_no = ss.event_no
 
-left join /*+jtype(h),distrib(l,a)*/ (
-    select
-        usm.user_id,
-        usm.logical_category_id,
-        usm.segment_rank,
-        usm.user_segment as user_segment_market,
-        c.event_date
-    from (
-        select
-            user_id,
-            logical_category_id,
-            user_segment,
-            segment_rank,
-            converting_date as from_date,
-            lead(converting_date, 1, cast('2099-01-01' as date)) over(partition by user_id, logical_category_id order by converting_date) as to_date
-        from DMA.user_segment_market
-        where user_id in (select user_id from bs_users)
-            and converting_date <= :last_date
-    ) usm
-    join dict.calendar c on c.event_date between :first_date and :last_date
-    where c.event_date >= usm.from_date and c.event_date < usm.to_date
-        and usm.to_date >= :first_date
-) usm on ss.item_user_id = usm.user_id and cm.logical_category_id = usm.logical_category_id and cast(ss.event_date as date) = usm.event_date
+left join /*+jtype(h),distrib(l,a)*/ DMA.user_segment_market usm
+  on ss.item_user_id = usm.user_id
+  and cm.logical_category_id = usm.logical_category_id
+  and cast(ss.event_date as date) = usm.event_date
+  and usm.reason_code is not null
+  and usm.event_date between :first_date and :last_date
+  -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 
 left join /*+jtype(h),distrib(l,a)*/ (
    select
