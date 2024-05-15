@@ -96,4 +96,4 @@ left join /*+distrib(l,a)*/ (
     on olf.user_id = asd.user_id
     and cast(olf.event_date as date) between asd.active_from_date and asd.active_to_date
 where olf.event_date between :first_date and :last_date
--- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
+-- and olf.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
