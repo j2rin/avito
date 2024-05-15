@@ -1928,7 +1928,7 @@ metric.counter:
     iv_video: { filter: [*is_item_with_video, *is_iv] }
     c_video: { filter: [*is_item_with_video, *is_contact] }
     fav_video: { filter: [*is_item_with_video, *is_fav] }
-    btc_video: { filter: [*is_item_with_video, *is_btc] }
+    btc_video: { filter: [*is_item_with_video, *is_btc_wo_guessing] }
     iv_video_s: { filter: [*is_item_with_video, *is_iv_wo_guessing, *x_is_search] }
     c_video_s: { filter: [*is_item_with_video, *is_contact_wo_guessing, *x_is_search] }
     fav_video_s: { filter: [*is_item_with_video, *is_fav, *x_is_search] }
@@ -1958,10 +1958,10 @@ metric.counter:
     iv_premium_bx: { filter: [*is_iv, {is_premium: True}] }
     c_premium_bx: { filter: [*is_contact, {is_premium: True}] }
     
-    iv_fancy: { filter: [is_fancy: true, *is_iv] }
-    c_fancy: { filter: [is_fancy: true, *is_contact] }
+    iv_fancy: { filter: [is_fancy: true, *is_iv_wo_guessing] }
+    c_fancy: { filter: [is_fancy: true, *is_contact_wo_guessing] }
     fav_fancy: { filter: [is_fancy: true, *is_fav] }
-    btc_fancy: { filter: [is_fancy: true, *is_btc] }
+    btc_fancy: { filter: [is_fancy: true, *is_btc_wo_guessing] }
     iv_fancy_s: { filter: [is_fancy: true, *is_iv_wo_guessing, *x_is_search] }
     c_fancy_s: { filter: [is_fancy: true, *is_contact_wo_guessing, *x_is_search] }
     fav_fancy_s: { filter: [is_fancy: true, *is_fav, *x_is_search] }
@@ -1973,7 +1973,7 @@ metric.counter:
     c_fancy_i2i: { filter: [is_fancy: true, *is_contact_wo_guessing, *x_is_i2i] }
     btc_fancy_i2i: { filter: [is_fancy: true, *is_btc_wo_guessing, *x_is_i2i] }
     
-    iv_non_fancy: { filter: [is_fancy: false, *is_iv] }
+    iv_non_fancy: { filter: [is_fancy: false, *is_iv_wo_guessing] }
     iv_non_fancy_s: { filter: [is_fancy: false, *is_iv_wo_guessing, *x_is_search] }
     iv_non_fancy_u2i: { filter: [is_fancy: false, *is_iv_wo_guessing, *x_is_u2i] }
     iv_non_fancy_i2i: { filter: [is_fancy: false, *is_iv_wo_guessing, *x_is_i2i] }
@@ -2115,13 +2115,13 @@ metric.counter:
     iv_video_lenta_premium: { filter: [*is_iv_wo_guessing, *x_avl, {is_premium: True}] }
     c_video_lenta_premium: { filter: [*is_contact_wo_guessing, *x_avl, {is_premium: True}] }
 
-    btc_video_lenta: { filter: [*is_btc, *x_avl] }
+    btc_video_lenta: { filter: [*is_btc_wo_guessing, *x_avl] }
     fav_video_lenta: { filter: [*is_fav, *x_avl] }
     
     iv_widget:	{	filter: [*is_iv_wo_guessing, *x_is_widget] }
     c_widget:	{	filter: [*is_contact_wo_guessing, *x_is_widget] }
     fav_widget:	{	filter: [*is_fav, *x_is_widget] }
-    btc_widget:	{	filter: [*is_btc, *x_is_widget] }
+    btc_widget:	{	filter: [*is_btc_wo_guessing, *x_is_widget] }
 
     cnt_iv_sales: { filter: [*is_iv, *in_sale] }
     cnt_iv_s_sales: { filter: [*is_iv, *x_is_search, *in_sale] }
