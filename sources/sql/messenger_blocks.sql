@@ -54,4 +54,4 @@ left join  dict.segmentation_ranks ls
     on ls.logical_category_id = cm.logical_category_id
     and ls.is_default
 where cast(t.event_date as date) between :first_date and :last_date
---and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
+--and t.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
