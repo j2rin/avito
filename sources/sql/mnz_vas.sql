@@ -73,4 +73,4 @@ left join /*+jtype(h),distrib(l,a)*/ (
     where user_id in (select user_id from users)
 ) acd on mv.user_id = acd.user_id and mv.event_date between acd.active_from_date and acd.active_to_date
 where cast(mv.event_date as date) between :first_date and :last_date
--- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+-- and mv.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
