@@ -375,6 +375,7 @@ definitions:
     - &is_trx_commission_high {item_flags.bit: 39}
     - &is_trx {$or: [*is_trx_commission_low, *is_trx_commission_medium, *is_trx_commission_high]}
 
+    - &is_cpt {item_flags.bit: 42}
 
 
 metric.counter:
@@ -2182,6 +2183,18 @@ metric.counter:
     rec_hide_item:                  { filter: [eid: 3848, from_page: 'hide_item']}
     rec_hide_location:              { filter: [eid: 3848, from_page: 'hide_location']}
 
+    cnt_c_cpt:                      { filter: [ *is_contact, *is_cpt ] }
+    cnt_c_serp_cpt:                 { filter: [ *is_contact, *is_cpt, *x_is_search ] }
+    cnt_c_u2i_cpt:                  { filter: [ *is_contact, *is_cpt, *x_is_u2i ] }
+    cnt_c_i2i_cpt:                  { filter: [ *is_contact, *is_cpt, *x_is_i2i ] }
+    cnt_c_map_cpt:                  { filter: [ *is_contact, *is_cpt, *x_is_map ] }
+
+    cnt_iv_cpt:                     { filter: [ *is_iv, *is_cpt ] }
+    cnt_iv_serp_cpt:                { filter: [ *is_iv_wo_guessing, *is_cpt, *x_is_search ] }
+    cnt_iv_u2i_cpt:                 { filter: [ *is_iv_wo_guessing, *is_cpt, *x_is_u2i ] }
+    cnt_iv_i2i_cpt:                 { filter: [ *is_iv_wo_guessing, *is_cpt, *x_is_i2i ] }
+    cnt_iv_map_cpt:                 { filter: [ *is_iv_wo_guessing, *is_cpt, *x_is_map ] }
+
 metric.uniq:
     user_rec_hide_category:         { counter: rec_hide_category, key: [cookie]}
     user_rec_hide_item:             { counter: rec_hide_item,     key: [cookie]}
@@ -3939,6 +3952,24 @@ metric.uniq:
 	user_c_widget: { counter: c_widget, key: [cookie]}
 	user_fav_widget: { counter: fav_widget, key: [cookie]}
 	user_btc_widget: { counter: btc_widget, key: [cookie]}
+
+    contacts_cpt:                       { counter: cnt_c_cpt,                   key: [ item, x ] }
+    contacts_serp_cpt:                  { counter: cnt_c_serp_cpt,              key: [ item, x ] }
+    contacts_u2i_cpt:                   { counter: cnt_c_u2i_cpt,               key: [ item, x ] }
+    contacts_i2i_cpt:                   { counter: cnt_c_i2i_cpt,               key: [ item, x ] }
+    contacts_map_cpt:                   { counter: cnt_c_map_cpt,               key: [ item, x ] }
+
+    user_c_cpt:                      { counter: cnt_c_cpt,                   key: [cookie] }
+    user_c_serp_cpt:                 { counter: cnt_c_serp_cpt,              key: [cookie] }
+    user_c_u2i_cpt:                  { counter: cnt_c_u2i_cpt,               key: [cookie] }
+    user_c_i2i_cpt:                  { counter: cnt_c_i2i_cpt,               key: [cookie] }
+    user_c_map_cpt:                  { counter: cnt_c_map_cpt,               key: [cookie] }
+
+    item_views_cpt:                     { counter: cnt_iv_cpt,                  key: [item, x] }
+    item_views_serp_cpt:                { counter: cnt_iv_serp_cpt,             key: [item, x] }
+    item_views_u2i_cpt:                 { counter: cnt_iv_u2i_cpt,              key: [item, x] }
+    item_views_i2i_cpt:                 { counter: cnt_iv_i2i_cpt,              key: [item, x] }
+    item_views_map_cpt:                 { counter: cnt_iv_map_cpt,              key: [item, x] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
