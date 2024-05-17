@@ -53,6 +53,6 @@ wallet_top_ups as (select ca.createdat as create_date,method,amount,user_id,stat
    and rn = 1)
  select *
  from wallet_events
- union
+ union all
  select *
  from top_ups
