@@ -163,8 +163,8 @@ select
     coalesce(fancy.is_fancy, false) is_fancy,
     case
         when inn_info.inn_status then 'B2C White'
-        when usm.segment_rank is null or usm.segment_rank < 300 then 'C2C'
-        when usm.segment_rank >= 300 then 'B2C Gray'
+        when coalesce(usm.user_segment, ls.segment) not in ('Private.Seller','Private (Earning).Seller','Private (Earning).Extra Small') then 'B2C Gray'
+        else 'C2C'
     end as seller_segment_marketplace,
     b.reputation_badge
 from DMA.buyer_stream ss
@@ -293,14 +293,12 @@ left join /*+jtype(h),distrib(l,a)*/
                     dma.verification_statuses
                 where 1=1
                     and verification_type = 'INN'
-                    and user_id in (select user_id from bs_users)
-    --                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
             ) _
         where rn = 1 --получаем последний за день статус
         ) inn_info
         join dict.calendar c on c.event_date between :first_date and :last_date
-        where c.event_date >= inn_info.active_from and c.event_date < inn_info.active_until
-        and inn_info.active_until >= :first_date
+        where c.event_date between inn_info.active_from and inn_info.active_until
+            and inn_info.active_from >= :first_date
 ) inn_info on ss.item_user_id = inn_info.user_id and cast(ss.event_date as date) = inn_info.event_date
 
 left join /*+jtype(h),distrib(l,a)*/ (
