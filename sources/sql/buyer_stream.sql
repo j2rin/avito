@@ -293,6 +293,7 @@ left join /*+jtype(h),distrib(l,a)*/
                     dma.verification_statuses
                 where 1=1
                     and verification_type = 'INN'
+    --                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
             ) _
         where rn = 1 --получаем последний за день статус
         ) inn_info
