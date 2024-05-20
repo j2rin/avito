@@ -106,7 +106,7 @@ select
     co.paylink_not_null,
     co.is_cod,
     purchase_ext,
-    case when cast(co.create_date as date) <= cast(onboarding_ended_db as date) then true
+    case when cast(co.create_date as date) >= cast(onboarding_ended_db as date) then true
      else false
     end as has_opened_delivery_wallet,
 -- Dimensions -----------------------------------------------------------------------------------------------------
