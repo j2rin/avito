@@ -36,6 +36,7 @@ with am_client_day as (
     chr.user_id,
     cast(reply_time as date) as reply_time,
     date_diff ('minute',first_message_event_date, reply_time) as reply_time_minutes,
+    date_diff ('minute',first_message_event_date, assistant_reply_time) as assistant_reply_time_minutes,
     case
         when cast(first_message_event_date as date)=cast(reply_time as date) then true
         else false
