@@ -99,9 +99,9 @@ from
                 str.subcategory_id,
                 first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
                 --- следующие поля актуальны только если предыдущее поле x_eid = 300
-                first_value(bitwise_and(serp_search_params, 4503599627370496)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
-                first_value(bitwise_and(serp_search_params, 2251799813685248)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
-                first_value(bitwise_and(serp_search_params, 1125899906842624)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
+                first_value(bitwise_and(serp_search_params, 4503599627370496) > 0) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
+                first_value(bitwise_and(serp_search_params, 2251799813685248) > 0) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
+                first_value(bitwise_and(serp_search_params, 1125899906842624) > 0) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
                 first_value(coalesce(serp_query is not null, false)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as text_query_flg,
                 ---
                 sum(1) over (partition by t.cookie_id, t.item_id, t.event_date) as item_views_cnt
