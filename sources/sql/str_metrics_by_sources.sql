@@ -186,7 +186,7 @@ from
                             SELECT
                                 DISTINCT STROrderEventname_id
                             FROM dds.S_STROrderEventname_CreatedAt
-                                WHERE CreatedAt::date between :first_date and :last_date
+                                WHERE cast(CreatedAt as date) between :first_date and :last_date
                         ) AS s1
                         JOIN (
                             SELECT
