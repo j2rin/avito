@@ -25,8 +25,8 @@ with
             t.x,
             t.x_eid,
             t.eid,
-            min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_params,
-            min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query
+            min(case when t.eid = 300 then t.search_flags end) over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_params,
+            min(case when t.eid = 300 then t.query_id end)     over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query
         from (
             select
                 t.event_date as event_datetime,
@@ -40,6 +40,8 @@ with
                 t.x_eid,
                 t.eid,
                 t.infmquery_id,
+                t.search_flags,
+                t.query_id,
                 max(case when t.eid = 301 then 1 else 0 end) over (partition by t.x) as serp_with_iv_flg
             from dma.buyer_stream t
             where 1=1
@@ -48,23 +50,8 @@ with
                 --and cast(t.date as date) between :first_date and :last_date --@trino
                  -- оставляем только события поиска, просмотра и бронирования
                 and t.eid in (300, 301, 2581)
-            ) t
-            left join   (select
-                                 cookie_id,
-                                 track_id,
-                                 event_no,
-                                 search_params,
-                                 search_query
-                            from dma.clickstream_search_events
-                            where event_date between :first_date and :last_date
-                                and (search_query is not null or search_params is not null)
-                                -- and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
-                            ) as cs
-                    on t.cookie_id = cs.cookie_id
-                    and t.track_id = cs.track_id
-                    and t.event_no = cs.event_no
-                    and t.eid = 300
-            )
+        ) t
+    )
 select
     iv.event_date,
     iv.cookie_id,
@@ -112,10 +99,10 @@ from
                 str.subcategory_id,
                 first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
                 --- следующие поля актуальны только если предыдущее поле x_eid = 300
-                first_value(serp_search_params like '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
-                first_value(serp_search_params like '%"Посуточно"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
-                first_value(serp_search_params like '%"2903":{"from"%' or serp_search_params like '%"2900":{"from"%' or serp_search_params like '%"2844":{"from"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
-                first_value(coalesce(serp_query != '', false)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as text_query_flg,
+                first_value(serp_search_params & (1 << 52) > 0) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
+                first_value(serp_search_params & (1 << 51) > 0) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
+                first_value(serp_search_params & (1 << 50) > 0) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
+                first_value(coalesce(serp_query is not null, false)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as text_query_flg,
                 ---
                 sum(1) over (partition by t.cookie_id, t.item_id, t.event_date) as item_views_cnt
             from events as t
