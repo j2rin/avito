@@ -7,8 +7,7 @@ with
             mic.subcategory_id
         from DMA.current_item ci
             inner join DMA.current_locations cl
-                on 1=1
-                and cl.Location_id = ci.location_id
+                on cl.Location_id = ci.location_id
             inner join DMA.current_microcategories mic
                 on ci.microcat_id = mic.microcat_id
                 and mic.logical_category = 'Realty.ShortRent'
@@ -39,10 +38,8 @@ with
                 t.x,
                 t.x_eid,
                 t.eid,
-                t.infmquery_id,
                 t.search_flags,
-                t.query_id,
-                max(case when t.eid = 301 then 1 else 0 end) over (partition by t.x) as serp_with_iv_flg
+                t.query_id
             from dma.buyer_stream t
             where 1=1
                 --- фильтрация на даты
