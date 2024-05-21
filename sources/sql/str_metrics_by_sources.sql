@@ -181,7 +181,7 @@ from
                 dma.short_term_rent_orders s
                 left join (
                         SELECT
-                            DISTINCT StrBooking_id
+                            DISTINCT StrBooking_id as order_id
                         FROM (
                             SELECT
                                 DISTINCT STROrderEventname_id
