@@ -180,15 +180,29 @@ from
             from
                 dma.short_term_rent_orders s
                 left join (
-                        select
-                            distinct StrBooking_id as order_id, CreatedAt as actual_date
-                        from dds.L_STROrderEventname_StrBooking l
-                        left join dds.S_STROrderEventname_STREventName s1
-                            on l.STROrderEventname_id = s1.STROrderEventname_id
-                        left join dds.S_STROrderEventname_CreatedAt s2
-                            on l.STROrderEventname_id = s2.STROrderEventname_id
-                        where STREventName = 'paid'
-                            and cast(CreatedAt as date) between :first_date and :last_date
+                        SELECT
+                            DISTINCT StrBooking_id
+                        FROM (
+                            SELECT
+                                DISTINCT STROrderEventname_id
+                            FROM dds.S_STROrderEventname_CreatedAt
+                                WHERE CreatedAt::date between :first_date and :last_date
+                        ) AS s1
+                        JOIN (
+                            SELECT
+                                DISTINCT STROrderEventname_id
+                            FROM dds.S_STROrderEventname_STREventName
+                                WHERE STREventName = 'paid'
+                        ) AS s2
+                        ON s1.STROrderEventname_id = s2.STROrderEventname_id
+                        JOIN (
+                            SELECT
+                                DISTINCT
+                                STROrderEventname_id,
+                                StrBooking_id
+                            FROM dds.L_STROrderEventname_StrBooking
+                        ) AS l
+                        ON l.STROrderEventname_id = s2.STROrderEventname_id
                         ) as p
                     on s.order_id = p.order_id
             where cast(s.order_create_time as date) between :first_date and :last_date
