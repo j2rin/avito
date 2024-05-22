@@ -299,7 +299,6 @@ left join /*+jtype(h),distrib(l,a)*/
         ) inn_info
         join dict.calendar c on c.event_date between :first_date and :last_date
         where c.event_date between inn_info.active_from and inn_info.active_until
-            and inn_info.active_from >= :first_date
 ) inn_info on ss.item_user_id = inn_info.user_id and cast(ss.event_date as date) = inn_info.event_date
 
 left join /*+jtype(h),distrib(l,a)*/ (
