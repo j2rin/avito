@@ -177,7 +177,6 @@ left join /*+jtype(h),distrib(l,a)*/
         ) inn_info
         join dict.calendar c on c.event_date between :first_date and :last_date
         where c.event_date between inn_info.active_from and inn_info.active_until
-            and inn_info.active_from >= :first_date
 ) inn_info on co.seller_id = inn_info.user_id and cast(co.status_date as date) = inn_info.event_date
  left join /*+jtype(h),distrib(l,a)*/ DMA.user_segment_market usm
       on co.seller_id = usm.user_id
