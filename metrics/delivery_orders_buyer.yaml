@@ -351,6 +351,10 @@ metric.counter:
   buyer_delivery_items_accepted_mall_start_date:     {filter: [{is_accepted: true}, {is_mall: true}, {create_date.>: $ab_start_date}]}
   buyer_delivery_gmv_created_mall_start_date:        {filter: [{is_created: true, is_mall: true}, {create_date.>: $ab_start_date}], obs: [item_price]}
   buyer_delivery_gmv_accepted_mall_start_date:       {filter: [{is_accepted: true, is_mall: true}, {create_date.>: $ab_start_date}], obs: [item_price]}
+  
+  buyer_delivery_bundle_items_paid:           		 {filter: [{is_paid: true}, {is_bundle: true}]}
+  buyer_delivery_bundle_items_performed:           	 {filter: [{is_performed: true}, {is_bundle: true}]}
+  buyer_delivery_bundle_items_returned:           	 {filter: [{is_returned: true}, {is_bundle: true}]}
 
 metric.uniq:
   buyer_delivery_orders_created:          {counter: buyer_delivery_items_created, key: [deliveryorder_id]}
@@ -479,6 +483,8 @@ metric.uniq:
   buyer_delivery_orders_exmail_subsidies_accepted:                        { counter: buyer_delivery_items_exmail_subsidies_accepted, key: [ deliveryorder_id ] }
   buyer_delivery_orders_exmail_subsidies_returned:                        { counter: buyer_delivery_items_exmail_subsidies_returned, key: [ deliveryorder_id ] }
   buyer_delivery_orders_exmail_subsidies_accepted_and_returned:           { counter: buyer_delivery_items_exmail_subsidies_accepted_and_returned, key: [ deliveryorder_id ] }
+  
+  buyer_delivery_clustered_bundle_items_paid:   						  {counter: buyer_delivery_bundle_items_paid, key: [buyer_id, item_id]}
   
   payment_conversion_paid_uniq: { counter: payment_conversion_paid, key: [ purchase_ext ] } # PCR
   payment_conversion_created_uniq: { counter: payment_conversion_created, key: [ purchase_ext ] } # PCR
