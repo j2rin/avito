@@ -199,6 +199,10 @@ metric.counter:
   seller_transactional_revenue_paid_start_date:                        {filter: [{is_paid: true}, {create_date.>: $ab_start_date}], obs: [trx_commission_no_vat,b2c_white_commission_no_vat]}
   seller_transactional_revenue_performed_start_date:                   {filter: [{is_performed: true}, {create_date.>: $ab_start_date}], obs: [trx_commission_no_vat,b2c_white_commission_no_vat]}
   seller_transactional_revenue_accepted_start_date:                    {filter: [{is_accepted: true}, {create_date.>: $ab_start_date}], obs: [trx_commission_no_vat,b2c_white_commission_no_vat]}
+  
+  seller_delivery_bundle_items_paid:           		 				   {filter: [{is_paid: true}, {is_bundle: true}]}
+  seller_delivery_bundle_items_performed:            				   {filter: [{is_performed: true}, {is_bundle: true}]}
+  seller_delivery_bundle_items_returned:         				       {filter: [{is_returned: true}, {is_bundle: true}]}
 
 metric.uniq:  
   seller_delivery_orders_created:          {counter: seller_delivery_items_created, key: [deliveryorder_id]}
@@ -227,6 +231,8 @@ metric.uniq:
   seller_delivery_orders_c2c_seller_discount_performed_start_date:  {counter: seller_delivery_items_c2c_seller_discount_performed_start_date, key: [deliveryorder_id]}
   seller_free_delivery_orders_c2c_seller_discount_paid_start_date:       {counter: seller_free_delivery_items_c2c_seller_discount_paid_start_date, key: [deliveryorder_id]}
   seller_free_delivery_orders_c2c_seller_performed_start_date:           {counter: seller_free_delivery_items_c2c_seller_performed_start_date, key: [deliveryorder_id]}
+  
+  seller_delivery_clustered_bundle_items_paid:   						 {counter: seller_delivery_bundle_items_paid, key: [buyer_id, item_id]}
 
 metric.ratio:
   seller_delivery_average_item_price_created: {num: seller_delivery_gmv_created, den: seller_delivery_items_created}
