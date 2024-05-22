@@ -61,7 +61,7 @@ from DMA.am_client_day_versioned
 left join /*+jtype(h)*/ DMA.user_segment_market as usm
         on chr.user_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
-        and chr.first_message_event_date = usm.event_date
+        and cast(chr.first_message_event_date as date) = usm.event_date
         and usm.reason_code is not null
         and usm.event_date between :first_date and :last_date
         -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
