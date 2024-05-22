@@ -7,8 +7,7 @@ with
             mic.subcategory_id
         from DMA.current_item ci
             inner join DMA.current_locations cl
-                on 1=1
-                and cl.Location_id = ci.location_id
+                on cl.Location_id = ci.location_id
             inner join DMA.current_microcategories mic
                 on ci.microcat_id = mic.microcat_id
                 and mic.logical_category = 'Realty.ShortRent'
@@ -25,8 +24,8 @@ with
             t.x,
             t.x_eid,
             t.eid,
-            min(case when t.eid = 300 then cs.search_params end)       over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_params,
-            min(case when t.eid = 300 then cs.search_query end)        over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query
+            min(case when t.eid = 300 then t.search_flags end) over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_search_flags,
+            min(case when t.eid = 300 then t.query_id end)     over (partition by t.cookie_id, t.x order by t.event_datetime rows between unbounded preceding and current row) as serp_query
         from (
             select
                 t.event_date as event_datetime,
@@ -39,8 +38,8 @@ with
                 t.x,
                 t.x_eid,
                 t.eid,
-                t.infmquery_id,
-                max(case when t.eid = 301 then 1 else 0 end) over (partition by t.x) as serp_with_iv_flg
+                t.search_flags,
+                t.query_id
             from dma.buyer_stream t
             where 1=1
                 --- фильтрация на даты
@@ -48,23 +47,8 @@ with
                 --and cast(t.date as date) between :first_date and :last_date --@trino
                  -- оставляем только события поиска, просмотра и бронирования
                 and t.eid in (300, 301, 2581)
-            ) t
-            left join   (select
-                                 cookie_id,
-                                 track_id,
-                                 event_no,
-                                 search_params,
-                                 search_query
-                            from dma.clickstream_search_events
-                            where event_date between :first_date and :last_date
-                                and (search_query is not null or search_params is not null)
-                                -- and event_week between date_trunc('week', :first_date) and date_trunc('week', :last_date) --@trino
-                            ) as cs
-                    on t.cookie_id = cs.cookie_id
-                    and t.track_id = cs.track_id
-                    and t.event_no = cs.event_no
-                    and t.eid = 300
-            )
+        ) t
+    )
 select
     iv.event_date,
     iv.cookie_id,
@@ -112,10 +96,10 @@ from
                 str.subcategory_id,
                 first_value(t.x_eid) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as x_eid,
                 --- следующие поля актуальны только если предыдущее поле x_eid = 300
-                first_value(serp_search_params like '%"Сдам"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
-                first_value(serp_search_params like '%"Посуточно"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
-                first_value(serp_search_params like '%"2903":{"from"%' or serp_search_params like '%"2900":{"from"%' or serp_search_params like '%"2844":{"from"%') over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
-                first_value(coalesce(serp_query != '', false)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as text_query_flg,
+                first_value(bitwise_and(serp_search_flags, 4503599627370496) > 0) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as sdam_flg,
+                first_value(bitwise_and(serp_search_flags, 2251799813685248) > 0) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as str_flg,
+                first_value(bitwise_and(serp_search_flags, 1125899906842624) > 0) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as date_filtered_flg,
+                first_value(coalesce(serp_query is not null, false)) over (partition by t.cookie_id, t.item_id, t.event_date order by t.event_datetime) as text_query_flg,
                 ---
                 sum(1) over (partition by t.cookie_id, t.item_id, t.event_date) as item_views_cnt
             from events as t
@@ -196,15 +180,29 @@ from
             from
                 dma.short_term_rent_orders s
                 left join (
-                        select
-                            distinct StrBooking_id as order_id, CreatedAt as actual_date
-                        from dds.L_STROrderEventname_StrBooking l
-                        left join dds.S_STROrderEventname_STREventName s1
-                            on l.STROrderEventname_id = s1.STROrderEventname_id
-                        left join dds.S_STROrderEventname_CreatedAt s2
-                            on l.STROrderEventname_id = s2.STROrderEventname_id
-                        where STREventName = 'paid'
-                            and cast(CreatedAt as date) between :first_date and :last_date
+                        SELECT
+                            DISTINCT StrBooking_id as order_id
+                        FROM (
+                            SELECT
+                                DISTINCT STROrderEventname_id
+                            FROM dds.S_STROrderEventname_CreatedAt
+                                WHERE cast(CreatedAt as date) between :first_date and :last_date
+                        ) AS s1
+                        JOIN (
+                            SELECT
+                                DISTINCT STROrderEventname_id
+                            FROM dds.S_STROrderEventname_STREventName
+                                WHERE STREventName = 'paid'
+                        ) AS s2
+                        ON s1.STROrderEventname_id = s2.STROrderEventname_id
+                        JOIN (
+                            SELECT
+                                DISTINCT
+                                STROrderEventname_id,
+                                StrBooking_id
+                            FROM dds.L_STROrderEventname_StrBooking
+                        ) AS l
+                        ON l.STROrderEventname_id = s2.STROrderEventname_id
                         ) as p
                     on s.order_id = p.order_id
             where cast(s.order_create_time as date) between :first_date and :last_date
