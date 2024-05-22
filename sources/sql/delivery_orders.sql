@@ -51,6 +51,7 @@ select
     is_delivery_discount,
     items_qty,
     is_cart,
+    is_bundle,
     is_original,
     is_mall,
     has_short_video,
