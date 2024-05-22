@@ -36,6 +36,7 @@ with am_client_day as (
     chr.user_id,
     cast(reply_time as date) as reply_time,
     date_diff ('minute',first_message_event_date, reply_time) as reply_time_minutes,
+    date_diff ('minute',first_message_event_date, assistant_reply_time) as assistant_reply_time_minutes,
     case
         when cast(first_message_event_date as date)=cast(reply_time as date) then true
         else false
@@ -87,7 +88,7 @@ left join am_client_day acd
 left join DMA.user_segment_market usm
     on chr.user_id = usm.user_id
     and cm.logical_category_id = usm.logical_category_id
-    and cast(chr.first_message_event_date as timestamp) = usm.event_date
+    and cast(chr.first_message_event_date as date) = usm.event_date
     and usm.reason_code is not null
     and usm.event_date between :first_date and :last_date
     -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino

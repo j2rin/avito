@@ -45,6 +45,8 @@ metric.counter:
   c_avl:						{filter: [*is_contact], obs: [metric_value]}
   order_created_avl:			{filter: [eid: 2015], obs: [metric_value]}
   
+  upload_canceled_by_user:		{filter: [eid: 6303, error_text.ilike: '%cancel_by_user%'], obs: [metric_value]}
+  
   
 
 metric.uniq:
@@ -110,8 +112,11 @@ metric.uniq:
   user_c_video_lenta_half:        {counter: c_video_lenta_half, key: [cookie]}
   user_c_video_lenta_full:        {counter: c_video_lenta_full, key: [cookie]}
   
-  user_c_avl:					{counter: c_avl, key: [cookie]}
-  user_order_created_avl:		{counter: order_created_avl, key: [cookie]}
+  user_c_avl:					            {counter: c_avl, key: [cookie]}
+  user_order_created_avl:		      {counter: order_created_avl, key: [cookie]}
+  
+  user_upload_canceled_by_user:	  {counter: upload_canceled_by_user, key: [cookie]}
+  
 metric.ratio:
   avl_watch_per_session:        {num: watch_video_avl, den: session_watch_video_avl}
   item_watch_per_session:       {num: item_watch_video_avl, den: session_watch_video_avl}
@@ -121,6 +126,7 @@ metric.ratio:
 
   avl_watch_per_session_half:   {num: watch_video_avl_half, den: session_watch_video_avl_half}
   item_watch_per_session_half:  {num: item_watch_video_avl_half, den: session_watch_video_avl_half}
+  
 
 
   

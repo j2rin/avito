@@ -51,6 +51,7 @@ select
     is_delivery_discount,
     items_qty,
     is_cart,
+    is_bundle,
     is_original,
     is_mall,
     has_short_video,
@@ -138,8 +139,8 @@ select
     co.has_sbp_bindings,
     case
         when inn_info.inn_status then 'B2C White'
-        when usm.segment_rank is null or usm.segment_rank < 300 then 'C2C'
-        when usm.segment_rank >= 300 then 'B2C Gray'
+        when coalesce(usm.user_segment, ls.segment) not in ('Private.Seller','Private (Earning).Seller','Private (Earning).Extra Small') then 'B2C Gray'
+        else 'C2C'
     end as seller_segment_marketplace
 from dma.delivery_metric_for_ab co
 left join dma.current_logical_categories clc on clc.logcat_id = co.logical_category_id
@@ -170,13 +171,13 @@ left join /*+jtype(h),distrib(l,a)*/
                     dma.verification_statuses
                 where 1=1
                     and verification_type = 'INN'
-    --                and event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
+    --                and event_year <= date_trunc('year', date(:last_date)) -- @trino
             ) _
         where rn = 1 --получаем последний за день статус
         ) inn_info
         join dict.calendar c on c.event_date between :first_date and :last_date
-        where c.event_date >= inn_info.active_from and c.event_date < inn_info.active_until
-        and inn_info.active_until >= :first_date
+        where c.event_date between inn_info.active_from and inn_info.active_until
+            and inn_info.active_from >= :first_date
 ) inn_info on co.seller_id = inn_info.user_id and cast(co.status_date as date) = inn_info.event_date
  left join /*+jtype(h),distrib(l,a)*/ DMA.user_segment_market usm
       on co.seller_id = usm.user_id
@@ -185,6 +186,7 @@ left join /*+jtype(h),distrib(l,a)*/
       and usm.reason_code is not null
       and usm.event_date between :first_date and :last_date
       -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
+ left join /*+jtype(h),distrib(l,a)*/ dict.segmentation_ranks ls on co.logical_category_id = ls.logical_category_id and is_default
 where true 
     and date(co.status_date) between date(:first_date) and date(:last_date)
     -- and status_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
