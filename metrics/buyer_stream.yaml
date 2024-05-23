@@ -1649,6 +1649,12 @@ metric.counter:
     serp_empty_jk_catalog: { filter: [*is_1p, *is_search, *is_s_jk_catalog, *is_serp_empty] }
     serp_empty_jk_card: { filter: [*is_1p, *is_search, *is_s_jk_card, *is_serp_empty] }
     serp_small: { filter: [*is_1p, *is_search, *is_serp_small] }
+    cnt_cs_serp_small_item_attr: { filter: [*is_1p, *x_is_search, *is_serp_small, *is_contact_wo_guessing] }
+    cnt_iv_serp_small_item_attr: { filter: [*is_1p, *x_is_search, *is_serp_small, *is_iv_wo_guessing] }
+    cnt_btc_serp_small_item_attr: { filter: [*is_1p, *x_is_search, *is_serp_small, *is_btc_wo_guessing] }
+    cnt_cs_serp_small_base_item_attr: { filter: [*is_1p, *x_is_search, *is_base_serp_small, *is_contact_wo_guessing] }
+    cnt_iv_serp_small_base_item_attr: { filter: [*is_1p, *x_is_search, *is_base_serp_small, *is_iv_wo_guessing] }
+    cnt_btc_serp_small_base_item_attr: { filter: [*is_1p, *x_is_search, *is_base_serp_small, *is_btc_wo_guessing] }
     serp_with_query_empty: { filter: [*is_1p, *is_search, *is_serp_empty, *q] }
     serp_with_query_small: { filter: [*is_1p, *is_search, *is_serp_small, *q] }
     serp_without_query_empty: { filter: [*is_1p, *is_search, *is_serp_empty, *noq] }
@@ -3978,6 +3984,20 @@ metric.uniq:
     user_iv_u2i_cpt:                    { counter: cnt_iv_u2i_cpt,               key: [cookie] }
     user_iv_i2i_cpt:                    { counter: cnt_iv_i2i_cpt,               key: [cookie] }
     user_iv_map_cpt:                    { counter: cnt_iv_map_cpt,               key: [cookie] }
+
+    c_serp_small:		{ counter: cnt_cs_serp_small_item_attr,		key: [item, x] }
+    iv_serp_small:		{ counter: cnt_iv_serp_small_item_attr,		key: [item, x] }
+    btc_serp_small:		{ counter: cnt_btc_serp_small_item_attr,	key: [item, x] }
+    c_serp_small_base:		{ counter: cnt_cs_serp_small_base_item_attr,	key: [item, x] }
+    iv_serp_small_base:		{ counter: cnt_iv_serp_small_base_item_attr,	key: [item, x] }
+    btc_serp_small_base:	{ counter: cnt_btc_serp_small_base_item_attr,	key: [item, x] }
+    
+    user_c_serp_small: 		{ counter: cnt_cs_serp_small_item_attr, 	key: [cookie] }
+    user_iv_serp_small: 	{ counter: cnt_iv_serp_small_item_attr, 	key: [cookie] }
+    user_btc_serp_small: 	{ counter: cnt_btc_serp_small_item_attr, 	key: [cookie] }
+    user_c_serp_small_base: 	{ counter: cnt_cs_serp_small_base_item_attr, 	key: [cookie] }
+    user_iv_serp_small_base: 	{ counter: cnt_iv_serp_small_base_item_attr, 	key: [cookie] }
+    user_btc_serp_small_base: 	{ counter: cnt_btc_serp_small_base_item_attr, 	key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
