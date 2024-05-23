@@ -14,7 +14,10 @@ select
     from_page as x_from_page,
     is_human,
     region,
-    event_count
+    event_count,
+    case 
+        when from_page = 'tinkoff' and eid = 4498 then 'enter_tinkoff'
+    else 'unknown' end flag
 from dma.c2cloans_clickstream
 where
     eid in (4496, 9651, 4801, 4498, 9752, 4502, 9822)
@@ -23,5 +26,7 @@ where
 --     and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) --@trino
     and from_page in (
         'c2c_item_card', 'c2c_usp_banner',
-        'tinkoff', 'blankWork'
+        'tinkoff', 'blankWork',
+        'single_point_item_card', 'single_point_tinkoff', 'single_point_sber',
+        'single_banner', 'single_banner_tinkoff', 'single_banner_sber'
     )
