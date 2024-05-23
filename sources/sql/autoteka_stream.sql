@@ -1,4 +1,4 @@
-with /*+ENABLE_WITH_CLAUSE_MATERIALIZATION */
+with
 user_matching as (
     select
         autoteka_user_id,
