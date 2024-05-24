@@ -37,7 +37,11 @@ definitions:
     - &is_map       { eid: *eid_map }
     - &adv_page     { $or: [{ eid: [300, 2592] }, { platform_id: [1, 2], eid: [2572] }, { platform_id: [1], eid: [301] }] }
     - &is_story     { $or: [ {x_from_page.ilike: 'story_%' }, { from_page.ilike: 'bx-stories-%' } ] }
+    - &is_x_from_page_sspush	{ x_from_page.ilike: 'sspush' }
+	- &is_x_from_page_ssemail	{ x_from_page.ilike: 'ssemail' }
+    - &is_x_from_page_ssfav		{ x_from_page.ilike: 'ssfav' }
 
+    
     - &collab       { item_engines.bit: 0 }
     - &user2vec     { item_engines.bit: 1 }
     - &similars     { item_engines.bit: 3 }
@@ -522,9 +526,9 @@ metric.counter:
     cnt_btc_s_road: { filter: [*is_btc_wo_guessing, *is_s_road, *x_is_search] }
     cnt_btc_s_saved: { filter: [*is_btc_wo_guessing, *is_s_saved, *x_is_search] }
     cnt_btc_search_saved: { filter: [*is_btc_wo_guessing, *x_is_search_saved] }
-    cnt_btc_search_saved_sspush: { filter: [*is_btc_wo_guessing, { *x_is_search_saved, x_from_page: 'sspush' } ] }
-    cnt_btc_search_saved_ssemail: { filter: [*is_btc_wo_guessing, { *x_is_search_saved, x_from_page: 'ssemail' } ] }
-    cnt_btc_search_saved_ssfav: { filter: [*is_btc_wo_guessing, { *x_is_search_saved, x_from_page: 'ssfav' } ] }
+    cnt_btc_search_saved_sspush: { filter: [*is_btc_wo_guessing, *x_is_search_saved, *is_x_from_page_sspush] }
+    cnt_btc_search_saved_ssemail: { filter: [*is_btc_wo_guessing, *x_is_search_saved, *is_x_from_page_ssemail] }
+    cnt_btc_search_saved_ssfav: { filter: [*is_btc_wo_guessing, *x_is_search_saved, *is_x_from_page_ssfav] }
     
     cnt_btc_s_not_saved_filters:
         {
@@ -757,9 +761,9 @@ metric.counter:
     cnt_cs_s_road: { filter: [*is_contact_wo_guessing, *is_s_road, *x_is_search] }
     cnt_cs_s_saved: { filter: [*is_contact_wo_guessing, *is_s_saved, *x_is_search] }
     cnt_cs_search_saved: { filter: [*is_contact_wo_guessing, *x_is_search_saved] }
-    cnt_cs_search_saved_sspush: { filter: [*is_contact_wo_guessing, { *x_is_search_saved, x_from_page: 'sspush' } ] }
-    cnt_cs_search_saved_ssemail: { filter: [*is_contact_wo_guessing, { *x_is_search_saved, x_from_page: 'ssemail' } ] }
-    cnt_cs_search_saved_ssfav: { filter: [*is_contact_wo_guessing, { *x_is_search_saved, x_from_page: 'ssfav' } ] }
+    cnt_cs_search_saved_sspush: { filter: [*is_contact_wo_guessing, *x_is_search_saved, *is_x_from_page_sspush] }
+    cnt_cs_search_saved_ssemail: { filter: [*is_contact_wo_guessing, *x_is_search_saved, *is_x_from_page_ssemail] }
+    cnt_cs_search_saved_ssfav: { filter: [*is_contact_wo_guessing, *x_is_search_saved, *is_x_from_page_ssfav] }
     cnt_cs_s_not_saved_filters:
         {
             filter: [
@@ -1068,9 +1072,9 @@ metric.counter:
     cnt_iv_s_road: { filter: [*is_iv_wo_guessing, *is_s_road, *x_is_search] }
     cnt_iv_s_saved: { filter: [*is_iv_wo_guessing, *is_s_saved, *x_is_search] }
     cnt_iv_search_saved: { filter: [*is_iv_wo_guessing, *x_is_search_saved] }
-    cnt_iv_search_saved_sspush: { filter: [*is_iv_wo_guessing, *x_is_search_saved, x_from_page.=: 'sspush'] }
-    cnt_iv_search_saved_ssemail: { filter: [*is_iv_wo_guessing, *x_is_search_saved, x_from_page.=: 'ssemail'] }
-    cnt_iv_search_saved_ssfav: { filter: [*is_iv_wo_guessing, *x_is_search_saved, x_from_page.=: 'ssfav'] }
+    cnt_iv_search_saved_sspush: { filter: [*is_iv_wo_guessing, *x_is_search_saved, *is_x_from_page_sspush] }
+    cnt_iv_search_saved_ssemail: { filter: [*is_iv_wo_guessing, *x_is_search_saved, *is_x_from_page_ssemail] }
+    cnt_iv_search_saved_ssfav: { filter: [*is_iv_wo_guessing, *x_is_search_saved, *is_x_from_page_ssfav] }
     cnt_iv_s_not_saved_filters:
         {
             filter: [
