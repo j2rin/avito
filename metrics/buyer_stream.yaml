@@ -124,9 +124,9 @@ definitions:
     - &is_btc_wo_guessing { $or: [{ <<: *is_btc, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
     - &is_contact_wo_guessing { $or: [{ <<: *is_contact, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
 	- &is_search_saved { eid: *eid_search, from_page.in: ['sspush', 'ssemail', 'ssfav'] }
-    - &is_from_page_sspush	{ from_page.=: 'sspush' }
-	- &is_from_page_ssemail	{ from_page.=: 'ssemail' }
-    - &is_from_page_ssfav		{ from_page.=: 'ssfav' }
+    - &is_from_page_sspush	{ eid: *eid_search, from_page.=: 'sspush' }
+	- &is_from_page_ssemail	{ eid: *eid_search, from_page.=: 'ssemail' }
+    - &is_from_page_ssfav		{ eid: *eid_search, from_page.=: 'ssfav' }
     - &x_is_search_saved { x_eid: *eid_search, x_from_page.in: ['sspush', 'ssemail', 'ssfav'] }
     - &is_x_from_page_sspush	{ x_eid: *eid_search, x_from_page.=: 'sspush' }
 	- &is_x_from_page_ssemail	{ x_eid: *eid_search, x_from_page.=: 'ssemail' }
