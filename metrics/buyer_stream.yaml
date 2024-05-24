@@ -123,7 +123,9 @@ definitions:
     - &is_iv_wo_guessing { <<: *is_iv, item_x_type: 0 }
     - &is_btc_wo_guessing { $or: [{ <<: *is_btc, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
     - &is_contact_wo_guessing { $or: [{ <<: *is_contact, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
-
+	- &is_search_saved { eid: *eid_search, from_page.in: ['sspush', 'ssemail', 'ssfav'] }
+    - &x_is_search_saved { x_eid: *eid_search, x_from_page.in: ['sspush', 'ssemail', 'ssfav'] }
+    
     - &is_videocalls_contact { eid: 5629 }
 
     - &is_shop      { search_flags.bit: 7 }
@@ -1056,6 +1058,7 @@ metric.counter:
     cnt_iv_s_radius: { filter: [*is_iv_wo_guessing, *is_s_radius, *x_is_search] }
     cnt_iv_s_road: { filter: [*is_iv_wo_guessing, *is_s_road, *x_is_search] }
     cnt_iv_s_saved: { filter: [*is_iv_wo_guessing, *is_s_saved, *x_is_search] }
+    cnt_iv_search_saved: { filter: [*is_iv_wo_guessing, *is_search_saved, *x_is_search_saved] }
     cnt_iv_s_not_saved_filters:
         {
             filter: [
@@ -2744,6 +2747,7 @@ metric.uniq:
     item_views_serp_radius:       { counter: cnt_iv_s_radius,           key: [item, x] }
     item_views_serp_road:         { counter: cnt_iv_s_road,             key: [item, x] }
     item_views_serp_saved:        { counter: cnt_iv_s_saved,            key: [item, x] }
+    item_views_search_saved:        { counter: cnt_iv_search_saved            key: [item, x] }
     item_views_serp_not_saved_filters:  { counter: cnt_iv_s_not_saved_filters, key: [item, x] }
     item_views_serp_saved_filters:      { counter: cnt_iv_s_saved_filters,     key: [item, x] }
     item_views_serp_similar:      { counter: cnt_iv_grouped,            key: [item, x] }
@@ -2965,6 +2969,7 @@ metric.uniq:
     user_item_views_quorum: { counter: cnt_iv_qrm, key: [cookie] }
     user_item_views_vector: { counter: cnt_iv_vec, key: [cookie] }
     user_item_views_serp_saved: { counter: cnt_iv_s_saved, key: [cookie] }
+    user_item_views_search_saved: { counter: cnt_iv_search_saved, key: [cookie] }
     user_item_views_serp_not_saved_filters:
         {
             counter: cnt_iv_s_not_saved_filters,
