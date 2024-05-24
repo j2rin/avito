@@ -37,10 +37,6 @@ definitions:
     - &is_map       { eid: *eid_map }
     - &adv_page     { $or: [{ eid: [300, 2592] }, { platform_id: [1, 2], eid: [2572] }, { platform_id: [1], eid: [301] }] }
     - &is_story     { $or: [ {x_from_page.ilike: 'story_%' }, { from_page.ilike: 'bx-stories-%' } ] }
-    - &is_x_from_page_sspush	{ x_from_page.=: 'sspush' }
-	- &is_x_from_page_ssemail	{ x_from_page.=: 'ssemail' }
-    - &is_x_from_page_ssfav		{ x_from_page.=: 'ssfav' }
-
     
     - &collab       { item_engines.bit: 0 }
     - &user2vec     { item_engines.bit: 1 }
@@ -128,7 +124,13 @@ definitions:
     - &is_btc_wo_guessing { $or: [{ <<: *is_btc, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
     - &is_contact_wo_guessing { $or: [{ <<: *is_contact, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
 	- &is_search_saved { eid: *eid_search, from_page.in: ['sspush', 'ssemail', 'ssfav'] }
+    - &is_from_page_sspush	{ from_page.=: 'sspush' }
+	- &is_from_page_ssemail	{ from_page.=: 'ssemail' }
+    - &is_from_page_ssfav		{ from_page.=: 'ssfav' }
     - &x_is_search_saved { x_eid: *eid_search, x_from_page.in: ['sspush', 'ssemail', 'ssfav'] }
+    - &is_x_from_page_sspush	{ x_eid: *eid_search, x_from_page.=: 'sspush' }
+	- &is_x_from_page_ssemail	{ x_eid: *eid_search, x_from_page.=: 'ssemail' }
+    - &is_x_from_page_ssfav		{ x_eid: *eid_search, x_from_page.=: 'ssfav' }
     
     - &is_videocalls_contact { eid: 5629 }
 
@@ -526,9 +528,9 @@ metric.counter:
     cnt_btc_s_road: { filter: [*is_btc_wo_guessing, *is_s_road, *x_is_search] }
     cnt_btc_s_saved: { filter: [*is_btc_wo_guessing, *is_s_saved, *x_is_search] }
     cnt_btc_search_saved: { filter: [*is_btc_wo_guessing, *x_is_search_saved] }
-    cnt_btc_search_saved_sspush: { filter: [*is_btc_wo_guessing, *x_is_search_saved, *is_x_from_page_sspush] }
-    cnt_btc_search_saved_ssemail: { filter: [*is_btc_wo_guessing, *x_is_search_saved, *is_x_from_page_ssemail] }
-    cnt_btc_search_saved_ssfav: { filter: [*is_btc_wo_guessing, *x_is_search_saved, *is_x_from_page_ssfav] }
+    cnt_btc_search_saved_sspush: { filter: [*is_btc_wo_guessing, *is_x_from_page_sspush] }
+    cnt_btc_search_saved_ssemail: { filter: [*is_btc_wo_guessing, *is_x_from_page_ssemail] }
+    cnt_btc_search_saved_ssfav: { filter: [*is_btc_wo_guessing, *is_x_from_page_ssfav] }
     
     cnt_btc_s_not_saved_filters:
         {
@@ -761,9 +763,9 @@ metric.counter:
     cnt_cs_s_road: { filter: [*is_contact_wo_guessing, *is_s_road, *x_is_search] }
     cnt_cs_s_saved: { filter: [*is_contact_wo_guessing, *is_s_saved, *x_is_search] }
     cnt_cs_search_saved: { filter: [*is_contact_wo_guessing, *x_is_search_saved] }
-    cnt_cs_search_saved_sspush: { filter: [*is_contact_wo_guessing, *x_is_search_saved, *is_x_from_page_sspush] }
-    cnt_cs_search_saved_ssemail: { filter: [*is_contact_wo_guessing, *x_is_search_saved, *is_x_from_page_ssemail] }
-    cnt_cs_search_saved_ssfav: { filter: [*is_contact_wo_guessing, *x_is_search_saved, *is_x_from_page_ssfav] }
+    cnt_cs_search_saved_sspush: { filter: [*is_contact_wo_guessing, *is_x_from_page_sspush] }
+    cnt_cs_search_saved_ssemail: { filter: [*is_contact_wo_guessing, *is_x_from_page_ssemail] }
+    cnt_cs_search_saved_ssfav: { filter: [*is_contact_wo_guessing, *is_x_from_page_ssfav] }
     cnt_cs_s_not_saved_filters:
         {
             filter: [
@@ -1072,9 +1074,9 @@ metric.counter:
     cnt_iv_s_road: { filter: [*is_iv_wo_guessing, *is_s_road, *x_is_search] }
     cnt_iv_s_saved: { filter: [*is_iv_wo_guessing, *is_s_saved, *x_is_search] }
     cnt_iv_search_saved: { filter: [*is_iv_wo_guessing, *x_is_search_saved] }
-    cnt_iv_search_saved_sspush: { filter: [*is_iv_wo_guessing, *x_is_search_saved, *is_x_from_page_sspush] }
-    cnt_iv_search_saved_ssemail: { filter: [*is_iv_wo_guessing, *x_is_search_saved, *is_x_from_page_ssemail] }
-    cnt_iv_search_saved_ssfav: { filter: [*is_iv_wo_guessing, *x_is_search_saved, *is_x_from_page_ssfav] }
+    cnt_iv_search_saved_sspush: { filter: [*is_iv_wo_guessing, *is_x_from_page_sspush] }
+    cnt_iv_search_saved_ssemail: { filter: [*is_iv_wo_guessing, *is_x_from_page_ssemail] }
+    cnt_iv_search_saved_ssfav: { filter: [*is_iv_wo_guessing, *is_x_from_page_ssfav] }
     cnt_iv_s_not_saved_filters:
         {
             filter: [
@@ -2405,36 +2407,12 @@ metric.uniq:
     buyer_target_clicks_serp_metro: { counter: cnt_btc_s_metro, key: [item, x] }
     buyer_target_clicks_serp_radius: { counter: cnt_btc_s_radius, key: [item, x] }
     buyer_target_clicks_serp_road: { counter: cnt_btc_s_road, key: [item, x] }
-    buyer_target_clicks_serp_not_saved_filters:
-        {
-            counter: cnt_btc_s_not_saved_filters,
-            key: [item, x]
-        }
-    buyer_target_clicks_serp_saved:
-        {
-            counter: cnt_btc_s_saved,
-            key: [item, x]
-        }
-    buyer_target_clicks_search_saved:
-        {
-            counter: cnt_btc_search_saved,
-            key: [item, x]
-        }
-    buyer_target_clicks_search_saved_sspush:
-        {
-            counter: cnt_btc_search_saved_sspush,
-            key: [item, x]
-        }
-    buyer_target_clicks_search_saved_ssemail:
-        {
-            counter: cnt_btc_search_saved_ssemail,
-            key: [item, x]
-        }
-    buyer_target_clicks_search_saved_ssfav:
-        {
-            counter: cnt_btc_search_saved_ssfav,
-            key: [item, x]
-        }
+    buyer_target_clicks_serp_not_saved_filters: { counter: cnt_btc_s_not_saved_filters, key: [item, x] }
+    buyer_target_clicks_serp_saved: { counter: cnt_btc_s_saved, key: [item, x] }
+    buyer_target_clicks_search_saved: { counter: cnt_btc_search_saved, key: [item, x] }
+    buyer_target_clicks_search_saved_sspush: { counter: cnt_btc_search_saved_sspush, key: [item, x] }
+    buyer_target_clicks_search_saved_ssemail: { counter: cnt_btc_search_saved_ssemail, key: [item, x] }
+    buyer_target_clicks_search_saved_ssfav: { counter: cnt_btc_search_saved_ssfav, key: [item, x] }
     buyer_target_clicks_serp_saved_filters: { counter: cnt_btc_s_saved_filters, key: [item, x] }
     buyer_target_clicks_shop: { counter: cnt_btc_shopx, key: [item, x] }
     buyer_target_clicks_vas: { counter: cnt_btc_vas, key: [item, x] }
