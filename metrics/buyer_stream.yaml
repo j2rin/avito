@@ -37,9 +37,9 @@ definitions:
     - &is_map       { eid: *eid_map }
     - &adv_page     { $or: [{ eid: [300, 2592] }, { platform_id: [1, 2], eid: [2572] }, { platform_id: [1], eid: [301] }] }
     - &is_story     { $or: [ {x_from_page.ilike: 'story_%' }, { from_page.ilike: 'bx-stories-%' } ] }
-    - &is_x_from_page_sspush	{ x_from_page.ilike: 'sspush' }
-	- &is_x_from_page_ssemail	{ x_from_page.ilike: 'ssemail' }
-    - &is_x_from_page_ssfav		{ x_from_page.ilike: 'ssfav' }
+    - &is_x_from_page_sspush	{ x_from_page.=: 'sspush' }
+	- &is_x_from_page_ssemail	{ x_from_page.=: 'ssemail' }
+    - &is_x_from_page_ssfav		{ x_from_page.=: 'ssfav' }
 
     
     - &collab       { item_engines.bit: 0 }
