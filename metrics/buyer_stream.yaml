@@ -122,15 +122,15 @@ definitions:
     - &x_no_guessing     { item_x_type: 0 }
     - &is_iv_wo_guessing { <<: *is_iv, item_x_type: 0 }
     - &is_btc_wo_guessing { $or: [{ <<: *is_btc, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
-    - &is_contact_wo_guessing { $or: [{ <<: *is_contact, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
-	- &is_search_saved { eid: *eid_search, from_page.in: ['sspush', 'ssemail', 'ssfav'] }
-    - &is_search_saved_from_page_sspush	{ eid: *eid_search, from_page.=: 'sspush' }
+    - &is_contact_wo_guessing 				{ $or: [{ <<: *is_contact, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
+	- &is_search_saved 						{ eid: *eid_search, from_page.in: ['sspush', 'ssemail', 'ssfav'] }
+    - &is_search_saved_from_page_sspush		{ eid: *eid_search, from_page.=: 'sspush' }
 	- &is_search_saved_from_page_ssemail	{ eid: *eid_search, from_page.=: 'ssemail' }
     - &is_search_saved_from_page_ssfav		{ eid: *eid_search, from_page.=: 'ssfav' }
-    - &x_is_search_saved { x_eid: *eid_search, x_from_page.in: ['sspush', 'ssemail', 'ssfav'] }
-    - &is_x_from_page_sspush	{ x_eid: *eid_search, x_from_page.=: 'sspush' }
-	- &is_x_from_page_ssemail	{ x_eid: *eid_search, x_from_page.=: 'ssemail' }
-    - &is_x_from_page_ssfav		{ x_eid: *eid_search, x_from_page.=: 'ssfav' }
+    - &x_is_search_saved 					{ x_eid: *eid_search, x_from_page.in: ['sspush', 'ssemail', 'ssfav'] }
+    - &is_x_from_page_sspush				{ x_eid: *eid_search, x_from_page.=: 'sspush' }
+	- &is_x_from_page_ssemail				{ x_eid: *eid_search, x_from_page.=: 'ssemail' }
+    - &is_x_from_page_ssfav					{ x_eid: *eid_search, x_from_page.=: 'ssfav' }
     
     - &is_videocalls_contact { eid: 5629 }
 
@@ -1073,10 +1073,10 @@ metric.counter:
     cnt_iv_s_radius: { filter: [*is_iv_wo_guessing, *is_s_radius, *x_is_search] }
     cnt_iv_s_road: { filter: [*is_iv_wo_guessing, *is_s_road, *x_is_search] }
     cnt_iv_s_saved: { filter: [*is_iv_wo_guessing, *is_s_saved, *x_is_search] }
-    cnt_iv_search_saved: { filter: [*is_iv_wo_guessing, *x_is_search_saved] }
-    cnt_iv_search_saved_sspush: { filter: [*is_iv_wo_guessing, *is_x_from_page_sspush] }
-    cnt_iv_search_saved_ssemail: { filter: [*is_iv_wo_guessing, *is_x_from_page_ssemail] }
-    cnt_iv_search_saved_ssfav: { filter: [*is_iv_wo_guessing, *is_x_from_page_ssfav] }
+    cnt_iv_search_saved: 			{ filter: [*is_iv_wo_guessing, *x_is_search_saved] }
+    cnt_iv_search_saved_sspush: 	{ filter: [*is_iv_wo_guessing, *is_x_from_page_sspush] }
+    cnt_iv_search_saved_ssemail: 	{ filter: [*is_iv_wo_guessing, *is_x_from_page_ssemail] }
+    cnt_iv_search_saved_ssfav: 		{ filter: [*is_iv_wo_guessing, *is_x_from_page_ssfav] }
     cnt_iv_s_not_saved_filters:
         {
             filter: [
@@ -1568,10 +1568,10 @@ metric.counter:
     vertical_main_featured: { filter: [*is_vertical_main, *featured_widget] }
     vertical_main_first_page: { filter: [$or: [[*is_search, *x_is_vertical_main, *is_1p], *is_vertical_main]] }
     searches: { filter: [*is_1p, *is_search] }
-    searches_saved: { filter: [*is_search_saved] }
-    searches_saved_from_page_sspush: { filter: [*is_search_saved_from_page_sspush] }
-    searches_saved_from_page_ssemail: { filter: [*is_search_saved_from_page_ssemail] }
-    searches_saved_from_page_ssfav: { filter: [*is_search_saved_from_page_ssfav] }
+    searches_saved: 					{ filter: [*is_search_saved] }
+    searches_saved_from_page_sspush: 	{ filter: [*is_search_saved_from_page_sspush] }
+    searches_saved_from_page_ssemail: 	{ filter: [*is_search_saved_from_page_ssemail] }
+    searches_saved_from_page_ssfav: 	{ filter: [*is_search_saved_from_page_ssfav] }
     searches_part_qual_exists: { filter: [*part_qual_exists, *is_1p, *is_search] }
     searches_part_qual_compab: { filter: [*part_qual_compab, *is_1p, *is_search] }
     searches_part_qual_unknown: { filter: [*part_qual_unknown, *is_1p, *is_search] }
@@ -2413,10 +2413,10 @@ metric.uniq:
     buyer_target_clicks_serp_road: { counter: cnt_btc_s_road, key: [item, x] }
     buyer_target_clicks_serp_not_saved_filters: { counter: cnt_btc_s_not_saved_filters, key: [item, x] }
     buyer_target_clicks_serp_saved: { counter: cnt_btc_s_saved, key: [item, x] }
-    buyer_target_clicks_search_saved: { counter: cnt_btc_search_saved, key: [item, x] }
-    buyer_target_clicks_search_saved_sspush: { counter: cnt_btc_search_saved_sspush, key: [item, x] }
-    buyer_target_clicks_search_saved_ssemail: { counter: cnt_btc_search_saved_ssemail, key: [item, x] }
-    buyer_target_clicks_search_saved_ssfav: { counter: cnt_btc_search_saved_ssfav, key: [item, x] }
+    buyer_target_clicks_search_saved: 			{ counter: cnt_btc_search_saved, key: [item, x] }
+    buyer_target_clicks_search_saved_sspush: 	{ counter: cnt_btc_search_saved_sspush, key: [item, x] }
+    buyer_target_clicks_search_saved_ssemail: 	{ counter: cnt_btc_search_saved_ssemail, key: [item, x] }
+    buyer_target_clicks_search_saved_ssfav: 	{ counter: cnt_btc_search_saved_ssfav, key: [item, x] }
     buyer_target_clicks_serp_saved_filters: { counter: cnt_btc_s_saved_filters, key: [item, x] }
     buyer_target_clicks_shop: { counter: cnt_btc_shopx, key: [item, x] }
     buyer_target_clicks_vas: { counter: cnt_btc_vas, key: [item, x] }
@@ -2769,10 +2769,10 @@ metric.uniq:
     item_views_serp_radius:       { counter: cnt_iv_s_radius,           key: [item, x] }
     item_views_serp_road:         { counter: cnt_iv_s_road,             key: [item, x] }
     item_views_serp_saved:        { counter: cnt_iv_s_saved,            key: [item, x] }
-    item_views_search_saved:        { counter: cnt_iv_search_saved,            key: [item, x] }
-    item_views_search_saved_sspush:        { counter: cnt_iv_search_saved_sspush,            key: [item, x] }
+    item_views_search_saved:        		{ counter: cnt_iv_search_saved,            key: [item, x] }
+    item_views_search_saved_sspush:        	{ counter: cnt_iv_search_saved_sspush,            key: [item, x] }
     item_views_search_saved_ssemail:        { counter: cnt_iv_search_saved_ssemail,            key: [item, x] }
-    item_views_search_saved_ssfav:        { counter: cnt_iv_search_saved_ssfav,            key: [item, x] }
+    item_views_search_saved_ssfav:        	{ counter: cnt_iv_search_saved_ssfav,            key: [item, x] }
     item_views_serp_not_saved_filters:  { counter: cnt_iv_s_not_saved_filters, key: [item, x] }
     item_views_serp_saved_filters:      { counter: cnt_iv_s_saved_filters,     key: [item, x] }
     item_views_serp_similar:      { counter: cnt_iv_grouped,            key: [item, x] }
@@ -2906,11 +2906,11 @@ metric.uniq:
     user_buyer_target_clicks_regions_any: { counter: cnt_btc_reg_any, key: [cookie] }
     user_buyer_target_clicks_quorum: { counter: cnt_btc_qrm, key: [cookie] }
     user_buyer_target_clicks_vector: { counter: cnt_btc_vec, key: [cookie] }
-    user_buyer_target_clicks_serp_saved: { counter: cnt_btc_s_saved, key: [cookie] }
-    user_buyer_target_clicks_search_saved: { counter: cnt_btc_search_saved, key: [cookie] }
-    user_buyer_target_clicks_search_saved_sspush: { counter: cnt_btc_search_saved_sspush, key: [cookie] }
-    user_buyer_target_clicks_search_saved_ssemail: { counter: cnt_btc_search_saved_ssemail, key: [cookie] }
-    user_buyer_target_clicks_search_saved_ssfav: { counter: cnt_btc_search_saved_ssfav, key: [cookie] }
+    user_buyer_target_clicks_serp_saved: 			{ counter: cnt_btc_s_saved, key: [cookie] }
+    user_buyer_target_clicks_search_saved: 			{ counter: cnt_btc_search_saved, key: [cookie] }
+    user_buyer_target_clicks_search_saved_sspush: 	{ counter: cnt_btc_search_saved_sspush, key: [cookie] }
+    user_buyer_target_clicks_search_saved_ssemail: 	{ counter: cnt_btc_search_saved_ssemail, key: [cookie] }
+    user_buyer_target_clicks_search_saved_ssfav: 	{ counter: cnt_btc_search_saved_ssfav, key: [cookie] }
     user_buyer_target_clicks_serp_not_saved_filters:
         {
             counter: cnt_btc_s_not_saved_filters,
@@ -2954,10 +2954,10 @@ metric.uniq:
     user_contacts_quorum: { counter: cnt_cs_qrm, key: [cookie] }
     user_contacts_vector: { counter: cnt_cs_vec, key: [cookie] }
     user_contacts_serp_saved: { counter: cnt_cs_s_saved, key: [cookie] }
-    user_contacts_search_saved: { counter: cnt_cs_search_saved, key: [cookie] }
-    user_contacts_search_saved_sspush: { counter: cnt_cs_search_saved_sspush, key: [cookie] }
+    user_contacts_search_saved: 		{ counter: cnt_cs_search_saved, key: [cookie] }
+    user_contacts_search_saved_sspush: 	{ counter: cnt_cs_search_saved_sspush, key: [cookie] }
     user_contacts_search_saved_ssemail: { counter: cnt_cs_search_saved_ssemail, key: [cookie] }
-    user_contacts_search_saved_ssfav: { counter: cnt_cs_search_saved_ssfav, key: [cookie] }
+    user_contacts_search_saved_ssfav: 	{ counter: cnt_cs_search_saved_ssfav, key: [cookie] }
     user_contacts_serp_not_saved_filters:
         {
             counter: cnt_cs_s_not_saved_filters,
@@ -3001,11 +3001,11 @@ metric.uniq:
     user_item_views_regions_any: { counter: cnt_iv_reg_any, key: [cookie] }
     user_item_views_quorum: { counter: cnt_iv_qrm, key: [cookie] }
     user_item_views_vector: { counter: cnt_iv_vec, key: [cookie] }
-    user_item_views_serp_saved: { counter: cnt_iv_s_saved, key: [cookie] }
-    user_item_views_search_saved: { counter: cnt_iv_search_saved, key: [cookie] }
-    user_item_views_search_saved_sspush: { counter: cnt_iv_search_saved_sspush, key: [cookie] }
-    user_item_views_search_saved_ssemail: { counter: cnt_iv_search_saved_ssemail, key: [cookie] }
-    user_item_views_search_saved_ssfav: { counter: cnt_iv_search_saved_ssfav, key: [cookie] }
+    user_item_views_serp_saved: 			{ counter: cnt_iv_s_saved, key: [cookie] }
+    user_item_views_search_saved: 			{ counter: cnt_iv_search_saved, key: [cookie] }
+    user_item_views_search_saved_sspush: 	{ counter: cnt_iv_search_saved_sspush, key: [cookie] }
+    user_item_views_search_saved_ssemail: 	{ counter: cnt_iv_search_saved_ssemail, key: [cookie] }
+    user_item_views_search_saved_ssfav: 	{ counter: cnt_iv_search_saved_ssfav, key: [cookie] }
     user_item_views_serp_not_saved_filters:
         {
             counter: cnt_iv_s_not_saved_filters,
@@ -4039,7 +4039,12 @@ metric.uniq:
     user_c_serp_small_base: 	{ counter: cnt_cs_serp_small_base_item_attr, 	key: [cookie] }
     user_iv_serp_small_base: 	{ counter: cnt_iv_serp_small_base_item_attr, 	key: [cookie] }
     user_btc_serp_small_base: 	{ counter: cnt_btc_serp_small_base_item_attr, 	key: [cookie] }
-
+	
+    user_searches_saved: 					{ counter: *is_search_saved, 	key: [cookie] }
+    user_searches_saved_from_page_sspush: 	{ counter: *is_search_saved_from_page_sspush, 	key: [cookie] }
+    user_searches_saved_from_page_ssemail: 	{ counter: *is_search_saved_from_page_ssemail, 	key: [cookie] }
+    user_searches_saved_from_page_ssfav: 	{ counter: *is_search_saved_from_page_ssfav, 	key: [cookie] }
+    
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
     btc_from_witcher_any_per_witcher_any: { num: btc_from_witcher_any, den: searches_witcher_any }
