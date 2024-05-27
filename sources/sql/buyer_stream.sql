@@ -166,7 +166,9 @@ select
         when coalesce(usm.user_segment, ls.segment) not in ('Private.Seller','Private (Earning).Seller','Private (Earning).Extra Small') then 'B2C Gray'
         else 'C2C'
     end as seller_segment_marketplace,
-    b.reputation_badge
+    b.reputation_badge,
+    case when sub_info.is_free_delivery_item = 1 then true else false end as is_free_delivery_by_seller_item,
+    case when sub_info.is_seller_delivery_subsidy_item = 1 then true else false end as is_seller_delivery_subsidy_item
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -319,6 +321,25 @@ left join /*+jtype(h),distrib(l,a)*/ (
         and ub.is_active
     --    and date_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
 ) b on ss.item_user_id = b.user_id and coalesce(lc.vertical_id, cm.vertical_id) = b.vertical_id and cast(ss.event_date as date) between b.date_from and b.date_to
+
+-- информация по айтемам со скидкой от продавца на доставку
+left join /*+jtype(h),distrib(l,a)*/
+(
+  select 
+      event_date
+      , item_id
+      , case when subsidy_index = 3 then 1 else 0 end as is_free_delivery_item
+      , 1 as is_seller_delivery_subsidy_item
+  from 
+      dma.item_day_delivery
+  where 1=1
+  	  and cast(event_date as date) >= date('2022-08-01') -- вообще субсидии только с этого дня поехали
+      and is_delivery_active
+      and (is_enabled_postamat or is_enabled_postamat)
+      and item_price between 500 and 150000
+      and subsidy_index > 0 
+      and subsidy_amount > 0
+) sub_info on ss.item_id = sub_info.item_id and cast(ss.event_date as date) = sub_info.event_date
 
 where cast(ss.event_date as date) between :first_date and :last_date
 --     and ss.date between :first_date and :last_date -- @trino
