@@ -746,6 +746,14 @@ metric.counter:
     cnt_cs_s_item_attr_reputation_medium: { filter: [*is_reputation_medium, *is_contact_wo_guessing, *x_is_search] }
     cnt_cs_s_item_attr_reputation_low:    { filter: [*is_reputation_low, *is_contact_wo_guessing, *x_is_search] }
     cnt_cs_s_item_attr_reputation_grey:   { filter: [*is_reputation_grey, *is_contact_wo_guessing, *x_is_search] }
+    cnt_cs_s_item_attr_reputation_high_reg:   { filter: [*is_reputation_high, *is_contact_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_cs_s_item_attr_reputation_medium_reg: { filter: [*is_reputation_medium, *is_contact_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_cs_s_item_attr_reputation_low_reg:    { filter: [*is_reputation_low, *is_contact_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_cs_s_item_attr_reputation_grey_reg:   { filter: [*is_reputation_grey, *is_contact_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_cs_s_item_attr_reputation_high_reg_mix: { filter: [ *is_reputation_high, *is_contact_wo_guessing, *is_serp_regions_mix, *x_is_search ] }
+    cnt_cs_s_item_attr_reputation_medium_reg_mix: { filter: [ *is_reputation_medium, *is_contact_wo_guessing, *is_serp_regions_mix, *x_is_search ] }
+    cnt_cs_s_item_attr_reputation_low_reg_mix: { filter: [ *is_reputation_low, *is_contact_wo_guessing, *is_serp_regions_mix, *x_is_search ] }
+    cnt_cs_s_item_attr_reputation_grey_reg_mix: { filter: [ *is_reputation_grey, *is_contact_wo_guessing, *is_serp_regions_mix, *x_is_search ] }
     cnt_cs_no_item_attr: { filter: [*is_contact, *x_no] }
     cnt_cs_s_item_part_qual_exists: { filter: [*is_contact, *x_is_search, *part_qual_exists] }
     cnt_cs_s_item_part_qual_compab: { filter: [*is_contact, *x_is_search, *part_qual_compab] }
@@ -966,6 +974,14 @@ metric.counter:
     cnt_iv_s_item_attr_reputation_medium: { filter: [*is_reputation_medium, *is_iv_wo_guessing, *x_is_search] }
     cnt_iv_s_item_attr_reputation_low: { filter: [*is_reputation_low, *is_iv_wo_guessing, *x_is_search] }
     cnt_iv_s_item_attr_reputation_grey: { filter: [*is_reputation_grey, *is_iv_wo_guessing, *x_is_search] }
+    cnt_iv_s_item_attr_reputation_high_reg: { filter: [*is_reputation_high, *is_iv_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_iv_s_item_attr_reputation_medium_reg: { filter: [*is_reputation_medium, *is_iv_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_iv_s_item_attr_reputation_low_reg: { filter: [*is_reputation_low, *is_iv_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_iv_s_item_attr_reputation_grey_reg: { filter: [*is_reputation_grey, *is_iv_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_iv_s_item_attr_reputation_high_reg_mix: { filter: [*is_reputation_high, *is_iv_wo_guessing, *is_serp_regions_mix, *x_is_search] }
+    cnt_iv_s_item_attr_reputation_medium_reg_mix: { filter: [*is_reputation_medium, *is_iv_wo_guessing, *is_serp_regions_mix, *x_is_search] }
+    cnt_iv_s_item_attr_reputation_low_reg_mix: { filter: [*is_reputation_low, *is_iv_wo_guessing, *is_serp_regions_mix, *x_is_search] }
+    cnt_iv_s_item_attr_reputation_grey_reg_mix: { filter: [*is_reputation_grey, *is_iv_wo_guessing, *is_serp_regions_mix, *x_is_search] }
     cnt_iv_s_item_attr_guarantee: { filter: [*is_iv_wo_guessing, *x_is_search, *is_guarantee] }
     cnt_iv_s_item_attr_sum_rnk: { filter: [*is_iv_wo_guessing, *x_is_search, *is_1p], obs: [item_rnk] }
     cnt_iv_s_item_attr_rnk3: { filter: [*is_iv_wo_guessing, *x_is_search, *is_1p, item_rnk.<=: 3] }
@@ -2543,6 +2559,14 @@ metric.uniq:
     contacts_serp_reputation_medium:    { counter: cnt_cs_s_item_attr_reputation_medium,key: [item, x] }
     contacts_serp_reputation_low:       { counter: cnt_cs_s_item_attr_reputation_low,   key: [item, x] }
     contacts_serp_reputation_grey:      { counter: cnt_cs_s_item_attr_reputation_grey,  key: [item, x] }
+    contacts_serp_reputation_high_reg:      { counter: cnt_cs_s_item_attr_reputation_high_reg,  key: [item, x] }
+    contacts_serp_reputation_medium_reg:    { counter: cnt_cs_s_item_attr_reputation_medium_reg,key: [item, x] }
+    contacts_serp_reputation_low_reg:       { counter: cnt_cs_s_item_attr_reputation_low_reg,   key: [item, x] }
+    contacts_serp_reputation_grey_reg:      { counter: cnt_cs_s_item_attr_reputation_grey_reg,  key: [item, x] }
+    contacts_serp_reputation_high_reg_mix:      { counter: cnt_cs_s_item_attr_reputation_high_reg_mix,  key: [item, x] }
+    contacts_serp_reputation_medium_reg_mix:    { counter: cnt_cs_s_item_attr_reputation_medium_reg_mix,key: [item, x] }
+    contacts_serp_reputation_low_reg_mix:       { counter: cnt_cs_s_item_attr_reputation_low_reg_mix,   key: [item, x] }
+    contacts_serp_reputation_grey_reg_mix:      { counter: cnt_cs_s_item_attr_reputation_grey_reg_mix,  key: [item, x] }
     contacts_nox: { counter: cnt_cs_no_item_attr, key: [item, x] }
     contacts_serp_district: { counter: cnt_cs_s_distr, key: [item, x] }
     contacts_serp_local_geo: { counter: cnt_cs_s_distr_metro_road, key: [item, x] }
@@ -2765,6 +2789,14 @@ metric.uniq:
     item_views_serp_reputation_medium:  { counter: cnt_iv_s_item_attr_reputation_medium,     key: [item, x] }
     item_views_serp_reputation_low:     { counter: cnt_iv_s_item_attr_reputation_low,        key: [item, x] }
     item_views_serp_reputation_grey:    { counter: cnt_iv_s_item_attr_reputation_grey,       key: [item, x] }
+    item_views_serp_reputation_high_reg:    { counter: cnt_iv_s_item_attr_reputation_high_reg,       key: [item, x] }
+    item_views_serp_reputation_medium_reg:  { counter: cnt_iv_s_item_attr_reputation_medium_reg,     key: [item, x] }
+    item_views_serp_reputation_low_reg:     { counter: cnt_iv_s_item_attr_reputation_low_reg,        key: [item, x] }
+    item_views_serp_reputation_grey_reg:    { counter: cnt_iv_s_item_attr_reputation_grey_reg,       key: [item, x] }
+    item_views_serp_reputation_high_reg_mix:    { counter: cnt_iv_s_item_attr_reputation_high_reg_mix,       key: [item, x] }
+    item_views_serp_reputation_medium_reg_mix:  { counter: cnt_iv_s_item_attr_reputation_medium_reg_mix,     key: [item, x] }
+    item_views_serp_reputation_low_reg_mix:     { counter: cnt_iv_s_item_attr_reputation_low_reg_mix,        key: [item, x] }
+    item_views_serp_reputation_grey_reg_mix:    { counter: cnt_iv_s_item_attr_reputation_grey_reg_mix,       key: [item, x] }
     item_views_serp_dedup:        { counter: cnt_iv_s_item_attr,           key: [seller_microcat_price_x] }
     item_views_serp_guarantee:    { counter: cnt_iv_s_item_attr_guarantee, key: [item, x] }
     item_views_nox:               { counter: cnt_iv_no_item_attr,       key: [item, x] }
