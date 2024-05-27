@@ -168,7 +168,9 @@ select
     end as seller_segment_marketplace,
     b.reputation_badge,
     case when sub_info.is_free_delivery_item = 1 then true else false end as is_free_delivery_by_seller_item,
-    case when sub_info.is_seller_delivery_subsidy_item = 1 then true else false end as is_seller_delivery_subsidy_item
+    case when sub_info.is_seller_delivery_subsidy_item = 1 then true else false end as is_seller_delivery_subsidy_item,
+    coalesce(vl.is_seller_verified, False) is_seller_verified,
+    coalesce(vl.seller_verification_type, 'not_verified') seller_verification_type
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
@@ -340,6 +342,37 @@ left join /*+jtype(h),distrib(l,a)*/
       and subsidy_index > 0 
       and subsidy_amount > 0
 ) sub_info on ss.item_id = sub_info.item_id and cast(ss.event_date as date) = sub_info.event_date
+
+-- Информация о верификации селлера
+left join /*+jtype(h),distrib(l,a)*/ (
+    select
+            user_id
+        ,   date_from
+        ,   date_to
+        ,   vrf_status = 'verified' is_seller_verified
+        ,   vrf_type seller_verification_type
+    from (
+            select
+                    user_id
+                ,   vrf_status
+                ,   vrf_type
+                ,   event_date date_from
+                ,   coalesce(lead(event_date) over (partition by user_id order by event_date), date('2100-01-01')) date_to
+            from dma.verification_day
+            where True
+                and user_id in (
+                        select
+                                user_id
+                        from bs_users
+                    )
+				-- and event_year <= date_trunc('year', date(:last_date)) -- @trino
+        ) _
+    where True
+        and date_from <= date(:last_date)
+        and date_to >= date(:first_date)
+        and vrf_status = 'verified'
+        and vrf_type is not NULL
+) vl on ss.item_user_id = vl.user_id and cast(ss.event_date as date) between vl.date_from and vl.date_to
 
 where cast(ss.event_date as date) between :first_date and :last_date
 --     and ss.date between :first_date and :last_date -- @trino
