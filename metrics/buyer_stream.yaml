@@ -373,6 +373,8 @@ definitions:
     - &is_b2c { b2c_wo_dbs: 1}
     - &is_c2c_return_within_14_days { c2c_return_within_14_days: 1}
     - &is_return_within_14_days {return_within_14_days: 1}
+    - &is_free_delivery_by_seller_item {is_free_delivery_by_seller_item: 1}
+    - &is_seller_delivery_subsidy_item {is_seller_delivery_subsidy_item: 1}
 
     - &in_sale { item_flags.bit: 36 }
     - &x_is_sales_vertical_main_widget { x_eid: [ 5516, 2012 ], from_page.ilike: '%_sale' } 
@@ -2134,18 +2136,29 @@ metric.counter:
     total_delivery_item_view_b2c: { filter: [*is_iv, *is_b2c] }
     total_delivery_item_view_c2c_14days_return:  { filter: [*is_iv, *is_c2c_return_within_14_days] }
     total_delivery_item_view_14days_return:  { filter: [*is_iv, *is_return_within_14_days] }
+    total_delivery_item_view_free_delivery_by_seller: { filter: [*is_iv, *is_free_delivery_by_seller_item] }
+    total_delivery_item_view_seller_delivery_subsidy: { filter: [*is_iv, *is_seller_delivery_subsidy_item] }
 
     total_delivery_contact_b2c: { filter: [*is_delivery, *is_b2c] }
     total_delivery_contact_c2c_14days_return:  { filter: [*is_delivery, *is_c2c_return_within_14_days] }
     total_delivery_contact_14days_return:  { filter: [*is_delivery, *is_return_within_14_days] }
+    total_delivery_contact_free_delivery_by_seller: { filter: [*is_delivery, *is_free_delivery_by_seller_item] }
+    total_delivery_contact_seller_delivery_subsidy: { filter: [*is_delivery, *is_seller_delivery_subsidy_item] }
 
     total_delivery_click_b2c: { filter: [*is_delivery_pvz, *is_b2c, eid: 2483] }
     total_delivery_click_c2c_14days_return:  { filter: [*is_delivery_pvz, *is_c2c_return_within_14_days, eid: 2483] }
     total_delivery_click_14days_return:  { filter: [*is_delivery_pvz, *is_return_within_14_days, eid: 2483] }
+    total_delivery_click_free_delivery_by_seller: { filter: [*is_delivery_pvz, *is_free_delivery_by_seller_item, eid: 2483] }
+    total_delivery_click_seller_delivery_subsidy: { filter: [*is_delivery_pvz, *is_seller_delivery_subsidy_item, eid: 2483] }
 
     total_delivery_confirm_b2c: { filter: [eid: 2749, *is_b2c ]  }
     total_delivery_confirm_c2c_14days_return:  { filter: [ eid: 2749, *is_c2c_return_within_14_days ]  }
     total_delivery_confirm_14days_return:  { filter: [ eid: 2749, *is_return_within_14_days ] }
+    total_delivery_confirm_free_delivery_by_seller: { filter: [eid: 2749, *is_free_delivery_by_seller_item] }
+    total_delivery_confirm_seller_delivery_subsidy: { filter: [eid: 2749, *is_seller_delivery_subsidy_item] }
+    
+    total_contact_on_delivery_item_free_delivery_by_seller: { filter: [*is_free_delivery_by_seller_item, *is_not_item_marketplace, *is_contact, *is_delivery_active] }
+    total_contact_on_delivery_item_seller_delivery_subsidy: { filter: [*is_seller_delivery_subsidy_item, *is_not_item_marketplace, *is_contact, *is_delivery_active] }
 
     total_perfvas: { filter: [*is_item_perfvas] }
     
@@ -3879,18 +3892,29 @@ metric.uniq:
     delivery_item_view_b2c: { counter: total_delivery_item_view_b2c, key: [cookie, item] }
     delivery_item_view_c2c_14days_return: { counter: total_delivery_item_view_c2c_14days_return, key: [cookie, item] }
     delivery_item_view_14days_return: { counter: total_delivery_item_view_14days_return, key: [cookie, item] }
+    delivery_item_view_free_delivery_by_seller: { counter: total_delivery_item_view_free_delivery_by_seller, key: [cookie, item] }
+    delivery_item_view_seller_delivery_subsidy: { counter: total_delivery_item_view_seller_delivery_subsidy, key: [cookie, item] }
 
     delivery_contact_b2c: { counter: total_delivery_contact_b2c, key: [cookie, item] }
     delivery_contact_c2c_14days_return: { counter: total_delivery_contact_c2c_14days_return, key: [cookie, item] }
     delivery_contact_14days_return: { counter: total_delivery_contact_14days_return, key: [cookie, item] }
+    delivery_contact_free_delivery_by_seller: { counter: total_delivery_contact_free_delivery_by_seller, key: [cookie, item] }
+    delivery_contact_seller_delivery_subsidy: { counter: total_delivery_contact_seller_delivery_subsidy, key: [cookie, item] }
 
     delivery_click_b2c: { counter: total_delivery_click_b2c, key: [cookie, item] }
     delivery_click_c2c_14days_return: { counter: total_delivery_click_c2c_14days_return, key: [cookie, item] }
     delivery_click_14days_return: { counter: total_delivery_click_14days_return, key: [cookie, item] }
+    delivery_click_free_delivery_by_seller: { counter: total_delivery_click_free_delivery_by_seller, key: [cookie, item] }
+    delivery_click_seller_delivery_subsidy: { counter: total_delivery_click_seller_delivery_subsidy, key: [cookie, item] }
 
     delivery_confirm_b2c: { counter: total_delivery_confirm_b2c, key: [cookie, item] }
     delivery_confirm_c2c_14days_return: { counter: total_delivery_confirm_c2c_14days_return, key: [cookie, item] }
     delivery_confirm_14days_return: { counter: total_delivery_confirm_14days_return, key: [cookie, item] }
+    delivery_confirm_free_delivery_by_seller: { counter: total_delivery_confirm_free_delivery_by_seller, key: [cookie, item] }
+    delivery_confirm_seller_delivery_subsidy: { counter: total_delivery_confirm_seller_delivery_subsidy, key: [cookie, item] }
+    
+    contact_on_delivery_item_free_delivery_by_seller: { counter: total_contact_on_delivery_item_free_delivery_by_seller, key: [cookie, item] }
+    contact_on_delivery_item_seller_delivery_subsidy: { counter: total_contact_on_delivery_item_seller_delivery_subsidy, key: [cookie, item] }
 
     btc_views_serp:                 { counter: cnt_btc_s_item_attr,    key: [item, x] }
     btc_views_rec_u2i:              { counter: cnt_btc_rec_u2i,        key: [item, x] }
@@ -4749,22 +4773,33 @@ metric.ratio:
     delivery_iv_delivery_click_b2c: { num: delivery_click_b2c, den: delivery_item_view_b2c }
     delivery_iv_delivery_click_c2c_14days_return: { num: delivery_click_c2c_14days_return, den: delivery_item_view_c2c_14days_return }
     delivery_iv_delivery_click_14days_return: { num: delivery_click_14days_return, den: delivery_item_view_14days_return }
+    delivery_iv_delivery_click_free_delivery_by_seller: { num: delivery_click_free_delivery_by_seller, den: delivery_item_view_free_delivery_by_seller }
+    delivery_iv_delivery_click_seller_delivery_subsidy: { num: delivery_click_seller_delivery_subsidy, den: delivery_item_view_seller_delivery_subsidy }
 
     delivery_iv_delivery_contact_b2c: { num: delivery_contact_b2c, den: delivery_item_view_b2c }
     delivery_iv_delivery_contact_c2c_14days_return: { num: delivery_contact_c2c_14days_return , den: delivery_item_view_c2c_14days_return }
     delivery_iv_delivery_contact_14days_return: { num: delivery_contact_14days_return, den: delivery_item_view_14days_return }
+    delivery_iv_delivery_contact_free_delivery_by_seller: { num: delivery_contact_free_delivery_by_seller, den: delivery_item_view_free_delivery_by_seller }
+    delivery_iv_delivery_contact_seller_delivery_subsidy: { num: delivery_contact_seller_delivery_subsidy, den: delivery_item_view_seller_delivery_subsidy }
 
     delivery_click_delivery_contact_b2c: { num: delivery_contact_b2c, den: delivery_click_b2c }
     delivery_click_delivery_contact_c2c_14days_return: { num: delivery_contact_c2c_14days_return, den: delivery_click_c2c_14days_return }
     delivery_click_delivery_contact_14days_return: { num: delivery_contact_14days_return, den: delivery_click_14days_return }
+    delivery_click_delivery_contact_free_delivery_by_seller: { num: delivery_contact_free_delivery_by_seller, den: delivery_click_free_delivery_by_seller }
+    delivery_click_delivery_contact_seller_delivery_subsidy: { num: delivery_contact_seller_delivery_subsidy, den: delivery_click_seller_delivery_subsidy }
 
     delivery_click_delivery_confirm_b2c: { num: delivery_confirm_b2c, den: delivery_click_b2c }
     delivery_click_delivery_confirm_c2c_14days_return: { num: delivery_confirm_c2c_14days_return, den: delivery_click_c2c_14days_return }
     delivery_click_delivery_confirm_14days_return: { num: delivery_confirm_14days_return, den: delivery_click_14days_return }
+    delivery_click_delivery_confirm_free_delivery_by_seller: { num: delivery_confirm_free_delivery_by_seller, den: delivery_click_free_delivery_by_seller }
+    delivery_click_delivery_confirm_seller_delivery_subsidy: { num: delivery_confirm_seller_delivery_subsidy, den: delivery_click_seller_delivery_subsidy }
 
     delivery_confirm_delivery_contact_b2c: { num: delivery_contact_b2c, den: delivery_confirm_b2c }
     delivery_confirm_delivery_contact_c2c_14days_return: { num: delivery_contact_c2c_14days_return, den: delivery_confirm_c2c_14days_return }
     delivery_confirm_delivery_contact_14days_return: { num: delivery_contact_14days_return, den: delivery_confirm_14days_return }
+    delivery_confirm_delivery_contact_free_delivery_by_seller: { num: delivery_contact_free_delivery_by_seller, den: delivery_confirm_free_delivery_by_seller }
+    delivery_confirm_delivery_contact_seller_delivery_subsidy: { num: delivery_contact_seller_delivery_subsidy, den: delivery_confirm_seller_delivery_subsidy }
+  
 
     c_per_iv_sales: {num: c_sales, den: iv_sales}
     c_per_iv_s_sales: {num: c_s_sales, den: iv_s_sales}
