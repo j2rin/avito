@@ -349,8 +349,8 @@ left join /*+jtype(h),distrib(l,a)*/ (
             user_id
         ,   date_from
         ,   date_to
-        ,   vrf_status = 'verified' is_verified
-        ,   vrf_type verification_type
+        ,   vrf_status = 'verified' is_seller_verified
+        ,   vrf_type seller_verification_type
     from (
             select
                     user_id
