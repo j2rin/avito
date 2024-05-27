@@ -2201,6 +2201,10 @@ metric.counter:
     cnt_iv_u2i_cpt:                 { filter: [ *is_iv_wo_guessing, *is_cpt, *x_is_u2i ] }
     cnt_iv_i2i_cpt:                 { filter: [ *is_iv_wo_guessing, *is_cpt, *x_is_i2i ] }
     cnt_iv_map_cpt:                 { filter: [ *is_iv_wo_guessing, *is_cpt, *x_is_map ] }
+    
+    cnt_cs_rec_i2i_with_guessing:         { filter: [*is_contact, *x_is_i2i] }
+    cnt_btc_rec_i2i_with_guessing:        { filter: [*is_btc, *x_is_i2i] }
+    cnt_cs_ph_rec_i2i_with_guessing:      { filter: [*is_ph, *x_is_i2i] }
 
 metric.uniq:
     user_rec_hide_category:         { counter: rec_hide_category, key: [cookie]}
@@ -3998,6 +4002,14 @@ metric.uniq:
     user_c_serp_small_base: 	{ counter: cnt_cs_serp_small_base_item_attr, 	key: [cookie] }
     user_iv_serp_small_base: 	{ counter: cnt_iv_serp_small_base_item_attr, 	key: [cookie] }
     user_btc_serp_small_base: 	{ counter: cnt_btc_serp_small_base_item_attr, 	key: [cookie] }
+    
+    contacts_rec_i2i_with_guessing: { counter: cnt_cs_rec_i2i_with_guessing, key: [item, x] }
+    users_contact_rec_i2i_with_guessing: { counter: cnt_cs_rec_i2i_with_guessing,          key: [cookie] }
+    buyer_target_clicks_rec_i2i_with_guessing: { counter: cnt_btc_rec_i2i_with_guessing, key: [item, x] }
+    user_btc_rec_i2i_with_guessing: { counter: cnt_btc_rec_i2i_with_guessing, key: [cookie] }
+    shows_btc_recblock_i2i_with_guessing: { counter: cnt_btc_rec_i2i_with_guessing, key: [cookie, x] }
+    contacts_ph_rec_i2i_with_guessing: { counter: cnt_cs_ph_rec_i2i_with_guessing, key: [item, x] }
+    users_ph_rec_i2i_with_guessing: { counter: cnt_cs_ph_rec_i2i_with_guessing, key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
@@ -4684,4 +4696,8 @@ metric.ratio:
     delivery_iv_delivery_click_sales:     { num: delivery_click_sales, den: delivery_iv_sales}
     delivery_iv_order_create_sales:       { num: order_create_sales, den: delivery_iv_sales}
     
+	user_rec_i2i_target_click_iv_ratio_with_guessing: { num: user_btc_rec_i2i_with_guessing, den: users_item_view_rec_i2i }
+    user_rec_i2i_target_click_per_user_recblock_shows_with_guessing: { num: user_btc_rec_i2i_with_guessing, den: user_recblock_shows_i2i }
+    user_c_rec_i2i_per_users_item_views_rec_i2i_with_guessing: { num: users_contact_rec_i2i_with_guessing, den: users_item_view_rec_i2i }
+    user_c_rec_i2i_per_user_recblock_shows_i2i_with_guessing: { num: users_contact_rec_i2i_with_guessing, den: user_recblock_shows_i2i }
 
