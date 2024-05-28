@@ -1468,7 +1468,10 @@ metric.counter:
     meta_regions_level_searches: { filter: [{ location_level_id: 2 }, *is_1p, *is_search] }
     noncapital_city_level_searches: { filter: [{ location_level_id: 6 }, *is_1p, *is_search] }
     not_default_radius_searches: { filter: [*is_1p, *is_not_default_radius, *is_search] }
-    phone_view_button_clicks: { filter: [*is_ph_btn] }
+    phone_view_button_clicks:     { filter: [*is_ph_btn] }
+    phone_view_button_clicks_u2i: { filter: [*is_ph_btn, *x_is_u2i] }
+    phone_view_button_clicks_i2i: { filter: [*is_ph_btn, *x_is_i2i] }
+    phone_view_button_clicks_s:   { filter: [*is_ph_btn, *x_is_search] }
     phone_views: { filter: [*is_ph, { $or: [[*is_ph_right], [*is_ph_top]] }] }
     phone_views_part_qual_compab: { filter: [*part_qual_compab, *is_ph, { $or: [[*is_ph_right], [*is_ph_top]] }] }
     phone_views_part_qual_unknown: { filter: [*part_qual_unknown, *is_ph, { $or: [[*is_ph_right], [*is_ph_top]] }] }
@@ -1704,7 +1707,10 @@ metric.counter:
     serp_without_query_small: { filter: [*is_1p, *is_search, *is_serp_small, *noq] }
     total_districts_in_searches: { filter: [*is_1p, *is_search], obs: [district_count] }
     total_metros_in_searches: { filter: [*is_1p, *is_search], obs: [metro_count] }
-    write_button_clicks: { filter: [*is_msg_btn] }
+    write_button_clicks:     { filter: [*is_msg_btn] }
+    write_button_clicks_u2i: { filter: [*is_msg_btn, *x_is_u2i] }
+    write_button_clicks_i2i: { filter: [*is_msg_btn, *x_is_i2i] }
+    write_button_clicks_s:   { filter: [*is_msg_btn, *x_is_search] }
     write_button_clicks_snippet: { filter: [*is_msg_btn, { $or: [[*is_btn_snip], [*is_btn_xlvas]] }] }
     write_button_clicks_item: { filter: [*is_msg_btn, *is_btn_item] }
     contacts_metageo: { filter: [*is_contact_wo_guessing, *x_is_metageo] }
@@ -3238,8 +3244,11 @@ metric.uniq:
     users_msg_rec_i2i: { counter: cnt_cs_msg_rec_u2i, key: [cookie] }
     users_msg_comp_list: { counter: cnt_cs_msg_comp_list, key: [cookie] }
     users_msg_fav_list: { counter: cnt_cs_msg_fav_list, key: [cookie] }
-    users_phone_views_in_chat: { counter: phone_views_in_chat, key: [cookie] }
-    users_pv_button_clicks: { counter: phone_view_button_clicks, key: [cookie] }
+    users_phone_views_in_chat:  { counter: phone_views_in_chat, key: [cookie] }
+    users_pv_button_clicks:     { counter: phone_view_button_clicks,     key: [cookie] }
+    users_ph_button_clicks_u2i: { counter: phone_view_button_clicks_u2i, key: [cookie] }
+    users_ph_button_clicks_i2i: { counter: phone_view_button_clicks_i2i, key: [cookie] }
+    users_ph_button_clicks_s:   { counter: phone_view_button_clicks_s,   key: [cookie] }
     users_realty_dev_phone_view: { counter: realty_dev_phone_views, key: [cookie] }
     users_realty_dev_phone_view_serp: { counter: realty_dev_phone_views_serp, key: [cookie] }
     users_realty_dev_phone_view_contact_block: { counter: realty_dev_phone_views_contact_block, key: [cookie] }
@@ -3278,7 +3287,10 @@ metric.uniq:
     users_searches_inline: { counter: sercheas_from_inline, key: [cookie] }
     users_searches_shortcut: { counter: sercheas_from_shortcut, key: [cookie] }
     users_searches_catalog:  { counter: searches_from_catalog,  key: [cookie] }
-    users_write_button_clicks: { counter: write_button_clicks, key: [cookie] }
+    users_write_button_clicks:     { counter: write_button_clicks,     key: [cookie] }
+    users_write_button_clicks_u2i: { counter: write_button_clicks_u2i, key: [cookie] }
+    users_write_button_clicks_i2i: { counter: write_button_clicks_i2i, key: [cookie] }
+    users_write_button_clicks_s:   { counter: write_button_clicks_s,   key: [cookie] }
     users_saved_searches_added: { counter: saved_searches_added, key: [cookie] }
     users_head_main_page_daily: { counter: head_main_pages, key: [cookie] }
     users_all_main_page_daily: { counter: all_main_pages, key: [cookie] }
