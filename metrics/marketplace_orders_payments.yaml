@@ -1,5 +1,5 @@
 metric.counter:
-  buyer_delivery_mp_gmv_created_:         {filter: [{is_created: true}], obs: [item_price]}
+  buyer_delivery_mp_gmv_created:         {filter: [{is_created: true}], obs: [item_price]}
   buyer_delivery_mp_gmv_paid:             {filter: [{is_paid: true}], obs: [item_price]}
 
   buyer_delivery_mp_items_created:        {filter: [{is_created: true}]}
@@ -25,10 +25,10 @@ metric.uniq:
   buyer_delivery_mp_purchases_created:       {counter: buyer_delivery_mp_items_created, key: [marketplacepurchase_id]} # созданные покупки
   buyer_delivery_mp_purchases_paid:          {counter: buyer_delivery_mp_items_paid, key: [marketplacepurchase_id]} # оплаченные покупки
 
-  payment_conversion_paid_uniq_mp: { counter: payment_conversion_paid_delivery_mp, key: [ marketplacepurchase_id ] } # PCR
-  payment_conversion_created_uniq_mp: { counter: payment_conversion_created_delivery_mp, key: [ marketplacepurchase_id ] } # PCR
-  orders_paid_paid_uniq_mp: { counter: orders_paid_paid_delivery_mp, key: [ marketplacepurchase_id ] } # OPR
-  orders_paid_created_uniq_mp: { counter: orders_paid_created_delivery_mp, key: [ marketplacepurchase_id ] } # OPR
+  payment_conversion_paid_uniq_mp: { counter: payment_conversion_paid_mp, key: [ marketplacepurchase_id ] } # PCR
+  payment_conversion_created_uniq_mp: { counter: payment_conversion_created_mp, key: [ marketplacepurchase_id ] } # PCR
+  orders_paid_paid_uniq_mp: { counter: orders_paid_paid_mp, key: [ marketplacepurchase_id ] } # OPR
+  orders_paid_created_uniq_mp: { counter: orders_paid_created_mp, key: [ marketplacepurchase_id ] } # OPR
 
 metric.ratio:
   buyer_delivery_mp_average_item_price_created: {num: buyer_delivery_mp_gmv_created, den: buyer_delivery_mp_items_created}
@@ -40,5 +40,5 @@ metric.ratio:
 
   buyer_delivery_mp_average_payment_time:  {num: buyer_delivery_mp_total_payment_time, den: buyer_delivery_mp_items_paid}
   
-  orders_paid_ratio_mp: { num: orders_paid_paid_uniq_delivery_mp, den: orders_paid_created_uniq_delivery_mp } # OPR
-  payment_conversion_rate_mp: { num: payment_conversion_paid_uniq_delivery_mp, den: payment_conversion_created_uniq_delivery_mp } #PCR
+  orders_paid_ratio_mp: { num: orders_paid_paid_uniq_mp, den: orders_paid_created_uniq_mp } # OPR
+  payment_conversion_rate_mp: { num: payment_conversion_paid_uniq_mp, den: payment_conversion_created_uniq_mp } #PCR
