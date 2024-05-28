@@ -386,6 +386,8 @@ definitions:
     - &is_trx {$or: [*is_trx_commission_low, *is_trx_commission_medium, *is_trx_commission_high]}
 
     - &is_cpt {item_flags.bit: 42}
+    
+    - &is_seller_verified {is_seller_verified: True}
 
 
 metric.counter:
@@ -1296,6 +1298,7 @@ metric.counter:
     contacts_reputation_medium: { filter: [*is_reputation_medium, *is_contact] }
     contacts_reputation_low: { filter: [*is_reputation_low, *is_contact] }
     contacts_reputation_grey: { filter: [*is_reputation_grey, *is_contact] }
+    contacts_with_verified_sellers: { filter: [*is_contact, *is_seller_verified] }
     contacts_story: { filter: [*is_contact, *is_story] }
     btc_story: { filter: [*is_btc, *is_story] }
     contacts_items: { filter: [*is_contact_item]}
@@ -4825,4 +4828,6 @@ metric.ratio:
     user_rec_i2i_target_click_per_user_recblock_shows_with_guessing: { num: user_btc_rec_i2i_with_guessing, den: user_recblock_shows_i2i }
     user_c_rec_i2i_per_users_item_views_rec_i2i_with_guessing: { num: users_contact_rec_i2i_with_guessing, den: users_item_view_rec_i2i }
     user_c_rec_i2i_per_user_recblock_shows_i2i_with_guessing: { num: users_contact_rec_i2i_with_guessing, den: user_recblock_shows_i2i }
+    
+    contacts_with_verified_sellers_per_contacts:  { num: contacts_with_verified_sellers, den: contacts }
 
