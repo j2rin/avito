@@ -12,7 +12,7 @@ select
     marketplacepurchase_ext,
     item_id,
     item_price,
-    status,
+    co.status,
     billing_project,
     is_created,
     is_paid,
