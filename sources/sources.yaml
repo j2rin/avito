@@ -3801,3 +3801,14 @@ duplicates_in_dai:
   participant: {user: _ } # No participants
   primary_subject: user
   dtm: event_date
+
+avito_sales_events:
+  metric_configs: [avito_sales_events]
+  connections: [vertica, trino]
+  sql: avito_sales_events
+  column_map: 
+    cookie: cookie_id 
+  dimensions: [platform]
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
