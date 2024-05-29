@@ -162,14 +162,14 @@ select
     case when prem.is_premium = 1 then true when prem.is_premium = 0 or prem.is_premium is null then false end is_premium,
     coalesce(fancy.is_fancy, false) is_fancy,
     case
-        when inn_info.inn_status then 'B2C White'
+        when vl.seller_verification_type in ('inn', 'sber_business', 'tinkoff_business', 'alfa_business') then 'B2C White'
         when coalesce(usm.user_segment, ls.segment) not in ('Private.Seller','Private (Earning).Seller','Private (Earning).Extra Small') then 'B2C Gray'
         else 'C2C'
     end as seller_segment_marketplace,
     b.reputation_badge,
     case when sub_info.is_free_delivery_item = 1 then true else false end as is_free_delivery_by_seller_item,
     case when sub_info.is_seller_delivery_subsidy_item = 1 then true else false end as is_seller_delivery_subsidy_item,
-    coalesce(vl.is_seller_verified, False) is_seller_verified,
+    vl.seller_verification_type is not NULL is_seller_verified,
     coalesce(vl.seller_verification_type, 'not_verified') seller_verification_type
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
@@ -274,37 +274,6 @@ left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_
 left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
     on ss.item_user_id = fs.seller_id
 
-left join /*+jtype(h),distrib(l,a)*/
-(
-    select
-        c.event_date,
-        user_id,
-        inn_status,
-        active_from,
-        active_until
-    from
-        (
-        select *,
-               coalesce(cast(lead(active_from) over(partition by user_id order by active_from asc) as date) - interval '1' day, cast('2030-01-01' as date)) as active_until -- дата окончания действия этого статуса
-        from
-            (
-                select
-                    cast(event_time as date) as active_from,
-                    user_id,
-                    status as inn_status,
-                    row_number() over(partition by user_id, cast(event_time as date) order by event_time desc) as rn
-                from
-                    dma.verification_statuses
-                where 1=1
-                    and verification_type = 'INN'
-    --                and event_year <= date_trunc('year', date(:last_date)) -- @trino
-            ) _
-        where rn = 1 --получаем последний за день статус
-        ) inn_info
-        join dict.calendar c on c.event_date between :first_date and :last_date
-        where c.event_date between inn_info.active_from and inn_info.active_until
-) inn_info on ss.item_user_id = inn_info.user_id and cast(ss.event_date as date) = inn_info.event_date
-
 left join /*+jtype(h),distrib(l,a)*/ (
     select distinct
         ub.user_id,
@@ -346,15 +315,13 @@ left join /*+jtype(h),distrib(l,a)*/
 -- Информация о верификации селлера
 left join /*+jtype(h),distrib(l,a)*/ (
     select
-            user_id
+        	user_id
         ,   date_from
-        ,   date_to
-        ,   vrf_status = 'verified' is_seller_verified
+  		,	date_to
         ,   vrf_type seller_verification_type
     from (
             select
                     user_id
-                ,   vrf_status
                 ,   vrf_type
                 ,   event_date date_from
                 ,   coalesce(lead(event_date) over (partition by user_id order by event_date), date('2100-01-01')) date_to
@@ -365,12 +332,11 @@ left join /*+jtype(h),distrib(l,a)*/ (
                                 user_id
                         from bs_users
                     )
-				-- and event_year <= date_trunc('year', date(:last_date)) -- @trino
+    			-- and event_year <= date_trunc('year', date(:last_date)) -- @trino
         ) _
     where True
         and date_from <= date(:last_date)
         and date_to >= date(:first_date)
-        and vrf_status = 'verified'
         and vrf_type is not NULL
 ) vl on ss.item_user_id = vl.user_id and cast(ss.event_date as date) between vl.date_from and vl.date_to
 
