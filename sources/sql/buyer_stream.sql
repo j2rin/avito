@@ -315,9 +315,10 @@ left join /*+jtype(h),distrib(l,a)*/
 -- Информация о верификации селлера
 left join /*+jtype(h),distrib(l,a)*/ (
     select
-            vrf_log.user_id
-        ,   c.event_date
-        ,   vrf_log.vrf_type seller_verification_type
+        	user_id
+        ,   date_from
+  		,	date_to
+        ,   vrf_type seller_verification_type
     from (
             select
                     user_id
@@ -332,15 +333,12 @@ left join /*+jtype(h),distrib(l,a)*/ (
                         from bs_users
                     )
     			-- and event_year <= date_trunc('year', date(:last_date)) -- @trino
-        ) vrf_log
-        join dict.calendar c
-            on c.event_date between :first_date and :last_date
-                and c.event_date between vrf_log.date_from and vrf_log.date_to
+        ) _
     where True
-        and vrf_log.date_from <= date(:last_date)
-        and vrf_log.date_to >= date(:first_date)
-        and vrf_log.vrf_type is not NULL
-) vl on ss.item_user_id = vl.user_id and cast(ss.event_date as date) = vl.event_date
+        and date_from <= date(:last_date)
+        and date_to >= date(:first_date)
+        and vrf_type is not NULL
+) vl on ss.item_user_id = vl.user_id and cast(ss.event_date as date) between vl.date_from and vl.date_to
 
 where cast(ss.event_date as date) between :first_date and :last_date
 --     and ss.date between :first_date and :last_date -- @trino
