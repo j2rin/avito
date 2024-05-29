@@ -26,7 +26,7 @@ where
 --     and event_month between date_trunc('month', :first_date) and date_trunc('month', :last_date) --@trino
     and from_page in (
         'c2c_item_card', 'c2c_usp_banner',
-        'tinkoff', 'blankWork',
+        'autobrokerSber', 'tinkoff', 'blankWork',
         'single_point_item_card', 'single_point_tinkoff', 'single_point_sber',
         'single_banner', 'single_banner_tinkoff', 'single_banner_sber'
     )

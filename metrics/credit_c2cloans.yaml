@@ -1,8 +1,8 @@
 definitions:
-    - &render     {x_from_page.in: [tinkoff, c2c_item_card, single_point_item_card]}
-    - &click      {x_from_page.in: [tinkoff, c2c_item_card, single_point_item_card]}
-    - &enter      {x_from_page.in: [tinkoff, c2c_usp_banner, single_banner_tinkoff, single_banner_sber, single_point_tinkoff, single_point_sber]}
-    - &send       {x_from_page.in: [tinkoff, blankWork]}
+    - &render     {x_from_page.in: [autobrokerSber, tinkoff, c2c_item_card, single_point_item_card, single_point_tinkoff, single_point_sber]}
+    - &click      {x_from_page.in: [autobrokerSber, tinkoff, c2c_item_card, single_point_item_card]}
+    - &enter      {x_from_page.in: [autobrokerSber, tinkoff, c2c_usp_banner, single_banner_tinkoff, single_banner_sber, single_point_tinkoff, single_point_sber]}
+    - &send       {x_from_page.in: [autobrokerSber, tinkoff, blankWork]}
 
 
 metric.counter:
@@ -20,7 +20,8 @@ metric.uniq:
 
 
 metric.ratio:
-    c2c_credit_auto_render2click:                                  {num: c2c_credit_auto_clicks,     den: c2c_credit_auto_renders}
-    c2c_credit_auto_click2enter:                                   {num: c2c_credit_auto_enters,      den: c2c_credit_auto_clicks}
-    c2c_credit_auto_enter2send:                                    {num: c2c_credit_auto_sends,       den: c2c_credit_auto_enters}
-    c2c_credit_auto_render2send:                                   {num: c2c_credit_auto_sends,       den: c2c_credit_auto_renders}
+    c2c_credit_auto_render2click:                          {num: c2c_credit_auto_clicks,      den: c2c_credit_auto_renders}
+    c2c_credit_auto_click2enter:                           {num: c2c_credit_auto_enters,      den: c2c_credit_auto_clicks}
+    c2c_credit_auto_enter2send:                            {num: c2c_credit_auto_sends,       den: c2c_credit_auto_enters}
+    c2c_credit_auto_render2send:                           {num: c2c_credit_auto_sends,       den: c2c_credit_auto_renders}
+    c2c_credit_auto_render2enter:                          {num: c2c_credit_auto_enters,       den: c2c_credit_auto_renders}
