@@ -104,7 +104,10 @@ metric.counter:
   open_avito_sales_sellers_flow:               {filter: [eid: 7148],  obs: [event_count]}
   add_parameter_avito_sales_sellers_flow:      {filter: [eid: 7149],  obs: [event_count]}
   click_participate_in_sales:                  {filter: [eid.in: [8356,10110]],  obs: [event_count]}
-  click_suggest_word_bubble:				   {filter: [eid: 10338], obs: [event_count]}
+  click_suggest_word_bubble:				           {filter: [eid: 10338], obs: [event_count]}
+  click_carousel:                              {filter: [eid: 9494],  obs: [event_count]}
+  show_carousel:                               {filter: [eid: 9493],  obs: [event_count]}
+
 
 metric.uniq:
   orders_page_views_users:                          {counter: orders_page_views,                           key: [cookie]}
@@ -193,7 +196,10 @@ metric.uniq:
   users_opened_avito_sales_sellers_flow:            {counter: open_avito_sales_sellers_flow ,              key: [user_id]}
   users_added_parameter_avito_sales_sellers_flow:   {counter: add_parameter_avito_sales_sellers_flow,      key: [user_id]}
   users_clicked_participate_in_sales:               {counter: click_participate_in_sales,                  key: [user_id]}
-  user_click_suggest_word_bubble:					{counter: click_suggest_word_bubble,				   key: [cookie]}
+  user_click_suggest_word_bubble:					          {counter: click_suggest_word_bubble,				           key: [cookie]}
+  user_click_carousel:                              {counter: click_carousel,                              key: [cookie]}
+  user_show_carousel:                               {counter: show_carousel,                               key: [cookie]}
+
 
 
 metric.ratio:
@@ -214,4 +220,5 @@ metric.ratio:
   users_clicked_participate_per_users_opened_avito_sales:         	{num: users_clicked_participate_in_sales,  den: users_opened_avito_sales_sellers_flow}
   users_clicked_participate_per_users_added_parameter_avito_sales:  {num: users_clicked_participate_in_sales,  den: users_added_parameter_avito_sales_sellers_flow}
   users_added_parameter_per_users_opened_avito_sales:         		{num: users_added_parameter_avito_sales_sellers_flow,    den: users_opened_avito_sales_sellers_flow}
-  
+  user_ctr_carousel:                                    {num: user_click_carousel,                 den: user_show_carousel}
+  ctr_carousel:                                         {num: click_carousel,                      den: show_carousel}
