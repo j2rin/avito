@@ -388,6 +388,11 @@ definitions:
     - &is_cpt {item_flags.bit: 42}
     
     - &is_seller_verified {is_seller_verified: True}
+    - &vrf_segment_is_seller_private {user_segment_market: ["Private.Seller", "Private", "Private.Seller"]}
+    - &vrf_segment_is_seller_xs {user_segment_market: ["Private (Earning).Extra Small", "Extra Small", "Private (Earning).Reseller.Small", "Private (Earning).Seller", "Private.nonPro"]}
+    - &vrf_segment_is_seller_s {user_segment_market: ["MidMarket.nonPro", "Private (Earning).Reseller", "Private (Earning).Reseller.Medium", "Private (Earning).Small", "Small"]}
+    - &vrf_segment_is_seller_m {user_segment_market: ["LongTale.Pro", "Midmarket.CallCenter", "MidMarket.Company", "MidMarket.Dealer", "MidMarket.Pro", "Private (Earning).Reseller.Big", "MidMarket.Medium", "Medium"]}
+    - &vrf_segment_is_seller_l {user_segment_market: ["Enterprise.Company", "Enterprise.DealerHolding", "Enterprise.Pro", "Enterprise.nonPro", "Enterprise.Large", "Large"]}
 
 
 metric.counter:
@@ -1298,7 +1303,11 @@ metric.counter:
     contacts_reputation_medium: { filter: [*is_reputation_medium, *is_contact] }
     contacts_reputation_low: { filter: [*is_reputation_low, *is_contact] }
     contacts_reputation_grey: { filter: [*is_reputation_grey, *is_contact] }
+    
     contacts_with_verified_sellers: { filter: [*is_contact, *is_seller_verified] }
+    contacts_with_verified_pro_sellers: { filter: [*is_contact, *is_seller_verified, $or: [*vrf_segment_is_seller_s, *vrf_segment_is_seller_m, *vrf_segment_is_seller_l]] }
+    contacts_with_vrf_pro_sellers: { filter: [*is_contact, $or: [*vrf_segment_is_seller_s, *vrf_segment_is_seller_m, *vrf_segment_is_seller_l]] }
+    
     contacts_story: { filter: [*is_contact, *is_story] }
     btc_story: { filter: [*is_btc, *is_story] }
     contacts_items: { filter: [*is_contact_item]}
@@ -4830,4 +4839,5 @@ metric.ratio:
     user_c_rec_i2i_per_user_recblock_shows_i2i_with_guessing: { num: users_contact_rec_i2i_with_guessing, den: user_recblock_shows_i2i }
     
     contacts_with_verified_sellers_per_contacts:  { num: contacts_with_verified_sellers, den: contacts }
+    contacts_with_verified_pro_sellers_per_pro_contacts:  { num: contacts_with_verified_pro_sellers, den: contacts_with_vrf_pro_sellers }
 
