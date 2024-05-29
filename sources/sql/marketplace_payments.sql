@@ -2,6 +2,7 @@ select
     status_date,
     create_date,
     status_time,
+    platform_id,
     buyer_id,
     is_delivery_paid_new,
     is_delivery_accepted_new,
