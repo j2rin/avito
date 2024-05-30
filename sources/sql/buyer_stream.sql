@@ -170,7 +170,8 @@ select
     case when sub_info.is_free_delivery_item = 1 then true else false end as is_free_delivery_by_seller_item,
     case when sub_info.is_seller_delivery_subsidy_item = 1 then true else false end as is_seller_delivery_subsidy_item,
     vl.seller_verification_type is not NULL is_seller_verified,
-    coalesce(vl.seller_verification_type, 'not_verified') seller_verification_type
+    coalesce(vl.seller_verification_type, 'not_verified') seller_verification_type,
+    cmx.level_id as x_level_id
 from DMA.buyer_stream ss
 left join /*+jtype(h),distrib(l,a)*/ DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cmx on cmx.microcat_id = ss.x_microcat_id
