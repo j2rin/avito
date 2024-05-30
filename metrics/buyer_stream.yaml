@@ -389,8 +389,8 @@ definitions:
     
     - &is_seller_verified {is_seller_verified: True}
 
-    - &is_item_like_new { item_flags.bit: 43 }
-    - &is_item_non_like_new { item_flags.!bit: 43 }
+    - &is_like_new { item_flags.bit: 43 }
+    - &is_non_like_new { item_flags.!bit: 43 }
 
 
 metric.counter:
@@ -2041,31 +2041,31 @@ metric.counter:
     iv_non_fancy_u2i: { filter: [is_fancy: false, *is_iv_wo_guessing, *x_is_u2i] }
     iv_non_fancy_i2i: { filter: [is_fancy: false, *is_iv_wo_guessing, *x_is_i2i] }
 
-    iv_item_like_new: { filter: [*is_item_like_new, *is_iv] }
-    c_item_like_new: { filter: [*is_item_like_new, *is_contact] }
-    btc_item_like_new: { filter: [*is_item_like_new, *is_btc] }
-    iv_item_like_new_s: { filter: [*is_item_like_new, *is_iv_wo_guessing, *x_is_search] }
-    c_item_like_new_s: { filter: [*is_item_like_new, *is_contact_wo_guessing, *x_is_search] }
-    btc_item_like_new_s: { filter: [*is_item_like_new, *is_btc_wo_guessing, *x_is_search] }
-    iv_item_like_new_u2i: { filter: [*is_item_like_new, *is_iv_wo_guessing, *x_is_u2i] }
-    c_item_like_new_u2i: { filter: [*is_item_like_new, *is_contact_wo_guessing, *x_is_u2i] }
-    btc_item_like_new_u2i: { filter: [*is_item_like_new, *is_btc_wo_guessing, *x_is_u2i] }
-    iv_item_like_new_i2i: { filter: [*is_item_like_new, *is_iv_wo_guessing, *x_is_i2i] }
-    c_item_like_new_i2i: { filter: [*is_item_like_new, *is_contact_wo_guessing, *x_is_i2i] }
-    btc_item_like_new_i2i: { filter: [*is_item_like_new, *is_btc_wo_guessing, *x_is_i2i] }
+    iv_like_new: { filter: [*is_like_new, *is_iv] }
+    c_like_new: { filter: [*is_like_new, *is_contact] }
+    btc_like_new: { filter: [*is_like_new, *is_btc] }
+    iv_like_new_s: { filter: [*is_like_new, *is_iv_wo_guessing, *x_is_search] }
+    c_like_new_s: { filter: [*is_like_new, *is_contact_wo_guessing, *x_is_search] }
+    btc_like_new_s: { filter: [*is_like_new, *is_btc_wo_guessing, *x_is_search] }
+    iv_like_new_u2i: { filter: [*is_like_new, *is_iv_wo_guessing, *x_is_u2i] }
+    c_like_new_u2i: { filter: [*is_like_new, *is_contact_wo_guessing, *x_is_u2i] }
+    btc_like_new_u2i: { filter: [*is_like_new, *is_btc_wo_guessing, *x_is_u2i] }
+    iv_like_new_i2i: { filter: [*is_like_new, *is_iv_wo_guessing, *x_is_i2i] }
+    c_like_new_i2i: { filter: [*is_like_new, *is_contact_wo_guessing, *x_is_i2i] }
+    btc_like_new_i2i: { filter: [*is_like_new, *is_btc_wo_guessing, *x_is_i2i] }
     
-    iv_item_non_like_new: { filter: [*is_item_non_like_new, *is_iv] }
-    c_item_non_like_new: { filter: [*is_item_non_like_new, *is_contact] }
-    btc_item_non_like_new: { filter: [*is_item_non_like_new, *is_btc] }
-    iv_item_non_like_new_s: { filter: [*is_item_non_like_new, *is_iv_wo_guessing, *x_is_search] }
-    c_item_non_like_new_s: { filter: [*is_item_non_like_new, *is_contact_wo_guessing, *x_is_search] }
-    btc_item_non_like_new_s: { filter: [*is_item_non_like_new, *is_btc_wo_guessing, *x_is_search] }
-    iv_item_non_like_new_u2i: { filter: [*is_item_non_like_new, *is_iv_wo_guessing, *x_is_u2i] }
-    c_item_non_like_new_u2i: { filter: [*is_item_non_like_new, *is_contact_wo_guessing, *x_is_u2i] }
-    btc_item_non_like_new_u2i: { filter: [*is_item_non_like_new, *is_btc_wo_guessing, *x_is_u2i] }
-    iv_item_non_like_new_i2i: { filter: [*is_item_non_like_new, *is_iv_wo_guessing, *x_is_i2i] }
-    c_item_non_like_new_i2i: { filter: [*is_item_non_like_new, *is_contact_wo_guessing, *x_is_i2i] }
-    btc_item_non_like_new_i2i: { filter: [*is_item_non_like_new, *is_btc_wo_guessing, *x_is_i2i] }
+    iv_non_like_new: { filter: [*is_non_like_new, *is_iv] }
+    c_non_like_new: { filter: [*is_non_like_new, *is_contact] }
+    btc_non_like_new: { filter: [*is_non_like_new, *is_btc] }
+    iv_non_like_new_s: { filter: [*is_non_like_new, *is_iv_wo_guessing, *x_is_search] }
+    c_non_like_new_s: { filter: [*is_non_like_new, *is_contact_wo_guessing, *x_is_search] }
+    btc_non_like_new_s: { filter: [*is_non_like_new, *is_btc_wo_guessing, *x_is_search] }
+    iv_non_like_new_u2i: { filter: [*is_non_like_new, *is_iv_wo_guessing, *x_is_u2i] }
+    c_non_like_new_u2i: { filter: [*is_non_like_new, *is_contact_wo_guessing, *x_is_u2i] }
+    btc_non_like_new_u2i: { filter: [*is_non_like_new, *is_btc_wo_guessing, *x_is_u2i] }
+    iv_non_like_new_i2i: { filter: [*is_non_like_new, *is_iv_wo_guessing, *x_is_i2i] }
+    c_non_like_new_i2i: { filter: [*is_non_like_new, *is_contact_wo_guessing, *x_is_i2i] }
+    btc_non_like_new_i2i: { filter: [*is_non_like_new, *is_btc_wo_guessing, *x_is_i2i] }
     
 
     iv_mall: { filter: [*is_item_mall, *is_iv] }
@@ -3844,31 +3844,31 @@ metric.uniq:
 	user_iv_non_fancy_u2i: { counter: iv_non_fancy_u2i, key:	[cookie] }
 	user_iv_non_fancy_i2i: { counter: iv_non_fancy_i2i, key:	[cookie] }
     
-    user_iv_item_like_new: { counter: iv_item_like_new,	key:	[cookie] }
-    user_c_item_like_new: { counter: c_item_like_new,	key:	[cookie] }
-    user_btc_item_like_new: { counter: btc_item_like_new,	key:	[cookie] }
-    user_iv_item_like_new_s: { counter: iv_item_like_new_s,	key:	[cookie] }
-    user_c_item_like_new_s: { counter: c_item_like_new_s,	key:	[cookie] }
-    user_btc_item_like_new_s: { counter: btc_item_like_new_s,	key:	[cookie] }
-    user_iv_item_like_new_u2i: { counter: iv_item_like_new_u2i,	key:	[cookie] }
-    user_c_item_like_new_u2i: { counter: c_item_like_new_u2i,	key:	[cookie] }
-    user_btc_item_like_new_u2i: { counter: btc_item_like_new_u2i,	key:	[cookie] }
-    user_iv_item_like_new_i2i: { counter: iv_item_like_new_i2i,	key:	[cookie] }
-    user_c_item_like_new_i2i: { counter: c_item_like_new_i2i,	key:	[cookie] }
-    user_btc_item_like_new_i2i: { counter: btc_item_like_new_i2i,	key:	[cookie] }
+    user_iv_like_new: { counter: iv_like_new,	key:	[cookie] }
+    user_c_like_new: { counter: c_like_new,	key:	[cookie] }
+    user_btc_like_new: { counter: btc_like_new,	key:	[cookie] }
+    user_iv_like_new_s: { counter: iv_like_new_s,	key:	[cookie] }
+    user_c_like_new_s: { counter: c_like_new_s,	key:	[cookie] }
+    user_btc_like_new_s: { counter: btc_like_new_s,	key:	[cookie] }
+    user_iv_like_new_u2i: { counter: iv_like_new_u2i,	key:	[cookie] }
+    user_c_like_new_u2i: { counter: c_like_new_u2i,	key:	[cookie] }
+    user_btc_like_new_u2i: { counter: btc_like_new_u2i,	key:	[cookie] }
+    user_iv_like_new_i2i: { counter: iv_like_new_i2i,	key:	[cookie] }
+    user_c_like_new_i2i: { counter: c_like_new_i2i,	key:	[cookie] }
+    user_btc_like_new_i2i: { counter: btc_like_new_i2i,	key:	[cookie] }
     
-    user_iv_item_non_like_new: { counter: iv_item_non_like_new,	key:	[cookie] }
-    user_c_item_non_like_new: { counter: c_item_non_like_new,	key:	[cookie] }
-    user_btc_item_non_like_new: { counter: btc_item_non_like_new,	key:	[cookie] }
-    user_iv_item_non_like_new_s: { counter: iv_item_non_like_new_s,	key:	[cookie] }
-    user_c_item_non_like_new_s: { counter: c_item_non_like_new_s,	key:	[cookie] }
-    user_btc_item_non_like_new_s: { counter: btc_item_non_like_new_s,	key:	[cookie] }
-    user_iv_item_non_like_new_u2i: { counter: iv_item_non_like_new_u2i,	key:	[cookie] }
-    user_c_item_non_like_new_u2i: { counter: c_item_non_like_new_u2i,	key:	[cookie] }
-    user_btc_item_non_like_new_u2i: { counter: btc_item_non_like_new_u2i,	key:	[cookie] }
-    user_iv_item_non_like_new_i2i: { counter: iv_item_non_like_new_i2i,	key:	[cookie] }
-    user_c_item_non_like_new_i2i: { counter: c_item_non_like_new_i2i,	key:	[cookie] }
-    user_btc_item_non_like_new_i2i: { counter: btc_item_non_like_new_i2i,	key:	[cookie] }
+    user_iv_non_like_new: { counter: iv_non_like_new,	key:	[cookie] }
+    user_c_non_like_new: { counter: c_non_like_new,	key:	[cookie] }
+    user_btc_non_like_new: { counter: btc_non_like_new,	key:	[cookie] }
+    user_iv_non_like_new_s: { counter: iv_non_like_new_s,	key:	[cookie] }
+    user_c_non_like_new_s: { counter: c_non_like_new_s,	key:	[cookie] }
+    user_btc_non_like_new_s: { counter: btc_non_like_new_s,	key:	[cookie] }
+    user_iv_non_like_new_u2i: { counter: iv_non_like_new_u2i,	key:	[cookie] }
+    user_c_non_like_new_u2i: { counter: c_non_like_new_u2i,	key:	[cookie] }
+    user_btc_non_like_new_u2i: { counter: btc_non_like_new_u2i,	key:	[cookie] }
+    user_iv_non_like_new_i2i: { counter: iv_non_like_new_i2i,	key:	[cookie] }
+    user_c_non_like_new_i2i: { counter: c_non_like_new_i2i,	key:	[cookie] }
+    user_btc_non_like_new_i2i: { counter: btc_non_like_new_i2i,	key:	[cookie] }
 
     user_iv_mall: { counter: iv_mall, key: [cookie] }
     user_c_mall: { counter: c_mall, key: [cookie] }
