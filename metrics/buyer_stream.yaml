@@ -377,7 +377,9 @@ definitions:
     - &is_seller_delivery_subsidy_item {is_seller_delivery_subsidy_item: True}
 
     - &in_sale { item_flags.bit: 36 }
-    - &x_is_sales_vertical_main_widget { x_eid: [ 5516, 2012 ], from_page.ilike: '%_sale' } 
+    - &x_is_sale_page_carousel { x_eid: [ 5516 ], $or: [ { x_from_page: 'carousel_sale' }, {x_from_page: 'sale_carousel'}] }
+    - &x_is_sale_page_rec { x_eid: [ 5516 ], $or: [ {x_from_page: 'vertical_recommendations_sale' }, {x_from_page: 'sale_vertical_recommendations'}] }
+    - &x_is_sale_page {$or: [*x_is_sale_page_rec, *x_is_sale_page_carousel]}
     - &in_sale_delivery_active { is_delivery_active_in_sale: 1 }
 
     - &is_trx_commission_low {item_flags.bit: 37}
@@ -2235,12 +2237,24 @@ metric.counter:
     cnt_iv_sales: { filter: [*is_iv, *in_sale] }
     cnt_iv_s_sales: { filter: [*is_iv, *x_is_search, *in_sale] }
     cnt_iv_u2i_sales: { filter: [*is_iv, *x_is_u2i, *in_sale] }
-    cnt_iv_sales_vertical_page: { filter: [*is_iv, *x_is_sales_vertical_main_widget, *in_sale]}
+    cnt_iv_sales_vertical_page_carousel: { filter: [*is_iv, *x_is_sale_page_carousel, *in_sale]}
+    cnt_iv_sales_vertical_page_rec: { filter: [*is_iv, *x_is_sale_page_rec, *in_sale]}
+    cnt_iv_sales_vertical_page: { filter: [*is_iv, *x_is_sale_page, *in_sale]}
 
     cnt_c_sales: { filter: [*is_contact, *in_sale] }
     cnt_c_s_sales: { filter: [*is_contact_wo_guessing, *x_is_search, *in_sale] }
     cnt_c_u2i_sales: {filter: [*is_contact_wo_guessing, *x_is_u2i, *in_sale] }
-    cnt_c_sales_vertical_page: { filter: [*is_contact_wo_guessing, *x_is_sales_vertical_main_widget, *in_sale] }
+    cnt_c_sales_vertical_page_carousel: { filter: [*is_contact_wo_guessing, *x_is_sale_page_carousel, *in_sale] }
+    cnt_c_sales_vertical_page_rec: { filter: [*is_contact_wo_guessing, *x_is_sale_page_rec, *in_sale] }
+    cnt_c_sales_vertical_page: { filter: [*is_contact_wo_guessing, *x_is_sale_page, *in_sale] }
+
+    cnt_s_sales_header: { filter: [ eid: 300, from_page: 'salesHeaderWidget'] }
+    cnt_iv_s_sales_header: { filter: [ x_eid: 300, x_from_page: 'salesHeaderWidget', *is_iv, *in_sale] }
+    cnt_c_s_sales_header: { filter: [ x_eid: 300, x_from_page: 'salesHeaderWidget', *is_contact_wo_guessing, *in_sale] }
+
+    cnt_fav_sales: { filter: [*is_fav, *in_sale] }
+    cnt_marketplace_contacts_sales: {filter: [ eid: [4675, 5942], *in_sale] }
+    cnt_cart_sales: {filter: [ eid: [5942], *in_sale] }
 
     total_delivery_iv_sales: { filter: [*is_iv, *in_sale_delivery_active ] }
     total_delivery_click_sales: { filter: [ *in_sale_delivery_active, eid: 2483 ] }
