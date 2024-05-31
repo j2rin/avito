@@ -76,6 +76,7 @@ definitions:
     - &x_is_widget				{ x_eid: 5516}
     - &rec_widget               { engine: itemsRecWidget }
     - &featured_widget          { engine: itemsWidget }
+    - &carousel_widget          { engine: itemsCarouselWidget }
 
     - &is_sgt       { eid: 2443 }
     - &is_iv        { eid: 301 }
@@ -810,6 +811,7 @@ metric.counter:
     cnt_cs_vertical_main: { filter: [*is_contact_wo_guessing, $or: [*x_is_vertical_main, *x_is_vertical_main_widget]] }
     cnt_cs_vertical_main_rec: { filter: [*is_contact_wo_guessing, *rec_widget, *x_is_vertical_main_widget] }
     cnt_cs_vertical_main_featured: { filter: [*is_contact_wo_guessing, *featured_widget, *x_is_vertical_main_widget] }
+    cnt_cs_vertical_main_carousel: { filter: [*is_contact_wo_guessing, *carousel_widget, *x_is_vertical_main_widget] }
     cnt_cs_shopx: { filter: [*is_contact_wo_guessing, *x_is_search, *x_is_shop] }
     cnt_cs_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_search] }
     cnt_cs_serp: { filter: [*is_contact_wo_guessing, *x_is_search] }
@@ -1129,6 +1131,7 @@ metric.counter:
     cnt_iv_vertical_main: { filter: [*is_iv, $or: [*x_is_vertical_main_widget, *x_is_vertical_main]] }
     cnt_iv_vertical_main_rec: { filter: [*is_iv, *rec_widget, *x_is_vertical_main_widget] }
     cnt_iv_vertical_main_featured: { filter: [*is_iv, *featured_widget, *x_is_vertical_main_widget] }
+    cnt_iv_vertical_main_carousel: { filter: [*is_iv, *carousel_widget, *x_is_vertical_main_widget] }
     cnt_iv_shopx: { filter: [*is_iv_wo_guessing, *x_is_search, *x_is_shop] }
     cnt_iv_vas: { filter: [*is_iv_wo_guessing, *is_item_vas, *x_is_search] }
     cnt_iv_serp_xl: { filter: [*is_iv_wo_guessing, *is_serp_xl, *x_is_search] }
@@ -2918,6 +2921,7 @@ metric.uniq:
     iv_vertical_main: { counter: cnt_iv_vertical_main, key: [item, x] }
     iv_vertical_main_rec: { counter: cnt_iv_vertical_main_rec, key: [item, x] }
     iv_vertical_main_featured: { counter: cnt_iv_vertical_main_featured, key: [item, x] }
+    iv_vertical_main_carousel: { counter: cnt_iv_vertical_main_carousel, key: [item, x] }
     iv_seen: { counter: cnt_iv_seen, key: [item, x] }
     unq_item_x_btc_s_distr_metro_radius_road: { counter: cnt_btc_s_distr_metro_radius_road, key: [item, x] }
     unq_item_x_btc_s_distr_metro_road: { counter: cnt_btc_s_distr_metro_road, key: [item, x] }
@@ -3225,6 +3229,7 @@ metric.uniq:
     users_contact_vertical_main: { counter: cnt_cs_vertical_main, key: [cookie] }
     users_contact_vertical_main_rec: { counter: cnt_cs_vertical_main_rec, key: [cookie] }
     users_contact_vertical_main_featured: { counter: cnt_cs_vertical_main_featured, key: [cookie] }
+    users_contact_vertical_main_carousel: { counter: cnt_cs_vertical_main_carousel, key: [cookie] }
     users_contact_serp_daily: { counter: cnt_cs_s_item_attr, key: [cookie] }
     users_contact_nox_daily: { counter: cnt_cs_no_item_attr, key: [cookie] }
     users_contacts_comp_list: { counter: cnt_cs_comp_list, key: [cookie] }
@@ -3272,6 +3277,7 @@ metric.uniq:
     users_item_view_vertical_main: { counter: cnt_iv_vertical_main, key: [cookie] }
     users_item_view_vertical_main_rec: { counter: cnt_iv_vertical_main_rec, key: [cookie] }
     users_item_view_vertical_main_featured: { counter: cnt_iv_vertical_main_featured, key: [cookie] }
+    users_item_view_vertical_main_carousel: { counter: cnt_iv_vertical_main_carousel, key: [cookie] }
     users_item_view_serp_daily: { counter: cnt_iv_s_item_attr, key: [cookie] }
     users_item_view_nox_daily: { counter: cnt_iv_no_item_attr, key: [cookie] }
     users_item_views_fav_list: { counter: cnt_fav_list_iv, key: [cookie] }
