@@ -76,6 +76,7 @@ definitions:
     - &x_is_widget				{ x_eid: 5516}
     - &rec_widget               { engine: itemsRecWidget }
     - &featured_widget          { engine: itemsWidget }
+    - &carousel_widget          { engine: itemsCarouselWidget }
 
     - &is_sgt       { eid: 2443 }
     - &is_iv        { eid: 301 }
@@ -377,7 +378,9 @@ definitions:
     - &is_seller_delivery_subsidy_item {is_seller_delivery_subsidy_item: True}
 
     - &in_sale { item_flags.bit: 36 }
-    - &x_is_sales_vertical_main_widget { x_eid: [ 5516, 2012 ], from_page.ilike: '%_sale' } 
+    - &x_is_sale_page_carousel { x_eid: [ 5516 ], $or: [ { x_from_page: 'carousel_sale' }, {x_from_page: 'sale_carousel'}] }
+    - &x_is_sale_page_rec { x_eid: [ 5516 ], $or: [ {x_from_page: 'vertical_recommendations_sale' }, {x_from_page: 'sale_vertical_recommendations'}] }
+    - &x_is_sale_page {$or: [*x_is_sale_page_rec, *x_is_sale_page_carousel]}
     - &in_sale_delivery_active { is_delivery_active_in_sale: 1 }
 
     - &is_trx_commission_low {item_flags.bit: 37}
@@ -808,6 +811,7 @@ metric.counter:
     cnt_cs_vertical_main: { filter: [*is_contact_wo_guessing, $or: [*x_is_vertical_main, *x_is_vertical_main_widget]] }
     cnt_cs_vertical_main_rec: { filter: [*is_contact_wo_guessing, *rec_widget, *x_is_vertical_main_widget] }
     cnt_cs_vertical_main_featured: { filter: [*is_contact_wo_guessing, *featured_widget, *x_is_vertical_main_widget] }
+    cnt_cs_vertical_main_carousel: { filter: [*is_contact_wo_guessing, *carousel_widget, *x_is_vertical_main_widget] }
     cnt_cs_shopx: { filter: [*is_contact_wo_guessing, *x_is_search, *x_is_shop] }
     cnt_cs_vas: { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_search] }
     cnt_cs_serp: { filter: [*is_contact_wo_guessing, *x_is_search] }
@@ -1127,6 +1131,7 @@ metric.counter:
     cnt_iv_vertical_main: { filter: [*is_iv, $or: [*x_is_vertical_main_widget, *x_is_vertical_main]] }
     cnt_iv_vertical_main_rec: { filter: [*is_iv, *rec_widget, *x_is_vertical_main_widget] }
     cnt_iv_vertical_main_featured: { filter: [*is_iv, *featured_widget, *x_is_vertical_main_widget] }
+    cnt_iv_vertical_main_carousel: { filter: [*is_iv, *carousel_widget, *x_is_vertical_main_widget] }
     cnt_iv_shopx: { filter: [*is_iv_wo_guessing, *x_is_search, *x_is_shop] }
     cnt_iv_vas: { filter: [*is_iv_wo_guessing, *is_item_vas, *x_is_search] }
     cnt_iv_serp_xl: { filter: [*is_iv_wo_guessing, *is_serp_xl, *x_is_search] }
@@ -2235,12 +2240,24 @@ metric.counter:
     cnt_iv_sales: { filter: [*is_iv, *in_sale] }
     cnt_iv_s_sales: { filter: [*is_iv, *x_is_search, *in_sale] }
     cnt_iv_u2i_sales: { filter: [*is_iv, *x_is_u2i, *in_sale] }
-    cnt_iv_sales_vertical_page: { filter: [*is_iv, *x_is_sales_vertical_main_widget, *in_sale]}
+    cnt_iv_sales_vertical_page_carousel: { filter: [*is_iv, *x_is_sale_page_carousel, *in_sale]}
+    cnt_iv_sales_vertical_page_rec: { filter: [*is_iv, *x_is_sale_page_rec, *in_sale]}
+    cnt_iv_sales_vertical_page: { filter: [*is_iv, *x_is_sale_page, *in_sale]}
 
     cnt_c_sales: { filter: [*is_contact, *in_sale] }
     cnt_c_s_sales: { filter: [*is_contact_wo_guessing, *x_is_search, *in_sale] }
     cnt_c_u2i_sales: {filter: [*is_contact_wo_guessing, *x_is_u2i, *in_sale] }
-    cnt_c_sales_vertical_page: { filter: [*is_contact_wo_guessing, *x_is_sales_vertical_main_widget, *in_sale] }
+    cnt_c_sales_vertical_page_carousel: { filter: [*is_contact_wo_guessing, *x_is_sale_page_carousel, *in_sale] }
+    cnt_c_sales_vertical_page_rec: { filter: [*is_contact_wo_guessing, *x_is_sale_page_rec, *in_sale] }
+    cnt_c_sales_vertical_page: { filter: [*is_contact_wo_guessing, *x_is_sale_page, *in_sale] }
+
+    cnt_s_sales_header: { filter: [ eid: 300, from_page: 'salesHeaderWidget'] }
+    cnt_iv_s_sales_header: { filter: [ x_eid: 300, x_from_page: 'salesHeaderWidget', *is_iv, *in_sale] }
+    cnt_c_s_sales_header: { filter: [ x_eid: 300, x_from_page: 'salesHeaderWidget', *is_contact_wo_guessing, *in_sale] }
+
+    cnt_fav_sales: { filter: [*is_fav, *in_sale] }
+    cnt_marketplace_contacts_sales: {filter: [ eid: [4675, 5942], *in_sale] }
+    cnt_cart_sales: {filter: [ eid: [5942], *in_sale] }
 
     total_delivery_iv_sales: { filter: [*is_iv, *in_sale_delivery_active ] }
     total_delivery_click_sales: { filter: [ *in_sale_delivery_active, eid: 2483 ] }
@@ -2904,6 +2921,7 @@ metric.uniq:
     iv_vertical_main: { counter: cnt_iv_vertical_main, key: [item, x] }
     iv_vertical_main_rec: { counter: cnt_iv_vertical_main_rec, key: [item, x] }
     iv_vertical_main_featured: { counter: cnt_iv_vertical_main_featured, key: [item, x] }
+    iv_vertical_main_carousel: { counter: cnt_iv_vertical_main_carousel, key: [item, x] }
     iv_seen: { counter: cnt_iv_seen, key: [item, x] }
     unq_item_x_btc_s_distr_metro_radius_road: { counter: cnt_btc_s_distr_metro_radius_road, key: [item, x] }
     unq_item_x_btc_s_distr_metro_road: { counter: cnt_btc_s_distr_metro_road, key: [item, x] }
@@ -3211,6 +3229,7 @@ metric.uniq:
     users_contact_vertical_main: { counter: cnt_cs_vertical_main, key: [cookie] }
     users_contact_vertical_main_rec: { counter: cnt_cs_vertical_main_rec, key: [cookie] }
     users_contact_vertical_main_featured: { counter: cnt_cs_vertical_main_featured, key: [cookie] }
+    users_contact_vertical_main_carousel: { counter: cnt_cs_vertical_main_carousel, key: [cookie] }
     users_contact_serp_daily: { counter: cnt_cs_s_item_attr, key: [cookie] }
     users_contact_nox_daily: { counter: cnt_cs_no_item_attr, key: [cookie] }
     users_contacts_comp_list: { counter: cnt_cs_comp_list, key: [cookie] }
@@ -3258,6 +3277,7 @@ metric.uniq:
     users_item_view_vertical_main: { counter: cnt_iv_vertical_main, key: [cookie] }
     users_item_view_vertical_main_rec: { counter: cnt_iv_vertical_main_rec, key: [cookie] }
     users_item_view_vertical_main_featured: { counter: cnt_iv_vertical_main_featured, key: [cookie] }
+    users_item_view_vertical_main_carousel: { counter: cnt_iv_vertical_main_carousel, key: [cookie] }
     users_item_view_serp_daily: { counter: cnt_iv_s_item_attr, key: [cookie] }
     users_item_view_nox_daily: { counter: cnt_iv_no_item_attr, key: [cookie] }
     users_item_views_fav_list: { counter: cnt_fav_list_iv, key: [cookie] }
@@ -4016,33 +4036,54 @@ metric.uniq:
     user_btc_video_lenta:    { counter: btc_video_lenta, key: [cookie] }
     user_fav_video_lenta :    { counter: fav_video_lenta, key: [cookie] }
 
-    iv_sales:                     { counter: cnt_iv_sales, key: [item, x] }
-    iv_s_sales:                   { counter: cnt_iv_s_sales, key: [item, x] }
-    iv_u2i_sales:                 { counter: cnt_iv_u2i_sales, key: [item, x] }
-    iv_sales_vertical_page:       { counter: cnt_iv_sales_vertical_page, key: [item, x] }
 
-    c_sales:                      { counter: cnt_c_sales, key: [item, x] }
-    c_s_sales:                    { counter: cnt_c_s_sales, key: [item, x] }
-    c_u2i_sales:                  { counter: cnt_c_u2i_sales, key: [item, x] }
-    c_sales_vertical_page:        { counter: cnt_c_sales_vertical_page, key: [item, x] }
+    iv_sales:                               { counter: cnt_iv_sales, key: [item, cookie] }
+    iv_s_sales:                             { counter: cnt_iv_s_sales, key: [item, x] }
+    iv_u2i_sales:                           { counter: cnt_iv_u2i_sales, key: [item, x] }
+    iv_sales_vertical_page_carousel:        { counter: cnt_iv_sales_vertical_page_carousel, key: [item, x] }
+    iv_sales_vertical_page_rec:             { counter: cnt_iv_sales_vertical_page_rec, key: [item, x] }    
+    iv_sales_vertical_page:                 { counter: cnt_iv_sales_vertical_page, key: [item, x] }
+
+    c_sales:                                { counter: cnt_c_sales, key: [item, cookie] }
+    c_s_sales:                              { counter: cnt_c_s_sales, key: [item, x] }
+    c_u2i_sales:                            { counter: cnt_c_u2i_sales, key: [item, x] }
+    c_sales_vertical_page_carousel:         { counter: cnt_c_sales_vertical_page_carousel, key: [item, x] }
+    c_sales_vertical_page_rec:              { counter: cnt_c_sales_vertical_page_rec, key: [item, x] }
+    c_sales_vertical_page:                  { counter: cnt_c_sales_vertical_page, key: [item, x] }
 
     delivery_iv_sales:            { counter: total_delivery_iv_sales, key: [item, cookie] }
     delivery_click_sales:         { counter: total_delivery_click_sales, key: [item, cookie]}
     order_create_sales:           { counter: total_delivery_order_create_sales, key: [item, cookie]}
 
-    user_iv_sales:                { counter: cnt_iv_sales, key: [cookie] }
-    user_iv_s_sales:              { counter: cnt_iv_s_sales, key: [cookie] }
-    user_iv_u2i_sales:            { counter: cnt_iv_u2i_sales, key: [cookie] }
-    user_iv_sales_vertical_page:  { counter: cnt_iv_sales_vertical_page, key: [cookie] }
+    marketplace_contacts_sales:             { counter: cnt_marketplace_contacts_sales, key: [item, cookie] }
+    cart_sales:                             { counter: cnt_cart_sales, key: [item, cookie] }
 
-    user_c_sales:                 { counter: cnt_c_sales, key: [cookie] }
-    user_c_s_sales:               { counter: cnt_c_s_sales, key: [cookie] }
-    user_c_u2i_sales:             { counter: cnt_c_u2i_sales, key: [cookie] }
-    user_c_sales_vertical_page:   { counter: cnt_c_sales_vertical_page, key: [cookie] }
+    iv_s_sales_header: { counter: cnt_iv_s_sales_header, key: [item, x] }
+    c_s_sales_header: { counter: cnt_c_s_sales_header, key: [item, x] }
+
+    user_iv_sales:                          { counter: cnt_iv_sales, key: [cookie] }
+    user_iv_s_sales:                        { counter: cnt_iv_s_sales, key: [cookie] }
+    user_iv_u2i_sales:                      { counter: cnt_iv_u2i_sales, key: [cookie] }
+    user_iv_sales_vertical_page_carousel:   { counter: cnt_iv_sales_vertical_page_carousel, key: [cookie] }
+    user_iv_sales_vertical_page_rec:        { counter: cnt_iv_sales_vertical_page_rec, key: [cookie] }
+    user_iv_sales_vertical_page:            { counter: cnt_iv_sales_vertical_page, key: [cookie] }
+
+    user_c_sales:                           { counter: cnt_c_sales, key: [cookie] }
+    user_c_s_sales:                         { counter: cnt_c_s_sales, key: [cookie] }
+    user_c_u2i_sales:                       { counter: cnt_c_u2i_sales, key: [cookie] }
+    user_c_sales_vertical_page_carousel:    { counter: cnt_c_sales_vertical_page_carousel, key: [cookie] }
+    user_c_sales_vertical_page_rec:         { counter: cnt_c_sales_vertical_page_rec, key: [cookie] }
+    user_c_sales_vertical_page:             { counter: cnt_c_sales_vertical_page, key: [cookie] }
 
     user_delivery_iv_sales:       { counter: total_delivery_iv_sales, key: [cookie] }
     user_delivery_click_sales:    { counter: total_delivery_click_sales, key: [cookie]}
     user_order_create_sales:      { counter: total_delivery_order_create_sales, key: [cookie]}
+
+    user_marketplace_contacts_sales:             { counter: cnt_marketplace_contacts_sales, key: [cookie] }
+    user_cart_sales:                             { counter: cnt_cart_sales, key: [cookie] }
+
+    user_iv_s_sales_header: { counter: cnt_iv_s_sales_header, key: [cookie] }
+    user_c_s_sales_header: { counter: cnt_c_s_sales_header, key: [cookie] }
 
     contacts_trx:                       { counter: cnt_c_trx,                   key: [ item, x ] }
     contacts_serp_trx:                  { counter: cnt_c_serp_trx,              key: [ item, x ] }
