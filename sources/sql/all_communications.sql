@@ -160,7 +160,7 @@ from dma.all_contacts a
     left join dma.item_day_discounts idd on idd.event_date = cast(a.event_date as date)
         and a.item_id = idd.item_id
         and sales_campaign_id is not null
-        -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+        -- and idd.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
   
 where true 
     and cast(a.event_date as date) between :first_date and :last_date
