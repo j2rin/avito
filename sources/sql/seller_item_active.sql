@@ -96,7 +96,8 @@ select /*+syntactic_join*/
     is_delivery_active_regular,
     is_delivery_available_regular,
     delivery_flow,
-    ss.is_premium
+    ss.is_premium,
+    fs.seller_id is not null as is_federal_seller
 
 from DMA.o_seller_item_active ss
 
@@ -200,6 +201,9 @@ left join /*+distrib(l,r)*/ (
     on sic.user_id = ss.user_id
     and sic.item_id = ss.item_id
     and sic.event_date = ss.event_date
+
+left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
+    on ss.user_id = fs.seller_id
 
 where (ss.is_user_test is null or ss.is_user_test = false)
     and ss.event_date between :first_date and :last_date
