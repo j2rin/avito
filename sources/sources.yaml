@@ -3870,3 +3870,28 @@ autoteka_buyers_share:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
+
+sbc_zero_audience:
+  metric_configs: [ sbc_zero_audience ]
+  connections: [ vertica, trino ]
+  sql: sbc_popup_audience
+  column_map:
+    user: user_id
+    platform_id: platform_id
+  dimensions:
+    [
+      platform,
+      vertical,
+      category,
+      subcategory,
+      logical_category,
+      param1,
+      param2,
+      param3,
+      param4,
+      is_asd,
+      user_segment_market,
+    ]
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
