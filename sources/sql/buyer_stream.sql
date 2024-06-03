@@ -132,7 +132,6 @@ select
     coalesce(asd.asd_user_group_id,8383) as asd_user_group_id,
     coalesce(usm.user_segment, ls.segment) as user_segment_market,
     ss.item_rnk,
-    ss.boost_class_id,
     3 AS multiplier_3,
     5 AS multiplier_5,
     10 AS multiplier_10,
