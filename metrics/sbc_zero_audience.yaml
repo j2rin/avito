@@ -1,0 +1,15 @@
+
+
+metric.counter:
+    sbc_popup_open:                                              {}
+    sbc_popup_zero:                                              {filter: [msg_sbc_audience: 0]}
+    sbc_popup_not_zero:                                          {filter: [msg_sbc_audience.>: 0]}
+
+
+metric.uniq:
+    user_sbc_popup_open:                                         {counter: sbc_popup_open, key: [user_id]}
+    user_sbc_popup_zero:                                         {counter: sbc_popup_zero, key: [user_id]}
+    user_sbc_popup_not_zero:                                     {counter: sbc_popup_not_zero, key: [user_id]}
+    item_sbc_popup_open:                                         {counter: sbc_popup_open, key: [ item_id ] }
+    item_sbc_popup_zero:                                         { counter: sbc_popup_zero, key: [ item_id ] }
+    item_sbc_popup_not_zero:                                     { counter: sbc_popup_not_zero, key: [ item_id ] }

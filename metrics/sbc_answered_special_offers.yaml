@@ -2,12 +2,15 @@ definitions:
 
   - &is_accepted           {answer: accept_discount}
   - &is_first_message      {first_message: True}
+  - &is_want_offer         {want_offer: True}
 
 
 metric.counter:
     accepted_sbc_special_offers:                                 {filter: [*is_accepted], obs: [special_offers]}
     fm_sbc_special_offers:                                       {filter: [*is_first_message], obs: [special_offers]}
+    view_sbc_special_offers:                                     {filter: [*is_want_offer], obs: [special_offers]}
 
 
 metric.uniq:
     user_accepted_sbc_special_offers:                            {counter: accepted_sbc_special_offers, key: [user_id]}
+    user_view_sbc_special_offers:                                {counter: view_sbc_special_offers, key: [user_id]}

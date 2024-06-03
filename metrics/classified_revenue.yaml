@@ -166,7 +166,7 @@ metric.counter:
   str_trx_amount_net_adj:                             {obs: [transaction_amount_net_adj], filter: [$or: [*is_trx_revenue, *is_str_revenue]]}
   pay_for_perf_amount_net_adj:                        {obs: [transaction_amount_net_adj], filter: [$or: [*is_trx_revenue, *is_str_revenue, *is_cpt_revenue, *is_cpa_revenue, *is_profile_promo_revenue]]}
   promo_presence_amount_net_adj:                      {obs: [transaction_amount_net_adj], filter: [$or: [*is_trx_revenue, *is_str_revenue, *is_cpt_revenue, *is_cpa_revenue, *is_profile_promo_revenue, *is_subs_lf_pack_revenue, *is_vas_revenue, *is_lf_revenue]]}
-
+  vas_sbc_amount_net_adj:                             {obs: [transaction_amount_net_adj], filter: [is_revenue: true, product_subtype: 'vas_communication']}
 
 
 
@@ -214,6 +214,7 @@ metric.uniq:
   cpt_paying_users:                          {counter: cpt_amount_net_adj,                        key: [user]}
   cpt_c2c_paying_users:                      {counter: cpt_c2c_amount_net_adj,                    key: [user]}
   cpt_b2c_paying_users:                      {counter: cpt_b2c_amount_net_adj,                    key: [user]}
+  vas_sbc_users:                             {counter: vas_sbc_amount_net_adj,                    key: [user]}
 
 
 
@@ -265,3 +266,4 @@ metric.ratio:
   cpa_advance_transactions_per_user_clicks:   {num: cpa_advance_transactions_clicks,        den: cpa_advance_users_clicks}
   cpa_advance_transactions_per_user_contacts: {num: cpa_advance_transactions_contacts,      den: cpa_advance_users_contacts}
   pay_for_perf_amount_net_adj_share:          {num: pay_for_perf_amount_net_adj,            den: promo_presence_amount_net_adj}
+  vas_sbc_arppu:                              {num: vas_sbc_amount_net_adj,                 den: vas_sbc_users}
