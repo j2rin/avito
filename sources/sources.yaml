@@ -3837,3 +3837,22 @@ avito_sales_events:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
+
+user_item_active_days:
+  metric_configs: [user_item_active_days]
+  connections: [vertica, trino]
+  sql: user_item_active_days
+  column_map:
+    user: user_id
+  dimensions:
+    - vertical
+    - logical_category
+    - category
+    - subcategory
+    - param1
+    - param2
+    - region
+    - city
+  participant: { user: user_id }
+  primary_subject: user
+  dtm: event_date
