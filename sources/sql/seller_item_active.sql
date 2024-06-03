@@ -203,7 +203,7 @@ left join /*+distrib(l,r)*/ (
     and sic.event_date = ss.event_date
 
 left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
-    on ss.item_user_id = fs.seller_id
+    on ss.user_id = fs.seller_id
 
 where (ss.is_user_test is null or ss.is_user_test = false)
     and ss.event_date between :first_date and :last_date
