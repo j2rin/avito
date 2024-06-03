@@ -13,6 +13,10 @@ select /*+syntactic_join*/
     case cl.level when 3 then cl.Location_id end                           as city_id,
 
     unique_items,
+
+     7 * unique_items AS unique_items_7,
+    14 * unique_items AS unique_items_14,
+    28 * unique_items AS unique_items_28,
     item_7days,
     item_14days,
     item_28days 
