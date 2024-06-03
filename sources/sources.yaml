@@ -3856,3 +3856,17 @@ user_item_active_days:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
+
+autoteka_buyers_share:
+  metric_configs: [autoteka_buyers_share]
+  connections: [vertica, trino]
+  sql: autoteka_buyers_share
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    - platform
+    - vertical
+    - logical_category
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
