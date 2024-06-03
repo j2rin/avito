@@ -28,3 +28,4 @@ left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm on cm.microc
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_locations cl on cl.Location_id = uiad.location_id
 
 where uiad.event_date between :first_date and :last_date
+-- and event_month between date_trunc('month', date(:first_date)) and date_trunc('month', date(:last_date)) -- @trino
