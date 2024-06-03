@@ -9,21 +9,13 @@ with am_client_day as (
         and cast(active_to_date as date) >= :first_date
 )
  select
- 	sbc.chat_id,
- 	sbc.user_id,
- 	sbc.to_user_id as buyer_id,
- 	discount_send_date,
-	platform_id,
-    answer_platform,
-    cast(answer_time as date) as answer_time,
-    sbc.answer_buyer as answer,
-    coalesce(sbc.is_first_message, false) as first_message,
-    want_offer_platform,
-    cast(want_offer_time as date) as want_offer_time,
-    coalesce(sbc.is_want_offer, false) as want_offer,
-    special_offers,
-    sbc.sbc_source as source,
-	sbc.microcat_id,
+    cast(event_timestamp as date) as event_date,
+    sbc.user_id,
+    sbc.item_id,
+    sbc.msg_sbc_audience,
+    sbc.msg_sbc_id,
+    sbc.platform_id,
+    sbc.microcat_id,
 	-- Dimensions -----------------------------------------------------------------------------------------------------
     cm.vertical_id,
 	cm.category_id,
@@ -36,7 +28,7 @@ with am_client_day as (
 	coalesce(acd.is_asd, False)                                       as is_asd,
     acd.user_group_id                                            as asd_user_group_id,
     coalesce(usm.user_segment, ls.segment)                            as user_segment_market
-from DMA.messenger_seller_buyer_communication sbc
+from DMA.messenger_sbc_funnel_events sbc
 left join /*+jtype(h),distrib(l,a)*/ DMA.current_microcategories cm
 		on cm.microcat_id = sbc.microcat_id
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls
@@ -44,16 +36,16 @@ left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls
 		and ls.is_default
 left join am_client_day acd
 		on sbc.user_id = acd.user_id
-		and sbc.discount_send_date between acd.active_from_date and acd.active_to_date
+		and cast(sbc.event_timestamp as date) between acd.active_from_date and acd.active_to_date
 left join DMA.user_segment_market usm
         on sbc.user_id = usm.user_id
         and cm.logical_category_id = usm.logical_category_id
-		and cast(sbc.discount_send_date as timestamp) = usm.event_date
+		and cast(sbc.event_timestamp as date) = usm.event_date
 		and usm.reason_code is not null
         and usm.event_date between :first_date and :last_date
         -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 where (
-           cast(sbc.discount_send_date as date) between :first_date and :last_date
-        or cast(sbc.answer_time as date) between :first_date and :last_date
+           cast(sbc.event_timestamp as date) between :first_date and :last_date
+           and event_name='sbc_popup_audience'
     )
-    --and discount_send_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
+    --and sbc.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
