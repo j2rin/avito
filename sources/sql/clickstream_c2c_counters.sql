@@ -17,6 +17,7 @@ select
     event_count,
     case 
         when from_page = 'tinkoff' and eid = 4498 then 'enter_tinkoff'
+        when from_page = 'autobrokerSber' and eid = 4498 then 'enter_sber'
     else 'unknown' end flag
 from dma.c2cloans_clickstream
 where
