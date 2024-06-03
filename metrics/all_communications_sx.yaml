@@ -12,6 +12,7 @@ definitions:
   - &is_target                    {type: target}
   - &reply_time_not_zero          {reply_time_minutes.>=: 0} # порог для месенджера
   - &reply_3days                  {reply_time_minutes.<=: 4320} # порог для месенджера
+  - &in_sale                      {in_sale: True}
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
@@ -102,6 +103,8 @@ metric.counter:
   chat_sx_buyer_contact_exchange:                          {filter: [*is_common_funnel, {tags.ilike: '9_contact_exchange_buyer'} , *is_msg]} #old
   chat_sx_seller_contact_exchange:                         {filter: [*is_common_funnel, {tags.ilike: '10_contact_exchange_seller'} , *is_msg]} #old
 
+  seller_target_contact_all_sales:                         {filter: [*is_common_funnel, *is_target, *in_sale]}
+
 metric.uniq:
   calls_sx_incoming_canonical:                           {counter: calls_sx_incoming,              key: [item_id, logical_category_id]}
   calls_sx_incoming_answered_canonical:                  {counter: calls_sx_incoming_answered,     key: [item_id, logical_category_id]}
@@ -134,6 +137,10 @@ metric.uniq:
   comns_sx_trash_canonical:                     {counter: comns_sx_trash,        key: [item_id, logical_category_id]}
   comns_sx_preliminary_canonical:               {counter: comns_sx_preliminary,  key: [item_id, logical_category_id]}
   comns_sx_target_canonical:                    {counter: comns_sx_target,       key: [item_id, logical_category_id]}
+
+  seller_target_contact_sales:                            {counter: seller_target_contact_all_sales,      key: [seller_id]} 
+  seller_target_contact_canonical_sales:                  {counter: seller_target_contact_all_sales,      key: [item_id, logical_category_id]} 
+  target_sellers_canonical_sales:                         {counter: seller_target_contact_all_sales,      key: [seller_id, logical_category_id]} 
 
 metric.ratio:
   gsm_sx_incoming_call_dur_per_call:                     {num: gsm_sx_incoming_call_dur,            den: gsm_sx}

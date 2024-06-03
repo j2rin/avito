@@ -47,6 +47,7 @@ select
     ,lc.logical_param2_id
     ,coalesce(cpg.price_group, 'Undefined') as price_group
     ,coalesce(a.condition_id, 0) as condition_id
+    ,coalesce(sales_campaign_id > 0, false) in_sale
 from dma.all_contacts a
     left join dma.current_microcategories cm on cm.microcat_id = a.microcat_id
     
@@ -155,6 +156,11 @@ from dma.all_contacts a
     where true
         and cast(actual_date as date) <= :last_date
     ) video on a.item_id = video.item_id and a.event_date >= video.converting_date and a.event_date < video.next_converting_date
+
+    left join dma.item_day_discounts idd on idd.event_date = cast(a.event_date as date)
+        and a.item_id = idd.item_id
+        and sales_campaign_id is not null
+        -- and idd.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
   
 where true 
     and cast(a.event_date as date) between :first_date and :last_date
