@@ -369,6 +369,7 @@ definitions:
     - &x_is_s_sav_serp_fav_list { x_from_page: "saved_search" }
 
     - &is_item_original { item_flags.bit: 31 }
+    - &is_item_original_b2c { item_flags.bit: 44 }
     - &is_black_target_clicks { eid: [2483, 5942] }
 
     - &is_b2c { b2c_wo_dbs: 1}
@@ -2184,6 +2185,13 @@ metric.counter:
     chat_original: { filter: [*is_item_original, eid: 2654] }
     marketplace_contacts_original: { filter: [*is_item_original, *is_black_target_clicks] }
     delivery_contats_original: { filter: [*is_item_original, eid: 2483] }
+    
+    iv_original_b2c: { filter: [*is_item_original_b2c, *is_iv] }
+    cart_original_b2c: { filter: [*is_item_original_b2c, eid: 5942] }
+    fav_original_b2c: { filter: [*is_item_original_b2c, *is_fav] }
+    chat_original_b2c: { filter: [*is_item_original_b2c, eid: 2654] }
+    marketplace_contacts_original_b2c: { filter: [*is_item_original_b2c, *is_black_target_clicks] }
+    delivery_contats_original_b2c: { filter: [*is_item_original_b2c, eid: 2483] }
 
     total_delivery_item_view_b2c: { filter: [*is_iv, *is_b2c] }
     total_delivery_item_view_c2c_14days_return:  { filter: [*is_iv, *is_c2c_return_within_14_days] }
@@ -3989,6 +3997,13 @@ metric.uniq:
     user_chat_original: { counter: chat_original, key: [cookie] }
     user_target_contacts_original: { counter: marketplace_contacts_original, key: [cookie] }
     user_delivery_contats_original: { counter: delivery_contats_original, key: [cookie] }
+    
+    user_iv_original_b2c: { counter: iv_original_b2c, key: [cookie] }
+    user_cart_original_b2c: { counter: cart_original_b2c, key: [cookie] }
+    user_fav_original_b2c: { counter: fav_original_b2c, key: [cookie] }
+    user_chat_original_b2c: { counter: chat_original_b2c, key: [cookie] }
+    user_target_contacts_original_b2c: { counter: marketplace_contacts_original_b2c, key: [cookie] }
+    user_delivery_contats_original_b2c: { counter: delivery_contats_original_b2c, key: [cookie] }
 
     delivery_item_view_b2c: { counter: total_delivery_item_view_b2c, key: [cookie, item] }
     delivery_item_view_c2c_14days_return: { counter: total_delivery_item_view_c2c_14days_return, key: [cookie, item] }
@@ -4893,6 +4908,18 @@ metric.ratio:
     marketplace_c_per_user_iv_original: { num: marketplace_contacts_original, den: user_iv_original }
     delivery_c_per_user_iv_original: { num: delivery_contats_original, den: user_iv_original }
     iv_per_user_iv_original: { num: iv_original, den: user_iv_original }
+    
+    cart_per_iv_original_b2c: { num: cart_original_b2c, den: iv_original_b2c }
+    fav_per_iv_original_b2c: { num: fav_original_b2c, den: iv_original_b2c }
+    chat_per_iv_original_b2c: { num: chat_original_b2c, den: iv_original_b2c }
+    marketplace_c_per_iv_original_b2c: { num: marketplace_contacts_original_b2c, den: iv_original_b2c }
+    delivery_c_per_iv_original_b2c: { num: delivery_contats_original_b2c, den: iv_original_b2c }
+    cart_per_user_iv_original_b2c: { num: cart_original_b2c, den: user_iv_original_b2c }
+    fav_per_user_iv_original_b2c: { num: fav_original_b2c, den: user_iv_original_b2c }
+    chat_per_user_iv_original_b2c: { num: chat_original_b2c, den: user_iv_original_b2c }
+    marketplace_c_per_user_iv_original_b2c: { num: marketplace_contacts_original_b2c, den: user_iv_original_b2c }
+    delivery_c_per_user_iv_original_b2c: { num: delivery_contats_original_b2c, den: user_iv_original_b2c }
+    iv_per_user_iv_original_b2c: { num: iv_original_b2c, den: user_iv_original_b2c }
 
     delivery_iv_delivery_click_b2c: { num: delivery_click_b2c, den: delivery_item_view_b2c }
     delivery_iv_delivery_click_c2c_14days_return: { num: delivery_click_c2c_14days_return, den: delivery_item_view_c2c_14days_return }
