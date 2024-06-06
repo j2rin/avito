@@ -1,7 +1,17 @@
 select
     0 as user_id,
     ur.event_date,
-    miq.vertical_id,
+    -- Для некоторых продуктов не указана вертикаль, укажем ее вручную
+    case
+        when ctt.product_type = 'auto_paid_contact'
+            then 500012 --Transport
+        when ctt.product_type = 'autoteka'
+            then 500012 --Transport
+        when ctt.product_type = 'JOB ChatBot'
+            then 368340500002 --Vacancies
+        when ctt.product_type = 'paid_contact'
+            then 368294500001 --CVs
+        else miq.vertical_id end vertical_id,
     ctt.transaction_type,
     ctt.transaction_subtype,
     ctt.product_subtype,
@@ -10,8 +20,8 @@ select
     NULL as project_type,
     sum(ur.transaction_amount_net_adj) as amount_net_adj
 from DMA.paying_user_report ur
-join DMA.current_transaction_type ctt on ctt.transactiontype_id = ur.transactiontype_id
-left join dma.current_microcategories miq on ur.microcat_id = miq.microcat_id
+    join DMA.current_transaction_type ctt on ctt.transactiontype_id = ur.transactiontype_id
+        left join dma.current_microcategories miq on ur.microcat_id = miq.microcat_id
 where ur.user_id not in (select cu.user_id from dma."current_user" cu where cu.IsTest)
     and ctt.IsRevenue
     and cast(ur.event_date as date) between :first_date and :last_date
