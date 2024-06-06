@@ -1,13 +1,13 @@
 definitions:
-  - &no_coordinates     {$or: [location_distance.isnull: True, location_distance: -1]}
-  - &no_address_id      {has_address_id: False}
-  - &bad_level          {min_kind_level.!in: [40, 50, 55, 60, 70]}
-  - &bad_distance       {location_distance.<=: 0.1}
-  - &bad_address        {$or: [*no_coordinates, *no_address_id, *bad_level, *bad_distance]}
-  - &is_reputation_high {reputation_class: "high"}
+  - &no_coordinates       {$or: [location_distance.isnull: True, location_distance: -1]}
+  - &no_address_id        {has_address_id: False}
+  - &bad_level            {min_kind_level.!in: [40, 50, 55, 60, 70]}
+  - &bad_distance         {location_distance.<=: 0.1}
+  - &bad_address          {$or: [*no_coordinates, *no_address_id, *bad_level, *bad_distance]}
+  - &is_reputation_high   {reputation_class: "high"}
   - &is_reputation_medium {reputation_class: "medium"}
-  - &is_reputation_low {reputation_class: "low"}
-  - &is_reputation_grey {reputation_class.!in: ["high", "medium", "low"]}
+  - &is_reputation_low    {reputation_class: "low"}
+  - &is_reputation_grey   {reputation_class.!in: ["high", "medium", "low"]}
   - &is_free_delivery_by_seller {subsidy_index: 3}
 
 metric.counter:
@@ -17,6 +17,8 @@ metric.counter:
   active_items_with_msg_contacts:          {filter: [{is_active: True}, {is_message_forbidden: False}, contacts.!=: 0]}
   active_items_vas:                        {filter: [{is_active: True}, {vas_mask.>: 0}]}
   cnt_active_items:                        {filter: [{is_active: True}]}
+  cnt_active_federal_items:                {filter: [is_active: True, is_federal_seller: True]}
+  cnt_active_federal_delivery_items:       {filter: [is_active: True, is_federal_seller: True, is_delivery_active: True]}
   cnt_active_items_cpa:                    {filter: [{is_active: True}, {is_item_cpa: True}]}
   cnt_active_items_cpa_lf:                 {filter: [{is_active: True}, {is_item_cpa: False}, {is_user_cpa: True}]}
   cnt_active_items_cpa_prevalidation:      {filter: [{is_active: True}, {is_item_cpa: True}, {cpaaction_type: 4}]}
@@ -361,6 +363,8 @@ metric.uniq:
   users_active_item_more_5_description_word:        {counter: cnt_active_items_more_5_description_word, key: [user]}
   users_active_item_more_5_photo:                   {counter: cnt_active_items_more_5_photo,   key: [user]}
   users_active_items:                               {counter: cnt_active_items,                    key: [user]}
+  users_active_federal_items:                       {counter: cnt_active_federal_items,            key: [user]}
+  users_active_federal_delivery_items:              {counter: cnt_active_federal_delivery_items,   key: [user]}
   users_active_items_vas:                           {counter: active_items_vas,                    key: [user]}
   user_active_items_deliverable_start_date:         {counter: active_items_deliverable_start_date, key: [user]}
   user_active_items_delivery_on_start_date:         {counter: active_items_delivery_on_start_date, key: [user]}
