@@ -44,19 +44,21 @@ with vas_item_contact_price as (
         row_number() over(partition by ss.cookie_id, ss.item_id, cast_event_date order by ss.event_date) as rn
     from (select *, cast(event_date as date) as cast_event_date from dma.buyer_stream) ss
     left join dds.S_EngineRecommendation_Name en
-            on en.EngineRecommendation_id = ss.rec_engine_id
+        on en.EngineRecommendation_id = ss.rec_engine_id
     left join dma.current_item ci
-            on ss.item_id = ci.item_id
-    left join dma.current_microcategories cm
-            on ci.Microcat_id = cm.Microcat_id
+        on ss.item_id = ci.item_id
+    left join infomodel.current_infmquery_category cic
+        on cic.infmquery_id = ci.infmquery_id
+    left join dma.current_logical_categories cm
+        on cic.logcat_id = cm.logcat_id
     inner join dma.current_locations cl
-            on cl.Location_id = ci.Location_id
+        on cl.Location_id = ci.Location_id
     inner join dma.item_day_delivery idd
-            on ci.item_id = idd.item_id and ss.cast_event_date = idd.event_date
+        on ci.item_id = idd.item_id and ss.cast_event_date = idd.event_date
     inner join external_data.campaign_results_v2 cr
-            on ci.External_id = cr.item_id
-            and ss.event_date between cr.campaign_start_date and cr.campaign_end_date
-            and test_tag not like '%cpx_promo%'
+        on ci.External_id = cr.item_id
+        and ss.event_date between cr.campaign_start_date and cr.campaign_end_date
+        and test_tag not like '%cpx_promo%'
     where True
         and cast(ss.event_date as date) between :first_date and :last_date
         -- and ss.date between :first_date and :last_date -- @trino
