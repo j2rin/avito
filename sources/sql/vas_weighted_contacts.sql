@@ -33,14 +33,14 @@ with vas_item_contact_price as (
            else 'Регионы'
         end as region,
         case
-            when cr.xn <= 2 then 2
-            when cr.xn <= 5 then 5
-            when cr.xn <= 10 then 10
-            when cr.xn <= 15 then 15
-            when cr.xn <= 20 then 20
+            when ss.item_vas_xn <= 2 then 2
+            when ss.item_vas_xn <= 5 then 5
+            when ss.item_vas_xn <= 10 then 10
+            when ss.item_vas_xn <= 15 then 15
+            when ss.item_vas_xn <= 20 then 20
             else 30
         end as xn,
-        idd.is_delivery_active,
+        IFNULL((item_flags & (1 << 16) > 0), false) as is_delivery_active,
         row_number() over(partition by ss.cookie_id, ss.item_id, cast_event_date order by ss.event_date) as rn
     from (select *, cast(event_date as date) as cast_event_date from dma.buyer_stream) ss
     left join dds.S_EngineRecommendation_Name en
@@ -53,17 +53,11 @@ with vas_item_contact_price as (
         on cic.logcat_id = lc.logcat_id
     inner join dma.current_locations cl
         on cl.Location_id = ci.Location_id
-    inner join dma.item_day_delivery idd
-        on ci.item_id = idd.item_id and ss.cast_event_date = idd.event_date
-    inner join external_data.campaign_results_v2 cr
-        on ci.External_id = cr.item_id
-        and ss.event_date between cr.campaign_start_date and cr.campaign_end_date
-        and test_tag not like '%cpx_promo%'
     where True
         and cast(ss.event_date as date) between :first_date and :last_date
         -- and ss.date between :first_date and :last_date -- @trino
         and ss.is_human_dev
-        and (ss.eid in (303, 856, 857, 2581, 3005, 3461, 4066, 4600, 4675, 4813, 5942, 6154, 6608, 8814, 10068, 10069) or ss.eid = 4198 and ss.item_id is not null or ss.eid = 4198 and ss.item_id is null)
+        and ss.eid in (303, 856, 857, 2581, 3005, 3461, 4066, 4600, 4675, 4813, 5942, 6154, 6608, 8814, 10068, 10069, 4198)
 )
 select
     bsc.platform_id,
