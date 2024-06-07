@@ -1,6 +1,6 @@
 with vas_item_contact_price as (
     select
-        logical_category_id,
+        logcat_id as logical_category_id,
         region,
         xn,
         is_delivery_active,
