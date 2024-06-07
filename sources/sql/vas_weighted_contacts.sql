@@ -18,8 +18,8 @@ with vas_item_contact_price as (
         ss.cookie_id,
         ss.user_id,
         ss.item_id,
-        cm.vertical_id,
-        cm.logical_category_id,
+        lc.vertical_id,
+        lc.logical_category_id,
         ss.eid,
         ss.x,
         ss.x_eid,
@@ -49,8 +49,8 @@ with vas_item_contact_price as (
         on ss.item_id = ci.item_id
     left join infomodel.current_infmquery_category cic
         on cic.infmquery_id = ci.infmquery_id
-    left join dma.current_logical_categories cm
-        on cic.logcat_id = cm.logcat_id
+    left join dma.current_logical_categories lc
+        on cic.logcat_id = lc.logcat_id
     inner join dma.current_locations cl
         on cl.Location_id = ci.Location_id
     inner join dma.item_day_delivery idd
