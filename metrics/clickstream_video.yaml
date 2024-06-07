@@ -49,6 +49,10 @@ metric.counter:
   upload_canceled_by_user_item_add:	{filter: [eid: 6303, error_text.ilike: '%cancel_by_user%', from_page: 'item_add'], obs: [metric_value]}
   upload_canceled_by_user_item_edit:	{filter: [eid: 6303, error_text.ilike: '%cancel_by_user%', from_page: 'item_edit'], obs: [metric_value]}
   
+  avl_share_button_click:		{filter: [eid: 10333], obs: [metric_value]}
+  avl_option_share_click:		{filter: [eid: 10448], obs: [metric_value]}
+  
+  avl_opened_from_link:			{filter: [eid: 7724, from_page: 'share_link'], obs: [metric_value]}
   
   
 
@@ -123,6 +127,13 @@ metric.uniq:
   user_upload_canceled_by_user_item_add:	{counter: upload_canceled_by_user_item_add, key: [cookie]}
   user_upload_canceled_by_user_item_edit:	{counter: upload_canceled_by_user_item_edit, key: [cookie]}
   
+  user_avl_share_button_click:	{counter: 	avl_share_button_click, key: [cookie]}
+  user_avl_option_share_click:	{counter: 	avl_option_share_click, key: [cookie]}
+  user_avl_opened_from_link:	{counter: 	avl_opened_from_link, key: [cookie]}
+  
+  avl_sessions_with_share_button_click:	{counter: avl_share_button_click, key: [x_avl_hash]}
+  avl_sessions_with_option_share_click: {counter: avl_option_share_click, key: [x_avl_hash]}
+  
 metric.ratio:
   avl_watch_per_session:        {num: watch_video_avl, den: session_watch_video_avl}
   item_watch_per_session:       {num: item_watch_video_avl, den: session_watch_video_avl}
@@ -132,6 +143,9 @@ metric.ratio:
 
   avl_watch_per_session_half:   {num: watch_video_avl_half, den: session_watch_video_avl_half}
   item_watch_per_session_half:  {num: item_watch_video_avl_half, den: session_watch_video_avl_half}
+  
+  
+
   
 
 
