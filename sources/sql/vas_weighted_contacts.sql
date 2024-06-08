@@ -1,3 +1,4 @@
+select publish('dma.vas_contact_weight', 'trino');
 with vas_item_contact_price as (
     select
         logcat_id as logical_category_id,
