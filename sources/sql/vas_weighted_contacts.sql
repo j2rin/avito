@@ -40,7 +40,7 @@ with vas_item_contact_price as (
             when ss.item_vas_xn <= 20 then 20
             else 30
         end as xn,
-        IFNULL((item_flags & (1 << 16) > 0), false) as is_delivery_active,
+        IFNULL(bitwise_and(item_flags, bitwise_left_shift(1,16)) > 0), false) as is_delivery_active,
         row_number() over(partition by ss.cookie_id, ss.item_id, cast_event_date order by ss.event_date) as rn
     from (select *, cast(event_date as date) as cast_event_date from dma.buyer_stream) ss
     left join dds.S_EngineRecommendation_Name en
@@ -53,7 +53,7 @@ with vas_item_contact_price as (
         on cic.logcat_id = lc.logcat_id
     inner join dma.current_locations cl
         on cl.Location_id = ci.Location_id
-    where True
+    where true
         and cast(ss.event_date as date) between :first_date and :last_date
         -- and ss.date between :first_date and :last_date -- @trino
         and ss.is_human_dev
