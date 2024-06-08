@@ -8,7 +8,7 @@ with vas_item_contact_price as (
         lead(event_date, 1, cast('2099-01-01' as date)) over(partition by logcat_id, region, xn, is_delivery_active order by event_date) as to_date,
         contact_weight
     from dma.vas_contact_weight
-    -- where event_date between date_trunc('month', date(:first_date)) and date_trunc('month', date(:last_date)) -- @trino
+    -- where event_year between date_trunc('month', date(:first_date)) and date_trunc('month', date(:last_date)) -- @trino
 )
 , buyer_stream_contacts as (
     select
