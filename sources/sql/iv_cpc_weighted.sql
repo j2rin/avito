@@ -15,8 +15,8 @@ buyer_stream_contacts as (
         ss.cookie_id,
         ss.user_id,
         ss.item_id,
-        cm.vertical_id,
-        cm.logical_category_id,
+        lc.vertical_id,
+        lc.logical_category_id,
         ss.eid,
         ss.x,
         ss.x_eid,
@@ -26,15 +26,21 @@ buyer_stream_contacts as (
         en.Name as engine,
         case when cp.price is NULL then 0 else cp.price end as click_price,
         row_number() over(partition by ss.cookie_id, ss.item_id, cast_event_date order by ss.event_date) as rn
-    from (select *, cast(event_date as date) as cast_event_date from DMA.buyer_stream) ss
-    left join DDS.S_EngineRecommendation_Name en ON en.EngineRecommendation_id = ss.rec_engine_id
-    left join dma.current_item ci on ss.item_id = ci.item_id
-    left join dma.current_microcategories cm on ci.Microcat_id = cm.Microcat_id
-    left join cpx_item_click_price cp on ss.item_id=cp.item_id and ss.event_date >= cp.from_date and ss.event_date < cp.to_date
+    from (select *, cast(event_date as date) as cast_event_date from dma.buyer_stream) ss
+    left join DDS.S_EngineRecommendation_Name en
+        on en.EngineRecommendation_id = ss.rec_engine_id
+    left join dma.current_item ci
+        on ss.item_id = ci.item_id
+    left join infomodel.current_infmquery_category cic
+        on cic.infmquery_id = ci.infmquery_id
+    left join dma.current_logical_categories lc
+        on cic.logcat_id = lc.logcat_id
+    left join cpx_item_click_price cp
+        on ss.item_id=cp.item_id and ss.event_date >= cp.from_date and ss.event_date < cp.to_date
     where True
         and cast(ss.event_date as date) between :first_date and :last_date
         -- and ss.date between :first_date and :last_date -- @trino
-        and cm.vertical = 'Goods'
+        and lc.vertical = 'Goods'
         and ss.is_human_dev
         and eid = 301
 )
