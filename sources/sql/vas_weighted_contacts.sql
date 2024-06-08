@@ -40,7 +40,7 @@ with vas_item_contact_price as (
             when ss.item_vas_xn <= 20 then 20
             else 30
         end as xn,
-        IFNULL(bitwise_and(item_flags, bitwise_left_shift(1,16)) > 0, false) as is_delivery_active,
+        nullif(bitwise_and(item_flags, bitwise_left_shift(1,16)) > 0, false) as is_delivery_active,
         row_number() over(partition by ss.cookie_id, ss.item_id, cast_event_date order by ss.event_date) as rn
     from (select *, cast(event_date as date) as cast_event_date from dma.buyer_stream) ss
     left join dds.S_EngineRecommendation_Name en
