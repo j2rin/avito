@@ -400,7 +400,11 @@ definitions:
 
     - &is_like_new { item_flags.bit: 43 }
     - &is_non_like_new { item_flags.!bit: 43 }
-
+    
+    - &is_x_root { x_level_id: 1 }
+    - &is_x_category { x_level_id: 2 }
+    - &is_x_subcategory { x_level_id: 3 }
+    - &is_x_param { x_level_id: [4, 5, 6, 7, 8] }
 
 metric.counter:
     base_serp_empty: { filter: [*is_1p, *is_base_serp_empty, *is_search] }
@@ -2333,6 +2337,16 @@ metric.counter:
     cnt_cs_ph_rec_i2i_with_guessing:      { filter: [*is_ph, *x_is_i2i] }
 
     contacts_used_cars: { filter: [*is_contact, *is_item_used_car] }
+    
+    s_root: { filter: [eid : 300, *is_x_root] }
+	s_category: { filter: [eid : 300, *is_x_category] }
+	s_subcategory: { filter: [eid : 300, *is_x_subcategory] }
+	s_param: { filter: [eid : 300, *is_x_param] }
+
+    s_root_q: { filter: [eid : 300, *is_x_root, *q] }
+    s_category_q: { filter: [eid : 300, *is_x_category, *q] }
+    s_subcategory_q: { filter: [eid : 300, *is_x_subcategory, *q] }
+    s_param_q: { filter: [eid : 300, *is_x_param, *q] }
 
 metric.uniq:
     user_rec_hide_category:         { counter: rec_hide_category, key: [cookie]}
@@ -4251,6 +4265,16 @@ metric.uniq:
     users_ph_rec_i2i_with_guessing: { counter: cnt_cs_ph_rec_i2i_with_guessing, key: [cookie] }
 
     buyers_used_cars: { counter: contacts_used_cars, key: [cookie] }
+    
+    user_s_root: { counter: s_root, key: [cookie] }
+    user_s_category: { counter: s_category, key: [cookie] }
+    user_s_subcategory: { counter: s_subcategory, key: [cookie] }
+    user_s_param: { counter: s_param, key: [cookie] }
+    
+    user_s_root_q: { counter: s_root_q, key: [cookie] }
+    user_s_category_q: { counter: s_category_q, key: [cookie] }
+    user_s_subcategory_q: { counter: s_subcategory_q, key: [cookie] }
+    user_s_param_q: { counter: s_param_q, key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
@@ -4967,3 +4991,23 @@ metric.ratio:
     
     contacts_with_verified_sellers_per_contacts:  { num: contacts_with_verified_sellers, den: contacts }
     contacts_with_verified_pro_sellers_per_pro_contacts:  { num: contacts_with_verified_pro_sellers, den: contacts_with_vrf_pro_sellers }
+    
+    s_root_per_s: { num: s_root, den: searches_serp }
+    s_category_per_s: { num: s_category, den: searches_serp }
+    s_subcategory_per_s: { num: s_subcategory, den: searches_serp }
+    s_param_per_s: { num: s_param, den: searches_serp }
+    
+    s_root_q_per_s_q: { num: s_root_q, den: search_q }
+    s_category_q_per_s_q: { num: s_category_q, den: search_q }
+    s_subcategory_q_per_s_q: { num: s_subcategory_q, den: search_q }
+    s_param_q_per_s_q: { num: s_param_q, den: search_q }
+    
+    user_s_root_per_user_s: { num: user_s_root, den: users_search }
+    user_s_category_per_user_s: { num: user_s_category, den: users_search }
+    user_s_subcategory_per_user_s: { num: user_s_subcategory, den: users_search }
+    user_s_param_per_user_s: { num: user_s_param, den: users_search }    
+    
+    user_s_root_q_per_user_s_q: { num: user_s_root_q, den: user_sq }
+    user_s_category_q_per_user_s_q: { num: user_s_category_q, den: user_sq }
+    user_s_subcategory_q_per_user_s_q: { num: user_s_subcategory_q, den: user_sq }
+    user_s_param_per_q_user_s_q: { num: user_s_param_q, den: user_sq }
