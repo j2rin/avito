@@ -1,6 +1,7 @@
 metric.counter:
   buyer_delivery_gmv_created:          {filter: [{is_created: true}], obs: [item_price]}
   buyer_delivery_gmv_paid:             {filter: [{is_paid: true}], obs: [item_price]}
+  buyer_delivery_gmv_paid_b2c:         {filter: [{is_paid: true}, {seller_segment_marketplace.in: ['B2C White','B2C Gray']}, obs: [item_price]}
   buyer_delivery_gmv_confirmed:        {filter: [{is_confirmed: true}], obs: [item_price]}
   buyer_delivery_gmv_paid_video:             {filter: [{is_paid: true}, {has_short_video: true}], obs: [item_price]}
   buyer_delivery_gmv_confirmed_video:        {filter: [{is_confirmed: true}, {has_short_video: true}], obs: [item_price]}
@@ -10,6 +11,7 @@ metric.counter:
   buyer_delivery_gmv_provided:         {filter: [{is_provided: true}], obs: [item_price]}
   buyer_delivery_gmv_received:         {filter: [{is_received: true}], obs: [item_price]}
   buyer_delivery_gmv_accepted:         {filter: [{is_accepted: true}], obs: [item_price]}
+  buyer_delivery_gmv_accepted_b2c:     {filter: [{is_accepted: true}, {seller_segment_marketplace.in: ['B2C White','B2C Gray']}, obs: [item_price]}
   buyer_delivery_gmv_canceled:         {filter: [{is_canceled: true}], obs: [item_price]}
   buyer_delivery_gmv_voided:           {filter: [{is_voided: true}], obs: [item_price]}
   buyer_delivery_gmv_unperformed:      {filter: [{is_unperformed: true}], obs: [item_price]}
@@ -25,6 +27,7 @@ metric.counter:
   buyer_delivery_items_paid_start_date:  {filter: [{is_paid: true}, {create_date.>: $ab_start_date}]}
   buyer_delivery_items_paid_video:       {filter: [{is_paid: true}, {has_short_video: true}]}
   buyer_delivery_items_paid_no_video:    {filter: [{is_paid: true}, {has_short_video: false}]}
+  buyer_delivery_items_paid_b2c:         {filter: [{is_paid: true}, {seller_segment_marketplace.in: ['B2C White','B2C Gray']}]}
   buyer_delivery_items_confirmed:        {filter: [{is_confirmed: true}]}
   buyer_delivery_items_confirmed_video:  {filter: [{is_confirmed: true}, {has_short_video: true}]}
   buyer_delivery_items_confirmed_no_video: {filter: [{is_confirmed: true}, {has_short_video: false}]}
@@ -34,6 +37,7 @@ metric.counter:
   buyer_delivery_items_received:         {filter: [{is_received: true}]}
   buyer_delivery_items_accepted:         {filter: [{is_accepted: true}]}
   buyer_delivery_items_accepted_start_date: {filter: [{is_accepted: true}, {create_date.>: $ab_start_date}]}
+  buyer_delivery_items_accepted_b2c:     {filter: [{is_accepted: true}, {seller_segment_marketplace.in: ['B2C White','B2C Gray']}]}
   buyer_delivery_items_canceled:         {filter: [{is_canceled: true}]}
   buyer_delivery_items_voided:           {filter: [{is_voided: true}]}
   buyer_delivery_items_unperformed:      {filter: [{is_unperformed: true}]}
