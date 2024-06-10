@@ -3894,3 +3894,18 @@ sbc_zero_audience:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
+
+vas_weighted_contacts:
+  metric_configs: [vas_weighted_contacts]
+  connections: [vertica, trino]
+  sql: vas_weighted_contacts
+  column_map:
+    cookie: cookie_id
+    user: user_id
+  dimensions:
+    - platform
+    - logical_category
+    - vertical
+  participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
