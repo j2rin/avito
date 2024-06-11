@@ -15,6 +15,7 @@ metric.counter:
   revenue_net_total:                                  {obs: [transaction_amount_net],      filter: [is_revenue: true]}
   revenue_net_adj_total:                              {obs: [transaction_amount_net_adj],  filter: [is_revenue: true]} 
   classified_amount_net_adj:                          {obs: [transaction_amount_net_adj],  filter: [*revenue]}
+  classified_amount_net_adj_federal:                  {obs: [transaction_amount_net_adj],  filter: [*revenue, is_federal_seller: true]}
   classified_amount_net_adj_cpa_user:                 {obs: [transaction_amount_net_adj],  filter: [*revenue, is_user_cpa: true]}
   classified_payments_net_adj:                        {obs: [transaction_amount_net_adj],  filter: [*payment]}
   classified_transactions:                            {obs: [transaction_count],           filter: [*revenue]}
@@ -27,8 +28,8 @@ metric.counter:
   lf_transactions_p:                                  {obs: [transaction_count],           filter: [*payment, product_type: 'lf']}
   subs_amount_net_adj:                                {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
   subs_transactions:                                  {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', product_subtype.!=: 'extension']}
-  subs_w_extensions_amount_net_adj:                   {obs: [transaction_amount_net_adj], filter: [*revenue, product_type: 'subscription']}
-  subs_w_extensions_amount_net_adj_cpa_user:          {obs: [transaction_amount_net_adj], filter: [*revenue, product_type: 'subscription', is_user_cpa: true]}
+  subs_w_extensions_amount_net_adj:                   {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription']}
+  subs_w_extensions_amount_net_adj_cpa_user:          {obs: [transaction_amount_net_adj],  filter: [*revenue, product_type: 'subscription', is_user_cpa: true]}
   subs_w_extensions_payments_net_adj:                 {obs: [transaction_amount_net_adj],  filter: [*payment, product_type: 'subscription']}
   subs_w_extensions_transactions:                     {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription']}
   subs_w_extensions_transactions_cpa_user:            {obs: [transaction_count],           filter: [*revenue, product_type: 'subscription', is_user_cpa: true]}
@@ -130,6 +131,7 @@ metric.counter:
   str_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [*is_str_revenue]}
   chatbots_amount_net_adj:                            {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'JOB ChatBot']}
   cpt_amount_net_adj:                                 {obs: [transaction_amount_net_adj],  filter: [*is_cpt_revenue]}
+  cpt_amount_net_adj_federal:                         {obs: [transaction_amount_net_adj],  filter: [*is_cpt_revenue, is_federal_seller: true]}
   cpt_c2c_amount_net_adj:                             {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'cpt', transaction_subtype: ['c2c commission']]}
   cpt_b2c_amount_net_adj:                             {obs: [transaction_amount_net_adj],  filter: [is_revenue: true, product_type: 'cpt', transaction_subtype: ['b2c commission']]}
   cpt_transactions:                                   {obs: [transaction_count],  filter: [is_revenue: true, product_type: 'cpt', transaction_subtype: ['c2c commission', 'b2c commission']]}
