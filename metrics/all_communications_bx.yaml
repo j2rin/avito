@@ -18,9 +18,11 @@ definitions:
   - &is_trx                       {communication.!in: ["iac", "gsm", "msg"]}
   - &is_success_call              {talk_duration.>: 30}
   - &is_answered_call             {talk_duration.>: 0}
-  - &is_fancy					  {is_fancy: True}
-  - &has_short_video			  {has_short_video: True}	
+  - &is_fancy					            {is_fancy: True}
+  - &has_short_video			        {has_short_video: True}	
   - &in_sale                      {in_sale: True}
+  - &is_buyer2seller                 {caller_is_buyer: True} # направление коммуникации от баера к селлеру
+  - &is_seller2buyer                 {caller_is_buyer: False} # направление коммуникации от селлера к баеру
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
@@ -135,6 +137,15 @@ metric.counter:
   target_contacts_returned:                              {filter: [*is_common_funnel, *is_target, {is_target_buyer_new: True}]} 
 
   target_contact_all_sales:                             {filter: [*is_common_funnel, *is_target, *in_sale]}
+
+# перезвоны gsm (seller2buyer)
+  gsm_bx_incoming:                                       {filter: [*is_gsm, *is_seller2buyer]}
+  gsm_bx_incoming_answered:                              {filter: [*is_gsm, *is_seller2buyer, *is_answered]}
+  gsm_bx_incoming_trash:                                 {filter: [*is_gsm, *is_seller2buyer, *is_trash]}
+  gsm_bx_incoming_preliminary:                           {filter: [*is_gsm, *is_seller2buyer, *is_preliminary]}
+  gsm_bx_incoming_target:                                {filter: [*is_gsm, *is_seller2buyer, *is_target]}
+  gsm_bx_incoming_call_dur:                              {filter: [*is_gsm, *is_seller2buyer], obs: [call_duration]}
+  gsm_bx_incoming_talk_dur:                              {filter: [*is_gsm, *is_seller2buyer], obs: [talk_duration]}
 
 metric.uniq:
   calls_bx_outgoing_canonical:                           {counter: calls_bx_outgoing,              key: [item_id, logical_category_id]}

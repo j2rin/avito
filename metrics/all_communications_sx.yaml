@@ -13,6 +13,8 @@ definitions:
   - &reply_time_not_zero          {reply_time_minutes.>=: 0} # порог для месенджера
   - &reply_3days                  {reply_time_minutes.<=: 4320} # порог для месенджера
   - &in_sale                      {in_sale: True}
+  - &is_buyer2seller                 {caller_is_buyer: True} # направление коммуникации от баера к селлеру
+  - &is_seller2buyer                 {caller_is_buyer: False} # направление коммуникации от селлера к баеру
 
 metric.counter:
 # Общая воронка, звонки только исходящие от баера. В GSM не учитываются звонки, поступившие когда номер отвязан
@@ -104,6 +106,15 @@ metric.counter:
   chat_sx_seller_contact_exchange:                         {filter: [*is_common_funnel, {tags.ilike: '10_contact_exchange_seller'} , *is_msg]} #old
 
   seller_target_contact_all_sales:                         {filter: [*is_common_funnel, *is_target, *in_sale]}
+
+  # перезвоны gsm (seller2buyer)
+  gsm_sx_outgoing:                                       {filter: [*is_gsm, *is_seller2buyer]}
+  gsm_sx_outgoing_answered:                              {filter: [*is_gsm, *is_seller2buyer, *is_answered]}
+  gsm_sx_outgoing_trash:                                 {filter: [*is_gsm, *is_seller2buyer, *is_trash]}
+  gsm_sx_outgoing_preliminary:                           {filter: [*is_gsm, *is_seller2buyer, *is_preliminary]}
+  gsm_sx_outgoing_target:                                {filter: [*is_gsm, *is_seller2buyer, *is_target]}
+  gsm_sx_outgoing_call_dur:                              {filter: [*is_gsm, *is_seller2buyer], obs: [call_duration]}
+  gsm_sx_outgoing_talk_dur:                              {filter: [*is_gsm, *is_seller2buyer], obs: [talk_duration]}
 
 metric.uniq:
   calls_sx_incoming_canonical:                           {counter: calls_sx_incoming,              key: [item_id, logical_category_id]}
