@@ -75,7 +75,9 @@ select
     udc.user_id is not null as is_user_cpa,
 	cpaaction_type,
 	cpa_target_action_count,
-	cpt.user_id is not null as is_user_cpt_tariff
+	cpt.user_id is not null as is_user_cpt_tariff,
+    fs.seller_id is not null as is_federal_seller
+    
 from DMA.paying_user_report ur
 join current_transaction_type ctt on ctt.transactiontype_id = ur.transactiontype_id
 
@@ -134,6 +136,9 @@ left join (
 ) cpt
     on ur.user_id = cpt.user_id
     and ur.event_date = cpt.event_date
+
+left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
+    on ur.user_id = fs.seller_id
 
 where ur.user_id not in (select cu.user_id from dma."current_user" cu where cu.IsTest)
     and cast(ur.event_date as date) between :first_date and :last_date
