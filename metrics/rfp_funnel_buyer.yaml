@@ -14,6 +14,8 @@ metric.counter:
     cnt_buyer_start_fill_in_rfp: {filter: [eid: [8967, 8969, 8970, 8971, 10053, 10054]]}
     cnt_buyer_finish_fill_in_rfp: {filter: [eid: 8908]}
     cnt_find_more_2_seller: {filter: [eid: 10055, nsellers.>=: 2]}
+    cnt_find_more_1_seller: {filter: [eid: 10055, nsellers.>=: 1]}
+    cnt_find_0_seller: {filter: [eid: 10055, nsellers.<=: 0]}
     cnt_buyer_get_error_msg_change_desc: {filter: [eid: 10056]}
     cnt_rfp_cancel_moderation: {filter: [eid: 10057]}
     cnt_buyer_click_create_rfp: {filter: [eid: 8908]}
@@ -41,6 +43,8 @@ metric.uniq:
     u_buyer_rfp_create_rfp: {counter: cnt_buyer_create_rfp,     key: [user_id, rfpid]}
     u_buyer_rfp_cancel_rfp: {counter: cnt_buyer_cancel_rfp,     key: [user_id, rfpid]}
     u_buyer_rfp_find_more_2_seller: {counter: cnt_find_more_2_seller,     key: [user_id, rfpid]}
+    u_buyer_rfp_find_more_1_seller: {counter: cnt_find_more_1_seller,     key: [user_id, rfpid]}
+    u_buyer_rfp_find_0_seller: {counter: cnt_find_0_seller,     key: [user_id, rfpid]}
     u_buyer_rfp_cancel_moderation: {counter: cnt_rfp_cancel_moderation,     key: [user_id, rfpid]}
     u_buyer_rfp_get_proposal: {counter: cnt_buyer_get_proposal,     key: [user_id, rfpid]}
     u_buyer_rfp_download_table: {counter: cnt_buyer_download_table,     key: [user_id, rfpid]}
@@ -51,10 +55,10 @@ metric.ratio:
     cr_view_to_click_rfp: {num: u_buyer_rfp_click_enter_point,  den: u_buyer_view_enter_point}
     cr_click_to_start_fill_in_rfp: {num: u_buyer_rfp_start_fill_in_rfp,  den: u_buyer_rfp_click_enter_point}
     cr_start_fill_rfp_to_finish_fill_rfp: { num: u_buyer_finish_fill_in_rfp, den: u_buyer_start_fill_in_rfp }
+    cr_finish_fill_rfp_to_find_0_seller: {num: u_buyer_rfp_find_0_seller, den: u_buyer_finish_fill_in_rfp}
     cr_start_to_create_rfp: { num: u_buyer_rfp_create_rfp,  den: u_buyer_rfp_start_fill_in_rfp }
     cr_finish_to_create_rfp: { num: u_buyer_rfp_create_rfp,  den: u_buyer_rfp_finish_fill_in_rfp }
     cr_create_rfp_to_get_proposal: { num: u_buyer_rfp_get_proposal,  den: u_buyer_rfp_create_rfp }
-    cr_enter_point_to_open_table: { num: u_buyer_rfp_get_proposal,  den: u_buyer_rfp_create_rfp }
     cr_click_enter_point_to_open_table: { num: u_buyer_rfp_click_final_table,  den: u_buyer_rfp_click_enter_point }
     cr_get_proposal_to_download_table: { num: u_buyer_rfp_download_table,  den: u_buyer_rfp_get_proposal }
     cr_download_table_to_click_connect_seller: { num: u_buyer_rfp_click_connect_seller,  den: u_buyer_rfp_download_table }
