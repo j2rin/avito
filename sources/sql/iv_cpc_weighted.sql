@@ -41,10 +41,10 @@ buyer_stream_contacts as (
                 and infmquery_id is not null
                 -- and date between :first_date and :last_date -- @trino
         )
-    ) сic 
-        on сic.infmquery_id = ci.infmquery_id
+    ) cic 
+        on cic.infmquery_id = ci.infmquery_id
     left join dma.current_logical_categories lc 
-        on lc.logcat_id = cic.logcat_id
+        on cic.logcat_id = lc.logcat_id
     left join cpx_item_click_price cp
         on ss.item_id=cp.item_id and ss.event_date >= cp.from_date and ss.event_date < cp.to_date
     where True
