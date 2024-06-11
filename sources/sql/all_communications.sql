@@ -5,7 +5,7 @@ select
     ,contact_id as communication_id
     ,buyer_id
     ,seller_id
-    ,caller_is_buyer 
+    ,caller_is_buyer
     ,reply_date
     ,reply_time_minutes
     ,a.item_id
