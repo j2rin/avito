@@ -66,7 +66,8 @@ select
         to_big_endian_64(coalesce(t.user_id, 0)) ||
         to_big_endian_64(coalesce(t.microcat_id, 0)) ||
         to_big_endian_64(coalesce(t.profession_id, 0))
-    )) as user_microcat_price
+    )) as user_microcat_price,
+    fs.seller_id is not null as is_federal_seller
 from  DMA.o_seller_item_event t
 left join /*+jtype(h),distrib(l,a)*/ (
     select infmquery_id, logcat_id
@@ -92,6 +93,8 @@ left join /*+distrib(l,a)*/ dma.user_segment_market usm
     and usm.event_date between :first_date and :last_date
     -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 left join /*+jtype(h),distrib(l,a)*/ am_client_day acd on t.user_id = acd.user_id and t.event_date between acd.active_from_date and acd.active_to_date
+left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
+    on t.user_id = fs.seller_id
 
 where t.event_date between :first_date and :last_date
     -- and t.event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
