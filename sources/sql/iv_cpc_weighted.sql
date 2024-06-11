@@ -15,8 +15,8 @@ buyer_stream_contacts as (
         ss.cookie_id,
         ss.user_id,
         ss.item_id,
-        cm.vertical_id,
-        cm.logical_category_id,
+        lc.vertical_id,
+        lc.logical_category_id,
         ss.eid,
         ss.x,
         ss.x_eid,
@@ -31,14 +31,26 @@ buyer_stream_contacts as (
         on en.EngineRecommendation_id = ss.rec_engine_id
     left join dma.current_item ci
         on ss.item_id = ci.item_id
-    left join dma.current_microcategories cm 
-        on ci.Microcat_id = cm.Microcat_id
+    left join /*+jtype(h),distrib(l,a)*/ (
+        select infmquery_id, logcat_id
+        from infomodel.current_infmquery_category
+        where infmquery_id in (
+            select distinct infmquery_id
+            from dma.buyer_stream
+            where cast(event_date as date) between :first_date and :last_date
+                and infmquery_id is not null
+                -- and date between :first_date and :last_date -- @trino
+        )
+    ) сic 
+        on сic.infmquery_id = ci.infmquery_id
+    left join dma.current_logical_categories lc 
+        on lc.logcat_id = cic.logcat_id
     left join cpx_item_click_price cp
         on ss.item_id=cp.item_id and ss.event_date >= cp.from_date and ss.event_date < cp.to_date
     where True
         and cast(ss.event_date as date) between :first_date and :last_date
         -- and ss.date between :first_date and :last_date -- @trino
-        and cm.vertical = 'Goods'
+        and lc.vertical = 'Goods'
         and ss.is_human_dev
         and eid = 301
 )

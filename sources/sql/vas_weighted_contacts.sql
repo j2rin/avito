@@ -18,8 +18,8 @@ with vas_item_contact_price as (
         ss.cookie_id,
         ss.user_id,
         ss.item_id,
-        cm.vertical_id,
-        cm.logical_category_id,
+        lc.vertical_id,
+        lc.logical_category_id,
         ss.eid,
         ss.x,
         ss.x_eid,
@@ -47,8 +47,20 @@ with vas_item_contact_price as (
         on en.EngineRecommendation_id = ss.rec_engine_id
     left join dma.current_item ci
         on ss.item_id = ci.item_id
-    left join dma.current_microcategories cm 
-        on ci.Microcat_id = cm.Microcat_id
+    left join /*+jtype(h),distrib(l,a)*/ (
+        select infmquery_id, logcat_id
+        from infomodel.current_infmquery_category
+        where infmquery_id in (
+            select distinct infmquery_id
+            from dma.buyer_stream
+            where cast(event_date as date) between :first_date and :last_date
+                and infmquery_id is not null
+                -- and date between :first_date and :last_date -- @trino
+        )
+    ) сic 
+        on сic.infmquery_id = ci.infmquery_id
+    left join dma.current_logical_categories lc 
+        on lc.logcat_id = cic.logcat_id
     inner join dma.current_locations cl
         on cl.Location_id = ci.Location_id
     where true
