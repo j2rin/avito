@@ -141,7 +141,8 @@ select
         when inn_info.inn_status then 'B2C White'
         when coalesce(usm.user_segment, ls.segment) not in ('Private.Seller','Private (Earning).Seller','Private (Earning).Extra Small') then 'B2C Gray'
         else 'C2C'
-    end as seller_segment_marketplace
+    end as seller_segment_marketplace,
+    co.gross_profit
 from dma.delivery_metric_for_ab co
 left join dma.current_logical_categories clc on clc.logcat_id = co.logical_category_id
 left join dma.current_microcategories cm on cm.microcat_id = co.microcat_id
