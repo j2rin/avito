@@ -71,6 +71,10 @@ metric.counter:
   answered_contacts_exp:                                 {filter: [*is_answered, *reply_time_not_zero, *reply_3days]}
   target_contacts_all_2_0:                               {filter: [*is_common_funnel, *is_target]}
   target_contacts_all_exp:                               {filter: [*is_target]}
+
+# расширение 2_0, добавление в неё перезвонов
+  target_contacts_all_2_0_brf:                           {filter: [*is_target, $or: [{is_common_funnel: True}, {caller_is_buyer: False}]]}
+
   target_contact_all:                                    {filter: [*is_common_funnel, *is_target]} #old
   contacts_transactions:                                 {filter: [*is_common_funnel,*is_trx]}
   answered_transactions:                                 {filter: [*is_common_funnel, *is_answered, *reply_time_not_zero, *reply_3days, *is_trx]}
@@ -175,7 +179,7 @@ metric.uniq:
   target_contacts_canonical_exp:                         {counter: target_contacts_all_exp,         key: [buyer_cookie_id, item_id, logical_category_id]}
   target_buyers_canonical_exp:                           {counter: target_contacts_all_exp,         key: [buyer_cookie_id, logical_category_id]}
   # временная метрика, уники по buyer_id, перезвоны включены
-  target_buyers_canonical_exp_bfr:                       {counter: target_contacts_all_exp,         key: [buyer_id, logical_category_id]}
+  target_buyers_canonical_exp_bfr:                       {counter: target_contacts_all_2_0_brf,     key: [buyer_id, logical_category_id]}
 
   user_target_contacts_2_0:                              {counter: target_contacts_all_2_0,         key: [user]}
   user_asnwered_contacts_2_0:                            {counter: answered_contacts_2_0,         key: [user]}
