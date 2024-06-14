@@ -142,7 +142,9 @@ select
         when coalesce(usm.user_segment, ls.segment) not in ('Private.Seller','Private (Earning).Seller','Private (Earning).Extra Small') then 'B2C Gray'
         else 'C2C'
     end as seller_segment_marketplace,
-    co.gross_profit
+    co.gross_profit,
+    (case when co.gross_profit >= 0 then co.gross_profit else 0 end) as gross_profit_positive,
+    (case when co.gross_profit < 0 then -co.gross_profit else 0 end) as gross_profit_negative
 from dma.delivery_metric_for_ab co
 left join dma.current_logical_categories clc on clc.logcat_id = co.logical_category_id
 left join dma.current_microcategories cm on cm.microcat_id = co.microcat_id
