@@ -12,4 +12,4 @@ select
 union all
 select
     3 as value_id
-    , 'unknown' as value_id
+    , 'unknown' as value
