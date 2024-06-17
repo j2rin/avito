@@ -359,6 +359,22 @@ metric.counter:
   buyer_delivery_bundle_items_paid:           		 {filter: [{is_paid: true}, {is_bundle: true}]}
   buyer_delivery_bundle_items_performed:           	 {filter: [{is_performed: true}, {is_bundle: true}]}
   buyer_delivery_bundle_items_returned:           	 {filter: [{is_returned: true}, {is_bundle: true}]}
+  
+  delivery_gp_paid:                    {filter: [{is_paid: true}], obs: [gp]}
+  delivery_gp_performed:               {filter: [{is_performed: true}], obs: [gp]}
+  delivery_gp_accepted:                {filter: [{is_accepted: true}], obs: [gp]}
+
+  delivery_gp_pos_paid:                {filter: [{is_paid: true}], obs: [gp_pos]}
+  delivery_gp_pos_performed:           {filter: [{is_performed: true}], obs: [gp_pos]}
+  delivery_gp_pos_accepted:            {filter: [{is_accepted: true}], obs: [gp_pos]}
+  
+  delivery_gp_neg_paid:                {filter: [{is_paid: true}], obs: [gp_neg]}
+  delivery_gp_neg_performed:           {filter: [{is_performed: true}], obs: [gp_neg]}
+  delivery_gp_neg_accepted:            {filter: [{is_accepted: true}], obs: [gp_neg]}
+  
+  delivery_gp_abs_paid:                {filter: [{is_paid: true}], obs: [gp_abs]}
+  delivery_gp_abs_performed:           {filter: [{is_performed: true}], obs: [gp_abs]}
+  delivery_gp_abs_accepted:            {filter: [{is_accepted: true}], obs: [gp_abs]}
 
 metric.uniq:
   buyer_delivery_orders_created:          {counter: buyer_delivery_items_created, key: [deliveryorder_id]}
@@ -631,3 +647,8 @@ metric.ratio:
   buyer_delivery_cpo_paid_orders: { num: buyer_delivery_approximate_provider_cost_no_vat_paid, den: buyer_delivery_orders_paid }
   buyer_delivery_cpo_performed_orders_real: { num: buyer_delivery_real_provider_cost_no_vat_performed, den: buyer_delivery_orders_performed }
   buyer_delivery_cpo_performed_orders_approximate: { num: buyer_delivery_approximate_provider_cost_no_vat_performed, den: buyer_delivery_orders_performed }
+
+  delivery_eff_coeff_paid:         {num: delivery_gp_pos_paid, den: delivery_gp_abs_paid}
+  delivery_eff_coeff_performed:    {num: delivery_gp_pos_performed, den: delivery_gp_abs_performed}
+  delivery_eff_coeff_accepted:     {num: delivery_gp_pos_accepted, den: delivery_gp_abs_accepted}
+
