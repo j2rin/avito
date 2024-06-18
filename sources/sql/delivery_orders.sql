@@ -153,8 +153,8 @@ select
     	when co.gross_profit >= 0 then co.gross_profit
         when co.gross_profit < 0 then -co.gross_profit
     end as gp_abs,
-    coalesce(bfs.segment_id, 4) as buyer_frequency_segmentation_id,
-    coalesce(brs.segment_id, 3) as buyer_retention_segmentation_id
+    coalesce(bfs.segment_id, 4) as buyer_frequency_segment_id,
+    coalesce(brs.segment_id, 3) as buyer_retention_segment_id
 from dma.delivery_metric_for_ab co
 left join dma.current_logical_categories clc on clc.logcat_id = co.logical_category_id
 left join dma.current_microcategories cm on cm.microcat_id = co.microcat_id
