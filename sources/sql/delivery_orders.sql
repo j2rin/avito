@@ -152,13 +152,31 @@ select
     case
     	when co.gross_profit >= 0 then co.gross_profit
         when co.gross_profit < 0 then -co.gross_profit
-    end as gp_abs
+    end as gp_abs,
+    coalesce(bfs.segment_id, 4) as buyer_frequency_segment_id,
+    coalesce(brs.segment_id, 3) as buyer_retention_segment_id
 from dma.delivery_metric_for_ab co
 left join dma.current_logical_categories clc on clc.logcat_id = co.logical_category_id
 left join dma.current_microcategories cm on cm.microcat_id = co.microcat_id
 left join dma.current_locations as cl on co.warehouse_location_id = cl.location_id
 left join dma.current_locations as bl on co.buyer_location_id = bl.location_id
 left join /*+jtype(h),distrib(l,a)*/ dma.current_wallet_user as cwu on cwu.user_id = co.buyer_id
+left join (
+    select
+        user_id
+        , cast(valid_from as date) as valid_from
+        , coalesce(lead(cast(valid_from as date)) over (partition by user_id order by valid_from), cast('2030-01-01' as date)) as valid_to
+        , segment_id
+    from dict.buyer_frequency_segmentation
+) as bfs on co.buyer_id = bfs.user_id and cast(co.create_date as date) >= bfs.valid_from and cast(co.create_date as date) < bfs.valid_to
+left join (
+    select
+        user_id
+        , cast(valid_from as date) as valid_from
+        , coalesce(lead(cast(valid_from as date)) over (partition by user_id order by valid_from), cast('2030-01-01' as date)) as valid_to
+        , segment_id
+    from dict.buyer_retention_segmentation
+) as brs on co.buyer_id = brs.user_id and cast(co.create_date as date) >= brs.valid_from and cast(co.create_date as date) < brs.valid_to
 left join /*+jtype(h),distrib(l,a)*/
 (
     select
