@@ -120,7 +120,7 @@ def send_all(configurator_host, url):
             file_name_maps[name] = {name: path}
 
     result = post(configurator_host, url, data)
-    return result, file_name_maps
+    return result.get('result', {}), file_name_maps
 
 
 def post(configurator_host, url, data):
