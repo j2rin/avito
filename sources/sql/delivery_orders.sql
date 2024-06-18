@@ -164,19 +164,19 @@ left join /*+jtype(h),distrib(l,a)*/ dma.current_wallet_user as cwu on cwu.user_
 left join (
     select
         user_id
-        , valid_from
-        , coalesce(lead(valid_from) over (partition by user_id order by valid_from), '2030-01-01') as valid_to
+        , cast(valid_from as date) as valid_from
+        , coalesce(lead(cast(valid_from as date)) over (partition by user_id order by valid_from), cast('2030-01-01' as date)) as valid_to
         , segment_id
     from dict.buyer_frequency_segmentation
-) as bfs on co.buyer_id = bfs.user_id and co.create_date >= bfs.valid_from and co.create_date < bfs.valid_to
+) as bfs on co.buyer_id = bfs.user_id and cast(co.create_date as date) >= bfs.valid_from and cast(co.create_date as date) < bfs.valid_to
 left join (
     select
         user_id
-        , valid_from
-        , coalesce(lead(valid_from) over (partition by user_id order by valid_from), '2030-01-01') as valid_to
+        , cast(valid_from as date) as valid_from
+        , coalesce(lead(cast(valid_from as date)) over (partition by user_id order by valid_from), cast('2030-01-01' as date)) as valid_to
         , segment_id
     from dict.buyer_retention_segmentation
-) as brs on co.buyer_id = brs.user_id and co.create_date >= brs.valid_from and co.create_date < brs.valid_to
+) as brs on co.buyer_id = brs.user_id and cast(co.create_date as date) >= brs.valid_from and cast(co.create_date as date) < brs.valid_to
 left join /*+jtype(h),distrib(l,a)*/
 (
     select
