@@ -2,10 +2,7 @@ select
     event_date,
 	cookie_id,
     user_id,
-    case 
-        when platform_id = 1 then 'web'
-        when platform_id = 2 then 'mav'
-    end platform,
+    platform_id,
     eid,
     push_subscribe,
     cnt
