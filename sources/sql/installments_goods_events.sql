@@ -20,7 +20,7 @@ select
         buyer_id as user_id,
         item_id,
         'installment_order_creation' as event_name_slug
-from dma.current_installment_orders cio
+from dma.current_installment_order cio
 left join dds.h_platform hp
     on cio.platform_id = hp.platform_id
 where cast(create_date as date) between cast(:first_date as date) and cast(:last_date as date)
@@ -34,7 +34,7 @@ select
         buyer_id as user_id,
         item_id,
         'installment_order_payment' as event_name_slug
-from dma.current_installment_orders cio
+from dma.current_installment_order cio
 left join dds.h_platform hp
     on cio.platform_id = hp.platform_id
 where is_paid
