@@ -3911,3 +3911,15 @@ vas_weighted_contacts:
   participant: { visitor: cookie_id, user: user_id }
   primary_subject: visitor
   dtm: event_date
+
+web_mav_push_notifications:
+  metric_configs: [web_mav_push_notifications]
+  connections: [vertica, trino]
+  sql: web_mav_push_notifications
+  column_map:
+    cookie: cookie_id
+  dimensions: 
+    - platform
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
