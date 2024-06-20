@@ -3923,3 +3923,17 @@ web_mav_push_notifications:
   participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
+
+adjust_installs:
+  metric_configs: [adjust_installs]
+  connections: [vertica, trino]
+  sql: adjust_installs
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    [
+      platform
+    ]
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
