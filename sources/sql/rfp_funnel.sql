@@ -34,4 +34,5 @@ from
 	    -- and event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) -- @trino
      ) t
 where true
-	and (eid = 10055 and rn = 1) -- отбираем последний результат работы матчера
+	and case when eid = 10055 then rn = 1 -- отбираем последний результат работы матчера
+    	else true end
