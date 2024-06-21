@@ -1,5 +1,27 @@
 select
-	*
+	track_id,
+	event_no,
+    event_date,
+    event_timestamp,
+    eid,
+    from_page,
+    user_id,
+    platform_id,
+    microcat_id,
+    target_page,
+    rfpid,
+    offerid,
+    chat_id,
+    message_preview,
+    flow_id,
+    funnel_type,
+    nsellers,
+    category_id,
+	subcategory_id,
+	param1_id,
+	param2_id,
+	param3_id,
+    param4_id
 from 
 	(select
 	      track_id,
