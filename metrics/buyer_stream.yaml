@@ -124,13 +124,13 @@ definitions:
     - &is_iv_wo_guessing { <<: *is_iv, item_x_type: 0 }
     - &is_btc_wo_guessing { $or: [{ <<: *is_btc, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
     - &is_contact_wo_guessing 				{ $or: [{ <<: *is_contact, eid.!=: 303 }, { eid: *eid_ph, item_x_type: 0 }] }
-	- &is_search_saved 						{ eid: *eid_search, from_page.in: ['sspush', 'ssemail', 'ssfav'] }
+    - &is_search_saved 						{ eid: *eid_search, from_page.in: ['sspush', 'ssemail', 'ssfav'] }
     - &is_search_saved_from_page_sspush		{ eid: *eid_search, from_page.=: 'sspush' }
-	- &is_search_saved_from_page_ssemail	{ eid: *eid_search, from_page.=: 'ssemail' }
+    - &is_search_saved_from_page_ssemail	{ eid: *eid_search, from_page.=: 'ssemail' }
     - &is_search_saved_from_page_ssfav		{ eid: *eid_search, from_page.=: 'ssfav' }
     - &x_is_search_saved 					{ x_eid: *eid_search, x_from_page.in: ['sspush', 'ssemail', 'ssfav'] }
     - &is_x_from_page_sspush				{ x_eid: *eid_search, x_from_page.=: 'sspush' }
-	- &is_x_from_page_ssemail				{ x_eid: *eid_search, x_from_page.=: 'ssemail' }
+    - &is_x_from_page_ssemail				{ x_eid: *eid_search, x_from_page.=: 'ssemail' }
     - &is_x_from_page_ssfav					{ x_eid: *eid_search, x_from_page.=: 'ssfav' }
     
     - &is_videocalls_contact { eid: 5629 }
@@ -2339,14 +2339,19 @@ metric.counter:
     contacts_used_cars: { filter: [*is_contact, *is_item_used_car] }
     
     s_root: { filter: [eid : 300, *is_x_root] }
-	s_category: { filter: [eid : 300, *is_x_category] }
-	s_subcategory: { filter: [eid : 300, *is_x_subcategory] }
-	s_param: { filter: [eid : 300, *is_x_param] }
+    s_category: { filter: [eid : 300, *is_x_category] }
+    s_subcategory: { filter: [eid : 300, *is_x_subcategory] }
+    s_param: { filter: [eid : 300, *is_x_param] }
 
     s_root_q: { filter: [eid : 300, *is_x_root, *q] }
     s_category_q: { filter: [eid : 300, *is_x_category, *q] }
     s_subcategory_q: { filter: [eid : 300, *is_x_subcategory, *q] }
     s_param_q: { filter: [eid : 300, *is_x_param, *q] }
+
+    s_root_noq: { filter: [eid : 300, *is_x_root, *noq] }
+    s_category_noq: { filter: [eid : 300, *is_x_category, *noq] }
+    s_subcategory_noq: { filter: [eid : 300, *is_x_subcategory, *noq] }
+    s_param_noq: { filter: [eid : 300, *is_x_param, *noq] }
 
 metric.uniq:
     user_rec_hide_category:         { counter: rec_hide_category, key: [cookie]}
@@ -3893,9 +3898,9 @@ metric.uniq:
     user_btc_fancy_i2i: { counter: btc_fancy_i2i,	key:	[cookie] }
     
     user_iv_non_fancy: { counter: iv_non_fancy, key:	[cookie] }
-	user_iv_non_fancy_s: { counter: iv_non_fancy_s, key:	[cookie] }
-	user_iv_non_fancy_u2i: { counter: iv_non_fancy_u2i, key:	[cookie] }
-	user_iv_non_fancy_i2i: { counter: iv_non_fancy_i2i, key:	[cookie] }
+    user_iv_non_fancy_s: { counter: iv_non_fancy_s, key:	[cookie] }
+    user_iv_non_fancy_u2i: { counter: iv_non_fancy_u2i, key:	[cookie] }
+    user_iv_non_fancy_i2i: { counter: iv_non_fancy_i2i, key:	[cookie] }
     
     user_iv_like_new: { counter: iv_like_new,	key:	[cookie] }
     user_c_like_new: { counter: c_like_new,	key:	[cookie] }
@@ -4209,9 +4214,9 @@ metric.uniq:
     
     
     user_iv_widget: { counter: iv_widget, key: [cookie]}
-	user_c_widget: { counter: c_widget, key: [cookie]}
-	user_fav_widget: { counter: fav_widget, key: [cookie]}
-	user_btc_widget: { counter: btc_widget, key: [cookie]}
+    user_c_widget: { counter: c_widget, key: [cookie]}
+    user_fav_widget: { counter: fav_widget, key: [cookie]}
+    user_btc_widget: { counter: btc_widget, key: [cookie]}
 
     contacts_cpt:                       { counter: cnt_c_cpt,                   key: [ item, x ] }
     contacts_serp_cpt:                  { counter: cnt_c_serp_cpt,              key: [ item, x ] }
@@ -4250,7 +4255,7 @@ metric.uniq:
     user_c_serp_small_base: 	{ counter: cnt_cs_serp_small_base_item_attr, 	key: [cookie] }
     user_iv_serp_small_base: 	{ counter: cnt_iv_serp_small_base_item_attr, 	key: [cookie] }
     user_btc_serp_small_base: 	{ counter: cnt_btc_serp_small_base_item_attr, 	key: [cookie] }
-	
+    
     user_searches_saved: 					{ counter: searches_saved, 	key: [cookie] }
     user_searches_saved_from_page_sspush: 	{ counter: searches_saved_from_page_sspush, 	key: [cookie] }
     user_searches_saved_from_page_ssemail: 	{ counter: searches_saved_from_page_ssemail, 	key: [cookie] }
@@ -4275,6 +4280,11 @@ metric.uniq:
     user_s_category_q: { counter: s_category_q, key: [cookie] }
     user_s_subcategory_q: { counter: s_subcategory_q, key: [cookie] }
     user_s_param_q: { counter: s_param_q, key: [cookie] }
+    
+    user_s_root_noq: { counter: s_root_noq, key: [cookie] }
+    user_s_category_noq: { counter: s_category_noq, key: [cookie] }
+    user_s_subcategory_noq: { counter: s_subcategory_noq, key: [cookie] }
+    user_s_param_noq: { counter: s_param_noq, key: [cookie] }
 
 metric.ratio:
     btc_from_map_per_map_search_area: { num: buyer_target_clicks_from_map_area, den: searches_map_area }
@@ -4984,7 +4994,7 @@ metric.ratio:
     delivery_iv_delivery_click_sales:     { num: delivery_click_sales, den: delivery_iv_sales}
     delivery_iv_order_create_sales:       { num: order_create_sales, den: delivery_iv_sales}
     
-	user_rec_i2i_target_click_iv_ratio_with_guessing: { num: user_btc_rec_i2i_with_guessing, den: users_item_view_rec_i2i }
+    user_rec_i2i_target_click_iv_ratio_with_guessing: { num: user_btc_rec_i2i_with_guessing, den: users_item_view_rec_i2i }
     user_rec_i2i_target_click_per_user_recblock_shows_with_guessing: { num: user_btc_rec_i2i_with_guessing, den: user_recblock_shows_i2i }
     user_c_rec_i2i_per_users_item_views_rec_i2i_with_guessing: { num: users_contact_rec_i2i_with_guessing, den: users_item_view_rec_i2i }
     user_c_rec_i2i_per_user_recblock_shows_i2i_with_guessing: { num: users_contact_rec_i2i_with_guessing, den: user_recblock_shows_i2i }
@@ -5002,6 +5012,11 @@ metric.ratio:
     s_subcategory_q_per_s_q: { num: s_subcategory_q, den: search_q }
     s_param_q_per_s_q: { num: s_param_q, den: search_q }
     
+    s_root_noq_per_s_noq: { num: s_root_noq, den: cnt_s_without_query }
+    s_category_noq_per_s_noq: { num: s_category_noq, den: cnt_s_without_query }
+    s_subcategory_noq_per_s_noq: { num: s_subcategory_noq, den: cnt_s_without_query }
+    s_param_noq_per_s_noq: { num: s_param_noq, den: cnt_s_without_query }
+    
     user_s_root_per_user_s: { num: user_s_root, den: users_search }
     user_s_category_per_user_s: { num: user_s_category, den: users_search }
     user_s_subcategory_per_user_s: { num: user_s_subcategory, den: users_search }
@@ -5011,3 +5026,8 @@ metric.ratio:
     user_s_category_q_per_user_s_q: { num: user_s_category_q, den: user_sq }
     user_s_subcategory_q_per_user_s_q: { num: user_s_subcategory_q, den: user_sq }
     user_s_param_per_q_user_s_q: { num: user_s_param_q, den: user_sq }
+
+    user_s_root_noq_per_user_s_noq: { num: user_s_root_noq, den: user_noq }
+    user_s_category_noq_per_user_s_noq: { num: user_s_category_noq, den: user_noq }
+    user_s_subcategory_noq_per_user_s_noq: { num: user_s_subcategory_noq, den: user_noq }
+    user_s_param_per_noq_user_s_noq: { num: user_s_param_noq, den: user_noq }
