@@ -549,6 +549,8 @@ delivery_orders_buyer:
     - has_sbp_bindings
     - seller_segment_marketplace
     - has_opened_delivery_wallet
+    - buyer_frequency_segment
+    - buyer_retention_segment
   participant: { user: buyer_id }
   primary_subject: user
   dtm: status_date
@@ -3907,6 +3909,32 @@ vas_weighted_contacts:
     - logical_category
     - vertical
   participant: { visitor: cookie_id, user: user_id }
+  primary_subject: visitor
+  dtm: event_date
+
+web_mav_push_notifications:
+  metric_configs: [web_mav_push_notifications]
+  connections: [vertica, trino]
+  sql: web_mav_push_notifications
+  column_map:
+    cookie: cookie_id
+  dimensions: 
+    - platform
+  participant: { visitor: cookie_id }
+  primary_subject: visitor
+  dtm: event_date
+
+adjust_installs:
+  metric_configs: [adjust_installs]
+  connections: [vertica, trino]
+  sql: adjust_installs
+  column_map:
+    cookie: cookie_id
+  dimensions:
+    [
+      platform
+    ]
+  participant: { visitor: cookie_id }
   primary_subject: visitor
   dtm: event_date
 
