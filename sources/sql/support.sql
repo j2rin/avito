@@ -67,7 +67,19 @@
   		   chat_count_in_sl,
   		   chat_count_has_sl,
            ticket_waiting_status,
-           ticket_waiting_closed_by_timeout
+           ticket_waiting_closed_by_timeout,
+           delivery_ticket_satisfaction_scores,
+           delivery_ticket_csat_scores,
+           delivery_chat_satisfaction_scores,
+           delivery_chat_csat_scores,
+           delivery_call_satisfaction_scores,
+           delivery_call_csat_scores,
+           delivery_ticket_ht,
+           delivery_tickets_with_ht,
+           delivery_chat_ht,
+           delivery_chat_with_ht,
+           delivery_call_ht,
+           delivery_calls_with_ht
 	  from dma.support_metric_observation
 where cast(observation_date as date) between :first_date and :last_date
     --and observation_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
