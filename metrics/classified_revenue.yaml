@@ -1,3 +1,11 @@
+# ВНИМАНИЕ
+# Если вы добавляете новую метрику, которая может меняться более чем на 10 дней назад
+# (н-р по подпискам - subs), её надо добавить в расписания, чтобы она пересчитывалась
+# в m42 корректно. https://stash.msk.avito.ru/projects/BI/repos/ab-metrics/browse/m42/reports/main.yaml
+# Если выручка не относится к продуктам vas, cpa, paid_contact,
+# то стоит её добавить в расписание аналогично classified_amount_net_adj
+# При сомнениях обращайтесь в ~core-analytics
+
 definitions:
   - &revenue   {is_revenue: true, is_classified: true}
   - &payment   {is_payment: true, is_classified: true}
