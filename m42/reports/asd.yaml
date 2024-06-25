@@ -13,3 +13,13 @@ reports:
             user_segment_market,
             logical_category,
         ]
+      schedules:
+        - {
+            first_date: '$TODAY[-1]',
+            last_date: '$TODAY[-1]',
+        }
+        - {
+            first_date: '$TODAY[-31]',
+            last_date: '$TODAY[-2]',
+            sources: [operating_model_asd_revenue],
+        }

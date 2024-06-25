@@ -18,6 +18,11 @@ reports:
           param2,
           region,
         ]
+      schedules:
+        - {
+          first_date: "$TODAY[-1]",
+          last_date: '$TODAY[-1]',
+        }
 
     - name: m42_services_monthly
       label: "Services monthly"
@@ -38,3 +43,9 @@ reports:
           param2,
           region,
         ]
+      schedules:
+        - {
+          first_date: '$START_OF_MONTH[-1]',
+          last_date: '$END_OF_MONTH[-1]',
+          schedule_interval: { day_month: 1 },
+        }

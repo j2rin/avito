@@ -24,7 +24,87 @@ reports:
           logical_param1,
           logical_param2,
           condition,
-        ]
+       ]
+      schedules:
+        - {
+            first_date: "$TODAY[-1]",
+            last_date: '$TODAY[-1]',
+        }
+        - {
+            first_date: '$TODAY[-5]',
+            last_date: '$TODAY[-2]',
+            sources: [
+              delivery_orders_buyer,
+              delivery_orders_seller
+           ],
+        }
+        - {
+            first_date: '$TODAY[-4]',
+            last_date: '$TODAY[-2]',
+            sources: [
+              messenger_answered_inbox_messages,
+              messenger_answered_messages,
+              messenger_chat_leads,
+              messenger_inbox_chat_leads,
+              sbc_answered_inbox_special_offers,
+              sbc_answered_special_offers,
+              target_contact,
+              target_contact_seller,
+              all_communications_bx,
+              true_new_users,
+              str_metrics_by_sources
+           ],
+        }
+        - {
+            first_date: '$TODAY[-31]',
+            last_date: '$TODAY[-2]',
+            sources: [classified_revenue],
+            is_recalc: True,
+        }
+        - {
+            first_date: '$TODAY[-31]',
+            last_date: '$TODAY[-2]',
+            sources: [
+              buyer_delivery_revenue_no_vat_accepted,
+              re_nd_cpa_call_revenue
+           ],
+            is_recalc: True,
+        }
+        - {
+            first_date: '$TODAY[-40]',
+            last_date: '$TODAY[-2]',
+            sources: [qd_lots_terminated_date, other_projects_revenue, total_revenue],
+            is_recalc: True,
+        }
+        - {
+            first_date: '$TODAY[-90]',
+            last_date: '$TODAY[-2]',
+            sources: [credit_broker, credit_broker_revenue],
+        }
+        - {
+            first_date: '$TODAY[-3]',
+            last_date: '$TODAY[-2]',
+            sources: [
+              target_call_sx,
+              target_contact,
+              target_call_bx
+           ],
+        }
+        - {
+            first_date: '$TODAY[-4]',
+            last_date: '$TODAY[-4]',
+            sources: [
+              proxy_deals_2_0,
+           ],
+        }
+        - {
+            first_date: '$TODAY[-2]',
+            last_date: '$TODAY[-2]',
+            sources: [
+              short_video_upload_source,
+           ],
+        }
+
 
     - name: m42_weekly
       label: "Weekly"
@@ -50,7 +130,43 @@ reports:
           city,
           logical_param1,
           logical_param2,
-        ]
+       ]
+      schedules:
+        - {
+            first_date: '$START_OF_WEEK[-1]',
+            last_date: '$END_OF_WEEK[-1]',
+            schedule_interval: { day_week: 1 },
+            metrics: [
+              users_bt_click_daily,
+              buyers,
+              users_buyer_target_click_serp_daily,
+              users_contact_serp_daily,
+              users_first_messages,
+              user_pv,
+              user_btc_rec_i2i,
+              user_btc_rec_u2i,
+              users_item_view_daily,
+              users_all_main_page_daily,
+              users_favorites,
+              users_item_view_rec_i2i,
+              users_item_view_rec_u2i,
+              users_item_view_serp_daily,
+              users_search,
+              users_active_daily,
+              sess_any_action,
+              sess_fatal_app_errors,
+           ],
+            sources: [buyer_stream],
+            sampling: 0.1,
+        }
+        - {
+            first_date: '$START_OF_WEEK[-1]',
+            last_date: '$END_OF_WEEK[-1]',
+            schedule_interval: { day_week: 1 },
+            metrics: [users_fatal_app_errors],
+            sources: [production_errors],
+        }
+
 
     - name: m42_monthly
       label: "Monthly"
@@ -76,4 +192,303 @@ reports:
           city,
           logical_param1,
           logical_param2,
-        ]
+       ]
+      schedules:
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                vas_users,
+                classified_users,
+                subs_w_extensions_users,
+                lf_users,
+                classified_amount_net_adj,
+                lf_amount_net_adj,
+                vas_amount_net_adj,
+                subs_amount_net_adj,
+                cpa_amount_net_adj,
+                paying_users,
+             ],
+            sources: [classified_revenue],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                buyers_canonical,
+                returned_buyers,
+                new_buyers,
+                contacts_canonical,
+                buyers_any,
+             ],
+            sources: [core_contacts],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                buyers_canonical_by_user,
+                buyers_any_by_user,
+                user_c_uniq_vertical,
+                user_c_uniq_category,
+                user_c_uniq_subcategory,
+             ],
+            sources: [core_contact_user],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                users_bt_click_daily,
+                buyers,
+                users_buyer_target_click_serp_daily,
+                users_contact_serp_daily,
+                users_first_messages,
+                user_pv,
+                user_btc_rec_i2i,
+                user_btc_rec_u2i,
+                users_item_view_daily,
+                users_all_main_page_daily,
+                users_favorites,
+                users_item_view_rec_i2i,
+                users_item_view_rec_u2i,
+                users_item_view_serp_daily,
+                users_search,
+                users_active_daily,
+                sess_any_action,
+                sess_fatal_app_errors,
+                users_item_views_logcat,
+                user_soc_btn,
+                users_saved_searches_added,
+             ],
+            sources: [buyer_stream],
+            sampling: 0.03,
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                active_listers,
+                active_items,
+                sellers_with_contacts,
+                users_active_items,
+             ],
+            sources: [seller_item_active],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                items_reactivated_net_conversion,
+                items_sold_onavito_conversion,
+                items_started_net_conversion,
+             ],
+            sources: [seller_item_event],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                daily_active_authorized_users,
+                daily_active_users,
+                user_day_iv,
+                user_month_iv,
+                user_day_s,
+                user_month_s,
+                user_day_active,
+                user_month_active,
+                user_day_btc,
+                user_month_btc,
+                user_day_c,
+                user_month_c,
+                user_day_page_view,
+                user_month_page_view,
+             ],
+            sources: [pageviews],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                daily_active_uniq_authorized_users,
+                user_day_iv_user,
+                user_month_iv_user,
+                user_day_s_user,
+                user_month_s_user,
+                user_day_active_user,
+                user_month_active_user,
+                user_day_btc_user,
+                user_month_btc_user,
+                user_day_c_user,
+                user_month_c_user,
+                user_day_page_view_user,
+                user_month_page_view_user,
+             ],
+            sources: [user_dau],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics: [users_fatal_app_errors],
+            sources: [production_errors],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                new_pro_listers_uniq,
+                new_pro_listers_less_1_month_uniq,
+                new_pro_listers_over_1_month_uniq,
+                new_pro_sellers_uniq,
+                new_pro_sellers_less_1_month_uniq,
+                new_pro_sellers_over_1_month_uniq,
+                new_pro_sellers_vertical_uniq,
+                new_pro_sellers_vertical_less_1_month_uniq,
+                new_pro_sellers_vertical_over_1_month_uniq,
+             ],
+            sources: [new_pro_listers],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics: [new_listers],
+            sources: [user_cohort],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                user_nc_marketing_to_receiver,
+                user_email_marketing_to_receiver,
+                user_push_marketing_to_receiver,
+                user_push_rec_to_receiver,
+                user_push_crm_to_receiver,
+                user_notification_marketing_to_receiver,
+                user_notification_rec_to_receiver,
+                user_notification_crm_to_receiver,
+                user_push_to_receiver,
+                user_notifications_off_any,
+                user_notifications_off_profile,
+                user_notifications_off_system,
+                user_notifications_on_any,
+                user_notifications_on_profile,
+                user_notifications_on_system,
+             ],
+            sources: [notification],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                user_nc_tech_available,
+                user_app_push_tech_available,
+                user_email_tech_available,
+                user_messenger_tech_available,
+                user_nc_any_setting_available,
+                user_app_push_any_setting_available,
+                user_app_push_any_default_setting_available,
+                user_app_push_any_nondefault_setting_available,
+                user_email_any_setting_available,
+                user_email_any_default_setting_available,
+                user_email_any_nondefault_setting_available,
+                user_messenger_any_setting_available,
+                user_messenger_any_default_setting_available,
+                user_messenger_any_nondefault_setting_available,
+                user_any_setting_available,
+                user_any_default_setting_available,
+                user_any_nondefault_setting_available,
+                user_nc_available,
+                user_app_push_available,
+                user_email_available,
+                user_messenger_available,
+                user_nc_crm_covered,
+                user_nc_marketing_crm_covered,
+                user_nc_rec_crm_covered,
+                user_app_push_crm_covered,
+                user_app_push_marketing_crm_covered,
+                user_app_push_rec_crm_covered,
+                user_email_crm_covered,
+                user_email_marketing_crm_covered,
+                user_email_rec_crm_covered,
+                user_messenger_crm_covered,
+                user_messenger_marketing_crm_covered,
+                user_messenger_rec_crm_covered,
+                user_crm_covered,
+                user_marketing_crm_covered,
+                user_recommendations_crm_covered,
+             ],
+            sources: [notification_availability],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics: [messenger_chatbot_dau_tr],
+            sources: [chatbot_events],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics: [flows_end_success],
+            sources: [chatbot_metrics_end],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics: [user_kmt_organic],
+            sources: [kmt_stream],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                user_stories_list_clicks,
+                user_story_clicks,
+                user_story_depth,
+             ],
+            sources: [clickstream],
+        }
+        - {
+            first_date: '$START_OF_MONTH[-1]',
+            last_date: '$END_OF_MONTH[-1]',
+            schedule_interval: { day_month: 1 },
+            metrics:
+              [
+                active_pro_sellers_fixed_segment_unique,
+                pro_seller_revenue_fixed_segment,
+                pro_seller_target_contacts,
+                revenue_per_target_contact,
+                average_revenue_per_pro_seller,
+                average_target_contact_per_pro_seller,
+                seller_with_at_least_one_target_contact,
+             ],
+            sources: [avito_pro_metrics],
+        }
