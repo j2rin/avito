@@ -61,6 +61,11 @@ select /*+syntactic_join*/
     ipl.count_services_price_list,
     sic.item_id is not null as is_item_calendar,
     ipl.quality_price_list,
+    aed.levenshtein_strict,
+    aed.levenshtein_light,
+    aed.jaccard_strict,
+    aed.jaccard_light,
+    
     -- Dimensions -----------------------------------------------------------------------------------------------------
     coalesce(lc.vertical_id, cm.vertical_id)                       as vertical_id,
     coalesce(lc.logical_category_id, cm.logical_category_id)       as logical_category_id,
@@ -205,5 +210,11 @@ left join /*+distrib(l,r)*/ (
 left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
     on ss.user_id = fs.seller_id
 
+left join /*+distrib(l,r)*/
+dma.autodescribe_edit_distance aed
+	on aed.item_id = ss.item_id
+    -- and aed.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
+
 where (ss.is_user_test is null or ss.is_user_test = false)
     and ss.event_date between :first_date and :last_date
+
