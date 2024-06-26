@@ -44,21 +44,21 @@ definitions:
     - &graph        { item_engines.bit: 4 }
     - &crosscat     { item_engines.bit: 5 }
 
-    - &x_is_search  { x_eid: *eid_search }
-    - &x_is_rec     { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
-    - &x_is_rec_sg  { search_flags.bit: 10 }
-    - &x_is_u2i     { $or: [{x_eid: *eid_u2i}, {x_eid: *eid_map, engine: personal_geo_map}] }
-    - &x_is_i2i     { x_eid: *eid_i2i }
+    - &x_is_search    { x_eid: *eid_search }
+    - &x_is_rec       { $or: [{ x_eid: *eid_rec }, { search_features.bit: 0 }, {x_eid: *eid_map, engine: personal_geo_map}] }
+    - &x_is_rec_sg    { search_flags.bit: 10 }
+    - &x_is_u2i       { $or: [{x_eid: *eid_u2i}, {x_eid: *eid_map, engine: personal_geo_map}] }
+    - &x_is_i2i       { x_eid: *eid_i2i }
     - &x_is_i2i_delivery { x_eid: *eid_i2i, engine: delivery}
     - &x_is_push_land { x_eid: *eid_push_land }
-    - &x_is_cv2vac  { x_eid: *eid_cv2vac }
-    - &x_is_rec_msg { x_from_page: msg_recommendations }
-    - &x_is_fav_lst { x_eid: *eid_fav_lst }
-    - &x_is_fav_coll { x_eid: *eid_fav_coll }
-    - &x_is_comp_lst { x_eid: *eid_comp_lst }
-    - &x_is_map     { x_eid: *eid_map }
-    - &x_no         { x_eid.isnull: true }
-    - &x_avl        { x_eid: *eid_avl_click }
+    - &x_is_cv2vac    { x_eid: *eid_cv2vac }
+    - &x_is_rec_msg   { x_from_page: msg_recommendations }
+    - &x_is_fav_lst   { x_eid: *eid_fav_lst }
+    - &x_is_fav_coll  { x_eid: *eid_fav_coll }
+    - &x_is_comp_lst  { x_eid: *eid_comp_lst }
+    - &x_is_map       { x_eid: *eid_map }
+    - &x_no           { x_eid.isnull: true }
+    - &x_avl          { x_eid: *eid_avl_click }
 
     - &x_is_vertical_main {
           $or: [{ x_category_id: [1, 12, 17, 28, 39, 55], x_subcategory_id.isnull: true }, { x_subcategory_id: [250005, 250006, 34,38,47], x_param1_id.isnull: true }],
@@ -447,38 +447,12 @@ metric.counter:
     cnt_btc_developer_rec_u2i: { filter: [*is_btc_wo_guessing, *is_developer_acc, *x_is_u2i] }
     cnt_btc_dlv: { filter: [*is_btc_wo_guessing, *is_serp_delivery, *x_is_search] }
     cnt_btc_new_dlv: { filter: [*is_btc_wo_guessing, *is_serp_delivery, *x_is_search, *is_new_btc] }
-    cnt_btc_any_ext_block:
-        {
-            filter:
-                [
-                    *is_btc_wo_guessing,
-                    *x_is_search,
-                    { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] },
-                ],
-
-        }
-    cnt_btc_new_any_ext_block:
-        {
-            filter:
-                [
-                    *is_btc_wo_guessing,
-                    *x_is_search,
-                    *is_new_btc,
-                    { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] },
-                ],
-
-        }
-    cnt_btc_old_any_ext_block:
-        {
-            filter:
-                [
-                    *is_btc_wo_guessing,
-                    *x_is_search,
-                    *is_old_btc,
-                    { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] },
-                ],
-
-        }
+    cnt_btc_any_ext_block:      { filter: [*is_btc_wo_guessing, *x_is_search,
+                                        { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
+    cnt_btc_new_any_ext_block:  { filter: [*is_btc_wo_guessing, *x_is_search, *is_new_btc,
+                                        { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
+    cnt_btc_old_any_ext_block:  { filter: [*is_btc_wo_guessing, *x_is_search, *is_old_btc,
+                                        { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
     cnt_btc_from_map: { filter: [*is_btc_wo_guessing, *x_is_map] }
     cnt_btc_new_from_map: { filter: [*is_btc_wo_guessing, *x_is_map, *is_new_btc] }
     cnt_btc_from_map_s_area: { filter: [*is_btc_wo_guessing, { $or: [[*is_s_map, *x_is_search], [*x_is_map]] }] }
@@ -511,12 +485,24 @@ metric.counter:
     cnt_btc_rec_perfvas_x15_7:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x15_7, *x_is_rec] }
     cnt_btc_rec_perfvas_x20_1:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x20_1, *x_is_rec] }
     cnt_btc_rec_perfvas_x20_7:  { filter: [*is_btc_wo_guessing, *is_item_perfvas_x20_7, *x_is_rec] }
-    cnt_btc_reg: { filter: [*is_btc_wo_guessing, *is_serp_regions, *x_is_search] }
-    cnt_btc_new_reg: { filter: [*is_new_btc, *is_btc_wo_guessing, *is_serp_regions, *x_is_search] }
-    cnt_btc_reg_mix: { filter: [*is_btc_wo_guessing, *is_serp_regions_mix, *x_is_search] }
-    cnt_btc_reg_any: { filter: [*is_btc_wo_guessing, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
-    cnt_btc_qrm: { filter: [*is_btc_wo_guessing, *is_serp_quorum, *x_is_search] }
-    cnt_btc_vec: { filter: [*is_btc_wo_guessing, *is_serp_vector, *x_is_search] }
+    cnt_btc_reg:                { filter: [*is_btc_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_btc_new_reg:            { filter: [*is_new_btc, *is_btc_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_btc_reg_mix:            { filter: [*is_btc_wo_guessing, *is_serp_regions_mix, *x_is_search] }
+    cnt_btc_reg_any:            { filter: [*is_btc_wo_guessing, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
+    cnt_btc_qrm:                { filter: [*is_btc_wo_guessing, *is_serp_quorum, *x_is_search] }
+    cnt_btc_vec:                { filter: [*is_btc_wo_guessing, *is_serp_vector, *x_is_search] }
+    cnt_btc_any_ext_block_q:    { filter: [*is_btc_wo_guessing, *x_is_search, *q,
+                                        { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
+    cnt_btc_reg_q:              { filter: [*is_btc_wo_guessing, *q, *is_serp_regions, *x_is_search] }
+    cnt_btc_reg_mix_q:          { filter: [*is_btc_wo_guessing, *q, *is_serp_regions_mix, *x_is_search] }
+    cnt_btc_reg_any_q:          { filter: [*is_btc_wo_guessing, *q, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
+    cnt_btc_vec_q:              { filter: [*is_btc_wo_guessing, *q, *is_serp_vector, *x_is_search] }
+    cnt_btc_any_ext_block_noq:  { filter: [*is_btc_wo_guessing, *x_is_search, *noq,
+                                        { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
+    cnt_btc_reg_noq:            { filter: [*is_btc_wo_guessing, *noq, *is_serp_regions, *x_is_search] }
+    cnt_btc_reg_mix_noq:        { filter: [*is_btc_wo_guessing, *noq, *is_serp_regions_mix, *x_is_search] }
+    cnt_btc_reg_any_noq:        { filter: [*is_btc_wo_guessing, *noq, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
+    cnt_btc_vec_noq:            { filter: [*is_btc_wo_guessing, *noq, *is_serp_vector, *x_is_search] }
     cnt_btc_s_distr: { filter: [*is_btc_wo_guessing, *is_s_district, *x_is_search] }
     cnt_btc_s_distr_metro_radius_road:
         {
@@ -674,16 +660,8 @@ metric.counter:
     cnt_cs_developer_rec_i2i: { filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_i2i] }
     cnt_cs_developer_rec_u2i: { filter: [*is_contact_wo_guessing, *is_developer_acc, *x_is_u2i] }
     cnt_cs_dlv: { filter: [*is_contact_wo_guessing, *is_serp_delivery, *x_is_search] }
-    cnt_cs_any_ext_block:
-        {
-            filter:
-                [
-                    *is_contact_wo_guessing,
-                    *x_is_search,
-                    { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] },
-                ],
-
-        }
+    cnt_cs_any_ext_block: { filter: [*is_contact_wo_guessing, *x_is_search,
+                                  { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
     cnt_cs_comp_list:       { filter: [*is_contact_wo_guessing, *x_is_comp_lst] }
     cnt_cs_msg_comp_list:   { filter: [*is_msg, *x_is_comp_lst] }
     cnt_cs_ph_comp_list:    { filter: [*is_ph, *x_is_comp_lst] }
@@ -719,22 +697,34 @@ metric.counter:
     cnt_cs_rec_u2i_vas:         { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_u2i] }
     cnt_cs_rec_vas:             { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_rec] }
     cnt_cs_rec_vas_cpa:         { filter: [*is_contact_wo_guessing, *is_item_vas, *x_is_rec, *is_item_cpa] }
-    cnt_cs_rec_perfvas_x2_1:  { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec] }
-    cnt_cs_rec_perfvas_x2_7:  { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_7, *x_is_rec] }
-    cnt_cs_rec_perfvas_x5_1:  { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_1, *x_is_rec] }
-    cnt_cs_rec_perfvas_x5_7:  { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_7, *x_is_rec] }
-    cnt_cs_rec_perfvas_x10_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_1, *x_is_rec] }
-    cnt_cs_rec_perfvas_x10_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_7, *x_is_rec] }
-    cnt_cs_rec_perfvas_x15_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x15_1, *x_is_rec] }
-    cnt_cs_rec_perfvas_x15_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x15_7, *x_is_rec] }
-    cnt_cs_rec_perfvas_x20_1: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x20_1, *x_is_rec] }
-    cnt_cs_rec_perfvas_x20_7: { filter: [*is_contact_wo_guessing, *is_item_perfvas_x20_7, *x_is_rec] }
-    cnt_cs_reg: { filter: [*is_contact_wo_guessing, *is_serp_regions, *x_is_search] }
-    cnt_cs_reg_mix: { filter: [*is_contact_wo_guessing, *is_serp_regions_mix, *x_is_search] }
-    cnt_cs_reg_any: { filter: [*is_contact_wo_guessing, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
-    cnt_cs_qrm: { filter: [*is_contact_wo_guessing, *is_serp_quorum, *x_is_search] }
-    cnt_cs_vec: { filter: [*is_contact_wo_guessing, *is_serp_vector, *x_is_search] }
-    cnt_cs_s_distr: { filter: [*is_contact_wo_guessing, *is_s_district, *x_is_search] }
+    cnt_cs_rec_perfvas_x2_1:    { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_1, *x_is_rec] }
+    cnt_cs_rec_perfvas_x2_7:    { filter: [*is_contact_wo_guessing, *is_item_perfvas_x2_7, *x_is_rec] }
+    cnt_cs_rec_perfvas_x5_1:    { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_1, *x_is_rec] }
+    cnt_cs_rec_perfvas_x5_7:    { filter: [*is_contact_wo_guessing, *is_item_perfvas_x5_7, *x_is_rec] }
+    cnt_cs_rec_perfvas_x10_1:   { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_1, *x_is_rec] }
+    cnt_cs_rec_perfvas_x10_7:   { filter: [*is_contact_wo_guessing, *is_item_perfvas_x10_7, *x_is_rec] }
+    cnt_cs_rec_perfvas_x15_1:   { filter: [*is_contact_wo_guessing, *is_item_perfvas_x15_1, *x_is_rec] }
+    cnt_cs_rec_perfvas_x15_7:   { filter: [*is_contact_wo_guessing, *is_item_perfvas_x15_7, *x_is_rec] }
+    cnt_cs_rec_perfvas_x20_1:   { filter: [*is_contact_wo_guessing, *is_item_perfvas_x20_1, *x_is_rec] }
+    cnt_cs_rec_perfvas_x20_7:   { filter: [*is_contact_wo_guessing, *is_item_perfvas_x20_7, *x_is_rec] }
+    cnt_cs_reg:                 { filter: [*is_contact_wo_guessing, *is_serp_regions, *x_is_search] }
+    cnt_cs_reg_mix:             { filter: [*is_contact_wo_guessing, *is_serp_regions_mix, *x_is_search] }
+    cnt_cs_reg_any:             { filter: [*is_contact_wo_guessing, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
+    cnt_cs_qrm:                 { filter: [*is_contact_wo_guessing, *is_serp_quorum, *x_is_search] }
+    cnt_cs_vec:                 { filter: [*is_contact_wo_guessing, *is_serp_vector, *x_is_search] }
+    cnt_cs_any_ext_block_q:     { filter: [*is_contact_wo_guessing, *x_is_search, *q
+                                      { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
+    cnt_cs_reg_q:               { filter: [*is_contact_wo_guessing, *q, *is_serp_regions, *x_is_search] }
+    cnt_cs_reg_mix_q:           { filter: [*is_contact_wo_guessing, *q, *is_serp_regions_mix, *x_is_search] }
+    cnt_cs_reg_any_q:           { filter: [*is_contact_wo_guessing, *q, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
+    cnt_cs_vec_q:               { filter: [*is_contact_wo_guessing, *q, *is_serp_vector, *x_is_search] }
+    cnt_cs_any_ext_block_noq:   { filter: [*is_contact_wo_guessing, *x_is_search, *noq
+                                      { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
+    cnt_cs_reg_noq:             { filter: [*is_contact_wo_guessing, *noq, *is_serp_regions, *x_is_search] }
+    cnt_cs_reg_mix_noq:         { filter: [*is_contact_wo_guessing, *noq, *is_serp_regions_mix, *x_is_search] }
+    cnt_cs_reg_any_noq:         { filter: [*is_contact_wo_guessing, *noq, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
+    cnt_cs_vec_noq:             { filter: [*is_contact_wo_guessing, *noq, *is_serp_vector, *x_is_search] }
+    cnt_cs_s_distr:             { filter: [*is_contact_wo_guessing, *is_s_district, *x_is_search] }
     cnt_cs_s_distr_metro_road:
         { filter: [*is_contact_wo_guessing, *x_is_search, { $or: [[*is_s_district], [*is_s_metro], [*is_s_road]] }] }
     cnt_cs_s_item_attr:                   { filter: [*is_contact_wo_guessing, *x_is_search] }
@@ -928,27 +918,10 @@ metric.counter:
     cnt_iv_developer_rec_i2i: { filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_i2i] }
     cnt_iv_developer_rec_u2i: { filter: [*is_developer_acc, *is_iv_wo_guessing, *x_is_u2i] }
     cnt_iv_dlv: { filter: [*is_iv_wo_guessing, *is_serp_delivery, *x_is_search] }
-    cnt_iv_any_ext_block:
-        {
-            filter:
-                [
-                    *is_iv_wo_guessing,
-                    *x_is_search,
-                    { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] },
-                ],
-
-        }
-    cnt_iv_delivery_any_ext_block:
-        {
-            filter:
-                [
-                    *is_iv_wo_guessing,
-                    *is_delivery_active,
-                    *x_is_search,
-                    { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] },
-                ],
-
-        }
+    cnt_iv_any_ext_block: { filter: [ *is_iv_wo_guessing, *x_is_search,
+                                  { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
+    cnt_iv_delivery_any_ext_block: { filter: [ *is_iv_wo_guessing, *is_delivery_active, *x_is_search,
+                                            { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
     cnt_iv_from_map: { filter: [*is_iv_wo_guessing, *x_is_map] }
     cnt_iv_from_map_s_area: { filter: [*is_iv_wo_guessing, { $or: [[*is_s_map, *x_is_search], [*x_is_map]] }] }
     cnt_iv_grouped: { filter: [*is_iv_wo_guessing, *is_serp_grouping, *x_is_search] }
@@ -987,6 +960,18 @@ metric.counter:
     cnt_iv_reg_any: { filter: [*is_iv_wo_guessing, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
     cnt_iv_qrm: { filter: [*is_iv_wo_guessing, *is_serp_quorum, *x_is_search] }
     cnt_iv_vec: { filter: [*is_iv_wo_guessing, *is_serp_vector, *x_is_search] }
+    cnt_iv_any_ext_block_q: { filter: [ *is_iv_wo_guessing, *x_is_search, *q,
+                                  { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
+    cnt_iv_reg_q:     { filter: [*is_iv_wo_guessing, *q, *is_serp_regions, *x_is_search] }
+    cnt_iv_reg_mix_q: { filter: [*is_iv_wo_guessing, *q, *is_serp_regions_mix, *x_is_search] }
+    cnt_iv_reg_any_q: { filter: [*is_iv_wo_guessing, *q, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
+    cnt_iv_vec_q:     { filter: [*is_iv_wo_guessing, *q, *is_serp_vector, *x_is_search] }
+    cnt_iv_any_ext_block_noq: { filter: [ *is_iv_wo_guessing, *x_is_search, *noq,
+                                  { $or: [[*is_serp_delivery], [*is_serp_regions], [*is_serp_regions_mix], [*is_serp_quorum], [*is_serp_vector]] }, ], }
+    cnt_iv_reg_noq:     { filter: [*is_iv_wo_guessing, *noq, *is_serp_regions, *x_is_search] }
+    cnt_iv_reg_mix_noq: { filter: [*is_iv_wo_guessing, *noq, *is_serp_regions_mix, *x_is_search] }
+    cnt_iv_reg_any_noq: { filter: [*is_iv_wo_guessing, *noq, { $or: [[*is_serp_regions], [*is_serp_regions_mix]] }, *x_is_search] }
+    cnt_iv_vec_noq:     { filter: [*is_iv_wo_guessing, *noq, *is_serp_vector, *x_is_search] }
     cnt_iv_s_distr: { filter: [*is_iv_wo_guessing, *is_s_district, *x_is_search] }
     cnt_iv_s_filter_price:
         { filter: [*is_iv_wo_guessing, *x_is_search, { $or: [[*is_filter_search], [*is_price_filter_search]] }] }
@@ -1623,35 +1608,47 @@ metric.counter:
     searches_part_qual_unknown: { filter: [*part_qual_unknown, *is_1p, *is_search] }
     searches_in_stock: { filter: [*item_in_stock, *is_1p, *is_search] }
     searches_to_order: { filter: [*item_to_order, *is_1p, *is_search] }
-    searches_any_ext_block:
-        {
-            filter:
-                [
-                    *is_search,
-                    {
-                        $or:
-                            [
-                                [*is_extra_delivery],
-                                [*is_extra_regions],
-                                [*is_extra_regions_mix],
-                                [*is_extra_quorum],
-                                [*is_extra_vector],
-                            ],
-                    },
-                ],
-        }
+    searches_any_ext_block: { filter: [ *is_search, { $or: [
+                                                              [*is_extra_delivery],
+                                                              [*is_extra_regions],
+                                                              [*is_extra_regions_mix],
+                                                              [*is_extra_quorum],
+                                                              [*is_extra_vector],
+                                                            ], }, ], }
     searches_date_sort: { filter: [*is_1p, *is_s_sort_date, *is_search] }
     searches_default_sort: { filter: [*is_1p, *is_s_sort_dft, *is_search] }
     searches_price_sort: { filter: [*is_1p, *is_s_sort_price, *is_search] }
     searches_distance_sort: { filter: [*is_1p, *is_s_sort_distance, *is_search] }
     searches_param_sort: { filter: [*is_1p, *is_s_sort_param, *is_search] }
     searches_district: { filter: [*is_1p, *is_s_district, *is_search] }
-    searches_extra_delivery: { filter: [*is_search, *is_extra_delivery] }
-    searches_extra_regions: { filter: [*is_search, *is_extra_regions] }
+    searches_extra_delivery:    { filter: [*is_search, *is_extra_delivery] }
+    searches_extra_regions:     { filter: [*is_search, *is_extra_regions] }
     searches_extra_regions_mix: { filter: [*is_search, *is_extra_regions_mix] }
     searches_extra_regions_any: { filter: [*is_search, { $or: [[*is_extra_regions_mix], [*is_extra_regions]] }] }
-    searches_extra_quorum: { filter: [*is_search, *is_extra_quorum] }
-    searches_extra_vector: { filter: [*is_search, *is_extra_vector] }
+    searches_extra_quorum:      { filter: [*is_search, *is_extra_quorum] }
+    searches_extra_vector:      { filter: [*is_search, *is_extra_vector] }
+    searches_any_ext_block_q:   { filter: [*is_search, *q, { $or: [
+                                                                    [*is_extra_delivery],
+                                                                    [*is_extra_regions],
+                                                                    [*is_extra_regions_mix],
+                                                                    [*is_extra_quorum],
+                                                                    [*is_extra_vector],
+                                                                  ], }, ], }
+    searches_extra_regions_q:     { filter: [*is_search, *q, *is_extra_regions] }
+    searches_extra_regions_mix_q: { filter: [*is_search, *q, *is_extra_regions_mix] }
+    searches_extra_regions_any_q: { filter: [*is_search, *q, { $or: [[*is_extra_regions_mix], [*is_extra_regions]] }] }
+    searches_extra_vector_q:      { filter: [*is_search, *q, *is_extra_vector] }
+    searches_any_ext_block_noq:   { filter: [*is_search, *noq, { $or: [
+                                                                        [*is_extra_delivery],
+                                                                        [*is_extra_regions],
+                                                                        [*is_extra_regions_mix],
+                                                                        [*is_extra_quorum],
+                                                                        [*is_extra_vector],
+                                                                      ], }, ], }
+    searches_extra_regions_noq:     { filter: [*is_search, *noq, *is_extra_regions] }
+    searches_extra_regions_mix_noq: { filter: [*is_search, *noq, *is_extra_regions_mix] }
+    searches_extra_regions_any_noq: { filter: [*is_search, *noq, { $or: [[*is_extra_regions_mix], [*is_extra_regions]] }] }
+    searches_extra_vector_noq:      { filter: [*is_search, *noq, *is_extra_vector] }
     searches_from_witcher_any:
         {
             filter:
@@ -2490,7 +2487,17 @@ metric.uniq:
     buyer_target_clicks_regions_any: { counter: cnt_btc_reg_any, key: [item, x] }
     buyer_target_clicks_quorum: { counter: cnt_btc_qrm, key: [item, x] }
     buyer_target_clicks_vector: { counter: cnt_btc_vec, key: [item, x] }
-    buyer_target_clicks_searches_u2i: { counter: cnt_btc_s_u2i, key: [item, x] }
+    buyer_target_clicks_any_ext_block_q:    { counter: cnt_btc_any_ext_block_q,   key: [item, x] }
+    buyer_target_clicks_regions_q:          { counter: cnt_btc_reg_q,             key: [item, x] }
+    buyer_target_clicks_regions_mix_q:      { counter: cnt_btc_reg_mix_q,         key: [item, x] }
+    buyer_target_clicks_regions_any_q:      { counter: cnt_btc_reg_any_q,         key: [item, x] }
+    buyer_target_clicks_vector_q:           { counter: cnt_btc_vec_q,             key: [item, x] }
+    buyer_target_clicks_any_ext_block_noq: { counter: cnt_btc_any_ext_block_noq,  key: [item, x] }
+    buyer_target_clicks_regions_noq:       { counter: cnt_btc_reg_noq,            key: [item, x] }
+    buyer_target_clicks_regions_mix_noq:   { counter: cnt_btc_reg_mix_noq,        key: [item, x] }
+    buyer_target_clicks_regions_any_noq:   { counter: cnt_btc_reg_any_noq,        key: [item, x] }
+    buyer_target_clicks_vector_noq:        { counter: cnt_btc_vec_noq,            key: [item, x] }
+    buyer_target_clicks_searches_u2i_q:  { counter: cnt_btc_s_u2i_q,          key: [item, x] }
     buyer_target_clicks_serp: { counter: cnt_btc_s_item_attr, key: [item, x] }
     buyer_target_clicks_serp_guarantee: { counter: cnt_btc_s_item_attr_guarantee, key: [item, x] }
     buyer_target_clicks_new_serp: { counter: cnt_btc_new_s_item_attr, key: [item, x] }
@@ -2633,6 +2640,16 @@ metric.uniq:
     contacts_regions_any: { counter: cnt_cs_reg_any, key: [item, x] }
     contacts_quorum: { counter: cnt_cs_qrm, key: [item, x] }
     contacts_vector: { counter: cnt_cs_vec, key: [item, x] }
+    contacts_any_ext_block_q:   { counter: cnt_cs_any_ext_block_q,    key: [item, x] }
+    contacts_regions_q:         { counter: cnt_cs_reg_q,              key: [item, x] }
+    contacts_regions_mix_q:     { counter: cnt_cs_reg_mix_q,          key: [item, x] }
+    contacts_regions_any_q:     { counter: cnt_cs_reg_any_q,          key: [item, x] }
+    contacts_vector_q:          { counter: cnt_cs_vec_q,              key: [item, x] }
+    contacts_any_ext_block_noq: { counter: cnt_cs_any_ext_block_noq,  key: [item, x] }
+    contacts_regions_noq:       { counter: cnt_cs_reg_noq,            key: [item, x] }
+    contacts_regions_mix_noq:   { counter: cnt_cs_reg_mix_noq,        key: [item, x] }
+    contacts_regions_any_noq:   { counter: cnt_cs_reg_any_noq,        key: [item, x] }
+    contacts_vector_noq:        { counter: cnt_cs_vec_noq,            key: [item, x] }
     contacts_searches_u2i: { counter: cnt_cs_s_u2i, key: [item, x] }
     contacts_vertical_main: { counter: cnt_cs_vertical_main, key: [item, x] }
     contacts_vertical_main_rec: { counter: cnt_cs_vertical_main_rec, key: [item, x] }
@@ -2890,6 +2907,16 @@ metric.uniq:
     item_views_regions_any:       { counter: cnt_iv_reg_any,            key: [item, x] }
     item_views_quorum:            { counter: cnt_iv_qrm,                key: [item, x] }
     item_views_vector:            { counter: cnt_iv_vec,                key: [item, x] }
+    item_views_any_ext_block_q:   { counter: cnt_iv_any_ext_block_q,    key: [item, x] }
+    item_views_regions_q:         { counter: cnt_iv_reg_q,              key: [item, x] }
+    item_views_regions_mix_q:     { counter: cnt_iv_reg_mix_q,          key: [item, x] }
+    item_views_regions_any_q:     { counter: cnt_iv_reg_any_q,          key: [item, x] }
+    item_views_vector_q:          { counter: cnt_iv_vec_q,              key: [item, x] }
+    item_views_any_ext_block_noq: { counter: cnt_iv_any_ext_block_noq,  key: [item, x] }
+    item_views_regions_noq:       { counter: cnt_iv_reg_noq,            key: [item, x] }
+    item_views_regions_mix_noq:   { counter: cnt_iv_reg_mix_noq,        key: [item, x] }
+    item_views_regions_any_noq:   { counter: cnt_iv_reg_any_noq,        key: [item, x] }
+    item_views_vector_noq:        { counter: cnt_iv_vec_noq,            key: [item, x] }
     item_views_serp:              { counter: cnt_iv_s_item_attr,        key: [item, x] }
     item_views_serp_reputation_high:    { counter: cnt_iv_s_item_attr_reputation_high,       key: [item, x] }
     item_views_serp_reputation_medium:  { counter: cnt_iv_s_item_attr_reputation_medium,     key: [item, x] }
@@ -3049,7 +3076,15 @@ metric.uniq:
     user_buyer_target_clicks_regions_any: { counter: cnt_btc_reg_any, key: [cookie] }
     user_buyer_target_clicks_quorum: { counter: cnt_btc_qrm, key: [cookie] }
     user_buyer_target_clicks_vector: { counter: cnt_btc_vec, key: [cookie] }
-    user_buyer_target_clicks_serp_saved: 			{ counter: cnt_btc_s_saved, key: [cookie] }
+    user_buyer_target_clicks_any_ext_block_q:   { counter: cnt_btc_any_ext_block_q,   key: [cookie] }
+    user_buyer_target_clicks_regions_mix_q:     { counter: cnt_btc_reg_mix_q,         key: [cookie] }
+    user_buyer_target_clicks_regions_any_q:     { counter: cnt_btc_reg_any_q,         key: [cookie] }
+    user_buyer_target_clicks_vector_q:          { counter: cnt_btc_vec_q,             key: [cookie] }
+    user_buyer_target_clicks_any_ext_block_noq: { counter: cnt_btc_any_ext_block_noq, key: [cookie] }
+    user_buyer_target_clicks_regions_mix_noq:   { counter: cnt_btc_reg_mix_noq,       key: [cookie] }
+    user_buyer_target_clicks_regions_any_noq:   { counter: cnt_btc_reg_any_noq,       key: [cookie] }
+    user_buyer_target_clicks_vector_noq:        { counter: cnt_btc_vec_noq,           key: [cookie] }
+    user_buyer_target_clicks_serp_saved: 			{ counter: cnt_btc_s_saved,       key: [cookie] }
     user_buyer_target_clicks_search_saved: 			{ counter: cnt_btc_search_saved, key: [cookie] }
     user_buyer_target_clicks_search_saved_sspush: 	{ counter: cnt_btc_search_saved_sspush, key: [cookie] }
     user_buyer_target_clicks_search_saved_ssemail: 	{ counter: cnt_btc_search_saved_ssemail, key: [cookie] }
@@ -3096,6 +3131,16 @@ metric.uniq:
     user_contacts_regions_any: { counter: cnt_cs_reg_any, key: [cookie] }
     user_contacts_quorum: { counter: cnt_cs_qrm, key: [cookie] }
     user_contacts_vector: { counter: cnt_cs_vec, key: [cookie] }
+    user_contacts_any_ext_block_q:    { counter: cnt_cs_any_ext_block_q,    key: [cookie] }
+    user_contacts_regions_q:          { counter: cnt_cs_reg_q,              key: [cookie] }
+    user_contacts_regions_mix_q:      { counter: cnt_cs_reg_mix_q,          key: [cookie] }
+    user_contacts_regions_any_q:      { counter: cnt_cs_reg_any_q,          key: [cookie] }
+    user_contacts_vector_q:           { counter: cnt_cs_vec_q,              key: [cookie] }
+    user_contacts_any_ext_block_noq:  { counter: cnt_cs_any_ext_block_noq,  key: [cookie] }
+    user_contacts_regions_noq:        { counter: cnt_cs_reg_noq,            key: [cookie] }
+    user_contacts_regions_mix_noq:    { counter: cnt_cs_reg_mix_noq,        key: [cookie] }
+    user_contacts_regions_any_noq:    { counter: cnt_cs_reg_any_noq,        key: [cookie] }
+    user_contacts_vector_noq:         { counter: cnt_cs_vec_noq,            key: [cookie] }
     user_contacts_serp_saved: { counter: cnt_cs_s_saved, key: [cookie] }
     user_contacts_search_saved: 		{ counter: cnt_cs_search_saved, key: [cookie] }
     user_contacts_search_saved_sspush: 	{ counter: cnt_cs_search_saved_sspush, key: [cookie] }
@@ -3137,28 +3182,30 @@ metric.uniq:
     user_item_view_with_kmt: {counter: item_views_with_kmt, key: [cookie] }
     user_item_view_from_map_total: { counter: cnt_iv_from_map_s_area, key: [cookie] }
     user_item_views_from_jk_card: { counter: item_views_from_jk_card, key: [cookie] }
-    user_item_views_any_ext_block: { counter: cnt_iv_any_ext_block, key: [cookie] }
-    user_item_views_delivery: { counter: cnt_iv_dlv, key: [cookie] }
-    user_item_views_regions: { counter: cnt_iv_reg, key: [cookie] }
-    user_item_views_regions_mix: { counter: cnt_iv_reg_mix, key: [cookie] }
-    user_item_views_regions_any: { counter: cnt_iv_reg_any, key: [cookie] }
-    user_item_views_quorum: { counter: cnt_iv_qrm, key: [cookie] }
-    user_item_views_vector: { counter: cnt_iv_vec, key: [cookie] }
+    user_item_views_any_ext_block:  { counter: cnt_iv_any_ext_block,  key: [cookie] }
+    user_item_views_delivery:       { counter: cnt_iv_dlv,            key: [cookie] }
+    user_item_views_regions:        { counter: cnt_iv_reg,            key: [cookie] }
+    user_item_views_regions_mix:    { counter: cnt_iv_reg_mix,        key: [cookie] }
+    user_item_views_regions_any:    { counter: cnt_iv_reg_any,        key: [cookie] }
+    user_item_views_quorum:         { counter: cnt_iv_qrm,            key: [cookie] }
+    user_item_views_vector:         { counter: cnt_iv_vec,            key: [cookie] }
+    user_item_views_any_ext_block_q:    { counter: cnt_iv_any_ext_block_q,    key: [cookie] }
+    user_item_views_regions_q:          { counter: cnt_iv_reg_q,              key: [cookie] }
+    user_item_views_regions_mix_q:      { counter: cnt_iv_reg_mix_q,          key: [cookie] }
+    user_item_views_regions_any_q:      { counter: cnt_iv_reg_any_q,          key: [cookie] }
+    user_item_views_vector_q:           { counter: cnt_iv_vec_q,              key: [cookie] }
+    user_item_views_any_ext_block_noq:  { counter: cnt_iv_any_ext_block_noq,  key: [cookie] }
+    user_item_views_regions_noq:        { counter: cnt_iv_reg_noq,            key: [cookie] }
+    user_item_views_regions_mix_noq:    { counter: cnt_iv_reg_mix_noq,        key: [cookie] }
+    user_item_views_regions_any_noq:    { counter: cnt_iv_reg_any_noq,        key: [cookie] }
+    user_item_views_vector_noq:         { counter: cnt_iv_vec_noq,            key: [cookie] }
     user_item_views_serp_saved: 			{ counter: cnt_iv_s_saved, key: [cookie] }
     user_item_views_search_saved: 			{ counter: cnt_iv_search_saved, key: [cookie] }
     user_item_views_search_saved_sspush: 	{ counter: cnt_iv_search_saved_sspush, key: [cookie] }
     user_item_views_search_saved_ssemail: 	{ counter: cnt_iv_search_saved_ssemail, key: [cookie] }
     user_item_views_search_saved_ssfav: 	{ counter: cnt_iv_search_saved_ssfav, key: [cookie] }
-    user_item_views_serp_not_saved_filters:
-        {
-            counter: cnt_iv_s_not_saved_filters,
-            key: [cookie]
-        }
-    user_item_views_serp_saved_filters:
-        {
-            counter: cnt_iv_s_saved_filters,
-            key: [cookie]
-        }
+    user_item_views_serp_not_saved_filters: { counter: cnt_iv_s_not_saved_filters, key: [cookie] }
+    user_item_views_serp_saved_filters: { counter: cnt_iv_s_saved_filters, key: [cookie] }
     user_item_views_shop: { counter: cnt_iv_shopx, key: [cookie] }
     user_item_views_total_vas: { counter: item_views_total_vas, key: [cookie] }
     user_iv_developer: { counter: iv_developer, key: [cookie] }
@@ -3356,14 +3403,24 @@ metric.uniq:
     users_search_jk_card: { counter: searches_jk_card, key: [cookie] }
     users_search_filter_any: { counter: searches_with_filter_any, key: [cookie] }
     users_search_query: { counter: searches_with_query, key: [cookie] }
-    users_searches_any_ext_block: { counter: searches_any_ext_block, key: [cookie] }
-    users_searches_district: { counter: searches_district, key: [cookie] }
-    users_searches_extra_delivery: { counter: searches_extra_delivery, key: [cookie] }
-    users_searches_extra_regions: { counter: searches_extra_regions, key: [cookie] }
-    users_searches_extra_regions_mix: { counter: searches_extra_regions_mix, key: [cookie] }
-    users_searches_extra_regions_any: { counter: searches_extra_regions_any, key: [cookie] }
-    users_searches_extra_quorum: { counter: searches_extra_quorum, key: [cookie] }
-    users_searches_extra_vector: { counter: searches_extra_vector, key: [cookie] }
+    users_searches_any_ext_block:     { counter: searches_any_ext_block,      key: [cookie] }
+    users_searches_district:          { counter: searches_district,           key: [cookie] }
+    users_searches_extra_delivery:    { counter: searches_extra_delivery,     key: [cookie] }
+    users_searches_extra_regions:     { counter: searches_extra_regions,      key: [cookie] }
+    users_searches_extra_regions_mix: { counter: searches_extra_regions_mix,  key: [cookie] }
+    users_searches_extra_regions_any: { counter: searches_extra_regions_any,  key: [cookie] }
+    users_searches_extra_quorum:      { counter: searches_extra_quorum,       key: [cookie] }
+    users_searches_extra_vector:      { counter: searches_extra_vector,       key: [cookie] }
+    users_searches_any_ext_block_q:     { counter: searches_any_ext_block_q,      key: [cookie] }
+    users_searches_extra_regions_q:     { counter: searches_extra_regions_q,      key: [cookie] }
+    users_searches_extra_regions_mix_q: { counter: searches_extra_regions_mix_q,  key: [cookie] }
+    users_searches_extra_regions_any_q: { counter: searches_extra_regions_any_q,  key: [cookie] }
+    users_searches_extra_vector_q:      { counter: searches_extra_vector_q,       key: [cookie] }
+    users_searches_any_ext_block_noq:     { counter: searches_any_ext_block_noq,      key: [cookie] }
+    users_searches_extra_regions_noq:     { counter: searches_extra_regions_noq,      key: [cookie] }
+    users_searches_extra_regions_mix_noq: { counter: searches_extra_regions_mix_noq,  key: [cookie] }
+    users_searches_extra_regions_any_noq: { counter: searches_extra_regions_any_noq,  key: [cookie] }
+    users_searches_extra_vector_noq:      { counter: searches_extra_vector_noq,       key: [cookie] }
     users_searches_local_geo: { counter: searches_local_geo, key: [cookie] }
     users_searches_metro: { counter: searches_metro, key: [cookie] }
     users_searches_radius: { counter: searches_radius, key: [cookie] }
