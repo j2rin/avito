@@ -52,8 +52,8 @@ select
     NULL                                                    as product_type,
     false                                                   as is_classified,
     'delivery'                                              as project_type,
-    ifnull(delivery_revenue_no_vat, 0) +
-                    ifnull(seller_commission_no_vat, 0)     as delivery_amount_net_adj
+    coalesce(delivery_revenue_no_vat, 0) +
+                    coalesce(seller_commission_no_vat, 0)   as delivery_amount_net_adj
 from dma.delivery_metric_for_ab co
     left join dma.current_logical_categories clc
         on clc.logcat_id = co.logical_category_id
