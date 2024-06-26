@@ -208,7 +208,10 @@ left join /*+distrib(l,r)*/ (
     and sic.event_date = ss.event_date
 
 left join /*+jtype(h),distrib(l,a)*/ DMA.federal_sellers fs
-    on ss.user_id = fs.user_id and fs.federal_achieved=1
+    on ss.user_id = fs.user_id
+        and fs.federal_achieved=1
+        and ss.event_date = fs.event_date
+    -- and fs.event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
 
 left join /*+distrib(l,r)*/
 dma.autodescribe_edit_distance aed

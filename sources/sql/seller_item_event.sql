@@ -94,7 +94,10 @@ left join /*+distrib(l,a)*/ dma.user_segment_market usm
     -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 left join /*+jtype(h),distrib(l,a)*/ am_client_day acd on t.user_id = acd.user_id and t.event_date between acd.active_from_date and acd.active_to_date
 left join /*+jtype(h),distrib(l,a)*/ DMA.federal_sellers fs
-    on t.user_id = fs.user_id and fs.federal_achieved=1
+    on t.user_id = fs.user_id
+        and fs.federal_achieved=1
+        and t.event_date = fs.event_date
+    -- and fs.event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
 
 where t.event_date between :first_date and :last_date
     -- and t.event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino

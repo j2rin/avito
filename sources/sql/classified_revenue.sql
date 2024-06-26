@@ -138,7 +138,10 @@ left join (
     and ur.event_date = cpt.event_date
 
 left join /*+jtype(h),distrib(l,a)*/ DMA.federal_sellers fs
-    on ur.user_id = fs.user_id and fs.federal_achieved=1
+    on ur.user_id = fs.user_id
+        and fs.federal_achieved=1
+        and ur.event_date = fs.event_date
+    -- and fs.event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
 
 where ur.user_id not in (select cu.user_id from dma."current_user" cu where cu.IsTest)
     and cast(ur.event_date as date) between :first_date and :last_date

@@ -272,7 +272,10 @@ left join /*+jtype(h),distrib(l,a)*/ (
 left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_category_id=pg.logical_category_id and ial.price>=pg.min_price and ial.price< pg.max_price
 
 left join /*+jtype(h),distrib(l,a)*/ DMA.federal_sellers fs
-    on ss.item_user_id = fs.user_id and fs.federal_achieved = 1
+    on ss.item_user_id = fs.user_id
+        and fs.federal_achieved = 1
+        and ss.event_date = fs.event_date
+    -- and fs.event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
 
 left join /*+jtype(h),distrib(l,a)*/ (
     select distinct

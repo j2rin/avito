@@ -207,4 +207,7 @@ left join DMA.user_segment_market usm
     -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 
 left join /*+jtype(h),distrib(l,a)*/ DMA.federal_sellers fs
-    on t.user_id = fs.user_id and fs.federal_achieved=1
+    on t.user_id = fs.user_id
+        and fs.federal_achieved=1
+        and t.event_date = fs.event_date
+    -- and fs.event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
