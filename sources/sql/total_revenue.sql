@@ -59,6 +59,7 @@ from dma.delivery_metric_for_ab co
         on clc.logcat_id = co.logical_category_id
 where is_accepted = True
     and cast(co.status_date as date) between date(:first_date) and date(:last_date)
+    and status_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date))
 union all
 select
     0                           as user_id,
