@@ -157,7 +157,7 @@ select
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 35)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as c2c_return_within_14_days,
     cast((bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 34)) > 0 or bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 35)) > 0) and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as return_within_14_days,
     cast(bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 36)) > 0 and bitwise_and(ss.item_flags, bitwise_left_shift(cast(1 as bigint), 16)) > 0 as int) as is_delivery_active_in_sale,
-    fs.seller_id is not null as is_federal_seller,
+    fs.user_id is not null as is_federal_seller,
     case when prem.is_premium = 1 then true when prem.is_premium = 0 or prem.is_premium is null then false end is_premium,
     coalesce(fancy.is_fancy, false) is_fancy,
     case
@@ -271,8 +271,8 @@ left join /*+jtype(h),distrib(l,a)*/ (
     and cast(ss.event_date as date) between ial.from_date and ial.to_date
 left join /*+jtype(h),distrib(l,a)*/ dict.current_price_groups pg on cm.logical_category_id=pg.logical_category_id and ial.price>=pg.min_price and ial.price< pg.max_price
 
-left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
-    on ss.item_user_id = fs.seller_id
+left join /*+jtype(h),distrib(l,a)*/ DMA.federal_sellers fs
+    on ss.item_user_id = fs.user_id and fs.federal_achieved = 1
 
 left join /*+jtype(h),distrib(l,a)*/ (
     select distinct

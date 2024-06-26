@@ -102,7 +102,7 @@ select /*+syntactic_join*/
     is_delivery_available_regular,
     delivery_flow,
     ss.is_premium,
-    fs.seller_id is not null as is_federal_seller
+    fs.user_id is not null as is_federal_seller
 
 from DMA.o_seller_item_active ss
 
@@ -207,8 +207,8 @@ left join /*+distrib(l,r)*/ (
     and sic.item_id = ss.item_id
     and sic.event_date = ss.event_date
 
-left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
-    on ss.user_id = fs.seller_id
+left join /*+jtype(h),distrib(l,a)*/ DMA.federal_sellers fs
+    on ss.user_id = fs.user_id and fs.federal_achieved=1
 
 left join /*+distrib(l,r)*/
 dma.autodescribe_edit_distance aed
