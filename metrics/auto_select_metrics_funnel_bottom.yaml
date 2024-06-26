@@ -1,0 +1,21 @@
+metric.counter:
+    auto_select_leads: {filter: [entity_type: "lead"]}
+    auto_select_quality_leads: {filter: [entity_type: "quality_lead"]}
+    auto_select_bookings: {filter: [entity_type.in: ["booking", "booking_tinkoff"]]}
+    auto_select_deals: {filter: [entity_type: "deal"]}
+
+
+metric.uniq:
+    auto_select_uniq_leads:  {counter: auto_select_leads, key: [user]}
+    auto_select_uniq_quality_leads:  {counter: auto_select_quality_leads, key: [user]}
+    auto_select_uniq_bookings:   {counter: auto_select_bookings, key: [user]}
+    auto_select_uniq_deals:   {counter: auto_select_deals, key: [user]}
+
+
+metric.ratio:
+    auto_select_cr_lead_quality_lead: {num: auto_select_uniq_quality_leads, den: auto_select_uniq_leads}
+    auto_select_cr_quality_lead_booking:  {num: auto_select_uniq_bookings, den: auto_select_uniq_quality_leads}
+    auto_select_cr_booking_deal:   {num: auto_select_uniq_deals, den: auto_select_uniq_bookings}
+    auto_select_cr_lead_booking:  {num: auto_select_uniq_bookings, den: auto_select_uniq_leads}
+    auto_select_cr_lead_deal:   {num: auto_select_uniq_deals, den: auto_select_uniq_leads}
+    auto_select_cr_quality_lead_deal:  {num: auto_select_uniq_deals, den: auto_select_uniq_quality_leads}

@@ -3946,3 +3946,14 @@ haraba_active_user_event:
   participant: { user: user_id }
   primary_subject: user
   dtm: event_date
+
+auto_select_metrics_funnel_bottom:
+  metric_configs: [ auto_select_metrics_funnel_bottom ]
+  connections: [vertica, trino]
+  sql: auto_select_events_autocrm
+  column_map:
+    user: user_id
+    deal: selectdeal_id
+  dtm: event_date
+  participant: {user: user_id }
+  primary_subject: user
