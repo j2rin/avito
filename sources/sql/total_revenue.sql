@@ -43,33 +43,22 @@ from dma.other_projects_revenue
 where cast(observation_date as date) between :first_date and :last_date
 union all
 select
-	0 as user_id,
-    cast(ps.actual_date as date) as status_date,
-    cm.vertical_id as vertical_id,
-    NULL as transaction_type,
-    NULL as transaction_subtype,
-    NULL as product_subtype,
-    NULL as product_type,
-    false as is_classified,
-    'delivery' as project_type,
-    co.delivery_revenue/co.items_qty/1.2 as delivery_amount_net_adj --нормируем на кол-во айтемов в заказе, чтобы не дублировать выручку
-from dma.current_order_item as coi
-left join dma.current_order as co on co.deliveryorder_id = coi.deliveryorder_id
-left join dma.current_microcategories as cm on coi.microcat_id = cm.microcat_id
-join (
-    --чтобы побороть дубли статусов по некоторым заказам, находим минимальную дату для каждого из статусов
-    select
-        deliveryorder_id,
-        platformstatus,
-        min(actual_date) as actual_date
-    from dds.s_deliveryorder_platformstatus
-    group by 1,2
-) ps on ps.deliveryorder_id = coi.deliveryorder_id
-where cast(ps.actual_date as date) between :first_date and :last_date
-    --and not co.is_test
-    --and not co.is_deleted
-    --and not coi.is_deleted
-    and ps.platformstatus = 'accepted'
+    0                                                       as user_id,
+    cast(co.status_date as date)                            as status_date,
+    clc.vertical_id                                         as vertical_id,
+    NULL                                                    as transaction_type,
+    NULL                                                    as transaction_subtype,
+    NULL                                                    as product_subtype,
+    NULL                                                    as product_type,
+    false                                                   as is_classified,
+    'delivery'                                              as project_type,
+    ifnull(delivery_revenue_no_vat, 0) +
+                    ifnull(seller_commission_no_vat, 0)     as delivery_amount_net_adj
+from dma.delivery_metric_for_ab co
+    left join dma.current_logical_categories clc
+        on clc.logcat_id = co.logical_category_id
+where is_accepted = True
+    and cast(co.status_date as date) between date(:first_date) and date(:last_date)
 union all
 select
     0                           as user_id,
