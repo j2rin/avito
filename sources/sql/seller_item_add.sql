@@ -194,7 +194,7 @@ select
       vertical_id,
       t.logical_category_id,
       coalesce(usm.user_segment, ls.segment) as user_segment_market,
-      fs.seller_id is not null as is_federal_seller
+      fs.user_id is not null as is_federal_seller
 
 from item_add_chain_metrics t
 left join /*+jtype(h),distrib(l,b)*/ dict.segmentation_ranks ls on ls.logical_category_id = t.logical_category_id and ls.is_default
@@ -206,5 +206,8 @@ left join DMA.user_segment_market usm
     and usm.event_date between :first_date and :last_date
     -- and usm.event_year between date_trunc('year', :first_date) and date_trunc('year', :last_date) --@trino
 
-left join /*+jtype(h),distrib(l,a)*/ DICT.federal_sellers fs
-    on t.user_id = fs.seller_id
+left join /*+jtype(h),distrib(l,a)*/ DMA.federal_sellers fs
+    on t.user_id = fs.user_id
+        and fs.federal_achieved=1
+        and t.event_date = fs.event_date
+    -- and fs.event_year between date_trunc('year', date(:first_date)) and date_trunc('year', date(:last_date)) -- @trino
