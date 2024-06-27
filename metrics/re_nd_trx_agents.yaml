@@ -1,0 +1,17 @@
+metric.counter:
+  ndtrx_active:                                {                                  obs: [pvs]}
+  ndtrx_searches:                              {                                  obs: [searches]}
+  ndtrx_cvs:                                   {                                  obs: [cv]}
+  ndtrx_bookings:                              {                                  obs: [bookings]}
+
+metric.uniq:
+  ndtrx_monthly_active_users:                  {counter: ndtrx_active,   key: [user_month_hash]}
+  ndtrx_monthly_search_users:                  {counter: ndtrx_searches,   key: [user_month_hash]}
+  ndtrx_monthly_cv_users:                      {counter: ndtrx_cvs,   key: [user_month_hash]}
+  ndtrx_monthly_booking_users:                 {counter: ndtrx_bookings,   key: [user_month_hash]}
+  
+
+metric.ratio:
+  ndtrx_monthly_search_users_share:            {num: ndtrx_monthly_search_users,   den: ndtrx_monthly_active_users}
+  ndtrx_monthly_cv_users_share:                {num: ndtrx_monthly_cv_users,   den: ndtrx_monthly_active_users}
+  ndtrx_monthly_booking_users_share:           {num: ndtrx_monthly_booking_users,   den: ndtrx_monthly_active_users}
